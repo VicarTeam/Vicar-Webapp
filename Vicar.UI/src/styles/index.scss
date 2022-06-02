@@ -29,4 +29,6 @@
   --dm-button-primary-bg-image-hover: linear-gradient(var(--primary-color-light), var(--primary-color-dark)) !important; 
 
   --image-to-primary-color-filter: invert(10%) sepia(59%) saturate(4471%) hue-rotate(332deg) brightness(104%) contrast(100%);
+  
+  --dm-input-border-color: var(--primary-color) !important;
 }

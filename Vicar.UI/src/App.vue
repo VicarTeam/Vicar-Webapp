@@ -8,7 +8,6 @@
 
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
-import {Backend} from "@/libs/backend";
 
 @Component({
   components: {}
@@ -16,9 +15,7 @@ import {Backend} from "@/libs/backend";
 export default class App extends Vue {
   
   async mounted() {
-      await Backend.updateData(state => {
-        console.log("Data Update State: " + state);
-      });
+    
   }
 }
 </script>

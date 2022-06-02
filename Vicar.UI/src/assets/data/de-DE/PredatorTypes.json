@@ -1,0 +1,89 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Räuber",
+    "description": "Du bist ein Angriffsfresser, der sich an seine Beute heranpirscht, sie überwältigt, sich von ihr ernährt und ihr dann entkommt.",
+    "actions": [
+      {
+        "description": "Zusätzliche Spezialisierung: Einschüchtern (Überfälle) oder Handgemenge (Ringen)",
+        "type": "additional_specialization",
+        "data": {
+          "choices": [
+            "int=Überfälle",
+            "bra=Ringen"
+          ]
+        }
+      },
+      {
+        "description": "Du erhälst einen zusätzlichen Punkt in Geschwindigkeit oder Stärke",
+        "type": "discipline_point",
+        "data": {
+          "choices": [
+            {
+              "id": 4
+            },
+            {
+              "id": 8
+            }
+          ]
+        }
+      },
+      {
+        "description": "Du verlierst einen Punkt in Menschlichkeit",
+        "type": "humanity_change",
+        "data": {
+          "amount": -1
+        }
+      },
+      {
+        "description": "Du erhälst drei zusätzliche Punkte in kriminelle Kontakte (Vorteil: TODO)!"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Beuteltrinker",
+    "description": "Du ziehst es vor, kaltes Blut zu trinken, anstatt sich von einem lebenden Opfer zu ernähren.",
+    "restriction": {
+      "type": "exclude_clans",
+      "data": [14]
+    },
+    "actions": [
+      {
+        "description": "Zusätzliche Spezialisierung: Diebeshandwerk (Schlösserknacken) oder Szenekenntnis (Schwarzmarkt)",
+        "type": "additional_specialization",
+        "data": {
+          "choices": [
+            "lar=Schlösserknacken",
+            "stw=Schwarzmarkt"
+          ]
+        }
+      },
+      {
+        "description": "Du erhälst einen zusätzlichen Punkt in Blutmagie (nur für Tremere oder Banu Haqim), Verdunklung oder Vergessenheit",
+        "type": "discipline_point",
+        "data": {
+          "choices": [
+            {
+              "id": 3,
+              "restriction": {
+                "type": "only_clans",
+                "data": [1, 12]
+              }
+            },
+            {
+              "id": 10
+            },
+            {
+              "id": 11,
+              "restriction": {
+                "type": "book_activated",
+                "data": [3, 5]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

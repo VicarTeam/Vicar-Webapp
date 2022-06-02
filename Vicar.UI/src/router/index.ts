@@ -7,13 +7,18 @@ Vue.use(VueRouter)
 const routes: Array<RouteConfig> = [
   {
     path: '/',
+    name: 'loading',
+    component: () => import('../views/LoadingView.vue')
+  },
+  {
+    path: '/main',
     name: 'main',
     component: () => import('@/views/MainView.vue')
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
