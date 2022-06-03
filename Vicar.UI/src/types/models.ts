@@ -1,4 +1,11 @@
-﻿import {IDiscipline} from "@/types/data";
+﻿import {IDiscipline, ITraitPack} from "@/types/data";
+
+export function fillDefaults<T extends object>(given: T, defaults: T): T {
+    for (let key in given) {
+        given[key] = given[key] || defaults[key];
+    }
+    return given;
+}
 
 export interface ILanguage {
     readonly key: string;
@@ -8,6 +15,8 @@ export interface ILanguage {
 export interface IBook {
     readonly id: number;
     readonly clans: IClan[];
+    readonly merits: ITraitPack[];
+    readonly backgrounds: ITraitPack[];
 }
 
 export interface IClan {
@@ -19,12 +28,13 @@ export interface IClan {
 }
 
 export interface ICharacter {
+    books: number[];
     name: string;
     concept: string;
     //TODO jagdverhalten
     chronicle: string;
     ambition: string;
-    clan?: IClan;
+    clan: IClan;
     sire: string;
     desire: string;
     generation: number;

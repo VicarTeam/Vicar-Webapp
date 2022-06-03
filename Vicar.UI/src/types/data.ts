@@ -1,6 +1,13 @@
-﻿export interface IEdition {
+﻿export interface IBook {
+    id: number;
+    clans: number[];
+    merits: number[];
+    backgrounds: number[];
+}
+
+export interface IEdition {
     languages: string[];
-    books: { clans: number[]; id: number }[];
+    books: IBook[];
 }
 
 export interface IClan {
@@ -17,7 +24,7 @@ export interface IDiscipline {
     nicknames: string[];
     summary?: string;
     properties: IDisciplineProperties;
-    levels: { [key: (1 | 2 | 3 | 4 | 5)]: IDisciplineAbility[] };
+    levels: { [key: number]: IDisciplineAbility[] };
     note?: string;
 }
 
@@ -70,7 +77,7 @@ export interface IRestriction {
 export enum RestrictionType {
     SpecificClans = "specific_clans", // data = [clanIds]
     ExcludeClans = "exclude_clans", // data = [clanIds]
-    MinimumCharacterValue = "minimum_character_value", // data = {numeric value, key of value}
+    MinimumCharacterValue = "minimum_character_value", // data = {value: number, key: string}
     BookActivated = "book_activated", // data = [bookIds] (orX)
     MaxGeneration = "max_generation", // data = numeric generation (must have this generation or less)
 }
@@ -88,15 +95,32 @@ export interface ITraitPack {
     disadvantages: ITrait[];
 }
 
+export enum TraitSpecialRules {
+    None = "none",
+    Allies = "allies"
+}
+
 export interface ITrait {
     id: number;
     level: 1 | 2 | 3 | 4 | 5;
     name: string;
     description: string;
-    isRepeatable?: boolean;
+    isRepeatable: boolean;
     actions: ITraitAction[];
     restriction?: IRestriction;
+    specialRules: TraitSpecialRules;
 }
+
+export const DefaultTrait: ITrait = {
+    id: 0,
+    level: 1,
+    name: "",
+    description: "",
+    isRepeatable: false,
+    actions: [],
+    restriction: undefined,
+    specialRules: TraitSpecialRules.None
+};
 
 export interface ITraitAction {
     description: string;

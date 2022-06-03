@@ -14,15 +14,13 @@
         "id": 1,
         "level": 1,
         "name": "Im Gestern leben",
-        "description": "Du hast eine oder mehrere altmodische Überzeugungen wie z.B. \"Niedere Klassen sind zum Dienen\". Bei jedem Wurfelvorrat in einer gesellschaftlichen Konfliktsituation, wo der Glaubenssatz Anwendung findet und das andere Wesen nicht gleich alt oder älter ist und somit dem Glaubenssatz respektieren könnte, hast du einen Würfel weniger",
-        "actions": []
+        "description": "Du hast eine oder mehrere altmodische Überzeugungen wie z.B. \"Niedere Klassen sind zum Dienen\". Bei jedem Wurfelvorrat in einer gesellschaftlichen Konfliktsituation, wo der Glaubenssatz Anwendung findet und das andere Wesen nicht gleich alt oder älter ist und somit dem Glaubenssatz respektieren könnte, hast du einen Würfel weniger"
       },
       {
         "id": 2,
         "level": 2,
         "name": "Archaisch",
-        "description": "Du kannst moderne Technologie nicht verwenden",
-        "actions": []
+        "description": "Du kannst moderne Technologie nicht verwenden"
       }
     ]
   },
@@ -36,22 +34,19 @@
         "id": 1,
         "level": 1,
         "name": "Bindungsresistenz",
-        "description": "Es ist einfacher für dich gegen das Band zu wehren. Pro Stufe in diesem Vorzug (max. 3) erhälst du einen Würfel beim Wehren gegen das Band mehr",
-        "actions": []
+        "description": "Es ist einfacher für dich gegen das Band zu wehren. Pro Stufe in diesem Vorzug (max. 3) erhälst du einen Würfel beim Wehren gegen das Band mehr"
       },
       {
         "id": 2,
         "level": 2,
         "name": "Kurzes Band",
-        "description": "Die Kraft des Bandes lässt schneller nach. Pro Monat verliert das Band ohne Erneuerung 2 Punkte",
-        "actions": []
+        "description": "Die Kraft des Bandes lässt schneller nach. Pro Monat verliert das Band ohne Erneuerung 2 Punkte"
       },
       {
         "id": 3,
         "level": 5,
         "name": "Ewig Ungebunden",
-        "description": "Das Blutband hat bei dir keine Wirkung",
-        "actions": []
+        "description": "Das Blutband hat bei dir keine Wirkung"
       }
     ],
     "disadvantages": [
@@ -59,22 +54,19 @@
         "id": 1,
         "level": 1,
         "name": "Bindungsjunkie",
-        "description": "Das Band fühlt sich liebevoller an. Du bekommst einen Würfel weniger, wenn du gegen das Band handeln willst",
-        "actions": []
+        "description": "Das Band fühlt sich liebevoller an. Du bekommst einen Würfel weniger, wenn du gegen das Band handeln willst"
       },
       {
         "id": 2,
         "level": 1,
         "name": "Lange Bindung",
-        "description": "Das Band hält länger und braucht 3 Monate um einen Punkt zu verlieren",
-        "actions": []
+        "description": "Das Band hält länger und braucht 3 Monate um einen Punkt zu verlieren"
       },
       {
         "id": 3,
         "level": 2,
         "name": "Sklave des Bandes",
-        "description": "Du bindest dich beim ersten Schluck von Vitae",
-        "actions": []
+        "description": "Du bindest dich beim ersten Schluck von Vitae"
       }
     ]
   },
@@ -88,15 +80,13 @@
         "id": 1,
         "level": 1,
         "name": "Bluthund",
-        "description": "Du kannst die Resonanz des Blutes erriechen anstatt das Blut schmecken zu müssen (Probe: Entschlossenheit + Wahrnehmung >= 3)",
-        "actions": []
+        "description": "Du kannst die Resonanz des Blutes erriechen anstatt das Blut schmecken zu müssen (Probe: Entschlossenheit + Wahrnehmung >= 3)"
       },
       {
         "id": 2,
         "level": 3,
         "name": "Eiserner Magen",
         "description": "Du kannst dich von kaltem Blut, ranzigem Blut oder fraktioniertem Plasma ernähren",
-        "actions": [],
         "restriction": {
           "type": "exclude_clans",
           "data": [14]
@@ -108,29 +98,25 @@
         "id": 1,
         "level": 1,
         "name": "Durst des Methusalems",
-        "description": "Du kannst dein Hunger nur durch das Trinken von übernatürlichen Wesen, oder durch Alchemisten angedicktes Dünnblütigen-Blut verringern, ansonsten ist dein Hunger immer mindestens 1",
-        "actions": []
+        "description": "Du kannst dein Hunger nur durch das Trinken von übernatürlichen Wesen, oder durch Alchemisten angedicktes Dünnblütigen-Blut verringern, ansonsten ist dein Hunger immer mindestens 1"
       },
       {
         "id": 2,
         "level": 1,
         "name": "Beutebeschränkung",
-        "description": "Du weigsterst dich eine bestimmte Beuteart zu jagen,",
-        "actions": []
+        "description": "Du weigsterst dich eine bestimmte Beuteart zu jagen,"
       },
       {
         "id": 3,
         "level": 2,
         "name": "Vegan",
-        "description": "Du ernährst dich nur von Tierblut. Es kostet dich 2 Punkte Willenskraft um menschliches Blut zu trinken",
-        "actions": []
+        "description": "Du ernährst dich nur von Tierblut. Es kostet dich 2 Punkte Willenskraft um menschliches Blut zu trinken"
       },
       {
         "id": 4,
         "level": 2,
         "name": "Organfresser",
-        "description": "Dein Hunger kann nur durch das Essen von Organen, besonders den blutigen, oder menschlichem Fleisch verringert werden",
-        "actions": []
+        "description": "Dein Hunger kann nur durch das Essen von Organen, besonders den blutigen, oder menschlichem Fleisch verringert werden"
       }
     ]
   },
@@ -152,36 +138,31 @@
         "id": 1,
         "level": 1,
         "name": "$input",
-        "description": "Du kannst die benannte Sprache sprechen, lesen und schreiben.",
-        "actions": []
+        "description": "Du kannst die benannte Sprache sprechen, lesen und schreiben."
       },
       {
         "id": 2,
         "level": 2,
         "name": "$input",
-        "description": "Du kannst die benannte Sprache sprechen, lesen und schreiben.",
-        "actions": []
+        "description": "Du kannst die benannte Sprache sprechen, lesen und schreiben."
       },
       {
         "id": 3,
         "level": 3,
         "name": "$input",
-        "description": "Du kannst die benannte Sprache sprechen, lesen und schreiben.",
-        "actions": []
+        "description": "Du kannst die benannte Sprache sprechen, lesen und schreiben."
       },
       {
         "id": 4,
         "level": 4,
         "name": "$input",
-        "description": "Du kannst die benannte Sprache sprechen, lesen und schreiben.",
-        "actions": []
+        "description": "Du kannst die benannte Sprache sprechen, lesen und schreiben."
       },
       {
         "id": 5,
         "level": 5,
         "name": "$input",
-        "description": "Du kannst die benannte Sprache sprechen, lesen und schreiben.",
-        "actions": []
+        "description": "Du kannst die benannte Sprache sprechen, lesen und schreiben."
       }
     ],
     "disadvantages": [
@@ -221,15 +202,13 @@
         "id": 1,
         "level": 2,
         "name": "Schön",
-        "description": "Bei sämtlichen passenden gesellschaftlichen Würfelvorräten hast du einen Bonus von 1",
-        "actions": []
+        "description": "Bei sämtlichen passenden gesellschaftlichen Würfelvorräten hast du einen Bonus von 1"
       },
       {
         "id": 2,
         "level": 4,
         "name": "Umwerfend",
-        "description": "Bei sämtlichen passenden gesellschaftlichen Würfelvorräten hast du einen Bonus von 2",
-        "actions": []
+        "description": "Bei sämtlichen passenden gesellschaftlichen Würfelvorräten hast du einen Bonus von 2"
       }
     ],
     "disadvantages": [
@@ -237,15 +216,13 @@
         "id": 1,
         "level": 1,
         "name": "Hässlich",
-        "description": "Bei sämtlichen passenden gesellschaftlichen Würfelvorräten hast du einen Malus von 1",
-        "actions": []
+        "description": "Bei sämtlichen passenden gesellschaftlichen Würfelvorräten hast du einen Malus von 1"
       },
       {
         "id": 2,
         "level": 2,
         "name": "Abstoßend",
-        "description": "Bei sämtlichen passenden gesellschaftlichen Würfelvorräten hast du einen Malus von 2",
-        "actions": []
+        "description": "Bei sämtlichen passenden gesellschaftlichen Würfelvorräten hast du einen Malus von 2"
       }
     ]
   },
@@ -259,8 +236,7 @@
         "id": 1,
         "level": 2,
         "name": "Nahrung konsumieren",
-        "description": "Du kannst Nahrung zunehmen und genießen, welche dich jedoch nicht nährt und vor der Ruhe ausgeschieden werden muss",
-        "actions": []
+        "description": "Du kannst Nahrung zunehmen und genießen, welche dich jedoch nicht nährt und vor der Ruhe ausgeschieden werden muss"
       }
     ],
     "disadvantages": [
@@ -268,30 +244,26 @@
         "id": 1,
         "level": 1,
         "name": "Folkloristischer Fluch ($input)",
-        "description": "Du erhälst schweren Schaden von einem folklorischen Fluch wie z.B. \"ultraviolettes Licht\" oder \"Weihwasser\"",
-        "actions": []
+        "description": "Du erhälst schweren Schaden von einem folklorischen Fluch wie z.B. \"ultraviolettes Licht\" oder \"Weihwasser\""
       },
       {
         "id": 2,
         "level": 1,
         "isRepeatable": true,
         "name": "Folkloristische Blockade ($input)",
-        "description": "Vor einer solchen Blockade musst du zurückweichen oder einen Punkt Willenskraft einsetzen um die Blockade zu durchbrechen. Blockaden sind z.B. \"heilige Symbol\" oder \"ohne Einladung des Besitzer die Türschwelle eines Hauses zu überschreiten\"",
-        "actions": []
+        "description": "Vor einer solchen Blockade musst du zurückweichen oder einen Punkt Willenskraft einsetzen um die Blockade zu durchbrechen. Blockaden sind z.B. \"heilige Symbol\" oder \"ohne Einladung des Besitzer die Türschwelle eines Hauses zu überschreiten\""
       },
       {
         "id": 3,
         "level": 1,
         "name": "Stigmata",
-        "description": "Wenn du Hunger 4 erreichst, blutest du aus offenen Wunden und kannst damit Spuren hinterlassen und Aufmerksamkeit erregen",
-        "actions": []
+        "description": "Wenn du Hunger 4 erreichst, blutest du aus offenen Wunden und kannst damit Spuren hinterlassen und Aufmerksamkeit erregen"
       },
       {
         "id": 4,
         "level": 2,
         "name": "Pflock-Opfer",
-        "description": "Sollte ein Pflock dein Herz durchbohren, stirbst du endgültig anstatt in Starre zu verfallen",
-        "actions": []
+        "description": "Sollte ein Pflock dein Herz durchbohren, stirbst du endgültig anstatt in Starre zu verfallen"
       }
     ]
   },
@@ -306,15 +278,13 @@
         "id": 1,
         "level": 2,
         "name": "Leben auf Messers Schneide",
-        "description": "Sie leiden unter dem Zwang, immer neue Erfahrungen machen zu müssen. Dieser Zwang zwingt dich gerne auch selbstmörderische und teils unvorhersehbare Handlungen auszuführen",
-        "actions": []
+        "description": "Sie leiden unter dem Zwang, immer neue Erfahrungen machen zu müssen. Dieser Zwang zwingt dich gerne auch selbstmörderische und teils unvorhersehbare Handlungen auszuführen"
       },
       {
         "id": 2,
         "level": 3,
         "name": "Schwacher Wille",
-        "description": "Dein Wille ist schwach und du hast Mühe, deine eigene Persönlichkeit zu behaupten, wenn du mit dem Willen eines anderen konfrontiert wirst. Selbst wenn du weißt, jemand will dich geistig oder emotional beeinflussen (durch z.B. Beherrschung), darfst du dich nicht wiedersetzen",
-        "actions": []
+        "description": "Dein Wille ist schwach und du hast Mühe, deine eigene Persönlichkeit zu behaupten, wenn du mit dem Willen eines anderen konfrontiert wirst. Selbst wenn du weißt, jemand will dich geistig oder emotional beeinflussen (durch z.B. Beherrschung), darfst du dich nicht wiedersetzen"
       }
     ]
   },
@@ -328,8 +298,7 @@
         "id": 1,
         "level": 1,
         "name": "Hochfunktionale Sucht ($input)",
-        "description": "Du erhälst einen Bonus von 1 auf alle Würfelvorräte, wenn die letzte Person von der du getrunken hast, deine Droge intus hatte",
-        "actions": []
+        "description": "Du erhälst einen Bonus von 1 auf alle Würfelvorräte, wenn die letzte Person von der du getrunken hast, deine Droge intus hatte"
       }
     ],
     "disadvantages": [
@@ -337,15 +306,13 @@
         "id": 1,
         "level": 1,
         "name": "Sucht ($input)",
-        "description": "Du erhälst einen Malus von 1 auf alle Würfelvorräten (außer welche, die deinen Drogenkonsum begünstigen), sofern die letzte Person, von der du getrunken hast, nicht deine Droge intus hatte",
-        "actions": []
+        "description": "Du erhälst einen Malus von 1 auf alle Würfelvorräten (außer welche, die deinen Drogenkonsum begünstigen), sofern die letzte Person, von der du getrunken hast, nicht deine Droge intus hatte"
       },
       {
         "id": 2,
         "level": 2,
         "name": "Hoffnungslose Abhängigkeit ($input)",
-        "description": "Du erhälst einen Malus von 2 auf alle Würfelvorräten (außer welche, die deinen Drogenkonsum begünstigen), sofern die letzte Person, von der du getrunken hast, nicht deine Droge intus hatte",
-        "actions": []
+        "description": "Du erhälst einen Malus von 2 auf alle Würfelvorräten (außer welche, die deinen Drogenkonsum begünstigen), sofern die letzte Person, von der du getrunken hast, nicht deine Droge intus hatte"
       }
     ]
   }

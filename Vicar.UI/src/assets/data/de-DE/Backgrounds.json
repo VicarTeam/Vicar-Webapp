@@ -1,0 +1,191 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Gefolge",
+    "description": "Du hast einen oder mehrere treue und unerschütterliche Diener oder Assistenten. Das Gefolge besteht jedoch aus keinen Marionetten sondern eigenständigen Charakteren",
+    "isCombinable": false,
+    "advantages": [
+      {
+        "id": 1,
+        "level": 1,
+        "name": "Gefolge 1",
+        "description": "Schwache Sterbliche wie Kinder, Kleinkriminelle oder Horrorfans, die auch ohne Blutsband kleinere Wünsche erfüllen"
+      },
+      {
+        "id": 2,
+        "level": 2,
+        "name": "Gefolge 2",
+        "description": "Gewöhnliche Sterbliche oder Ghule ohne Vorteile wie Ghule, Familiendiener oder menschliche Liebhaber"
+      },
+      {
+        "id": 3,
+        "level": 3,
+        "name": "Gefolge 3",
+        "description": "Ghule mit Eigenschaften wie ein Sterblicher. Gefolgsleute die aus freien Stücken handeln können"
+      }
+    ],
+    "disadvantages": [
+      {
+        "id": 1,
+        "level": 1,
+        "name": "Stalker",
+        "description": "Sterbliche, welche in dich verschossen sind, Erinnerungen zu dir bewahren und das Verlangen hegen zur dir zurückzukehren"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Kontakte",
+    "description": "Jemand, der dir Informationen, Dienstleistungen oder Waren in einem bestimmten Bereich liefert.",
+    "isCombinable": false,
+    "advantages": [
+      {
+        "id": 1,
+        "level": 1,
+        "name": "Kontakte 1",
+        "description": "Kontakt, der etwas Gewöhnliches (Ressourcen 1) erledigen kann (z.B. Gras-Dealer oder Autoverkäufer)"
+      },
+      {
+        "id": 2,
+        "level": 2,
+        "name": "Kontakte 2",
+        "description": "Kontakt, der etwas Nützliches (Ressourcen 2) erledigen kann (z.B. unbedeutender Waffenhändler oder Tierarzt"
+      },
+      {
+        "id": 3,
+        "level": 3,
+        "name": "Kontakte 3",
+        "description": "Kontakt, der etwas Teures (Ressourcen 4) erledigen kann (z.B. Polizeileutnant in der Mordkommission oder Experte für Überwachungssystem)"
+      }
+    ],
+    "disadvantages": []
+  },
+  {
+    "id": 3,
+    "name": "Ruhm",
+    "description": "Wie bekannt du bist, normalerweise unter den Sterblichen, aber auch unter den Blutsverwandten kann das zutreffen.",
+    "isCombinable": false,
+    "advantages": [
+      {
+        "id": 1,
+        "level": 1,
+        "name": "Ruhm 1",
+        "description": "Eine Subkultur kennt und bewundert dich"
+      },
+      {
+        "id": 2,
+        "level": 2,
+        "name": "Ruhm 2",
+        "description": "Du bist eine lokale Berühmtheit und ein Großteil der Stadt erkennt dich"
+      },
+      {
+        "id": 3,
+        "level": 3,
+        "name": "Ruhm 3",
+        "description": "Die meisten Bewohner des Landes kennen zumindest deinen Namen"
+      },
+      {
+        "id": 4,
+        "level": 4,
+        "name": "Ruhm 4",
+        "description": "Die, die am Rande sich für soziale Trends oder dein Fachgebiet interessieren, wissen etwas über dich"
+      },
+      {
+        "id": 5,
+        "level": 5,
+        "name": "Ruhm 5",
+        "description": "Du besitzt nationale oder sogar internationale Bekanntheit, wie z.B. ein Rockstar"
+      }
+    ],
+    "disadvantages": [
+      {
+        "id": 1,
+        "level": 1,
+        "name": "Dunkles Geheimnis",
+        "description": "Du hast ein dunkles Geheimnis was du bewahren musst. Zum Beispiel eine Schuld, die noch nicht beglichen hast. Oder dein Ehepartner oder Liebhaber hat Infam"
+      },
+      {
+        "id": 2,
+        "level": 2,
+        "name": "Infam",
+        "description": "Du bist berühmt, weil du etwas Schreckliches oder Verwerfliches in den Augen der Sterblichen oder der Gesellschaft der Blutsverwandten getan hast"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Verbündete",
+    "description": "Ein Sterblicher oder eine Gruppe von Sterblichen, die dir gegenüber loyal und vertrauenswürdig sind und dir bei Bedarf helfen.",
+    "isCombinable": false,
+    "specialRules": "allies",
+    "advantages": [
+      {
+        "id": 1,
+        "level": 1,
+        "name": "Nützlichkeit 1",
+        "description": "Schwacher Sterblicher, welcher in gewaltsamen Situationen wahrscheinlich nutzlos ist"
+      },
+      {
+        "id": 2,
+        "level": 2,
+        "name": "Nützlichkeit 2",
+        "description": "Gewöhnlicher Sterblicher oder engverbunde Gruppe schwacher Sterblicher (z.B. Nachbarschaftskinder die Rätsel lösen)"
+      },
+      {
+        "id": 3,
+        "level": 3,
+        "name": "Nützlichkeit 3",
+        "description": "Begabter Sterblicher oder gefährliche Gruppe gewöhnlicher Sterblicher (z.B. Straßengang)"
+      },
+      {
+        "id": 4,
+        "level": 4,
+        "name": "Nützlichkeit 4",
+        "description": "Gefährlicher Sterblicher, begabter Sterblicher mit Magie oder andere übernatürliche Talente (z.B. Russische Mafia)"
+      }
+    ],
+    "disadvantages": [
+      {
+        "id": 1,
+        "level": 1,
+        "name": "Zuverlässigkeit 1",
+        "description": "50%ige Chance, dass sie beim Rufen erscheinen"
+      },
+      {
+        "id": 2,
+        "level": 2,
+        "name": "Zuverlässigkeit 2",
+        "description": "Sie erscheinen innerhalb 1-10 Stunden (auswürfeln), wenn du sie rufst"
+      },
+      {
+        "id": 3,
+        "level": 3,
+        "name": "Zuverlässigkeit 3",
+        "description": "Sie erscheinen schnellstmöglich, wenn du sie rufst"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Einfluss",
+    "description": "Du hast Einfluss in der Gemeinschaft der Sterblichen, sei es durch Reichtum, Prestige, politische Ämter, Erpressung oder übernatürliche Manipulation. Der Erzähler kann diesen Einfluss bei sozialen Proben als optionalen Würfelvorrat zulassen.",
+    "isCombinable": false,
+    "advantages": [
+      
+    ],
+    "disadvantages": [
+      {
+        "id": 1,
+        "level": 1,
+        "name": "Unbeliebt",
+        "description": "Bei Würfelvorräten für gesellschaftliche Interaktionen in deiner Stadt außer mit deinen Kontakten oder Verbündeten hast du einen Malus von 1"
+      },
+      {
+        "id": 2,
+        "level": 2,
+        "name": "Verachtet",
+        "description": "Eine Gruppe oder ein Gebiet will gegen dich Vorgehen. Du hast einen Malus von 2 um neutrale Akteure von deiner politischen Position zu überzeugen"
+      }
+    ]
+  }
+]

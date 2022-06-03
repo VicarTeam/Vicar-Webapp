@@ -17,6 +17,9 @@
       ],
       "merits": [
         1, 2, 3, 5, 6, 7, 9
+      ],
+      "backgrounds": [
+        
       ]
     },
     {
@@ -24,14 +27,20 @@
       "clans": [
         7
       ],
-      "merits": []
+      "merits": [],
+      "backgrounds": [
+
+      ]
     },
     {
       "id": 3,
       "clans": [
         5
       ],
-      "merits": []
+      "merits": [],
+      "backgrounds": [
+
+      ]
     },
     {
       "id": 4,
@@ -40,14 +49,20 @@
         10,
         13
       ],
-      "merits": [8]
+      "merits": [8],
+      "backgrounds": [
+
+      ]
     },
     {
       "id": 5,
       "clans": [
         4
       ],
-      "merits": []
+      "merits": [],
+      "backgrounds": [
+
+      ]
     }
   ]
 }
