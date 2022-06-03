@@ -52,6 +52,8 @@ export default class DataManager {
                 })
             });
         }
+        
+        console.log(this.selectedLanguage);
     }
 
 }

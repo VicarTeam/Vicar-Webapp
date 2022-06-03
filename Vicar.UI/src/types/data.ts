@@ -97,7 +97,9 @@ export interface ITraitPack {
 
 export enum TraitSpecialRules {
     None = "none",
-    Allies = "allies"
+    Allies = "allies",
+    Haven = "haven",
+    Mask = "mask",
 }
 
 export interface ITrait {
