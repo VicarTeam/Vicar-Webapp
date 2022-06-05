@@ -20,6 +20,9 @@
       ],
       "backgrounds": [
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+      ],
+      "predatorTypes": [
+        1, 2, 3, 4, 5, 7, 9, 11, 12, 13
       ]
     },
     {
@@ -28,9 +31,8 @@
         7
       ],
       "merits": [],
-      "backgrounds": [
-
-      ]
+      "backgrounds": [],
+      "predatorTypes": []
     },
     {
       "id": 3,
@@ -38,9 +40,8 @@
         5
       ],
       "merits": [],
-      "backgrounds": [
-
-      ]
+      "backgrounds": [],
+      "predatorTypes": []
     },
     {
       "id": 4,
@@ -50,9 +51,8 @@
         13
       ],
       "merits": [8],
-      "backgrounds": [
-
-      ]
+      "backgrounds": [],
+      "predatorTypes": []
     },
     {
       "id": 5,
@@ -60,8 +60,18 @@
         4
       ],
       "merits": [],
-      "backgrounds": [
-
+      "backgrounds": [],
+      "predatorTypes": [
+        6, 8
+      ]
+    },
+    {
+      "id": 6,
+      "clans": [],
+      "merits": [],
+      "backgrounds": [],
+      "predatorTypes": [
+        10
       ]
     }
   ]

@@ -45,6 +45,11 @@ class RestrictionResolver {
     private resolveMaxGeneration(char: ICharacter, generation: number): boolean {
         return char.generation <= generation;
     }
+
+    @ResolveType(RestrictionType.MaxBloodPotency)
+    private resolveMaxBloodPotency(char: ICharacter, bloodPotency: number): boolean {
+        return char.bloodPotency <= bloodPotency;
+    }
 }
 
 export const restrictionResolver = new RestrictionResolver();

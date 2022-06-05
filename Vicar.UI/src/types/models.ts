@@ -1,4 +1,4 @@
-﻿import {IDiscipline, ITraitPack} from "@/types/data";
+﻿import {IDiscipline, IPredatorType, ITraitPack} from "@/types/data";
 
 export function fillDefaults<T extends object>(given: T, defaults: T): T {
     for (let key in given) {
@@ -17,6 +17,7 @@ export interface IBook {
     readonly clans: IClan[];
     readonly merits: ITraitPack[];
     readonly backgrounds: ITraitPack[];
+    readonly predatorTypes: IPredatorType[];
 }
 
 export interface IClan {
@@ -43,6 +44,7 @@ export interface ICharacter {
     hunger: number;
     humanity: number;
     resonance: string;
+    bloodPotency: number;
     attributes: {[key in AttributeKeys]: number};
     skills: {[key in SkillKeys]: ISkillData};
 }

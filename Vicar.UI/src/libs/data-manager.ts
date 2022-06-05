@@ -1,7 +1,7 @@
 ﻿import * as data from "@/types/data";
 import {fillDefaults, IClan, ILanguage} from "@/types/models";
 import {i18n} from "@/libs/i18n";
-import {DefaultTrait, ITrait, ITraitPack} from "@/types/data";
+import {DefaultTrait, IPredatorType, ITrait, ITraitPack} from "@/types/data";
 
 export default class DataManager {
 
@@ -40,6 +40,8 @@ export default class DataManager {
                 return merit;
             });
 
+            const predatorTypes: IPredatorType[] = <data.IPredatorType[]>(await import(`@/assets/data/${langKey}/PredatorTypes.json`)).default;
+
             this.languages.push({
                 key: langKey,
                 books: meta.books.map(book => {
@@ -47,7 +49,8 @@ export default class DataManager {
                         id: book.id,
                         clans: clans.filter(clan => book.clans.includes(clan.id)),
                         merits,
-                        backgrounds
+                        backgrounds,
+                        predatorTypes
                     };
                 })
             });

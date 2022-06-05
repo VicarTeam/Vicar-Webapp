@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Archaisch",
     "description": "Nur Ancillae oder ältere Vampire dürfen sich eine dieser Schwächen aussuchen.",
-    "isCombinable": false,
+    "isCombinable": true,
     "restriction": {
       "type": "max_generation",
       "data": 11
@@ -123,7 +123,7 @@
   {
     "id": 4,
     "name": "Ghule",
-    "isCombinable": false,
+    "isCombinable": true,
     "description": "PLACEHOLDER -- NOT SUPPORTED YET",
     "advantages": [],
     "disadvantages": []
@@ -131,7 +131,7 @@
   {
     "id": 5,
     "name": "Sprachen",
-    "isCombinable": false,
+    "isCombinable": true,
     "description": "Jeder Charakter kann seine Muttersprache flüssig sprechen, lesen und schreiben. Jeder weitere Punkt in diesem Vorzug, erlaubt es dir eine weitere Sprache zu sprechen, lesen und schreiben.",
     "advantages": [
       {
@@ -195,7 +195,7 @@
   {
     "id": 6,
     "name": "Aussehen",
-    "isCombinable": false,
+    "isCombinable": true,
     "description": "Die Vorzüge und Schwächen beziehen sich auf das Aussehen des Vampirs und haben Einfluss auf das soziale Umfeld",
     "advantages": [
       {
@@ -229,7 +229,7 @@
   {
     "id": 7,
     "name": "Mythische Vorzüge und Schwächen",
-    "isCombinable": false,
+    "isCombinable": true,
     "description": "Diese Vorzüge und Schwächen beziehen sich auf magische Flüche, Besonderheiten des Blutes und andere mystische Wirkungen.",
     "advantages": [
       {
@@ -270,7 +270,7 @@
   {
     "id": 8,
     "name": "Psychologisch",
-    "isCombinable": false,
+    "isCombinable": true,
     "description": "Diese Vorzüge und Schwächen beziehen sich auf psychologische Eigenheiten der Figur.",
     "advantages": [],
     "disadvantages": [
@@ -291,7 +291,7 @@
   {
     "id": 9,
     "name": "Drogenkonsum",
-    "isCombinable": false,
+    "isCombinable": true,
     "description": "Du bist nicht nur von Blut abhängig, sondern auch von einer anderen Substanz, die dich normalerweise bestraft, wenn du keinen Zugang zu ihr hast.",
     "advantages": [
       {

@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Gefolge",
     "description": "Du hast einen oder mehrere treue und unerschütterliche Diener oder Assistenten. Das Gefolge besteht jedoch aus keinen Marionetten sondern eigenständigen Charakteren",
-    "isCombinable": false,
+    "isCombinable": true,
     "advantages": [
       {
         "id": 1,
@@ -37,7 +37,7 @@
     "id": 2,
     "name": "Kontakte",
     "description": "Jemand, der dir Informationen, Dienstleistungen oder Waren in einem bestimmten Bereich liefert.",
-    "isCombinable": false,
+    "isCombinable": true,
     "advantages": [
       {
         "id": 1,
@@ -64,7 +64,7 @@
     "id": 3,
     "name": "Ruhm",
     "description": "Wie bekannt du bist, normalerweise unter den Sterblichen, aber auch unter den Blutsverwandten kann das zutreffen.",
-    "isCombinable": false,
+    "isCombinable": true,
     "advantages": [
       {
         "id": 1,
@@ -116,7 +116,7 @@
     "id": 4,
     "name": "Verbündete",
     "description": "Ein Sterblicher oder eine Gruppe von Sterblichen, die dir gegenüber loyal und vertrauenswürdig sind und dir bei Bedarf helfen.",
-    "isCombinable": false,
+    "isCombinable": true,
     "specialRules": "allies",
     "advantages": [
       {
@@ -146,22 +146,46 @@
     ],
     "disadvantages": [
       {
-        "id": 1,
+        "id": -1,
         "level": 1,
         "name": "Zuverlässigkeit 1",
         "description": "50%ige Chance, dass sie beim Rufen erscheinen"
       },
       {
-        "id": 2,
+        "id": -2,
         "level": 2,
         "name": "Zuverlässigkeit 2",
         "description": "Sie erscheinen innerhalb 1-10 Stunden (auswürfeln), wenn du sie rufst"
       },
       {
-        "id": 3,
+        "id": -3,
         "level": 3,
         "name": "Zuverlässigkeit 3",
         "description": "Sie erscheinen schnellstmöglich, wenn du sie rufst"
+      },
+      {
+        "id": 1,
+        "level": 1,
+        "name": "Feind 1",
+        "description": "Schwacher Sterblicher, welcher in gewaltsamen Situationen wahrscheinlich nutzlos ist"
+      },
+      {
+        "id": 2,
+        "level": 2,
+        "name": "Feind 2",
+        "description": "Gewöhnlicher Sterblicher oder engverbunde Gruppe schwacher Sterblicher (z.B. Nachbarschaftskinder die Rätsel lösen)"
+      },
+      {
+        "id": 3,
+        "level": 3,
+        "name": "Feind 3",
+        "description": "Begabter Sterblicher oder gefährliche Gruppe gewöhnlicher Sterblicher (z.B. Straßengang)"
+      },
+      {
+        "id": 4,
+        "level": 4,
+        "name": "Feind 4",
+        "description": "Gefährlicher Sterblicher, begabter Sterblicher mit Magie oder andere übernatürliche Talente (z.B. Russische Mafia)"
       }
     ]
   },
@@ -169,7 +193,7 @@
     "id": 5,
     "name": "Einfluss",
     "description": "Du hast Einfluss in der Gemeinschaft der Sterblichen, sei es durch Reichtum, Prestige, politische Ämter, Erpressung oder übernatürliche Manipulation. Der Erzähler kann diesen Einfluss bei sozialen Proben als optionalen Würfelvorrat zulassen.",
-    "isCombinable": false,
+    "isCombinable": true,
     "advantages": [
       {
         "id": 1,
@@ -221,7 +245,7 @@
     "id": 6,
     "name": "Zuflucht",
     "description": "Ein Platz zum Schlafen, der nicht von anderen Hintergründen abhängig ist.",
-    "isCombinable": false,
+    "isCombinable": true,
     "specialRules": "haven",
     "advantages": [
       {
@@ -340,7 +364,7 @@
     "id": 7,
     "name": "Herde",
     "description": "Eine Gruppe von Sterblichen, von denen du dich ohne Probleme ernähren kannst.",
-    "isCombinable": false,
+    "isCombinable": true,
     "advantages": [
       {
         "id": 1,
@@ -386,7 +410,7 @@
     "id": 8,
     "name": "Alias",
     "description": "Die Stärke deiner gefälschten Identität, wenn du eine hast.",
-    "isCombinable": false,
+    "isCombinable": true,
     "specialRules": "mask",
     "advantages": [
       {
@@ -434,7 +458,7 @@
     "id": 9,
     "name": "Mawla",
     "description": "Ein einzelner oder eine Gruppe von Vampiren hilft dir und bietet Informationen, Beratung oder Hilfe.",
-    "isCombinable": false,
+    "isCombinable": true,
     "advantages": [
       {
         "id": 1,
@@ -493,7 +517,7 @@
     "id": 10,
     "name": "Ressourcen",
     "description": "Diese Vorteile sind nicht unbedingt finanzieller Natur und selten vollständig liquide, aber man kann sie oft verkaufen, um Geld zu gewinnen.",
-    "isCombinable": false,
+    "isCombinable": true,
     "advantages": [
       {
         "id": 1,
@@ -540,7 +564,7 @@
     "id": 11,
     "name": "Status",
     "description": "Du hast einen gewissen Ruf und ein gewisses Ansehen (verdient oder unverdient) innerhalb einer bestimmten lokalen Gemeinschaft von Blutsverwandten, wahrscheinlich Camarilla oder Anarch.",
-    "isCombinable": false,
+    "isCombinable": true,
     "advantages": [
       {
         "id": 1,

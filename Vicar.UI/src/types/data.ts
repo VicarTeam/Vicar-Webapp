@@ -67,6 +67,14 @@ export enum PTActionType {
     AdditionalSpecialization = "additional_specialization",
     DisciplinePoint = "discipline_point",
     HumanityChange = "humanity_change",
+    AddMerit = "add_merit",
+    AddMeritPoints = "add_merit_points",
+    AddBackground = "add_background",
+    AddBackgroundPoints = "add_background_points",
+    AddFlaw = "add_flaw",
+    BloodPotencyChange = "blood_potency_change",
+    SpendBackgroundPointsBetween = "spend_background_points_between",
+    SpendFlawPointsBetween = "spend_flaw_points_between",
 }
 
 export interface IRestriction {
@@ -80,6 +88,7 @@ export enum RestrictionType {
     MinimumCharacterValue = "minimum_character_value", // data = {value: number, key: string}
     BookActivated = "book_activated", // data = [bookIds] (orX)
     MaxGeneration = "max_generation", // data = numeric generation (must have this generation or less)
+    MaxBloodPotency = "max_blood_potency", // data = numeric blood potency (must have this potency or less)
 }
 
 /**
