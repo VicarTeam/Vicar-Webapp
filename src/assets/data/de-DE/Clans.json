@@ -1,0 +1,156 @@
+[
+  {
+    "id": 1,
+    "name": "Banu Haqim",
+    "slogan": "Clan der Jagd",
+    "description": "Sie haben ihren Sitz in ihrer verborgenen Festung Alamut im Nahen Osten und werden von den westlichen Blutsverwandten traditionell als gefährliche Attentäter und Diableristen angesehen, aber in Wahrheit sind sie Wächter, Krieger und Gelehrte, die sich von den Jyhad abgrenzen wollen. Im Laufe ihrer Geschichte sind sie ein autarker und unabhängiger Clan geblieben, auch wenn sie sich kürzlich der Camarilla angeschlossen haben.",
+    "disciplines": [
+      3,
+      4,
+      10
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Brujah",
+    "slogan": "Clan der Gelehrten",
+    "description": "Die Brujah sind ein Clan von Radikalen und Unruhestiftern, die bereit sind, jemanden in die Schranken zu weisen, wenn die Situation es erfordert. Die meisten sehen sich als Krieger mit einer Sache, und diese Rebellen werden von ihrer Leidenschaft, Stärke und Hingabe an ihre Ideale geleitet - was auch immer das sein mag.",
+    "disciplines": [
+      4,
+      8,
+      6
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Gangrel",
+    "slogan": "Clan des Tiers",
+    "description": "Sie sind Nomaden, die eine engere Bindung an die Wildnis haben als die meisten ihrer stadtgebundenen Vettern. Sie stehen auch dem tierischen Aspekt der Bestie näher und sind Meister der Protean-Disziplin. Sie waren einer der sieben Gründungsclans der Camarilla, wurden aber in den Letzten Nächten von der Sekte desillusioniert und ihre Ältesten beschlossen schließlich, ihre Bindungen zu lösen und ein unabhängiger Clan zu werden.",
+    "disciplines": [
+      9,
+      7,
+      5
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Hecata",
+    "slogan": "Clan des Todes",
+    "description": "Sie sind kein vollständig organischer Clan, der sich von einem einzigen Antediluvian und einer ununterbrochenen Blutlinie ableitet, sondern bestehen aus den Giovanni und den Überresten des alten Clans Cappadocian und ihren verwandten Blutlinien sowie den Nagaraja, obwohl sie keine Verbindung zu Antediluvian haben.[2] Zusammen stellen sie einen neuen, (größtenteils) vereinigten Clan des Todes dar, der aus Blutsverwandten besteht, die Nekromantie durch den Gebrauch von Oblivion praktizieren. Ähnlich wie die Giovanni, die er fast vollständig unter sich aufnimmt, ist auch er eine Familie, wenn auch eine weitaus größere. Da sich die Banu Haqim der Camarilla und das Ministerium den Anarchen angeschlossen haben, sind die Hecata der letzte unabhängige Clan von Bedeutung in den heutigen Nächten.",
+    "disciplines": [
+      1,
+      7,
+      11
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Lasombra",
+    "slogan": "Der Nacht-Clan",
+    "description": "Die Lasombra leben für ihren eigenen Erfolg, sie kämpfen für persönliche Siege und nicht nur für eine Krone, die sie tragen oder einen Thron, auf dem sie sitzen. Sie glauben, dass Macht Recht schafft, und sind bereit, alles zu opfern, um ihre Ziele zu erreichen. Sie sind ein Clan, der Spiritualität eher als Werkzeug einsetzt, als nach ehrlicher Erleuchtung zu streben, und ihre wankelmütige Loyalität wird derzeit dadurch unterstrichen, dass die Hälfte ihres Clans von der Sabbat abgewichen ist.",
+    "disciplines": [
+      2,
+      11,
+      8
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Malkavianer",
+    "slogan": "Clan des Mondes",
+    "description": "Die Malkavianer sind eine rätselhafte und zutiefst gestörte Gruppe von Kainiten. Mitglieder des Clans haben die Rolle von Sehern und Orakeln unter den Blutsverwandten übernommen, unheimliche Gestalten mit seltsamen Zwängen und der Fähigkeit, wahrzunehmen, was andere nicht sehen können. Sie sind auch berüchtigte Witzbolde, deren \"Scherze\" von albern bis sadistisch reichen. Allen Widrigkeiten zum Trotz gehören die Kinder von Malkav jedoch zu den ältesten überlebenden Vampirlinien. Sie sind einer der 13 ursprünglichen Klans der Kainiten und können ihre Geschichte bis in die Zeit vor der biblischen Sintflut zurückverfolgen. Sie gehörten auch zu den Gründern der mächtigen Camarilla und sind weithin als eine ihrer Säulen in den modernen Nächten bekannt.",
+    "disciplines": [
+      1,
+      2,
+      10
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Die Priesterschaft",
+    "slogan": "Clan des Glaubens",
+    "description": "Der orthodoxe Glaube der Setiten besagt, dass Set eines Tages zurückkehren wird, um die Welt zu beherrschen oder zu verschlingen, und die gläubigen Setiten bereiten den Weg für seine Wiederauferstehung vor. Zu diesem Zweck bleibt der Clan unabhängig von den Sekten anderer Blutsverwandter und praktiziert mit großem Geschick die Künste der Korruption, des Betrugs und der alten Zauberei. Sie bezeichnen sich selbst als die Mesu Bedshet, die \"Kinder der Rebellion\".",
+    "disciplines": [
+      10,
+      6,
+      5
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Nosferatu",
+    "slogan": "Clan der Verborgenen",
+    "description": "Der archetypische Nosferatu ähnelt Max Shrecks Graf Orlok, obwohl der Fluch eine Vielzahl von Variationen hat. Die Nosferatu sind die Spionagemeister der Toten, die Informationen sammeln und sie teuer verkaufen. Sie sind auch die Meister des Untergrunds und leben zum Schutz in der Kanalisation.",
+    "disciplines": [
+      9,
+      10,
+      8
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Ravnos",
+    "slogan": "Die Gejagten",
+    "description": "Die Ravnos sind als umherziehende Gauner, Mystiker und Vagabunden bekannt. Sie sind unverbesserliche Draufgänger, die genüsslich die Kunst des gefährlichen Nichtlebens betreiben. Niemand im Westen verstand die alten Ravnos, und jetzt ist es dafür viel zu spät, denn Zapathasura erhob sich in der Woche der Albträume aus seinem Schlummer und löschte in seinem Todeskampf fast seinen gesamten Clan aus. Die wenigen Übriggebliebenen wurden ohne jegliche Verbindung zu ihrem wahren Erbe und ihrer Geschichte zurückgelassen und sind gezwungen, diese selbst neu zu schreiben. Aber wenn sie nicht schon vorher gewandert sind, haben sie keine andere Wahl, als es zu tun, sonst wird sie das gleiche Schicksal ereilen wie ihren Stammvater.",
+    "disciplines": [
+      6,
+      9,
+      10
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Salubri",
+    "slogan": "Saulots Nachkommen",
+    "description": "In den Letzten Nächten gilt der einst mächtige Salubri-Clan nach dem Tod seines Stammvaters Saulot kaum noch als Blutlinie. Ihre allgemein geringe Zahl verleiht den Gerüchten Glaubwürdigkeit, dass sie zu jeder Zeit nur aus sieben Vampiren bestehen und dass diese modernen Salubri sich voll und ganz der Suche nach Golconda verschrieben haben - und ein blutiges Ritual durchführen, wenn sie diesen Zustand erreichen oder daran verzweifeln, ihn jemals zu erreichen. Sie sind in drei Zweige unterteilt: die Heiler, die Krieger und die Wächter, und jeder dieser Zweige hat seine eigene spezifische vampirische Schwäche.",
+    "disciplines": [
+      1,
+      2,
+      7
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Toreador",
+    "slogan": "Clan der Rose",
+    "description": "Die Entarteten sind verantwortlich für die Legenden von Vampiren, die ihre Beute mit Schönheit, Liebe und Sinnlichkeit verführen und locken. Berühmt und berüchtigt als ein Clan von Künstlern und Innovatoren, sind sie eine der Bastionen der Camarilla, da ihr Überleben von der Fassade der Höflichkeit und Anmut abhängt, auf die die Sekte stolz ist.",
+    "disciplines": [
+      1,
+      4,
+      6
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Tremere",
+    "slogan": "Der Zerbrochene Clan",
+    "description": "In der (vergleichsweise) kurzen Zeit seit ihrer Gründung haben die Hexenmeister unglaubliche Fortschritte in der vampirischen Gesellschaft gemacht und sind wohl der mächtigste Clan in den modernen Nächten. Das liegt nicht zuletzt an ihrer strengen Hierarchie, ihrer Geheimniskrämerei und ihrer Beherrschung der Thaumaturgie, die bei den anderen Kainiten Misstrauen, Furcht und Respekt hervorruft. Die Hexenmeister sind eine tragende Säule der Camarilla und einer ihrer Hauptverteidiger, obwohl sie fast wie eine Untersekte existieren. Manche gehen sogar so weit, sich selbst als die Weiterentwicklung des Vampirismus zu betrachten, da sie die Blutmagie extrem vielseitig einsetzen können und es keinen echten Clanfluch gibt. Die Letzten Nächte halten jedoch viele Dinge für die Tremere bereit, und je mächtiger sie werden, desto mehr Feinde sammeln sich an - und in ihrem Streben nach Macht haben die Tremere mehr Feinde angehäuft als die meisten anderen.",
+    "disciplines": [
+      1,
+      3,
+      2
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Tzimisce",
+    "slogan": "Der Alte Clan",
+    "description": "Wenn jemand einen Tzimisce als unmenschlich und sadistisch bezeichnen würde, würden die Tzimisce ihn wahrscheinlich für seinen Scharfsinn loben und ihm dann zeigen, dass seine sterbliche Definition von Sadismus lächerlich unzureichend ist. Die Tzimisce haben das Menschsein gerne hinter sich gelassen und konzentrieren sich nun darauf, die Grenzen des vampirischen Zustands zu überwinden. Bei einem flüchtigen Blick oder einer kurzen Unterhaltung scheint ein Tzimisce einer der angenehmeren Vampire zu sein. Höflich, intelligent und wissbegierig scheinen sie im krassen Gegensatz zu den brüllenden Sabbat-Mobs oder sogar den scheinbar humaneren Brujah oder Nosferatu zu stehen. Bei näherer Betrachtung wird jedoch klar, dass dies nur eine Maske ist, hinter der sich etwas Fremdes und Monströses verbirgt.",
+    "disciplines": [
+      2,
+      5,
+      9
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Ventrue",
+    "slogan": "Clan der Könige",
+    "description": "Die Ventrue sind seit langem eine der stolzesten Vampirlinien. Ihre Mitglieder arbeiten hart, um den Ruf von Ehre, vornehmem Verhalten und Führungsqualitäten zu wahren. Der Clan ist seit langem von einem Gefühl der Noblesse oblige durchdrungen, begleitet von dem aufrichtigen Glauben, dass die Ventrue wissen, was das Beste für alle ist. Sie halten sich nicht nur für den ältesten Clan, sondern sehen sich auch als die Hüter der Tradition und die rechtmäßigen Führer der Blutsverwandten. Sie sind seit langem aus den Reihen des Adels und der Privilegierten, seien es Könige oder Handelsfürsten, umarmt worden, aber sie waren auch als Ritter und Kriegsherren bekannt, die nach den Gesetzen der Ritterlichkeit und Pflicht zu leben versuchten. Wenn überhaupt, dann haben sich die Ventrue im Laufe der Jahrhunderte an die Führungsrolle angepasst und sind in den Letzten Nächten mehr Politiker als edle Krieger, mehr Geschäftsführer als Baron-Lord. Sie sind nach wie vor die größten Unterstützer der Camarilla und der Maskerade, da sie beide Institutionen für das sicherste Mittel halten, um die Vampire vor der wachsenden Masse der Sterblichen zu schützen und ihre eigene Macht zu bewahren.",
+    "disciplines": [
+      2,
+      7,
+      6
+    ]
+  }
+]
