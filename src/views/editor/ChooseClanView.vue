@@ -14,7 +14,7 @@
           <div class="text">
             <b>{{selectedClan.name}}</b>
             <small>"<i>{{selectedClan.slogan}}</i>"</small>
-            <span class="desc">{{selectedClan.description}}</span>
+            <div class="desc">{{selectedClan.description}}</div>
 
             <h6 style="font-weight: bolder; margin: 1rem 0 0;">{{$t('editor.step1.clan.disciplines')}}:</h6>
             <div class="disciplines">
@@ -84,6 +84,8 @@ export default class EditorClanView extends Vue {
       img {
         width: 35%;
         height: auto;
+        max-height: 15rem;
+        margin: auto;
         object-fit: contain;
         float: left;
         -webkit-user-drag: none;
@@ -100,6 +102,9 @@ export default class EditorClanView extends Vue {
         }
         .desc {
           font-size: 1.1rem;
+          max-height: 15rem;
+          overflow-x: hidden;
+          overflow-y: auto;
         }
         .disciplines {
           width: 100%;
