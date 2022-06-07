@@ -3,6 +3,7 @@
     clans: number[];
     merits: number[];
     backgrounds: number[];
+    predatorTypes: number[];
 }
 
 export interface IEdition {
@@ -35,6 +36,10 @@ export interface IDisciplineProperties {
     resonance: string;
 }
 
+export interface IRestrictionHolder {
+    restriction?: IRestriction;
+}
+
 export interface IDisciplineAbility {
     id: number;
     name: string;
@@ -48,18 +53,16 @@ export interface IDisciplineAbility {
     duration: string;
 }
 
-export interface IPredatorType {
+export interface IPredatorType extends IRestrictionHolder {
     id: number;
     name: string;
     description: string;
-    restriction?: IRestriction;
     actions: IPTAction[];
 }
 
-export interface IPTAction {
+export interface IPTAction extends IRestrictionHolder {
     description: string;
     type: PTActionType;
-    restriction?: IRestriction;
     data: { [key: string]: any };
 }
 
@@ -94,12 +97,11 @@ export enum RestrictionType {
 /**
  * The interface combining merits and backgrounds.
  */
-export interface ITraitPack {
+export interface ITraitPack extends IRestrictionHolder {
     id: number;
     name: string;
     description: string;
     isCombinable: boolean;
-    restriction?: IRestriction;
     advantages: ITrait[];
     disadvantages: ITrait[];
 }
@@ -111,14 +113,13 @@ export enum TraitSpecialRules {
     Mask = "mask",
 }
 
-export interface ITrait {
+export interface ITrait extends IRestrictionHolder {
     id: number;
     level: 1 | 2 | 3 | 4 | 5;
     name: string;
     description: string;
     isRepeatable: boolean;
     actions: ITraitAction[];
-    restriction?: IRestriction;
     specialRules: TraitSpecialRules;
 }
 

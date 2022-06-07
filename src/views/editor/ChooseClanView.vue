@@ -1,61 +1,75 @@
 <template>
-  <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem">
-    <div class="choose-clan-wrapper">
-      <div class="form-group" style="text-align: center">
-        <label class="required">{{$t('editor.step1.sire')}}: <TipButton :title="$t('editor.step1.sire.tip.title')" :content="$t('editor.step1.sire.tip.content')"/></label>
-        <input class="form-control" type="text" style="width: 30rem" :placeholder="$t('editor.step1.sire')"/>
-      </div>
-      <hr>
-      <div class="clan-selection">
-        <label class="required">{{$t('editor.step1.clan')}}: <TipButton :title="$t('editor.step1.clan.tip.title')" :content="$t('editor.step1.clan.tip.content')"/></label>
+  <EditorForm :can-go-next="canGoNext" next-step="editor-predator-type" :is-cancel="true">
+    <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
+      <div class="choose-clan-wrapper">
+        <div class="form-group" style="text-align: center">
+          <label class="required">{{$t('editor.step1.sire')}}: <TipButton :title="$t('editor.step1.sire.tip.title')" :content="$t('editor.step1.sire.tip.content')"/></label>
+          <input class="form-control" type="text" style="width: 30rem" :placeholder="$t('editor.step1.sire')" v-model="editingCharacter.sire"/>
+        </div>
+        <hr>
+        <div class="clan-selection">
+          <label class="required">{{$t('editor.step1.clan')}}: <TipButton :title="$t('editor.step1.clan.tip.title')" :content="$t('editor.step1.clan.tip.content')"/></label>
 
-        <div class="card clan-info" style="margin: 0; width: 55rem" v-if="selectedClan">
-          <img :src="getClanSymbol(selectedClan)"/>
-          <div class="text">
-            <b>{{selectedClan.name}}</b>
-            <small>"<i>{{selectedClan.slogan}}</i>"</small>
-            <div class="desc">{{selectedClan.description}}</div>
+          <div class="card clan-info" style="margin: 0; width: 55rem" v-if="editingCharacter.clan">
+            <img :src="getClanSymbol(editingCharacter.clan)"/>
+            <div class="text">
+              <b>{{editingCharacter.clan.name}}</b>
+              <small>"<i>{{editingCharacter.clan.slogan}}</i>"</small>
+              <div class="desc">{{editingCharacter.clan.description}}</div>
 
-            <h6 style="font-weight: bolder; margin: 1rem 0 0;">{{$t('editor.step1.clan.disciplines')}}:</h6>
-            <div class="disciplines">
-              <div class="discipline" v-for="d in selectedClan.disciplines" :key="d.id">
-                {{d.name}} <TipButton :content="d.summary"/>
+              <h6 style="font-weight: bolder; margin: 1rem 0 0;">{{$t('editor.step1.clan.disciplines')}}:</h6>
+              <div class="disciplines">
+                <div class="discipline" v-for="d in editingCharacter.clan.disciplines" :key="d.id">
+                  {{d.name}} <TipButton :content="d.summary"/>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="clans">
-          <div class="clan" v-for="clan in clans" :key="clan.id" @click="selectedClan = clan">
-            <img :src="getClanSymbol(clan)"/>
-            <small>{{clan.name}}</small>
+          <div class="clans">
+            <div class="clan" v-for="clan in clans" :key="clan.id" @click="editingCharacter.clan = clan">
+              <img :src="getClanSymbol(clan)"/>
+              <small>{{clan.name}}</small>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </EditorForm>
 </template>
 
 <script lang="ts">
 import {Component, Inject, Vue} from "vue-property-decorator";
 import TipButton from "@/components/editor/TipButton.vue";
-import {IClan} from "@/types/models";
+import {ICharacter, IClan} from "@/types/models";
 import DataManager from "@/libs/data-manager";
+import {Mutation, State} from "vuex-class";
+import EditorForm from "@/components/editor/EditorForm.vue";
 
 @Component({
-  components: {TipButton}
+  components: {EditorForm, TipButton}
 })
 export default class EditorClanView extends Vue {
 
-  private selectedClan: IClan | null = null;
+  @State("editingCharacter")
+  private editingCharacter!: ICharacter|undefined;
 
   private getClanSymbol(clan: IClan) {
     const images = require.context('@/assets/img/clans', false, /\.png$/)
     return images(`./${clan.id}.png`);
   }
 
+  private get canGoNext() {
+    return this.editingCharacter && this.editingCharacter.clan && this.editingCharacter.sire.trim().length > 0;
+  }
+
   private get clans(): IClan[] {
-    return DataManager.selectedLanguage.books.map(book => book.clans).flat().sort((a, b) => a.name.localeCompare(b.name));
+    let books = DataManager.selectedLanguage.books;
+    if (this.editingCharacter) {
+      books = books.filter(b => this.editingCharacter!.books.includes(b.id));
+    }
+
+    return books.map(book => book.clans).flat().sort((a, b) => a.name.localeCompare(b.name));
   }
 
   @Inject("show-tip")

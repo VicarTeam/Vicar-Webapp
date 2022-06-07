@@ -23,6 +23,11 @@ const routes: Array<RouteConfig> = [
         path: 'clan',
         name: 'editor-clan',
         component: () => import('@/views/editor/ChooseClanView.vue')
+      },
+      {
+        path: 'predator-type',
+        name: 'editor-predator-type',
+        component: () => import('@/views/editor/ChoosePredatorTypeView.vue')
       }
     ]
   }

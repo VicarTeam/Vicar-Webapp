@@ -54,6 +54,12 @@ export enum Sex {
     Divers = 'd'
 }
 
+export enum Generation {
+    Children = "children",
+    Newborn = "newborn",
+    Ancillae = "ancillae"
+}
+
 const SortedSkillsAndAtribute = {
     [CategoryKeys.Physical]: {
         attributes: [AttributeKeys.Strength, AttributeKeys.Dexterity, AttributeKeys.Stamina],
@@ -138,6 +144,7 @@ export interface ICharacter {
     clan: IClan;
     sire: string;
     desire: string;
+    generationEra: Generation;
     generation: number;
     health: number;
     willpower: number;
@@ -146,6 +153,7 @@ export interface ICharacter {
     resonance: string;
     bloodPotency: number;
     categories: ICategory[];
+    exp: number;
 }
 
 export interface ICategory {
@@ -189,14 +197,16 @@ export const DefaultCharacter: ICharacter = {
     clan: undefined!,
     concept: "",
     desire: "",
+    generationEra: Generation.Children,
     generation: 0,
     health: 0,
-    humanity: 0,
+    humanity: 7,
     hunger: 0,
     name: "",
     predatorType: undefined!,
     resonance: "",
     sire: "",
     willpower: 0,
-    sex: Sex.Divers
+    sex: Sex.Divers,
+    exp: 0
 };

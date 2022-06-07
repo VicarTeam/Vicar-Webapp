@@ -14,6 +14,17 @@
         <input type="text" class="form-control" :placeholder="$t('main.characters.create.name')" required="required" v-model="name">
       </div>
       <div class="form-group">
+        <label class="required">{{$t('main.characters.create.generation')}}:</label>
+        <div class="d-flex" style="gap: 1rem">
+          <select v-model="generationEra" @change="onEraChange" class="form-control">
+            <option :value="Generation.Children">{{$t('character.generation.' + Generation.Children)}}</option>
+            <option :value="Generation.Newborn">{{$t('character.generation.' + Generation.Newborn)}}</option>
+            <option :value="Generation.Ancillae">{{$t('character.generation.' + Generation.Ancillae)}}</option>
+          </select>
+          <input type="number" :min="eraMin" :max="eraMax" class="form-control" :placeholder="$t('main.characters.create.generation')" required="required" v-model="generation">
+        </div>
+      </div>
+      <div class="form-group">
         <label class="required">{{$t('main.characters.create.sex')}}:</label>
         <div class="sex-select">
           <div :class="{'active': sex === Sex.Male}" @click="sex = Sex.Male" style="border-right: 1px solid var(--primary-color);">{{$t('character.sex.m')}}</div>
@@ -44,7 +55,7 @@
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
-import {DefaultCharacter, ICharacter, Sex} from "@/types/models";
+import {DefaultCharacter, Generation, ICharacter, Sex} from "@/types/models";
 import {Mutation} from "vuex-class";
 
 @Component({
@@ -53,14 +64,20 @@ import {Mutation} from "vuex-class";
 export default class CreateCharacterModal extends Vue {
 
   private Sex = Sex;
+  private Generation = Generation;
 
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character?: ICharacter) => void;
+
+  @Mutation("addCharToEditorHistory")
+  private addCharToEditorHistory!: (character: ICharacter) => void;
 
   private show = false;
   private name: string = "";
   private sex: Sex = Sex.Divers;
   private useAllBooks: boolean = false;
+  private generation: number = 13;
+  private generationEra: Generation = Generation.Children;
 
   private books: ({id: number; active: boolean})[] = [
     {id: 1, active: true},
@@ -88,12 +105,73 @@ export default class CreateCharacterModal extends Vue {
     const char = {...DefaultCharacter};
     char.name = this.name;
     char.sex = this.sex;
+    char.generation = this.generation;
+    char.generationEra = this.generationEra;
     char.books = this.books.filter(book => book.active).map(book => book.id);
 
+    this.applyEra(char);
+    this.addCharToEditorHistory(char);
     this.setEditingCharacter(char);
     this.$router.push({name: 'editor-clan'});
 
     this.show = false;
+  }
+
+  private applyEra(char: ICharacter) {
+    switch (char.generationEra) {
+      case Generation.Children:
+        if (char.generation >= 14) {
+          char.bloodPotency = 0;
+        } else {
+          char.bloodPotency = 1;
+        }
+        break;
+      case Generation.Newborn:
+        char.bloodPotency = 1;
+        char.exp = 15;
+        break;
+      case Generation.Ancillae:
+        char.bloodPotency = 2;
+        char.exp = 35;
+        char.humanity--;
+        break;
+    }
+  }
+
+  private onEraChange() {
+    switch (this.generationEra) {
+      case Generation.Children:
+        this.generation = 13;
+        break;
+      case Generation.Newborn:
+        this.generation = 12;
+        break;
+      case Generation.Ancillae:
+        this.generation = 11;
+        break;
+    }
+  }
+
+  private get eraMin(): number {
+    switch (this.generationEra) {
+      case Generation.Children:
+        return 12;
+      case Generation.Newborn:
+        return 12;
+      case Generation.Ancillae:
+        return 10;
+    }
+  }
+
+  private get eraMax(): number {
+    switch (this.generationEra) {
+      case Generation.Children:
+        return 16;
+      case Generation.Newborn:
+        return 13;
+      case Generation.Ancillae:
+        return 11;
+    }
   }
 }
 </script>

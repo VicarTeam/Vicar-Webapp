@@ -7,7 +7,8 @@ import {actions} from "@/store/actions";
 Vue.use(Vuex)
 
 export const state: State = {
-    editingCharacter: undefined
+    editingCharacter: undefined,
+    editorCharHistory: []
 }
 
 export default new Vuex.Store({

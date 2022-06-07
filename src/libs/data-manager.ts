@@ -1,7 +1,8 @@
 ﻿import * as data from "@/types/data";
-import {fillDefaults, IClan, ILanguage} from "@/types/models";
+import {fillDefaults, ICharacter, IClan, ILanguage} from "@/types/models";
 import {i18n} from "@/libs/i18n";
-import {DefaultTrait, IPredatorType, ITrait, ITraitPack} from "@/types/data";
+import {DefaultTrait, IPredatorType, IRestrictionHolder, ITrait, ITraitPack} from "@/types/data";
+import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
 
 export default class DataManager {
 
@@ -48,15 +49,19 @@ export default class DataManager {
                     return {
                         id: book.id,
                         clans: clans.filter(clan => book.clans.includes(clan.id)),
-                        merits,
-                        backgrounds,
-                        predatorTypes
+                        merits: merits.filter(merit => book.merits.includes(merit.id)),
+                        backgrounds: backgrounds.filter(background => book.backgrounds.includes(background.id)),
+                        predatorTypes: predatorTypes.filter(p => book.predatorTypes.includes(p.id))
                     };
                 })
             });
         }
-
-        console.log(this.selectedLanguage);
     }
 
+    public static filterRestrictions<T extends IRestrictionHolder>(char: ICharacter|undefined, input: T[]): T[] {
+        if (!char) {
+            return input;
+        }
+        return input.filter(value => !value.restriction || restrictionResolver.resolve(char, value.restriction));
+    }
 }

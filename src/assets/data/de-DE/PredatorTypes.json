@@ -379,7 +379,7 @@
         "type": "additional_specialization",
         "data": {
           "choices": [
-            "ken=Spezielles Tier",
+            "ken=$input:Spezielles Tier",
             "sur=Jagd"
           ]
         }
@@ -490,8 +490,8 @@
         "type": "additional_specialization",
         "data": {
           "choices": [
-            "occ=$input",
-            "per=$input"
+            "occ=$input:spezielle Tradition",
+            "per=$input:spezielle Unterhaltungsform"
           ]
         }
       },
@@ -644,9 +644,9 @@
         "type": "additional_specialization",
         "data": {
           "choices": [
-            "eti=$input",
-            "lea=$input",
-            "stw=$input"
+            "eti=$input:spezifische Szene",
+            "lea=$input:spezifische Szene",
+            "stw=$input:spezifische Szene"
           ]
         }
       },
