@@ -63,7 +63,7 @@ export interface IPredatorType extends IRestrictionHolder {
 export interface IPTAction extends IRestrictionHolder {
     description: string;
     type: PTActionType;
-    data: { [key: string]: any };
+    data: any;
 }
 
 export enum PTActionType {

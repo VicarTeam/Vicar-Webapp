@@ -1,7 +1,7 @@
 ﻿import * as data from "@/types/data";
 import {fillDefaults, ICharacter, IClan, ILanguage} from "@/types/models";
 import {i18n} from "@/libs/i18n";
-import {DefaultTrait, IPredatorType, IRestrictionHolder, ITrait, ITraitPack} from "@/types/data";
+import {DefaultTrait, IDiscipline, IPredatorType, IRestrictionHolder, ITrait, ITraitPack} from "@/types/data";
 import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
 
 export default class DataManager {
@@ -56,6 +56,41 @@ export default class DataManager {
                 })
             });
         }
+    }
+
+    public static getBackground(id: number): ITraitPack|null {
+        for (const book of this.selectedLanguage.books) {
+            for (const background of book.backgrounds) {
+                if (background.id === id) {
+                    return background;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static getMerit(id: number): ITraitPack|null {
+        for (const book of this.selectedLanguage.books) {
+            for (const merit of book.merits) {
+                if (merit.id === id) {
+                    return merit;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static getDiscipline(id: number): IDiscipline|null {
+        for (const book of this.selectedLanguage.books) {
+            for (const clan of book.clans) {
+                for (const discipline of clan.disciplines) {
+                    if (discipline.id === id) {
+                        return discipline;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public static filterRestrictions<T extends IRestrictionHolder>(char: ICharacter|undefined, input: T[]): T[] {

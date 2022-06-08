@@ -150,7 +150,7 @@
       },
       {
         "description": "Erhöhe deine Blutmacht um 1",
-        "type": "blood_potency",
+        "type": "blood_potency_change",
         "data": {
           "amount": 1
         }

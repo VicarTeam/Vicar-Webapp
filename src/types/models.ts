@@ -1,4 +1,4 @@
-﻿import {IDiscipline, IPredatorType, ITraitPack} from "@/types/data";
+﻿import {IDiscipline, IPredatorType, ITrait, ITraitPack} from "@/types/data";
 
 export enum CategoryKeys {
     Physical = "physical",
@@ -133,6 +133,19 @@ export interface IClan {
     readonly disciplines: IDiscipline[];
 }
 
+export interface IUsingTraitPacks {
+    freePoints: number;
+    packs: {
+        pack: ITraitPack;
+        usedPoints: number;
+        traits: ILockableTrait[];
+    }[];
+}
+
+export interface ILockableTrait extends ITrait {
+    isLocked: boolean;
+}
+
 export interface ICharacter {
     books: number[];
     name: string;
@@ -142,6 +155,7 @@ export interface ICharacter {
     chronicle: string;
     ambition: string;
     clan: IClan;
+    disciplines: {discipline: IDiscipline; points: number}[];
     sire: string;
     desire: string;
     generationEra: Generation;
@@ -153,6 +167,9 @@ export interface ICharacter {
     resonance: string;
     bloodPotency: number;
     categories: ICategory[];
+    merits: IUsingTraitPacks;
+    backgrounds: IUsingTraitPacks;
+    flaws: IUsingTraitPacks;
     exp: number;
 }
 
@@ -166,6 +183,11 @@ export interface ISkillData {
     value: number;
     specialization: string[];
 }
+
+export const DefaultUsingTraitPacks: IUsingTraitPacks = {
+    freePoints: 0,
+    packs: []
+};
 
 export const DefaultCharacter: ICharacter = {
     ambition: "",
@@ -193,6 +215,7 @@ export const DefaultCharacter: ICharacter = {
 
         return category;
     }),
+    disciplines: [],
     chronicle: "",
     clan: undefined!,
     concept: "",
@@ -208,5 +231,8 @@ export const DefaultCharacter: ICharacter = {
     sire: "",
     willpower: 0,
     sex: Sex.Divers,
-    exp: 0
+    exp: 0,
+    flaws: {...DefaultUsingTraitPacks},
+    merits: {...DefaultUsingTraitPacks},
+    backgrounds: {...DefaultUsingTraitPacks}
 };
