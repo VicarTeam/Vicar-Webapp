@@ -15,7 +15,8 @@ const ResolveType = (type: PTActionType) => {
 }
 
 const AvailableActions: PTActionType[] = [
-    PTActionType.AdditionalSpecialization, PTActionType.DisciplinePoint
+    PTActionType.AdditionalSpecialization, PTActionType.DisciplinePoint, PTActionType.AddFlaw,
+    PTActionType.SpendBackgroundPointsBetween, PTActionType.SpendFlawPointsBetween
 ];
 
 class PTActionsResolver {

@@ -39,9 +39,14 @@ import EventBus from "@/libs/event-bus";
 import {ptActionResolver} from "@/libs/resolvers/ptactions-resolver";
 import DisciplinePointAction from "@/components/editor/actions/DisciplinePointAction.vue";
 import PTActionHandler from "@/libs/ptaction-handler";
+import AddFlawAction from "@/components/editor/actions/AddFlawAction.vue";
+import SpendBackgroundPointsBetweenAction from "@/components/editor/actions/SpendBackgroundPointsBetweenAction.vue";
+import SpendFlawPointsBetweenAction from "@/components/editor/actions/SpendFlawPointsBetweenAction.vue";
 
 @Component({
-  components: {DisciplinePointAction, AdditionalSpecializationAction, TipButton, EditorForm}
+  components: {
+    SpendFlawPointsBetweenAction, SpendBackgroundPointsBetweenAction,
+    AddFlawAction, DisciplinePointAction, AdditionalSpecializationAction, TipButton, EditorForm}
 })
 export default class ChoosePredatorTypeView extends Vue {
 

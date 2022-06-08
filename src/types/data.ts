@@ -71,7 +71,6 @@ export enum PTActionType {
     DisciplinePoint = "discipline_point",
     HumanityChange = "humanity_change",
     AddMerit = "add_merit",
-    AddMeritPoints = "add_merit_points",
     AddBackground = "add_background",
     AddBackgroundPoints = "add_background_points",
     AddFlaw = "add_flaw",
@@ -111,6 +110,14 @@ export enum TraitSpecialRules {
     Allies = "allies",
     Haven = "haven",
     Mask = "mask",
+}
+
+export interface IFlawChoice {
+    type: "background" | "merit";
+    id: number;
+    flawId: number;
+    customLevel?: number;
+    suffix?: string;
 }
 
 export interface ITrait extends IRestrictionHolder {

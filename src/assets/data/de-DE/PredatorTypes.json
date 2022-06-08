@@ -530,11 +530,11 @@
           "points": 2,
           "choices": [
             {
-              "type": "background",
+              "type": "backgrounds",
               "id": 4
             },
             {
-              "type": "merit",
+              "type": "merits",
               "id": 7
             }
           ]

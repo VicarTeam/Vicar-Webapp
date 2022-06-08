@@ -138,12 +138,16 @@ export interface IUsingTraitPacks {
     packs: {
         pack: ITraitPack;
         usedPoints: number;
+        bonusPoints: number;
+        flawBonusPoints: number; //TODO these points must used: Force that!
         traits: ILockableTrait[];
     }[];
 }
 
 export interface ILockableTrait extends ITrait {
     isLocked: boolean;
+    customLevel?: number;
+    suffix?: string;
 }
 
 export interface ICharacter {

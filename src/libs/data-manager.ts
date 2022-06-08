@@ -1,7 +1,15 @@
 ﻿import * as data from "@/types/data";
 import {fillDefaults, ICharacter, IClan, ILanguage} from "@/types/models";
 import {i18n} from "@/libs/i18n";
-import {DefaultTrait, IDiscipline, IPredatorType, IRestrictionHolder, ITrait, ITraitPack} from "@/types/data";
+import {
+    DefaultTrait,
+    IDiscipline,
+    IFlawChoice,
+    IPredatorType,
+    IRestrictionHolder,
+    ITrait,
+    ITraitPack
+} from "@/types/data";
 import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
 
 export default class DataManager {
@@ -56,6 +64,10 @@ export default class DataManager {
                 })
             });
         }
+    }
+
+    public static getFlawOwner(choice: IFlawChoice): ITraitPack|null {
+        return (choice.type === "merit") ? this.getMerit(choice.id) : this.getBackground(choice.id);
     }
 
     public static getBackground(id: number): ITraitPack|null {
