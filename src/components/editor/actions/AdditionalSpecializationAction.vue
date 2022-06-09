@@ -25,8 +25,9 @@ export default class AdditionalSpecializationAction extends PTActionBase<{choice
     const skillKey = this.getSkillKey(this.selected);
     for (let i = 0; i < char.categories.length; i++) {
       const category = char.categories[i];
-      if (category.skills[skillKey]) {
-        category.skills[skillKey].specialization.push(this.input);
+      const skill = category.skills.find(s => s.key === skillKey);
+      if (skill) {
+        skill.specialization.push(this.input);
         break;
       }
     }

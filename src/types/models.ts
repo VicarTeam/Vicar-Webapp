@@ -60,7 +60,7 @@ export enum Generation {
     Ancillae = "ancillae"
 }
 
-const SortedSkillsAndAttribute = {
+export const SortedSkillsAndAttribute = {
     [CategoryKeys.Physical]: {
         attributes: [AttributeKeys.Strength, AttributeKeys.Dexterity, AttributeKeys.Stamina],
         skills: [
@@ -179,11 +179,17 @@ export interface ICharacter {
 
 export interface ICategory {
     readonly name: CategoryKeys;
-    readonly attributes: {[key in AttributeKeys]: number};
-    readonly skills: {[key in SkillKeys]: ISkillData};
+    readonly attributes: IAttributeData[];
+    readonly skills: ISkillData[];
+}
+
+export interface IAttributeData {
+    key: AttributeKeys;
+    value: number;
 }
 
 export interface ISkillData {
+    key: SkillKeys;
     value: number;
     specialization: string[];
 }
@@ -195,21 +201,16 @@ export const DefaultCharacter: () => ICharacter = () => ({
     categories: Object.values(CategoryKeys).map(key => {
         const category: ICategory = {
             name: key,
-            // @ts-ignore
-            attributes: {},
-            // @ts-ignore
-            skills: {}
+            attributes: [],
+            skills: []
         };
 
         SortedSkillsAndAttribute[key].attributes.forEach(attribute => {
-            category.attributes[attribute] = 0;
+            category.attributes.push({key: attribute, value: 0});
         });
 
         SortedSkillsAndAttribute[key].skills.forEach(skill => {
-            category.skills[skill] = {
-                value: 0,
-                specialization: []
-            };
+            category.skills.push({key: skill, value: 0, specialization: []});
         });
 
         return category;
