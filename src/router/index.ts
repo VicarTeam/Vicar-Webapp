@@ -28,6 +28,11 @@ const routes: Array<RouteConfig> = [
         path: 'predator-type',
         name: 'editor-predator-type',
         component: () => import('@/views/editor/ChoosePredatorTypeView.vue')
+      },
+      {
+        path: 'attributes',
+        name: 'editor-attributes',
+        component: () => import('@/views/editor/ChooseAttributesView.vue')
       }
     ]
   }

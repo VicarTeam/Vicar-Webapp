@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
-import {Mutation, State} from "vuex-class";
+import {Action, Mutation, State} from "vuex-class";
 import {ICharacter} from "@/types/models";
 
 @Component({
@@ -52,6 +52,9 @@ export default class EditorForm extends Vue {
   @Mutation("clearCharHistory")
   private clearCharHistory!: () => void;
 
+  @Action("popEditorCharHistory")
+  private popEditorCharHistory!: () => ICharacter;
+
   private next() {
     if (!this.editingCharacter || !this.canGoNext) {
       return;
@@ -67,7 +70,7 @@ export default class EditorForm extends Vue {
 
   private back() {
     if (!this.isCancel) {
-      this.setEditingCharacter(this.editorCharHistory.pop());
+      this.setEditingCharacter(this.popEditorCharHistory());
       this.$router.back();
     } else {
       this.setEditingCharacter();

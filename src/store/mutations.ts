@@ -11,5 +11,8 @@ export const mutations: MutationTree<State> = {
     },
     clearCharHistory(state) {
         state.editorCharHistory = [];
+    },
+    setCharHistory(state, history: ICharacter[]) {
+        state.editorCharHistory = history;
     }
 };

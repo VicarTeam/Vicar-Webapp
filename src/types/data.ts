@@ -85,7 +85,7 @@ export interface IRestriction {
 }
 
 export enum RestrictionType {
-    SpecificClans = "specific_clans", // data = [clanIds]
+    SpecificClans = "only_clans", // data = [clanIds]
     ExcludeClans = "exclude_clans", // data = [clanIds]
     MinimumCharacterValue = "minimum_character_value", // data = {value: number, key: string}
     BookActivated = "book_activated", // data = [bookIds] (orX)

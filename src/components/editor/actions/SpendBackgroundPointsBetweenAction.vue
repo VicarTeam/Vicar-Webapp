@@ -13,7 +13,7 @@ import {Component} from "vue-property-decorator";
 import PTActionBase from "@/components/editor/actions/PTActionBase";
 import {ITraitPack} from "@/types/data";
 import DataManager from "@/libs/data-manager";
-import SpendSelect from "@/components/editor/actions/spend/SpendSelect.vue";
+import SpendSelect from "@/components/editor/actions/SpendSelect.vue";
 import {ICharacter} from "@/types/models";
 import PTActionHandler from "@/libs/ptaction-handler";
 

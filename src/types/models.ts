@@ -141,6 +141,7 @@ export interface IUsingTraitPacks {
         bonusPoints: number;
         flawBonusPoints: number; //TODO these points must used: Force that!
         traits: ILockableTrait[];
+        flawTraits: ILockableTrait[];
     }[];
 }
 
@@ -173,7 +174,6 @@ export interface ICharacter {
     categories: ICategory[];
     merits: IUsingTraitPacks;
     backgrounds: IUsingTraitPacks;
-    flaws: IUsingTraitPacks;
     exp: number;
 }
 
@@ -188,12 +188,7 @@ export interface ISkillData {
     specialization: string[];
 }
 
-export const DefaultUsingTraitPacks: IUsingTraitPacks = {
-    freePoints: 0,
-    packs: []
-};
-
-export const DefaultCharacter: ICharacter = {
+export const DefaultCharacter: () => ICharacter = () => ({
     ambition: "",
     bloodPotency: 0,
     books: [],
@@ -236,7 +231,12 @@ export const DefaultCharacter: ICharacter = {
     willpower: 0,
     sex: Sex.Divers,
     exp: 0,
-    flaws: {...DefaultUsingTraitPacks},
-    merits: {...DefaultUsingTraitPacks},
-    backgrounds: {...DefaultUsingTraitPacks}
-};
+    merits: {
+        freePoints: 0,
+        packs: []
+    },
+    backgrounds: {
+        freePoints: 0,
+        packs: []
+    }
+});

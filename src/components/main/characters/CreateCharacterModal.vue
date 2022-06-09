@@ -102,7 +102,7 @@ export default class CreateCharacterModal extends Vue {
       return;
     }
 
-    const char = {...DefaultCharacter};
+    const char = DefaultCharacter();
     char.name = this.name;
     char.sex = this.sex;
     char.generation = this.generation;
