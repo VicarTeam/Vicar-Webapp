@@ -60,7 +60,7 @@ export enum Generation {
     Ancillae = "ancillae"
 }
 
-const SortedSkillsAndAtribute = {
+const SortedSkillsAndAttribute = {
     [CategoryKeys.Physical]: {
         attributes: [AttributeKeys.Strength, AttributeKeys.Dexterity, AttributeKeys.Stamina],
         skills: [
@@ -206,11 +206,11 @@ export const DefaultCharacter: ICharacter = {
             skills: {}
         };
 
-        SortedSkillsAndAtribute[key].attributes.forEach(attribute => {
+        SortedSkillsAndAttribute[key].attributes.forEach(attribute => {
             category.attributes[attribute] = 0;
         });
 
-        SortedSkillsAndAtribute[key].skills.forEach(skill => {
+        SortedSkillsAndAttribute[key].skills.forEach(skill => {
             category.skills[skill] = {
                 value: 0,
                 specialization: []

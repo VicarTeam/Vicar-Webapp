@@ -4,7 +4,7 @@
       <div class="choose-predator-type-wrapper">
         <div class="form-group" style="text-align: center">
           <label class="required">{{$t('editor.step2.predator')}}: <TipButton :title="$t('editor.step2.predator.tip.title')" :content="$t('editor.step2.predator.tip.content')"/></label>
-          <select class="form-control" style="width: 30rem" v-model="editingCharacter.predatorType">
+          <select class="form-control" style="width: 30rem" v-model="editingCharacter.predatorType" :disabled="characterCache">
             <option v-for="p in predatorTypes" :key="p.id" :value="p">{{p.name}}</option>
           </select>
         </div>

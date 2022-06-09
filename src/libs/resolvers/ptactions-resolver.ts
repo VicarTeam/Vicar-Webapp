@@ -1,4 +1,4 @@
-import {IPTAction, PTActionType} from "@/types/data";
+import {IFlawChoice, IPTAction, PTActionType} from "@/types/data";
 import {ICharacter} from "@/types/models";
 import {DisciplinePointActionData} from "@/components/editor/actions/DisciplinePointAction.vue";
 import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
@@ -33,6 +33,11 @@ class PTActionsResolver {
 
             return true;
         });
+    }
+
+    @ResolveType(PTActionType.AddFlaw)
+    private resolveAddFlaw(char: ICharacter, data: {choices: IFlawChoice[]}): boolean {
+        return data.choices.length > 1;
     }
 
     @ResolveType(PTActionType.DisciplinePoint)
