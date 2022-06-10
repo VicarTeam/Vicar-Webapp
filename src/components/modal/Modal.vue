@@ -1,6 +1,6 @@
 <template>
   <Blur v-if="shown" :disabled="!withBlur">
-    <div class="card" v-bind="$attrs">
+    <div class="card" style="margin: auto" v-bind="$attrs">
       <i v-if="withClose" style="position: absolute; top: 1rem; right: 1rem; font-size: 2rem; cursor: pointer" class="fa-solid fa-xmark" @click="$emit('close')"></i>
       <div class="card-content">
         <slot></slot>

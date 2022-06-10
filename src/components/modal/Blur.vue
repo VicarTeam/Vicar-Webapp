@@ -20,7 +20,7 @@ export default class Blur extends Vue {
 <style scoped lang="scss">
 .blur {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   z-index: 1000;
@@ -29,6 +29,8 @@ export default class Blur extends Vue {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
   .disabled {
     background-color: transparent;
   }

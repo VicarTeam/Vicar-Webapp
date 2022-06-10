@@ -53,7 +53,6 @@ export default class ChooseAttributesView extends Vue {
   private getAvailableAmount(val: number) {
     const pool = this.getSubtractedPool();
     const usage = pool.find(p => p.point === val);
-    console.log(pool, val, usage);
     return usage ? usage.amount : -1;
   }
 
