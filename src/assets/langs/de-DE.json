@@ -45,6 +45,10 @@
   "editor.step3.attributes.point3": "Nimm {amount} Attribut(e) auf 3",
   "editor.step3.attributes.point2": "Nimm {amount} Attribut(e) auf 2",
   "editor.step3.attributes.point1": "Nimm {amount} Attribut auf 1",
+  "editor.step4.skills.spread": "Wähle eine Fähigkeitenverteilung",
+  "editor.step4.skills.spread.info": "{amount} Fähigkeit(en) auf {points}",
+  "editor.step4.skills.specialization": "Füge bei Geisteswissenschaften, Handwerk, Darbietung und Naturwissenschaften eine kostenlose Spezialisierung hinzu",
+  "editor.step4.skills.specialization.free": "und eine kostenlose deiner Wahl",
   "character.sex.m": "männlich",
   "character.sex.f": "weiblich",
   "character.sex.d": "divers",
@@ -95,5 +99,8 @@
   "data.skill.occ": "Okkultismus",
   "data.skill.pol": "Politik",
   "data.skill.sci": "Naturwissenschaften",
-  "data.skill.tec": "Technologie"
+  "data.skill.tec": "Technologie",
+  "data.skillspread.1": "Tausendsassa",
+  "data.skillspread.2": "Ausgewogen",
+  "data.skillspread.3": "Spezialist"
 }

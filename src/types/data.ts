@@ -40,10 +40,15 @@ export interface IRestrictionHolder {
     restriction?: IRestriction;
 }
 
+export interface IDisciplineCombo {
+    id: number;
+    level: number;
+}
+
 export interface IDisciplineAbility {
     id: number;
     name: string;
-    combination?: string;
+    combination?: IDisciplineCombo;
     requirement?: number;
     summary: string;
     costs: string;
@@ -150,3 +155,71 @@ export interface ITraitAction {
 export enum TraitActionType {
     CapSkill = "cap_skill",
 }
+
+export interface ISkillSpread {
+    amount: number;
+    points: number;
+}
+
+export interface ISkillSpreadType {
+    id: number;
+    spreads: ISkillSpread[];
+}
+
+export const DefinedSpreadTypes: ISkillSpreadType[] = [
+    {
+        id: 1,
+        spreads: [
+            {
+                amount: 1,
+                points: 3
+            },
+            {
+                amount: 8,
+                points: 2
+            },
+            {
+                amount: 10,
+                points: 1
+            }
+        ]
+    },
+    {
+        id: 2,
+        spreads: [
+            {
+                amount: 3,
+                points: 3
+            },
+            {
+                amount: 5,
+                points: 2
+            },
+            {
+                amount: 7,
+                points: 1
+            }
+        ]
+    },
+    {
+        id: 3,
+        spreads: [
+            {
+                amount: 1,
+                points: 4
+            },
+            {
+                amount: 3,
+                points: 3
+            },
+            {
+                amount: 3,
+                points: 2
+            },
+            {
+                amount: 3,
+                points: 1
+            }
+        ]
+    }
+];

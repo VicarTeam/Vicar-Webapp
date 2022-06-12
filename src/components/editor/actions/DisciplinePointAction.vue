@@ -32,10 +32,15 @@ export default class DisciplinePointAction extends PTActionBase<DisciplinePointA
   applyOutput(char: ICharacter) {
     const discipline = this.selectedDiscipline;
     if (discipline) {
-      char.disciplines.push({
-        discipline,
-        points: 1
-      });
+      const charDiscipline = char.disciplines.find(d => d.discipline.id === discipline.id);
+      if (charDiscipline) {
+        charDiscipline.points += 1;
+      } else {
+        char.disciplines.push({
+          discipline: discipline,
+          points: 1
+        });
+      }
     }
   }
 

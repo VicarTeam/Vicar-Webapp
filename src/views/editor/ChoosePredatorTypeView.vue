@@ -8,6 +8,7 @@
             <option v-for="p in predatorTypes" :key="p.id" :value="p">{{p.name}}</option>
           </select>
         </div>
+        <i v-if="editingCharacter.predatorType" style="width: 60%; margin-bottom: 1rem">{{editingCharacter.predatorType.description}}</i>
         <b v-if="editingCharacter.predatorType">{{$t('editor.step2.predator.changes')}}</b>
         <ul v-if="editingCharacter.predatorType">
           <li v-for="(a, i) in editingCharacter.predatorType.actions" :key="i">{{a.description}}</li>

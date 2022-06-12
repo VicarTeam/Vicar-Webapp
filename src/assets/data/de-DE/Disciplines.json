@@ -93,7 +93,10 @@
         {
           "id": 8,
           "name": "Besessenheit",
-          "combination": "Beherrschung 3",
+          "combination": {
+            "id": 2,
+            "level": 3
+          },
           "summary": "Mit dieser Kraft kann der Vampir den Sterblichen ihren Willen nehmen, um ihren Körper zu besetzen und wie seinen eigenen zu benutzen. Der Verstand des Opfers bleibt dem Vampir zwar verborgen, doch er kann alles tun, was das Opfer tun könnte, und kann überall dahin gehen, wo auch das Opfer Zugang hätte, solange die Kraft aktiv ist. Somit kann ein Vampir auch die Sonne spüren, Nahrung zu sich nehmen und körperliche Sexualität erleben, was ihm so lange verwehrt war, während der Wirtskörper den Preis für die Misshandlungen zahlt, die der Vampir ihm zumutet, solange er ihn besetzt.",
           "costs": "zwei Wallungs-Check",
           "diceSupplies": "Entschlossenheit + Auspex vs. Entschlossenheit + Intelligenz",
@@ -161,7 +164,10 @@
         {
           "id": 4,
           "name": "Irrsinn",
-          "combination": "Verdunkelung 2",
+          "combination": {
+            "id": 10,
+            "level": 2
+          },
           "summary": "Für diese subtile Kraft ist nichts weiter als eine beiläufige Unterhaltung nötig, da sich die heimtückische Beeinflussung durch den Vampir zwischen den Zeilen und im angewandten Tonfall verbirgt. Das Opfer fühlt sich zunehmend aufgewühlt, während sein innerer Dämon an die Oberfläche brodelt und schließlich seinen Verstand völlig verdrängt.",
           "costs": "ein Wallungs-Check pro Szene",
           "diceSupplies": "Manipulation + Beherrschung vs. Fassung + Intelligenz",
@@ -391,7 +397,10 @@
         {
           "id": 6,
           "name": "Unfehlbares Auge",
-          "combination": "Auspex 2",
+          "combination": {
+            "id": 1,
+            "level": 2
+          },
           "summary": "Die Welt um ihn herum wird deutlich langsamer und der Vampir kann in aller Ruhe zielen und ein Geschoss auf ein Ziel werfen oder abfeuern, als stünde das Ziel still.",
           "costs": "ein Wallungs-Check",
           "system": "Aktiviere die Kraft vor einem Fernkampfangriff. Das Ziel legt keine Probe zum Ausweichen oder Verteidigen ab. Der Angriff erfolgt bei einer Schwierigkeit von 1. Ein Gegner mit Geschwindigkeit 5 kann diese Kraft aufheben, indem er selbst einen Wallungs-Check ablegt und sich mit derselben Schnelligkeit verteidigt.",
@@ -581,7 +590,10 @@
         {
           "id": 5,
           "name": "Unwiderstehliche Stimme",
-          "combination": "Beherrschung 1",
+          "combination": {
+            "id": 2,
+            "level": 1
+          },
           "summary": "Die Präsenz des Anwenders wird zum Überträger für Beherrschung. Jetzt muss nur noch die Stimme des Vampirs gehört werden, damit er seine Beherrschungskräfte einsetzen kann.",
           "costs": "keine weiteren Kosten",
           "system": "Jetzt genügt einzig die Stimme des Anwenders, um ein Opfer zu beherrschen. Das gilt nicht für Stimmen, die elektronisch übertragen werden wie durch Telefone, Fernsehgeräte oder Gegensprechanlagen.",
@@ -663,7 +675,10 @@
         {
           "id": 4,
           "name": "Zähe Biester",
-          "combination": "Tierhaftigkeit 1",
+          "combination": {
+            "id": 9,
+            "level": 1
+          },
           "summary": "Der Anwender teilt einen kleinen Teil seiner unnatürlichen Zähigkeit mit den Tieren, die er beeinflusst. Wuselnde Schwärme und große Biester zeigen gleichermaßen eine Resistenz gegen flüchtige Verletzungen, die der des Vampirs fast ebenbürtig ist.",
           "costs": "keine (bei Famuli), ein Wallungs- Check (bei anderen Tieren)",
           "diceSupplies": "Widerstandsfähigkeit + Tierhaftigkeit (bei Tieren, die keine Famuli sind)",
@@ -773,7 +788,10 @@
         {
           "id": 5,
           "name": "Funke des Zorns",
-          "combination": "Präsenz 3",
+          "combination": {
+            "id": 6,
+            "level": 3
+          },
           "summary": "Wenn er Stärke und Präsenz kombiniert, kann der Vampir Wut und sogar Zorn ebenso leicht in Schaulustigen auslösen wie Ehrfurcht und Grauen. Der Anwender muss darauf achten, dass er den wütenden Mob nicht gegen sich selbst aufbringt statt gegen das eigentliche Ziel oder einander.",
           "costs": "ein Wallungs-Check",
           "diceSupplies": "Manipulation + Stärke vs. Fassung + Intelligenz",
@@ -887,7 +905,10 @@
         {
           "id": 6,
           "name": "Untotes Nest",
-          "combination": "Verdunkelung 2",
+          "combination": {
+            "id": 10,
+            "level": 2
+          },
           "summary": "Meist bei den Nosferatu gesehen, gestattet es diese beunruhigende Kraft des Anwenders, seinen tierischen Einfluss auf Insektenschwärme wie Fliegen oder Kakerlaken auszuweiten. Bestimmte Vampire gehen sogar soweit, Schwärme als Famuli zu adoptieren und ihnen ein permanentes Zuhause in den Falten und Öffnungen ihrer missgestalteten Leiber zu bieten.",
           "costs": "keine zusätzlichen Kosten",
           "system": "Diese Kraft erweitert alle Kräfte, die bislang auf Wirbeltiere beschränkt waren, auf Insektenschwärme und behandelt einen Schwarm wie ein einzelnes Wesen. Der Vampir kann den Schwarm als Famulus an sich binden, und manche geben ihm sogar die Fähigkeit, in den Öffnungen ihrer Körper zu nisten. Dadurch ist der Schwarm vor Blicken geschützt, während er sich von der winzigen Menge Blut ernähren kann, der er braucht, um sich auf unbestimmte Zeit zu erhalten. Solange er sich einnistet, kann der Schwarm nur durch Röntgenstrahlen aufgespürt werden. Schwärme fügen im Kampf nur wenig Schaden zu. Sie haben 5 Punkte in Gesundheit und einen Vorrat von acht Würfeln, um sich gegen Angriffe zu wehren. Schwärme erleiden im Handgemenge Leichten Schaden. Feuer und Insektizide verursachen Schweren Schaden. Vampire können Schwärme zur Spionage einsetzen, als Ablenkung (das umschwärmte Opfer hat bei jeder Probe zwei Würfel weniger) oder um Sterbliche einzuschüchtern (der Vampir hat ein bis drei Würfel mehr im Vorrat für Einschüchtern, je nach Insektenart und den Phobien des Opfers). Spieler und Erzählerinnen lassen sich bestimmt weitere kreative Anwendungen für diese Kraft einfallen.",
@@ -994,7 +1015,10 @@
         {
           "id": 6,
           "name": "Verbergen",
-          "combination": "Auspex 3",
+          "combination": {
+            "id": 1,
+            "level": 3
+          },
           "summary": "Mit dieser Kraft ist der Anwender in der Lage, einen unbelebten Gegenstand zu tarnen, wie eine Tür, ein Auto oder ein kleines Haus. Wie bei den anderen Verdunkelungskräften ist das Objekt damit nicht wirklich unsichtbar, sondern es wird ein bleibender Hypnoseeffekt erzielt, durch den die meisten Leute den Gegenstand einfach ignorieren. In diesem Fall ist die Kraft besonders wirkungsvoll, da der Gegenstand wohl kaum Aufmerksamkeit auf sich lenken wird. Wenn Vorbeiziehende nicht gerade damit kollidieren oder jemand sie darauf aufmerksam macht, verhalten sich die Leute, als wäre das Objekt nicht da und umrunden größere Gegenstände, falls nötig.",
           "costs": "ein Wallungs-Check",
           "diceSupplies": "Intelligenz + Verdunkelung",
@@ -1087,7 +1111,10 @@
         {
           "id": 4,
           "name": "Arme des Ahriman",
-          "combination": "Stärke 2",
+          "combination": {
+            "id": 8,
+            "level": 2
+          },
           "summary": "Der Vampir beschwört abgrundtiefe Anhängsel von unbeleuchteten Stellen in der Umgebung, innerhalb der Sichtlinie. Die lokalen Schatten verzerren sich, während sich düstere Tentakel aus ihnen herausschlängeln und und sich auf ein oder mehrere unglückliche Opfer stürzen. Ob durch den Körper des Opfers hinaufgleiten oder sich in einen mystischen mit dem eigenen Schatten des Opfers, können die Arme sie an Ort und Stelle zu halten oder sie zu erdrücken.",
           "costs": "ein Wallungs-Check",
           "diceSupplies": "Geistesschärfe + Vergessenheit",

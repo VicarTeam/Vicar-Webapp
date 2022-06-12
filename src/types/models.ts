@@ -1,4 +1,4 @@
-﻿import {IDiscipline, IPredatorType, ITrait, ITraitPack} from "@/types/data";
+﻿import {IDiscipline, IPredatorType, ISkillSpreadType, ITrait, ITraitPack} from "@/types/data";
 
 export enum CategoryKeys {
     Physical = "physical",
@@ -171,6 +171,7 @@ export interface ICharacter {
     humanity: number;
     resonance: string;
     bloodPotency: number;
+    skillspread: ISkillSpreadType;
     categories: ICategory[];
     merits: IUsingTraitPacks;
     backgrounds: IUsingTraitPacks;
@@ -227,6 +228,7 @@ export const DefaultCharacter: () => ICharacter = () => ({
     hunger: 0,
     name: "",
     predatorType: undefined!,
+    skillspread: undefined!,
     resonance: "",
     sire: "",
     willpower: 0,
