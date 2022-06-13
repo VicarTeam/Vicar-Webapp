@@ -1,4 +1,4 @@
-﻿import {IDiscipline, IPredatorType, ISkillSpreadType, ITrait, ITraitPack} from "@/types/data";
+﻿import {IDiscipline, IDisciplineAbility, IPredatorType, ISkillSpreadType, ITrait, ITraitPack} from "@/types/data";
 
 export enum CategoryKeys {
     Physical = "physical",
@@ -151,6 +151,18 @@ export interface ILockableTrait extends ITrait {
     suffix?: string;
 }
 
+export interface ILeveledDisciplineAbility extends IDisciplineAbility {
+    level: number;
+    usedLevel: number;
+}
+
+export interface IDisciplineSelection {
+    discipline: IDiscipline;
+    points: number;
+    currentLevel: number;
+    abilities: ILeveledDisciplineAbility[];
+}
+
 export interface ICharacter {
     books: number[];
     name: string;
@@ -160,7 +172,7 @@ export interface ICharacter {
     chronicle: string;
     ambition: string;
     clan: IClan;
-    disciplines: {discipline: IDiscipline; points: number}[];
+    disciplines: IDisciplineSelection[];
     sire: string;
     desire: string;
     generationEra: Generation;

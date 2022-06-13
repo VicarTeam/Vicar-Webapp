@@ -38,7 +38,9 @@ export default class DisciplinePointAction extends PTActionBase<DisciplinePointA
       } else {
         char.disciplines.push({
           discipline: discipline,
-          points: 1
+          abilities: [],
+          points: 1,
+          currentLevel: 1
         });
       }
     }

@@ -12,7 +12,7 @@
           <li v-for="(s, i) in editingCharacter.skillspread.spreads" :key="i">{{$t('editor.step4.skills.spread.info', {amount: getAvailableAmount(s.points), points: s.points})}}</li>
         </ul>
         <hr>
-        <button class="btn btn-primary" v-if="editingCharacter.skillspread && !characterCache" @click="selectType">Auswählen</button>
+        <button class="btn btn-primary" v-if="editingCharacter.skillspread && !characterCache" @click="selectType">{{$t('editor.choose')}}</button>
 
         <div class="categories" v-if="characterCache && editingCharacter.skillspread">
           <div class="card" v-for="cat in editingCharacter.categories" :key="cat.name">

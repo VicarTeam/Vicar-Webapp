@@ -1,9 +1,16 @@
 ﻿import * as data from "@/types/data";
-import {fillDefaults, ICharacter, IClan, ILanguage} from "@/types/models";
+import {
+    fillDefaults,
+    ICharacter,
+    IClan,
+    IDisciplineSelection,
+    ILanguage,
+    ILeveledDisciplineAbility
+} from "@/types/models";
 import {i18n} from "@/libs/i18n";
 import {
     DefaultTrait,
-    IDiscipline,
+    IDiscipline, IDisciplineAbility,
     IFlawChoice,
     IPredatorType,
     IRestrictionHolder,
@@ -11,6 +18,7 @@ import {
     ITraitPack
 } from "@/types/data";
 import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
+import {disciplineAbilityResolver} from "@/libs/resolvers/disciplineability-resolver";
 
 export default class DataManager {
 
@@ -64,6 +72,20 @@ export default class DataManager {
                 })
             });
         }
+    }
+
+    public static normalToLeveledAbilities(discipline: IDiscipline): ILeveledDisciplineAbility[] {
+        const arr: ILeveledDisciplineAbility[] = [];
+        for (let [level, abilites] of Object.entries(discipline.levels)) {
+            abilites.map(ability => {
+                arr.push({
+                    level: parseInt(level),
+                    usedLevel: 0,
+                    ...ability
+                });
+            });
+        }
+        return arr;
     }
 
     public static getFlawOwner(choice: IFlawChoice): ITraitPack|null {

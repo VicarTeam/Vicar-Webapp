@@ -14,7 +14,7 @@
           <li v-for="(a, i) in editingCharacter.predatorType.actions" :key="i">{{a.description}}</li>
         </ul>
         <hr>
-        <button class="btn btn-primary" v-if="editingCharacter.predatorType && !characterCache" @click="selectType">Auswählen</button>
+        <button class="btn btn-primary" v-if="editingCharacter.predatorType && !characterCache" @click="selectType">{{$t('editor.choose')}}</button>
 
         <div v-if="characterCache">
           <div v-for="(a, i) in interactableActions" class="card w-400 m-20" :key="i">
