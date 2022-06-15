@@ -1,6 +1,6 @@
 <template>
   <div class="form-group mb-0">
-    <label class="required">{{$t('editor.step2.predator.actions.additional_specialization')}}:</label>
+    <label class="required">{{$t('editor.predator.actions.additional_specialization')}}:</label>
     <select v-model="selected" class="form-control" @change="onSelectionChange">
       <option v-for="(c, i) in data.choices" :key="i" :value="c">{{$t('data.skill.' + getSkillKey(c))}}</option>
     </select>

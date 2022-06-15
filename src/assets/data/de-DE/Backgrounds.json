@@ -142,27 +142,27 @@
         "level": 4,
         "name": "Nützlichkeit 4",
         "description": "Gefährlicher Sterblicher, begabter Sterblicher mit Magie oder andere übernatürliche Talente (z.B. Russische Mafia)"
-      }
-    ],
-    "disadvantages": [
+      },
       {
-        "id": -1,
+        "id": 5,
         "level": 1,
         "name": "Zuverlässigkeit 1",
         "description": "50%ige Chance, dass sie beim Rufen erscheinen"
       },
       {
-        "id": -2,
+        "id": 6,
         "level": 2,
         "name": "Zuverlässigkeit 2",
         "description": "Sie erscheinen innerhalb 1-10 Stunden (auswürfeln), wenn du sie rufst"
       },
       {
-        "id": -3,
+        "id": 7,
         "level": 3,
         "name": "Zuverlässigkeit 3",
         "description": "Sie erscheinen schnellstmöglich, wenn du sie rufst"
-      },
+      }
+    ],
+    "disadvantages": [
       {
         "id": 1,
         "level": 1,
@@ -227,7 +227,7 @@
       }
     ],
     "disadvantages": [
-      { 
+      {
         "id": 1,
         "level": 1,
         "name": "Unbeliebt",
@@ -276,60 +276,89 @@
         "id": 5,
         "level": 1,
         "name": "Zelle",
+        "isRepeatable": true,
+        "requirement": {
+          "type": "or",
+          "values":  [2, 3]
+        },
+        "restrictRepeats": {
+          "amount": 32
+        },
         "description": "Du kannst 2 Gefangene in dieser Zelle einsperren. Mit jedem Punkt kannst du doppelt so viele Gefangene einsperren (max. 32 bei Zufluchtsgröße 3; geht nicht bei Zufluchtsgröße 1)"
       },
       {
         "id": 6,
         "level": 1,
         "name": "Wachleute",
+        "isRepeatable": true,
         "description": "Entweder professionelle Sicherheitsleute oder Schlägertypen. Jeder Punkt gewährt dir 4 Wachleute und einen begabten Boss"
       },
       {
         "id": 7,
         "level": 1,
         "name": "Labor",
+        "isRepeatable": true,
+        "requirement": {
+          "type": "or",
+          "values":  [2, 3]
+        },
         "description": "Deine Zuflucht besitzt ein vollausgestattetes Labor. Bei der Benutzung des Labors in Verbindung mit einer naturwissenschaftlichen oder technologischen Spezialisierung erhälst du pro Punkt einen Würfel im Vorrat mehr (nicht für Zufluchtsgröße 1)"
       },
       {
         "id": 8,
         "level": 1,
         "name": "Bibliothek",
+        "isRepeatable": true,
+        "restrictRepeats": {
+          "size": 1,
+          "amount": 1
+        },
         "description": "Deine Zuflucht besitzt eine Bibliothek über Okkultismus und Vampiresagen. Du erhälst pro Punkt einen Würfel mehr auf Spezialisierungen Geisteswissenschaften, Okkultismus oder Ermitteln beim Recherchieren (bei Zufluchtsgröße 1 auf 1 beschränkt)"
       },
       {
         "id": 9,
         "level": 1,
         "name": "Lage",
+        "isRepeatable": true,
         "description": "Deine Zuflucht liegt in einer exklusiven Gegend. Du bekommst 2 Würfel Bonus auf Werte die zu deiner Lage passen (z.B. Zuflucht neben dem Elysium: Aufschnappen von Gerüchten)"
       },
       {
         "id": 10,
         "level": 1,
         "name": "Luxus",
+        "isRepeatable": true,
         "description": "Du erhälst luxuriöse Güter wie Designermöbel. Bei sterblichen Gästen in der Zuflucht erhälst einen Bonus von 2 auf gesellschaftliche Interaktionen (hast du nicht mindestens Ressourcen 3, sind die Güter illegal erworben)"
       },
       {
         "id": 11,
         "level": 1,
         "name": "Hintereingang",
+        "isRepeatable": true,
         "description": "Deine Zuflucht erhält einen Hintereingang wie einen Geheimtunnel zum Flüchten. Jeder Punkt gewährt dir 2 Würfel Bonus wenn du Überwachung in der Nähe der Zuflucht ausweichen willst"
       },
       {
         "id": 12,
         "level": 1,
         "name": "Sicherheitssystem",
+        "isRepeatable": true,
         "description": "Das Sicherheitssystem deiner Zuflucht ist besser als der Standard. Jeder Punkt gewährt dir 2 Würfel Bonus um ungewährten Zugriff in deine Zuflucht zu verhindern oder dich zu warnen"
       },
       {
         "id": 13,
         "level": 1,
         "name": "Behandlungszimmer",
+        "isRepeatable": true,
+        "requirement": {
+          "type": "or",
+          "values":  [2, 3]
+        },
         "description": "Deine Zuflucht ist für Wundversorgung oder mehr ausgestattet. Jeder Punkt gewährt dir 2 Würfel Bonus für die passende Probe auf Medizin (geht nicht bei Zufluchtsgröße 1)"
       },
       {
         "id": 14,
         "level": 1,
         "name": "Schutz",
+        "isRepeatable": true,
         "description": "Deine Zuftlucht ist magisch gegen übernatürliche Kräfte geschützt. Jeder Punkt gewährt dir 1 Würfel Bonus um dich gegen übernatürliche Wahrsagekünste o.ä. zu wehren (Erzähler kann dies durch einen Mindestwert auf Okkultismus o.ä. beschränken)"
       }
     ],

@@ -1,6 +1,6 @@
 <template>
   <div class="form-group mb-0">
-    <label class="required">{{$t('editor.step2.predator.actions.discipline_point')}}:</label>
+    <label class="required">{{$t('editor.predator.actions.discipline_point')}}:</label>
     <div class="d-flex" style="gap: 1rem; justify-content: center; align-items: center">
       <select v-model="selected" class="form-control">
         <option v-for="(c, i) in data.choices" :key="i" :value="c.id">{{getDiscipline(c.id).name}}</option>

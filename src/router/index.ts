@@ -43,6 +43,11 @@ const routes: Array<RouteConfig> = [
         path: 'disciplines',
         name: 'editor-disciplines',
         component: () => import('@/views/editor/ChooseDisciplinesView.vue')
+      },
+      {
+        path: 'traits',
+        name: 'editor-traits',
+        component: () => import('@/views/editor/ChooseTraitsView.vue')
       }
     ]
   }

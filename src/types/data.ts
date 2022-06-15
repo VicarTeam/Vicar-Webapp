@@ -98,6 +98,13 @@ export enum RestrictionType {
     MaxBloodPotency = "max_blood_potency", // data = numeric blood potency (must have this potency or less)
 }
 
+export enum TraitSpecialRules {
+    None = "none",
+    Allies = "allies",
+    Haven = "haven",
+    Mask = "mask",
+}
+
 /**
  * The interface combining merits and backgrounds.
  */
@@ -106,15 +113,9 @@ export interface ITraitPack extends IRestrictionHolder {
     name: string;
     description: string;
     isCombinable: boolean;
+    specialRules: TraitSpecialRules;
     advantages: ITrait[];
     disadvantages: ITrait[];
-}
-
-export enum TraitSpecialRules {
-    None = "none",
-    Allies = "allies",
-    Haven = "haven",
-    Mask = "mask",
 }
 
 export interface IFlawChoice {
@@ -125,6 +126,16 @@ export interface IFlawChoice {
     suffix?: string;
 }
 
+export interface ITraitRequirement {
+    type: "or";
+    values: number[];
+}
+
+export interface ITraitRepeatRestriction {
+    size?: number;
+    amount: number;
+}
+
 export interface ITrait extends IRestrictionHolder {
     id: number;
     level: 1 | 2 | 3 | 4 | 5;
@@ -132,7 +143,8 @@ export interface ITrait extends IRestrictionHolder {
     description: string;
     isRepeatable: boolean;
     actions: ITraitAction[];
-    specialRules: TraitSpecialRules;
+    requirement?: ITraitRequirement;
+    restrictRepeats?: ITraitRepeatRestriction;
 }
 
 export const DefaultTrait: ITrait = {
@@ -142,8 +154,7 @@ export const DefaultTrait: ITrait = {
     description: "",
     isRepeatable: false,
     actions: [],
-    restriction: undefined,
-    specialRules: TraitSpecialRules.None
+    restriction: undefined
 };
 
 export interface ITraitAction {

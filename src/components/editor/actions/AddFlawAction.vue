@@ -1,6 +1,6 @@
 <template>
   <div class="form-group mb-0">
-    <label class="required">{{$t('editor.step2.predator.actions.add_flaw')}}:</label>
+    <label class="required">{{$t('editor.predator.actions.add_flaw')}}:</label>
     <select v-model="selected" class="form-control">
       <option v-for="(c, i) in data.choices" :key="i" :value="c.id">{{getFlaw(c).name}}</option>
     </select>

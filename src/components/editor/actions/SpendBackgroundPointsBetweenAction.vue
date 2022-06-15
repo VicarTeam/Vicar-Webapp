@@ -1,6 +1,6 @@
 <template>
   <div class="form-group mb-0">
-    <label class="required">{{$t('editor.step2.predator.actions.spend_points_between', {x: pool})}}:</label>
+    <label class="required">{{$t('editor.predator.actions.spend_points_between', {x: pool})}}:</label>
     <div class="d-flex" style="gap: 1rem; align-items: center" v-for="(background, i) in backgrounds" :key="background.id" :class="{'mt-10': i > 0}">
       <label style="width: 50%">{{background.name}}: </label>
       <SpendSelect :max="data.points" :pool="pool" @change="val => onPointsChanged(background, val)"/>

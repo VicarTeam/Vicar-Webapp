@@ -3,9 +3,9 @@
     <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
       <div class="choose-attributes-wrapper">
         <div class="form-group" style="text-align: center">
-          <label class="required"><b>{{$t('editor.step3.attributes.spend')}}:</b></label>
+          <label class="required"><b>{{$t('editor.attributes.spend')}}:</b></label>
           <ul style="text-align: left">
-            <li v-for="i in [4, 3, 2, 1]" :key="i">{{$t(`editor.step3.attributes.point${i}`, {amount: getAvailableAmount(i)})}}</li>
+            <li v-for="i in [4, 3, 2, 1]" :key="i">{{$t(`editor.attributes.point${i}`, {amount: getAvailableAmount(i)})}}</li>
           </ul>
         </div>
 

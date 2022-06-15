@@ -3,19 +3,19 @@
     <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
       <div class="choose-disciplines-wrapper">
         <div class="form-group mb-5 d-flex justify-content-center align-items-center flex-column" style="text-align: center">
-          <label class="required"><b>{{$t('editor.step4.disciplines.spread')}}:</b></label>
+          <label class="required"><b>{{$t('editor.disciplines.spread')}}:</b></label>
           <div class="d-flex w-500 justify-content-center align-items-center" style="gap: 2rem">
             <div class="d-flex flex-column" style="width: 45%">
-              <label>{{$t('editor.step4.disciplines.spread.2')}}</label>
+              <label>{{$t('editor.disciplines.spread.2')}}</label>
               <select class="form-control" :disabled="characterCache" v-model="disciplineFor2">
-                <option :value="null">{{$t('editor.step4.disciplines.selection.none')}}</option>
+                <option :value="null">{{$t('editor.disciplines.selection.none')}}</option>
                 <option v-for="d in editingCharacter.clan.disciplines" :key="d.id" :value="d" :disabled="!isDisciplineAvailable(d)">{{d.name}}</option>
               </select>
             </div>
             <div class="d-flex flex-column" style="width: 45%">
-              <label>{{$t('editor.step4.disciplines.spread.1')}}</label>
+              <label>{{$t('editor.disciplines.spread.1')}}</label>
               <select class="form-control" :disabled="characterCache" v-model="disciplineFor1">
-                <option :value="null">{{$t('editor.step4.disciplines.selection.none')}}</option>
+                <option :value="null">{{$t('editor.disciplines.selection.none')}}</option>
                 <option v-for="d in editingCharacter.clan.disciplines" :key="d.id" :value="d" :disabled="!isDisciplineAvailable(d)">{{d.name}}</option>
               </select>
             </div>

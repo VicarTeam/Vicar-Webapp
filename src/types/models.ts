@@ -133,20 +133,23 @@ export interface IClan {
     readonly disciplines: IDiscipline[];
 }
 
+export interface IUsingTraitPack {
+    pack: ITraitPack;
+    usedPoints: number;
+    bonusPoints: number;
+    flawBonusPoints: number; //TODO these points must used: Force that!
+    traits: ILockableTrait[];
+    flawTraits: ILockableTrait[];
+}
+
 export interface IUsingTraitPacks {
     freePoints: number;
-    packs: {
-        pack: ITraitPack;
-        usedPoints: number;
-        bonusPoints: number;
-        flawBonusPoints: number; //TODO these points must used: Force that!
-        traits: ILockableTrait[];
-        flawTraits: ILockableTrait[];
-    }[];
+    packs: IUsingTraitPack[];
 }
 
 export interface ILockableTrait extends ITrait {
     isLocked: boolean;
+    isManual: boolean;
     customLevel?: number;
     suffix?: string;
 }

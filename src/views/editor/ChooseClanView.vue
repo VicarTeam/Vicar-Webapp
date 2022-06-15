@@ -3,12 +3,12 @@
     <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
       <div class="choose-clan-wrapper">
         <div class="form-group" style="text-align: center">
-          <label class="required">{{$t('editor.step1.sire')}}: <TipButton :title="$t('editor.step1.sire.tip.title')" :content="$t('editor.step1.sire.tip.content')"/></label>
-          <input class="form-control" type="text" style="width: 30rem" :placeholder="$t('editor.step1.sire')" v-model="editingCharacter.sire"/>
+          <label class="required">{{$t('editor.sire')}}: <TipButton :title="$t('editor.sire.tip.title')" :content="$t('editor.sire.tip.content')"/></label>
+          <input class="form-control" type="text" style="width: 30rem" :placeholder="$t('editor.sire')" v-model="editingCharacter.sire"/>
         </div>
         <hr>
         <div class="clan-selection">
-          <label class="required">{{$t('editor.step1.clan')}}: <TipButton :title="$t('editor.step1.clan.tip.title')" :content="$t('editor.step1.clan.tip.content')"/></label>
+          <label class="required">{{$t('editor.clan')}}: <TipButton :title="$t('editor.clan.tip.title')" :content="$t('editor.clan.tip.content')"/></label>
 
           <div class="card clan-info" style="margin: 0; width: 55rem" v-if="editingCharacter.clan">
             <img :src="getClanSymbol(editingCharacter.clan)"/>
@@ -17,7 +17,7 @@
               <small>"<i>{{editingCharacter.clan.slogan}}</i>"</small>
               <div class="desc">{{editingCharacter.clan.description}}</div>
 
-              <h6 style="font-weight: bolder; margin: 1rem 0 0;">{{$t('editor.step1.clan.disciplines')}}:</h6>
+              <h6 style="font-weight: bolder; margin: 1rem 0 0;">{{$t('editor.clan.disciplines')}}:</h6>
               <div class="disciplines">
                 <div class="discipline" v-for="d in editingCharacter.clan.disciplines" :key="d.id">
                   {{d.name}} <TipButton :content="d.summary"/>

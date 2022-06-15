@@ -1,15 +1,15 @@
 <template>
-  <EditorForm :can-go-next="canGoNext" next-step="editor-attributes" :fallback-history-char="characterCache" @before-next="applyPredatorType">
+  <EditorForm :can-go-next="canGoNext" next-step="editor-traits" :fallback-history-char="characterCache" @before-next="applyPredatorType">
     <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
       <div class="choose-predator-type-wrapper">
         <div class="form-group" style="text-align: center">
-          <label class="required">{{$t('editor.step2.predator')}}: <TipButton :title="$t('editor.step2.predator.tip.title')" :content="$t('editor.step2.predator.tip.content')"/></label>
+          <label class="required">{{$t('editor.predator')}}: <TipButton :title="$t('editor.predator.tip.title')" :content="$t('editor.predator.tip.content')"/></label>
           <select class="form-control" style="width: 30rem" v-model="editingCharacter.predatorType" :disabled="characterCache">
             <option v-for="p in predatorTypes" :key="p.id" :value="p">{{p.name}}</option>
           </select>
         </div>
         <i v-if="editingCharacter.predatorType" style="width: 60%; margin-bottom: 1rem">{{editingCharacter.predatorType.description}}</i>
-        <b v-if="editingCharacter.predatorType">{{$t('editor.step2.predator.changes')}}</b>
+        <b v-if="editingCharacter.predatorType">{{$t('editor.predator.changes')}}</b>
         <ul v-if="editingCharacter.predatorType">
           <li v-for="(a, i) in editingCharacter.predatorType.actions" :key="i">{{a.description}}</li>
         </ul>

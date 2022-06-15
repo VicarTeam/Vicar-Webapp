@@ -3,13 +3,13 @@
     <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
       <div class="choose-skills-wrapper">
         <div class="form-group mb-5" style="text-align: center">
-          <label class="required"><b>{{$t('editor.step4.skills.spread')}}:</b></label>
+          <label class="required"><b>{{$t('editor.skills.spread')}}:</b></label>
           <select class="form-control" v-model="editingCharacter.skillspread" :disabled="characterCache">
             <option v-for="t in DefinedSpreadTypes" :key="t.id" :value="t">{{$t('data.skillspread.' + t.id)}}</option>
           </select>
         </div>
         <ul v-if="editingCharacter.skillspread">
-          <li v-for="(s, i) in editingCharacter.skillspread.spreads" :key="i">{{$t('editor.step4.skills.spread.info', {amount: getAvailableAmount(s.points), points: s.points})}}</li>
+          <li v-for="(s, i) in editingCharacter.skillspread.spreads" :key="i">{{$t('editor.skills.spread.info', {amount: getAvailableAmount(s.points), points: s.points})}}</li>
         </ul>
         <hr>
         <button class="btn btn-primary" v-if="editingCharacter.skillspread && !characterCache" @click="selectType">{{$t('editor.choose')}}</button>
@@ -28,14 +28,14 @@
         </div>
 
         <div class="specialization card" v-if="characterCache && editingCharacter.skillspread">
-          <b class="mb-10">{{$t('editor.step4.skills.specialization')}}:</b>
+          <b class="mb-10">{{$t('editor.skills.specialization')}}:</b>
           <div class="defined mb-20">
             <div class="control" v-for="d in definedSpecializations" :key="d.key" style="width: 45%">
               <input v-model="d.name" type="text" class="form-control" disabled/>
               <input v-model="d.value" type="text" class="form-control"/>
             </div>
           </div>
-          <b class="mb-10">{{$t('editor.step4.skills.specialization.free')}}:</b>
+          <b class="mb-10">{{$t('editor.skills.specialization.free')}}:</b>
           <div class="control">
             <select class="form-control" v-model="freeSpecializationKey">
               <option v-for="key in sortedSkillKeys" :key="key" :value="key">{{$t('data.skill.' + key)}}</option>

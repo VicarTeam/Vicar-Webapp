@@ -1,23 +1,23 @@
 <template>
   <Modal :shown="shown" v-if="editingCharacter && discipline && callback" @close="shown = false">
     <div style="width: 50rem; display: flex; flex-direction: column; gap: 2rem">
-      <p style="margin: 0; font-weight: bold; font-size: 1.6rem">{{$t('editor.step4.disciplines.choose.title', {disc: discipline.discipline.name, lvl: discipline.currentLevel})}}</p>
+      <p style="margin: 0; font-weight: bold; font-size: 1.6rem">{{$t('editor.disciplines.choose.title', {disc: discipline.discipline.name, lvl: discipline.currentLevel})}}</p>
 
       <select class="form-control" v-model="ability">
-        <option v-for="a in availableAbilities" :class="{'not-selectable': !isAbilitySelectable(a)}" :value="a">{{a.name}} - {{$t('editor.step4.disciplines.level')}}: {{a.level}}{{isAbilitySelectable(a) ? '' : ' - ' + $t('editor.step4.disciplines.notselectable')}}</option>
+        <option v-for="a in availableAbilities" :class="{'not-selectable': !isAbilitySelectable(a)}" :value="a">{{a.name}} - {{$t('editor.disciplines.level')}}: {{a.level}}{{isAbilitySelectable(a) ? '' : ' - ' + $t('editor.disciplines.notselectable')}}</option>
       </select>
 
       <div class="info" v-if="ability">
         <small><i>{{ability.summary}}</i></small>
         <hr>
-        <small v-if="ability.requirement"><b>{{$t('editor.step4.disciplines.requirement')}}</b>: {{getRequirement(ability)}}</small>
-        <small v-if="ability.combination"><b>{{$t('editor.step4.disciplines.combo')}}</b>: {{getCombo(ability)}}</small>
+        <small v-if="ability.requirement"><b>{{$t('editor.disciplines.requirement')}}</b>: {{getRequirement(ability)}}</small>
+        <small v-if="ability.combination"><b>{{$t('editor.disciplines.combo')}}</b>: {{getCombo(ability)}}</small>
         <hr v-if="ability.combination || ability.requirement">
-        <span><b>{{$t('editor.step4.disciplines.costs')}}</b>: {{ability.costs}}</span>
-        <span v-if="ability.diceSupplies"><b>{{$t('editor.step4.disciplines.dices')}}</b>: {{ability.diceSupplies}}</span>
-        <span><b>{{$t('editor.step4.disciplines.system')}}</b>: {{ability.system}}</span>
-        <small v-if="ability.alternatives"><b>{{$t('editor.step4.disciplines.alternatives')}}</b>: {{ability.alternatives.join(", ")}}</small>
-        <span><b>{{$t('editor.step4.disciplines.duration')}}</b>: {{ability.duration}}</span>
+        <span><b>{{$t('editor.disciplines.costs')}}</b>: {{ability.costs}}</span>
+        <span v-if="ability.diceSupplies"><b>{{$t('editor.disciplines.dices')}}</b>: {{ability.diceSupplies}}</span>
+        <span><b>{{$t('editor.disciplines.system')}}</b>: {{ability.system}}</span>
+        <small v-if="ability.alternatives"><b>{{$t('editor.disciplines.alternatives')}}</b>: {{ability.alternatives.join(", ")}}</small>
+        <span><b>{{$t('editor.disciplines.duration')}}</b>: {{ability.duration}}</span>
       </div>
 
       <div style="width: 100%; display: flex; justify-content: center; align-items: center">

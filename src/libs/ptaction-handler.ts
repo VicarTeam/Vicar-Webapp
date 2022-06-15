@@ -77,10 +77,12 @@ export default class PTActionHandler {
         if (level) {
             const trait = cb ? cb({
                 ...level,
-                isLocked: true
+                isLocked: true,
+                isManual: false
             }) : {
                 ...level,
-                isLocked: true
+                isLocked: true,
+                isManual: false
             };
             (isFlaw ? upack.flawTraits : upack.traits).push(trait);
         }
