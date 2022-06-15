@@ -21,7 +21,7 @@
               <small>{{$t('data.skill.' + skill.key)}}:</small>
               <select class="form-control" v-model="skill.value" style="width: 7rem">
                 <option :value="0">0</option>
-                <option v-for="i in getAvailablePoints()" :key="i" :value="i" :disabled="!isPointAvailable(i)">{{i}}</option>
+                <option v-for="i in getAvailablePoints()" :key="i" :value="i" :disabled="!isPointAvailable(i, skill.key)">{{i}}</option>
               </select>
             </div>
           </div>
@@ -53,7 +53,7 @@ import {Component, Vue} from "vue-property-decorator";
 import EditorForm from "@/components/editor/EditorForm.vue";
 import {State} from "vuex-class";
 import {ICharacter, SkillKeys} from "@/types/models";
-import {DefinedSpreadTypes} from "@/types/data";
+import {DefinedSpreadTypes, TraitActionType} from "@/types/data";
 
 @Component({
   components: {EditorForm}
@@ -86,9 +86,19 @@ export default class ChooseSkillsView extends Vue {
     return this.editingCharacter!.skillspread.spreads.map(s => s.points).sort((a, b) => a - b);
   }
 
-  private isPointAvailable(val: number) {
+  private isPointAvailable(val: number, skillKey: SkillKeys) {
     const amount = this.getAvailableAmount(val);
-    return amount > 0;
+    if (amount > 0) {
+      for (const flaw of this.editingCharacter!.merits.packs.flatMap(p => p.flawTraits)) {
+        const action = flaw.actions.find(a => a.type === TraitActionType.CapSkill && a.data["skill"] === skillKey);
+        if (action && action.data["value"] < val) {
+          return false;
+        }
+      }
+      return true;
+    } else {
+      return false;
+    }
   }
 
   private getAvailableAmount(val: number) {

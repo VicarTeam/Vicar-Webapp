@@ -243,14 +243,14 @@
       {
         "id": 1,
         "level": 1,
-        "name": "Folkloristischer Fluch ($input)",
+        "name": "Folkloristischer Fluch",
         "description": "Du erhälst schweren Schaden von einem folklorischen Fluch wie z.B. \"ultraviolettes Licht\" oder \"Weihwasser\""
       },
       {
         "id": 2,
         "level": 1,
         "isRepeatable": true,
-        "name": "Folkloristische Blockade ($input)",
+        "name": "Folkloristische Blockade",
         "description": "Vor einer solchen Blockade musst du zurückweichen oder einen Punkt Willenskraft einsetzen um die Blockade zu durchbrechen. Blockaden sind z.B. \"heilige Symbol\" oder \"ohne Einladung des Besitzer die Türschwelle eines Hauses zu überschreiten\""
       },
       {
@@ -297,7 +297,7 @@
       {
         "id": 1,
         "level": 1,
-        "name": "Hochfunktionale Sucht ($input)",
+        "name": "Hochfunktionale Sucht",
         "description": "Du erhälst einen Bonus von 1 auf alle Würfelvorräte, wenn die letzte Person von der du getrunken hast, deine Droge intus hatte"
       }
     ],
@@ -305,13 +305,13 @@
       {
         "id": 1,
         "level": 1,
-        "name": "Sucht ($input)",
+        "name": "Sucht",
         "description": "Du erhälst einen Malus von 1 auf alle Würfelvorräten (außer welche, die deinen Drogenkonsum begünstigen), sofern die letzte Person, von der du getrunken hast, nicht deine Droge intus hatte"
       },
       {
         "id": 2,
         "level": 2,
-        "name": "Hoffnungslose Abhängigkeit ($input)",
+        "name": "Hoffnungslose Abhängigkeit",
         "description": "Du erhälst einen Malus von 2 auf alle Würfelvorräten (außer welche, die deinen Drogenkonsum begünstigen), sofern die letzte Person, von der du getrunken hast, nicht deine Droge intus hatte"
       }
     ]
