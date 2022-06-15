@@ -90,6 +90,7 @@ export default class ChooseSkillsView extends Vue {
     const amount = this.getAvailableAmount(val);
     if (amount > 0) {
       for (const flaw of this.editingCharacter!.merits.packs.flatMap(p => p.flawTraits)) {
+        if (!flaw.actions) continue;
         const action = flaw.actions.find(a => a.type === TraitActionType.CapSkill && a.data["skill"] === skillKey);
         if (action && action.data["value"] < val) {
           return false;
