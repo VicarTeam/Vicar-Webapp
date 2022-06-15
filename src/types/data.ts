@@ -110,6 +110,7 @@ export enum TraitSpecialRules {
  */
 export interface ITraitPack extends IRestrictionHolder {
     id: number;
+    type: "merits" | "backgrounds";
     name: string;
     description: string;
     isCombinable: boolean;

@@ -15,13 +15,13 @@ export default class PTActionHandler {
             case PTActionType.AddMerit:
                 const merit = DataManager.getMerit(action.data.meritId);
                 if (merit) {
-                    this.addTrait(false, char, merit, action.data.levelId, "merits");
+                    this.addTrait(false, false, char, merit, action.data.levelId, "merits");
                 }
                 break;
             case PTActionType.AddBackground:
                 const background = DataManager.getBackground(action.data.backgroundId);
                 if (background) {
-                    this.addTrait(false, char, background, action.data.levelId, "backgrounds");
+                    this.addTrait(false, false, char, background, action.data.levelId, "backgrounds");
                 }
                 break;
             case PTActionType.AddFlaw:
@@ -41,10 +41,10 @@ export default class PTActionHandler {
         }
     }
 
-    public static addFlaw(char: ICharacter, choice: IFlawChoice): void {
+    public static addFlaw(char: ICharacter, choice: IFlawChoice, manual = false): void {
         const pack: ITraitPack|null = DataManager.getFlawOwner(choice);
         if (pack) {
-            this.addTrait(true, char, pack, choice.flawId, choice.type === "background" ? "backgrounds" : "merits", "disadvantages", (flaw: ILockableTrait) => {
+            this.addTrait(manual, true, char, pack, choice.flawId, choice.type === "background" ? "backgrounds" : "merits", "disadvantages", (flaw: ILockableTrait) => {
                 return {
                     ...flaw,
                     customLevel: choice.customLevel,
@@ -70,7 +70,7 @@ export default class PTActionHandler {
         return upack;
     }
 
-    private static addTrait(isFlaw: boolean, char: ICharacter, pack: ITraitPack, levelId: number, name: "backgrounds" | "merits", packKey: "advantages" | "disadvantages" = "advantages", cb: ((trait: ILockableTrait) => ILockableTrait)|null = null): void {
+    public static addTrait(manual: boolean, isFlaw: boolean, char: ICharacter, pack: ITraitPack, levelId: number, name: "backgrounds" | "merits", packKey: "advantages" | "disadvantages" = "advantages", cb: ((trait: ILockableTrait) => ILockableTrait)|null = null): void {
         const upack = this.initializeTraitPack(char, pack, name);
 
         const level = pack[packKey].find(adv => adv.id === levelId);
@@ -78,11 +78,11 @@ export default class PTActionHandler {
             const trait = cb ? cb({
                 ...level,
                 isLocked: true,
-                isManual: false
+                isManual: manual
             }) : {
                 ...level,
                 isLocked: true,
-                isManual: false
+                isManual: manual
             };
             (isFlaw ? upack.flawTraits : upack.traits).push(trait);
         }

@@ -270,19 +270,19 @@
         "id": 4,
         "level": 1,
         "name": "Versteckte Waffenkammer",
+        "requirement": {
+          "type": "or",
+          "values":  [1, 2, 3]
+        },
         "description": "Jeder Punkt in diesem Vorzug fügt dem Vorrat weitere Waffen hinzu (z.B. Kurzwaffen, Langwaffen oder Munition)"
       },
       {
         "id": 5,
         "level": 1,
         "name": "Zelle",
-        "isRepeatable": true,
         "requirement": {
           "type": "or",
           "values":  [2, 3]
-        },
-        "restrictRepeats": {
-          "amount": 32
         },
         "description": "Du kannst 2 Gefangene in dieser Zelle einsperren. Mit jedem Punkt kannst du doppelt so viele Gefangene einsperren (max. 32 bei Zufluchtsgröße 3; geht nicht bei Zufluchtsgröße 1)"
       },
@@ -290,14 +290,16 @@
         "id": 6,
         "level": 1,
         "name": "Wachleute",
-        "isRepeatable": true,
+        "requirement": {
+          "type": "or",
+          "values":  [1, 2, 3]
+        },
         "description": "Entweder professionelle Sicherheitsleute oder Schlägertypen. Jeder Punkt gewährt dir 4 Wachleute und einen begabten Boss"
       },
       {
         "id": 7,
         "level": 1,
         "name": "Labor",
-        "isRepeatable": true,
         "requirement": {
           "type": "or",
           "values":  [2, 3]
@@ -308,7 +310,10 @@
         "id": 8,
         "level": 1,
         "name": "Bibliothek",
-        "isRepeatable": true,
+        "requirement": {
+          "type": "or",
+          "values":  [1, 2, 3]
+        },
         "restrictRepeats": {
           "size": 1,
           "amount": 1
@@ -319,35 +324,46 @@
         "id": 9,
         "level": 1,
         "name": "Lage",
-        "isRepeatable": true,
+        "requirement": {
+          "type": "or",
+          "values":  [1, 2, 3]
+        },
         "description": "Deine Zuflucht liegt in einer exklusiven Gegend. Du bekommst 2 Würfel Bonus auf Werte die zu deiner Lage passen (z.B. Zuflucht neben dem Elysium: Aufschnappen von Gerüchten)"
       },
       {
         "id": 10,
         "level": 1,
         "name": "Luxus",
-        "isRepeatable": true,
+        "requirement": {
+          "type": "or",
+          "values":  [1, 2, 3]
+        },
         "description": "Du erhälst luxuriöse Güter wie Designermöbel. Bei sterblichen Gästen in der Zuflucht erhälst einen Bonus von 2 auf gesellschaftliche Interaktionen (hast du nicht mindestens Ressourcen 3, sind die Güter illegal erworben)"
       },
       {
         "id": 11,
         "level": 1,
         "name": "Hintereingang",
-        "isRepeatable": true,
+        "requirement": {
+          "type": "or",
+          "values":  [1, 2, 3]
+        },
         "description": "Deine Zuflucht erhält einen Hintereingang wie einen Geheimtunnel zum Flüchten. Jeder Punkt gewährt dir 2 Würfel Bonus wenn du Überwachung in der Nähe der Zuflucht ausweichen willst"
       },
       {
         "id": 12,
         "level": 1,
         "name": "Sicherheitssystem",
-        "isRepeatable": true,
+        "requirement": {
+          "type": "or",
+          "values":  [1, 2, 3]
+        },
         "description": "Das Sicherheitssystem deiner Zuflucht ist besser als der Standard. Jeder Punkt gewährt dir 2 Würfel Bonus um ungewährten Zugriff in deine Zuflucht zu verhindern oder dich zu warnen"
       },
       {
         "id": 13,
         "level": 1,
         "name": "Behandlungszimmer",
-        "isRepeatable": true,
         "requirement": {
           "type": "or",
           "values":  [2, 3]
@@ -358,7 +374,10 @@
         "id": 14,
         "level": 1,
         "name": "Schutz",
-        "isRepeatable": true,
+        "requirement": {
+          "type": "or",
+          "values":  [1, 2, 3]
+        },
         "description": "Deine Zuftlucht ist magisch gegen übernatürliche Kräfte geschützt. Jeder Punkt gewährt dir 1 Würfel Bonus um dich gegen übernatürliche Wahrsagekünste o.ä. zu wehren (Erzähler kann dies durch einen Mindestwert auf Okkultismus o.ä. beschränken)"
       }
     ],
@@ -640,7 +659,6 @@
         "name": "Verstoßen",
         "description": "Du wirst von dieser Sekte veranscheut. Mitglieder dieser Gruppe werden aktiv gegen dich agieren, wenn sie können"
       }
-
     ]
   }
 ]

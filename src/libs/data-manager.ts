@@ -46,12 +46,14 @@ export default class DataManager {
             });
 
             const merits: ITraitPack[] = (<data.ITraitPack[]>(await import(`@/assets/data/${langKey}/Merits.json`)).default).map(merit => {
+                merit.type = "merits";
                 merit.advantages = merit.advantages.map(advantage => fillDefaults<ITrait>(advantage, DefaultTrait));
                 merit.disadvantages = merit.disadvantages.map(disadvantage => fillDefaults<ITrait>(disadvantage, DefaultTrait));
                 return merit;
             });
 
             const backgrounds: ITraitPack[] = (<data.ITraitPack[]>(await import(`@/assets/data/${langKey}/Backgrounds.json`)).default).map(merit => {
+                merit.type = "backgrounds";
                 merit.advantages = merit.advantages.map(advantage => fillDefaults<ITrait>(advantage, DefaultTrait));
                 merit.disadvantages = merit.disadvantages.map(disadvantage => fillDefaults<ITrait>(disadvantage, DefaultTrait));
                 return merit;
