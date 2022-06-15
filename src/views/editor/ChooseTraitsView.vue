@@ -11,7 +11,7 @@
             <span class="d-flex justify-content-center align-items-center mb-10"
                   style="width: 100%; border-bottom: 1px solid rgba(255, 255, 255, 0.4)">
               <small>{{ $t('editor.traits.merits') }}: </small><b
-                class="ml-5">{{ getUsedTraitPoints() }}</b>/{{ maxTraitPoints }}
+                class="ml-5">{{ getUsedTraitPoints() }}</b>/{{ maxTraitPoints }}{{maxTraitBonus > 0 ? ' (+' + maxTraitBonus + ')' : ''}}<TipButton class="ml-10" :content="$t('editor.traits.bonus')" v-if="maxTraitBonus > 0"/>
             </span>
 
             <div v-for="p in editingCharacter.merits.packs" style="width: 100%">
@@ -46,7 +46,7 @@
           <div class="card m-0 mt-20 w-500 trait-pack">
             <span class="d-flex justify-content-center align-items-center mb-10"
                   style="width: 100%; border-bottom: 1px solid rgba(255, 255, 255, 0.4)">
-              <small>{{ $t('editor.traits.flaws') }}: </small><b class="ml-5">{{ getUsedFlawPoints() }}</b>/{{ maxFlawPoints }}
+              <small>{{ $t('editor.traits.flaws') }}: </small><b class="ml-5">{{ getUsedFlawPoints() }}</b>/{{ maxFlawPoints }}{{maxFlawBonus > 0 ? ' (+' + maxFlawBonus + ')' : ''}}<TipButton class="ml-10" :content="$t('editor.traits.bonus')" v-if="maxFlawBonus > 0"/>
             </span>
 
             <div v-for="p in editingCharacter.merits.packs" style="width: 100%">
@@ -105,15 +105,15 @@ export default class ChooseTraitsView extends Vue {
   @Ref("chooseTraitModal")
   private chooseTraitModal!: ChooseTraitModal;
 
-  private maxTraitPoints: number = 0;
-  private maxFlawPoints: number = 0;
+  private maxTraitPoints: number = 7;
+  private maxTraitBonus: number = 0;
+  private maxFlawPoints: number = 2;
+  private maxFlawBonus: number = 0;
 
   mounted() {
     if (this.editingCharacter) {
-      const traitPoints = (using: IUsingTraitPacks) => using.freePoints + using.packs.map(value => value.bonusPoints).reduce((a, b) => a + b, 0);
-      const flawPoints = (using: IUsingTraitPacks) => using.packs.map(value => value.flawBonusPoints).reduce((a, b) => a + b, 0);
-      this.maxTraitPoints = traitPoints(this.editingCharacter.backgrounds) + traitPoints(this.editingCharacter.merits) + 7;
-      this.maxFlawPoints = flawPoints(this.editingCharacter.backgrounds) + flawPoints(this.editingCharacter.merits) + 2;
+      this.maxTraitBonus = this.editingCharacter.requiredPointSpreads.filter(s => !s.isFlaw).map(s => s.points).reduce((a, b) => a + b, 0);
+      this.maxFlawBonus = this.editingCharacter.requiredPointSpreads.filter(s => s.isFlaw).map(s => s.points).reduce((a, b) => a + b, 0);
     }
   }
 
@@ -126,7 +126,6 @@ export default class ChooseTraitsView extends Vue {
       return;
     }
 
-    //TODD check if trait is needed for any other trait
     if (isFlaw) {
       pack.flawTraits.splice(pack.flawTraits.indexOf(trait), 1);
     } else {
@@ -155,7 +154,7 @@ export default class ChooseTraitsView extends Vue {
         return;
       }
 
-      this.chooseTraitModal.showModal(isFlaw, this.maxTraitPoints - this.getUsedTraitPoints());
+      this.chooseTraitModal.showModal(isFlaw, this.maxTraitPoints + this.maxTraitBonus - this.getUsedTraitPoints());
     }
   }
 
@@ -171,11 +170,11 @@ export default class ChooseTraitsView extends Vue {
   }
 
   private hasTraitPointsLeft(): boolean {
-    return this.getUsedTraitPoints() < this.maxTraitPoints;
+    return this.getUsedTraitPoints() < this.maxTraitPoints + this.maxTraitBonus;
   }
 
   private hasFlawPointsLeft(): boolean {
-    return this.getUsedFlawPoints() < this.maxFlawPoints;
+    return this.getUsedFlawPoints() < this.maxFlawPoints + this.maxFlawBonus;
   }
 
   private getUsedTraitPoints(): number {

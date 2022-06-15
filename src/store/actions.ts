@@ -5,7 +5,8 @@ export const actions: ActionTree<State, any> = {
     popEditorCharHistory: ({commit, state}) => {
         const editableArr = [...state.editorCharHistory];
         const popped = editableArr.pop();
-        commit("setEditorCharHistory", editableArr);
+        commit("setEditingCharacter", popped);
+        commit("setCharHistory", editableArr);
         return popped;
     }
 };

@@ -37,8 +37,17 @@ export default class SpendFlawPointsBetweenAction extends PTActionBase<{points: 
   applyOutput(char: ICharacter) {
     this.usages.forEach(u => {
       if (u.val > 0) {
-        const upack = PTActionHandler.initializeTraitPack(char, u.pack, u.type);
-        upack.flawBonusPoints += u.val;
+        const existingSpread = char.requiredPointSpreads.find(spread => spread.packId === u.pack.id && spread.type === u.type);
+        if (existingSpread) {
+          existingSpread.points += u.val;
+        } else {
+          char.requiredPointSpreads.push({
+            isFlaw: false,
+            packId: u.pack.id,
+            type: u.type,
+            points: u.val
+          });
+        }
       }
     });
   }

@@ -32,10 +32,16 @@ export default class PTActionHandler {
                 }
                 break;
             case PTActionType.AddBackgroundPoints:
-                const background2 = DataManager.getBackground(action.data.backgroundId);
-                if (background2) {
-                    const upack = this.initializeTraitPack(char, background2, "backgrounds");
-                    upack.bonusPoints += action.data.amount;
+                const existingSpread = char.requiredPointSpreads.find(spread => spread.packId === action.data.backgroundId && spread.type === "backgrounds");
+                if (existingSpread) {
+                    existingSpread.points += action.data.amount;
+                } else {
+                    char.requiredPointSpreads.push({
+                        isFlaw: false,
+                        packId: action.data.backgroundId,
+                        type: "backgrounds",
+                        points: action.data.amount
+                    });
                 }
                 break;
         }
@@ -59,9 +65,6 @@ export default class PTActionHandler {
         if (!upack) {
             upack = {
                 pack,
-                usedPoints: 0,
-                bonusPoints: 0,
-                flawBonusPoints: 0,
                 traits: [],
                 flawTraits: []
             };

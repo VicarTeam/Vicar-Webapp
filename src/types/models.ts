@@ -135,15 +135,11 @@ export interface IClan {
 
 export interface IUsingTraitPack {
     pack: ITraitPack;
-    usedPoints: number;
-    bonusPoints: number;
-    flawBonusPoints: number; //TODO these points must used: Force that!
     traits: ILockableTrait[];
     flawTraits: ILockableTrait[];
 }
 
 export interface IUsingTraitPacks {
-    freePoints: number;
     packs: IUsingTraitPack[];
 }
 
@@ -166,7 +162,15 @@ export interface IDisciplineSelection {
     abilities: ILeveledDisciplineAbility[];
 }
 
+export interface IRequiredPointSpread {
+    type: "backgrounds"|"merits";
+    isFlaw: boolean;
+    points: number;
+    packId: number;
+}
+
 export interface ICharacter {
+    requiredPointSpreads: IRequiredPointSpread[];
     books: number[];
     name: string;
     sex: Sex;
@@ -211,6 +215,7 @@ export interface ISkillData {
 }
 
 export const DefaultCharacter: () => ICharacter = () => ({
+    requiredPointSpreads: [],
     ambition: "",
     bloodPotency: 0,
     books: [],
@@ -250,11 +255,9 @@ export const DefaultCharacter: () => ICharacter = () => ({
     sex: Sex.Divers,
     exp: 0,
     merits: {
-        freePoints: 0,
         packs: []
     },
     backgrounds: {
-        freePoints: 0,
         packs: []
     }
 });

@@ -32,8 +32,17 @@ export default class SpendBackgroundPointsBetweenAction extends PTActionBase<{po
   applyOutput(char: ICharacter) {
     this.usages.forEach(u => {
       if (u.val > 0) {
-        const upack = PTActionHandler.initializeTraitPack(char, u.background, "backgrounds");
-        upack.bonusPoints += u.val;
+        const existingSpread = char.requiredPointSpreads.find(spread => spread.packId === u.background.id && spread.type === "backgrounds");
+        if (existingSpread) {
+          existingSpread.points += u.val;
+        } else {
+          char.requiredPointSpreads.push({
+            isFlaw: false,
+            packId: u.background.id,
+            type: "backgrounds",
+            points: u.val
+          });
+        }
       }
     });
   }

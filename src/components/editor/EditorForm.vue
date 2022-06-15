@@ -70,7 +70,7 @@ export default class EditorForm extends Vue {
 
   private back() {
     if (!this.isCancel) {
-      this.setEditingCharacter(this.popEditorCharHistory());
+      this.popEditorCharHistory();
       this.$router.back();
     } else {
       this.setEditingCharacter();

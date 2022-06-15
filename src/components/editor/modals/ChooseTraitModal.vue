@@ -5,10 +5,10 @@
         <b style="flex-grow: 1">{{$t('editor.traits.modal.title.' + (isFlaw ? 'flaw' : 'trait'))}}:</b>
         <select class="form-control categorized" v-model="selectedPack" @change="selectTrait(null)">
           <option class="category" disabled>{{$t('data.trait.merits')}}</option>
-          <option v-for="m in merits" :value="m">{{m.name}}</option>
+          <option v-for="m in merits" :value="m">{{m.name}}{{getTraitPackBonus(m, "merits", isFlaw) > 0 ? '(+' + getTraitPackBonus(m, "merits", isFlaw) + ')' : ''}}</option>
 
           <option class="category" disabled>{{$t('data.trait.backgrounds')}}</option>
-          <option v-for="b in backgrounds" :value="b">{{b.name}}</option>
+          <option v-for="b in backgrounds" :value="b">{{b.name}}{{getTraitPackBonus(b, "backgrounds", isFlaw) > 0 ? '(+' + getTraitPackBonus(b, "backgrounds", isFlaw) + ')' : ''}}</option>
         </select>
       </div>
 
@@ -124,6 +124,14 @@ export default class ChooseTraitModal extends Vue {
     });
 
     this.show = false;
+  }
+
+  private getTraitPackBonus(pack: ITraitPack, type: "backgrounds"|"merits", isFlaw: boolean) {
+    return this.getTraitPackBonusSpread(pack, type, isFlaw)?.points ?? 0;
+  }
+
+  private getTraitPackBonusSpread(pack: ITraitPack, type: "backgrounds"|"merits", isFlaw: boolean) {
+    return this.editingCharacter!.requiredPointSpreads.find(s => s.type === type && s.isFlaw === isFlaw && s.packId === pack.id);
   }
 
   private selectTrait(trait: ITrait) {
