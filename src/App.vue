@@ -3,19 +3,25 @@
     <div class="content-wrapper">
       <router-view/>
     </div>
+    <TipModal ref="tipModal"/>
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Provide, Ref, Vue} from "vue-property-decorator";
+import TipModal from "@/components/editor/TipModal.vue";
 
 @Component({
-  components: {}
+  components: {TipModal}
 })
 export default class App extends Vue {
 
-  async mounted() {
+  @Ref("tipModal")
+  private tipModal!: TipModal;
 
+  @Provide("show-tip")
+  private showTip(content: any, title?: any) {
+    this.tipModal.showModal(title, content);
   }
 }
 </script>

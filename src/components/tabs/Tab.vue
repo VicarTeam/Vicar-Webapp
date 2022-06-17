@@ -12,18 +12,18 @@ import VText from "@/components/text/VText.vue";
   components: {VText}
 })
 export default class Tab extends Vue {
-  
+
   @Prop({required: true})
-  private value!: number;
-  
+  private value!: any;
+
   @Prop({required: true})
   private text!: string;
-  
+
   @Inject("tabs:getSelectedValue")
-  private getSelectedValue!: () => number;
-  
+  private getSelectedValue!: () => any;
+
   @Inject("tabs:setSelectedValue")
-  private setSelectedValue!: (value: number) => void;
+  private setSelectedValue!: (value: any) => void;
 }
 </script>
 

@@ -5,7 +5,7 @@
 <!--      <Tab :value="1" :text="$t('main.tabs.lexicon').toString()"/>-->
       <Tab :value="2" :text="$t('main.tabs.settings').toString()"/>
     </Tabs>
-    <div class="flex-grow-1" style="width: 100%; height: calc(100vh - 5rem)">
+    <div class="flex-grow-1" style="width: 100%; height: calc(100vh - 4.2rem - 3px); overflow-x: hidden; overflow-y: auto">
       <Characters v-if="selectedTab === 0"/>
       <Settings v-else-if="selectedTab === 2"/>
     </div>

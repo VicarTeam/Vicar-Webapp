@@ -5,17 +5,20 @@
         <IconButton icon="fa-angles-left" @click="backToMain"/>
         <Avatar :src="editingCharacter.avatar" style="width: 3rem; height: 3rem;"/>
       </div>
-      <Tabs class="center" v-model="selectedTopTab">
-        <Tab :value="0" :text="$t('viewer.tab.profile').toString()"/>
-        <Tab :value="1" :text="$t('viewer.tab.attributes').toString()"/>
-        <Tab :value="2" :text="$t('viewer.tab.skills').toString()"/>
-        <Tab :value="3" :text="$t('viewer.tab.disciplines').toString()"/>
-        <Tab :value="4" :text="$t('viewer.tab.traits').toString()"/>
-        <Tab :value="5" :text="$t('viewer.tab.pdf').toString()"/>
+      <Tabs class="center" @before-change="switchTab" v-model="selectedTab">
+        <Tab value="viewer-profile" :text="$t('viewer.tab.profile').toString()"/>
+        <Tab value="viewer-attributes" :text="$t('viewer.tab.attributes').toString()"/>
+        <Tab value="viewer-skills" :text="$t('viewer.tab.skills').toString()"/>
+        <Tab value="viewer-disciplines" :text="$t('viewer.tab.disciplines').toString()"/>
+        <Tab value="viewer-traits" :text="$t('viewer.tab.traits').toString()"/>
+        <Tab value="viewer-pdf" :text="$t('viewer.tab.pdf').toString()"/>
       </Tabs>
       <div class="actions">
         <small style="color: #afafaf">EXP: <b>{{editingCharacter.exp}}</b></small>
       </div>
+    </div>
+    <div style="width: 100%; height: calc(100vh - 4.2rem - 3px); overflow-x: hidden; overflow-y: auto">
+      <router-view/>
     </div>
   </div>
 </template>
@@ -40,7 +43,17 @@ export default class ViewerView extends Vue {
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character?: ICharacter) => void;
 
-  private selectedTopTab = 0;
+  private selectedTab: string = "viewer-profile";
+
+  mounted() {
+    this.$router.push({name: 'viewer-profile'});
+  }
+
+  private switchTab(name: string) {
+    if (this.$route.name !== name) {
+      this.$router.push({name});
+    }
+  }
 
   private backToMain() {
     this.setEditingCharacter(undefined);

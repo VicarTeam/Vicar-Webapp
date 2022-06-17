@@ -62,7 +62,39 @@ const routes: Array<RouteConfig> = [
       } else {
         next('/');
       }
-    }
+    },
+    children: [
+      {
+        path: 'profile',
+        name: 'viewer-profile',
+        component: () => import('@/views/viewer/ProfileView.vue')
+      },
+      {
+        path: 'attributes',
+        name: 'viewer-attributes',
+        component: () => import('@/views/viewer/AttributesView.vue')
+      },
+      {
+        path: 'skills',
+        name: 'viewer-skills',
+        component: () => import('@/views/viewer/SkillsView.vue')
+      },
+      {
+        path: 'disciplines',
+        name: 'viewer-disciplines',
+        component: () => import('@/views/viewer/DisciplinesView.vue')
+      },
+      {
+        path: 'traits',
+        name: 'viewer-traits',
+        component: () => import('@/views/viewer/TraitsView.vue')
+      },
+      {
+        path: 'pdf',
+        name: 'viewer-pdf',
+        component: () => import('@/views/viewer/PdfView.vue')
+      }
+    ]
   }
 ]
 

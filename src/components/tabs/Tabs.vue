@@ -11,17 +11,18 @@ import {Component, Prop, Provide, Vue} from "vue-property-decorator";
   components: {}
 })
 export default class Tabs extends Vue {
-  
+
   @Prop()
-  private value!: number;
-  
+  private value!: any;
+
   @Provide("tabs:setSelectedValue")
-  private setSelectedValue(value: number) {
+  private setSelectedValue(value: any) {
+    this.$emit("before-change", value);
     this.$emit("input", value);
   }
-  
+
   @Provide("tabs:getSelectedValue")
-  private getSelectedValue(): number {
+  private getSelectedValue(): any {
     return this.value;
   }
 }

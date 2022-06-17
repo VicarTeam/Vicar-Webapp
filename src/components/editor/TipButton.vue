@@ -1,5 +1,5 @@
 <template>
-  <i class="fa-solid fa-circle-question" @click="showTip(content, title)"></i>
+  <i class="fa-solid fa-circle-question" @click="click"></i>
 </template>
 
 <script lang="ts">
@@ -10,11 +10,22 @@ import {Component, Inject, Prop, Vue} from "vue-property-decorator";
 })
 export default class TipButton extends Vue {
 
-  @Prop({required: true})
+  @Prop({default: ""})
   private content!: any;
 
   @Prop({default: null})
   private title!: any;
+
+  @Prop({default: false})
+  private override!: boolean;
+
+  private click() {
+    if (this.override) {
+      this.$emit("click");
+    } else {
+      this.showTip(this.content, this.title);
+    }
+  }
 
   @Inject("show-tip")
   private showTip!: (content: any, title?: any) => void;
