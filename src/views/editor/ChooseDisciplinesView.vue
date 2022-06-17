@@ -1,5 +1,5 @@
 <template>
-  <EditorForm :can-go-next="canGoNext" next-step="" is-finish>
+  <EditorForm :can-go-next="canGoNext" :is-finish="true">
     <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
       <div class="choose-disciplines-wrapper">
         <div class="form-group mb-5 d-flex justify-content-center align-items-center flex-column" style="text-align: center">

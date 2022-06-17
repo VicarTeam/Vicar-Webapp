@@ -5,6 +5,7 @@ export enum UpdateState {
     Checking,
     Updating,
     LoadingData,
+    LoadingCharacters,
     Finishing
 }
 

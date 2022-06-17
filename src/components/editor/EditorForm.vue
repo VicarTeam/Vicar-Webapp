@@ -16,6 +16,7 @@
 import {Component, Prop, Vue} from "vue-property-decorator";
 import {Action, Mutation, State} from "vuex-class";
 import {ICharacter} from "@/types/models";
+import CharacterStorage from "@/libs/io/character-storage";
 
 @Component({
   components: {}
@@ -34,7 +35,7 @@ export default class EditorForm extends Vue {
   @Prop({required: true})
   private canGoNext!: boolean;
 
-  @Prop({required: true})
+  @Prop({default: ""})
   private nextStep!: string;
 
   @State("editingCharacter")
@@ -64,7 +65,10 @@ export default class EditorForm extends Vue {
       this.addCharToEditorHistory(this.fallbackHistoryChar ? this.fallbackHistoryChar : this.editingCharacter);
       this.$router.push({name: this.nextStep});
     } else {
-
+      const id = CharacterStorage.addCharacter(this.editingCharacter);
+      this.setEditingCharacter();
+      this.clearCharHistory();
+      this.$router.push({name: 'viewer', params: {id}});
     }
   }
 

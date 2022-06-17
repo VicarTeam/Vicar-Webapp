@@ -170,6 +170,8 @@ export interface IRequiredPointSpread {
 }
 
 export interface ICharacter {
+    id: string;
+    avatar: string;
     requiredPointSpreads: IRequiredPointSpread[];
     books: number[];
     name: string;
@@ -215,8 +217,10 @@ export interface ISkillData {
 }
 
 export const DefaultCharacter: () => ICharacter = () => ({
+    id: "",
     requiredPointSpreads: [],
     ambition: "",
+    avatar: "",
     bloodPotency: 0,
     books: [],
     categories: Object.values(CategoryKeys).map(key => {
