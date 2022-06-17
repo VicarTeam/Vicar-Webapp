@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
+import store from "@/store";
 
 Vue.use(VueRouter)
 
@@ -50,6 +51,18 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/editor/ChooseTraitsView.vue')
       }
     ]
+  },
+  {
+    path: '/viewer',
+    name: 'viewer',
+    component: () => import('@/views/ViewerView.vue'),
+    beforeEnter: (to, from, next) => {
+      if (store.state.editingCharacter) {
+        next();
+      } else {
+        next('/');
+      }
+    }
   }
 ]
 

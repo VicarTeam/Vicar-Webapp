@@ -65,10 +65,9 @@ export default class EditorForm extends Vue {
       this.addCharToEditorHistory(this.fallbackHistoryChar ? this.fallbackHistoryChar : this.editingCharacter);
       this.$router.push({name: this.nextStep});
     } else {
-      const id = CharacterStorage.addCharacter(this.editingCharacter);
-      this.setEditingCharacter();
+      CharacterStorage.addCharacter(this.editingCharacter);
       this.clearCharHistory();
-      this.$router.push({name: 'viewer', params: {id}});
+      this.$router.push({name: 'viewer'});
     }
   }
 

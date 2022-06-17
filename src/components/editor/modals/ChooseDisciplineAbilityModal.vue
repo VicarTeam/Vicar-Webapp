@@ -53,6 +53,7 @@ export default class ChooseDisciplineAbilityModal extends Vue {
   private callback: ChooseAbilityCallback|null = null;
 
   public showModal(discipline: IDisciplineSelection, callback: ChooseAbilityCallback) {
+    this.ability = null;
     this.discipline = discipline;
     this.abilities = DataManager.normalToLeveledAbilities(discipline.discipline);
     this.callback = callback;

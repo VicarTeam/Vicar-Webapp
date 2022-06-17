@@ -18,26 +18,26 @@
           <span class="title">{{c.name}}</span>
           <span class="subtitle">
             {{$t('character.sex.' + c.sex)}}
-            <span class="bullet">&#8226;</span>
+            <bullet/>
             {{c.concept}}
-            <span v-if="c.concept" class="bullet">&#8226;</span>
+            <bullet v-if="c.concept"/>
             <i> Clan:</i> {{c.clan.name}}
-            <span class="bullet">&#8226;</span>
+            <bullet/>
             {{c.clan.slogan}}
-            <span class="bullet">&#8226;</span>
+            <bullet/>
             <i> Generation:</i> {{c.generation}} ({{$t('character.generation.' + c.generationEra)}})
-            <span v-if="c.chronicle" class="bullet">&#8226;</span>
+            <bullet v-if="c.chronicle"/>
             {{c.chronicle}}
-            <span v-if="c.exp > 0" class="bullet">&#8226;</span>
+            <bullet v-if="c.exp > 0"/>
             <span v-if="c.exp > 0"><i> EXP:</i> {{c.exp}}</span>
           </span>
         </div>
 
         <div class="actions">
-          <span class="action" @click="confirmCharDeletionModal.showModal(c)"><i class="fa-solid fa-trash"></i></span>
-          <span class="action" @click="cloneCharacter(c)"><i class="fa-solid fa-copy"></i></span>
-          <span class="action" @click="exportCharacter(c)"><i class="fa-solid fa-file-arrow-down"></i></span>
-          <span class="action"><i class="fa-solid fa-eye"></i></span>
+          <IconButton icon="fa-trash" @click="confirmCharDeletionModal.showModal(c)"/>
+          <IconButton icon="fa-copy" @click="cloneCharacter(c)"/>
+          <IconButton icon="fa-file-arrow-down" @click="exportCharacter(c)"/>
+          <IconButton icon="fa-eye" @click="viewCharacter(c)"/>
         </div>
       </div>
     </div>
@@ -57,9 +57,12 @@ import CharacterStorage from "@/libs/io/character-storage";
 import ConfirmCharDeletionModal from "@/components/main/characters/ConfirmCharDeletionModal.vue";
 import FileCreator from "@/libs/io/file-creator";
 import FileReaderUtils from "@/libs/io/file-reader";
+import {Mutation} from "vuex-class";
+import Bullet from "@/components/Bullet.vue";
+import IconButton from "@/components/IconButton.vue";
 
 @Component({
-  components: {ConfirmCharDeletionModal, Avatar, CreateCharacterModal, Modal}
+  components: {IconButton, Bullet, ConfirmCharDeletionModal, Avatar, CreateCharacterModal, Modal}
 })
 export default class Characters extends Vue {
 
@@ -71,6 +74,9 @@ export default class Characters extends Vue {
 
   @Ref("confirmCharDeletionModal")
   private confirmCharDeletionModal!: ConfirmCharDeletionModal;
+
+  @Mutation("setEditingCharacter")
+  private setEditingCharacter!: (character: ICharacter) => void;
 
   private async importCharacterFromFile(event: {target: {files: FileList}}) {
     try {
@@ -95,6 +101,11 @@ export default class Characters extends Vue {
 
   private exportCharacter(char: ICharacter) {
     FileCreator.create(char.name + ".json", JSON.stringify(char));
+  }
+
+  private viewCharacter(character: ICharacter) {
+    this.setEditingCharacter(character);
+    this.$router.push({name: 'viewer'});
   }
 
   private getCharacters(): ICharacter[] {
@@ -125,9 +136,6 @@ export default class Characters extends Vue {
     .subtitle {
       font-size: 1.1rem;
       color: #939393;
-      .bullet {
-        color: var(--primary-color);
-      }
     }
   }
   .actions {
@@ -135,26 +143,6 @@ export default class Characters extends Vue {
     gap: 1rem;
     justify-content: center;
     align-items: center;
-    .action {
-      border: 3px solid var(--primary-color);
-      color: var(--primary-color);
-      border-radius: 50%;
-      padding: 0.5rem;
-      width: 3rem;
-      height: 3rem;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      &:hover {
-        background-color: var(--primary-color-light);
-        color: #fff;
-      }
-      &:active {
-        background-color: var(--primary-color);
-        color: #fff;
-      }
-    }
   }
 }
 </style>

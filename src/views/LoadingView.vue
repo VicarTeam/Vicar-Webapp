@@ -1,10 +1,7 @@
 ﻿<template>
-  <div class="loading-wrapper">
-    <div class="loader">
-      <Spinner/>
-      <i>{{$t(`loading.state.${i18nKey}`)}}</i>
-    </div>
-  </div>
+  <WrappedSpinner>
+    <i>{{$t(`loading.state.${i18nKey}`)}}</i>
+  </WrappedSpinner>
 </template>
 
 <script lang="ts">
@@ -13,9 +10,10 @@ import Spinner from "@/components/spinners/Spinner.vue";
 import {UpdateState} from "@/libs/backend";
 import DataManager from "@/libs/data-manager";
 import CharacterStorage from "@/libs/io/character-storage";
+import WrappedSpinner from "@/components/spinners/WrappedSpinner.vue";
 
 @Component({
-  components: {Spinner}
+  components: {WrappedSpinner, Spinner}
 })
 export default class LoadingView extends Vue {
 
@@ -38,25 +36,3 @@ export default class LoadingView extends Vue {
   }
 }
 </script>
-
-<style scoped lang="scss">
-.loading-wrapper {
-  user-select: none;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .loader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    i {
-      font-size: 1.7rem;
-      flex-shrink: 0;
-      margin-top: 10px;
-    }
-  }
-}
-</style>
