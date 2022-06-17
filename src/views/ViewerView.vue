@@ -15,6 +15,7 @@
       </Tabs>
       <div class="actions">
         <small style="color: #afafaf">EXP: <b>{{editingCharacter.exp}}</b></small>
+        <button class="btn btn-primary ml-10" @click="saveCurrentCharacter">{{$t('viewer.save')}}</button>
       </div>
     </div>
     <div style="width: 100%; height: calc(100vh - 4.2rem - 3px); overflow-x: hidden; overflow-y: auto">
@@ -24,13 +25,14 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Prop, Provide, Vue} from "vue-property-decorator";
 import {Mutation, State} from "vuex-class";
 import {ICharacter} from "@/types/models";
 import Tabs from "@/components/tabs/Tabs.vue";
 import IconButton from "@/components/IconButton.vue";
 import Avatar from "@/components/Avatar.vue";
 import Tab from "@/components/tabs/Tab.vue";
+import CharacterStorage from "@/libs/io/character-storage";
 
 @Component({
   components: {Tab, Avatar, IconButton, Tabs}
@@ -55,9 +57,21 @@ export default class ViewerView extends Vue {
     }
   }
 
+  private saveCurrentCharacter() {
+    if (this.editingCharacter) {
+      CharacterStorage.saveCharacter(this.editingCharacter);
+    }
+  }
+
   private backToMain() {
+    this.saveCurrentCharacter();
     this.setEditingCharacter(undefined);
     this.$router.push({name: 'main'});
+  }
+
+  @Provide("update-viewer")
+  private updaterViewer() {
+    this.$forceUpdate();
   }
 }
 </script>

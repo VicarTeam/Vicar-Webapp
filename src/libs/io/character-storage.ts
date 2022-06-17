@@ -21,6 +21,10 @@ export default class CharacterStorage {
         });
     }
 
+    public static saveCharacter(character: ICharacter) {
+        localStorage.setItem("character-" + character.id, JSON.stringify(character));
+    }
+
     public static addCharacter(character: ICharacter): string {
         character.id = uuidv4();
 

@@ -1,5 +1,5 @@
 <template>
-  <img :src="realSrc" class="avatar" v-bind="$attrs"/>
+  <img :src="realSrc" class="avatar" v-bind="$attrs" @click="$emit('click')"/>
 </template>
 
 <script lang="ts">

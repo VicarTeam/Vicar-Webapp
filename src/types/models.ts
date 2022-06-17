@@ -197,6 +197,10 @@ export interface ICharacter {
     merits: IUsingTraitPacks;
     backgrounds: IUsingTraitPacks;
     exp: number;
+    chroniclePrinciples: string;
+    anchorsAndBeliefs: string;
+    backstory: string;
+    notes: string;
 }
 
 export interface ICategory {
@@ -263,5 +267,9 @@ export const DefaultCharacter: () => ICharacter = () => ({
     },
     backgrounds: {
         packs: []
-    }
+    },
+    chroniclePrinciples: "",
+    anchorsAndBeliefs: "",
+    backstory: "",
+    notes: ""
 });

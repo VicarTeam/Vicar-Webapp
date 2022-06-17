@@ -1,16 +1,16 @@
 ﻿import * as data from "@/types/data";
 import {
+    AttributeKeys,
     fillDefaults,
     ICharacter,
     IClan,
-    IDisciplineSelection,
     ILanguage,
     ILeveledDisciplineAbility
 } from "@/types/models";
 import {i18n} from "@/libs/i18n";
 import {
     DefaultTrait,
-    IDiscipline, IDisciplineAbility,
+    IDiscipline,
     IFlawChoice,
     IPredatorType,
     IRestrictionHolder,
@@ -18,7 +18,6 @@ import {
     ITraitPack
 } from "@/types/data";
 import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
-import {disciplineAbilityResolver} from "@/libs/resolvers/disciplineability-resolver";
 
 export default class DataManager {
 
@@ -88,6 +87,16 @@ export default class DataManager {
             });
         }
         return arr;
+    }
+
+    public static getAttributeValue(char: ICharacter, attr: AttributeKeys): number {
+        for (const cat of char.categories) {
+            const a = cat.attributes.find(a => a.key === attr);
+            if (a) {
+                return a.value;
+            }
+        }
+        return 0;
     }
 
     public static getFlawOwner(choice: IFlawChoice): ITraitPack|null {

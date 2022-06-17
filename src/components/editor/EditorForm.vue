@@ -15,8 +15,9 @@
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
 import {Action, Mutation, State} from "vuex-class";
-import {ICharacter} from "@/types/models";
+import {AttributeKeys, ICharacter} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
+import DataManager from "@/libs/data-manager";
 
 @Component({
   components: {}
@@ -65,6 +66,9 @@ export default class EditorForm extends Vue {
       this.addCharToEditorHistory(this.fallbackHistoryChar ? this.fallbackHistoryChar : this.editingCharacter);
       this.$router.push({name: this.nextStep});
     } else {
+      this.editingCharacter.health = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Stamina) + 3;
+      this.editingCharacter.willpower = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Composure)
+          + DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Resolve);
       CharacterStorage.addCharacter(this.editingCharacter);
       this.clearCharHistory();
       this.$router.push({name: 'viewer'});
