@@ -54,6 +54,9 @@ export default class EditorForm extends Vue {
   @Mutation("clearCharHistory")
   private clearCharHistory!: () => void;
 
+  @Mutation("setLevelMode")
+  private setLevelMode!: (mode: boolean) => void;
+
   @Action("popEditorCharHistory")
   private popEditorCharHistory!: () => ICharacter;
 
@@ -70,6 +73,7 @@ export default class EditorForm extends Vue {
       this.editingCharacter.willpower = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Composure)
           + DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Resolve);
       CharacterStorage.addCharacter(this.editingCharacter);
+      this.setLevelMode(false);
       this.clearCharHistory();
       this.$router.push({name: 'viewer'});
     }

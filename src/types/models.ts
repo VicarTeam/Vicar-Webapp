@@ -1,5 +1,15 @@
 ﻿import {IDiscipline, IDisciplineAbility, IPredatorType, ISkillSpreadType, ITrait, ITraitPack} from "@/types/data";
 
+export enum LevelType {
+    Attribute,
+    Skill,
+    NewSpecialization,
+    ClanDiscipline,
+    OtherDiscipline,
+    Trait,
+    BloodPotency
+}
+
 export enum CategoryKeys {
     Physical = "physical",
     Social = "social",

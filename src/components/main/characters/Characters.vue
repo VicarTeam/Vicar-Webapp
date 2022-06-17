@@ -78,6 +78,9 @@ export default class Characters extends Vue {
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character: ICharacter) => void;
 
+  @Mutation("setLevelMode")
+  private setLevelMode!: (mode: boolean) => void;
+
   private async importCharacterFromFile(event: {target: {files: FileList}}) {
     try {
       const content = await FileReaderUtils.readFile(event.target.files);
@@ -104,6 +107,7 @@ export default class Characters extends Vue {
   }
 
   private viewCharacter(character: ICharacter) {
+    this.setLevelMode(false);
     this.setEditingCharacter(character);
     this.$router.push({name: 'viewer'});
   }

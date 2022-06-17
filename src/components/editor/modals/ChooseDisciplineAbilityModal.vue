@@ -20,7 +20,8 @@
         <span><b>{{$t('editor.disciplines.duration')}}</b>: {{ability.duration}}</span>
       </div>
 
-      <div style="width: 100%; display: flex; justify-content: center; align-items: center">
+      <div style="width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
+        <span v-if="costs > 0" class="mb-10">{{$t('viewer.modal.level.costs', {xp: this.costs})}}</span>
         <button class="btn btn-primary" :disabled="!canSelectAbility" @click="addCurrentAbility">{{$t('editor.choose')}}</button>
       </div>
     </div>
@@ -28,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Prop, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {ICharacter, IDisciplineSelection, ILeveledDisciplineAbility} from "@/types/models";
 import {State} from "vuex-class";
@@ -45,6 +46,8 @@ export default class ChooseDisciplineAbilityModal extends Vue {
   @State("editingCharacter")
   private editingCharacter!: ICharacter|undefined;
 
+  private costs: number = -1;
+
   private shown: boolean = false;
   private ability: ILeveledDisciplineAbility|null = null;
 
@@ -52,8 +55,9 @@ export default class ChooseDisciplineAbilityModal extends Vue {
   private abilities: ILeveledDisciplineAbility[] = [];
   private callback: ChooseAbilityCallback|null = null;
 
-  public showModal(discipline: IDisciplineSelection, callback: ChooseAbilityCallback) {
+  public showModal(discipline: IDisciplineSelection, callback: ChooseAbilityCallback, costs = -1) {
     this.ability = null;
+    this.costs = costs;
     this.discipline = discipline;
     this.abilities = DataManager.normalToLeveledAbilities(discipline.discipline);
     this.callback = callback;
@@ -95,7 +99,8 @@ export default class ChooseDisciplineAbilityModal extends Vue {
   }
 
   private get canSelectAbility(): boolean {
-    return !!this.ability && disciplineAbilityResolver.resolve(this.editingCharacter!, this.ability);
+    return !!this.ability && disciplineAbilityResolver.resolve(this.editingCharacter!, this.ability)
+        && (this.costs === -1 || this.costs <= this.editingCharacter!.exp);
   }
 }
 </script>

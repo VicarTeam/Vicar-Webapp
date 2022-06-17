@@ -13,7 +13,8 @@ const vuexLocal = new VuexPersistence<State>({
 
 export const state: State = {
     editingCharacter: undefined,
-    editorCharHistory: []
+    editorCharHistory: [],
+    isLevelMode: false
 }
 
 export default new Vuex.Store({

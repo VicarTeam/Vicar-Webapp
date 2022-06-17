@@ -49,7 +49,7 @@
         </div>
         <div class="row">
           <div class="stat" style="margin-right: 5rem">
-            <b>{{ $t('character.bloodpotency') }}:</b>
+            <b>{{ $t('character.bloodpotency') }}: <LevelButton v-if="editingCharacter.bloodPotency < 10" @click="levelBloodPotencyModal.showModal()"/></b>
             <Squares :max="10" :amount="editingCharacter.bloodPotency" :margin-at="6"/>
           </div>
           <div class="stat">
@@ -113,6 +113,8 @@
         </div>
       </div>
     </div>
+
+    <BloodPotencyModal ref="levelBloodPotencyModal"/>
   </div>
 </template>
 
@@ -120,16 +122,18 @@
 import {Component, Inject, Ref, Vue} from "vue-property-decorator";
 import Avatar from "@/components/Avatar.vue";
 import {State} from "vuex-class";
-import {ICharacter} from "@/types/models";
+import {ICharacter, LevelType} from "@/types/models";
 import Bullet from "@/components/Bullet.vue";
 import IconButton from "@/components/IconButton.vue";
 import Squares from "@/components/progress/Squares.vue";
 import Tabs from "@/components/tabs/Tabs.vue";
 import Tab from "@/components/tabs/Tab.vue";
 import TipButton from "@/components/editor/TipButton.vue";
+import LevelButton from "@/components/viewer/LevelButton.vue";
+import BloodPotencyModal from "@/components/viewer/modals/leveling/BloodPotencyModal.vue";
 
 @Component({
-  components: {TipButton, Tab, Tabs, Squares, IconButton, Bullet, Avatar}
+  components: {BloodPotencyModal, LevelButton, TipButton, Tab, Tabs, Squares, IconButton, Bullet, Avatar}
 })
 export default class ProfileView extends Vue {
 
@@ -139,8 +143,13 @@ export default class ProfileView extends Vue {
   @Ref("avatarUploader")
   private avatarUploader!: HTMLInputElement;
 
+  @Ref("levelBloodPotencyModal")
+  private levelBloodPotencyModal!: BloodPotencyModal;
+
   private isEditName = false;
   private editName = "";
+
+  LevelType = LevelType;
 
   private onAvatarUpload(e: Event) {
     //@ts-ignore

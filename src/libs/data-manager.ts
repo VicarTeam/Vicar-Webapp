@@ -1,11 +1,11 @@
 ﻿import * as data from "@/types/data";
 import {
     AttributeKeys,
-    fillDefaults,
+    fillDefaults, IAttributeData,
     ICharacter,
     IClan,
     ILanguage,
-    ILeveledDisciplineAbility
+    ILeveledDisciplineAbility, ISkillData, SkillKeys
 } from "@/types/models";
 import {i18n} from "@/libs/i18n";
 import {
@@ -89,9 +89,23 @@ export default class DataManager {
         return arr;
     }
 
+    public static isClanDiscipline(clan: IClan, disciple: IDiscipline): boolean {
+        return clan.disciplines.find(d => d.id === disciple.id) !== undefined;
+    }
+
     public static getAttributeValue(char: ICharacter, attr: AttributeKeys): number {
         for (const cat of char.categories) {
             const a = cat.attributes.find(a => a.key === attr);
+            if (a) {
+                return a.value;
+            }
+        }
+        return 0;
+    }
+
+    public static getSkillValue(char: ICharacter, skill: SkillKeys): number {
+        for (const cat of char.categories) {
+            const a = cat.skills.find(a => a.key === skill);
             if (a) {
                 return a.value;
             }
