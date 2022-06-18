@@ -16,6 +16,7 @@ export interface IClan {
     name: string;
     slogan: string;
     description: string;
+    curse: string;
     disciplines: number[];
 }
 

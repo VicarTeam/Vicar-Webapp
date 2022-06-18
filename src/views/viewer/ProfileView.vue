@@ -20,7 +20,7 @@
           <bullet/>
           <i> Clan:</i> {{ editingCharacter.clan.name }}
           <bullet/>
-          {{ editingCharacter.clan.slogan }}
+          {{ editingCharacter.clan.slogan }} <TipButton :content="editingCharacter.clan.curse"/>
         </span>
         <span class="side" style="margin-top: 0.2rem">
           <i>Generation:</i> {{

@@ -40,6 +40,7 @@ export default class DataManager {
                     name: clan.name,
                     slogan: clan.slogan,
                     description: clan.description,
+                    curse: clan.curse,
                     disciplines: disciplines.filter(value => clan.disciplines.includes(value.id))
                 };
             });

@@ -140,6 +140,7 @@ export interface IClan {
     readonly name: string;
     readonly slogan: string;
     readonly description: string;
+    readonly curse: string;
     readonly disciplines: IDiscipline[];
 }
 
