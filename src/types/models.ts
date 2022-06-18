@@ -1,4 +1,5 @@
 ﻿import {
+    IBloodPotencyData,
     IDiscipline,
     IDisciplineAbility,
     IPredatorType, IPTAction,
@@ -132,6 +133,7 @@ export function fillDefaults<T extends object>(given: T, defaults: T): T {
 export interface ILanguage {
     readonly key: string;
     readonly books: IBook[];
+    readonly bloodPotencyTable: IBloodPotencyData[];
 }
 
 export interface IBook {

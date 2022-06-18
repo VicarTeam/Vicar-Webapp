@@ -9,7 +9,7 @@ import {
 } from "@/types/models";
 import {i18n} from "@/libs/i18n";
 import {
-    DefaultTrait,
+    DefaultTrait, IBloodPotencyData,
     IDiscipline,
     IFlawChoice,
     IPredatorType,
@@ -62,6 +62,8 @@ export default class DataManager {
 
             const predatorTypes: IPredatorType[] = (await import(`@/assets/data/${langKey}/PredatorTypes.json`)).default;
 
+            const bloodPotencyTable: IBloodPotencyData[] = (await import(`@/assets/data/${langKey}/BloodPotencyTable.json`)).default;
+
             this.languages.push({
                 key: langKey,
                 books: meta.books.map(book => {
@@ -72,7 +74,8 @@ export default class DataManager {
                         backgrounds: backgrounds.filter(background => book.backgrounds.includes(background.id)),
                         predatorTypes: predatorTypes.filter(p => book.predatorTypes.includes(p.id))
                     };
-                })
+                }),
+                bloodPotencyTable
             });
         }
     }

@@ -113,6 +113,39 @@
         </div>
       </div>
     </div>
+    <Tabs/>
+
+    <div style="width: 100%; padding: 2rem; flex-direction: column; justify-content: center; align-items: center">
+      <Row style="width: 100%">
+        <Col style="width: calc(100%/3); justify-content: center; align-items: center">
+          <Row><b>{{$t('character.bloodpotency.spurt')}}</b>:</Row>
+          <Row><small>{{getBloodPotency().bleedingSpurt}} {{$t('character.dice')}}</small></Row>
+        </Col>
+        <Col style="width: calc(100%/3); justify-content: center; align-items: center">
+          <Row><b>{{$t('character.bloodpotency.healing')}}</b>:</Row>
+          <Row><small>{{getBloodPotency().healedDamage}} {{$t('character.simpledmg')}}</small></Row>
+        </Col>
+        <Col style="width: calc(100%/3); justify-content: center; align-items: center">
+          <Row><b>{{$t('character.bloodpotency.bonus')}}</b>:</Row>
+          <Row><small>{{getBloodPotency().disciplineBonus}} {{$t('character.dice')}}</small></Row>
+        </Col>
+      </Row>
+
+      <Row style="width: 100%; margin-top: 1rem">
+        <Col style="width: calc(100%/3); justify-content: center; align-items: center">
+          <Row><b>{{$t('character.bloodpotency.rouserepeat')}}</b>:</Row>
+          <Row><small>{{$t('character.bloodpotency.rouserepeat.val', {x: getBloodPotency().rouseRepeatDisciplineLevel})}}</small></Row>
+        </Col>
+        <Col style="width: calc(100%/3); justify-content: center; align-items: center">
+          <Row><b>{{$t('character.bloodpotency.banelevel')}}</b>:</Row>
+          <Row><small>{{getBloodPotency().baneLevel}}</small></Row>
+        </Col>
+        <Col style="width: calc(100%/3); justify-content: center; align-items: center">
+          <Row><b>{{$t('character.bloodpotency.pray')}}</b>:</Row>
+          <Row><small>{{getBloodPotency().pray}}</small></Row>
+        </Col>
+      </Row>
+    </div>
 
     <BloodPotencyModal ref="levelBloodPotencyModal"/>
   </div>
@@ -131,9 +164,13 @@ import Tab from "@/components/tabs/Tab.vue";
 import TipButton from "@/components/editor/TipButton.vue";
 import LevelButton from "@/components/viewer/LevelButton.vue";
 import BloodPotencyModal from "@/components/viewer/modals/leveling/BloodPotencyModal.vue";
+import {IBloodPotencyData} from "@/types/data";
+import DataManager from "@/libs/data-manager";
+import Col from "@/components/viewer/pdf/Col.vue";
+import Row from "@/components/viewer/pdf/Row.vue";
 
 @Component({
-  components: {BloodPotencyModal, LevelButton, TipButton, Tab, Tabs, Squares, IconButton, Bullet, Avatar}
+  components: {BloodPotencyModal, LevelButton, TipButton, Tab, Tabs, Squares, IconButton, Bullet, Avatar, Row, Col}
 })
 export default class ProfileView extends Vue {
 
@@ -150,6 +187,10 @@ export default class ProfileView extends Vue {
   private editName = "";
 
   LevelType = LevelType;
+
+  private getBloodPotency(): IBloodPotencyData {
+    return DataManager.selectedLanguage.bloodPotencyTable.find(x => x.value === this.editingCharacter.bloodPotency)!;
+  }
 
   private onAvatarUpload(e: Event) {
     //@ts-ignore

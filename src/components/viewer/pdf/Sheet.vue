@@ -23,12 +23,10 @@ export default class Sheet extends Vue {
   flex-direction: column;
   color: black;
   padding: 1cm;
+  width: 21cm !important;
+  height: 29.6cm !important;
   img {
     -webkit-user-drag: none;
-  }
-  &[size="A4"] {
-    width: 21cm;
-    height: 29.6cm;
   }
 }
 

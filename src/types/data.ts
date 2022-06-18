@@ -6,6 +6,16 @@
     predatorTypes: number[];
 }
 
+export interface IBloodPotencyData {
+    value: number;
+    bleedingSpurt: number;
+    healedDamage: number;
+    disciplineBonus: number;
+    rouseRepeatDisciplineLevel: number;
+    baneLevel: number;
+    pray: string;
+}
+
 export interface IEdition {
     languages: string[];
     books: IBook[];
