@@ -44,7 +44,10 @@
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "",
+        "wix": {
+          "language": "de-DE"
+        }
       }
     },
     "security": {
@@ -59,7 +62,7 @@
         "height": 720,
         "resizable": true,
         "title": "Vicar",
-        "width": 1280
+        "width": 1280,
       }
     ]
   }
