@@ -17,9 +17,11 @@ export const state: State = {
     isLevelMode: false
 }
 
+const plugins = process.env.NODE_ENV === 'development' ? [vuexLocal.plugin] : [];
+
 export default new Vuex.Store({
   state,
   mutations,
   actions,
-  plugins: [vuexLocal.plugin]
+  plugins
 })
