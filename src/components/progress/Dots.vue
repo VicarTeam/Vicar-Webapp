@@ -1,6 +1,6 @@
 <template>
   <div class="dots">
-    <span v-for="i in dots" class="dot" :class="{'active': i <= amount}"></span>
+    <span v-for="i in dots" class="dot" :class="{'active': i <= amount, 'ml-10': isMargin(i)}"></span>
   </div>
 </template>
 
@@ -17,6 +17,13 @@ export default class Dots extends Vue {
 
   @Prop({default: 0})
   private max!: number;
+
+  @Prop({default: -1})
+  private marginAt!: number;
+
+  private isMargin(i: number): boolean {
+    return i === this.marginAt;
+  }
 
   private get dots(): number[] {
     const dots: number[] = [];

@@ -4,10 +4,8 @@
       <button class="btn btn-primary" @click="exportPdf">{{ $t('viewer.pdf.print') }}</button>
     </div>
     <div class="pdf" ref="pdfSheets">
-      <ProfileSheet/>
-
-      <Sheet>
-      </Sheet>
+      <FirstSheet/>
+      <SecondSheet/>
     </div>
   </div>
 </template>
@@ -21,10 +19,11 @@ import {State} from "vuex-class";
 import {ICharacter} from "@/types/models";
 import Squares from "@/components/progress/Squares.vue";
 import html2pdf from "html2pdf.js";
-import ProfileSheet from "@/components/viewer/pdf/sheets/ProfileSheet.vue";
+import FirstSheet from "@/components/viewer/pdf/sheets/FirstSheet.vue";
+import SecondSheet from "@/components/viewer/pdf/sheets/SecondSheet.vue";
 
 @Component({
-  components: {ProfileSheet, Squares, Col, Row, Sheet}
+  components: {SecondSheet, FirstSheet, Squares, Col, Row, Sheet}
 })
 export default class PdfView extends Vue {
 

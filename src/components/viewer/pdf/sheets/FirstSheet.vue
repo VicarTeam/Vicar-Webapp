@@ -249,7 +249,7 @@ import Dots from "@/components/progress/Dots.vue";
 @Component({
   components: {Dots, Sheet, Row, Col, Squares}
 })
-export default class ProfileSheet extends Vue {
+export default class FirstSheet extends Vue {
 
   @State("editingCharacter")
   private editingCharacter!: ICharacter;
