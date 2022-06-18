@@ -14,7 +14,7 @@
             <img :src="getClanSymbol(editingCharacter.clan)"/>
             <div class="text">
               <b>{{editingCharacter.clan.name}}</b>
-              <small>"<i>{{editingCharacter.clan.slogan}}</i>"</small>
+              <small>"<i>{{editingCharacter.clan.slogan}}</i>" <bullet/> <i>{{$t('editor.clan.curse')}}: </i><TipButton :content="editingCharacter.clan.curse"/></small>
               <div class="desc">{{editingCharacter.clan.description}}</div>
 
               <h6 style="font-weight: bolder; margin: 1rem 0 0;">{{$t('editor.clan.disciplines')}}:</h6>
@@ -45,9 +45,10 @@ import {ICharacter, IClan} from "@/types/models";
 import DataManager from "@/libs/data-manager";
 import {Mutation, State} from "vuex-class";
 import EditorForm from "@/components/editor/EditorForm.vue";
+import Bullet from "@/components/Bullet.vue";
 
 @Component({
-  components: {EditorForm, TipButton}
+  components: {Bullet, EditorForm, TipButton}
 })
 export default class EditorClanView extends Vue {
 
