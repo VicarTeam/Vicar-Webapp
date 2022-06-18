@@ -13,7 +13,7 @@
           <div class="card" v-for="cat in editingCharacter.categories" :key="cat.name">
             <div style="width: 100%; text-align: center"><b>{{$t('data.category.' + cat.name)}}</b></div>
             <div class="attribute mt-10" v-for="attr in cat.attributes" :key="attr.key">
-              <small>{{$t('data.attribute.' + attr.key)}}:</small>
+              <small><TipButton :content="$t('data.attribute.' + attr.key + '.desc')"/> {{$t('data.attribute.' + attr.key)}}:</small>
               <select class="form-control" v-model="attr.value" style="width: 7rem">
                 <option :value="0">0</option>
                 <option v-for="i in [1, 2, 3, 4]" :key="i" :value="i" :disabled="!isPointAvailable(i)">{{i}}</option>
@@ -31,6 +31,7 @@ import {Component, Vue} from "vue-property-decorator";
 import {State} from "vuex-class";
 import {ICharacter} from "@/types/models";
 import EditorForm from "@/components/editor/EditorForm.vue";
+import TipButton from "@/components/editor/TipButton.vue";
 
 type PointUsage = {
   point: number;
@@ -38,7 +39,7 @@ type PointUsage = {
 }
 
 @Component({
-  components: {EditorForm}
+  components: {TipButton, EditorForm}
 })
 export default class ChooseAttributesView extends Vue {
 

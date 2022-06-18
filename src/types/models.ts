@@ -75,7 +75,8 @@ export enum Sex {
 export enum Generation {
     Children = "children",
     Newborn = "newborn",
-    Ancillae = "ancillae"
+    Ancillae = "ancillae",
+    Older = "older"
 }
 
 export const SortedSkillsAndAttribute = {

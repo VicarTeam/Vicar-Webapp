@@ -18,7 +18,7 @@
           <div class="card" v-for="cat in editingCharacter.categories" :key="cat.name">
             <div style="width: 100%; text-align: center"><b>{{$t('data.category.' + cat.name)}}</b></div>
             <div class="skill mt-10" v-for="skill in cat.skills" :key="skill.key">
-              <small>{{$t('data.skill.' + skill.key)}}:</small>
+              <small><TipButton :override="true" @click="skillInfoModal.showModal(skill.key)"/> {{$t('data.skill.' + skill.key)}}:</small>
               <select class="form-control" v-model="skill.value" style="width: 7rem">
                 <option :value="0">0</option>
                 <option v-for="i in getAvailablePoints()" :key="i" :value="i" :disabled="!isPointAvailable(i, skill.key)">{{i}}</option>
@@ -44,19 +44,23 @@
           </div>
         </div>
       </div>
+
+      <SkillInfoModal ref="skillInfoModal"/>
     </div>
   </EditorForm>
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Ref, Vue} from "vue-property-decorator";
 import EditorForm from "@/components/editor/EditorForm.vue";
 import {State} from "vuex-class";
 import {ICharacter, SkillKeys} from "@/types/models";
 import {DefinedSpreadTypes, TraitActionType} from "@/types/data";
+import TipButton from "@/components/editor/TipButton.vue";
+import SkillInfoModal from "@/components/editor/modals/SkillInfoModal.vue";
 
 @Component({
-  components: {EditorForm}
+  components: {SkillInfoModal, TipButton, EditorForm}
 })
 export default class ChooseSkillsView extends Vue {
 
@@ -64,6 +68,9 @@ export default class ChooseSkillsView extends Vue {
 
   @State("editingCharacter")
   private editingCharacter!: ICharacter|undefined;
+
+  @Ref("skillInfoModal")
+  private skillInfoModal!: SkillInfoModal;
 
   private characterCache: ICharacter|null = null;
   private definedSpecializations: {key: SkillKeys, value: string, name: any}[] = [];
