@@ -16,9 +16,9 @@
 
             <div v-for="p in editingCharacter.merits.packs" style="width: 100%">
               <div class="trait" :class="{'locked': t.isLocked || !t.isManual}" v-for="t in [...p.traits].sort((a, b) => a.name.localeCompare(b.name))">
-              <span>
-                <i>{{$t('data.trait.merit')}}</i> - <b>{{p.pack.name}}</b>: {{t.name}}{{getTraitSuffix(t)}} - <small><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(t)}}</small>
-              </span>
+                <span>
+                  <i>{{$t('data.trait.merit')}}</i> - <b>{{p.pack.name}}</b>: {{t.name}}{{getTraitSuffix(t)}} - <small><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(t)}}</small>
+                </span>
                 <div class="actions">
                   <TipButton :content="t.description"/>
                   <XButton v-if="!t.isLocked && t.isManual && !isTraitNeededForOtherTrait(p, t)" class="ml-5" @click="removeTrait(p, t, false)"/>
@@ -28,9 +28,9 @@
 
             <div v-for="p in editingCharacter.backgrounds.packs" style="width: 100%">
               <div class="trait" :class="{'locked': t.isLocked || !t.isManual}" v-for="t in [...p.traits].sort((a, b) => a.name.localeCompare(b.name))">
-              <span>
-                <i>{{$t('data.trait.background')}}</i> - <b>{{p.pack.name}}</b>: {{t.name}}{{getTraitSuffix(t)}} - <small><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(t)}}</small>
-              </span>
+                <span>
+                  <i>{{$t('data.trait.background')}}</i> - <b>{{p.pack.name}}</b>: {{t.name}}{{getTraitSuffix(t)}} - <small><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(t)}}</small>
+                </span>
                 <div class="actions">
                   <TipButton :content="t.description"/>
                   <XButton v-if="!t.isLocked && t.isManual && !isTraitNeededForOtherTrait(p, t)" class="ml-5" @click="removeTrait(p, t, false)"/>
@@ -93,9 +93,10 @@ import {ICharacter, ILockableTrait, IUsingTraitPack, IUsingTraitPacks} from "@/t
 import ChooseTraitModal from "@/components/editor/modals/ChooseTraitModal.vue";
 import TipButton from "@/components/editor/TipButton.vue";
 import XButton from "@/components/editor/XButton.vue";
+import LevelButton from "@/components/viewer/LevelButton.vue";
 
 @Component({
-  components: {XButton, TipButton, ChooseTraitModal, EditorForm}
+  components: {LevelButton, XButton, TipButton, ChooseTraitModal, EditorForm}
 })
 export default class ChooseTraitsView extends Vue {
 

@@ -93,6 +93,21 @@
       9,
       10,
       8
+    ],
+    "actions": [
+      {
+        "description": "Erhalten durch den Clanfluch.",
+        "type": "add_flaw",
+        "data": {
+          "choices": [
+            {
+              "type": "merit",
+              "id": 6,
+              "flawId": 2
+            }
+          ]
+        }
+      }
     ]
   },
   {

@@ -94,6 +94,7 @@
   "viewer.modal.level.attribute": "Attribut steigern",
   "viewer.modal.level.skill": "Fähigkeit steigern",
   "viewer.modal.level.specialization": "Spezialisierung hinzufügen",
+  "viewer.modal.level.trait": "Vorzug steigern",
   "viewer.disciplines.level.addnew": "Neue Diszipline erlernen",
   "character.deletion": "Möchtest du wirklich {char} löschen? Dieser Vorgang kann nicht rückgängig gemacht werden.",
   "character.deletion.confirm": "Löschen",

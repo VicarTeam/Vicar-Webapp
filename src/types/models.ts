@@ -1,4 +1,11 @@
-﻿import {IDiscipline, IDisciplineAbility, IPredatorType, ISkillSpreadType, ITrait, ITraitPack} from "@/types/data";
+﻿import {
+    IDiscipline,
+    IDisciplineAbility,
+    IPredatorType, IPTAction,
+    ISkillSpreadType,
+    ITrait,
+    ITraitPack
+} from "@/types/data";
 
 export enum LevelType {
     Attribute,
@@ -142,6 +149,7 @@ export interface IClan {
     readonly description: string;
     readonly curse: string;
     readonly disciplines: IDiscipline[];
+    readonly actions: IPTAction[];
 }
 
 export interface IUsingTraitPack {

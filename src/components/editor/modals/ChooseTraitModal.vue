@@ -42,8 +42,9 @@
         </div>
       </div>
 
-      <div style="width: 100%; margin-top: 1rem; text-align: center">
-        <button class="btn btn-primary" :disabled="!isReady" @click="addSelectedTrait">{{$t('editor.choose')}}</button>
+      <div style="margin-top: 1rem; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center">
+        <span v-if="selectedTrait && calculateCosts" class="mb-10">{{$t('viewer.modal.level.costs', {xp: calculateCosts(this.selectedTrait, this.customLevel)})}}</span>
+        <button class="btn btn-primary" style="width: fit-content" :disabled="!isReady" @click="addSelectedTrait">{{$t('editor.choose')}}</button>
       </div>
     </div>
   </Modal>
@@ -58,11 +59,14 @@ import {ITrait, ITraitPack} from "@/types/data";
 import DataManager from "@/libs/data-manager";
 import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
 import PTActionHandler from "@/libs/ptaction-handler";
+import CharacterStorage from "@/libs/io/character-storage";
 
 export type ChooseTraitData = {
   merits: ITraitPack[];
   backgrounds: ITraitPack[];
 }
+
+export type CostsCalculationCallback = (trait: ITrait, level: number) => number;
 
 @Component({
   components: {Modal}
@@ -84,6 +88,8 @@ export default class ChooseTraitModal extends Vue {
   private pointsLeft: number = 0;
   private data: ChooseTraitData = null!;
 
+  private calculateCosts: CostsCalculationCallback|null = null;
+
   mounted() {
     this.data = {
       backgrounds: DataManager.selectedLanguage.books.flatMap(book => {
@@ -101,11 +107,12 @@ export default class ChooseTraitModal extends Vue {
     };
   }
 
-  public showModal(isFlaw: boolean, pointsLeft: number) {
+  public showModal(isFlaw: boolean, pointsLeft: number, callback: CostsCalculationCallback|null = null) {
     this.selectedTrait = null;
     this.selectedPack = null;
     this.isFlaw = isFlaw;
     this.pointsLeft = pointsLeft;
+    this.calculateCosts = callback;
     this.show = true;
   }
 
@@ -122,6 +129,11 @@ export default class ChooseTraitModal extends Vue {
       isLocked: false,
       isManual: true
     });
+
+    if (this.calculateCosts) {
+      this.editingCharacter.exp -= this.calculateCosts(this.selectedTrait, this.customLevel);
+      CharacterStorage.saveCharacter(this.editingCharacter);
+    }
 
     this.show = false;
   }
@@ -239,7 +251,8 @@ export default class ChooseTraitModal extends Vue {
   }
 
   private get isReady(): boolean {
-    return !!this.selectedPack && !!this.selectedTrait;
+    return !!this.selectedPack && !!this.selectedTrait
+        && (!this.calculateCosts || this.calculateCosts(this.selectedTrait, this.customLevel) <= this.editingCharacter!.exp);
   }
 }
 </script>

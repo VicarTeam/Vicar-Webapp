@@ -18,6 +18,7 @@ export interface IClan {
     description: string;
     curse: string;
     disciplines: number[];
+    actions?: IPTAction[];
 }
 
 export interface IDiscipline {

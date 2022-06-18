@@ -1,5 +1,5 @@
 <template>
-  <EditorForm :can-go-next="canGoNext" next-step="editor-predator-type" :is-cancel="true">
+  <EditorForm :can-go-next="canGoNext" next-step="editor-predator-type" :is-cancel="true" @before-next="applyClanActions">
     <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
       <div class="choose-clan-wrapper">
         <div class="form-group" style="text-align: center">
@@ -46,6 +46,7 @@ import DataManager from "@/libs/data-manager";
 import {Mutation, State} from "vuex-class";
 import EditorForm from "@/components/editor/EditorForm.vue";
 import Bullet from "@/components/Bullet.vue";
+import PTActionHandler from "@/libs/ptaction-handler";
 
 @Component({
   components: {Bullet, EditorForm, TipButton}
@@ -54,6 +55,16 @@ export default class EditorClanView extends Vue {
 
   @State("editingCharacter")
   private editingCharacter!: ICharacter|undefined;
+
+  private applyClanActions() {
+    if (!this.editingCharacter || !this.editingCharacter.clan) {
+      return;
+    }
+
+    for (const action of this.editingCharacter.clan.actions) {
+      PTActionHandler.handle(this.editingCharacter, action);
+    }
+  }
 
   private getClanSymbol(clan: IClan) {
     const images = require.context('@/assets/img/clans', false, /\.png$/)

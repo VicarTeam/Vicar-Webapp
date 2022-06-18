@@ -3,10 +3,12 @@
     <div class="trait card">
       <div class="title">
         <b>{{$t('editor.traits.merits')}}</b>
+        <LevelButton icon="fa-plus" class="ml-10" @click="addNewTrait"/>
       </div>
 
       <div class="list">
         <div class="entry" v-for="t in getTransformedData(editingCharacter.merits, false)">
+          <LevelButton v-if="getTraitLevel(t) < 5" @click="levelTraitModal.showModal(t, 'merits')"/>
           <div class="name">
             <small>
               <i style="color: #989898">{{$t('data.trait.merit')}}</i> - {{t.pack.name}}: {{t.name}}{{getTraitSuffix(t)}} - <i><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(t)}}</i>
@@ -16,6 +18,7 @@
         </div>
 
         <div class="entry" v-for="t in getTransformedData(editingCharacter.backgrounds, false)">
+          <LevelButton v-if="getTraitLevel(t) < 5" @click="levelTraitModal.showModal(t, 'backgrounds')"/>
           <div class="name">
             <small>
               <i style="color: #989898">{{$t('data.trait.background')}}</i> - {{t.pack.name}}: {{t.name}}{{getTraitSuffix(t)}} - <i><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(t)}}</i>
@@ -51,28 +54,44 @@
         </div>
       </div>
     </div>
+
+    <TraitModal ref="levelTraitModal"/>
+    <ChooseTraitModal ref="chhoseTraitModal"/>
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Ref, Vue} from "vue-property-decorator";
 import {ICharacter, ILockableTrait, IUsingTraitPacks} from "@/types/models";
 import {State} from "vuex-class";
 import {ITraitPack} from "@/types/data";
 import TipButton from "@/components/editor/TipButton.vue";
 import Bullet from "@/components/Bullet.vue";
+import LevelButton from "@/components/viewer/LevelButton.vue";
+import TraitModal from "@/components/viewer/modals/leveling/TraitModal.vue";
+import ChooseTraitModal from "@/components/editor/modals/ChooseTraitModal.vue";
 
-interface ITransformedData extends ILockableTrait {
+export interface ITransformedData extends ILockableTrait {
   pack: ITraitPack;
 }
 
 @Component({
-  components: {Bullet, TipButton}
+  components: {ChooseTraitModal, TraitModal, LevelButton, Bullet, TipButton}
 })
 export default class TraitsView extends Vue {
 
   @State("editingCharacter")
   private editingCharacter!: ICharacter;
+
+  @Ref("levelTraitModal")
+  private levelTraitModal!: TraitModal;
+
+  @Ref("chhoseTraitModal")
+  private chooseTraitModal!: ChooseTraitModal;
+
+  private addNewTrait() {
+    this.chooseTraitModal.showModal(false, Infinity, (trait, level) => level * 3);
+  }
 
   private getTransformedData(upacks: IUsingTraitPacks, isFlaw: boolean): ITransformedData[] {
     const arr: ITransformedData[] = [];
