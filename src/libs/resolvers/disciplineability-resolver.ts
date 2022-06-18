@@ -37,7 +37,7 @@ class DisciplineAbilityResolver {
 
     @ResolveRestriction("combination")
     private resolveCombination(char: ICharacter, combination: IDisciplineCombo): boolean {
-        return !!char.disciplines.find(s => s.discipline.id === combination.id && s.points >= combination.level);
+        return !!char.disciplines.find(s => s.discipline.id === combination.id && s.currentLevel - 1 >= combination.level);
     }
 }
 
