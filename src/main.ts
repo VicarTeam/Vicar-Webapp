@@ -13,11 +13,29 @@ import VueResizeText from 'vue-resize-text';
 Vue.config.productionTip = false
 Vue.use(VueResizeText);
 
+function disableMenu() {
+    document.onkeydown = function (e) {
+        return (e.which || e.keyCode) != 116;
+    };
+
+    document.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        return false;
+    }, {capture: true})
+
+    document.addEventListener('selectstart', e => {
+        e.preventDefault();
+        return false;
+    }, {capture: true})
+}
+
+disableMenu();
+
 Backend.initAsync().then(() => {
-  new Vue({
-    router,
-    store,
-    i18n,
-    render: h => h(App)
-  }).$mount('#app');
+    new Vue({
+        router,
+        store,
+        i18n,
+        render: h => h(App)
+    }).$mount('#app');
 });

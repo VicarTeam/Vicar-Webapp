@@ -37,12 +37,12 @@ export default class SpendFlawPointsBetweenAction extends PTActionBase<{points: 
   applyOutput(char: ICharacter) {
     this.usages.forEach(u => {
       if (u.val > 0) {
-        const existingSpread = char.requiredPointSpreads.find(spread => spread.packId === u.pack.id && spread.type === u.type);
+        const existingSpread = char.requiredPointSpreads.find(spread => spread.packId === u.pack.id && spread.type === u.type && spread.isFlaw);
         if (existingSpread) {
           existingSpread.points += u.val;
         } else {
           char.requiredPointSpreads.push({
-            isFlaw: false,
+            isFlaw: true,
             packId: u.pack.id,
             type: u.type,
             points: u.val

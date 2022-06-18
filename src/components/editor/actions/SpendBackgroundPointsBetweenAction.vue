@@ -32,7 +32,7 @@ export default class SpendBackgroundPointsBetweenAction extends PTActionBase<{po
   applyOutput(char: ICharacter) {
     this.usages.forEach(u => {
       if (u.val > 0) {
-        const existingSpread = char.requiredPointSpreads.find(spread => spread.packId === u.background.id && spread.type === "backgrounds");
+        const existingSpread = char.requiredPointSpreads.find(spread => spread.packId === u.background.id && spread.type === "backgrounds" && !spread.isFlaw);
         if (existingSpread) {
           existingSpread.points += u.val;
         } else {
