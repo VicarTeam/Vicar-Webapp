@@ -97,7 +97,7 @@
 
         <Row style="width: 100%">
           <Col style="width: 100%">
-            <Row v-for="a in getCategory(CategoryKeys.Physical).attributes" style="gap: 2rem; justify-content: center; align-items: center">
+            <Row v-for="a in getCategory(CategoryKeys.Physical).attributes" :key="a.key" style="gap: 2rem; justify-content: center; align-items: center">
               <Col :grow="true" style="width: 100%">
                 {{$t('data.attribute.' + a.key)}}
               </Col>
@@ -120,7 +120,7 @@
 
         <Row style="width: 100%">
           <Col style="width: 100%">
-            <Row v-for="a in getCategory(CategoryKeys.Social).attributes" style="gap: 2rem; justify-content: center; align-items: center">
+            <Row v-for="a in getCategory(CategoryKeys.Social).attributes" :key="a.key" style="gap: 2rem; justify-content: center; align-items: center">
               <Col :grow="true">
                 {{$t('data.attribute.' + a.key)}}
               </Col>
@@ -143,7 +143,7 @@
 
         <Row style="width: 100%">
           <Col style="width: 100%">
-            <Row v-for="a in getCategory(CategoryKeys.Mental).attributes" style="gap: 2rem; justify-content: center; align-items: center">
+            <Row v-for="a in getCategory(CategoryKeys.Mental).attributes" :key="a.key" style="gap: 2rem; justify-content: center; align-items: center">
               <Col :grow="true">
                 {{$t('data.attribute.' + a.key)}}
               </Col>
@@ -164,7 +164,7 @@
       <Col style="width: calc((100% - 1rem)/3); margin-right: 1rem">
         <Row style="width: 100%">
           <Col style="width: 100%">
-            <Row v-for="a in sortSkills(getCategory(CategoryKeys.Physical).skills)" style="gap: 2rem; justify-content: center; align-items: center">
+            <Row v-for="a in sortSkills(getCategory(CategoryKeys.Physical).skills)" :key="a.key" style="gap: 2rem; justify-content: center; align-items: center">
               <Col :grow="true" style="width: 100%; font-size: 1.2rem">
                 {{$t('data.skill.' + a.key)}} <span style="margin-bottom: 0.3rem; font-size: 1.1rem; font-style: italic" v-if="a.specialization.length > 0">({{a.specialization.join(', ')}})</span>
               </Col>
@@ -179,7 +179,7 @@
       <Col style="width: calc((100% - 1rem)/3)">
         <Row style="width: 100%">
           <Col style="width: 100%">
-            <Row v-for="a in sortSkills(getCategory(CategoryKeys.Social).skills)" style="gap: 2rem; justify-content: center; align-items: center">
+            <Row v-for="a in sortSkills(getCategory(CategoryKeys.Social).skills)" :key="a.key" style="gap: 2rem; justify-content: center; align-items: center">
               <Col :grow="true" style="width: 100%; font-size: 1.2rem">
                 {{$t('data.skill.' + a.key)}} <span style="margin-bottom: 0.3rem; font-size: 1.1rem; font-style: italic" v-if="a.specialization.length > 0">({{a.specialization.join(', ')}})</span>
               </Col>
@@ -194,7 +194,7 @@
       <Col style="width: calc((100% - 1rem)/3); margin-left: 1rem">
         <Row style="width: 100%">
           <Col style="width: 100%">
-            <Row v-for="a in sortSkills(getCategory(CategoryKeys.Mental).skills)" style="gap: 2rem; justify-content: center; align-items: center">
+            <Row v-for="a in sortSkills(getCategory(CategoryKeys.Mental).skills)" :key="a.key" style="gap: 2rem; justify-content: center; align-items: center">
               <Col :grow="true" style="width: 100%; font-size: 1.2rem; ">
                 {{$t('data.skill.' + a.key)}} <span style="margin-bottom: 0.3rem; font-size: 1.1rem; font-style: italic" v-if="a.specialization.length > 0">({{a.specialization.join(', ')}})</span>
               </Col>
@@ -212,7 +212,7 @@
     </Row>
 
     <Row style="width: 100%; border: 1px solid rgba(0, 0, 0, 0.5); flex-wrap: wrap">
-      <Col style="width: calc(100% / 3)" v-for="d in getDisciplines()">
+      <Col style="width: calc(100% / 3)" v-for="(d, i) in getDisciplines()" :key="i">
         <Row style="border: 1px solid rgba(0, 0, 0, 0.5); height: 2.5rem">
           <Col style="padding: 1rem; font-size: 1.5rem" :grow="true" :center-horizontally="true">
             {{d.discipline.name}}
@@ -221,7 +221,7 @@
             <Dots :amount="d.currentLevel - 1" :max="5"/>
           </Col>
         </Row>
-        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="a in getDisciplineAbilities(d)">
+        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="a in getDisciplineAbilities(d)" :key="a.id">
           <span v-if="a.name">{{a.name}} (<small><b>{{$t('editor.disciplines.level')}}</b>: {{a.level}}</small>)</span>
         </Row>
       </Col>

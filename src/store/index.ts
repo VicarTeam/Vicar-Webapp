@@ -14,7 +14,9 @@ const vuexLocal = new VuexPersistence<State>({
 export const state: State = {
     editingCharacter: undefined,
     editorCharHistory: [],
-    isLevelMode: false
+    isLevelMode: false,
+    directoryForCharCreation: undefined,
+    draggingCharacter: undefined
 }
 
 const plugins = process.env.NODE_ENV === 'development' ? [vuexLocal.plugin] : [];

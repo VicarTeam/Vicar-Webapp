@@ -88,6 +88,7 @@ export default class Character extends Vue {
 
 <style scoped lang="scss">
 .character-entry {
+  background-color: #25282C;
   user-select: none;
   padding: 1rem 1.5rem;
   border-radius: 8px;

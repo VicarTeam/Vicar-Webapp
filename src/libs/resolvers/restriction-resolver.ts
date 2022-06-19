@@ -33,6 +33,7 @@ class RestrictionResolver {
 
     @ResolveType(RestrictionType.MinimumCharacterValue)
     private resolveMinimumCharacterValue(char: ICharacter, data: {value: number, key: keyof ICharacter}): boolean {
+        // @ts-ignore
         return char[data.key] >= data.value;
     }
 

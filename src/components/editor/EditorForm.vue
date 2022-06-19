@@ -15,7 +15,7 @@
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
 import {Action, Mutation, State} from "vuex-class";
-import {AttributeKeys, ICharacter} from "@/types/models";
+import {AttributeKeys, ICharacter, ICharacterDirectory} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
 import DataManager from "@/libs/data-manager";
 
@@ -45,6 +45,9 @@ export default class EditorForm extends Vue {
   @State("editorCharHistory")
   private editorCharHistory!: ICharacter[];
 
+  @State("directoryForCharCreation")
+  private directoryForCharCreation!: ICharacterDirectory|undefined;
+
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character?: ICharacter) => void;
 
@@ -56,6 +59,9 @@ export default class EditorForm extends Vue {
 
   @Mutation("setLevelMode")
   private setLevelMode!: (mode: boolean) => void;
+
+  @Mutation("setDirectoryForCharCreation")
+  private setDirectoryForCharCreation!: (dir?: ICharacterDirectory) => void;
 
   @Action("popEditorCharHistory")
   private popEditorCharHistory!: () => ICharacter;
@@ -80,6 +86,10 @@ export default class EditorForm extends Vue {
           return;
         }
 
+        if (this.directoryForCharCreation) {
+          this.editingCharacter.directory = this.directoryForCharCreation.id;
+        }
+
         this.editingCharacter.requiredPointSpreads = [];
         this.editingCharacter.health = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Stamina) + 3;
         this.editingCharacter.willpower = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Composure)
@@ -87,6 +97,7 @@ export default class EditorForm extends Vue {
         CharacterStorage.addCharacter(this.editingCharacter);
         this.setLevelMode(false);
         this.clearCharHistory();
+        this.setDirectoryForCharCreation();
         this.$router.push({name: 'viewer'});
       };
       const event = {next: n, cancel: false};
@@ -102,6 +113,7 @@ export default class EditorForm extends Vue {
       this.popEditorCharHistory();
       this.$router.back();
     } else {
+      this.setDirectoryForCharCreation();
       this.setEditingCharacter();
       this.clearCharHistory();
       this.$router.push({name: 'main'});

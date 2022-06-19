@@ -192,7 +192,14 @@ export interface IRequiredPointSpread {
     packId: number;
 }
 
+export interface ICharacterDirectory {
+    id: string;
+    name: string;
+    open: boolean;
+}
+
 export interface ICharacter {
+    directory?: string;
     id: string;
     avatar: string;
     requiredPointSpreads: IRequiredPointSpread[];

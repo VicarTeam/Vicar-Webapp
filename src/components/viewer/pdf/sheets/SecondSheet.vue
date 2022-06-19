@@ -6,33 +6,33 @@
 
     <Row style="width: 100%; border: 1px solid rgba(0, 0, 0, 0.5)">
       <Col style="width: 50%">
-        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="a in getTransformedData(editingCharacter.merits, false)">
+        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="(a, i) in getTransformedData(editingCharacter.merits, false)" :key="i">
           <span v-if="a.pack">
             <i style="color: #989898">{{$t('data.trait.merit')}}</i> - {{a.pack.name}}: {{a.name}}{{getTraitSuffix(a)}} - <i><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(a)}}</i>
           </span>
         </Row>
-        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="a in getTransformedData(editingCharacter.backgrounds, false)">
+        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="(a, i) in getTransformedData(editingCharacter.backgrounds, false)" :key="i">
           <span v-if="a.pack">
             <i style="color: #989898">{{$t('data.trait.background')}}</i> - {{a.pack.name}}: {{a.name}}{{getTraitSuffix(a)}} - <i><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(a)}}</i>
           </span>
         </Row>
-        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="a in getTraitPlaceholders()">
+        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="(a, i) in getTraitPlaceholders()" :key="i">
 
         </Row>
       </Col>
 
       <Col style="width: 50%">
-        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="a in getTransformedData(editingCharacter.merits, true)">
+        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="(a, i) in getTransformedData(editingCharacter.merits, true)" :key="i">
           <span v-if="a.pack">
             <i style="color: #989898">{{$t('data.trait.merit')}}</i> - {{a.pack.name}}: {{a.name}}{{getTraitSuffix(a)}} - <i><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(a)}}</i>
           </span>
         </Row>
-        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="a in getTransformedData(editingCharacter.backgrounds, true)">
+        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="(a, i) in getTransformedData(editingCharacter.backgrounds, true)" :key="i">
           <span v-if="a.pack">
             <i style="color: #989898">{{$t('data.trait.background')}}</i> - {{a.pack.name}}: {{a.name}}{{getTraitSuffix(a)}} - <i><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(a)}}</i>
           </span>
         </Row>
-        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="a in getFlawPlaceholders()">
+        <Row style="border: 1px solid rgba(0, 0, 0, 0.5); font-size: 1.1rem; height: 2.5rem; padding-left: 1rem; padding-right: 1rem; align-items: center" v-for="(a, i) in getFlawPlaceholders()" :key="i">
 
         </Row>
       </Col>

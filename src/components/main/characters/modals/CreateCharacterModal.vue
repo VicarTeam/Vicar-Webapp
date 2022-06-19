@@ -56,7 +56,7 @@
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
-import {DefaultCharacter, Generation, ICharacter, Sex} from "@/types/models";
+import {DefaultCharacter, Generation, ICharacter, ICharacterDirectory, Sex} from "@/types/models";
 import {Mutation} from "vuex-class";
 
 @Component({
@@ -73,12 +73,16 @@ export default class CreateCharacterModal extends Vue {
   @Mutation("addCharToEditorHistory")
   private addCharToEditorHistory!: (character: ICharacter) => void;
 
+  @Mutation("setDirectoryForCharCreation")
+  private setDirectoryForCharCreation!: (dir?: ICharacterDirectory) => void;
+
   private show = false;
   private name: string = "";
   private sex: Sex = Sex.Divers;
   private useAllBooks: boolean = false;
   private generation: number = 13;
   private generationEra: Generation = Generation.Children;
+  private dir: ICharacterDirectory|undefined = undefined;
 
   private books: ({id: number; active: boolean})[] = [
     {id: 1, active: true},
@@ -89,7 +93,8 @@ export default class CreateCharacterModal extends Vue {
     {id: 6, active: false}
   ]
 
-  public showModal() {
+  public showModal(dir?: ICharacterDirectory) {
+    this.dir = dir;
     this.show = true;
   }
 
@@ -109,6 +114,8 @@ export default class CreateCharacterModal extends Vue {
     char.generation = this.generation;
     char.generationEra = this.generationEra;
     char.books = this.books.filter(book => book.active).map(book => book.id);
+
+    this.setDirectoryForCharCreation(this.dir);
 
     this.applyEra(char);
     this.addCharToEditorHistory(char);
