@@ -10,6 +10,7 @@
         <Tab value="viewer-attributes" :text="$t('viewer.tab.attributes').toString()"/>
         <Tab value="viewer-skills" :text="$t('viewer.tab.skills').toString()"/>
         <Tab value="viewer-disciplines" :text="$t('viewer.tab.disciplines').toString()"/>
+        <Tab v-if="editingCharacter.bloodRituals && editingCharacter.bloodRituals.length > 0" value="viewer-bloodrituals" :text="$t('viewer.tab.bloodrituals').toString()"/>
         <Tab value="viewer-traits" :text="$t('viewer.tab.traits').toString()"/>
         <Tab value="viewer-pdf" :text="$t('viewer.tab.pdf').toString()"/>
       </Tabs>

@@ -65,17 +65,35 @@ export default class EditorForm extends Vue {
       return;
     }
     if (!this.isFinish) {
-      this.$emit("before-next");
-      this.addCharToEditorHistory(this.fallbackHistoryChar ? this.fallbackHistoryChar : this.editingCharacter);
-      this.$router.push({name: this.nextStep});
+      const n = () => {
+        this.addCharToEditorHistory(this.fallbackHistoryChar ? this.fallbackHistoryChar : this.editingCharacter!);
+        this.$router.push({name: this.nextStep});
+      };
+      const event = {next: n, cancel: false};
+      this.$emit("before-next", event);
+      if (!event.cancel) {
+        n();
+      }
     } else {
-      this.editingCharacter.health = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Stamina) + 3;
-      this.editingCharacter.willpower = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Composure)
-          + DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Resolve);
-      CharacterStorage.addCharacter(this.editingCharacter);
-      this.setLevelMode(false);
-      this.clearCharHistory();
-      this.$router.push({name: 'viewer'});
+      const n = () => {
+        if (!this.editingCharacter) {
+          return;
+        }
+
+        this.editingCharacter.requiredPointSpreads = [];
+        this.editingCharacter.health = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Stamina) + 3;
+        this.editingCharacter.willpower = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Composure)
+            + DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Resolve);
+        CharacterStorage.addCharacter(this.editingCharacter);
+        this.setLevelMode(false);
+        this.clearCharHistory();
+        this.$router.push({name: 'viewer'});
+      };
+      const event = {next: n, cancel: false};
+      this.$emit("before-next", event);
+      if (!event.cancel) {
+        n();
+      }
     }
   }
 

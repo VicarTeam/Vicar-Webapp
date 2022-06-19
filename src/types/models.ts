@@ -1,5 +1,5 @@
 ﻿import {
-    IBloodPotencyData,
+    IBloodPotencyData, IBloodRitual,
     IDiscipline,
     IDisciplineAbility,
     IPredatorType, IPTAction,
@@ -135,6 +135,7 @@ export interface ILanguage {
     readonly key: string;
     readonly books: IBook[];
     readonly bloodPotencyTable: IBloodPotencyData[];
+    readonly bloodRituals: IBloodRitual[];
 }
 
 export interface IBook {
@@ -223,6 +224,7 @@ export interface ICharacter {
     anchorsAndBeliefs: string;
     backstory: string;
     notes: string;
+    bloodRituals: IBloodRitual[];
 }
 
 export interface ICategory {
@@ -245,6 +247,7 @@ export interface ISkillData {
 export const DefaultCharacter: () => ICharacter = () => ({
     id: "",
     requiredPointSpreads: [],
+    bloodRituals: [],
     ambition: "",
     avatar: "",
     bloodPotency: 0,

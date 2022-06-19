@@ -85,6 +85,11 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/viewer/DisciplinesView.vue')
       },
       {
+        path: 'bloodrituals',
+        name: 'viewer-bloodrituals',
+        component: () => import('@/views/viewer/BloodRitualsView.vue')
+      },
+      {
         path: 'traits',
         name: 'viewer-traits',
         component: () => import('@/views/viewer/TraitsView.vue')

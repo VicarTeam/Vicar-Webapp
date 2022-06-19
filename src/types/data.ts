@@ -16,6 +16,16 @@ export interface IBloodPotencyData {
     pray: string;
 }
 
+export interface IBloodRitual {
+    id: number;
+    level: number;
+    name: string;
+    description: string;
+    ingredients: string;
+    execution: string;
+    system: string;
+}
+
 export interface IEdition {
     languages: string[];
     books: IBook[];

@@ -8,6 +8,9 @@
             <option v-for="lang in availableLocales" :key="lang.code" :value="lang.code">{{lang.name}}</option>
           </select>
         </div>
+        <div class="form-group mb-0" style="font-style: italic; width: 100%; text-align: right">
+          <small>Vicar v{{appVersion}} (c) {{new Date().getFullYear()}} VicarTeam</small>
+        </div>
       </div>
     </div>
   </div>
@@ -21,14 +24,18 @@ import {AVAILABLE_LOCALES, i18n, setLocale} from "@/libs/i18n";
   components: {}
 })
 export default class Settings extends Vue {
-  
+
   availableLocales = AVAILABLE_LOCALES;
   setLocale = setLocale;
-  
+
   private selectedLocale = "";
-  
+
   mounted() {
     this.selectedLocale = i18n.locale;
+  }
+
+  private get appVersion(): string {
+    return process.env.VERSION;
   }
 }
 </script>

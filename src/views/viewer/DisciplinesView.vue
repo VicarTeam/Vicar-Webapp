@@ -93,7 +93,10 @@ export default class DisciplinesView extends Vue {
     gap: 2rem;
     flex-wrap: wrap;
     align-content: flex-start;
+    padding-left: 2rem;
+    padding-right: 2rem;
     .discipline {
+      margin: auto;
       width: 30rem;
       display: flex;
       flex-direction: column;

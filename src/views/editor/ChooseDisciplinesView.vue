@@ -1,5 +1,5 @@
 <template>
-  <EditorForm :can-go-next="canGoNext" :is-finish="true">
+  <EditorForm :can-go-next="canGoNext" :is-finish="true" @before-next="onBeforeNext">
     <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
       <div class="choose-disciplines-wrapper">
         <div class="form-group mb-5 d-flex justify-content-center align-items-center flex-column" style="text-align: center">
@@ -40,6 +40,7 @@
       </div>
 
       <ChooseDisciplineAbilityModal ref="chooseAbilityModal"/>
+      <ChooseBloodRitualModal ref="chooseRitualModal"/>
     </div>
   </EditorForm>
 </template>
@@ -53,9 +54,10 @@ import {IDiscipline} from "@/types/data";
 import ChooseDisciplineAbilityModal from "@/components/editor/modals/ChooseDisciplineAbilityModal.vue";
 import TipButton from "@/components/editor/TipButton.vue";
 import XButton from "@/components/editor/XButton.vue";
+import ChooseBloodRitualModal from "@/components/editor/modals/ChooseBloodRitualModal.vue";
 
 @Component({
-  components: {XButton, TipButton, ChooseDisciplineAbilityModal, EditorForm}
+  components: {ChooseBloodRitualModal, XButton, TipButton, ChooseDisciplineAbilityModal, EditorForm}
 })
 export default class ChooseDisciplinesView extends Vue {
 
@@ -65,9 +67,21 @@ export default class ChooseDisciplinesView extends Vue {
   @Ref("chooseAbilityModal")
   private chooseAbilityModal!: ChooseDisciplineAbilityModal;
 
+  @Ref("chooseRitualModal")
+  private chooseRitualModal!: ChooseBloodRitualModal;
+
   private disciplineFor2: IDiscipline|null = null;
   private disciplineFor1: IDiscipline|null = null;
   private characterCache: ICharacter|null = null;
+
+  private onBeforeNext(e: any) {
+    const selection: IDisciplineSelection = this.editingCharacter!.disciplines.find(d => d.discipline.id === 3)!;
+    if (selection && selection.currentLevel - 1 >= 1) {
+      e.cancel = true;
+      this.chooseRitualModal.showModal(e.next, selection);
+      return false;
+    }
+  }
 
   private selectType() {
     if (!this.disciplineFor2 || !this.disciplineFor1) {
