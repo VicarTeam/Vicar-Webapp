@@ -6,7 +6,7 @@
     "disciplineBonus": 0,
     "rouseRepeatDisciplineLevel": 0,
     "baneLevel": 0,
-    "pray": "keiner"
+    "pray": "No effect"
   },
   {
     "value": 1,
@@ -15,7 +15,7 @@
     "disciplineBonus": 0,
     "rouseRepeatDisciplineLevel": 1,
     "baneLevel": 1,
-    "pray": "keiner"
+    "pray": "No effect"
   },
   {
     "value": 2,
@@ -24,7 +24,7 @@
     "disciplineBonus": 1,
     "rouseRepeatDisciplineLevel": 1,
     "baneLevel": 1,
-    "pray": "Tier- und Blutkonserven stillen die Hälfte des Hungers"
+    "pray": "Animal and bagged blood slakes half Hunger"
   },
   {
     "value": 3,
@@ -33,7 +33,7 @@
     "disciplineBonus": 1,
     "rouseRepeatDisciplineLevel": 2,
     "baneLevel": 2,
-    "pray": "Tier- und Blutkonserven stillen keinen Hunger"
+    "pray": "Animal and bagged blood slakes no Hunger"
   },
   {
     "value": 4,
@@ -42,7 +42,7 @@
     "disciplineBonus": 2,
     "rouseRepeatDisciplineLevel": 2,
     "baneLevel": 2,
-    "pray": "Tier- und Blutkonserven stillen keinen Hunger; stillt pro Mensch 1 Punkt Hunger weniger"
+    "pray": "Animal and bagged blood slakes no Hunger; Slake 1 less Hunger per human"
   },
   {
     "value": 5,
@@ -51,7 +51,7 @@
     "disciplineBonus": 2,
     "rouseRepeatDisciplineLevel": 3,
     "baneLevel": 3,
-    "pray": "Tier- und Blutkonserven stillen keinen Hunger; stillt pro Mensch 1 Punkt Hunger weniger; muss einen Menschen ausbluten und töten, um den Hunger unter 2 senken zu können"
+    "pray": "Animal and bagged blood slakes no Hunger; Slake 1 less Hunger per human; Must drain and kill a human to reduce Hunger below 2"
   },
   {
     "value": 6,
@@ -60,7 +60,7 @@
     "disciplineBonus": 3,
     "rouseRepeatDisciplineLevel": 3,
     "baneLevel": 3,
-    "pray": "Tier- und Blutkonserven stillen keinen Hunger"
+    "pray": "Animal and bagged blood slakes no Hunger"
   },
   {
     "value": 7,
@@ -69,7 +69,7 @@
     "disciplineBonus": 3,
     "rouseRepeatDisciplineLevel": 4,
     "baneLevel": 4,
-    "pray": "stillt pro Mensch 2 Punkte Hunger weniger; muss einen Menschen ausbluten und töten, um den Hunger unter 2 senken zu können"
+    "pray": "Slake 2 less Hunger per human; Must drain and kill a human to reduce Hunger below 2"
   },
   {
     "value": 8,
@@ -78,7 +78,7 @@
     "disciplineBonus": 4,
     "rouseRepeatDisciplineLevel": 4,
     "baneLevel": 4,
-    "pray": "Tier- und Blutkonserven stillen keinen Hunger"
+    "pray": "Animal and bagged blood slakes no Hunger"
   },
   {
     "value": 9,
@@ -87,7 +87,7 @@
     "disciplineBonus": 4,
     "rouseRepeatDisciplineLevel": 5,
     "baneLevel": 5,
-    "pray": "stillt pro Mensch 2 Punkte Hunger weniger; muss einen Menschen ausbluten und töten, um den Hunger unter 3 zu senken"
+    "pray": "Slake 2 less Hunger per human; Must drain and kill a human to reduce Hunger below 3"
   },
   {
     "value": 10,
@@ -96,6 +96,6 @@
     "disciplineBonus": 5,
     "rouseRepeatDisciplineLevel": 5,
     "baneLevel": 5,
-    "pray": "Tier- und Blutkonserven stillen keinen Hunger; stillt pro Mensch 3 Punkte Hunger weniger; muss einen Menschen ausbluten und töten, um den Hunger unter 3 zu senken"
+    "pray": "Animal and bagged blood slakes no Hunger; Slake 3 less Hunger per human; Must drain and kill a human to reduce Hunger below 3"
   }
 ]
