@@ -14,7 +14,7 @@
     "name": "Clinging of the Insect",
     "description": "The vampire gains the ability to cling to walls like a grotesque insect or spider.",
     "ingredients": "a living spider.",
-    "execution": "The caster fills a vial with his own blood, crushes the spider, and mixes the crushed body with the blood before drinking the concoction. (This does not restore hunger.) The vampire can only perform the ritual on himself; others gain no benefit from drinking the concoction."
+    "execution": "The caster fills a vial with his own blood, crushes the spider, and mixes the crushed body with the blood before drinking the concoction. (This does not restore hunger.) The vampire can only perform the ritual on himself; others gain no benefit from drinking the concoction.",
     "system": "A successfully performed ritual grants the ability to cling to walls and ceilings for one scene. On a critical triumph, the effect lasts for one night. The vampire must cling to the surface with both hands and feet, and his speed is halved."
   },
   {
@@ -48,9 +48,9 @@
     "id": 6,
     "level": 2,
     "name": "Communicate with kindred sire",
-    "description": "The thaumaturge uses the bond between the sire and the child to build a mental bridge that allows the child to establish a telepathic link to communicate over great distance. Like some other rituals, this one is becoming more common again in these nights of listening devices and electronic surveillance."
+    "description": "The thaumaturge uses the bond between the sire and the child to build a mental bridge that allows the child to establish a telepathic link to communicate over great distance. Like some other rituals, this one is becoming more common again in these nights of listening devices and electronic surveillance.",
     "ingredients": "an object that once belonged to the creator, and a silver bowl of clear water.",
-    "execution": "The thaumaturge places the object in the water and drips its blood into the bowl while concentrating on the last memory of its maker for a maximum of 30 minutes."
+    "execution": "The thaumaturge places the object in the water and drips its blood into the bowl while concentrating on the last memory of its maker for a maximum of 30 minutes.",
     "system": "Once 15 minutes have passed, the ritual sample is taken. In the case of a triumph, mental communication can be made in either direction for 10 minutes once another 15 minutes have passed. In the case of a critical triumph, communication is instantaneous. A major disturbance on either side breaks the connection."
   },
   {
@@ -77,14 +77,14 @@
     "name": "Truth of Blood",
     "description": "Until recently known only to the viziers of the Banu Haqim, this ritual creates a potion that separates lies from truth. This ritual has the power to sometimes even elicit facts from the speaker that were previously unknown to himself.",
     "ingredients": "a pint of blood from the victim",
-    "execution": "The performer of the ritual mixes his blood with that of the victim in a container large enough for him to put a finger into."
+    "execution": "The performer of the ritual mixes his blood with that of the victim in a container large enough for him to put a finger into.",
     "system": "Instead of the usual ritual test, the thaumaturge dips his finger into the mixture and rolls for Determination + Blood Magic vs. Composure + Occultism each time the victim makes a statement. If the contest fails once, the ritual ends. On a Triumph, he learns whether the statement is true from the victim's point of view. In the case of a critical triumph by the spellcaster, the victim elaborates on his statement and provides further information, even details he has only casually noticed and unconsciously forgotten. (The narrator should tell the player if there is no further information on the subject). The mixture bubbles and foams as it is performed and turns to ash at the end of the scene. Memory Fog, Forgetful Mind, or other memory-erasing powers cannot be imbued with this ritual. The thaumaturge can guess the cause of a non-existent or cloudy memory, but cannot retrieve the actual memory."
   },
   {
     "id": 10,
     "level": 2,
     "name": "Ward against Spirits",
-    "description": "This ritual is used to protect an item against incorporeal beings such as death aliens, ghosts, and elemental spirits. Any attempt on their part to affect or penetrate the item will trigger the effect. This protection character uses the standard rules for protection characters (p. 255)."
+    "description": "This ritual is used to protect an item against incorporeal beings such as death aliens, ghosts, and elemental spirits. Any attempt on their part to affect or penetrate the item will trigger the effect. This protection character uses the standard rules for protection characters (p. 255).",
     "ingredients": "a handful of salt (in some variants, a handful of brick dust instead) mixed with the caster's blood.",
     "execution": "",
     "system": ""
@@ -147,7 +147,7 @@
     "id": 17,
     "level": 3,
     "name": "Wardening Circle against Spirits",
-    "description": "With this ritual, you create a circular protective sign on the ground to block the path of ghosts. Although more complex than some other protective circles, this protective circle is particularly common in grimoires and other sources. A human occultist could possibly reconstruct a functional version of the ritual if he made a trial of Intelligence + Occultism (difficulty 6), even if he could not do it without Vitæ or other supernatural aid or elements. This protective character uses the standard rules for protective circles (p. 255)."
+    "description": "With this ritual, you create a circular protective sign on the ground to block the path of ghosts. Although more complex than some other protective circles, this protective circle is particularly common in grimoires and other sources. A human occultist could possibly reconstruct a functional version of the ritual if he made a trial of Intelligence + Occultism (difficulty 6), even if he could not do it without Vitæ or other supernatural aid or elements. This protective character uses the standard rules for protective circles (p. 255).",
     "ingredients": "The caster draws the circle of protection with an iron knife dipped in salt and its blood.",
     "execution": "",
     "system": ""
@@ -158,7 +158,7 @@
     "name": "Defense of the Sacred Haven",
     "description": "The performer of this powerful ritual can protect his sanctuary from the sun itself and keep his resting place from the intrusion of its destructive rays while mystical darkness blankets the area.",
     "ingredients": "only the blood of the thaumaturge.",
-    "execution": "The thaumaturge draws sigils and glyphs on the area to be protected and in its surroundings. He must pay particular attention to windows and doors, but can also have an open passageway protected if the area is inside. (The ritual can be used to protect gray areas and border areas, such as ruins, at the narrator's discretion)."
+    "execution": "The thaumaturge draws sigils and glyphs on the area to be protected and in its surroundings. He must pay particular attention to windows and doors, but can also have an open passageway protected if the area is inside. (The ritual can be used to protect gray areas and border areas, such as ruins, at the narrator's discretion).",
     "system": "It takes at least an hour to perform, depending on the nature or area to be protected. The area cannot be larger than a circle with a radius of 6 meters. The ritual automatically fails if the caster leaves the area after the protection has taken effect. The vampire takes the ritual test as soon as the sun rises. On a Triumph, shadows cover the area, blocking the view from outside, but also preventing the sun from harming the vampires in the protected area. During a critical Triumph, those inside can indistinctly perceive the world outside. The ritual works for an entire day, unless it is ended because the caster leaves the area."
   },
   {
@@ -183,7 +183,7 @@
     "id": 21,
     "level": 4,
     "name": "Ward against Cainites",
-    "description": "This ritual can be used to protect an item from vampires, the thaumaturge excluded. Any attempt to touch the item will trigger the effect. However, a vampire can examine the protection sign with Auspex and read the thaumaturge's name with a successful roll on Intelligence + Auspex vs. Intelligence + Blood Magic of the caster. This protection sign uses the standard rules for protection signs (p. 255)."
+    "description": "This ritual can be used to protect an item from vampires, the thaumaturge excluded. Any attempt to touch the item will trigger the effect. However, a vampire can examine the protection sign with Auspex and read the thaumaturge's name with a successful roll on Intelligence + Auspex vs. Intelligence + Blood Magic of the caster. This protection sign uses the standard rules for protection signs (p. 255).",
     "ingredients": "warm ash, fresh from a still-burning fire; the thaumaturge risks Furchtraserei, and cannot write the protection sign that night if he falls to it.",
     "execution": "",
     "system": ""
@@ -212,14 +212,14 @@
     "name": "Heart of Stone",
     "description": "Performing this ritual turns the thaumaturge's undead heart into stone. This makes him immune to impalement, but through an unfortunate effect of sympathetic magic, he simultaneously becomes a pitiless and hard-hearted robot, completely unresponsive to emotional and social cues. More than usual.",
     "ingredients": "a stone slab and a wax candle soaked in the blood of the thaumaturge.",
-    "execution": "The thaumaturge lies down on the stone slab with the candle on his chest and lets the candle burn overnight until nothing is left. Once the fire reaches his chest, it deals 1 point of Heavy damage and forces a Fear Frenzy roll (difficulty 3). If the roll on Frenzy fails, the ritual is aborted. If the vampire does not fall into frenzy, he takes the ritual test. On a Triumph, the ritual is completed. On a critical Triumph, the damage is healed by the candle flame. The effect lasts indefinitely, and if the caster wishes to undo the effect, he must repeat the ritual."
+    "execution": "The thaumaturge lies down on the stone slab with the candle on his chest and lets the candle burn overnight until nothing is left. Once the fire reaches his chest, it deals 1 point of Heavy damage and forces a Fear Frenzy roll (difficulty 3). If the roll on Frenzy fails, the ritual is aborted. If the vampire does not fall into frenzy, he takes the ritual test. On a Triumph, the ritual is completed. On a critical Triumph, the damage is healed by the candle flame. The effect lasts indefinitely, and if the caster wishes to undo the effect, he must repeat the ritual.",
     "system": "While under the influence of the ritual, the thaumaturge's heart is literally made of stone. Stakes cannot pierce it and break instead. The vampire is completely emotionless, which causes him to have three fewer dice on any trial of Remorse and any active roll on Social Interactions (except for Resistance rolls), except for Intimidate and Domination. The vampire cannot use Presence, but gains three additional dice on die stocks used to resist the effects of this discipline."
   },
   {
     "id": 25,
     "level": 5,
     "name": "Shaft of Belated Dissolution",
-    "description": "The blood kin fear few weapons as much as the stake made with this ritual. Presumably the origin of the legend that the stake is the ultimate weapon for destroying vampires, the Shaft of Delayed Decay not only seeks the heart of the vampire it was directed against, but also causes its final death once it reaches its target. If necessary, the shaft works its way as a splinter inch by inch through the body of the targeted vampire to reach its destination."
+    "description": "The blood kin fear few weapons as much as the stake made with this ritual. Presumably the origin of the legend that the stake is the ultimate weapon for destroying vampires, the Shaft of Delayed Decay not only seeks the heart of the vampire it was directed against, but also causes its final death once it reaches its target. If necessary, the shaft works its way as a splinter inch by inch through the body of the targeted vampire to reach its destination.",
     "ingredients": "a stake carved from rowan wood with ominous runes carved into it.",
     "execution": "The thaumaturge soaks the stake in as much of its blood as two Wallungs checks will yield, while blackening it in a fire fed by oak wood and casting incantations over it. It takes five hours to complete the ritual.",
     "system": "This stake grants a bonus of three dice for each die supply used to stake a vampire, whether doing so involves hammering it into the chest of a sleeping victim or shooting it from a crossbow. The stake does not have to be used by the thaumaturge himself. If the difference is 5 or more on a successful attack roll, the vampire crumbles to dust within one round, as if burned by invisible flames. If the stake hits without the difference being enough (less than 5) to pierce the heart, the stake breaks in the wound and the tip slowly digs deeper to the victim's heart. Depending on where the stake hit, this can take hours or nights, but unless it is removed medically or magically, the vampire is assured of final death. To surgically remove the stake, someone other than the victim must take a Dexterity + Medicine (difficulty 6) test. Removal takes up to four hours. If no one with medical experience is present, someone can also remove the splinter by severing the affected limb - unless the splinter has already reached the torso."

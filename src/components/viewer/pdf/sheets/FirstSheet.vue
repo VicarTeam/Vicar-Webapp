@@ -282,7 +282,7 @@ export default class FirstSheet extends Vue {
       disciplines.push({
         abilities: [], currentLevel: 0, points: 0,
         discipline: {
-          id: 0, levels: {}, name: "", nicknames: [], properties: undefined!
+          id: 0, levels: {}, name: ""
         }
       });
     }

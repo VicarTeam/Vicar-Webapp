@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Auspex",
-    "summary": "Als eine der größten Gaben und schlimmsten Flüche, die Vampire heimsuchen, gestattet die Disziplin Auspex es den Blutsverwandten, die Wahrheit unter all den Lügen zu erkennen, den Verstand der Leute in ihrer Nähe zu prüfen und Realität als andere Wesen auf einer anderen Ebene wahrzunehmen. Was zunächst als die ultimative Macht der Voraussicht und Visionen erscheint, verleiht ihren Benutzern vielleicht zu viel Wissen. Mag sein, dass sie die Klinge eines Meuchelmörders erkennen, bevor sie zusticht, oder in den Verstand eines Feindes eindringen können, um ihn auf den Kopf zu stellen, aber sie spüren auch jede Gefühlsregung, gute wie schlechte, sehen Dinge, die sie am liebsten nicht sehen würden, und erkennen eine Zukunft, die sie lieber nicht genauer betrachten würden. Wer Auspex anwendet, öffnet der Paranoia Tür und Tor, doch die Anwendung macht süchtig. Wenn man einmal weiß, dass die Wahrheit in greifbarer Nähe liegt, wird man jede Gelegenheit beim Schopfe packen, sie zu enthüllen. Die Blutsverwandten verwenden Auspex auf viele Arten. Manche Vampire agieren als Spione für ihren Hof oder ihre Fraktion. Andere handeln auf eigene Faust und erpressen Sterbliche oder Unsterbliche mit den Geheimnissen, die sie aus stillen Unterhaltungen, subtilen Gefühlsregungen und telepathischen Eingriffen gewonnen haben. Auspex gestattet es dem Anwender, die Rolle des Detektivs in der eigenen Domäne zu übernehmen, die den Schauplatz der Vernichtung eines Vampirs nach verräterischen spirituellen Hinweisen untersucht oder Verdächtige mit übernatürlicher Genauigkeit befragt.",
+    "summary": "One of the greatest gifts and worst curses that haunt vampires, the discipline Auspex allows kindred to discern the truth among all the lies, to test the minds of those around them, and to perceive reality as other beings on another plane. What at first appears to be the ultimate power of foresight and vision, perhaps bestows too much knowledge upon its users. They may be able to detect an assassin's blade before it strikes or enter an enemy's mind to turn it upside down, but they also sense every emotion, good and bad, see things they would prefer not to see, and discern a future they would rather not take a closer look at. Those who use Auspex open the door to paranoia, but using it is addictive. Once you know that the truth is within your grasp, you will seize any opportunity to reveal it. Kindred use Auspex in many ways. Some vampires act as spies for their court or faction. Others act on their own, blackmailing mortals or immortals with the secrets they have gleaned from quiet conversations, subtle sentients, and telepathic intrusions. Auspex allows the user to assume the role of detective in their own domain, investigating the scene of a vampire's destruction for telltale spiritual clues or interrogating suspects with supernatural accuracy.",
     "levels": {
       "1": [
         {
@@ -18,7 +18,7 @@
           "id": 2,
           "name": "Das unsichtbare Spüren",
           "summary": "Die Sinne des Vampirs stellen sich auf Dimensionen jenseits der profanen Welt ein, wodurch er Dinge erspüren kann, die dem bloßen Auge verborgen sind. Dies kann ein anderer Vampir sein, der Verdunkelung einsetzt, jemand, der mit Auspex den Charakter ausspioniert, oder ein Geist inmitten des Raums. Auch inaktive Zauber und Rituale der Blutmagie können mit dieser Kraft aufgespürt werden, nach Ermessen der Erzählerin.",
-          "costs": "keine",
+          "costs": "Free",
           "diceSupplies": "Geistesschärfe + Auspex oder Entschlossenheit + Auspex",
           "system": "Wenn sich etwas Übernatürliches in der Umgebung verbirgt, würfelt die Erzählerin versteckt auf Geistesschärfe + Auspex, wobei sie selbst die Schwierigkeit bestimmt. Gegen ein Wesen, das sich aktiv versteckt hält, kann die Erzählerin eine blinde Probe („Lisa, wirf sieben Würfel.“) als Wettbewerb gegen den Vorrat des Opfers verlangen. (Um zum Beispiel einen Vampir zu entdecken, der sich mit Verdunkelung verbirgt, legt man eine Probe auf Geistesschärfe + Auspex vs. Geistesschärfe + Verdunkelung ab.) Wenn der Vampir aktiv nach einem übernatürlichen Wesen sucht, würfelt er auf Entschlossenheit + Auspex.",
           "duration": "passiv"
@@ -106,7 +106,7 @@
   },
   {
     "id": 2,
-    "name": "Beherrschung",
+    "name": "Dominate",
     "summary": "Beherrschung verleiht dem Vampir die Fähigkeit, die Handlungen anderer zu kontrollieren, ihre Erinnerungen zu manipulieren und Lebewesen zu Taten zu zwingen, die sie aus freien Stücken nicht begehen würden. Im Wesentlichen ermöglicht Beherrschung einem Vampir, das Opfer vergessen zu lassen, dass gerade von ihm getrunken wurde. Am gefährlichsten wird es, wenn Blutsverwandte ganze Viehherden versklaven. Hier ist das Tier besonders grausam und kontrollierend. Beherrschung fungiert auch als Knüppel, um die Maskerade zu forcieren, unterwürfige Bedienstete zu erschaffen und die Selbstsicherheit des Vampirs zu stärken. Wenn Blutsverwandte diese Disziplin einsetzen, fühlen sie sich allmächtig, auch wenn die Weisesten unter ihnen wissen, dass auch das Ketten einer anderen Art sind, die ihnen vom Blut angelegt wurden.",
     "levels": {
       "1": [
@@ -114,7 +114,7 @@
           "id": 1,
           "name": "Erinnerung vernebeln",
           "summary": "Mit dem Befehl „Vergiss!“ kann der Anwender das beherrschte Opfer den gegenwärtigen Augenblick und die letzten paar Minuten vergessen lassen, was reicht, um einen oberflächlichen Trunk oder eine Zufallsbegegnung zu verschleiern. Es werden keine neuen Erinnerungen gebildet, und wenn jemand nachhakt, erkennt das Opfer, dass ihm ein paar Minuten fehlen.",
-          "costs": "keine",
+          "costs": "Free",
           "diceSupplies": "Charisma + Beherrschung vs. Geistesschärfe + Entschlossenheit",
           "system": "Gegen ein ahnungsloses sterbliches Opfer ist keine Probe erforderlich. Die Erinnerungen eines widerstrebenden Opfers oder eines anderen Vampirs zu vernebeln, erfordert dagegen einen Wurf auf Charisma + Beherrschung vs. Geistesschärfe + Entschlossenheit.",
           "duration": "unbegrenzt"
@@ -123,7 +123,7 @@
           "id": 2,
           "name": "Nötigen",
           "summary": "Bei Blickkontakt kann der Vampir das Opfer durch einen Befehl, der nicht länger als ein kurzer Satz ist, zu einer einzelnen Handlung nötigen, die es wortwörtlich befolgen muss. Es muss möglich sein, den Befehl innerhalb einer Runde auszuführen. Die Erzählerin bestimmt, ob ungenau formulierte Befehle auf unerwartete oder nachteilige Weise ausgeführt werden, alternativ kann der Befehl auch einfach das Opfer verwirren und schlägt somit fehl.",
-          "costs": "keine",
+          "costs": "Free",
           "diceSupplies": "Charisma + Beherrschung vs. Intelligenz + Entschlossenheit",
           "system": "Gegen ein ahnungsloses sterbliches Opfer ist keine Probe erforderlich. Ein widerstrebendes Opfer, ein Opfer, das der Vampir in derselben Szene bereits beherrscht hat, oder einen anderen Vampir zu nötigen, erfordert dagegen einen Wettbewerb auf Charisma + Beherrschung vs. Geistesschärfe + Entschlossenheit. Befehle, die dem Wesen des Opfers widersprechen, erfordern ebenfalls einen Wettbewerb.",
           "duration": "nicht länger als eine einzelne Szene"
@@ -167,7 +167,7 @@
           "id": 6,
           "name": "Eingepflanzter Befehl",
           "summary": "Mit Hypnose kann der Vampir jetzt dem Opfer eine posthypnotische Suggestion einpflanzen, die dafür sorgt, dass der Befehl inaktiv bleibt, bis ein bestimmter Auslöser eintritt. Alles Mögliche kann als Auslöser fungieren: ein bestimmtes Datum, eine bestimmte Person („Wenn du Roland triffst, sag ihm folgendes …“), ein bestimmter Satz. Ein eingepflanzter Befehl verfällt nicht und die Leute können eventuell jahrelang mit einer Anweisung herumlaufen, die tief in ihrem Verstand verborgen wartet. Der Anwender kann nur eine Suggestion pro Opfer einpflanzen.",
-          "costs": "keine zusätzlichen Kosten",
+          "costs": "No additional cost",
           "system": "Wie Hypnose, aber die Erzählerin kann verborgen Proben würfeln, wenn sie das wünscht. Man weiß erst, ob eine verborgene Suggestion funktioniert, wenn die Bedingungen dafür eintreten.",
           "duration": "passiv"
         }
@@ -177,7 +177,7 @@
           "id": 7,
           "name": "Rationalisieren",
           "summary": "Die Opfer des Vampirs glauben jetzt, dass alles, was sie unter dem Einfluss von Beherrschung getan haben, aus freien Stücken geschah und werden ihre Handlungen verteidigen, ganz egal, wie absurd. Ist man dieser Kraft lange Zeit ausgesetzt, kann das beim Opfer zu einer geistigen Störung führen.",
-          "costs": "keine zusätzlichen Kosten",
+          "costs": "No additional cost",
           "system": "Wenn jemand seinen Glauben nachdrücklich anzweifelt, kann das Opfer auf Geistesschärfe + Wahrnehmung würfeln (Schwierigkeit 5). Bei einem Triumph stellt es seine eigene Aussage infrage, vermutlich auch seinen eigenen Verstand.",
           "duration": "unbegrenzt"
         }
@@ -204,7 +204,7 @@
   },
   {
     "id": 3,
-    "name": "Blutmagie",
+    "name": "Blood Sorcery",
     "summary": "Die Tremere behaupten, dass Blutmagie oder „Thaumaturgie“, wie sie es nennen, ihre Erfindung ist. In der Version, die die Banu Haqim erzählen, war „Quietus“ ihr Blutrecht, lange bevor die Tremere Vampire waren. Andere Clans treffen ähnliche Aussagen. Auch wenn ihr Ursprung unklar ist, so ist es die grausige Natur der Blutmagie an sich nicht. Nur wenige Blutsverwandte trauen jenen, die eine Kraft verwenden, die die Vitæ in ihren Adern manipulieren und Blut in Gift verwandeln kann. Anders als andere Disziplinen, die sich damit beschreiben lassen, dass sie in den von dem Vampir ausgewählten Opfern ganz natürlich heranwachsen, benötigen Blutmagier Lehrmeister. Die Tremere verließen sich einst auf die Pyramidenhierarchie ihres Clans, um die Ausbildung ihrer Neugeborenen zu vereinbaren, während die Banu Haqim darauf bestehen, dass die Erzeuger- Kind-Beziehung die beste Form der Betreuung durch einen Mentor sei. In diesen Nächten werden viele Kinder der Haqim in Europa oder Amerika angeschwemmt, und da die Pyramidenstruktur der Tremere zerbrochen ist, suchen ihre Neugeborenen verzweifelt durch die modrigen Folianten und Palimpseste nach Fragmenten wahrer Überlieferungen. Jene, die diese Disziplin wahrhaft gemeistert haben, entwickeln ihre eigenen Rituale, wenn auch viele sie vor anderen verbergen und in vollen Zügen genießen, dass ihre unbekannten Fähigkeiten von solch einem Geheimnis umgeben sind. Um Blutmagie zu praktizieren, muss man das eigene Blut unterwerfen. Jede Form dieser Kraft erinnert den Vampir daran, dass er sich weit von der Menschheit entfernt hat, da kein Sterblicher solche magischen Kräfte besitzen könnte.",
     "levels": {
       "1": [
@@ -220,7 +220,7 @@
           "id": 2,
           "name": "Ein Sinn für Blut",
           "summary": "Indem er einen Tropfen Blut kostet, kann der Anwender bestimmte grundlegende Eigenschaften desjenigen erkennen, von dem es stammt.",
-          "costs": "keine",
+          "costs": "Free",
           "diceSupplies": "Entschlossenheit + Blutmagie",
           "system": "Der Anwender träufelt sich das Blut auf die Zunge und würfelt auf Entschlossenheit + Blutmagie (Schwierigkeit 3). Bei einem Triumph kann der Anwender die Resonanz und Intensivität des Blutes erkennen, wenn es menschlich ist. Außerdem kann er erkennen, ob das Blut von einem Sterblichen, Ghul, Vampir oder einem anderen übernatürlichen Wesen stammt (es ist nicht unbedingt möglich, die Art des übernatürlichen Wesens zu erkennen, es sei denn, es ist ein Blutsverwandter oder Ghul). Der Geschmack der Vitæ verrät auch die relative Blutmacht (und somit auch das wahrscheinliche Generationenband) des Vampirs. Bei einem kritischen Triumph wird ihm auch enthüllt, ob das Subjekt jemals Diablerie begangen hat, und er kann die Generation eingrenzen, der der Vampir angehört, plusminus 1. Wenn der Anwender das übernatürliche Wesen kennt, kann er nach dem Kosten das übernatürliche Wesen bei einem kritischen Triumph erkennen.",
           "duration": "k.A."
@@ -292,7 +292,7 @@
   },
   {
     "id": 4,
-    "name": "Geschwindigkeit",
+    "name": "Celerity",
     "summary": "Die Fähigkeit, zügig zuzuschlagen, Schlägen auszuweichen und Verfolgern zu entkommen macht aus den Blutsverwandten extrem effektive Raubtiere. Mit Geschwindigkeit bewegen sich die Vampire schneller als alle anderen natürlichen Wesen, auch wenn sie ihnen mehr als nur übernatürliche Schnelligkeit gewährt, mit der Vampire ebenso schnell zu denken scheinen, wie sie handeln. Während manche Vampire ohne Furcht vor Gegenschlägen gegen ihre Feinde ausholen, benutzen andere die Kraft einfach um schneller als andere Personen zu Fuß von A nach B zu kommen.",
     "levels": {
       "1": [
@@ -300,14 +300,14 @@
           "id": 1,
           "name": "Katzengleiche Anmut",
           "summary": "Das Gleichgewicht und die Anmut des Vampirs stehen denen erstklassiger Trapezkünstler in nichts nach. Er kann mühelos über Kanten und Kabel laufen und sogar rennen und verliert auch auf den schmalsten Oberflächen nicht das Gleichgewicht.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Der Anwender besteht automatisch sämtliche Proben auf Geschicklichkeit oder Sportlichkeit, um sein Gleichgewicht zu wahren. Beachte, dass diese Kraft ihm nicht hilft, das Gleichgewicht auf Oberflächen zu wahren, die sein Gewicht nicht tragen können.",
           "duration": "passiv"
         },
         {
           "name": "Schnelle Reflexe",
           "summary": "Auch wenn ihre Körper noch immer den Naturgesetzen gehorchen müssen, nehmen Vampire mit dieser Kraft Ereignisse sofort war und können mit übermenschlicher Geschwindigkeit darauf reagieren. Heranfliegende Geschosse erkennen sie so gut, dass sie versuchen können, Pfeilen oder gar Kugeln auszuweichen, wenn keine Deckung vorhanden ist.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Mit dieser Kraft erleiden Vampire keine Abzüge auf ihre Verteidigungsvorräte, wenn ihnen gegen Angriffe mit Schusswaffen keine Deckung zur Verfügung steht. Sie können auch kostenlos eine kleine Aktion (S. 298) mit bis zu zwei Würfeln pro Runde durchführen, wie das Ziehen oder Nachladen einer Waffe.",
           "duration": "passiv"
         }
@@ -386,7 +386,7 @@
   },
   {
     "id": 5,
-    "name": "Gestaltwandeln",
+    "name": "Protean",
     "summary": "Werwölfe hassen Vampire für den Besitz dieser Fähigkeit. In ihren Augen ist es eine Verhöhnung ihrer eigenen Natur, wenn sich untote Wesen in Wölfe oder Fledermäuse verwandeln, die Krallen ausfahren und mit den Fängen knirschen, als wären sie einer von ihnen. Doch das Gestaltwandeln liegt ihnen schon fast so lange im Blut wie es die Blutsverwandten gibt. Die Kraft, sich zu wandeln, die Gestalt zu verändern und zu noch tödlicheren Raubtieren zu werden, ist ebenso wesentlicher Bestandteil des Vampirs wie es zu den Wolflingen gehört. Gestaltwandler nutzen die Disziplin vor allem wegen ihrer Nützlichkeit. Die Kraft erlaubt es dem Vampir, zu einer Bestie zu werden, ihre Gliedmaßen in Waffen zu verwandeln oder sich als Nebelwolken der Gefangennahme zu entziehen, durch Schlüssellöcher zu gleiten oder durch einen Spalt im Fenster zu schlüpfen.",
     "levels": {
       "1": [
@@ -394,7 +394,7 @@
           "id": 1,
           "name": "Augen des Tiers",
           "summary": "Der Vampir kann ein übernatürliches rotes Schimmern in seinen Augen heraufbeschwören, wodurch er in der Lage ist, auch unter komplettem Lichtmangel zu sehen.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Um Augen des Tiers zu aktivieren, ist keine Probe erforderlich. Solange es aktiv ist, ignoriert der Anwender sämtliche Erschwernisse durch Dunkelheit, selbst bei übernatürlicher Finsternis. Wenn es aktiviert wurde, gewährt das unmenschliche Leuchten der Augen zwei zusätzliche Würfel für Würfelvorräte zum Einschüchtern von Sterblichen.",
           "duration": "so lange, wie gewünscht"
         },
@@ -402,7 +402,7 @@
           "id": 2,
           "name": "Federleicht",
           "summary": "Der Vampir kann seine tatsächliche Masse und Dichte reduzieren, wodurch er fast schwerelos wird. Dadurch kann er vermeiden, Drucksensoren auszulösen und Schäden durch Stürze, Kollisionen oder wenn er geworfen wird zu erleiden. Die Kraft kann nicht für längere Sprünge verwendet werden, da auch die Kraft des Vampirs proportional reduziert wird.",
-          "costs": "keine",
+          "costs": "Free",
           "diceSupplies": "Geistesschärfe + Überleben",
           "system": "Wenn der Vampir Zeit hat, sich darauf vorzubereiten, ist keine Probe erforderlich. Als Reaktion, wie zum Beispiel während eines Sturzes, muss er zum Aktivieren der Kraft auf Geistesschärfe + Überleben (Schwierigkeit 3) würfeln. Solange die Kraft wirkt, ist der Vampir gegen Schäden durch Stürze, Kollisionen oder wenn er geworfen wird immun. Außerdem vermeidet der Anwender nach Ermessen der Erzählerin das Auslösen von Geräten, die auf Druck reagieren.",
           "duration": "so lange, wie gewünscht"
@@ -460,7 +460,7 @@
           "id": 8,
           "name": "Das entfesselte Herz",
           "summary": "Nachdem er die Kräfte des Gestaltwandelns gemeistert hat, wird sogar sein innerstes formbar, geradezu zähflüssig. Das Herz, Sitz der Vitæ und des Unlebens der Vampire, löst sich und wandert in der Brust frei umher, wenn auch schwerfällig. Dadurch ist es ausgesprochen schwer, den Vampir zu pfählen, da sich die Position des Herzens nächtlich ändert. Außerdem gestattet die Kraft es dem Anwender, sich aus der Lähmung zu lösen.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Erhöht außerhalb des Kampfes die Schwierigkeit für Proben, um einen Vampir zu pfählen, um 3. Im Nahkampf durchdringt der Pflock nur bei einem kritischen Triumph das Herz des Anwenders. Selbst wenn er gepfählt wurde, kann der Anwender einmal pro Stunde einen Wallungs-Check ablegen und auf Körperkraft + Entschlossenheit (Schwierigkeit 5) würfeln. Bei einem Triumph löst er sich aus der Lähmung, während der Pflock aus seinem Körper gedrängt wird. Bei Hunger 5 kann er nicht versuchen, den Pflock zu entfernen.",
           "duration": "passiv"
         }
@@ -469,7 +469,7 @@
   },
   {
     "id": 6,
-    "name": "Präsenz",
+    "name": "Presence",
     "summary": "Die meisten Vampire sind anmutige und tödliche Wesen. Sie werden sowohl mit schrecklicher Gewalt als auch verheerender Schönheit in Verbindung gebracht und verkörpern Gegensätze, die zwischen Alptraum und Traum schwanken, je nachdem, wer sie betrachtet und wonach dem Vampir gerade der Sinn steht. Präsenz ist eine Disziplin, die dieser zweigespaltenen Existenz Ausdruck verleiht. Als Werkzeug, um Opfer anzulocken oder zu zerstreuen, gestattet es Präsenz, die Massen zu kontrollieren, Leute emotional zu manipulieren und Hingabe zu erzwingen. Ein Sterblicher könnte sich seiner größten Angst gegenübersehen, die ihm plötzlich wie das herrlichste Wesen auf Erden erscheint. Viele, die Präsenz verwenden, nutzen die Disziplin, um sich mühelos Trinkgefäße zu beschaffen, während andere sie benutzen, um als Schreckenskreaturen durch die Nacht zu streifen und willensschwaches Vieh vor Angst in die Flucht zu schlagen, unsicher, was es gerade erblickt hat. Wirkungsvoll nicht nur als Lockmittel sondern auch zur Verteidigung, genießen Vampire mit Präsenz ein leichteres Nachtleben, wobei sie gerne vergessen, welche Gefühle, die ihnen entgegengebracht werden, normal sind und welche erzwungen.",
     "levels": {
       "1": [
@@ -477,7 +477,7 @@
           "id": 1,
           "name": "Ehrfurcht",
           "summary": "Die Aufmerksamkeit aller, die sich in der Nähe des Vampirs befinden, wird auf unerklärliche Weise auf ihn gezogen. Jene, die dem Vampir zuhören, stimmen ihm plötzlich bei Themen zu, bei denen sie ursprünglich anderer Meinung waren. Auch wenn diese Kraft keine begeisterte Vernarrtheit auslöst, ist sie doch stark genug, den Verstand der meisten Sterblichen umzustimmen.",
-          "costs": "keine",
+          "costs": "Free",
           "diceSupplies": "Manipulation + Präsenz vs. Fassung + Intelligenz",
           "system": "Der Wert in Präsenz wird Proben auf Fähigkeiten, die Überzeugen oder Darbietung beinhalten, und nach Ermessen der Erzählerin anderen Charisma-basierten Proben hinzugefügt. Alle, die sich bewusst sind, dass sie beeinflusst werden, können sich mit einem Wettbewerb auf Fassung + Intelligenz vs. Manipulation + Präsenz des Anwenders zur Wehr setzen. Bei einem Triumph widersteht das Opfer eine Szene lang der Wirkung. Bei einem kritischen Triumph ist das Opfer den Rest der Nacht immun. Sobald die Kraft nachlässt, kehren die Opfer zu ihren vorigen Meinungen zurück.",
           "duration": "eine Szene oder bis sie bewusst beendet wird"
@@ -486,7 +486,7 @@
           "id": 2,
           "name": "Abschreckung",
           "summary": "Statt Leute anzulocken, nutzt der Vampir seine Präsenz, um sie abzuschrecken. Mit dieser Kraft wirkt der Anwender bedrohlich und strahlt eine Aura der Gefahr aus, die stark genug ist, dass die meisten Sterblichen seine Aufmerksamkeit meiden, und selbst Vampire überlegen es sich zweimal, bevor sie sich gegen ihn stellen.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Der Wert des Anwenders in Präsenz wird Proben auf Einschüchtern hinzugefügt. Um den Anwender anzugreifen, ist ein Wurf auf Entschlossenheit + Fassung bei einer Schwierigkeit von 2 nötig. Vampire können Ehrfurcht und Abschreckung nicht gleichzeitig verwenden.",
           "duration": "eine Szene oder bis sie bewusst beendet wird"
         }
@@ -496,7 +496,7 @@
           "id": 3,
           "name": "Anhaltender Kuss",
           "summary": "Der Kuss der Vampire löst fast ekstatische Gefühle in den Sterblichen aus, Überaber diese Kraft übertrifft alle anderen Küsse um Längen. Sterbliche, von denen der Anwender getrunken hat, werden abhängig von dem Kuss, sind wie besessen davon und machen den Vampir gar ausfindig, um wiederholt von sich trinken zu lassen. Sterbliche werden oft anämisch, verletzen sich selbst und sterben sogar an der Sucht, aber Vampire finden die Kraft nützlich, um eine Herde zu halten.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Der Vampir kann während des Trinkens entscheiden, ob er die Kraft einsetzen möchte oder nicht. Der Anwender fügt einem auf Charisma basierenden Würfelvorrat, der gegen das gebissene Opfer zum Einsatz kommt, Würfel in Höhe seiner Präsenz hinzu. Sterbliche, von denen mit dieser Kraft getrunken wird, können jede Woche auf Willenskraft würfeln (Schwierigkeit entspricht dem Wert des Anwenders in Präsenz), um sich gegen die Wirkung zu wehren. Haben sie dabei drei Mal in Folge einen Triumph, endet die Wirkung, ebenso bei einem einzelnen kritischen Triumph.",
           "duration": "bis ihr erfolgreich widerstanden wird"
         }
@@ -567,7 +567,7 @@
   },
   {
     "id": 7,
-    "name": "Seelenstärke",
+    "name": "Fortitude",
     "summary": "Von den Unsterblichen hoch geschätzt, verleiht Seelenstärke die Fähigkeit, körperlichen und geistigen Angriffen zu widerstehen. Ohne wenigstens einen Funken Seelenstärke leben nur sehr wenige Vampire länger als ein Jahrhundert, ganz besonders in einer Welt, in der Gewalt zum Alltag gehört und nicht einmal Blutsverwandte sicher sind. In diesen Nächten nutzen Vampire Seelenstärke seltener, um der Sonne zu widerstehen, als um gewaltsamen Schaden, Feuer und übernatürliche Nötigung abzuwehren. Jene, die Seelenstärke besitzen, sind die festen Säulen der Gesellschaft der Blutsverwandten, fähig, ohne Regung oder Anzeichen der Schwäche Schläge einzustecken und Zauber abzuwehren. Nur wenige Vampire fühlen sich in ihrer Unsterblichkeit so gefestigt wie die Ahnen der Blaublütigen und der Wilden.",
     "levels": {
       "1": [
@@ -575,7 +575,7 @@
           "id": 1,
           "name": "Resilienz",
           "summary": "Mit übernatürlicher Ausdauer ausgestattet, kann der Anwender ihre körperliche Entschlossenheit stärken.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Der Anwender addiert den Wert in Seelenstärke zu seiner Gesundheit hinzu.",
           "duration": "passiv"
         },
@@ -583,7 +583,7 @@
           "id": 2,
           "name": "Unerschütterlicher Geist",
           "summary": "Der Anwender erhält die mystische Fähigkeit, allen Versuchen zu widerstehen, ihn durch gewöhnliche Zauber, Nötigung und Listen zu beeinflussen. Bei manchen äußert sich der unerschütterliche Geist als Zen-artige Ruhe, bei anderen als übernatürliche Sturheit.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Der Anwender fügt seine Punkte in Seelenstärke als zusätzliche Würfel jeder Probe hinzu, die er ablegen muss, um sich gegen Nötigung, Einschüchterung, Verführung oder andere Versuche der Beeinflussung seines Verstandes gegen seinen Willen zu wehren. Diese Kraft wirkt auch gegen übernatürliche Fähigkeiten wie Beherrschung und Präsenz.",
           "duration": "passiv"
         }
@@ -625,7 +625,7 @@
           "id": 6,
           "name": "Stärkung der inneren Fassade",
           "summary": "Statt den Körper des Vampirs zu stärken, gestattet diese Kraft es ihm, seine Gedanken und Gefühle vor übernatürlichen Blicken zu schützen. Sein Verstand wirkt wie leergefegt, während seine Aura sozusagen flach wirkt.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Erhöht die Schwierigkeit für Blick in die Seele (Auspex 3), Telepathie (Auspex 5) und ähnliche Kräfte, die gegen den Anwender eingesetzt werden, um die Hälfte seines Wertes in Seelenstärke (aufgerundet). Wenn die Regeln des Anwenders gestatten, den Kräften zu widerstehen, fügt er stattdessen seinen Wert in Seelenstärke dem Würfelvorrat hinzu.",
           "duration": "eine Szene"
         }
@@ -660,7 +660,7 @@
   },
   {
     "id": 8,
-    "name": "Stärke",
+    "name": "Potence",
     "summary": "Unter den Mitgliedern des Clans der Brujah gibt es ein Sprichwort: „Unsere Kraft unterschätzt man nur einmal.“ Stärke ist vitæ-angetriebene Kraft, die andere vampirische Fähigkeiten bei weitem übersteigt. Mächtiger als jede leistungssteigernde Droge, unnatürlicher als die Statur eines angeschwollenen Bodybuilders, verkörpert Stärke das Tier, das in den Fäusten, Füßen, Gliedmaßen und der rohen körperlichen Kraft eines Vampirs losgelassen wird. Die Disziplin wird nicht nur genutzt, um Dinge zu schlagen, auch wenn sie dafür perfekt geeignet ist. Es ist die Fähigkeit der Vampire, mit ihren Körpern Aktionen durchzuführen, die Sterbliche unmöglich nachahmen können. In Sachen Missverhältnis überbietet Stärke alle anderen Disziplinen: Ein gebrechlich aussehender Nosferatu schlägt härter zu als ein Schwergewichtboxer, ein von den Brujah umarmtes Kind kann ein Opfer mit einem Schlag enthaupten.",
     "levels": {
       "1": [
@@ -668,7 +668,7 @@
           "id": 1,
           "name": "Tödlicher Körper",
           "summary": "Mit dieser Kraft kann der Anwender Sterblichen schrecklichen Schaden zufügen und mit bloßen Fingern ihre Haut aufreißen und ihnen die Knochen brechen.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Unbewaffnete Angriffe des Anwenders verursachen bei Sterblichen jetzt Schweren Schaden auf Gesundheit, wenn gewünscht. Außerdem ignoriert er eine Stufe Rüstung pro Stärkestufe des Anwenders.",
           "duration": "passiv"
         },
@@ -676,7 +676,7 @@
           "id": 2,
           "name": "Gleitender Sprung",
           "summary": "Da er nicht nur in den Armen und Fäusten unheilige Kraft besitzt, kann der Anwender viel höher und weiter springen als Sterbliche.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Der Anwender kann so viele Meter hoch springen wie seine Stärkestufe beträgt und fünfmal so weit. Für einen solchen Sprung braucht der Anwender Anlauf.",
           "duration": "passiv"
         }
@@ -696,7 +696,7 @@
           "id": 4,
           "name": "Brutales Trinken",
           "summary": "Auch als „Grausamer Kuss“ bekannt, gestattet diese Kraft des Anwenders, ein Opfer mit unheiliger innerer Kraft auszusaugen. In Sekundenschnelle schluckt der Anwender Sturzbäche an Blut, während er das Opfer zerfleischt. Daraus resultiert ein effizientes, wenn auch unschönes Trinken, das oft während des Kampfes eingesetzt wird, wo die zerfleischten Überreste des Opfers getarnt werden können.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Der Vampir kann einen Menschen innerhalb von Sekunden leertrinken, für gewöhnlich innerhalb einer Runde. Jeder Hungerpunkt, der gestillt wird, verursacht beim Opfer einen Punkt Schweren Schaden auf Gesundheit, während seine Blutgefäße platzen und die Organe innerlich zerquetscht und aufgerissen werden. Brutales Trinken, wenn bei einem Vampir angewendet, verursacht bei den toten und inaktiven Organen des Vampirs nur Leichten Schaden auf Gesundheit. Im Kampf folgt brutales Trinken sofort nach einem erfolgreichen Angriff im Handgemenge, bei dem die Fangzähne eingesetzt werden. Zuerst erleidet das Opfer Bissschaden, dann Schaden von dieser Kraft. Rüstung schützt nicht gegen brutales Trinken, da die Wunden, zumindest am Anfang, innerlich sind. Die Erzählerin kann festlegen, dass ein solch zerstörerisches Töten Makel verursacht (S. 245).",
           "duration": "beim Trinken"
         },
@@ -754,107 +754,107 @@
   },
   {
     "id": 9,
-    "name": "Tierhaftigkeit",
-    "summary": "Vielleicht haben die Vampire mehr mit Tieren gemein als mit Menschen. Eine gefährliche Mischung aus Instinkten treibt sie an, und sie müssen sich ganz schön anstrengen, um dem Verlangen nicht nachzugeben, auf andere loszugehen. Wie ein wilder Hund an der Kette, wird sich auch das Tier im Vampir nie zähmen lassen. Manche Blutsverwandte haben es geschafft, eins mit ihrem inneren Tier zu werden. Sie haben die Tierhaftigkeit gemeistert. Manche lassen sich bei der Anwendung seiner Kräfte zum Heulen, Knurren und Brüllen hinreißen, oder sie kommunizieren mit den Tieren in deren „Sprache“, auch wenn das nur eine Vorliebe und nicht notwendig ist. Die Disziplin Tierhaftigkeit findet vor allem unter jenen Vampiren Anwendung, denen es schwerfällt, dazuzugehören, oder die einfach keinen Geschmack daran gefunden haben, unter Sterblichen zu leben. Oftmals als eine der nützlichen Gaben Kains klassifiziert, die es Vampiren gestattet, von geringerem Blut zu leben oder Kameradschaft unter den nicht denkenden Wesen zu finden, ist es auch eine vernichtende Waffe gegen Vampire, die sich an ihre Türme klammern, und gegen Inquisitoren, die davon ausgehen, dass sich ihre Feinde nur unter den Zweibeinern befinden. Ein Schwarm bluthungriger Ratten, der in die Penthouse-Zuflucht eines Blutsverwandten eindringt, die in Tierhaftigkeit bewanderte Vampirin, die im Elysium das Tier des Sheriffs einschüchtert, oder der scharfäugige Rabe, der die Ortsgruppe der Leopoldsgesellschaft ausspioniert, dienen alle dazu, die Anhänger der Tierhaftigkeit zu stärken und ihre Feinde zu schwächen.",
+    "name": "Animalism",
+    "summary": "Perhaps vampires have more in common with animals than with humans. A dangerous mix of instincts drives them, and they have to make quite an effort not to give in to the urge to go after others. Like a wild dog on a chain, the animal in the vampire will never be tamed. Some kindred have managed to become one with their inner animal. They have mastered beastliness. Some get carried away with howling, growling and roaring when using his powers, or they communicate with the animals in their \"language\", even if this is only a preference and not necessary. The discipline of beastliness is used mainly among those vampires who find it difficult to belong, or who simply have not found a taste for living among mortals. Often classified as one of Cain's useful gifts, allowing vampires to live on lesser blood or find camaraderie among non-thinking beings, it is also a devastating weapon against vampires who cling to their towers and against Inquisitors who assume that their enemies are only among the bipeds. A swarm of blood-hungry rats invading the penthouse haven of a kindred, the vampiress skilled in beastliness intimidating the sheriff's beast in Elysium, or the sharp-eyed raven spying on the local chapter of the Leopold Society all serve to strengthen the adherents of beastliness and weaken their enemies.",
     "levels": {
       "1": [
         {
           "id": 1,
-          "name": "Einen Famulus binden",
-          "summary": "Wenn man das Blutsband auf ein Tier anwendet, kann ein Vampir daraus einen Famulus machen, um eine geistige Verbindung damit einzugehen und somit die Anwendung weiterer Kräfte der Tierhaftigkeit ermöglichen. Die Kraft allein reicht nicht für eine Kommunikation mit dem Tier, aber es kann einfachen, verbalen Aufforderungen folgen wie „bleib“ und „komm her“. Es greift an, um sich und seinen Herrn zu verteidigen, kann aber nicht einfach so dazu bewegt werden, etwas anzugreifen, das es normalerweise nicht angreifen würde.",
-          "diceSupplies": "Charisma + Tierkunde",
-          "costs": "Das Tier muss das Blut des Anwenders in drei verschiedenen Nächten trinken, wobei der Anwender jedes Mal einen Wallungs-Check ablegen muss. Die Blutmenge, die danach nötig ist, um den Ghulzustand des Tieres aufrechtzuerhalten, ist belanglos. Spieler, die mit dieser Kraft starten, haben diesen Prozess bereits abgeschlossen und können sich gratis einen Famulus aussuchen.",
-          "system": "Ohne die Anwendung von Wildes Flüstern, siehe unten, ist eine Probe auf Charisma + Tierkunde (Schwierigkeit 2) nötig, um dem Tier Befehle zu geben. Bei komplexeren Befehlen erhöht sich die Schwierigkeit. Ein Vampir kann nur einen Famulus haben, kann sich aber einen neuen holen, wenn der aktuelle stirbt. Ein Vampir kann Wildes Flüstern (Tierhaftigkeit 2) und Geteilter Geist (Tierhaftigkeit 4) ohne Kosten auf seinen Famulus anwenden.",
-          "duration": "Nur der Tod befreit einen Famulus, wenn er einmal gebunden ist. Solange er regelmäßig Vampirblut erhält, altert der Famulus nicht."
+          "name": "Bond Famulus",
+          "summary": "When applying the blood bond to an animal, a vampire can make a famulus of it to form a mental link with it, allowing the application of further powers of animalhood. The power alone is not enough for communication with the animal, but it can follow simple verbal prompts such as \"stay\" and \"come here.\" It attacks to defend itself and its master, but cannot be moved to attack something it would not normally attack.",
+          "diceSupplies": "Charisma + Animal Ken",
+          "costs": "The animal must be fed the user’s Blood on three separate nights, each of which requires a Rouse Check by the user. The amount of Blood needed to sustain the ghoulstate of the animal after this is negligible. Players starting with this power have completed this process and can chose a famulus for free.",
+          "system": "Without the use of Feral Whispers, below, giving commands to the animal requires a Charisma + Animal Ken roll (Difficulty 2); increase Difficulty for more complex orders. A vampire can only have one famulus, but can get a new one if the current one dies. A vampire can use Feral Whispers (Animalism 2) and Subsume the Spirit (Animalism 4) on their famulus for free.",
+          "duration": "Only death releases a famulus once bound. As long as it receives vampire Blood on a regular basis, the famulus does not age."
         },
         {
           "id": 2,
-          "name": "Das Tier spüren",
-          "summary": "Der Vampir kann das Tier in Sterblichen, Vampiren und anderen übernatürliche Wesen spüren und ihr Wesen, ihren Hunger und ihre Feindseligkeit erkennen.",
-          "costs": "Gratis",
-          "diceSupplies": "Entschlossenheit + Tierhaftigkeit vs. Fassung + Ausflüchte",
-          "system": "Würfle auf Entschlossenheit + Tierhaftigkeit vs. Fassung + Ausflüchte. Bei einem Triumph kann der Anwender die Stufe der Feindseligkeit im Opfer erkennen (ob die Person bereit oder gar entschlossen ist, Schaden zuzufügen) und feststellen, ob es ein übernatürliches Wesen in sich trägt, wodurch es als Vampir oder Werwolf erkannt wird. Ein kritischer Triumph verrät dem Anwender genau, um welches Wesen es sich handelt und auf welcher Stufe sich sein Hunger oder Zorn befindet. Diese Kraft kann sowohl aktiv als auch passiv eingesetzt werden und den Vampir vor bösen Absichten in seiner unmittelbaren Umgebung warnen.",
-          "duration": "passiv"
+          "name": "Sense the Beast",
+          "summary": "The vampire can sense the Beast present in mortals, vampires, and other supernaturals, gaining a sense of their nature, hunger, and hostility.",
+          "costs": "Free",
+          "diceSupplies": "Resolve + Animalism vs Composure + Subterfuge",
+          "system": "Roll Resolve + Animalism vs Composure + Subterfuge. A win allows the user to sense the level of hostility in a target (whether the person is prepared to do harm or even determined to cause it) and determine whether they harbor a supernatural Beast, marking them as a vampire or werewolf. On a win, a critical gives the user information on the exact type of creature, as well as their Hunger or Rage level. This power can be used both actively and passively, warning the user of aggressive intent in their immediate vicinity.",
+          "duration": "Passive"
         }
       ],
       "2": [
         {
           "id": 3,
-          "name": "Wildes Flüstern",
-          "summary": "Der Vampir kann mit den Tieren der Wildnis und der Stadt kommunizieren. Wildes Flüstern gestattet die direkte Kommunikation mit Tieren. Eine Katze hat vielleicht wenig Interesse daran, über Matisse-Farbgebung zu debattieren, wird sich aber mit Eifer über den Mangel an Beutetieren beim Sandsteinhaus auf der anderen Seite der Straße beklagen. Je nachdem, wie fähig der Vampir ist, kann er Tiere sogar dazu überreden, ihm Dienste zu leisten. Wie Menschen werden auch Tiere nur selten damit Einverstanden sein, etwas zu tun, das ihnen widerstrebt oder sie in Gefahr bringt. Vampire können Wildes Flüstern auch einsetzen, um eine ausgewählte Tierart herbeizurufen (siehe Einschränkungen der Tierhaftigkeit oben), aber die Tiere müssen auch anwesend sein, um dem Ruf zu folgen. Niemand hält einen Vampir davon ab, einen Schwertwal im Central Park herbeizurufen, aber das wird wohl nicht von Erfolg gekrönt sein. Herbeigerufene Tiere hören auf denjenigen, der sie gerufen hat, zerstreuen sich aber oder greifen an, wenn sie in Gefahr sind.",
-          "diceSupplies": "Manipulation + Tierhaftigkeit, Charisma + Tierhaftigkeit",
-          "costs": "Ein Wallungs-Check pro Tierart, die für die Szene ausgewählt wurde. Gewährt eine Herbeirufung und unbegrenzte Kommunikation. Gratis, wenn es bei Famuli angewendet wird.",
-          "system": "Einfache Kommunikation erfordert keine Probe. Ein Tier dazu überreden, einen Dienst zu erweisen, erfordert einen Wurf auf Manipulation + Tierhaftigkeit. Die Schwierigkeit hängt von der Aufgabe ab. Einen Vogel dazu bringen, nachts jeden im Auge zu behalten, der den Park betritt, liegt bei Schwierigkeit 3, ein Tier damit zu beauftragen, einen Ort mit seinem Leben zu verteidigen, liegt bei Schwierigkeit 6. Tiere herbeizurufen erfordert einen Wurf auf Charisma + Tierhaftigkeit. Die Schwierigkeit hängt davon ab, wie selten die Tiere sind, die herbeigerufen werden sollen. Die Anzahl der herbeigerufenen Tiere hängt von der Differenz bei der Probe ab. Ein kritischer Triumph ruft die meisten, wenn nicht gar alle Tiere einer Art aus der Gegend herbei.",
-          "duration": "eine Szene"
+          "name": "Feral Whispers",
+          "summary": "The vampire can commune with the beasts of the wild and the city. Feral Whispers allows two-way communication with animals. A cat might not be interested in debating Matisse’s use of color but happily discusses the lack of prey around the brownstone building across the street. Depending on the vampire’s skill, they can even persuade animals to perform services; like humans, animals seldom agree to things that go against their nature or endanger them. Vampires can also use Feral Whispers to summon a chosen type of animal (see Animalism limitations above) but the animals must be present to answer. Nothing prevents a vampire trying to summon an orca in Central Park, but success seems unlikely. Summoned animals listen to the summoner, but scatter or attack if endangered.",
+          "diceSupplies": "Manipulation + Animalism, Charisma + Animalism",
+          "costs": "One Rouse Check per type of animal chosen for the scene. Allows one summoning and unlimited communication. Free when used on famulus.",
+          "system": "Simple communication requires no dice pool test. Persuading an animal to perform a service requires a Manipulation + Animalism roll; the Difficulty depends on the task required. Having a bird keep an eye out for anyone entering the park at night is Difficulty 3, while ordering any animal to defend a place with their lives is Difficulty 6. Summoning animals uses a Charisma + Animalism roll; Difficulty depends on the scarcity of the animals summoned. The number of animals summoned depend on the margin on the test; a critical win summons most, if not all, animals of the type in the area.",
+          "duration": "One Scene"
         }
       ],
       "3": [
         {
           "id": 4,
-          "name": "Saftiges Fleisch",
-          "summary": "Der Vampir kann zusätzlichen Hunger stillen, indem er sich von Tieren ernährt. Außerdem kann er seinen Famulus verzehren und daraus mehr Nahrung gewinnen, als von einem Tier derselben Statur, wobei er auch ein kleines Stück von dessen wichtigsten Eigenschaft zu sich nimmt.",
-          "costs": "keine",
-          "system": "Wer von Tieren trinkt, stillt 1 zusätzlichen Hunger. Zudem zählt die Blutmacht für den Vampir als 2 Stufen niedriger in Hinsicht auf die Nachteile, die sich daraus ergeben, dass man sich von Tierblut ernährt. Wer den eigenen Famulus verzehrt, stillt 4 Hunger, unabhängig von der Größe des Tiers. Mit dieser Tat kann man jedoch nicht den letzten Hungerwürfel loswerden. Zudem erhöht sich beim Verzehr des eigenen Famulus das Attribut des Vampirs, das am stärksten mit dem Tier verbunden ist (was die Erzählerin bestimmt) um 2 Punkte. Der Verzehr einer Katze könnte Geschicklichkeit oder Fassung erhöhen, der Verzehr eines Hundes Charisma oder Entschlossenheit. Erzählerinnen können die Belohnung durch den Verzehr des eigenen Famulus variieren: eine Eule zu trinken, könnte Attribute zur Wahrnehmung um 2 Punkte erhöhen oder Attribute für weise Entscheidungen. Der Bonus hält, bis der Vampir erneut trinkt oder der Hunger auf den Wert 5 steigt.",
-          "duration": "passiv"
+          "name": "Animal Succulence",
+          "summary": "The vampire can slake additional Hunger by feeding on animals. In addition, the vampire can consume its famulus, gaining nourishment far beyond what would be gained from an animal of similar stature and absorbing a sliver of its primary trait.",
+          "costs": "Free",
+          "system": "Feeding from animals slakes 1 additional Hunger, and the vampire counts their Blood Potency as two levels lower in regards to penalties to slaking Hunger from animal blood. Consuming one's famulus slakes 4 Hunger, regardless of animal size. This act can never remove the final Hunger die. In addition, consuming one's famulus increases the vampire’s Attribute most associated with that animal (as determined by the Storyteller) by two dots. Consuming a cat might raise Dexterity or Composure; consuming a dog might raise Charisma or Resolve. Storytellers may vary the reward from famulus consumption: draining an owl might raise the Attribute in any perception pool by two dots, or in pools involving wise decision making. The bonus lasts until the vampire’s next feeding or until their.",
+          "duration": "passive"
         },
         {
           "id": 5,
-          "name": "Das Tier besänftigen",
-          "summary": "Via Blickkontakt unterwirft der Vampir das innere Tier in einen vorübergehenden Schlummer. Sterbliche, die davon betroffen sind, werden apathisch, sind nicht mehr in der Lage, zu handeln, außer, um am Leben zu bleiben, während sich die tierischen Triebe der Vampire wohl oder übel vorübergehend legen.",
-          "costs": "ein Wallungs-Check",
-          "diceSupplies": "Charisma + Tierhaftigkeit vs. Widerstandsfähigkeit + Entschlossenheit",
-          "system": "Würfle auf Charisma + Tierhaftigkeit vs. Widerstandsfähigkeit + Entschlossenheit. Ein Triumph gegen ein sterbliches Opfer setzt es für diese Szene außer Gefecht und löst schwere Lethargie aus. Sie handeln nur, um ihr Leben zu erhalten, aber nicht gegen den Anwender oder jemand anderen. Ein Triumph gegen einen Vampir hindert das Opfer daran, Blutschübe durchzuführen. Solange das Tier besänftigt ist, können Vampire keine schmutzigen Triumphe erwürfeln. Gegen Vampire hält diese Kraft eine Runde plus so viele weitere Runden, wie die Differenz im Wettbewerb beträgt. Bei einem kritischen Triumph gegen einen Vampir wird auch dessen Raserei beendet.",
-          "duration": "Eine Szene oder so viele Runden, wie die Differenz der Probe beträgt, plus 1."
+          "name": "Quell the Beast",
+          "summary": "By locking eyes with a target, the vampire cows their inner Beast into temporary slumber. Mortals affected thus become apathetic, unable to take any actions other than to stay alive, while vampires’ bestial urges temporarily abate, for better or worse.",
+          "costs": "One Rouse Check",
+          "diceSupplies": "Charisma + Animalism vs Stamina + Resolve",
+          "system": "Roll Charisma + Animalism vs Stamina + Resolve. A win against a mortal target incapacitates them for that scene, instilling severe lethargy. They act only to preserve themselves, not against the user or anyone else. A win against a vampire prevents the target from performing Blood Surges. While their Beast is quelled, vampires do not score messy criticals. Against vampires, this power lasts a turn plus a number of turns equal to the win margin on the contest. A critical win against a vampire target also ends their frenzy.",
+          "duration": "One scene, or a number of turns equal to the test margin plus one."
         },
         {
           "id": 6,
-          "name": "Untotes Nest",
+          "name": "Unliving Hive",
           "combination": {
             "id": 10,
             "level": 2
           },
-          "summary": "Meist bei den Nosferatu gesehen, gestattet es diese beunruhigende Kraft des Anwenders, seinen tierischen Einfluss auf Insektenschwärme wie Fliegen oder Kakerlaken auszuweiten. Bestimmte Vampire gehen sogar soweit, Schwärme als Famuli zu adoptieren und ihnen ein permanentes Zuhause in den Falten und Öffnungen ihrer missgestalteten Leiber zu bieten.",
-          "costs": "keine zusätzlichen Kosten",
-          "system": "Diese Kraft erweitert alle Kräfte, die bislang auf Wirbeltiere beschränkt waren, auf Insektenschwärme und behandelt einen Schwarm wie ein einzelnes Wesen. Der Vampir kann den Schwarm als Famulus an sich binden, und manche geben ihm sogar die Fähigkeit, in den Öffnungen ihrer Körper zu nisten. Dadurch ist der Schwarm vor Blicken geschützt, während er sich von der winzigen Menge Blut ernähren kann, der er braucht, um sich auf unbestimmte Zeit zu erhalten. Solange er sich einnistet, kann der Schwarm nur durch Röntgenstrahlen aufgespürt werden. Schwärme fügen im Kampf nur wenig Schaden zu. Sie haben 5 Punkte in Gesundheit und einen Vorrat von acht Würfeln, um sich gegen Angriffe zu wehren. Schwärme erleiden im Handgemenge Leichten Schaden. Feuer und Insektizide verursachen Schweren Schaden. Vampire können Schwärme zur Spionage einsetzen, als Ablenkung (das umschwärmte Opfer hat bei jeder Probe zwei Würfel weniger) oder um Sterbliche einzuschüchtern (der Vampir hat ein bis drei Würfel mehr im Vorrat für Einschüchtern, je nach Insektenart und den Phobien des Opfers). Spieler und Erzählerinnen lassen sich bestimmt weitere kreative Anwendungen für diese Kraft einfallen.",
-          "duration": "passiv"
+          "summary": "Most often seen amongst the Nosferatu, this unnerving power allows the user to extend their animal influence to swarms of insects such as flies or roaches. Certain vampires even go so far as to adopt swarms as famuli, giving them a permanent home within the folds and orifices of their malformed flesh.",
+          "costs": "No additional cost",
+          "system": "This power extends all powers previously restricted to vertebrates to insect swarms, treating a swarm as a single creature. The vampire can bind the swarm as a famulus, and some even give it the ability to nest inside the cavities of their body. This hides the swarm from sight while allowing it to nurse the minute amounts of Blood needed to sustain it indefinitely. While nested, the swarm is undetectable by anything less than X-rays. Swarms do little damage in combat. They have Health 5 and a pool of 8 dice to resist attacks. Swarms take Superficial damage from Brawl; flame and insecticide cause Aggravated damage. Vampires can use swarms for spying, as distractions (resulting in a two-dice penalty on any roll for a single swarmed individual), or to intimidate mortals (add between one and three dice to Intimidation pools, depending on the type of insect and the victim’s phobias). Players and Storytellers can doubtlessly come up with even more creative uses of this power.",
+          "duration": "passive"
         }
       ],
       "4": [
         {
           "id": 7,
-          "name": "Geteilter Geist",
-          "summary": "Der Vampir kann seinen Geist in den Körper eines Tieres übertragen. Damit kann er das Tier kontrollieren und verfügt frei über seine Sinne, selbst bei Tage, wenn es ihm gelingt, wachzubleiben. Währenddessen liegt der Körper des Vampires reglos da, als wäre er erstarrt.",
-          "costs": "ein Wallungs-Check - bei einem Famulus ohne Kosten",
-          "diceSupplies": "Manipulation + Tierhaftigkeit",
-          "system": "Würfel auf Manipulation + Tierhaftigkeit, die Schwierigkeit beträgt 4. Bei einem Triumph kann der Vampir eine Szene lang den Körper eines Tieres vereinnahmen. Bei einem kritischen Triumph kann der Vampir das Tier auf unbestimmte Zeit vereinnahmen. Will er diese Vereinnahmung in die Tagesstunden ausdehnen, muss der Vampir wachbleiben (S. 219). Der Anblick der Sonne erfordert eine Probe auf Angstraserei, auch wenn das Sonnenlicht dem besessenen Tier nicht schadet. Der Anwender spürt seinen eigentlichen Körper nicht mehr, wird dieser aber beschädigt, so wird der Vampir aus der Trance gerissen und das Tier wieder freigesetzt. Der Tod des besessenen Tiers beendet ebenfalls die Trance, aber der Vampir erhält durch den Schock 1 Punkt schweren Schaden auf Willenskraft.",
-          "duration": "eine Szene oder auf unbestimmte Zeit (siehe oben)"
+          "name": "Subsume the Spirit",
+          "summary": "The vampire can completely transfer its mind into the body of an animal. They can control the animal and use its senses freely, even during the day should they manage to stay awake. While doing this, the vampire’s body lies immobile as if in torpor.",
+          "costs": "One Rouse Check. Free if used on famulus.",
+          "diceSupplies": "Manipulation + Animalism",
+          "system": "Make a Manipulation + Animalism test; Difficulty 4. On a win, the vampire can inhabit the animal’s body for one scene. On a critical win, the vampire can inhabit the animal indefinitely. Extending this possession into the daylight hours requires the vampire to stay awake (p. 219); seeing the sun requires a test for fear frenzy though the sunlight does not damage the animal being ridden. The user remains oblivious to their original body, but harm to it pulls them out of the trance and releases the animal. Death of the possessed animal also ends the trance, and the vampire takes a point of Aggravated Willpower damage from the shock.",
+          "duration": "A scene / indefinitely (see above)"
         }
       ],
       "5": [
         {
           "id": 8,
-          "name": "Herrschaft über Tiere",
-          "summary": "Die Macht, die ein Vampir über die Tiere hat, ist nun groß genug, dass er Herden und Rudel befehligen kann, als wären sie lediglich Erweiterungen seines Leibes. Mit einer bloßen Geste sind Dutzende, gar Hunderte Tiere bereit, ihr Leben für den Vampir zu geben.",
-          "costs": "zwei Wallungs-Checks",
-          "diceSupplies": "Charisma + Tierhaftigkeit",
-          "system": "Wähle eine Tierart aus und würfle auf Charisma + Tierhaftigkeit, die Schwierigkeit hängt vom Wesen der Tiere und dem gegebenen Befehl ab. Einen Krähenschwarm dazu zu bringen, sich zu zerstreuen und nach einer bestimmten Person Ausschau zu halten (vorausgesetzt, sie haben eine Möglichkeit, das Ziel zu identifizieren) ist relativ einfach (Schwierigkeit 3), aber ein Hunderudel dazu zu bringen, ihr Leben in einem Selbstmordangriff gegen einen anderen Vampir zu riskieren, ist eine größere Herausforderung (Schwierigkeit 5). Mit der Kraft ist der Anwender nicht in der Lage, Tiere herbeizurufen, sondern er zwingt damit nur jene, die bereits anwesend sind, ihm zu gehorchen. Der Vampir kann die Tiere beauftragen, zu ihm zurückzukehren, wenn sie ihre Aufgabe erfüllt haben, wenn es ihnen möglich ist.",
-          "duration": "eine einzelne Szene oder bis die Aufgabe erfüllt ist, was immer davon zuerst eintritt"
+          "name": "Animal Dominion",
+          "summary": "The power the vampire holds over beasts is now great enough to command flocks and packs as if they were extensions of their own body. At a gesture, animals lay down their lives by the dozens, even hundreds, to appease their master.",
+          "costs": "Two Rouse Checks",
+          "diceSupplies": "Charisma + Animalism",
+          "system": "Chose a type of animal and make a Charisma + Animalism roll with a Difficulty depending on the nature of the animals and the order given. Getting a flock of crows to disperse and look for a specific individual (given some means of identifying their target) is relatively easy (Difficulty 3), but getting a pack of dogs to give their lives in a suicidal attack on another vampire is more of a challenge (Difficulty 5). The power does not allow the user to summon animals, but compels those already present to obey. The vampire can command the animals to return after completing their task, if they have means to do so.",
+          "duration": "A single scene or until the directive is fulfilled, whichever is shortest."
         },
         {
           "id": 9,
-          "name": "Das Tier locken",
-          "summary": "Der Vampir kann sein Tier im Zustand der Furcht- oder Zornraserei in ein Opfer in seiner Nähe übertragen, sei es sterblich oder ein Vampir. Die Person erlebt anstelle des Vampirs die Raserei und verfällt in einen gnadenlosen Wutanfall oder flieht vor Angst, je nachdem, was der Auslöser ist.",
-          "costs": "ein Wallungs-Check",
-          "diceSupplies": "Geistesschärfe + Tierhaftigkeit vs. Fassung + Entschlossenheit",
-          "system": "Anstelle einer Willenskraftprobe, um einer Furcht- oder Zornraserei zu widerstehen, würfelst du auf Geistesschärfe + Tierhaftigkeit vs. Fassung + Entschlossenheit des Opfers. Schlägt der Wurf des Anwenders fehl, verfällt er in Raserei, als hätte er die Probe auf Willenskraft nicht bestanden. Bei einem Triumph erlebt das Opfer die Raserei anstelle des Anwenders. Spätere Impulse können noch immer eine Raserei in dem Vampir auslösen, aber er kann die Kraft anwenden, solange er in der Lage ist, Wallungs-Checks durchzuführen und weitere Opfer zur Verfügung stehen. Mit dieser Kraft kein eine Hungerraserei nicht übertragen werden.",
-          "duration": "Dauer der Raserei (siehe S. 220)"
+          "name": "Drawing out the Beast",
+          "summary": "The vampire can project their Beast at the moment of terror or fury frenzy, transferring it into a nearby subject, either mortal or vampire. That person immediately experiences the frenzy instead, going on a merciless rampage or fleeing in terror depending on the trigger.",
+          "costs": "One Rouse Check",
+          "diceSupplies": "Wits + Animalism vs Composure + Resolve",
+          "system": "Instead of the Willpower roll to resist a terror or fury frenzy, roll Wits + Animalism vs Composure + Resolve of the target. If the user fails, they enter frenzy as though they had failed the Willpower roll. On a win, the target experiences that frenzy instead of the user. Later stimuli can still provoke frenzy in the user, but they can use this power as long as they can make Rouse Checks and further targets remain available. This power cannot transfer a hunger frenzy.",
+          "duration": "Frenzy duration (see p. 220)"
         }
       ]
     }
   },
   {
     "id": 10,
-    "name": "Verdunkelung",
+    "name": "Obfuscate",
     "summary": "Für alle Jagenden ist die Fähigkeit, sich zu verbergen, sich ungesehen fortzubewegen und sich zu tarnen unerlässlich. Den Blutsverwandten, die Verdunkelung verwenden, bietet die Disziplin die perfekte Deckung, um sich an ein Opfer heranzuschleichen, sich als etwas Harmloses zu tarnen und zu entwischen, wenn die Sache zu gefährlich wird. Experten in Verdunkelung können die Disziplin einsetzen, um während des Bespitzelns in den Schatten zu lauern, in einer Menge das Aussehen zu verändern oder die Gabe gar auf eine Gruppe Vampire zu übertragen, die sich verbergen will.",
     "levels": {
       "1": [
@@ -862,7 +862,7 @@
           "id": 1,
           "name": "Schattenmandel",
           "summary": "Wenn der Anwender absolut still steht, verschmilzt er mit seiner Umgebung. Solange er Deckung hat, kein Geräusch von sich gibt und sich nicht rührt, kann er nur von mechanischen oder übernatürlichen Dingen aufgespürt werden.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "folgt den allgemeinen Regeln von Verdunkelung. Die Wirkung hält, bis sich der Anwender bewegt oder er mit anderen Mitteln entdeckt wird.",
           "duration": "eine Szene"
         },
@@ -870,7 +870,7 @@
           "id": 2,
           "name": "Totenstille",
           "summary": "Beliebt unter den Banu Haqim, verleiht diese Kraft dem Anwender absolute Stille und hebt sämtliche Geräusche auf, die er verursacht. Wie bei anderen Verdunkelungskräften, funktioniert auch diese nur bei Personen in Hörweite und täuscht keine Mikrofone oder anderen elektronischen Geräte zur Geräuschaufnahme. Anders als bei Verdunkelung im Allgemeinen, wirkt sich diese Kraft nur auf das Gehör aus, funktioniert dagegen aber auch zuverlässiger. Ein Vampir muss schon jede Menge Krach verursachen, um die Stille zu durchbrechen.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Der Anwender unterdrückt Geräusche seiner Schritte, Kleidung, kleinere Zusammenstöße und andere Laute, die er verursacht. Dadurch kann er nicht wahrgenommen werden, wenn eine Person ihn nur anhand ihre Geräusche bemerken würde, zum Beispiel wenn er sich in einer anderen Etage im Haus aufhält. Diese Kraft hebt allerdings keine Geräusche auf, die außerhalb der persönlichen Sphäre des Anwenders verursacht werden (wenn er zum Beispiel Gegenstände wirft oder fallen lässt oder Türen zuschlägt). Davon abgesehen kann der Anwender nur mit Das Unsichtbare spüren (Auspex 1) entdeckt werden.",
           "duration": "eine Szene"
         }
@@ -890,7 +890,7 @@
           "id": 4,
           "name": "Geist in der Maschine",
           "summary": "Der Anwender kann jetzt die Wirkung von Verdunkelung durch elektronische Medien übertragen, was es dem Vampir gestattet, auch auf einem Bildschirm bei einer Live-Übertragung unsichtbar oder maskiert zu erscheinen. Wenn die Aufnahme später betrachtet wird, entweder als Foto oder Video, ist die Wirkung abgeschwächt: Die Aufnahme wirkt leicht verschwommen, wodurch es schwer wird, die Person zu erkennen. Außerdem neigen automatisierte Überwachungsgeräte in der Anwesenheit des Vampirs zu Aussetzern, wodurch die Gefahr verringert wird, von automatisierten Systemen entdeckt zu werden.",
-          "costs": "keine zusätzlichen Kosten",
+          "costs": "No additional cost",
           "system": "Bei einer Live-Übertragung ist keine zusätzliche Probe nötig. Im Hinblick auf die Disziplin gelten Beobachtende am anderen Ende als wären sie mit dem Vampir am gleichen Ort. Bei Proben, um den Anwender auf Fotos, Videos oder ähnlichen Dingen zu erkennen, die während der Verdunkelung aufgenommen wurden, erhöht sich für Beobachtende die Schwierigkeit um +3. Der Anwender erhält auch drei zusätzliche Würfel in Würfelvorräten, wenn er automatisierte elektronische Überwachungsgeräte und Gegenmaßnahmen umgehen will.",
           "duration": "siehe eingesetze Kraft"
         },
@@ -952,7 +952,7 @@
   },
   {
     "id": 11,
-    "name": "Vergessenheit",
+    "name": "Oblivion",
     "summary": "Diejenigen, die Vergessenheit praktizieren, flirten mit etwas Unnatürlichem; dem Reich, in dem Gespenster für immer zerstört werden. Diese Gefahr ist jedoch nicht ohne Macht, denn die Meister dieser Disziplin nutzen sie, um sich in die Nacht zu hüllen, Gespenster zu versklaven und ihre Opfer mit ihrem eigenen Schatten zu erdrosseln. Bei einem Ergebnis von 1 oder 10 bei einer Wallungsprobe für die Disziplin erleidet der Vampir einen Makel, da Vergessenheit in seine Seele sickert. Diese können von jenen mit starkem Blut vermieden werden, die bestimmte mit der Disziplin verbundene Wallungsproben wiederholen können. Die übernatürlichen Projektionen von Dunkelheit und Leere der Vergessenheit sind anfällig für helles, gerichtetes Licht, Feuer, Sonnenlicht und Wahren Glauben. Ein Mangel an Schatten, aus denen man schöpfen kann, kann die Anwendung dieser Disziplin erschweren, obwohl ultraviolettes und infrarotes Licht keine Wirkung hat. Vergessenheit ist resonant zu einem totalen Mangel an Resonanz, wie Psychopathen und Menschen ohne emotionale Bindung.",
     "levels": {
       "1": [
@@ -960,7 +960,7 @@
           "id": 1,
           "name": "Schattenumhang",
           "summary": "Durch die subtile Anwendung des Einflusses von Vergessenheit auf Schatten, maskiert der Benutzer sein Aussehen oder wirkt düsterer und bedrohlicher.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Der Vampir erhält einen Bonus von zwei Würfeln auf Verstohlenheitswürfen sowie auf Einschüchterungswürfe gegen Sterbliche.",
           "duration": "passiv"
         },
@@ -968,7 +968,7 @@
           "id": 2,
           "name": "Anblick des Vergessens",
           "summary": "Der Vampir schließt die Augen. Wenn er sie öffnet, hebt sich die Iris der Augen schwarz vom Weiß der Sklera, und er kann nun in der Schwärze klar sehen Schwärze sehen und Geister wahrnehmen, die ihre Anwesenheit nicht aktivverbergen.",
-          "costs": "keine",
+          "costs": "Free",
           "system": "Bei Aktivierung werden die Augen des Benutzers auf übernatürliche Weise auf Dunkelheit eingestellt und können alle Nachteile bei schwachem Licht zu ignorieren, auch solche übernatürlichen Ursprung. Er braucht seine Augen immer noch zum Sehen und ist und werden wie üblich von Augenbinden und dergleichen beeinflusst. Wenn ein Geist anwesend ist und nicht versucht, sich zu tarnen oder oder eine Macht benutzt, um seine Anwesenheit zu verbergen, wird der Geist für den Vampir sichtbar, der Anblick des Vergessens benutzt. In solchen Fällen erscheinen Geister so, wie sie erscheinen wollen, sei es als Menschen mit den Wunden, die ihren Tod verursacht haben, als als geisterhafte Monstrositäten oder als vollkommen makellose Leichen. Die Geister erkennen nicht automatisch, wenn ein Vampir wenn ein Vampir sie sieht, aber wenn sie es tun, reagieren viele eher mit Angst oder Wut statt mit Passivität. Diese Kraft verleiht nicht die Fähigkeit, physischen Kontakt Kontakt mit Geistern aufzunehmen.",
           "duration": "eine Szene"
         }

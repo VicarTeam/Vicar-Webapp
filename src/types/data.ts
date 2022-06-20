@@ -44,18 +44,9 @@ export interface IClan {
 export interface IDiscipline {
     id: number;
     name: string;
-    nicknames: string[];
     summary?: string;
-    properties: IDisciplineProperties;
     levels: { [key: number]: IDisciplineAbility[] };
     note?: string;
-}
-
-export interface IDisciplineProperties {
-    summary?: string;
-    type: "Geistig" | "Körperlich" | "Magie";
-    threat: string;
-    resonance: string;
 }
 
 export interface IRestrictionHolder {
