@@ -2,18 +2,7 @@
   {
     "id": 1,
     "name": "Auspex",
-    "nicknames": [
-      "Voyeurismus",
-      "Wahrsagen",
-      "Anima Visus"
-    ],
     "summary": "Als eine der größten Gaben und schlimmsten Flüche, die Vampire heimsuchen, gestattet die Disziplin Auspex es den Blutsverwandten, die Wahrheit unter all den Lügen zu erkennen, den Verstand der Leute in ihrer Nähe zu prüfen und Realität als andere Wesen auf einer anderen Ebene wahrzunehmen. Was zunächst als die ultimative Macht der Voraussicht und Visionen erscheint, verleiht ihren Benutzern vielleicht zu viel Wissen. Mag sein, dass sie die Klinge eines Meuchelmörders erkennen, bevor sie zusticht, oder in den Verstand eines Feindes eindringen können, um ihn auf den Kopf zu stellen, aber sie spüren auch jede Gefühlsregung, gute wie schlechte, sehen Dinge, die sie am liebsten nicht sehen würden, und erkennen eine Zukunft, die sie lieber nicht genauer betrachten würden. Wer Auspex anwendet, öffnet der Paranoia Tür und Tor, doch die Anwendung macht süchtig. Wenn man einmal weiß, dass die Wahrheit in greifbarer Nähe liegt, wird man jede Gelegenheit beim Schopfe packen, sie zu enthüllen. Die Blutsverwandten verwenden Auspex auf viele Arten. Manche Vampire agieren als Spione für ihren Hof oder ihre Fraktion. Andere handeln auf eigene Faust und erpressen Sterbliche oder Unsterbliche mit den Geheimnissen, die sie aus stillen Unterhaltungen, subtilen Gefühlsregungen und telepathischen Eingriffen gewonnen haben. Auspex gestattet es dem Anwender, die Rolle des Detektivs in der eigenen Domäne zu übernehmen, die den Schauplatz der Vernichtung eines Vampirs nach verräterischen spirituellen Hinweisen untersucht oder Verdächtige mit übernatürlicher Genauigkeit befragt.",
-    "properties": {
-      "summary": "Erzählerinnen können anstelle der Spieler für die Charaktere auf Auspex würfeln, um überzeugender falsche oder unvollständige Antworten nach fehlgeschlagenen Proben zu liefern.",
-      "type": "Geistig",
-      "threat": "Niedrig. Auspex an sich manifestiert sich nie auf eine Art, die für das bloße Auge sichtbar ist, und auch seine Auswirkungen können stets rational erklärt werden, selbst wenn man es als pures Glück abtut.",
-      "resonance": "Phlegmatisch. Künstlerisch Begabte (besonders im fotografischen Bereich) und Visionäre, bestimmte Personen mit Schizophrenie, Personen, die psychoaktive Substanzen zu sich genommen haben, Detektive"
-    },
     "levels": {
       "1": [
         {
@@ -118,18 +107,7 @@
   {
     "id": 2,
     "name": "Beherrschung",
-    "nicknames": [
-      "Schlangenbeschwören",
-      "Hypnotisieren",
-      "Mentis Imperium"
-    ],
     "summary": "Beherrschung verleiht dem Vampir die Fähigkeit, die Handlungen anderer zu kontrollieren, ihre Erinnerungen zu manipulieren und Lebewesen zu Taten zu zwingen, die sie aus freien Stücken nicht begehen würden. Im Wesentlichen ermöglicht Beherrschung einem Vampir, das Opfer vergessen zu lassen, dass gerade von ihm getrunken wurde. Am gefährlichsten wird es, wenn Blutsverwandte ganze Viehherden versklaven. Hier ist das Tier besonders grausam und kontrollierend. Beherrschung fungiert auch als Knüppel, um die Maskerade zu forcieren, unterwürfige Bedienstete zu erschaffen und die Selbstsicherheit des Vampirs zu stärken. Wenn Blutsverwandte diese Disziplin einsetzen, fühlen sie sich allmächtig, auch wenn die Weisesten unter ihnen wissen, dass auch das Ketten einer anderen Art sind, die ihnen vom Blut angelegt wurden.",
-    "properties": {
-      "summary": "Die meisten Beherrschungskräfte erfordern Blickkontakt mit dem Opfer. Sobald der Kontakt hergestellt wurde, hält Beherrschung den Blick des Opfers, bis der Anwender seinen Befehl oder Befehle übermittelt hat, sofern er nicht unterbrochen wird. Blickkontakt mit jemandem aufzunehmen, der aktiv den Blick des Vampirs meidet, erfordert einen Wettbewerb auf Entschlossenheit + Einschüchtern seitens des Anwenders vs. Geistesschärfe + Wahrnehmung seitens des Opfers. Es ist natürlich unmöglich, Blickkontakt mit jemandem herzustellen, der die Augen zusammenkneift oder dem die Augen verbunden wurden, aber diese Person wäre für andere Taktiken ein leichtes Opfer. Im Kampf oder anderen hektischen Situationen kann Beherrschung nur von Leuten eingesetzt werden, die den Vampir gerade angreifen oder anderweitig direkt mit ihm interagieren, da die Aufmerksamkeit aller anderen auf persönliche Gefahren gerichtet ist. Wenn dem Anwender keine übernatürlichen Fähigkeiten wie Telepathie (Auspex 5) zur Verfügung stehen, muss er das Opfer verbal befehligen. Das Opfer muss den Anwender hören und seine Sprache verstehen können. Ohne Tödliches Dekret (Beherrschung 5) schlagen Befehle automatisch fehl, die offensichtlich zum Tod oder schwerer Verletzung führen würden. Gegen Befehle, die dem Opfer auf andere Weise gesellschaftlichen oder körperlich Schaden würden, wenn es sich zum Beispiel in der Öffentlichkeit ausziehen soll, kann sich das Opfer mit einer Probe wehren. (Einzelheiten dazu findest du bei den individuellen Kräften.) Vampire können mit Beherrschung keine Informationen entlocken, da das Opfer zu einer geistlosen Marionette wird, solange es unter seinem Einfluss steht. Wenn zum Beispiel unter Nötigen der Befehl „Sprich!“ gegeben wird, resultiert das in einem brabbelnden Wortsalat, während eine hypnotisierte Person auf den Befehl „Erzähl mir alles, was du von dem Assassinen weißt!“ antwortet: „Alles, was du von dem Assassinen weißt.“ Beherrschung kann die Opfer nicht dazu bringen, etwas zu tun, was sie nicht auf Befehl tun können, wie „Schlaf!“. Letztlich liegt es im Ermessen der Erzählerin, was mit der Disziplin erreicht werden kann, aber sie sollte bedenken, dass Beherrschung nur eine Disziplin unter vielen ist und keine Alleskönnerlösung für jedes Problem darstellt. Mit Beherrschung dringt man zum Kern vampirischer Kontrolle und ihrem Raubtierverhalten vor. Weshalb Vampire jedem Versuch widerstehen müssen, sie zu beherrschen. Ein Vampir einer älteren (stärkeren) Generation kann einen Punkt in Willenskraft ausgeben, um dem Versuch eines Vampirs einer jüngeren Generation, ihn zu beherrschen, zu widerstehen und die Wirkung vollständig zu negieren. Wenn eine Probe auf eine der Beherrschungskräfte einen totalen Fehlschlag erleidet, kann der Vampir dieses Opfer bis zum Ende der Geschichte nicht beherrschen. Beherrschung bedroht die Menschlichkeit, ganz besonders, wenn der Vampir Prinzipien hat, in denen es um persönliche Freiheit geht und die es ihm verbieten, die menschliche Unversehrtheit zu gefährden. Der Einsatz könnte Makel verursachen (S. 245).",
-      "type": "Geistig",
-      "threat": "Niedrig. Wenn man nicht gerade einen ganzen Hörsaal via Beherrschung dazu bringt, von den Klippen bei Dover zu springen, ist es eine der subtileren vampirischen Kräfte.",
-      "resonance": "Phlegmatisch. Das Blut des Unterwürfigen oder Dominanten, Herren und Sklaven, Großindustrielle, Leute im Machtrausch, Kultführer und ihre Anhänger."
-    },
     "levels": {
       "1": [
         {
@@ -227,18 +205,7 @@
   {
     "id": 3,
     "name": "Blutmagie",
-    "nicknames": [
-      "A Kind of Magic",
-      "Thaumaturgie",
-      "Quietus"
-    ],
     "summary": "Die Tremere behaupten, dass Blutmagie oder „Thaumaturgie“, wie sie es nennen, ihre Erfindung ist. In der Version, die die Banu Haqim erzählen, war „Quietus“ ihr Blutrecht, lange bevor die Tremere Vampire waren. Andere Clans treffen ähnliche Aussagen. Auch wenn ihr Ursprung unklar ist, so ist es die grausige Natur der Blutmagie an sich nicht. Nur wenige Blutsverwandte trauen jenen, die eine Kraft verwenden, die die Vitæ in ihren Adern manipulieren und Blut in Gift verwandeln kann. Anders als andere Disziplinen, die sich damit beschreiben lassen, dass sie in den von dem Vampir ausgewählten Opfern ganz natürlich heranwachsen, benötigen Blutmagier Lehrmeister. Die Tremere verließen sich einst auf die Pyramidenhierarchie ihres Clans, um die Ausbildung ihrer Neugeborenen zu vereinbaren, während die Banu Haqim darauf bestehen, dass die Erzeuger- Kind-Beziehung die beste Form der Betreuung durch einen Mentor sei. In diesen Nächten werden viele Kinder der Haqim in Europa oder Amerika angeschwemmt, und da die Pyramidenstruktur der Tremere zerbrochen ist, suchen ihre Neugeborenen verzweifelt durch die modrigen Folianten und Palimpseste nach Fragmenten wahrer Überlieferungen. Jene, die diese Disziplin wahrhaft gemeistert haben, entwickeln ihre eigenen Rituale, wenn auch viele sie vor anderen verbergen und in vollen Zügen genießen, dass ihre unbekannten Fähigkeiten von solch einem Geheimnis umgeben sind. Um Blutmagie zu praktizieren, muss man das eigene Blut unterwerfen. Jede Form dieser Kraft erinnert den Vampir daran, dass er sich weit von der Menschheit entfernt hat, da kein Sterblicher solche magischen Kräfte besitzen könnte.",
-    "properties": {
-      "summary": "Bei Blutmagie handelt es sich um eine besondere Disziplin, da sie sowohl Kräfte verleiht wie andere Disziplinen, als auch die Fähigkeit gewährt, Rituale in Höhe der Stufe durchzuführen, die der Anwender in der Disziplin erreicht hat. Die normalen Kräfte scheinen im Vergleich schwach, aber die Vielseitigkeit der Rituale gleicht das wieder aus, vorausgesetzt, der Anwender kann sie erlernen. Bei der Charaktererstellung kann sich der Spieler ein Stufe-1-Ritual aussuchen, wenn er wenigstens einen Punkt in Blutmagie hat. Charaktere können neue Rituale erwerben, indem sie so viele Erfahrungspunkte bezahlen, wie die Ritualstufe x3 beträgt. Neue Rituale während des Spiels zu erlernen, erfordert sowohl Erfahrung als auch Zeit. Gehe davon aus, dass das Lernen eines Rituals so viele Woche dauert, wie der Ritualwert x Ritualwert beträgt.",
-      "type": "Magie",
-      "threat": "Niedrig bis mittel. Die einzelnen Erscheinungsformen der Kräfte und Rituale der Blutmagie variieren ebenso stark wie ihre Wirkungen.",
-      "resonance": "Sanguinisch. Auch wenn es ihrem Blut selbst nicht innewohnt, so reagiert Blutmagie begierig auf das Blut von menschlichen Okkultisten, Magiern und Kultanführern, ebenso wie auf Hämophile und Bibliophile."
-    },
     "levels": {
       "1": [
         {
@@ -326,17 +293,7 @@
   {
     "id": 4,
     "name": "Geschwindigkeit",
-    "nicknames": [
-      "Ausreißen",
-      "Entgleiten",
-      "Velocitas"
-    ],
     "summary": "Die Fähigkeit, zügig zuzuschlagen, Schlägen auszuweichen und Verfolgern zu entkommen macht aus den Blutsverwandten extrem effektive Raubtiere. Mit Geschwindigkeit bewegen sich die Vampire schneller als alle anderen natürlichen Wesen, auch wenn sie ihnen mehr als nur übernatürliche Schnelligkeit gewährt, mit der Vampire ebenso schnell zu denken scheinen, wie sie handeln. Während manche Vampire ohne Furcht vor Gegenschlägen gegen ihre Feinde ausholen, benutzen andere die Kraft einfach um schneller als andere Personen zu Fuß von A nach B zu kommen.",
-    "properties": {
-      "type": "Körperlich",
-      "threat": "Mittel bis hoch. Die meisten Geschwindigkeitskräfte sind offensichtlich unmenschlich, die einzige Rettung besteht darin, dass es schwer ist, sie auf Film oder ein Foto zu bannen.",
-      "resonance": "Cholerisch. Angst und purer Schrecken, Sprinter, Athleten, Personen, die Amphetamine und Alkaloide zu sich nehmen, Personen, die regelmäßig Ego-Shooter und andere Spiele auf Twitch spielen."
-    },
     "levels": {
       "1": [
         {
@@ -430,18 +387,7 @@
   {
     "id": 5,
     "name": "Gestaltwandeln",
-    "nicknames": [
-      "Morphen",
-      "Transformation",
-      "Mutatio"
-    ],
     "summary": "Werwölfe hassen Vampire für den Besitz dieser Fähigkeit. In ihren Augen ist es eine Verhöhnung ihrer eigenen Natur, wenn sich untote Wesen in Wölfe oder Fledermäuse verwandeln, die Krallen ausfahren und mit den Fängen knirschen, als wären sie einer von ihnen. Doch das Gestaltwandeln liegt ihnen schon fast so lange im Blut wie es die Blutsverwandten gibt. Die Kraft, sich zu wandeln, die Gestalt zu verändern und zu noch tödlicheren Raubtieren zu werden, ist ebenso wesentlicher Bestandteil des Vampirs wie es zu den Wolflingen gehört. Gestaltwandler nutzen die Disziplin vor allem wegen ihrer Nützlichkeit. Die Kraft erlaubt es dem Vampir, zu einer Bestie zu werden, ihre Gliedmaßen in Waffen zu verwandeln oder sich als Nebelwolken der Gefangennahme zu entziehen, durch Schlüssellöcher zu gleiten oder durch einen Spalt im Fenster zu schlüpfen.",
-    "properties": {
-      "summary": "Gestaltwandlungskräfte, die den Körper des Vampirs verwandeln oder sonst irgendwie verändern, wirken sich auch auf die Kleidung, verschluckte Gegenstände und leichte (nur wenige Gramm), am Leib getragene Gegenstände aus. Die Kräfte beeinflussen keine größeren, am Leib getragenen Gegenstände, einschließlich Rucksäcken, Reise- oder Sporttaschen. Aus diesem Grund reisen Gestaltwandler meistens nur mit leichtem Gepäck.",
-      "type": "Körperlich",
-      "threat": "Hoch. Als eine der offensichtlichsten Disziplinen, die den Vampiren zur Verfügung stehen, können alle Gestaltwandlungskräfte mehr oder weniger ohne Weiteres gegen die Maskerade verstoßen.",
-      "resonance": "Tierblut, besonders von Tieren, die zur Gestaltwandlungsform passen, das Blut von Werwölfen, Wechselbälgern und anderen übernatürlichen Schimären zwischen Mensch und Tier"
-    },
     "levels": {
       "1": [
         {
@@ -524,18 +470,7 @@
   {
     "id": 6,
     "name": "Präsenz",
-    "nicknames": [
-      "Superstar",
-      "Faszination",
-      "Sublimitas"
-    ],
     "summary": "Die meisten Vampire sind anmutige und tödliche Wesen. Sie werden sowohl mit schrecklicher Gewalt als auch verheerender Schönheit in Verbindung gebracht und verkörpern Gegensätze, die zwischen Alptraum und Traum schwanken, je nachdem, wer sie betrachtet und wonach dem Vampir gerade der Sinn steht. Präsenz ist eine Disziplin, die dieser zweigespaltenen Existenz Ausdruck verleiht. Als Werkzeug, um Opfer anzulocken oder zu zerstreuen, gestattet es Präsenz, die Massen zu kontrollieren, Leute emotional zu manipulieren und Hingabe zu erzwingen. Ein Sterblicher könnte sich seiner größten Angst gegenübersehen, die ihm plötzlich wie das herrlichste Wesen auf Erden erscheint. Viele, die Präsenz verwenden, nutzen die Disziplin, um sich mühelos Trinkgefäße zu beschaffen, während andere sie benutzen, um als Schreckenskreaturen durch die Nacht zu streifen und willensschwaches Vieh vor Angst in die Flucht zu schlagen, unsicher, was es gerade erblickt hat. Wirkungsvoll nicht nur als Lockmittel sondern auch zur Verteidigung, genießen Vampire mit Präsenz ein leichteres Nachtleben, wobei sie gerne vergessen, welche Gefühle, die ihnen entgegengebracht werden, normal sind und welche erzwungen.",
-    "properties": {
-      "summary": "Präsenz beeinflusst die Gefühle derer, die ihr ausgesetzt sind, nicht den Verstand. Obwohl das ganz nützlich ist, weil die Opfer ihren Verstand behalten (anders als bei Beherrschung), stehen sie auch nicht unter der direkten Kontrolle des Anwenders und sind daher oft unberechenbar. Um von Präsenz beeinflusst zu werden, muss sich das Opfer in der Nähe des Anwenders befinden, zumindest in Hörweite. Die Disziplin kann nicht elektronisch übertragen werden, es sei denn, der Anwender besitzt die Kraft Prominenz (Präsenz 5). Der Einsatz von Präsenz lässt sich nur schwer feststellen, außer man besitzt die Kraft Das Unsichtbare spüren (Auspex 1), aber selbst dann ist manchmal zu subtil, um bemerkt zu werden, es sei denn, man hält speziell danach Ausschau. Die Wirkungen der Präsenzkräfte lassen sich nicht addieren, wenn also jemand Ehrfurcht und Entzücken auf dieselbe Person anwendet, fügt er gesellschaftlichen Überzeugenproben seinen Wert in Präsenz nur einmal hinzu. Im Kampf wirken nur die Kräfte Blick der Furcht und Majestät, da Charme nur wenig nützt, wenn jemand beschlossen hat, einem wehzutun.",
-      "type": "Geistig",
-      "threat": "Niedrig bis mittel. Subtil wie die Kräfte sind, erkennen die Leute nur selten, dass sie überhaupt beeinflusst wurden. Wie die meisten Disziplinen können höherstufige Kräfte verdutzte Zeugen hinterlassen, besonders wenn die Wirkung nachlässt.",
-      "resonance": "Sanguinisch. Die Schönen und Lustvollen, jene, die völlig in den Vampir vernarrt sind, Models, Schauspieler und Filmstars, jene, die fesselnde Reden schwingen, seien es Politiker oder Autoverkäufer, YouTube-Sensationen und Instagram-Influencer."
-    },
     "levels": {
       "1": [
         {
@@ -633,17 +568,7 @@
   {
     "id": 7,
     "name": "Seelenstärke",
-    "nicknames": [
-      "Mauern",
-      "Steinhaut",
-      "Resistentia"
-    ],
     "summary": "Von den Unsterblichen hoch geschätzt, verleiht Seelenstärke die Fähigkeit, körperlichen und geistigen Angriffen zu widerstehen. Ohne wenigstens einen Funken Seelenstärke leben nur sehr wenige Vampire länger als ein Jahrhundert, ganz besonders in einer Welt, in der Gewalt zum Alltag gehört und nicht einmal Blutsverwandte sicher sind. In diesen Nächten nutzen Vampire Seelenstärke seltener, um der Sonne zu widerstehen, als um gewaltsamen Schaden, Feuer und übernatürliche Nötigung abzuwehren. Jene, die Seelenstärke besitzen, sind die festen Säulen der Gesellschaft der Blutsverwandten, fähig, ohne Regung oder Anzeichen der Schwäche Schläge einzustecken und Zauber abzuwehren. Nur wenige Vampire fühlen sich in ihrer Unsterblichkeit so gefestigt wie die Ahnen der Blaublütigen und der Wilden.",
-    "properties": {
-      "type": "Körperlich",
-      "threat": "Mittel. Augenzeugen werden zweifelsohne darauf reagieren, wenn jemand nach einer tödlichen Schlägerei oder einem Kugelhagel scheinbar unversehrt wieder aufsteht. Die beliebtesten Erklärungen zur Vertuschung beinhalten fehlerhafte Erinnerungen durch die Aufregung (die Kugeln haben nur scheinbar getroffen), Special Effects (YouTube-Scherz) oder die bewährte Ausrede: „Die Person stand unter dem Einfluss von PCP.“",
-      "resonance": "Melancholisch. Jene, die Krieg, Misshandlung oder Unglück überlebt haben, Dauerläufer, Bergsteiger, Mitglieder der Infanterie und Sondereinsatzkräfte, jene mit einem besonders starken Immunsystem"
-    },
     "levels": {
       "1": [
         {
@@ -713,7 +638,9 @@
           "costs": "ein Wallungs-Check",
           "system": "Wer direkt von dem Anwender genügend Blut für einen Wallungs-Check trinkt, erhält vorübergehend Seelenstärke, wobei der Seelenstärkewert des Spenders halbiert (abgerundet) wird. Der Trinkende erhält dieselben Kräfte auf der gleichen Stufe wie der Spender.",
           "duration": "eine Nacht; bei Vampiren: bis zum nächsten Trinken oder bis der Hunger des Vampirs auf 5 steigt"
-        },
+        }
+      ],
+      "5": [
         {
           "id": 8,
           "name": "Marmorhaut",
@@ -736,17 +663,7 @@
   {
     "id": 8,
     "name": "Stärke",
-    "nicknames": [
-      "Hulken",
-      "Starkes Blut",
-      "Percutio"
-    ],
     "summary": "Unter den Mitgliedern des Clans der Brujah gibt es ein Sprichwort: „Unsere Kraft unterschätzt man nur einmal.“ Stärke ist vitæ-angetriebene Kraft, die andere vampirische Fähigkeiten bei weitem übersteigt. Mächtiger als jede leistungssteigernde Droge, unnatürlicher als die Statur eines angeschwollenen Bodybuilders, verkörpert Stärke das Tier, das in den Fäusten, Füßen, Gliedmaßen und der rohen körperlichen Kraft eines Vampirs losgelassen wird. Die Disziplin wird nicht nur genutzt, um Dinge zu schlagen, auch wenn sie dafür perfekt geeignet ist. Es ist die Fähigkeit der Vampire, mit ihren Körpern Aktionen durchzuführen, die Sterbliche unmöglich nachahmen können. In Sachen Missverhältnis überbietet Stärke alle anderen Disziplinen: Ein gebrechlich aussehender Nosferatu schlägt härter zu als ein Schwergewichtboxer, ein von den Brujah umarmtes Kind kann ein Opfer mit einem Schlag enthaupten.",
-    "properties": {
-      "type": "Körperlich",
-      "threat": "Mittel bis hoch. Kleinere Darbietungen der Disziplin könnten als „hysterische Stärke“ abgewinkt werden, aber wenn der Asphalt Risse bekommt und Gebäude zerbröckeln, verliert die Erklärung das letzte Bisschen Glaubwürdigkeit.",
-      "resonance": "Cholerisch. Die Kräftigen und Gesunden, Athleten und junge Personen in den besten Jahren, Fitnessstudiofanatiker, Ringer, Bauarbeiter und Holzfäller, Hafenarbeiter"
-    },
     "levels": {
       "1": [
         {
@@ -840,18 +757,7 @@
   {
     "id": 9,
     "name": "Tierhaftigkeit",
-    "nicknames": [
-      "Doolitteln",
-      "Abrichten",
-      "Bestiae Sermo"
-    ],
     "summary": "Vielleicht haben die Vampire mehr mit Tieren gemein als mit Menschen. Eine gefährliche Mischung aus Instinkten treibt sie an, und sie müssen sich ganz schön anstrengen, um dem Verlangen nicht nachzugeben, auf andere loszugehen. Wie ein wilder Hund an der Kette, wird sich auch das Tier im Vampir nie zähmen lassen. Manche Blutsverwandte haben es geschafft, eins mit ihrem inneren Tier zu werden. Sie haben die Tierhaftigkeit gemeistert. Manche lassen sich bei der Anwendung seiner Kräfte zum Heulen, Knurren und Brüllen hinreißen, oder sie kommunizieren mit den Tieren in deren „Sprache“, auch wenn das nur eine Vorliebe und nicht notwendig ist. Die Disziplin Tierhaftigkeit findet vor allem unter jenen Vampiren Anwendung, denen es schwerfällt, dazuzugehören, oder die einfach keinen Geschmack daran gefunden haben, unter Sterblichen zu leben. Oftmals als eine der nützlichen Gaben Kains klassifiziert, die es Vampiren gestattet, von geringerem Blut zu leben oder Kameradschaft unter den nicht denkenden Wesen zu finden, ist es auch eine vernichtende Waffe gegen Vampire, die sich an ihre Türme klammern, und gegen Inquisitoren, die davon ausgehen, dass sich ihre Feinde nur unter den Zweibeinern befinden. Ein Schwarm bluthungriger Ratten, der in die Penthouse-Zuflucht eines Blutsverwandten eindringt, die in Tierhaftigkeit bewanderte Vampirin, die im Elysium das Tier des Sheriffs einschüchtert, oder der scharfäugige Rabe, der die Ortsgruppe der Leopoldsgesellschaft ausspioniert, dienen alle dazu, die Anhänger der Tierhaftigkeit zu stärken und ihre Feinde zu schwächen.",
-    "properties": {
-      "summary": "Standardmäßig wirken die Kräfte der Tierhaftigkeit, die sich auf Tiere auswirken, nur bei Wirbeltieren. Außerdem erhöht sich die Schwierigkeit für Proben auf Fähigkeiten um 1, wenn die Kräfte auf Pflanzenfresser angewendet werden.",
-      "type": "Geistig",
-      "threat": "Niedrig bis mittel. Mit Tieren zu sprechen, mag exzentrisch sein, aber die brutalsten Anwendungen der Disziplin werden mehr als nur erhobene Augenbrauen hervorrufen.",
-      "resonance": "Tierblut, vorzugsweise wild"
-    },
     "levels": {
       "1": [
         {
@@ -951,19 +857,7 @@
   {
     "id": 10,
     "name": "Verdunkelung",
-    "nicknames": [
-      "Stealth Mode",
-      "Tarnkappe",
-      "Verschleierung",
-      "Occulto"
-    ],
     "summary": "Für alle Jagenden ist die Fähigkeit, sich zu verbergen, sich ungesehen fortzubewegen und sich zu tarnen unerlässlich. Den Blutsverwandten, die Verdunkelung verwenden, bietet die Disziplin die perfekte Deckung, um sich an ein Opfer heranzuschleichen, sich als etwas Harmloses zu tarnen und zu entwischen, wenn die Sache zu gefährlich wird. Experten in Verdunkelung können die Disziplin einsetzen, um während des Bespitzelns in den Schatten zu lauern, in einer Menge das Aussehen zu verändern oder die Gabe gar auf eine Gruppe Vampire zu übertragen, die sich verbergen will.",
-    "properties": {
-      "summary": "Verdunkelungskräfte funktionieren über leichte, räumliche Hypnose. Beobachtende sehen den Vampir, aber ihr Verstand ignoriert ihn. Zeugen weichen unbewusst aus, wenn der Anwender sich ihnen in den Weg stellt, und rationalisieren ihr Verhalten, wenn jemand nachhakt. Verdunkelung beeinflusst alle fünf Sinne, wenn es nicht anders vermerkt wird. Die Disziplin hat ihre Grenzen: Die Illusion versagt, wenn der Beobachter den Anwender nicht ignorieren kann oder wenn der Anwender den Beobachter in die Enge treibt. Ein Vampir, der die Tür blockiert, kann keine Verdunkelung gegen jemanden aufrechterhalten, der durch die Tür will. Auch gewaltsame Handlungen gefährden die Fassade, ebenso Handlungen wie laute Stimmen, fehlgeschlagene Taschendiebstähle und zum Schlag erhobene Waffen. Es ist möglich, zu flüstern, ohne die Verdunkelung zu brechen. Im Allgemeinen bietet die Disziplin keinen Schutz vor technologischer Überwachung. Einem Menschen, der den Vampir beobachtet, fällt es schwer, die Linse auf ihn auszurichten, aber automatische Kameras und andere Detektoren können ihn erwischen. Ein Vampir mit Aas Unsichtbare spüren (Auspex 1) kann verdunkelte Charaktere erkennen, indem er auf Geistesschärfe oder Entschlossenheit + Auspex vs. Geistesschärfe + Verdunkelung würfelt. Alle können verdunkelte Vampire erkennen, wenn sie Aufmerksamkeit erregen. Solche Beobachtenden bemerken sie versehentlich, indem sie einen Wettbewerb auf Geistesschärfe + Wahrnehmung (oder Entschlossenheit + Wahrnehmung bei aktiv Suchenden) vs. Geistesschärfe + Heimlichkeit ablegen. Das gilt auch für Überraschungsangriffe aus der Verdunkelung heraus: Ein Opfer hat stets eine Chance, die Gefahr zu erkennen, kurz bevor sie zuschlägt.",
-      "type": "Geistig",
-      "threat": "Niedrig. Es geht bei der Disziplin darum, Entdeckung zu vermeiden.",
-      "resonance": "Melancholisch. Die Ignorierten und Ungesehenen, die Obdachlosen, Vergessenen und Depressiven, Spione, Taschendiebe, ausgezeichnete Bedienstete, Roadies und Bühnenhelfer und alle anderen Leute im Hintergrund"
-    },
     "levels": {
       "1": [
         {
@@ -1060,112 +954,183 @@
   },
   {
     "id": 11,
-    "name": "Vergessenheit",
-    "nicknames": [
-      "Obtenebration",
-      "Nekromantie",
-      "Schattenboxen",
-      "Abyssal Mastery",
-      "Tenebrae Imperiosae",
-      "Mortis",
-      "die dunklen Künste",
-      "schwarze Magie",
-      "Entropie"
-    ],
+    "name": "Oblivion",
     "summary": "Diejenigen, die Vergessenheit praktizieren, flirten mit etwas Unnatürlichem; dem Reich, in dem Gespenster für immer zerstört werden. Diese Gefahr ist jedoch nicht ohne Macht, denn die Meister dieser Disziplin nutzen sie, um sich in die Nacht zu hüllen, Gespenster zu versklaven und ihre Opfer mit ihrem eigenen Schatten zu erdrosseln. Bei einem Ergebnis von 1 oder 10 bei einer Wallungsprobe für die Disziplin erleidet der Vampir einen Makel, da Vergessenheit in seine Seele sickert. Diese können von jenen mit starkem Blut vermieden werden, die bestimmte mit der Disziplin verbundene Wallungsproben wiederholen können. Die übernatürlichen Projektionen von Dunkelheit und Leere der Vergessenheit sind anfällig für helles, gerichtetes Licht, Feuer, Sonnenlicht und Wahren Glauben. Ein Mangel an Schatten, aus denen man schöpfen kann, kann die Anwendung dieser Disziplin erschweren, obwohl ultraviolettes und infrarotes Licht keine Wirkung hat. Vergessenheit ist resonant zu einem totalen Mangel an Resonanz, wie Psychopathen und Menschen ohne emotionale Bindung.",
-    "properties": {
-      "summary": "Die Kräfte der Vergessenheit erlauben die Kontrolle von Kräften oder Geistern eines extradimensionalen Elements, das aus einer Ebene des Todes und des Nichts stammt. Wenn es sich manifestiert, projiziert dieses Element in unsere Realität als zweidimensionale Schatten auf der Oberfläche von dreidimensionalen Objekten, entweder von selbst oder als Erweiterung des eigenen Schattens, die sich über den Boden schlängeln, Wänden, Gegenständen oder Menschen. Das macht es unmöglich, sie mit den meisten physischen Mitteln anzugreifen, da jeder Schlag nur nur die Oberfläche trifft, auf die sie projiziert werden, und nicht die Entitäten selbst. Vergessenheits-Projektionen und Geister erleiden Schaden durch Feuer und Sonnenlicht und zählen in dieser Hinsicht wie Vampire mit Blut Potenz 1 in dieser Hinsicht. Außerdem erleiden sie eine Stufe von Verschlimmerter Schaden pro Runde durch helles, direktes Licht, und können auch durch gesegnete Waffen und Artefakte geschädigt werden (oberflächlich oder verschlimmert) durch gesegnete Waffen und Artefakte, je nach der Stärke des Segens und des wahren Glaubens des Anwenders. Kräfte der Vergessenheit sind in hell erleuchteten Räumen unwirksam. Tageslicht und schattenlose Räume sind besonders und verhindern das erfolgreiche Wirken der Disziplin, Ultraviolettes und infrarotes Licht stellt jedoch keine keine Einschränkung für die Anwendung der Disziplin. Mäßig beleuchtete Räume führen zu einem Malus von einem Würfel auf den Wurf für die Disziplin. Der Einsatz dieser Kräfte fordert einen hohen Tribut von der Psyche des Anwenders, und viele Kräfte verursachen Flecken wie die betäubende Leere des Vergessens in den Geist des Anwenders eindringt. des Anwenders.",
-      "type": "Geistig",
-      "threat": "Mittel-hoch. Die abgrundtiefen Schatten sind auf Kameras selten gut zu erkennen, aber sie sind offensichtlich unnatürlich, wenn man sie persönlich sieht.",
-      "resonance": "Psychopathen und die emotional losgelöst. Blut leer von Resonanz.",
-      "note": "Bei einem Wallungs-Check für Vergessenheit, führt ein Ergebnis von \"1\" oder \"10\" zusätzlich zum möglichen gewonnen Hunger zu einem Markel. Wenn die Blutpotenz ein Re-Roll des Wallungs-Checks erlaubt, kann zwischen den beiden Ergebnissen gewählt werden."
-    },
     "levels": {
       "1": [
         {
           "id": 1,
-          "name": "Schattenumhang",
-          "summary": "Durch die subtile Anwendung des Einflusses von Vergessenheit auf Schatten, maskiert der Benutzer sein Aussehen oder wirkt düsterer und bedrohlicher.",
+          "name": "Schattenmantel (Lasombra)",
+          "summary": "Durch die subtile Anwendung des Einflusses der Vergessenheit auf die Schatten der Umgebung maskiert der Benutzer sein Aussehen oder wirkt unheimlicher und bedrohlicher.",
           "costs": "keine",
-          "system": "Der Vampir erhält einen Bonus von zwei Würfeln auf Verstohlenheitswürfen sowie auf Einschüchterungswürfe gegen Sterbliche.",
+          "system": "Der Vampir erhält einen Bonus von zwei Würfeln auf Heimlichkeitswürfe sowie auf Einschüchterung gegenüber Sterblichen.",
           "duration": "passiv"
         },
         {
           "id": 2,
-          "name": "Anblick des Vergessens",
-          "summary": "Der Vampir schließt die Augen. Wenn er sie öffnet, hebt sich die Iris der Augen schwarz vom Weiß der Sklera, und er kann nun in der Schwärze klar sehen Schwärze sehen und Geister wahrnehmen, die ihre Anwesenheit nicht aktivverbergen.",
+          "name": "Sicht der Vergessenheit (Lasombra)",
+          "summary": "Der Vampir schließt seine Augen. Wenn er sie öffnet, hebt sich die Iris seiner Augen schwarz von der weißen Sklera ab, und er kann nun in der Schwärze klar sehen und Geister wahrnehmen, die ihre Anwesenheit nicht aktiv verbergen.",
           "costs": "keine",
-          "system": "Bei Aktivierung werden die Augen des Benutzers auf übernatürliche Weise auf Dunkelheit eingestellt und können alle Nachteile bei schwachem Licht zu ignorieren, auch solche übernatürlichen Ursprung. Er braucht seine Augen immer noch zum Sehen und ist und werden wie üblich von Augenbinden und dergleichen beeinflusst. Wenn ein Geist anwesend ist und nicht versucht, sich zu tarnen oder oder eine Macht benutzt, um seine Anwesenheit zu verbergen, wird der Geist für den Vampir sichtbar, der Anblick des Vergessens benutzt. In solchen Fällen erscheinen Geister so, wie sie erscheinen wollen, sei es als Menschen mit den Wunden, die ihren Tod verursacht haben, als als geisterhafte Monstrositäten oder als vollkommen makellose Leichen. Die Geister erkennen nicht automatisch, wenn ein Vampir wenn ein Vampir sie sieht, aber wenn sie es tun, reagieren viele eher mit Angst oder Wut statt mit Passivität. Diese Kraft verleiht nicht die Fähigkeit, physischen Kontakt Kontakt mit Geistern aufzunehmen.",
+          "system": "Bei der Aktivierung werden die Augen des Anwenders auf übernatürliche Weise auf die Dunkelheit eingestimmt, so dass er alle Nachteile bei schwachem Licht ignorieren kann, auch solche übernatürlichen Ursprungs. Er braucht seine Augen immer noch, um zu sehen, und wird wie üblich von Augenbinden und dergleichen betroffen. Wenn ein Geist anwesend ist und nicht versucht, sich zu tarnen oder eine Kraft zu benutzen, um seine Anwesenheit zu verbergen, wird der Geist für den Vampir sichtbar, wenn er die Sicht der Vergessenheit benutzt. In solchen Fällen erscheinen Geister so, wie sie erscheinen wollen, sei es als Menschen mit den Wunden, die ihren Tod verursacht haben, als geisterhafte Monstrositäten oder als vollkommen makellose Leichen. Geister erkennen nicht automatisch, wenn ein Vampir sie sieht, aber wenn sie es tun, reagieren viele eher mit Angst oder Wut als mit Passivität. Diese Kraft verleiht nicht die Fähigkeit, mit Geistern in physischen Kontakt zu treten.",
           "duration": "eine Szene"
+        },
+        {
+          "id": 10,
+          "name": "Asche zu Asche (Hecata)",
+          "summary": "Die Vernichtung von Beweisen für die Nahrungsaufnahme ist ein häufiges Bedürfnis von Vampiren, die schreiende, sich wehrende Gefäße zurücklassen, vor allem, wenn diese Gefäße tot enden. Diese Kraft ermöglicht es einem Vampir, einen Leichnam - ob frisch oder schon lange tot - zu zerstören, indem er seine Vitae in dessen Körper einbringt. Diese Kraft wirkt nicht bei Vampiren, wohl aber bei belebten Leichen.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Widerstandsfähigkeit + Vergessenheit vs. Widerstandsfähigkeit + Medizin oder Seelenstärke",
+          "system": "Der Vampir macht eine Wutprobe, um Lebenskraft zu verbrauchen, und bringt die Lebenskraft in den Leichnam ein. Wenn der Leichnam nicht belebt ist, zerfällt er innerhalb von drei Runden, ohne dass eine Probe erforderlich ist. Ist dies der Fall, würfelt der Anwender einen Wettkampf von Widerstandsfähigkeit + Vergessenheit gegen Widerstandsfähigkeit + Medizin (Leichen mit Seelenstärke können sich mit Widerstandsfähigkeit + Seelenstärke wehren). Gewinnt der Anwender, löst sich der belebte Leichnam in fünf Runden auf, abzüglich der Marge (mindestens eine, und zerfallende Leichen erleiden körperliche Beeinträchtigungen). Bei einem kritischen Sieg löst sich der Leichnam sofort auf. Bei einem totalen Fehlschlag verwest der Leichnam, löst sich aber nicht auf und ist anschließend immun gegen diese Macht eines beliebigen Anwenders.",
+          "duration": "Variabel (siehe Schwierigkeitseffekte)"
+        },
+        {
+          "id": 11,
+          "name": "Der Bindungsfetter (Hecata)",
+          "summary": "Der Vampir schließt seine Augen. Wenn er sie öffnet, zeigt die Iris seiner Augen ein mattes Spiegelbild seiner Umgebung und er kann Gegenstände oder Orte erkennen, die für Geister wichtig sind. Diese \"Fesseln\" wirken wie Symbole, die die Toten an ihre Existenz binden. Wenn ein Geisterbeschwörer weiß, ob ein Gegenstand eine Fessel ist, kann er den Geist besser manipulieren. Fesseln verströmen unterschiedliche Auren, manche strotzen vor Vitalität und glühen in goldenem Licht, andere strahlen Verfall oder Gerüche aus, die für das gebundene Gespenst wichtig sind, wie der Geruch von frisch gebackenem Brot, Benzin oder Zigarettenrauch.",
+          "costs": "keine",
+          "diceSupplies": "Geistesschärfe + Vergessenheit",
+          "system": "Bei der Aktivierung werden die Sinne des Anwenders auf übernatürliche Weise auf die Energien von Fesseln eingestimmt, und er kann diese Auren durch Sehen, Riechen und seine anderen Sinne identifizieren. Während der Anwendung dieser Macht ist der Nekromant von anderen Aktivitäten um ihn herum abgelenkt, was ihm einen Malus von -2 auf Geschicklichkeits- und Geistesschärfe-Proben einbringt.",
+          "duration": "Variabel (siehe Schwierigkeitseffekte)"
         }
       ],
       "2": [
         {
           "id": 3,
-          "name": "Schattenwurf",
-          "summary": "Vergessenheit ist mächtig, kann aber oft vereitelt werden durch das Fehlen geeigneter Schatten, aus denen sie beschworen beschwören. Diese Macht nutzt die Dunkelheit im des Anwenders, um einen übernatürlichen Schatten zu projizieren, aus dem andere Kräfte zu manifestieren, unabhängig von der Umgebungshelligkeit. Dieser Schatten ahmt normalerweise die Bewegungen und die Form des Anwenders nach, kann aber manchmal verzerrt und sogar monströs werden und dem aktuellen Temperament seines seines Besitzers.",
+          "name": "Schattenwurf (Lasombra)",
+          "summary": "Vergessenheit ist mächtig, kann aber oft durch den einfachen Mangel an geeigneten Schatten, aus denen sie beschworen werden kann, vereitelt werden. Diese Macht nutzt die Dunkelheit im Inneren des Anwenders, um einen übernatürlichen Schatten zu projizieren, aus dem heraus sich andere Kräfte manifestieren können, unabhängig von den umgebenden Lichtverhältnissen. Dieser Schatten ahmt normalerweise die Bewegungen und die Form des Anwenders nach, kann aber manchmal verzerrt und sogar monströs werden und mit dem aktuellen Temperament seines Besitzers mitschwingen.",
           "costs": "ein Wallungs-Check",
-          "system": "Die Aktivierung der Kraft beschwört einen übernatürlichen Schatten aus dem Körper des Vampirs. Solange die Kraft aktiv ist, wirft der Anwender diesen Schatten, der nur durch direktes Sonnenlicht entfernt werden kann. Jeder, der Zeuge des Anwenders ist, bemerkt den Schatten den Schatten, der von keiner sichtbaren Lichtquelle geworfen wird, bei einem Wurf mit Geistesschärfe + Wahrnehmung (Schwierigkeitsgrad 3). Der Vampir kann seinen Schatten lenken, ihn nach Belieben verlängern oder verzerren (aber nicht ablösen), obwohl er manchmal auch aus eigenem Antrieb handeln kann, je nach Ermessen des Geschichtenerzählers Ermessen. Für die Zwecke anderer Kräfte wie Schattenperspektive, kann der Schatten auf bis zu bis zum Doppelten der Vergessenheits-Werte des Anwenders in Yards/Metern verlängert werden. Für jeden, der sich innerhalb der Reichweite des Schattens befindet, erhöht sich der Willenskraftschaden aus sozialen Konflikten um 1 erhöht, nachdem Halbierung für Oberflächlichen Schaden. Im Schatten von Vergessenheit zu stehen Schatten zu stehen, ist eine schreckliche Aussicht.",
+          "system": "Die Aktivierung der Kraft beschwört einen übernatürlichen Schatten aus dem Körper des Vampirs. Solange die Macht aktiv ist, wirft der Anwender diesen Schatten, der nur durch direktes Sonnenlicht entfernt werden kann. Jeder, der Zeuge des Anwenders ist, bemerkt den Schatten, der von keiner sichtbaren Lichtquelle geworfen wird, durch einen Wurf auf Geistesschärfe + Wahrnehmung (Schwierigkeit 3). Der Vampir kann seinen Schatten lenken, indem er ihn nach Belieben verlängert oder verzerrt (aber nicht ablöst), auch wenn er manchmal nach dem Ermessen des Geschichtenerzählers aus eigenem Antrieb agieren kann. Für die Zwecke anderer Kräfte wie der Schattenperspektive kann der Schatten bis auf das Doppelte der Vergessenheit des Anwenders in Metern verlängert werden. Für jeden, der sich in der Reichweite des Schattens befindet, erhöht sich der Willenskraftschaden aus einem sozialen Konflikt um 1, nachdem er für Oberflächlichen Schaden halbiert wurde. Im Schatten der Vergessenheit zu stehen ist eine furchterregende Aussicht.",
           "duration": "eine Szene"
         },
         {
           "id": 4,
-          "name": "Arme des Ahriman",
+          "name": "Arme von Ahriman (Lasombra)",
           "combination": {
             "id": 8,
             "level": 2
           },
-          "summary": "Der Vampir beschwört abgrundtiefe Anhängsel von unbeleuchteten Stellen in der Umgebung, innerhalb der Sichtlinie. Die lokalen Schatten verzerren sich, während sich düstere Tentakel aus ihnen herausschlängeln und und sich auf ein oder mehrere unglückliche Opfer stürzen. Ob durch den Körper des Opfers hinaufgleiten oder sich in einen mystischen mit dem eigenen Schatten des Opfers, können die Arme sie an Ort und Stelle zu halten oder sie zu erdrücken.",
+          "summary": "Der Vampir beschwört abgrundtiefe Anhängsel von unbeleuchteten Stellen in der Umgebung, die sich in Sichtweite befinden. Die lokalen Schatten verzerren sich, während sich düstere Tentakel aus ihnen herausschlängeln und auf ein oder mehrere unglückliche Opfer zusteuern. Die Arme gleiten am Körper des Opfers hinauf oder nehmen einen mystischen Kampf mit dem eigenen Schatten des Opfers auf, um es an Ort und Stelle zu halten oder zu ersticken.",
           "costs": "ein Wallungs-Check",
           "diceSupplies": "Geistesschärfe + Vergessenheit",
-          "system": "Der Anwender ist eine Runde dran und zahlt die Kosten, er beschwört die Schattenanhängsel. Mit diesen kann der kann der Vampir in jeder folgenden Runde Hieb- und gegen weit entfernte Ziele in jeder folgenden Runde durchführen. Zusätzliche Arme können durch Aufteilung des Würfelpools erzeugt werden, so dass der Benutzer mehrere Gegner angreifen kann. (siehe Vampire: The Masquerade S. 125). Die Arme nutzen die Fähigkeiten des Vampirs Geistesschärfe + Vergessenheit, um anzugreifen und oberflächlichen Schaden zu verursachen oder zu packen, wobei die Hälfte der Potenz des Anwenders (aufgerundet) als Schadensbonus. Der Vampir kann nichts anderes tun nichts anderes tun, als die Arme zu kontrollieren, während diese Fähigkeit aktiv ist. Sie können auch für einfache Aktionen verwendet werden (wie wie das Öffnen von Türen und das Ziehen von Hebeln), aber nichts so Fortgeschrittenes wie Tippen oder das Steuern von Fahrzeugen. Die Arme haben eine Länge (in Yards/Metern), die dem Doppelten der Vergessenheits-Punkten des Benutzers entspricht. (Man beachte, dass sich die Arme, da sie Schatten sind, sich über Oberflächen und nicht durch die Luft bewegen und alle Entfernungen dies berücksichtigen.) Die Arme haben drei Gesundheitsstufen und nutzen den ihres Besitzers, um Angriffen auszuweichen und sie zu überstehen. Als zweidimensionalen Schatten können sie nur durch helles Licht, wie zum Beispiel von einer starken Fackel oder Tageslicht. Mit dem Wurf Geistesschärfe + Vergessenheit können die Ranken versuchen sich in die dunklen Ecken eines Raums zu schlängeln oder oder das Licht für eine Runde zu verdrängen, wobei sie eine Lebenspunktzahl an Schaden setzt aber den Angriff fort. Wenn sich die Schattenranken zusammenziehen und die Opfer angreifen, bedarf es einer Willensanstrengung, um ihnen zu entkommen. Ein eingeklemmtes Opfer kann Geistesschärfe + Gelassenheit würfeln und mehr Erfolge erzielen als der Angreifer, um einfach durch die durch die Ranken zu gehen, ohne Schaden zu nehmen. Diese Aktion löst die Arme Ahrimans nicht auf, die in der nächsten Runde erneut angreifen können angreifen, wenn der Anwender dies wünscht und das das Ziel noch in Reichweite ist.",
+          "system": "Der Anwender nimmt sich eine Runde Zeit, bezahlt die Kosten und beschwört die Schattenanhängsel. Mit diesen kann der Vampir in jeder folgenden Runde Hieb- und Greifangriffe gegen weit entfernte Ziele ausführen. Zusätzliche Arme können durch Aufteilung des Würfelpools erzeugt werden, so dass der Anwender mehrere Gegner angreifen kann. (siehe Vampire: The Masquerade S. 125). Die Arme verwenden die Geistesschärfe + Vergessenheit des Vampirs, um anzugreifen und oberflächlichen Schaden zu verursachen oder zu packen, wobei die Hälfte der Potenz des Anwenders (aufgerundet) als Schadensbonus hinzukommt. Der Vampir kann nichts anderes tun, als die Arme zu kontrollieren, während diese Fähigkeit aktiv ist. Mit ihnen können auch einfache Aktionen ausgeführt werden (wie das Öffnen von Türen und das Ziehen von Hebeln), aber nichts so Fortgeschrittenes wie Tippen oder das Steuern von Fahrzeugen. Die Arme haben eine Länge (in Metern), die dem Doppelten der Vergessenheitspunkte des Benutzers entspricht. (Man beachte, dass sich die Arme als Schatten über Oberflächen und nicht durch die Luft bewegen, und dass alle Entfernungen dies berücksichtigen müssen). Die Arme verfügen über drei Gesundheitsstufen und nutzen die Geistesschärfe + Vergessenheit ihres Besitzers, um Angriffen auszuweichen und standzuhalten. Als zweidimensionale Schatten können sie nur durch helles Licht verletzt werden, z. B. durch eine starke Taschenlampe oder Tageslicht. Mit dem Wurf Geistesschärfe + Vergessenheit können die Ranken versuchen, sich in die dunklen Ecken eines Raumes zu schlängeln oder das Licht für eine Runde zu überwältigen, wobei sie einen Lebenspunkt Schaden erleiden, aber weiter angreifen. Da die Schattenranken die Opfer mit magischen Mitteln einschnüren und angreifen, ist ein Akt des Willens erforderlich, um ihnen zu entkommen. Ein eingeklemmtes Opfer kann mit Entschlossenheit + Fassung würfeln und mehr Erfolge erzielen als der Angreifer, um einfach durch die Ranken hindurchzugehen, ohne Schaden zu nehmen. Diese Aktion löst die Arme von Ahriman nicht auf. Sie können in einer späteren Runde erneut angreifen, wenn der Anwender es wünscht und das Ziel noch in Reichweite ist.",
           "duration": "eine Szene oder bis zur Beendigung oder Zerstörung"
+        },
+        {
+          "id": 12,
+          "name": "Tödliche Präkognition (Hecata)",
+          "combination": {
+            "id": 1,
+            "level": 2
+          },
+          "summary": "Viele Nekromanten sagen, dass die Schicksalsgöttin die Unterwelt durch ihre stygischen Diener beherrscht, und dass einige Todeshändler durch die Verbindung mit ihr diese Macht erlangt haben. Die tödliche Präkognition erlaubt es einem Vampir, jeden Nicht-Vampir zu sehen und eine Vision seines bevorstehenden Todes zu erleben, egal ob dieser in einer Minute oder in mehreren Jahrzehnten eintritt. Die Augen der Blutsverwandten färben sich schwarz und sie stehen, sitzen oder liegen völlig still, während sich das Schicksal in ihrem Kopf abspielt. Das Schicksal kann natürlich auch überlistet werden, aber das hat seinen Preis.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Entschlossenheit + Vergessenheit",
+          "system": "Der Vampir muss in der Lage sein, sein Ziel zu sehen oder zu hören, wenn er diese Fähigkeit einsetzt. Nachdem er Entschlossenheit + Vergessenheit gewürfelt hat (Schwierigkeit 3 oder mehr nach Ermessen des Erzählers), wird der Vampir an Ort und Stelle gelähmt, während sich die Vision abspielt, was ihn für diese Runde an jeder Form von körperlicher oder sozialer Interaktion hindert. Je höher der Spielraum, desto klarer ist die Vision. Bei einem Sieg kann der Vampir die Leiche sehen, und mit jedem Punkt Gewinn erhält er einen zusätzlichen Hinweis, z. B. die Art des Todes, die Zeit und den Ort des Todes oder den Namen und das Gesicht der ersten lebenden Person, die die Leiche findet. Ein kritischer Erfolg bei diesem Wurf verleiht dem Vampir eine kristallklare Sicht und einen Sinn für das Schicksal, der ihn für den Rest der Szene blind macht und es ihm unmöglich macht, diese Macht erneut auf dasselbe Ziel anzuwenden. Wenn jemand versucht, das auf diese Weise beobachtete Schicksal zu unterlaufen, wird er feststellen, dass alles gegen seinen überheblichen Ehrgeiz arbeitet. Addiere einen Punkt zu allen Schwierigkeiten, während du versuchst, die Prophezeiung direkt zu umgehen, denn Autos gehen kaputt, Stürme brechen aus dem Nichts aus, und Menschen werden ohne Grund feindselig. Diese Strafe gilt so lange, bis die Prophezeiung erfüllt oder umgangen wird oder die aktuelle Geschichte endet.",
+          "duration": "Bis zur Erfüllung, Vermeidung oder dem Ende der Geschichte"
+        },
+        {
+          "id": 13,
+          "name": "Wo sich das Leichentuch lichtet (Hecata)",
+          "summary": "Vampire mit einer Affinität für Vergessenheit können Orte spüren, an denen das Leichentuch zwischen der Welt der Lebenden und den Schattenlanden dünner wird. Obwohl diese Disziplin einem Vampir nicht direkt sagt, warum das Leichentuch zwischen den Welten an einem bestimmten Ort dünn ist, kann es an einem grausamen Mord liegen, der dort viele Jahre zuvor stattgefunden hat, oder daran, dass Nekromanten den Ort häufig benutzt haben, um Geister zu beschwören, oder es könnte ein Ort mit heiliger oder unheiliger Resonanz sein, neben anderen Gründen. An Orten, an denen das Leichentuch am dünnsten ist, leidet die Gesundheit der Sterblichen und die Anwendung der Disziplin Vergessenheit wird einfacher, wenn der Vampir weiß, wie er die Lücke im Leichentuch ausnutzen kann.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Geistesschärfe + Vergessenheit",
+          "system": "Nach einem Wallungs-Check würfelt der Spieler mit Geistesschärfe + Vergessenheit (Schwierigkeitsgrad 3) und kann bei einem Sieg die Dichte des Leichentuchs in seiner Umgebung bestimmen, die so groß wie ein ganzes Gebäude oder ein Wahrzeichen sein kann. Bei einem kritischen Sieg zeigt dieser Wurf, ob sich die Dichte des Leichentuchs kürzlich geändert hat. Bei einem totalen Fehlschlag geht die Macht nach hinten los und liefert eine falsche Anzeige. Ohne diese Fähigkeit können Vergessenheit-Nutzer nicht von einer Ausdünnung des Leichentuches profitieren. In der folgenden Tabelle sind die verschiedenen Grade der Leichentuchdichte und ihre Auswirkungen aufgeführt: siehe Cult of the Blood Gods S. 205",
+          "duration": "ein Zug"
         }
       ],
       "3": [
         {
           "id": 5,
-          "name": "Schattenperspektive",
-          "summary": "Der Vampir kann seine Sinne in jeden Schatten projizieren Schatten in Sichtweite projizieren und so sehen und hören, als ob er als ob er sich in einem beliebigen Teil davon verstecken würde. Dies schließt seinen eigenen Schatten, der durch Schattenwurf manipuliert wird (siehe S. 293).",
+          "name": "Schattenperspektive (Lasombra)",
+          "summary": "Der Vampir kann seine Sinne in jeden Schatten in Sichtweite projizieren und so sehen und hören, als ob er sich in einem beliebigen Teil des Schattens verstecken würde. Dies gilt auch für den eigenen Schatten, der durch Schattenwurf manipuliert wird (siehe S. 293).",
           "costs": "ein Wallungs-Check",
-          "system": "Nach einem Wallungs-Check ist die Anwesenheit des des Vampirs im Schatten durch nichts anderes als durch außer mit übernatürlichen Mitteln. (z.B. das Unsichtbare spüren). Während diese Fähigkeit aktiv ist, nimmt der Vampir sowohl seine Umgebung als auch das, was er aus der aus der Schattenperspektive, als ob er durch einen Schirm oder ein Loch.",
-          "duration": "bis zu eine Szene"
+          "system": "Nach einem Wallungs-Check ist die Anwesenheit des Vampirs im Schatten mit nichts anderem als übernatürlichen Mitteln feststellbar. (z.B. das Unsichtbare spüren). Während diese Fähigkeit aktiv ist, nimmt der Vampir sowohl seine Umgebung als auch das, was er aus der Schattenperspektive wahrnehmen kann, wahr, als ob er durch einen Schirm oder ein Loch schaut.",
+          "duration": "Bis zu einer Szene"
         },
         {
           "id": 6,
-          "name": "Berührung des Vergessens",
-          "summary": "Der Vampir, der \"Berührung des Vergessens\" benutzt, leitet die Macht durch seine Lebenskraft. Wenn sie körperlichen Kontakt mit einem Opfer, fließt das vernichtende Element durch den Vampir und in seine Beute wie ein elektrischer Strom, mit dem Unterschied, dass das Zielgebiet physisch verdorrt. Zielbereich. Die Berührung wirkt auf jeden Teil des Körpers und lässt und verkürzt Muskeln, lässt Sehnen reißen und Knochen brüchig werden und macht Knochen brüchig, wodurch der betroffene Teil katastrophal altert. Die Hauptanwendung ist das Verkümmern eines Gliedes, das Ersticken einer Kehle, oder ein Paar Augen zu blenden.",
+          "name": "Berührung der Vergessenheit (Lasombra)",
+          "summary": "Der Vampir, der \"Berührung der Vergessenheit\" einsetzt, leitet die Kraft durch seine Lebenskraft. Bei körperlichem Kontakt mit einem Opfer fließt das vernichtende Element wie ein elektrischer Strom durch den Vampir und in seine Beute, nur dass die Wirkung darin besteht, das Zielgebiet physisch zu verdorren. Die Berührung schrumpft und verkürzt die Muskeln, lässt Sehnen reißen und Knochen brüchig werden, so dass der betroffene Körperteil katastrophal altert. Ihr Haupteinsatzgebiet ist das Verkümmern eines Gliedes, das Ersticken einer Kehle oder das Blenden eines Augenpaares.",
           "costs": "ein Wallungs-Check",
-          "system": "Nach einem Aufwecktest greift der Vampir packt er sein Opfer (was einen Wurf Körperkraft + Handgemenge wenn das Opfer versucht, dem Vampir auszuweichen), wobei das Opfer erleidet zwei Stufen schweren Schaden sowie sowie eine verkrüppelnde Verletzung. Wenn diese Verletzung einem Arm oder Bein zugefügt wird, ist das betroffene Gliedmaße verkrüppelt und erfordert bei Sterblichen eine langwierige Rehabilitation erfordern, während Vampire den Schaden als normalen schweren Schaden heilen können. Ebenso kann die Berührung des Vergessens ein Ziel stumm, taub oder blind machen, taub oder blind machen. Siehe Verkrüppelungsverletzungen in Vampire: Die Masquerade (S. 303) für Details zu den mechanischen Effekten von verkrüppelten Gliedmaßen. Geschichtenerzähler können entscheiden, dass eine solche Verstümmelung Flecken rechtfertigt",
-          "duration": "eine Runde"
+          "system": "Nach einem Wallungs-Check packt der Vampir sein Opfer (was einen Wurf auf Stärke + Raufen erfordert, wenn das Opfer versucht, dem Vampir auszuweichen), wobei das Opfer zwei Stufen von schwerem Schaden sowie eine verkrüppelnde Verletzung erleidet. Wenn diese Verletzung einem Arm oder Bein zugefügt wird, ist die betroffene Gliedmaße verkrüppelt und erfordert bei Sterblichen eine langwierige Rehabilitation, während Vampire den Schaden als normalen verschlimmerten Schaden heilen können. Ebenso kann die Berührung der Vergessenheit ein Ziel stumm, taub oder blind machen. Siehe Verkrüppelungsverletzungen in Vampire: Die Maskerade (S. 303) für Details zu den mechanischen Auswirkungen von verkrüppelten Gliedmaßen. Der Geschichtenerzähler kann entscheiden, dass eine solche Verstümmelung Markel rechtfertigt.",
+          "duration": "ein Zug"
+        },
+        {
+          "id": 14,
+          "name": "Aura des Verfalls (Hecata)",
+          "summary": "Blutsverwandte mit einer starken Verbindung zur Vergessenheit stellen fest, dass die Disziplin die Welt um sie herum beeinflusst und Pflanzen verwelken, Tiere und Menschen krank werden und Nahrungsmittel verderben lässt. Manche machen sich diese Aura als Kraft zunutze, die Vitalität mit Fäulnis verunreinigt und die Erosion des Lebens beschleunigt. Diese Macht beschleunigt nicht die Verwesung von Leichen.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Widerstandsfähigkeit + Vergessenheit vs. Widerstandsfähigkeit + Medizin oder Seelenstärke",
+          "system": "Der Vampir macht einen Wallungs-Check. Nach einem Wurf auf Widerstandsfähigkeit + Vergessenheit (Schwierigkeit 3) leidet unintelligente organische und anorganische Materie im Umkreis von 5 Metern - Pflanzen werden schwarz und sterben ab, Lebensmittel verfaulen in ihrer Verpackung und sogar Ziegelsteine beginnen zu bröckeln. Auf diese Weise betroffenes Material kann giftig werden, wenn diese Kraft zum Beispiel in einer Küche oder einer Wasserversorgung eingesetzt wird. Solche giftigen Speisen und Getränke fügen demjenigen, der sie zu sich nimmt, in der folgenden Szene zwei oberflächliche Gesundheitsschäden zu, und zwar für jede weitere Szene, bis sie mit einem Wurf auf Intelligenz + Medizin (Schwierigkeit 3) behandelt werden. Wenn irgendetwas Lebendiges in die Aura gerät, führt es einen Wurf auf Widerstandsfähigkeit + Medizin (Wer Seelenstärke hat, kann sich mit Widerstandsfähigkeit + Seelenstärke wehren) gegen den Aktivierungswurf des Vampirs durch. Für jeden Punkt Vorsprung, den der Vampir hat, erleidet das Opfer einen Punkt unheilbaren oberflächlichen Gesundheitsschaden. Dieser Schaden wird langsam über die gesamte Szene verteilt. Wiederholte Anwendungen der Macht in derselben Szene haben keinen Einfluss auf die Lebenspunkte der bereits betroffenen Sterblichen. Die Kraft ist eine Aura, die eine ganze Szene lang anhält, bevor sie verblasst. Jeder, der über einen Geruchssinn verfügt, kann während der Zeit, in der die Macht aktiv ist, einen Verwesungsgeruch wahrnehmen, der von dem Vampir ausgeht und einen Malus von zwei Würfeln auf alle Sozialwürfe verursacht, die der Vampir in einem positiven oder diplomatischen Kontext macht, wenn er dies persönlich tut.",
+          "duration": "eine Szene"
+        },
+        {
+          "id": 15,
+          "name": "Festessen der Leidenschaft (Hecata)",
+          "combination": {
+            "id": 7,
+            "level": 2
+          },
+          "summary": "Die Beziehung zwischen Vampiren und ihrem Bedarf an Blut als Nahrung ist wohlbekannt, aber wenn ein Vampir eine längere Zeit in den Schattenlanden verbringen muss oder einen Geist quälen will, erlaubt ihm diese Vergessenheitskraft, sich von den Leidenschaften der Wraiths zu ernähren. Wraiths haben weder einen Körper noch haben sie Blut. Stattdessen werden sie von ihren rohen Emotionen angetrieben. Liebe, Hass, Gier oder sogar das Bedürfnis nach Rache können ein Gespenst nach dem Tod seines früheren Körpers am Leben erhalten. Ein geübter Nekromant kann sich eine Zeit lang von diesen Leidenschaften ernähren, so dass er länger als seine Blutsverwandten ohne Blut überleben kann. Die Nahrungsaufnahme manifestiert sich als ein wirbelnder Strudel der Macht zwischen dem Gespenst und dem Schlund des Vampirs, da der Vampir nicht wirklich auf etwas beißen muss, um die Leidenschaften zu konsumieren.",
+          "costs": "keine",
+          "diceSupplies": "Entschlossenheit + Vergessenheit vs. Entschlossenheit + Fassung",
+          "system": "Ein Vampir mit dieser Fähigkeit kann einem Gespenst seine Leidenschaft entziehen. Solange er sich in der Nähe des Gespenstes befindet (drei Yards/Meter oder näher), kann er einen Wettkampf aus Entschlossenheit + Vergessenheit gegen die Entschlossenheit + Gelassenheit des Gespenstes würfeln. Gewinnt der Vampir, fügt er dem Gespenst einen Schaden in Form von erhöhter Willenskraft zu und reduziert seinen Hunger für den Rest der Nacht um eins. Dieser Hunger kehrt in der darauffolgenden Nacht zurück, unabhängig von Aufweckungsproben, da die Fütterung nur ein Nepenthe ist, um das Hungergefühl des Vampirs zu dämpfen. Das Füttern von einem Gespenst kann nach dem Ermessen des Geschichtenerzählers ein Markel verdienen, da die verzehrte Leidenschaft die Daseinsberechtigung des Gespenstes stumpft und es wahrscheinlich auf einen Pfad der Selbstzerstörung führt. Der Geschichtenerzähler bestimmt die Anzahl der Leidenschaften, die ein Gespenst besitzt (fünf oder mehr sind jedoch selten), und kann festlegen, dass das Gespenst zu einem unkontrollierbaren, mörderischen Gespenst wird, sobald alle Leidenschaften verbraucht sind.",
+          "duration": "passiv"
         }
       ],
       "4": [
         {
           "id": 7,
-          "name": "Stygischer Schleier",
-          "summary": "Dunkelheit spuckt aus einem nahen Schatten, während der Vampir das Gebiet um sie herum in eine Finsternis hüllt, die einer einer mondlosen Nacht, und die Geräusche sind gedämpft und undeutlich. Jeder, der den Effekt von außen betrachtet, sieht als einen Schatten, der sich über jede Oberfläche ausbreitet, einschließlich die Körper der Opfer in der Umgebung. Diejenigen, die außer dem dem Beschwörer, die von der Wirkung betroffen sind, haben Mühe um ihre Umgebung zu sehen und zu hören, und Sterbliche werden Sterbliche werden durch die erstickende Kraft ihres Lebens beraubt.",
+          "name": "Stygischer Schleier (Lasombra)",
+          "summary": "Aus einem nahe gelegenen Schatten tritt Dunkelheit aus, während der Vampir die Umgebung in eine Düsternis hüllt, die einer mondlosen Nacht entspricht, während Geräusche gedämpft und undeutlich sind. Jeder, der den Effekt von außen betrachtet, sieht ihn als einen Schatten, der sich über jede Oberfläche in der Umgebung ausbreitet, auch über die Körper der Opfer. Diejenigen, die außer dem Beschwörer von der Wirkung betroffen sind, haben Mühe, ihre Umgebung zu sehen und zu hören, und Sterbliche werden durch die erstickende Macht ihres Lebens beraubt.",
           "costs": "ein Wallungs-Check",
-          "system": "Der Anwender macht einen Wallungs-Check und verbringt eine Runde und verteilt den Schatten auf die gewünschten Flächen. Der Effekt deckt einen kreisförmigen Bereich mit einem Radius, der dem doppelten Vergessenheits-Wert des Anwenders in Yards/ Meter. Der Bereich ist auf den Anwender oder einen Punkt in dessen Sichtlinie. Jeder, der im Stygischen Leichentuch gefangen ist, erhält einen Malus von drei Würfeln auf alle Würfe, es sei denn, er besitzt die Fähigkeit, durch übernatürliche Dunkelheit zu sehen. Jeder Sterbliche, die im Stygischen Leichentuch gefangen sind, erleiden eine Stufe Oberflächlichen Schaden für jede Runde, die sie darin verweilen, aufgrund der erstickenden Wirkung der Macht.",
+          "system": "Der Anwender macht einen Wallungs-Check und verbringt eine Runde damit, sich zu konzentrieren und den Schatten über die gewünschten Flächen zu verteilen. Der Effekt deckt einen kreisförmigen Bereich mit einem Radius ab, der dem doppelten Wert der Vergessenheit des Anwenders in Yards/Metern entspricht. Der Bereich ist auf den Anwender oder einen Punkt in dessen Sichtlinie zentriert. Jeder, der im Stygischen Leichentuch gefangen ist, erhält einen Malus von drei Würfeln auf alle Würfe, es sei denn, er verfügt über die Fähigkeit, durch übernatürliche Dunkelheit zu sehen. Jeder Sterbliche, der im Stygischen Leichentuch gefangen ist, erleidet aufgrund der erstickenden Wirkung der Macht für jede Runde, die er darin verbleibt, eine Stufe oberflächlichen Schaden.",
           "duration": "eine Szene"
+        },
+        {
+          "id": 16,
+          "name": "Nekrotische Seuche (Hecata)",
+          "summary": "Blutsverwandte Gelehrte behaupten, dass die Vergessenheit alles verunreinigt, was sie berührt, wobei diese Kraft ein Paradebeispiel ist. Allein durch Berührung kann ein Vampir das Blut eines sterblichen Opfers vergiften und es mit einer Krankheit anstecken, die den Körper verwüstet und verwüstet. Das Gefährlichste daran ist, dass diese Krankheit ansteckend ist und auch andere Sterbliche anstecken kann. Medizinisch geschulte Nekromanten verfügen über genügend Talent, um diese Macht in Form von bestimmten Krankheiten erscheinen zu lassen, manchmal auch in Form von Krankheiten, die in den vergangenen Jahrzehnten oder Jahrhunderten ausgestorben sind. Unabhängig davon, wie sie sich manifestiert, verschwinden die Symptome schließlich auch ohne medizinische Behandlung, unabhängig davon, ob das Opfer überlebt oder nicht.",
+          "costs": "ein Wallungs-Check, zwei Makel",
+          "diceSupplies": "Intelligenz + Vergessenheit vs. Widerstandsfähigkeit + Medizin oder Seelenstärke",
+          "system": "Der Anwender macht einen Wallungs-Check und würfelt dann Intelligenz + Vergessenheit, während er sein Opfer berührt. Wenn das Opfer schwach ist (ein Baby, ein älterer Mensch, krank, im Begriff, sich von einer Krankheit zu erholen, sterbend oder mit 3 unmarkierten Lebenspunkten oder weniger), wird es automatisch infiziert. Ist das Opfer gesund, würfelt es Widerstandsfähigkeit + Medizin (wer über Seelenstärke verfügt, kann diese anstelle von Medizin verwenden) und widersteht der Krankheit, wenn es mehr Erfolge erzielt als der Vampir. Diese Fähigkeit kann nicht bei Vampiren eingesetzt werden. Geschichtenerzähler können entscheiden, dass die Verbreitung einer solch schrecklichen Krankheit Markel rechtfertigt. Die Opfer der Krankheit erleiden zu Beginn jeder Szene, die auf die Infektion folgt, einen Schaden in Form von schwerer Gesundheit. Das Opfer leidet eine Anzahl von Szenen lang an der Krankheit, die der Vergessenheit des Anwenders entspricht. Die Krankheit kann nicht medizinisch behandelt werden, da sie übernatürlichen Ursprungs ist, aber sie kann durch das Trinken von Lebenskraft geheilt werden. Erzielt der Spieler bei der Aktivierung dieser Fähigkeit einen kritischen Erfolg, kann er die Krankheit durch Berührung übertragbar machen, wobei die nachfolgenden Empfänger eine Runde lang weniger an der Krankheit leiden als das Opfer, von dem sie infiziert wurden. Wenn der Spieler einen totalen Fehlschlag würfelt, verkrampft sich der Lebenssaft des Vampirs wie bei einer Vergiftung. Er erleidet drei schwere Lebenspunkte Schaden, wenn das infizierte Blut aus ihm herausfließt, und muss einen Wallungs-Check machen.",
+          "duration": "ein Zug zur Aktivierung, variable Länge der Bedingung"
         }
       ],
       "5": [
         {
           "id": 8,
-          "name": "Schattenschritt",
-          "summary": "Tritt der Benutzer in einen nahe gelegenen Schatten, verschwindet er nur, um aus demselben oder einem anderen, weiter entfernten Schatten wieder wieder auf. Ob sie das Labyrinth betreten oder nur nur an seiner Oberfläche vorbeigehen, ist eine Quelle von Vermutungen viele Lasombra und Hecata, aber der geistige Schaden mit dem sie auftauchen können, deutet darauf hin, dass sie etwas Verdorbenes berühren, wenn sie diese Kraft einsetzen.",
+          "name": "Schattenschritt (Lasombra)",
+          "summary": "Wenn der Anwender in einen nahegelegenen Schatten tritt, verschwindet er, nur um aus demselben oder einem anderen, weiter entfernten Schatten wieder aufzutauchen. Ob sie das Labyrinth betreten oder nur an seiner Oberfläche vorbeigehen, ist eine Quelle von Vermutungen unter vielen Lasombra und Hecata, aber der geistige Schaden, mit dem sie auftauchen können, deutet darauf hin, dass sie etwas Verdorbenes berühren, wenn sie diese Kraft benutzen.",
           "costs": "ein Wallungs-Check",
-          "system": "Der Vampir muss einen Schatten betreten, der groß genug ist der groß genug ist, um ihn zu verdecken, und aus einem anderen Runde später. Der Zielschatten muss in Sichtweite sein, er kann jedoch auf mystische Weise wahrgenommen werden, z. B. durch Schattenperspektive, wenn gewünscht. Es ist möglich, eine andere Person durch den Durchgang zu bringen, aber wenn diese Person nicht bereit ist, muss sie durch einen einem erfolgreichen Greifen gehalten werden. Wenn durch die Anwendung dieser Macht ein Makel entsteht einen Makel erleidet, erhält auch der Passagier einen.",
-          "duration": "eine Runde"
+          "system": "Der Vampir muss in einen Schatten eintreten, der groß genug ist, um ihn zu verdecken, und eine Runde später aus einem anderen wieder auftauchen. Der Zielschatten muss in Sichtweite sein, kann aber auch durch mystische Mittel wie Schattenperspektive wahrgenommen werden, falls gewünscht. Es ist möglich, eine andere Person durch den Durchgang zu bringen, aber wenn diese Person nicht willig ist, muss sie durch einen erfolgreichen Greifer festgehalten werden. Wird durch die Anwendung dieser Fähigkeit ein Markel verursacht, erhält auch der Passagier einen solchen.",
+          "duration": "ein Zug"
         },
         {
           "id": 9,
-          "name": "Düsterer Avatar",
-          "summary": "Der Vampir erlangt die Fähigkeit, seine eigene Substanz in die eines Schattens zu verwandeln und zu einem zweidimensionalen Fleck der Dunkelheit, der über jede Oberfläche und durch winzige Lücken und Risse zu schlüpfen. In dieser Form wird der Vampir nur durch Feuer und Sonnenlicht geschädigt.",
+          "name": "Trübsinniger Avatar (Lasombra)",
+          "summary": "Der Vampir erlangt die Fähigkeit, seine eigene Substanz in die eines Schattens zu verwandeln und zu einem zweidimensionalen Fleck der Dunkelheit zu werden, der über jede Oberfläche und durch winzige Spalten und Risse schlüpfen kann. In dieser Form wird der Vampir nur durch Feuer und Sonnenlicht geschädigt.",
           "costs": "ein Wallungs-Check",
-          "system": "Die Verwandlung dauert eine Runde, während in der der Vampir nichts anderes tun kann. Sobald der Verwandlung kann sich der Vampir im Schritttempo Schritttempo über den Boden oder an Wänden entlang bewegen, behindert nur durch hermetisch abgeriegelte Barrieren behindert. Vampire, die Tenebrous Avatar benutzen, können ihre Opfer einhüllen, was dazu führt, dass das Opfer alle seine Würfelpools um drei reduzieren und Sterbliche wie bei Stygian Shroud ersticken, oben. Wenn er einen Sterblichen umgibt, kann der Vampir sich von ihnen ernähren, ohne die Haut mit den Reißzähnen zu durchdringen. Praktizierende dieser Macht erleiden keinen Schaden durch physischen Quellen, können aber durch Feuer und Sonnenlicht geschädigt wie üblich. Geistige Disziplinen können weiterhin nach dem Ermessen des Geschichtenerzählers eingesetzt werden.",
-          "duration": "eine Szene oder bis zur Beendigung"
+          "system": "Die Verwandlung dauert eine Runde, in der der Vampir zu nichts anderem fähig ist. Sobald die Verwandlung abgeschlossen ist, kann sich der Vampir im Schritttempo über den Boden oder an Wänden entlang bewegen, wobei er nur durch hermetisch abgeriegelte Barrieren behindert wird. Vampire, die Tenebrous Avatar benutzen, können ihre Opfer einhüllen, was dazu führt, dass alle Würfelpools des Opfers um drei reduziert werden und Sterbliche wie bei Stygian Shroud (siehe oben) erstickt werden. Wenn der Vampir einen Sterblichen umgibt, kann er sich von ihm ernähren, ohne die Haut mit seinen Reißzähnen zu durchdringen. Praktizierende dieser Macht erleiden keinen körperlichen Schaden, können aber wie üblich durch Feuer und Sonnenlicht geschädigt werden. Geistige Disziplinen können weiterhin nach dem Ermessen des Geschichtenerzählers eingesetzt werden.",
+          "duration": "eine Szene oder bis zum Ende"
+        },
+        {
+          "id": 17,
+          "name": "Erfüllte Schuld (Hecata)",
+          "summary": "Nekromanten können als die größten Einmischer des Schicksals bezeichnet werden, da sie in der Lage sind, in die vorbestimmten Wege von Leben und Geistern einzugreifen. Gelegentlich versuchen Nekromanten jedoch auch, dem Schicksal zu dienen, indem sie diejenigen bestrafen, die es betrügen. Diese Macht ermöglicht es einem Vampir, Krankheiten bei Opfern, die sich davon erholt haben, wieder einzuführen, Knochen zu brechen, die längst geheilt sind, und die Immunität gegen das Altern von Leichen zu beseitigen. Diese Macht wirkt zwar nicht bei Vampiren, ist aber ein wirksames Mittel, um ihre Diener zu durchtrennen und dafür zu sorgen, dass Schulden beim Schicksal zurückgezahlt werden, ohne dass sie mit dem Empfänger in Kontakt kommen müssen.",
+          "costs": "zwei Wallungs-Checks",
+          "diceSupplies": "Widerstandsfähigkeit + Vergessenheit vs. Widerstandsfähigkeit + Medizin oder Seelenstärke",
+          "system": "Der Vampir macht zwei Wallungs-Proben, während er genügend Lebenskraft aufwendet, um sowohl seine Handflächen als auch sein Gesicht mit Blut zu beschmieren, während er sich die Gesichter seiner Opfer ins Gedächtnis ruft. Wenn der Anwender in einem Wettkampf von Widerstandsfähigkeit + Vergessenheit gegen die Widerstandsfähigkeit + Medizin des Opfers erfolgreich ist (diejenigen mit Seelenstärke können mit Widerstandsfähigkeit + Seelenstärke widerstehen), wird die Zielperson von einem ernsten Zustand betroffen, an dem sie in der Vergangenheit gelitten hat und von dem sie sich erholt hat, wie z.B. behandelter Krebs, ein gebrochener Knochen oder eine Krankheit - einschließlich einer, die durch die Nekrotische Seuche (S. XX) erworben wurde - wobei alle schwächenden Auswirkungen dieses Zustands sofort auftreten. Die Auswirkungen des Zustands werden vom Geschichtenerzähler bestimmt, sollten aber schwerwiegend sein (siehe die Tabelle Verkrüppelungen zur Inspiration, Vampire: the Masquerade S.303). Wenn das Opfer ein Ghoul ist, hebt diese Macht seine Immunität gegen das Altern auf und eliminiert jegliches Leben in seinem System, was dazu führen kann, dass ältere Ghouls sterben oder sich sogar auflösen, wo sie stehen. Bei einem kritischen Sieg kann diese Kraft das Opfer töten, indem sie sein Herz vollständig zum Stillstand bringt, wenn der Anwender dies wünscht. Bei einem totalen Fehlschlag kann der Vampir diese Kraft nicht mehr gegen dieses Individuum einsetzen.",
+          "duration": "Variabel, abhängig davon, ob die Krankheit behandelbar ist"
+        },
+        {
+          "id": 18,
+          "name": "Verwelkender Geist (Hecata)",
+          "summary": "Diese Kraft kanalisiert rohe Entropie durch raschen geistigen Verfall und wirkt sich sowohl auf Vampire als auch auf Kine aus, indem sie auf den Geist des Opfers zielt. Ein Vampir, der diese Kraft einsetzt, riskiert Markel, da sie den Geist des Opfers vollständig auslöschen kann, was eine Rückkehr als Wraith verhindert.",
+          "costs": "Zwei Wallungs-Schecks, Markel (variabler Betrag)",
+          "diceSupplies": "Entschlossenheit + Vergessenheit vs. Entschlossenheit + Okkultismus oder Seelenstärke",
+          "system": "Der Vampir macht zwei Wallungs-Proben, um genügend Lebenskraft zu verbrauchen, um beide Hände zu bedecken, und berührt das Opfer. Nachdem er Entschlossenheit + Vergessenheit gegen Entschlossenheit + Okkultismus des Opfers gewürfelt hat (wer Seelenstärke hat, kann sie anstelle von Okkultismus verwenden), erleidet das Opfer für jeden Punkt der Marge des Vampirs zwei Punkte erhöhten Willenskraftschaden. Der Angriff zersetzt den Geist des Opfers, bis es nur noch eine zerbrochene Hülle ist, und wenn es durch diese Macht beeinträchtigt ist, kehrt es nach dem Tod nicht als Gespenst zurück. Geschichtenerzähler können entscheiden, dass die geistzerstörende Natur dieser Macht Markel rechtfertigt, obwohl wie immer eine angemessene Überzeugung diese abmildern kann.",
+          "duration": "ein Zug"
         }
       ]
     }
