@@ -1,23 +1,23 @@
 import {IDisciplineAbility, IDisciplineCombo} from "@/types/data";
-import {ICharacter} from "@/types/models";
+import {ICharacter, IDisciplineSelection} from "@/types/models";
 
-type ResolverCallback = (char: ICharacter, data: any) => boolean;
+type ResolverCallback = (char: ICharacter, data: any, dicipline: IDisciplineSelection) => boolean;
 const registeredResolvers: {[type: string]: ResolverCallback} = {};
 
 const ResolveRestriction = (dataKey: keyof IDisciplineAbility) => {
     return (target: Object, propertyKey: string, descriptor: PropertyDescriptor) => {
         if (descriptor.value) {
-            registeredResolvers[dataKey] = (char, data) => descriptor.value.call(target, char, data);
+            registeredResolvers[dataKey] = (char, data, ability) => descriptor.value.call(target, char, data, ability);
         }
     };
 }
 
 class DisciplineAbilityResolver {
 
-    public resolve(char: ICharacter, ability: IDisciplineAbility): boolean {
+    public resolve(char: ICharacter, dicipline: IDisciplineSelection, ability: IDisciplineAbility): boolean {
         for (let [key, value] of Object.entries(ability)) {
             if (registeredResolvers[key] && value) {
-                if (!registeredResolvers[key](char, value)) {
+                if (!registeredResolvers[key](char, value, dicipline)) {
                     return false;
                 }
             }
@@ -26,13 +26,12 @@ class DisciplineAbilityResolver {
     }
 
     @ResolveRestriction("requirement")
-    private resolveRequirement(char: ICharacter, requirement: number): boolean {
-        for (let discipline of char.disciplines) {
-            if (discipline.abilities.find(ability => ability.id === requirement)) {
-                return true;
-            }
+    private resolveRequirement(char: ICharacter, requirement: number, dicipline: IDisciplineSelection): boolean {
+        if (!dicipline) {
+            return false;
         }
-        return false;
+
+        return !!dicipline.abilities.find(ability => ability.id === requirement);
     }
 
     @ResolveRestriction("combination")

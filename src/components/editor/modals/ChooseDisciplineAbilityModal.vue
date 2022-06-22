@@ -72,7 +72,7 @@ export default class ChooseDisciplineAbilityModal extends Vue {
   }
 
   private isAbilitySelectable(ability: ILeveledDisciplineAbility): boolean {
-    return disciplineAbilityResolver.resolve(this.editingCharacter!, ability);
+    return disciplineAbilityResolver.resolve(this.editingCharacter!, this.discipline!, ability);
   }
 
   private getCombo(ability: ILeveledDisciplineAbility): string {
@@ -99,7 +99,7 @@ export default class ChooseDisciplineAbilityModal extends Vue {
   }
 
   private get canSelectAbility(): boolean {
-    return !!this.ability && disciplineAbilityResolver.resolve(this.editingCharacter!, this.ability)
+    return !!this.ability && disciplineAbilityResolver.resolve(this.editingCharacter!, this.discipline!, this.ability)
         && (this.costs === -1 || this.costs <= this.editingCharacter!.exp);
   }
 }

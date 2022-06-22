@@ -55,7 +55,7 @@ export default class ChooseBloodRitualModal extends Vue {
     this.withCosts = costs;
     this.maxLevel = maxLevel;
     this.discipline = discipline;
-    this.rituals = DataManager.selectedLanguage.bloodRituals.filter(x => x.level <= discipline.currentLevel - 1 && x.level <= this.maxLevel
+    this.rituals = DataManager.selectedLanguage.bloodRituals.filter(x => x.level <= discipline.currentLevel - 1 && x.level <= maxLevel
         && this.editingCharacter.bloodRituals.find(y => y.id === x.id) === undefined);
     this.shown = true;
   }
@@ -69,7 +69,7 @@ export default class ChooseBloodRitualModal extends Vue {
   }
 
   private get canSelectAbility(): boolean {
-    return !!this.ritual && (this.costs === -1 || this.costs <= this.editingCharacter!.exp);
+    return !!this.ritual && (this.costs === -1 || this.costs <= this.editingCharacter!.exp) && this.ritual.level <= this.maxLevel;
   }
 
   private get costs(): number {

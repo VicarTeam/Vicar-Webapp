@@ -78,7 +78,7 @@ export default class ChooseDisciplinesView extends Vue {
     const selection: IDisciplineSelection = this.editingCharacter!.disciplines.find(d => d.discipline.id === 3)!;
     if (selection && selection.currentLevel - 1 >= 1) {
       e.cancel = true;
-      this.chooseRitualModal.showModal(e.next, selection);
+      this.chooseRitualModal.showModal(e.next, selection, 1);
       return false;
     }
   }
