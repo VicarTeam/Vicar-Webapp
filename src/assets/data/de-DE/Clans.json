@@ -181,5 +181,30 @@
       7,
       6
     ]
+  },
+  {
+    "id": 15,
+    "name": "Caitiff",
+    "slogan": "Die Clanlosen",
+    "curse": "Unberührt von den Vorsintflutlichen teilen die Caitiff keinen gemeinsamen Fluch. Caitiff-Charaktere beginnen mit dem Nachteil Verdächtiger (*) und sie dürfen während der Charaktererstellung keinen positiven Status erwerben. Die Erzählerin kann immer einen Abzug von ein oder zwei Würfeln für gesellschaftliche Proben gegen andere Blutsverwandte aussprechen, wenn diese wissen, dass es sich um Caitiff handelt, unabhängig von ihrem tatsächlichen Status. Außerdem kostet das Steigern einer der Disziplinen eines Caitiff das Sechsfache des gegenwärtigen Werts an Erfahrungspunkten.",
+    "description": "Nicht alle Blutsverwandten erben den Fluch eines der 13. Einige kümmert ihre Abstammung nicht. Bestimmte Blutlinien von Blutsverwandten waren schon immer clanlos und manchmal werden Kinder der Clans einfach anders geboren. Sie werden oftft abgewiesen, ins Exil geschickt oder entscheiden sich, sich von den Clans zu distanzieren, von denen sie verachtet werden. Als reine Vampire gleichen Caitiffff das, was ihnen an Respekt und Abstammung verwehrt ist, durch die Flexibilität ihres Blutes und das Fehlen eines einschränkenden Fluches aus. Egal, ob stolz oder beschämt wegen ihrer clanlosen Natur, welcher Art sie auch sein mag, haben diese Kreaturen keine Familie, repräsentieren aber den Vampirismus in seiner reinsten und individualistischsten Form.",
+    "disciplines": [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+    ],
+    "actions": [
+      {
+        "description": "Erhalten durch den Clanfluch.",
+        "type": "add_flaw",
+        "data": {
+          "choices": [
+            {
+              "type": "background",
+              "id": 11,
+              "flawId": 1
+            }
+          ]
+        }
+      }
+    ]
   }
 ]

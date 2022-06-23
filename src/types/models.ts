@@ -15,7 +15,8 @@ export enum LevelType {
     ClanDiscipline,
     OtherDiscipline,
     Trait,
-    BloodPotency
+    BloodPotency,
+    CaitiffDiscipline
 }
 
 export enum CategoryKeys {

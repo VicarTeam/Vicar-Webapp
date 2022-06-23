@@ -66,14 +66,22 @@ export default class DisciplinesView extends Vue {
   private newDisciplineModal!: NewDisciplineModal;
 
   private levelDiscipline(selection: IDisciplineSelection) {
-    const costs = (DataManager.isClanDiscipline(this.editingCharacter.clan, selection.discipline)
-        ? levelResolver.resolveClanDiscipline : levelResolver.resolveOtherDiscipline)(this.editingCharacter, selection);
+    const costs = this.getLevelCost(selection);
     this.chooseAbilityModal.showModal(selection, ability => {
       selection.abilities.push({...ability, usedLevel: selection.currentLevel});
       selection.currentLevel++;
       this.editingCharacter.exp -= costs;
       CharacterStorage.saveCharacter(this.editingCharacter);
     }, costs);
+  }
+
+  private getLevelCost(selection: IDisciplineSelection): number {
+    if (this.editingCharacter.clan.id === 15) {
+      return levelResolver.resolveCaitiffDiscipline(this.editingCharacter, selection);
+    }
+
+    return (DataManager.isClanDiscipline(this.editingCharacter.clan, selection.discipline)
+        ? levelResolver.resolveClanDiscipline : levelResolver.resolveOtherDiscipline)(this.editingCharacter, selection);
   }
 }
 </script>

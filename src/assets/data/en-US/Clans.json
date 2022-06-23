@@ -96,7 +96,7 @@
     ],
     "actions": [
       {
-        "description": "Erhalten durch den Clanfluch.",
+        "description": "Given by Clan Bane.",
         "type": "add_flaw",
         "data": {
           "choices": [
@@ -180,6 +180,31 @@
       2,
       7,
       6
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Caitiff",
+    "slogan": "The Clanless",
+    "curse": "Untouched by the Antediluvians, the Caitiff share no common bane. Caitiff characters begin with the Suspect (*) Flaw and you may not purchase positive Status for them during character creation. The Storyteller may always impose a one or two dice penalty on Social tests against fellow Kindred who know they are Caitiff, regardless of their eventual Status. Further, to improve one of the Disciplines of a Caitiff costs six times the level purchased in experience points.",
+    "description": "Not all Kindred inherit the curse of one of the 13. Some don’t care what their lineage is. Certain bloodlines of kindred have always been clanless, and sometimes childer of the clans are just born different. They’re often discarded, exiled, or choose to distance themselves from the clans that despise them. Pure vampires, the Caitiff make up for what they lose in respect and pedigree by flexible blood and the absence of a crippling bane. Proud or ashamed of their clanless nature as they may be, these creatures have no family and represents vampirism at its purest and most individualistic.",
+    "disciplines": [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+    ],
+    "actions": [
+      {
+        "description": "Given by Clan Bane.",
+        "type": "add_flaw",
+        "data": {
+          "choices": [
+            {
+              "type": "background",
+              "id": 11,
+              "flawId": 1
+            }
+          ]
+        }
+      }
     ]
   }
 ]

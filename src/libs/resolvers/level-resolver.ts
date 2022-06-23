@@ -53,6 +53,11 @@ class LevelResolver {
         return disc.currentLevel * 7;
     }
 
+    @ResolveType(LevelType.CaitiffDiscipline)
+    public resolveCaitiffDiscipline(char: ICharacter, disc: IDisciplineSelection): number {
+        return disc.currentLevel * 6;
+    }
+
     @ResolveType(LevelType.BloodPotency)
     public resolveBloodPotency(char: ICharacter): number {
         return (char.bloodPotency + 1) * 10;

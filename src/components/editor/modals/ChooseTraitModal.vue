@@ -68,6 +68,8 @@ export type ChooseTraitData = {
 
 export type CostsCalculationCallback = (trait: ITrait, level: number) => number;
 
+const StatusId: number = 11;
+
 @Component({
   components: {Modal}
 })
@@ -156,10 +158,16 @@ export default class ChooseTraitModal extends Vue {
   }
 
   private filterTraitPacks(packs: ITraitPack[]): ITraitPack[] {
-    return DataManager.filterRestrictions(this.editingCharacter, packs);
+    return DataManager.filterRestrictions(this.editingCharacter, packs).filter(pack => {
+      return this.filterTraits(pack!, [...pack![this.isFlaw ? "disadvantages" : "advantages"]]).length > 0;
+    });
   }
 
   private filterTraits(pack: ITraitPack, traits: ITrait[]): ITrait[] {
+    if (!this.isFlaw && pack.id === StatusId && this.editingCharacter!.clan.id === 15 && !this.calculateCosts) {
+      return []; // Caitiffs aren't allowed to use positive status background when creating char
+    }
+
     const pointsRequirement = traits.filter(t => t.level <= this.pointsLeft);
     const usedFiltered = pointsRequirement.filter(t => !this.doesTraitExist(this.editingCharacter!, pack, t.id, this.isFlaw));
     const fullfilsRestrictions = usedFiltered.filter(t => {

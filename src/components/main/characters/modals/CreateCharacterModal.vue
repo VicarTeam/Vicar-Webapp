@@ -90,7 +90,8 @@ export default class CreateCharacterModal extends Vue {
     {id: 3, active: false},
     {id: 4, active: false},
     {id: 5, active: false},
-    {id: 6, active: false}
+    {id: 6, active: false},
+    {id: 7, active: false}
   ]
 
   public showModal(dir?: ICharacterDirectory) {

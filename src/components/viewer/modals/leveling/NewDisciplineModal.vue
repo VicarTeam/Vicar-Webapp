@@ -19,7 +19,7 @@
 import {Component, Ref, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {State} from "vuex-class";
-import {IAttributeData, ICharacter, ILeveledDisciplineAbility} from "@/types/models";
+import {IAttributeData, ICharacter, IDisciplineSelection, ILeveledDisciplineAbility} from "@/types/models";
 import {levelResolver} from "@/libs/resolvers/level-resolver";
 import Bullet from "@/components/Bullet.vue";
 import CharacterStorage from "@/libs/io/character-storage";
@@ -98,6 +98,15 @@ export default class NewDisciplineModal extends Vue {
   private get neededExp(): number {
     if (!this.discipline) {
       return Infinity;
+    }
+
+    if (this.editingCharacter.clan.id === 15) {
+      return levelResolver.resolveCaitiffDiscipline(this.editingCharacter, {
+        discipline: this.discipline,
+        points: 0,
+        currentLevel: 1,
+        abilities: []
+      });
     }
 
     return (DataManager.isClanDiscipline(this.editingCharacter.clan, this.discipline)

@@ -18,9 +18,14 @@
               <div class="desc">{{editingCharacter.clan.description}}</div>
 
               <h6 style="font-weight: bolder; margin: 1rem 0 0;">{{$t('editor.clan.disciplines')}}:</h6>
-              <div class="disciplines">
+              <div class="disciplines" v-if="editingCharacter.clan.disciplines.length < 11">
                 <div class="discipline" v-for="d in editingCharacter.clan.disciplines" :key="d.id">
                   {{d.name}} <TipButton :content="d.summary"/>
+                </div>
+              </div>
+              <div class="disciplines" v-else>
+                <div class="discipline">
+                  {{$t('data.disciplines.all')}}
                 </div>
               </div>
             </div>

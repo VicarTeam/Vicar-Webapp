@@ -74,6 +74,13 @@
       "predatorTypes": [
         10
       ]
+    },
+    {
+      "id": 7,
+      "clans": [15, 16],
+      "merits": [],
+      "backgrounds": [],
+      "predatorTypes": []
     }
   ]
 }
