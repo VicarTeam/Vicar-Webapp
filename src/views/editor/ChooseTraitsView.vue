@@ -89,7 +89,7 @@
 import {Component, Ref, Vue} from "vue-property-decorator";
 import EditorForm from "@/components/editor/EditorForm.vue";
 import {State} from "vuex-class";
-import {ICharacter, ILockableTrait, IUsingTraitPack, IUsingTraitPacks} from "@/types/models";
+import {Generation, ICharacter, ILockableTrait, IUsingTraitPack, IUsingTraitPacks} from "@/types/models";
 import ChooseTraitModal from "@/components/editor/modals/ChooseTraitModal.vue";
 import TipButton from "@/components/editor/TipButton.vue";
 import XButton from "@/components/editor/XButton.vue";
@@ -115,6 +115,11 @@ export default class ChooseTraitsView extends Vue {
     if (this.editingCharacter) {
       this.maxTraitBonus = this.editingCharacter.requiredPointSpreads.filter(s => !s.isFlaw).map(s => s.points).reduce((a, b) => a + b, 0);
       this.maxFlawBonus = this.editingCharacter.requiredPointSpreads.filter(s => s.isFlaw).map(s => s.points).reduce((a, b) => a + b, 0);
+
+      if (this.editingCharacter.generationEra === Generation.Ancillae) {
+        this.maxTraitPoints += 2;
+        this.maxFlawPoints += 2;
+      }
     }
   }
 
