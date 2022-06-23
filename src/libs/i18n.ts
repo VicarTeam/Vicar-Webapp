@@ -28,7 +28,6 @@ function getLocaleFromDisk() {
 
 function getSystemLocale() {
     const langCode = navigator.language;
-    console.log(langCode);
     const lang = AVAILABLE_LOCALES.find(l => l.code === langCode || l.code.startsWith(langCode.split('-')[0].toLowerCase()));
 
     return lang ? lang.code : DEFAULT_LOCALE;

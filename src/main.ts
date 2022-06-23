@@ -27,6 +27,10 @@ function disableMenu() {
         e.preventDefault();
         return false;
     }, {capture: true})
+
+    window.onbeforeunload = function () {
+        console.log("close 1");
+    };
 }
 
 disableMenu();
