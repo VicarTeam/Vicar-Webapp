@@ -8,7 +8,7 @@
       <button v-if="!vicarPlay.isRunning" class="btn btn-primary" :disabled="!username" style="height: 4rem" @click="connectSessionModal.showModal(username)">
         {{$t('play.connect')}}
       </button>
-      <button v-if="vicarPlay.isRunning" class="btn btn-primary" @click="closeSession">
+      <button v-if="vicarPlay.isRunning" style="height: 4rem" class="btn btn-primary" @click="closeSession">
         {{$t('play.' + (vicarPlay.session.isHost ? 'close' : 'disconnect'))}}
       </button>
     </div>

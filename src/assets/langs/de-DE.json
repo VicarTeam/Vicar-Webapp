@@ -294,5 +294,6 @@
   "play.connect.btn": "Sitzung beitreten",
   "play.connect.loading": "Sitzung wird beigetreten...",
   "play.close": "SITZUNG SCHLIEßEN",
-  "play.disconnect": "SITZUNG VERLASSEN"
+  "play.disconnect": "SITZUNG VERLASSEN",
+  "play.opensession": "Play-Sitzung: {session}"
 }
