@@ -58,6 +58,7 @@ class VicarPlay {
 
     private _session: ISession|null;
     private _me: IPlayer|null;
+    private _menuOpen: boolean = false;
 
     constructor() {
         this._session = null;
@@ -94,6 +95,15 @@ class VicarPlay {
         this.session.peer.destroy();
         this._session = null;
         this._me = null;
+        this._menuOpen = false;
+    }
+
+    public toggleMenu() {
+        this._menuOpen = !this._menuOpen;
+    }
+
+    public isMenuOpen() {
+        return this._menuOpen;
     }
 
     public createSession(username: string, name: string): Promise<ISession> {
@@ -172,6 +182,7 @@ class VicarPlay {
     }
 
     public close(): Promise<void> {
+        this._menuOpen = false;
         return new Promise<void>(resolve => {
             if (!this.isRunning) {
                 resolve();

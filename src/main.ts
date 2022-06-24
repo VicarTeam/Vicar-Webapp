@@ -10,9 +10,12 @@ import {Backend} from "@/libs/backend";
 import {i18n} from "@/libs/i18n";
 import VueResizeText from 'vue-resize-text';
 import EventBus from "@/libs/event-bus";
+import VueInteractJs from "vue-interactjs";
 
 Vue.config.productionTip = false
 Vue.use(VueResizeText);
+// @ts-ignore
+Vue.use(VueInteractJs);
 
 function disableMenu() {
     document.onkeydown = function (e) {
