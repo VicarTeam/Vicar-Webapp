@@ -105,6 +105,7 @@ export default class VicarShare extends Vue {
         const conn = this.peer!.connect(id);
         conn.on("open", () => {
           conn.send(char);
+          conn.close();
         });
       });
     }
