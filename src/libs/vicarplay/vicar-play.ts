@@ -3,21 +3,57 @@ import Peer, {DataConnection} from "peerjs";
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
 import EventBus from "@/libs/event-bus";
-import {LevelType} from "@/types/models";
 
-type ReceivePacketCallback = (sender: IPlayer, ...data: any[]) => number;
-const registeredReceivers: {[key: string]: ReceivePacketCallback} = {};
-
+const RegisteredReceivers = Symbol('RegisteredReceivers');
 let ackCallbacks: {[name: string]: Function} = {};
 
-const ReceivePacket = (name: string) => {
-    return (target: Object, propertyKey: string, descriptor: PropertyDescriptor) => {
-        if (descriptor.value) {
-            registeredReceivers[name] = (char, data) => descriptor.value.call(target, char, ...data);
+class ReceiverHandler {
+    private static instance = new ReceiverHandler();
+    private requestHandlers : {[name: string] : (sender: IPlayer, ...args: any[]) => ReceiverHandler} = {};
+
+    private constructor() {}
+
+    registerHandler(name: string, handler: (sender: IPlayer, ...args: any[]) => ReceiverHandler) {
+        this.requestHandlers[name] = handler;
+    }
+
+    callHandler(name: string, other: IPlayer, data: any[]) {
+        if (this.requestHandlers[name]) {
+            return this.requestHandlers[name](other, ...data);
+        }
+    }
+
+    static getInstance() {
+        return this.instance;
+    }
+}
+
+function ReceivePacket(name: string) {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        target[RegisteredReceivers] = target[RegisteredReceivers] || new Map();
+        target[RegisteredReceivers].set(propertyKey, name);
+    };
+}
+
+function Receiver<T extends { new(...args: any[]): {} }>(Base: T) {
+    return class extends Base {
+        constructor(...args: any[]) {
+            super(...args);
+            const subMethods = Base.prototype[RegisteredReceivers];
+            if (subMethods) {
+                subMethods.forEach((name: string, method: string) => {
+                    ReceiverHandler.getInstance()
+                        .registerHandler(
+                            name,
+                            (player, ...args: any[]) => (this as any)[method](player, ...args)
+                        );
+                });
+            }
         }
     };
 }
 
+@Receiver
 class VicarPlay {
 
     private _session: ISession|null;
@@ -148,9 +184,6 @@ class VicarPlay {
 
     @ReceivePacket("player:join")
     private onPlayerJoinPacket(player: IPlayer, ack: (host: IPlayer, name: string) => void) {
-        console.log(this);
-        console.log(this.session);
-
         if (!this.session.isHost) {
             return;
         }
@@ -207,6 +240,15 @@ class VicarPlay {
                 const packet = <IPacket>data;
                 const payload: any[] = packet.payload;
 
+                if (packet.name === "!ack:back") {
+                    const ackData: {aid: string, args: any[]} = payload[0];
+                    if (ackCallbacks[ackData.aid]) {
+                        ackCallbacks[ackData.aid].call(this, ...ackData.args);
+                        delete ackCallbacks[ackData.aid];
+                    }
+                    return;
+                }
+
                 for (let i = 0; i < payload.length; i++) {
                     const data = payload[i];
                     if (typeof data === 'string' || data instanceof String) {
@@ -219,9 +261,7 @@ class VicarPlay {
                     }
                 }
 
-                if (registeredReceivers[packet.name]) {
-                    registeredReceivers[packet.name](packet.sender, payload);
-                }
+                ReceiverHandler.getInstance().callHandler(packet.name, packet.sender, payload);
             } catch (e) {
                 console.error(e);
             }
