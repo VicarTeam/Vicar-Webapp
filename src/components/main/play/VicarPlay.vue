@@ -8,7 +8,7 @@
       <button v-if="!vicarPlay.isRunning" class="btn btn-primary" :disabled="!username" style="height: 4rem" @click="connectSessionModal.showModal(username)">
         {{$t('play.connect')}}
       </button>
-      <button v-if="vicarPlay.isRunning" class="btn btn-primary" @click="vicarPlay.close()">
+      <button v-if="vicarPlay.isRunning" class="btn btn-primary" @click="closeSession">
         {{$t('play.' + (vicarPlay.session.isHost ? 'close' : 'disconnect'))}}
       </button>
     </div>
@@ -58,6 +58,18 @@ export default class VicarPlay extends Vue {
 
   private saveUsername() {
     localStorage.setItem("play:username", this.username);
+  }
+
+  private async closeSession() {
+    this.toggleLoader(true, this.$t("play.closing").toString());
+
+    try {
+      await vicarPlay.close();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this.toggleLoader(false);
+    }
   }
 
   @Provide("play:toggle-loader")

@@ -65,6 +65,37 @@ class VicarPlay {
         EventBus.$on("closing", this.onAppClosing);
     }
 
+    @ReceivePacket("player:join")
+    private onPlayerJoinPacket(player: IPlayer, ack: (host: IPlayer, name: string) => void) {
+        if (!this.session.isHost) {
+            return;
+        }
+
+        (<IHostedSession>this.session).players.push(player);
+        ack(this._me!, this.session.name);
+    }
+
+    @ReceivePacket("player:left")
+    private onPlayerLeftPacket(player: IPlayer) {
+        if (!this.session.isHost) {
+            return;
+        }
+
+        const session = <IHostedSession>this.session;
+        session.players = session.players.filter(x => x.id !== player.id);
+    }
+
+    @ReceivePacket("session:closed")
+    private onSessionClosed() {
+        if (this.session.isHost) {
+            return;
+        }
+
+        this.session.peer.destroy();
+        this._session = null;
+        this._me = null;
+    }
+
     public createSession(username: string, name: string): Promise<ISession> {
         return new Promise<ISession>((resolve, reject) => {
             if (this.isRunning) {
@@ -180,26 +211,6 @@ class VicarPlay {
         session.players.forEach(x => {
             this.sendTo(x, name, data)
         });
-    }
-
-    @ReceivePacket("player:join")
-    private onPlayerJoinPacket(player: IPlayer, ack: (host: IPlayer, name: string) => void) {
-        if (!this.session.isHost) {
-            return;
-        }
-
-        (<IHostedSession>this.session).players.push(player);
-        ack(this._me!, this.session.name);
-    }
-
-    @ReceivePacket("player:left")
-    private onPlayerLeftPacket(player: IPlayer) {
-        if (!this.session.isHost) {
-            return;
-        }
-
-        const session = <IHostedSession>this.session;
-        session.players = session.players.filter(x => x.id !== player.id);
     }
 
     private sendTo(other: IPlayer, name: string, payload: any[]) {
