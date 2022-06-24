@@ -2,9 +2,14 @@
   <div class="playchat">
     <div class="history">
       <div class="message" v-for="(m, i) in vicarPlay.getChatMessages()" :key="i" :class="{'host': m.sender.isHost, 'private': m.isPrivate}">
-        <span v-if="m.type !== MessageType.PrivateAvatar && m.type !== MessageType.BroadcastAvatar">
+        <span v-if="m.type !== MessageType.PrivateAvatar && m.type !== MessageType.BroadcastAvatar && m.type !== MessageType.Status">
           <span v-if="m.sender.isHost">(GM) </span>{{m.sender.name}} &dash; {{m.content}}
         </span>
+        <div v-else-if="m.type === MessageType.Status" class="status">
+          <span class="border"></span>
+          <small class="content">{{$t('play.status.' + m.content, {name: m.sender.name})}}</small>
+          <span class="border"></span>
+        </div>
         <div v-else class="avatar" @click="avatarZoomModal.showModal(m.content)" :class="{'host': m.sender.isHost, 'private': m.isPrivate}">
           <span><span v-if="m.sender.isHost">(GM) </span>{{m.sender.name}}:</span>
           <img :src="m.content"/>
@@ -120,6 +125,29 @@ export default class PlayChat extends Vue {
         img {
           width: 100%;
           -webkit-user-drag: none;
+        }
+      }
+      .status {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 1rem;
+        .border {
+          margin-left: 1rem;
+          margin-right: 1rem;
+          flex-grow: 1;
+          height: 1px;
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+        .content {
+          flex-shrink: 0;
+          align-items: center;
+          justify-content: center;
+          display: flex;
+          font-style: italic;
+          color: rgba(255, 255, 255, 0.5);
+          margin: 0;
         }
       }
     }

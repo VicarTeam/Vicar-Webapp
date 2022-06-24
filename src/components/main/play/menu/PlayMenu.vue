@@ -26,13 +26,13 @@ import IconButton from "@/components/IconButton.vue";
 export default class PlayMenu extends Vue {
 
   vicarPlay = vicarPlay;
-  private currentWidth: number = 200;
-  private currentHeight: number = 250;
+  private currentWidth: number = 500;
+  private currentHeight: number = 600;
   private tab: string = "";
 
   mounted() {
-    this.currentWidth = parseInt(localStorage.getItem("play:width") || "200");
-    this.currentHeight = parseInt(localStorage.getItem("play:height") || "250");
+    this.currentWidth = parseInt(localStorage.getItem("play:width") || "500");
+    this.currentHeight = parseInt(localStorage.getItem("play:height") || "600");
     this.tab = localStorage.getItem("play:tab") || "PlayChat";
   }
 

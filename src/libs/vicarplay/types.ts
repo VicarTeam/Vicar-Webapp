@@ -6,7 +6,8 @@ export enum MessageType {
     BroadcastRoll,
     PrivateRoll,
     BroadcastAvatar,
-    PrivateAvatar
+    PrivateAvatar,
+    Status
 }
 
 export interface IMessage {

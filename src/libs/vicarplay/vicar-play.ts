@@ -1,4 +1,4 @@
-import {IHostedSession, IMessage, IPacket, IPlayer, ISession} from "@/libs/vicarplay/types";
+import {IHostedSession, IMessage, IPacket, IPlayer, ISession, MessageType} from "@/libs/vicarplay/types";
 import Peer, {DataConnection} from "peerjs";
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
@@ -77,6 +77,14 @@ class VicarPlay {
 
         (<IHostedSession>this.session).players.push(player);
         ack(this._me!, this.session.name);
+
+        const message: IMessage = {
+            type: MessageType.Status,
+            sender: player,
+            content: 'joined',
+            isPrivate: false
+        };
+        this.sendChatMessage(message);
     }
 
     @ReceivePacket("player:left")
@@ -87,6 +95,14 @@ class VicarPlay {
 
         const session = <IHostedSession>this.session;
         session.players = session.players.filter(x => x.id !== player.id);
+
+        const message: IMessage = {
+            type: MessageType.Status,
+            sender: player,
+            content: 'left',
+            isPrivate: false
+        };
+        this.sendChatMessage(message);
     }
 
     @ReceivePacket("session:closed")
@@ -253,6 +269,14 @@ class VicarPlay {
         const session = <IHostedSession>this.session;
         session.players = session.players.filter(x => x.id !== player.id);
         this.sendTo(player, "session:closed", []);
+
+        const message: IMessage = {
+            type: MessageType.Status,
+            sender: player,
+            content: 'kicked',
+            isPrivate: false
+        };
+        this.sendChatMessage(message);
     }
 
     public close(): Promise<void> {

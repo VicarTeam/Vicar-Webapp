@@ -302,5 +302,8 @@
   "play.chat.sendmode.private": "An {player}",
   "play.chat.sendmode.host": "An GM",
   "play.chat.send": "Senden",
-  "play.chat.host.prefix": "GM"
+  "play.chat.host.prefix": "GM",
+  "play.status.joined": "Spieler {name} ist beigetreten",
+  "play.status.left": "Spieler {name} hat Sitzung verlassen",
+  "play.status.kicked": "Spieler {name} wurde gekickt"
 }
