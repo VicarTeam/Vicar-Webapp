@@ -295,5 +295,12 @@
   "play.connect.loading": "Sitzung wird beigetreten...",
   "play.close": "SITZUNG SCHLIEßEN",
   "play.disconnect": "SITZUNG VERLASSEN",
-  "play.opensession": "Play-Sitzung: {session}"
+  "play.opensession": "Aktive Play-Sitzung",
+  "play.closing": "Sitzung wird geschlossen...",
+  "play.players.id": "Sitzungs-ID",
+  "play.chat.sendmode.all": "An Alle",
+  "play.chat.sendmode.private": "An {player}",
+  "play.chat.sendmode.host": "An GM",
+  "play.chat.send": "Senden",
+  "play.chat.host.prefix": "GM"
 }

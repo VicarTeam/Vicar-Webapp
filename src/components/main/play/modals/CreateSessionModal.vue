@@ -39,7 +39,6 @@ export default class CreateSessionModal extends Vue {
       this.toggleLoader(true, this.$t('play.create.loading').toString());
 
       await vicarPlay.createSession(this.username, this.name);
-      console.log(vicarPlay.session.host.id);
       this.show = false;
     } catch (e) {
       console.error(e);

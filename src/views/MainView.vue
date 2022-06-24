@@ -6,8 +6,8 @@
       <Tab :value="2" :text="$t('main.tabs.settings').toString()"/>
 
       <div style="position: absolute; right: 0.5rem; transform: translateY(-50%); top: 50%; z-index: 10" v-if="vicarPlay.isRunning">
-        <button class="btn btn-primary" style="max-width: 20rem; text-overflow: ellipsis; overflow: hidden; height: 4rem" @click="vicarPlay.toggleMenu()">
-          {{$t('play.opensession', {session: vicarPlay.session.name})}}
+        <button class="btn btn-primary" style="max-width: 20rem; height: 4rem" @click="vicarPlay.toggleMenu()">
+          {{$t('play.opensession')}}
         </button>
       </div>
 

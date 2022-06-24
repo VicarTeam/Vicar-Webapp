@@ -1,4 +1,4 @@
-import {IHostedSession, IPacket, IPlayer, ISession} from "@/libs/vicarplay/types";
+import {IHostedSession, IMessage, IPacket, IPlayer, ISession} from "@/libs/vicarplay/types";
 import Peer, {DataConnection} from "peerjs";
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
@@ -56,9 +56,12 @@ function Receiver<T extends { new(...args: any[]): {} }>(Base: T) {
 @Receiver
 class VicarPlay {
 
+    public chatSendTo: string = "@all";
+
     private _session: ISession|null;
     private _me: IPlayer|null;
     private _menuOpen: boolean = false;
+    private _chat: IMessage[] = [];
 
     constructor() {
         this._session = null;
@@ -96,6 +99,28 @@ class VicarPlay {
         this._session = null;
         this._me = null;
         this._menuOpen = false;
+        this.chatSendTo = "@all";
+    }
+
+    @ReceivePacket("chat:player:message")
+    private onPlayerChatMessage(sender: IPlayer, message: IMessage) {
+        if (this.session.isHost) {
+            return;
+        }
+
+        this._chat.push(message);
+    }
+
+    @ReceivePacket("chat:host:message")
+    private onHostChatMessage(sender: IPlayer, message: IMessage) {
+        if (!this.session.isHost) {
+            return;
+        }
+
+        this._chat.push(message);
+        if (!message.isPrivate) {
+            this.broadcast("chat:player:message", message);
+        }
     }
 
     public toggleMenu() {
@@ -104,6 +129,38 @@ class VicarPlay {
 
     public isMenuOpen() {
         return this._menuOpen;
+    }
+
+    public getChatMessages() {
+        return this._chat;
+    }
+
+    public getChatReceiver(): IPlayer|undefined {
+        if (this.chatSendTo === "@all") {
+            return undefined;
+        }
+        if (!this.session.isHost) {
+            return this.session.host;
+        }
+        return (<IHostedSession>this.session).players.find(p => p.id === this.chatSendTo);
+    }
+
+    public sendChatMessage(message: IMessage, receiver?: IPlayer) {
+        if (this.session.isHost) {
+            this.getChatMessages().push(message);
+
+            if (receiver !== undefined) {
+                this.sendPlayer(receiver, "chat:player:message", message);
+            } else {
+                this.broadcast("chat:player:message", message);
+            }
+        } else {
+            this.sendHost("chat:host:message", message);
+
+            if (message.isPrivate) {
+                this.getChatMessages().push(message);
+            }
+        }
     }
 
     public createSession(username: string, name: string): Promise<ISession> {
@@ -117,9 +174,11 @@ class VicarPlay {
 
             const peer = new Peer();
             peer.on("open", id => {
+                this._chat = [];
                 this._me = {
                     id,
-                    name: username
+                    name: username,
+                    isHost: true
                 };
                 this._session = <IHostedSession>{
                     isHost: true, players: [],
@@ -151,7 +210,8 @@ class VicarPlay {
             peer.on("open", async id => {
                 this._me = {
                     id,
-                    name: username
+                    name: username,
+                    isHost: false
                 };
 
                 this.sendToIdViaPeer(peer, hostId, "player:join", [
@@ -181,8 +241,23 @@ class VicarPlay {
         return this._session!;
     }
 
+    public get me(): IPlayer {
+        return this._me!;
+    }
+
+    public kickPlayer(player: IPlayer) {
+        if (!this.session.isHost) {
+            return;
+        }
+
+        const session = <IHostedSession>this.session;
+        session.players = session.players.filter(x => x.id !== player.id);
+        this.sendTo(player, "session:closed", []);
+    }
+
     public close(): Promise<void> {
         this._menuOpen = false;
+        this.chatSendTo = "@all";
         return new Promise<void>(resolve => {
             if (!this.isRunning) {
                 resolve();
@@ -203,6 +278,14 @@ class VicarPlay {
                 resolve();
             }, 1000);
         })
+    }
+
+    public sendPlayer(player: IPlayer, name: string, ...data: any[]) {
+        if (!this.isRunning || !this.session.isHost) {
+            return;
+        }
+
+        this.sendTo(player, name, data);
     }
 
     public sendHost(name: string, ...data: any[]) {
