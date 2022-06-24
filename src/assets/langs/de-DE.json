@@ -283,5 +283,16 @@
   "share.send.input": "Empfänger-ID für {char} eingeben",
   "share.send": "Senden",
   "share.received": "Du hast den Charakter {char} erhalten, willst du ihn abspeichern?",
-  "share.received.yes": "Ja"
+  "share.received.yes": "Ja",
+  "play.username": "Benutzername",
+  "play.create": "SITZUNG ERSTELLEN",
+  "play.create.input": "Name der Sitzung eingeben",
+  "play.create.btn": "Sitzung erstellen",
+  "play.create.loading": "Sitzung wird erstellt...",
+  "play.connect": "SITZUNG BEITRETEN",
+  "play.connect.input": "ID der zu beitretenden Sitzung eingeben",
+  "play.connect.btn": "Sitzung beitreten",
+  "play.connect.loading": "Sitzung wird beigetreten...",
+  "play.close": "SITZUNG SCHLIEßEN",
+  "play.disconnect": "SITZUNG VERLASSEN"
 }

@@ -3,15 +3,17 @@ import Peer, {DataConnection} from "peerjs";
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
 import EventBus from "@/libs/event-bus";
+import {LevelType} from "@/types/models";
 
 type ReceivePacketCallback = (sender: IPlayer, ...data: any[]) => number;
-const registeredReceivers: {[name: string]: ReceivePacketCallback} = {};
+const registeredReceivers: {[key: string]: ReceivePacketCallback} = {};
+
 let ackCallbacks: {[name: string]: Function} = {};
 
 const ReceivePacket = (name: string) => {
     return (target: Object, propertyKey: string, descriptor: PropertyDescriptor) => {
         if (descriptor.value) {
-            registeredReceivers[name] = (sender, data) => descriptor.value.call(target, sender, ...data);
+            registeredReceivers[name] = (char, data) => descriptor.value.call(target, char, ...data);
         }
     };
 }
@@ -47,11 +49,15 @@ class VicarPlay {
                     host: this._me,
                     name, peer
                 };
+
+                resolve(this.session);
             });
             peer.on("error", e => {
                reject(e);
             });
-            peer.on("connection", this.onPeerConnection);
+            peer.on("connection", conn => {
+                this.onPeerConnection(conn);
+            });
         });
     }
 
@@ -65,13 +71,13 @@ class VicarPlay {
             ackCallbacks = {};
 
             const peer = new Peer();
-            peer.on("open", id => {
+            peer.on("open", async id => {
                 this._me = {
                     id,
                     name: username
                 };
 
-                this.sendTo({name: "", id: hostId}, "player:join", [
+                this.sendToIdViaPeer(peer, hostId, "player:join", [
                     (host: IPlayer, name: string) => {
                         this._session = {
                             host, name, peer, isHost: false
@@ -84,7 +90,9 @@ class VicarPlay {
             peer.on("error", e => {
                 reject(e);
             });
-            peer.on("connection", this.onPeerConnection);
+            peer.on("connection", conn => {
+                this.onPeerConnection(conn);
+            });
         });
     }
 
@@ -96,30 +104,53 @@ class VicarPlay {
         return this._session!;
     }
 
-    public async sendHost(name: string, ...data: any[]): Promise<void> {
+    public close(): Promise<void> {
+        return new Promise<void>(resolve => {
+            if (!this.isRunning) {
+                resolve();
+                return;
+            }
+
+            if (this.session.isHost) {
+                this.broadcast("session:closed");
+            } else {
+                this.sendHost("player:left");
+            }
+
+            setTimeout(() => {
+                this.session.peer.destroy();
+                this._session = null;
+                this._me = null;
+
+                resolve();
+            }, 1000);
+        })
+    }
+
+    public sendHost(name: string, ...data: any[]) {
         if (!this.isRunning || this.session.isHost) {
             return;
         }
 
-        await this.sendTo(this.session.host, name, data);
+        this.sendTo(this.session.host, name, data);
     }
 
-    public async broadcast(name: string, ...data: any[]): Promise<void> {
+    public broadcast(name: string, ...data: any[]) {
         if (!this.isRunning || !this.session.isHost) {
             return;
         }
 
-        const promises: Promise<void>[] = [];
         const session = <IHostedSession>this.session;
         session.players.forEach(x => {
-           promises.push(this.sendTo(x, name, data));
+            this.sendTo(x, name, data)
         });
-
-        await Promise.all(promises);
     }
 
     @ReceivePacket("player:join")
     private onPlayerJoinPacket(player: IPlayer, ack: (host: IPlayer, name: string) => void) {
+        console.log(this);
+        console.log(this.session);
+
         if (!this.session.isHost) {
             return;
         }
@@ -138,33 +169,35 @@ class VicarPlay {
         session.players = session.players.filter(x => x.id !== player.id);
     }
 
-    private sendTo(other: IPlayer, name: string, payload: any[]): Promise<void> {
-        return new Promise<void>(resolve => {
-            if (!this.isRunning) {
-                resolve();
-                return;
+    private sendTo(other: IPlayer, name: string, payload: any[]) {
+        if (!this.isRunning) {
+            return;
+        }
+
+        this.sendToIdViaPeer(this.session.peer, other.id, name, payload);
+    }
+
+    private sendToIdViaPeer(peer: Peer, id: string, name: string, payload: any[]) {
+        for (let i = 0; i < payload.length; i++) {
+            const data = payload[i];
+
+            if (typeof data === "function") {
+                const aid = uuidv4();
+
+                ackCallbacks[aid] = data;
+                payload[i] = "ack@" + aid;
             }
+        }
 
-            for (let i = 0; i < payload.length; i++) {
-                const data = payload[i];
-
-                if (typeof data === "function") {
-                    const aid = uuidv4();
-
-                    ackCallbacks[aid] = data;
-                    payload[i] = "ack@" + aid;
-                }
-            }
-
-            const conn = this.session.peer.connect(other.id);
-            conn.on("open", () => {
-                conn.send(<IPacket>{
-                    sender: this._me!,
-                    name, payload
-                });
-                conn.close();
-                resolve();
+        const conn = peer.connect(id);
+        conn.on("open", () => {
+            conn.send(<IPacket>{
+                sender: this._me!,
+                name, payload
             });
+        });
+        conn.on("error", args => {
+            console.log(args);
         });
     }
 

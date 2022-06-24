@@ -30,7 +30,7 @@ function disableMenu() {
     }, {capture: true})
 
     window.onbeforeunload = function () {
-        EventBus.$emit("closing");
+       EventBus.$emit("closing");
     };
 }
 

@@ -7,6 +7,7 @@
     </Tabs>
     <div class="flex-grow-1" style="width: 100%; height: calc(100vh - 4.2rem - 3px); overflow-x: hidden; overflow-y: auto">
       <Characters v-if="selectedTab === 0"/>
+      <VicarPlay v-if="selectedTab === 1"/>
       <Settings v-else-if="selectedTab === 2"/>
     </div>
   </div>
@@ -19,9 +20,10 @@ import Tab from "@/components/tabs/Tab.vue";
 import Settings from "@/components/main/Settings.vue";
 import Spinner from "@/components/spinners/Spinner.vue";
 import Characters from "@/components/main/characters/Characters.vue";
+import VicarPlay from "@/components/main/play/VicarPlay.vue";
 
 @Component({
-  components: {Characters, Spinner, Settings, Tab, Tabs}
+  components: {VicarPlay, Characters, Spinner, Settings, Tab, Tabs}
 })
 export default class MainView extends Vue {
 
