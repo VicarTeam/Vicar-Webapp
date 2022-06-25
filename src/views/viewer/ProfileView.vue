@@ -2,8 +2,8 @@
   <div class="profile-view">
     <input type="file" ref="avatarUploader" @change="onAvatarUpload" accept="image/png, image/gif, image/jpeg" hidden/>
     <div class="meta">
-      <Avatar :src="editingCharacter.avatar" style="width: 12rem; height: 12rem; cursor: pointer; flex-shrink: 0"
-              @click="avatarUploader.click()"/>
+      <Avatar :src="editingCharacter.avatar" style="width: 12rem; height: 12rem; cursor: pointer; flex-shrink: 0" :draggable="true"
+              @click="changeAvatar($event)"/>
       <div class="info">
         <div class="name" v-if="!isEditName">
           {{ editingCharacter.name }}
@@ -205,6 +205,12 @@ export default class ProfileView extends Vue {
         this.$forceUpdate();
       };
       reader.readAsDataURL(file);
+    }
+  }
+
+  private changeAvatar(e: MouseEvent) {
+    if (!e.shiftKey) {
+      this.avatarUploader.click();
     }
   }
 
