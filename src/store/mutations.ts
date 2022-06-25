@@ -12,15 +12,6 @@ export const mutations: MutationTree<State> = {
     setDraggingCharacter(state, char?: ICharacter) {
         state.draggingCharacter = char;
     },
-    addCharToEditorHistory(state, char: ICharacter) {
-        state.editorCharHistory.push({...char});
-    },
-    clearCharHistory(state) {
-        state.editorCharHistory = [];
-    },
-    setCharHistory(state, history: ICharacter[]) {
-        state.editorCharHistory = history;
-    },
     setLevelMode(state, mode: boolean) {
         state.isLevelMode = mode;
     }

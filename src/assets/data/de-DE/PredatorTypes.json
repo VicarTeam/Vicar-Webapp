@@ -509,6 +509,13 @@
             },
             {
               "id": 6
+            },
+            {
+              "id": 11,
+              "restriction": {
+                "type": "book_activated",
+                "data": [3, 5]
+              }
             }
           ]
         }

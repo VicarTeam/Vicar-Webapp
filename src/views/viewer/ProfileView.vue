@@ -2,8 +2,8 @@
   <div class="profile-view">
     <input type="file" ref="avatarUploader" @change="onAvatarUpload" accept="image/png, image/gif, image/jpeg" hidden/>
     <div class="meta">
-      <Avatar :src="editingCharacter.avatar" style="width: 12rem; height: 12rem; cursor: pointer; flex-shrink: 0"
-              @click="avatarUploader.click()"/>
+      <Avatar :src="editingCharacter.avatar" style="width: 12rem; height: 12rem; cursor: pointer; flex-shrink: 0" :draggable="true"
+              @click="changeAvatar($event)"/>
       <div class="info">
         <div class="name" v-if="!isEditName">
           {{ editingCharacter.name }}
@@ -38,13 +38,11 @@
           </div>
           <div class="stat">
             <b>{{ $t('character.health') }}:</b>
-            <Squares :max="10" :amount="editingCharacter.health" :margin-at="6"
-                     @click="v => editingCharacter.health = v === editingCharacter.health ? 0 : v"/>
+            <Damage prop-key="health"/>
           </div>
           <div class="stat">
             <b>{{ $t('character.willpower') }}:</b>
-            <Squares :max="10" :amount="editingCharacter.willpower" :margin-at="6"
-                     @click="v => editingCharacter.willpower = v === editingCharacter.willpower ? 0 : v"/>
+            <Damage prop-key="willpower"/>
           </div>
         </div>
         <div class="row">
@@ -54,8 +52,7 @@
           </div>
           <div class="stat">
             <b>{{ $t('character.humanity') }}:</b>
-            <Squares :max="10" :amount="editingCharacter.humanity" :margin-at="6"
-                     @click="v => editingCharacter.humanity = v === editingCharacter.humanity ? 0 : v"/>
+            <Humanity/>
           </div>
           <div class="stat">
             <b>{{ $t('character.hunger') }}:</b>
@@ -168,9 +165,14 @@ import {IBloodPotencyData} from "@/types/data";
 import DataManager from "@/libs/data-manager";
 import Col from "@/components/viewer/pdf/Col.vue";
 import Row from "@/components/viewer/pdf/Row.vue";
+import Humanity from "@/components/progress/tracker/Humanity.vue";
+import Damage from "@/components/progress/tracker/Damage.vue";
 
 @Component({
-  components: {BloodPotencyModal, LevelButton, TipButton, Tab, Tabs, Squares, IconButton, Bullet, Avatar, Row, Col}
+  components: {
+    Damage,
+    Humanity,
+    BloodPotencyModal, LevelButton, TipButton, Tab, Tabs, Squares, IconButton, Bullet, Avatar, Row, Col}
 })
 export default class ProfileView extends Vue {
 
@@ -203,6 +205,12 @@ export default class ProfileView extends Vue {
         this.$forceUpdate();
       };
       reader.readAsDataURL(file);
+    }
+  }
+
+  private changeAvatar(e: MouseEvent) {
+    if (!e.shiftKey) {
+      this.avatarUploader.click();
     }
   }
 

@@ -82,7 +82,7 @@ export default class ChoosePredatorTypeView extends Vue {
 
   private selectType() {
     this.ptActions = [];
-    this.characterCache = {...this.editingCharacter!};
+    this.characterCache = JSON.parse(JSON.stringify(this.editingCharacter!));
   }
 
   private areActionsReady() {

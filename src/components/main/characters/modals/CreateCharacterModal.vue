@@ -58,6 +58,7 @@ import {Component, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {DefaultCharacter, Generation, ICharacter, ICharacterDirectory, Sex} from "@/types/models";
 import {Mutation} from "vuex-class";
+import {EditorHistory} from "@/libs/editor-history";
 
 @Component({
   components: {Modal}
@@ -69,9 +70,6 @@ export default class CreateCharacterModal extends Vue {
 
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character?: ICharacter) => void;
-
-  @Mutation("addCharToEditorHistory")
-  private addCharToEditorHistory!: (character: ICharacter) => void;
 
   @Mutation("setDirectoryForCharCreation")
   private setDirectoryForCharCreation!: (dir?: ICharacterDirectory) => void;
@@ -119,7 +117,7 @@ export default class CreateCharacterModal extends Vue {
     this.setDirectoryForCharCreation(this.dir);
 
     this.applyEra(char);
-    this.addCharToEditorHistory(char);
+    EditorHistory.push(char);
     this.setEditingCharacter(char);
     this.$router.push({name: 'editor-clan'});
 

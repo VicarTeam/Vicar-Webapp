@@ -1,22 +1,32 @@
 <template>
   <div class="form-group mb-0">
     <label class="required">{{$t('editor.predator.actions.additional_specialization')}}:</label>
-    <select v-model="selected" class="form-control" @change="onSelectionChange">
-      <option v-for="(c, i) in data.choices" :key="i" :value="c">{{$t('data.skill.' + getSkillKey(c))}}</option>
-    </select>
+    <div style="width: 100%; display: flex; gap: 1rem; justify-content: center; align-items: center">
+      <select v-model="selected" class="form-control" @change="onSelectionChange">
+        <option v-for="(c, i) in data.choices" :key="i" :value="c">{{$t('data.skill.' + getSkillKey(c))}}</option>
+      </select>
+      <TipButton v-if="selected" :override="true" @click="skillInfoModal.showModal(getSkillKey(selected))"/>
+    </div>
     <input class="form-control mt-10" v-if="selected.trim().length > 0" v-model="input" :placeholder="getPlaceholder(selected)" :disabled="!needsInput"/>
+
+    <SkillInfoModal ref="skillInfoModal"/>
   </div>
 </template>
 
 <script lang="ts">
-import {Component} from "vue-property-decorator";
+import {Component, Ref} from "vue-property-decorator";
 import PTActionBase from "@/components/editor/actions/PTActionBase";
 import {ICharacter, SkillKeys} from "@/types/models";
+import SkillInfoModal from "@/components/editor/modals/SkillInfoModal.vue";
+import TipButton from "@/components/editor/TipButton.vue";
 
 @Component({
-  components: {}
+  components: {TipButton, SkillInfoModal}
 })
 export default class AdditionalSpecializationAction extends PTActionBase<{choices: string[]}> {
+
+  @Ref("skillInfoModal")
+  private skillInfoModal!: SkillInfoModal;
 
   private selected: string = "";
   private input: string = "";

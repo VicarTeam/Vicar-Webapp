@@ -86,7 +86,7 @@ export default class ChooseSkillsView extends Vue {
     ];
     this.freeSpecializationKey = null;
     this.freeSpecializationName = "";
-    this.characterCache = {...this.editingCharacter!};
+    this.characterCache = JSON.parse(JSON.stringify(this.editingCharacter!));
   }
 
   private getAvailablePoints(): number[] {

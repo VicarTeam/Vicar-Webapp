@@ -14,10 +14,11 @@
 import {Component, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {State} from "vuex-class";
-import {IAttributeData, ICharacter} from "@/types/models";
+import {AttributeKeys, IAttributeData, ICharacter} from "@/types/models";
 import {levelResolver} from "@/libs/resolvers/level-resolver";
 import Bullet from "@/components/Bullet.vue";
 import CharacterStorage from "@/libs/io/character-storage";
+import DataManager from "@/libs/data-manager";
 
 @Component({
   components: {Bullet, Modal}
@@ -42,6 +43,17 @@ export default class AttributeModal extends Vue {
 
     this.editingCharacter.exp -= this.neededExp;
     this.data.value++;
+
+    if (this.data.key === AttributeKeys.Stamina) {
+      this.editingCharacter.health = this.data.value + 3;
+    }
+
+    if (this.data.key === AttributeKeys.Composure) {
+      this.editingCharacter.willpower = this.data.value + DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Resolve);
+    } else if (this.data.key === AttributeKeys.Resolve) {
+      this.editingCharacter.willpower = this.data.value + DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Composure);
+    }
+
     CharacterStorage.saveCharacter(this.editingCharacter);
     this.show = false;
   }

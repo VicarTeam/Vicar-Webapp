@@ -1,11 +1,14 @@
 <template>
   <div class="squares">
-    <span v-for="i in dots" class="square" :class="{'active': i <= amount, 'ml-10': isMargin(i)}" @click="$emit('click', i)"></span>
+    <span v-for="i in dots" class="square" :class="{'active': i <= amount, 'ml-10': isMargin(i)}" @click="onClick(i)"></span>
   </div>
 </template>
 
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
+import CharacterStorage from "@/libs/io/character-storage";
+import {State} from "vuex-class";
+import {ICharacter} from "@/types/models";
 
 @Component({
   components: {}
@@ -21,6 +24,9 @@ export default class Squares extends Vue {
   @Prop({default: -1})
   private marginAt!: number;
 
+  @State("editingCharacter")
+  private editingCharacter!: ICharacter;
+
   private isMargin(i: number): boolean {
     return i === this.marginAt;
   }
@@ -31,6 +37,11 @@ export default class Squares extends Vue {
       dots.push(i);
     }
     return dots;
+  }
+
+  private onClick(i: number) {
+    this.$emit('click', i);
+    CharacterStorage.saveCharacter(this.editingCharacter);
   }
 }
 </script>

@@ -18,6 +18,7 @@ import {Action, Mutation, State} from "vuex-class";
 import {AttributeKeys, ICharacter, ICharacterDirectory} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
 import DataManager from "@/libs/data-manager";
+import {EditorHistory} from "@/libs/editor-history";
 
 @Component({
   components: {}
@@ -51,20 +52,11 @@ export default class EditorForm extends Vue {
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character?: ICharacter) => void;
 
-  @Mutation("addCharToEditorHistory")
-  private addCharToEditorHistory!: (character: ICharacter) => void;
-
-  @Mutation("clearCharHistory")
-  private clearCharHistory!: () => void;
-
   @Mutation("setLevelMode")
   private setLevelMode!: (mode: boolean) => void;
 
   @Mutation("setDirectoryForCharCreation")
   private setDirectoryForCharCreation!: (dir?: ICharacterDirectory) => void;
-
-  @Action("popEditorCharHistory")
-  private popEditorCharHistory!: () => ICharacter;
 
   private next() {
     if (!this.editingCharacter || !this.canGoNext) {
@@ -72,7 +64,7 @@ export default class EditorForm extends Vue {
     }
     if (!this.isFinish) {
       const n = () => {
-        this.addCharToEditorHistory(this.fallbackHistoryChar ? this.fallbackHistoryChar : this.editingCharacter!);
+        EditorHistory.push(!!this.fallbackHistoryChar ? this.fallbackHistoryChar : this.editingCharacter!);
         this.$router.push({name: this.nextStep});
       };
       const event = {next: n, cancel: false};
@@ -96,7 +88,7 @@ export default class EditorForm extends Vue {
             + DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Resolve);
         CharacterStorage.addCharacter(this.editingCharacter);
         this.setLevelMode(false);
-        this.clearCharHistory();
+        EditorHistory.clear();
         this.setDirectoryForCharCreation();
         this.$router.push({name: 'viewer'});
       };
@@ -110,12 +102,12 @@ export default class EditorForm extends Vue {
 
   private back() {
     if (!this.isCancel) {
-      this.popEditorCharHistory();
+      this.setEditingCharacter(EditorHistory.pop());
       this.$router.back();
     } else {
       this.setDirectoryForCharCreation();
       this.setEditingCharacter();
-      this.clearCharHistory();
+      EditorHistory.clear();
       this.$router.push({name: 'main'});
     }
   }

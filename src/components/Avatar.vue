@@ -1,5 +1,5 @@
 <template>
-  <img :src="realSrc" class="avatar" v-bind="$attrs" @click="$emit('click')"/>
+  <img :src="realSrc" class="avatar" v-bind="$attrs" @click="$emit('click', $event)" :class="{'not-draggable': !draggable}"/>
 </template>
 
 <script lang="ts">
@@ -12,6 +12,9 @@ export default class Avatar extends Vue {
 
   @Prop({required: true})
   private src!: string;
+
+  @Prop({default: false})
+  private draggable!: boolean;
 
   private get realSrc(): string {
     if (!this.src || this.src.trim().length === 0) {
@@ -26,6 +29,8 @@ export default class Avatar extends Vue {
 <style scoped lang="scss">
 .avatar {
   border-radius: 50%;
-  -webkit-user-drag: none;
+  &.not-draggable {
+    -webkit-user-drag: none;
+  }
 }
 </style>

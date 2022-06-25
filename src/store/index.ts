@@ -13,7 +13,6 @@ const vuexLocal = new VuexPersistence<State>({
 
 export const state: State = {
     editingCharacter: undefined,
-    editorCharHistory: [],
     isLevelMode: false,
     directoryForCharCreation: undefined,
     draggingCharacter: undefined
