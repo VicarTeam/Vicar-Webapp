@@ -80,6 +80,12 @@ export enum Generation {
     Older = "older"
 }
 
+export enum DamageType {
+    None = "none",
+    Superficial = "superficial",
+    Heavy = "heavy"
+}
+
 export const SortedSkillsAndAttribute = {
     [CategoryKeys.Physical]: {
         attributes: [AttributeKeys.Strength, AttributeKeys.Dexterity, AttributeKeys.Stamina],
@@ -218,9 +224,12 @@ export interface ICharacter {
     generationEra: Generation;
     generation: number;
     health: number;
+    healthDamage?: DamageType[];
     willpower: number;
+    willpowerDamage?: DamageType[];
     hunger: number;
     humanity: number;
+    stains?: number;
     resonance: string;
     bloodPotency: number;
     skillspread: ISkillSpreadType;
@@ -251,6 +260,14 @@ export interface ISkillData {
     value: number;
     specialization: string[];
 }
+
+export const DefaultDamageArray: () => DamageType[] = () => {
+    const arr: DamageType[] = [];
+    for (let i = 0; i < 10; i++) {
+        arr.push(DamageType.None);
+    }
+    return arr;
+};
 
 export const DefaultCharacter: () => ICharacter = () => ({
     id: "",
@@ -285,14 +302,17 @@ export const DefaultCharacter: () => ICharacter = () => ({
     generationEra: Generation.Children,
     generation: 0,
     health: 0,
+    healthDamage: DefaultDamageArray(),
     humanity: 7,
     hunger: 0,
     name: "",
+    stains: 0,
     predatorType: undefined!,
     skillspread: undefined!,
     resonance: "",
     sire: "",
     willpower: 0,
+    willpowerDamage: DefaultDamageArray(),
     sex: Sex.Divers,
     exp: 0,
     merits: {
