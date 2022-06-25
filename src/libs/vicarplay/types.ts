@@ -3,16 +3,18 @@ import Peer from "peerjs";
 export enum MessageType {
     BroadcastMessage,
     PrivateMessage,
-    BroadcastRoll,
-    PrivateRoll,
+    BroadcastCommand,
+    PrivateCommand,
+    SecretCommand,
     BroadcastAvatar,
     PrivateAvatar,
-    Status
+    Status,
+    Raw
 }
 
 export interface IMessage {
     type: MessageType;
-    content: string;
+    content: any;
     sender: IPlayer;
     isPrivate: boolean;
 }

@@ -2,18 +2,28 @@
   <div class="playchat">
     <div class="history">
       <div class="message" v-for="(m, i) in vicarPlay.getChatMessages()" :key="i" :class="{'host': m.sender.isHost, 'private': m.isPrivate}">
-        <span v-if="m.type !== MessageType.PrivateAvatar && m.type !== MessageType.BroadcastAvatar && m.type !== MessageType.Status">
+        <span v-if="isNormalMessage(m)">
           <span v-if="m.sender.isHost">(GM) </span>{{m.sender.name}} &dash; {{m.content}}
+        </span>
+        <span v-else-if="(m.type === MessageType.BroadcastCommand || m.type === MessageType.PrivateCommand) && m.content['resultType'] === 'hungercheck'">
+          <span v-if="m.sender.isHost">(GM) </span>{{m.sender.name}} &dash; {{$t('play.chat.hungercheck' + (m.content['isDuel'] ? '.against' : ''), {status: m.content['status'], success: m.content['success'], diff: m.content['diff']})}}
+          <span v-if="m.content['rolls'].length > 0 || m.content['hunger'].length > 0">(<span class="normal">{{m.content['rolls']}}</span><span class="hunger">{{m.content['hunger']}}</span>)</span>
         </span>
         <div v-else-if="m.type === MessageType.Status" class="status">
           <span class="border"></span>
           <small class="content">{{$t('play.status.' + m.content, {name: m.sender.name})}}</small>
           <span class="border"></span>
         </div>
-        <div v-else class="avatar" @click="avatarZoomModal.showModal(m.content)" :class="{'host': m.sender.isHost, 'private': m.isPrivate}">
+        <div v-else-if="m.type === MessageType.SecretCommand" class="secret-command">
+          <i><b>{{$t('play.chat.secret')}} | </b>{{m.content}}</i>
+        </div>
+        <div v-else-if="m.type === MessageType.PrivateAvatar || m.type === MessageType.BroadcastAvatar" class="avatar" @click="avatarZoomModal.showModal(m.content)" :class="{'host': m.sender.isHost, 'private': m.isPrivate}">
           <span><span v-if="m.sender.isHost">(GM) </span>{{m.sender.name}}:</span>
           <img :src="m.content"/>
         </div>
+        <small v-else-if="m.type === MessageType.Raw">
+          <i>{{m.content}}</i>
+        </small>
       </div>
     </div>
     <div class="inputs">
@@ -43,6 +53,9 @@ import {Component, Ref, Vue} from "vue-property-decorator";
 import {vicarPlay} from "@/libs/vicarplay/vicar-play";
 import {IHostedSession, IMessage, IPlayer, MessageType} from "@/libs/vicarplay/types";
 import AvatarZoomModal from "@/components/main/play/modals/AvatarZoomModal.vue";
+import {commandHandler} from "@/libs/vicarplay/commands";
+import {State} from "vuex-class";
+import {ICharacter} from "@/types/models";
 
 @Component({
   components: {AvatarZoomModal}
@@ -54,6 +67,9 @@ export default class PlayChat extends Vue {
 
   @Ref("avatarZoomModal")
   private avatarZoomModal!: AvatarZoomModal;
+
+  @State("editingCharacter")
+  private editingCharacter!: ICharacter|undefined;
 
   private writingMessage: string = "";
 
@@ -69,6 +85,34 @@ export default class PlayChat extends Vue {
       sender: vicarPlay.me,
       isPrivate: receiver !== undefined
     };
+
+    if (this.writingMessage.startsWith("/")) {
+        const result = commandHandler.handle(this.editingCharacter, this.writingMessage.substring(1));
+        if (!result) {
+          return;
+        }
+
+        const [data, secret] = result;
+        if (typeof data !== 'string' && data["resultType"] === 'help') {
+          const msgs: IMessage[] = data["messages"];
+          msgs.forEach(msg => {
+            vicarPlay.getChatMessages().push(msg);
+          });
+
+          this.writingMessage = "";
+          return;
+        }
+
+        message.content = data;
+
+        if (secret) {
+          message.type = MessageType.SecretCommand;
+          vicarPlay.getChatMessages().push(message);
+          return;
+        }
+
+        message.type = vicarPlay.chatSendTo === "@all" ? MessageType.BroadcastCommand : MessageType.PrivateCommand;
+    }
 
     vicarPlay.sendChatMessage(message, receiver);
     this.writingMessage = "";
@@ -87,6 +131,13 @@ export default class PlayChat extends Vue {
       }
       return 0;
     });
+  }
+
+  private isNormalMessage(m: IMessage): boolean {
+    if (m.type === MessageType.PrivateCommand || m.type === MessageType.BroadcastCommand) {
+      return typeof m.content === "string";
+    }
+    return m.type !== MessageType.PrivateAvatar && m.type !== MessageType.BroadcastAvatar && m.type !== MessageType.Status && m.type !== MessageType.Raw && m.type !== MessageType.SecretCommand;
   }
 }
 </script>
@@ -149,6 +200,12 @@ export default class PlayChat extends Vue {
           color: rgba(255, 255, 255, 0.5);
           margin: 0;
         }
+      }
+      .normal {
+        color: white;
+      }
+      .hunger {
+        color: red;
       }
     }
   }
