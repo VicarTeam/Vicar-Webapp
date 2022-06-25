@@ -96,23 +96,5 @@ export default class PlayPlayers extends Vue {
       flex-shrink: 0;
     }
   }
-  .iconbtn {
-    border-radius: 3px;
-    padding: 0.5rem;
-    display: flex;
-    font-size: 1.2rem;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.15);
-    }
-    &:active {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-    &.active {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-  }
 }
 </style>

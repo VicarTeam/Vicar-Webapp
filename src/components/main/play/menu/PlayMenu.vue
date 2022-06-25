@@ -1,6 +1,6 @@
 <template>
   <interact v-if="vicarPlay.isRunning" class="playmenu card" resizable :resizeOption="resizeOptions" @resizemove="resizeMove"
-            :style="{'width': currentWidth + 'px', 'height': currentHeight + 'px'}">
+            :style="{'width': currentWidth + 'px', 'height': currentHeight + 'px'}" :class="{'opaque': opaque}">
     <b class="title">{{vicarPlay.session.name}}</b>
     <div class="content">
       <component :is="tab"/>
@@ -8,6 +8,10 @@
     <div class="footer">
       <MenuTab v-if="vicarPlay.session.isHost" icon="fa-users" tab="PlayPlayers" v-model="tab"/>
       <MenuTab icon="fa-message" tab="PlayChat" v-model="tab"/>
+
+      <div class="iconbtn" style="pointer-events: auto; margin-top: 0.5rem; margin-left: auto" @click="opaque = !opaque">
+        <i class="fa-solid" :class="!opaque ? 'fa-eye-slash' : 'fa-eye'"></i>
+      </div>
     </div>
   </interact>
 </template>
@@ -29,6 +33,7 @@ export default class PlayMenu extends Vue {
   private currentWidth: number = 500;
   private currentHeight: number = 600;
   private tab: string = "";
+  private opaque: boolean = false;
 
   mounted() {
     this.currentWidth = parseInt(localStorage.getItem("play:width") || "500");
@@ -61,6 +66,10 @@ export default class PlayMenu extends Vue {
   margin: 0;
   display: flex;
   flex-direction: column;
+  &.opaque {
+    opacity: 0.2;
+    pointer-events: none;
+  }
   .title {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -78,6 +87,7 @@ export default class PlayMenu extends Vue {
     overflow-y: auto;
   }
   .footer {
+    position: relative;
     display: flex;
     flex-shrink: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
