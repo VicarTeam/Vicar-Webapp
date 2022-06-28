@@ -41,7 +41,7 @@ enum CheckStatus {
 class CommandHandler {
 
     public handle(char: ICharacter|undefined, line: string): [any, boolean]|undefined {
-        const parts = line.split(" ");
+        const parts = line.split("\n").join(" ").trim().split(" ");
         const command = parts[0];
         const input = parts.slice(1).join(" ");
 

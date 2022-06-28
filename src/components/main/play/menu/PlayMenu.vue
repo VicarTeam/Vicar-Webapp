@@ -1,6 +1,8 @@
 <template>
-  <interact v-if="vicarPlay.isRunning" class="playmenu card" resizable :resizeOption="resizeOptions" @resizemove="resizeMove"
-            :style="{'width': currentWidth + 'px', 'height': currentHeight + 'px'}" :class="{'opaque': opaque}">
+  <interact v-if="vicarPlay.isRunning" class="playmenu card"
+            resizable :resizeOption="resizeOptions" @resizemove="resizeMove"
+            :draggable="true" :dragOption="dragOptions" @dragmove="dragMove"
+            :style="{'width': currentWidth + 'px', 'height': currentHeight + 'px', transform: `translate(${currentX}px, ${currentY}px)`}" :class="{'opaque': opaque}">
     <b class="title">{{vicarPlay.session.name}}</b>
     <div class="content">
       <component :is="tab"/>
@@ -17,42 +19,73 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Inject, Vue} from "vue-property-decorator";
 import {vicarPlay} from "@/libs/vicarplay/vicar-play";
 import MenuTab from "@/components/main/play/menu/MenuTab.vue";
 import PlayChat from "@/components/main/play/menu/components/PlayChat.vue";
 import PlayPlayers from "@/components/main/play/menu/components/PlayPlayers.vue";
 import IconButton from "@/components/IconButton.vue";
+import interact from "interactjs";
 
 @Component({
   components: {IconButton, PlayPlayers, PlayChat, MenuTab}
 })
 export default class PlayMenu extends Vue {
 
-  vicarPlay = vicarPlay;
+  private vicarPlay = vicarPlay;
   private currentWidth: number = 500;
   private currentHeight: number = 600;
+  private currentX: number = 0;
+  private currentY: number = 0;
   private tab: string = "";
   private opaque: boolean = false;
 
   mounted() {
     this.currentWidth = parseInt(localStorage.getItem("play:width") || "500");
     this.currentHeight = parseInt(localStorage.getItem("play:height") || "600");
+    this.currentX = parseInt(localStorage.getItem("play:x") || "0");
+    this.currentY = parseInt(localStorage.getItem("play:y") || "0");
     this.tab = localStorage.getItem("play:tab") || "PlayChat";
   }
 
   private get resizeOptions() {
     return {
-      edges: { left: true, right: false, bottom: true, top: false }
+      edges: { left: true, right: true, bottom: true, top: true }
     };
+  }
+
+  private get dragOptions() {
+    return {
+      modifiers: [
+          interact.modifiers.restrictRect({
+            restriction: this.getContentWrapper(),
+            endOnly: true
+          })
+      ]
+    };
+  }
+
+  private dragMove(event: any) {
+    this.currentX += event.dx;
+    this.currentY += event.dy;
+    localStorage.setItem("play:x", this.currentX.toString());
+    localStorage.setItem("play:y", this.currentY.toString());
   }
 
   private resizeMove(event: any) {
     this.currentWidth = event.rect.width;
     this.currentHeight = event.rect.height;
+    this.currentX += event.deltaRect.left;
+    this.currentY += event.deltaRect.top;
+
     localStorage.setItem("play:width", this.currentWidth.toString());
     localStorage.setItem("play:height", this.currentHeight.toString());
+    localStorage.setItem("play:x", this.currentX.toString());
+    localStorage.setItem("play:y", this.currentY.toString());
   }
+
+  @Inject("get-content-wrapper")
+  private getContentWrapper!: () => HTMLDivElement;
 }
 </script>
 

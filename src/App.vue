@@ -1,6 +1,6 @@
 <template>
   <div class="page-wrapper">
-    <div class="content-wrapper">
+    <div class="content-wrapper" ref="contentWrapper">
       <router-view/>
     </div>
 
@@ -22,12 +22,20 @@ export default class App extends Vue {
 
   private vicarPlay = vicarPlay;
 
+  @Ref("contentWrapper")
+  private contentWrapper!: HTMLDivElement;
+
   @Ref("tipModal")
   private tipModal!: TipModal;
 
   @Provide("show-tip")
   private showTip(content: any, title?: any) {
     this.tipModal.showModal(title, content);
+  }
+
+  @Provide("get-content-wrapper")
+  private getContentWrapper() {
+    return this.contentWrapper;
   }
 }
 </script>

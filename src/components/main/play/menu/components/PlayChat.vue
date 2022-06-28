@@ -27,7 +27,17 @@
       </div>
     </div>
     <div class="inputs">
-      <textarea class="form-control" v-model="writingMessage" @keypress.enter="sendMessage"></textarea>
+      <div class="ta-wrapper">
+        <textarea draggable="true" class="form-control" v-model="writingMessage" @keypress.enter="sendMessage"
+                  @drop="onSendingImageDrop($event)" :disabled="sendingImage">
+        </textarea>
+        <div v-if="sendingImage" class="ta-image">
+          <img :src="sendingImage"/>
+          <div class="remove">
+            <IconButton icon="fa-trash" @click="sendingImage = null"/>
+          </div>
+        </div>
+      </div>
       <div class="actions">
         <div class="row" style="flex-shrink: 0">
           <select class="form-control" v-model="vicarPlay.chatSendTo">
@@ -56,9 +66,10 @@ import AvatarZoomModal from "@/components/main/play/modals/AvatarZoomModal.vue";
 import {commandHandler} from "@/libs/vicarplay/commands";
 import {State} from "vuex-class";
 import {ICharacter} from "@/types/models";
+import IconButton from "@/components/IconButton.vue";
 
 @Component({
-  components: {AvatarZoomModal}
+  components: {IconButton, AvatarZoomModal}
 })
 export default class PlayChat extends Vue {
 
@@ -72,13 +83,25 @@ export default class PlayChat extends Vue {
   private editingCharacter!: ICharacter|undefined;
 
   private writingMessage: string = "";
+  private sendingImage: string|null = null;
 
   private sendMessage() {
+    const receiver = vicarPlay.getChatReceiver();
+    if (this.sendingImage !== null) {
+      vicarPlay.sendChatMessage({
+        type: vicarPlay.chatSendTo === "@all" ? MessageType.BroadcastAvatar : MessageType.PrivateAvatar,
+        content: this.sendingImage,
+        sender: vicarPlay.me,
+        isPrivate: receiver !== undefined
+      }, receiver);
+      this.sendingImage = null;
+      return;
+    }
+
     if (this.writingMessage.trim().length <= 0) {
       return;
     }
 
-    const receiver = vicarPlay.getChatReceiver();
     const message: IMessage = {
       type: vicarPlay.chatSendTo === "@all" ? MessageType.BroadcastMessage : MessageType.PrivateMessage,
       content: this.writingMessage,
@@ -138,6 +161,24 @@ export default class PlayChat extends Vue {
       return typeof m.content === "string";
     }
     return m.type !== MessageType.PrivateAvatar && m.type !== MessageType.BroadcastAvatar && m.type !== MessageType.Status && m.type !== MessageType.Raw && m.type !== MessageType.SecretCommand;
+  }
+
+  private onSendingImageDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (event.dataTransfer) {
+      if (event.dataTransfer.files.length > 0 && event.dataTransfer.files[0].type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = (e: ProgressEvent) => {
+          if (e.target) {
+            this.writingMessage = "";
+            this.sendingImage = (e.target as FileReader).result as string;
+          }
+        };
+        reader.readAsDataURL(event.dataTransfer.files[0]);
+      }
+    }
   }
 }
 </script>
@@ -215,14 +256,47 @@ export default class PlayChat extends Vue {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
-    textarea {
+    .ta-wrapper {
+      position: relative;
       flex-grow: 1;
-      resize: none;
-      &:focus {
-        outline: none !important;
-        border: none !important;
-        -webkit-box-shadow: none;
-        box-shadow: none;
+      textarea {
+        resize: none;
+        &:focus {
+          outline: none !important;
+          border: none !important;
+          -webkit-box-shadow: none;
+          box-shadow: none;
+        }
+      }
+      .ta-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        img {
+          height: calc(100% - 1rem);
+          -webkit-user-drag: none;
+        }
+        .remove {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          display: none;
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+        &:hover .remove {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       }
     }
     .actions {
