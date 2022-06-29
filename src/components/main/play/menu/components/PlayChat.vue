@@ -54,16 +54,17 @@
       </div>
     </div>
 
+    <input hidden type="file" accept="image/png, image/gif, image/jpeg" ref="imageUploader" @change="onImageUploader($event)"/>
     <AvatarZoomModal ref="avatarZoomModal"/>
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Ref, Vue} from "vue-property-decorator";
+import {Component, Provide, Ref, Vue} from "vue-property-decorator";
 import {vicarPlay} from "@/libs/vicarplay/vicar-play";
 import {IHostedSession, IMessage, IPlayer, MessageType} from "@/libs/vicarplay/types";
 import AvatarZoomModal from "@/components/main/play/modals/AvatarZoomModal.vue";
-import {commandHandler} from "@/libs/vicarplay/commands";
+import {CommandHandler, commandHandler} from "@/libs/vicarplay/commands";
 import {State} from "vuex-class";
 import {ICharacter} from "@/types/models";
 import IconButton from "@/components/IconButton.vue";
@@ -79,11 +80,19 @@ export default class PlayChat extends Vue {
   @Ref("avatarZoomModal")
   private avatarZoomModal!: AvatarZoomModal;
 
+  @Ref("imageUploader")
+  private imageUploader!: HTMLInputElement;
+
   @State("editingCharacter")
   private editingCharacter!: ICharacter|undefined;
 
   private writingMessage: string = "";
   private sendingImage: string|null = null;
+  private imageUploadChange: ((img: string) => void)|null = null;
+
+  mounted() {
+    CommandHandler.uploadImage = this.uploadImage;
+  }
 
   private sendMessage() {
     const receiver = vicarPlay.getChatReceiver();
@@ -112,6 +121,7 @@ export default class PlayChat extends Vue {
     if (this.writingMessage.trim().startsWith("/")) {
         const result = commandHandler.handle(this.editingCharacter, this.writingMessage.trim().substring(1));
         if (!result) {
+          this.writingMessage = "";
           return;
         }
 
@@ -179,6 +189,26 @@ export default class PlayChat extends Vue {
         reader.readAsDataURL(event.dataTransfer.files[0]);
       }
     }
+  }
+
+  private onImageUploader(e: Event) {
+    //@ts-ignore
+    const file = (e.target as HTMLInputElement).files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent) => {
+        if (this.imageUploadChange) {
+          this.imageUploadChange((e.target as FileReader).result as string);
+          this.imageUploadChange = null;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  private uploadImage(cb: (img: string) => void) {
+    this.imageUploadChange = cb;
+    this.imageUploader.click();
   }
 }
 </script>

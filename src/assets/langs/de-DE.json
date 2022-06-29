@@ -330,6 +330,7 @@
   "play.chat.help.check": "<Würfel> (<Schwierigkeit>) - Mache eine ganz normale Probe. Ist eine Schwierigkeit angegeben, wird gegen diese geprüft.",
   "play.chat.help.shungercheck": "<Würfel> (<Schwierigkeit>) - Mache eine Probe mit Einbeziehung des Hungers (nur möglich wenn Charakter gerade im Viewer angezeigt wird). Ist eine Schwierigkeit angegeben, wird gegen diese geprüft. Die anderen Spieler sehen das Ergebnis nicht!",
   "play.chat.help.hungercheck": "<Würfel> (<Schwierigkeit>) - Mache eine Probe mit Einbeziehung des Hungers (nur möglich wenn Charakter gerade im Viewer angezeigt wird). Ist eine Schwierigkeit angegeben, wird gegen diese geprüft.",
+  "play.chat.help.image": "(<Bild-URL>) - Sende ein Bild in den Chat.",
   "viewer.tab.traits": "Vorteile & Schwächen",
   "lexicon.toc.bloodpotency": "Blutmacht-Tabelle",
   "lexicon.toc.clans": "Clans",

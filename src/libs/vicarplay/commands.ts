@@ -1,6 +1,7 @@
 import {ICharacter} from "@/types/models";
 import {i18n} from "@/libs/i18n";
 import {IMessage, MessageType} from "@/libs/vicarplay/types";
+import {vicarPlay} from "@/libs/vicarplay/vicar-play";
 
 type Usage = {
     key: string;
@@ -38,7 +39,9 @@ enum CheckStatus {
     Failure = "failure"
 }
 
-class CommandHandler {
+export class CommandHandler {
+
+    public static uploadImage: ((cb: (img: string) => void) => void)|null = null;
 
     public handle(char: ICharacter|undefined, line: string): [any, boolean]|undefined {
         const parts = line.split("\n").join(" ").trim().split(" ");
@@ -264,6 +267,27 @@ class CommandHandler {
             hunger: hungerRolls.join(" "),
             diff, isDuel
         }];
+    }
+
+    @Command("image", "img", "i")
+    private image(char: ICharacter|undefined, input: string) {
+        const send = (img: string) => {
+            const receiver = vicarPlay.getChatReceiver();
+            vicarPlay.sendChatMessage({
+                type: vicarPlay.chatSendTo === "@all" ? MessageType.BroadcastAvatar : MessageType.PrivateAvatar,
+                content: img,
+                sender: vicarPlay.me,
+                isPrivate: receiver !== undefined
+            }, receiver);
+        };
+
+        if (!input || input.trim().length <= 0) {
+            if (CommandHandler.uploadImage) {
+                CommandHandler.uploadImage(send);
+            }
+        } else {
+            send(input);
+        }
     }
 }
 
