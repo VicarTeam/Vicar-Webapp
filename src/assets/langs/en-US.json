@@ -330,5 +330,11 @@
   "play.chat.help.scheck": "<Dice> (<Difficulty>) - Make a normal test. If a difficulty is given, it will be checked against it. The other players will not see the result!",
   "play.chat.help.check": "<Dice> (<Difficulty>) - Make a normal test. If a difficulty is given, it will be checked against it.",
   "play.chat.help.shungercheck": "<Dice> (<Difficulty>) - Make a test with the inclusion of hunger (only possible if character is currently displayed in the viewer). If a difficulty is given, it will be checked against it. The other players will not see the result!",
-  "play.chat.help.hungercheck": "<Dice> (<Difficulty>) - Make a test with the inclusion of hunger (only possible if character is currently displayed in the viewer). If a difficulty is given, it will be checked against it."
+  "play.chat.help.hungercheck": "<Dice> (<Difficulty>) - Make a test with the inclusion of hunger (only possible if character is currently displayed in the viewer). If a difficulty is given, it will be checked against it.",
+  "lexicon.toc.bloodpotency": "Blood Potency Table",
+  "lexicon.toc.clans": "Clans",
+  "lexicon.toc.clans.bane": "Bane",
+  "lexicon.toc.clans.disciplines": "Clan-Disciplines",
+  "lexicon.toc.disciplines": "Disciplines",
+  "lexicon.toc.disciplines.abilites": "Abilities"
 }
