@@ -115,22 +115,22 @@
     <div style="width: 100%; padding: 2rem; flex-direction: column; justify-content: center; align-items: center">
       <Row style="width: 100%">
         <Col style="width: calc(100%/3); justify-content: center; align-items: center">
-          <Row><b>{{$t('character.bloodpotency.spurt')}}</b>:</Row>
+          <Row><b>{{$t('character.bloodpotency.spurt')}}</b>: <TipButton :content="$t('character.bloodpotency.spurt.desc')"/></Row>
           <Row><small>{{getBloodPotency().bleedingSpurt}} {{$t('character.dice')}}</small></Row>
         </Col>
         <Col style="width: calc(100%/3); justify-content: center; align-items: center">
-          <Row><b>{{$t('character.bloodpotency.healing')}}</b>:</Row>
+          <Row><b>{{$t('character.bloodpotency.healing')}}</b>: <TipButton :content="$t('character.bloodpotency.healing.desc')"/></Row>
           <Row><small>{{getBloodPotency().healedDamage}} {{$t('character.simpledmg')}}</small></Row>
         </Col>
         <Col style="width: calc(100%/3); justify-content: center; align-items: center">
-          <Row><b>{{$t('character.bloodpotency.bonus')}}</b>:</Row>
+          <Row><b>{{$t('character.bloodpotency.bonus')}}</b>: <TipButton :content="$t('character.bloodpotency.bonus.desc')"/></Row>
           <Row><small>{{getBloodPotency().disciplineBonus}} {{$t('character.dice')}}</small></Row>
         </Col>
       </Row>
 
       <Row style="width: 100%; margin-top: 1rem">
         <Col style="width: calc(100%/3); justify-content: center; align-items: center">
-          <Row><b>{{$t('character.bloodpotency.rouserepeat')}}</b>:</Row>
+          <Row><b>{{$t('character.bloodpotency.rouserepeat')}}</b>: <TipButton :content="$t('character.bloodpotency.rouserepeat.desc')"/></Row>
           <Row><small>{{$t('character.bloodpotency.rouserepeat.val', {x: getBloodPotency().rouseRepeatDisciplineLevel})}}</small></Row>
         </Col>
         <Col style="width: calc(100%/3); justify-content: center; align-items: center">

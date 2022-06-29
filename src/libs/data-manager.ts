@@ -10,7 +10,7 @@ import {
 import {i18n} from "@/libs/i18n";
 import {
     DefaultTrait, IBloodPotencyData, IBloodRitual,
-    IDiscipline,
+    IDiscipline, IDisciplineAbility,
     IFlawChoice,
     IPredatorType,
     IRestrictionHolder,
@@ -78,6 +78,32 @@ export default class DataManager {
                 bloodPotencyTable, bloodRituals
             });
         }
+    }
+
+    public static normalBloodRitualsAsArray(): IBloodRitual[][] {
+        const arr: IBloodRitual[][] = [];
+        for (const ritual of DataManager.selectedLanguage.bloodRituals) {
+            const lvl = ritual.level - 1;
+            if (arr[lvl] === undefined) {
+                arr[lvl] = [];
+            }
+            arr[lvl].push(ritual);
+        }
+        return arr;
+    }
+
+    public static normalDisciplineAbilitiesAsArray(discipline: IDiscipline): IDisciplineAbility[][] {
+        const arr: IDisciplineAbility[][] = [];
+        for (let [level, abilites] of Object.entries(discipline.levels)) {
+            abilites.map(ability => {
+                const lvl = parseInt(level) - 1;
+                if (arr[lvl] === undefined) {
+                    arr[lvl] = [];
+                }
+                arr[lvl].push(ability);
+            });
+        }
+        return arr;
     }
 
     public static normalToLeveledAbilities(discipline: IDiscipline): ILeveledDisciplineAbility[] {
