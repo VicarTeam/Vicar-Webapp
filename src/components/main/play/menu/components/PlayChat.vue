@@ -201,6 +201,7 @@ export default class PlayChat extends Vue {
     overflow-y: auto;
     gap: 0.5rem;
     .message {
+      user-select: text;
       &.host {
         font-style: italic;
       }
@@ -260,6 +261,7 @@ export default class PlayChat extends Vue {
       position: relative;
       flex-grow: 1;
       textarea {
+        user-select: text;
         resize: none;
         &:focus {
           outline: none !important;

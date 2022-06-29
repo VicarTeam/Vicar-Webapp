@@ -1,7 +1,7 @@
 <template>
   <interact v-if="vicarPlay.isRunning" class="playmenu card"
             resizable :resizeOption="resizeOptions" @resizemove="resizeMove"
-            :draggable="true" :dragOption="dragOptions" @dragmove="dragMove"
+            :draggable="!locked" :dragOption="dragOptions" @dragmove="dragMove"
             :style="{'width': currentWidth + 'px', 'height': currentHeight + 'px', transform: `translate(${currentX}px, ${currentY}px)`}" :class="{'opaque': opaque}">
     <b class="title">{{vicarPlay.session.name}}</b>
     <div class="content">
@@ -11,7 +11,10 @@
       <MenuTab v-if="vicarPlay.session.isHost" icon="fa-users" tab="PlayPlayers" v-model="tab"/>
       <MenuTab icon="fa-message" tab="PlayChat" v-model="tab"/>
 
-      <div class="iconbtn" style="pointer-events: auto; margin-top: 0.5rem; margin-left: auto" @click="opaque = !opaque">
+      <div class="iconbtn" style="pointer-events: auto; margin-top: 0.5rem; margin-left: auto" @click="locked = !locked">
+        <i class="fa-solid" :class="!locked ? 'fa-lock' : 'fa-lock-open'"></i>
+      </div>
+      <div class="iconbtn" style="pointer-events: auto; margin-top: 0.5rem" @click="opaque = !opaque">
         <i class="fa-solid" :class="!opaque ? 'fa-eye-slash' : 'fa-eye'"></i>
       </div>
     </div>
@@ -39,6 +42,7 @@ export default class PlayMenu extends Vue {
   private currentY: number = 0;
   private tab: string = "";
   private opaque: boolean = false;
+  private locked: boolean = true;
 
   mounted() {
     this.currentWidth = parseInt(localStorage.getItem("play:width") || "500");
