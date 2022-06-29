@@ -5,7 +5,7 @@
 
       <div class="attribute" v-for="attr in cat.attributes">
         <LevelButton v-if="attr.value < 5" @click="levelAttributeModal.showModal(attr)"/>
-        <small class="name">{{$t('data.attribute.' + attr.key)}}</small>
+        <small class="name"><TipButton :content="$t('data.attribute.' + attr.key + '.desc')"/> {{$t('data.attribute.' + attr.key)}}</small>
         <Dots :amount="attr.value" :max="5"/>
       </div>
     </div>
@@ -21,9 +21,10 @@ import {ICharacter} from "@/types/models";
 import Dots from "@/components/progress/Dots.vue";
 import LevelButton from "@/components/viewer/LevelButton.vue";
 import AttributeModal from "@/components/viewer/modals/leveling/AttributeModal.vue";
+import TipButton from "@/components/editor/TipButton.vue";
 
 @Component({
-  components: {AttributeModal, LevelButton, Dots}
+  components: {AttributeModal, LevelButton, Dots, TipButton}
 })
 export default class AttributesView extends Vue {
 

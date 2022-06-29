@@ -7,7 +7,7 @@
         <LevelButton v-if="skill.value < 5" @click="levelSkillModal.showModal(skill)"/>
         <LevelButton @click="levelSpecializationModal.showModal(skill)" icon="fa-plus"/>
         <small class="name">
-          {{$t('data.skill.' + skill.key)}} <span style="color: #a6a6a6" v-if="hasSpecialization(skill)">(<i>{{skill.specialization.join(', ')}}</i>)</span>
+          <TipButton :content="$t('data.skill.' + skill.key + '.desc')"/> {{$t('data.skill.' + skill.key)}} <span style="color: #a6a6a6" v-if="hasSpecialization(skill)">(<i>{{skill.specialization.join(', ')}}</i>)</span>
         </small>
         <Dots :amount="skill.value" :max="5"/>
       </div>
@@ -26,9 +26,10 @@ import {ICharacter, ISkillData} from "@/types/models";
 import LevelButton from "@/components/viewer/LevelButton.vue";
 import SkillModal from "@/components/viewer/modals/leveling/SkillModal.vue";
 import NewSpecializationModal from "@/components/viewer/modals/leveling/NewSpecializationModal.vue";
+import TipButton from "@/components/editor/TipButton.vue";
 
 @Component({
-  components: {NewSpecializationModal, SkillModal, LevelButton, Dots}
+  components: {NewSpecializationModal, SkillModal, LevelButton, Dots, TipButton}
 })
 export default class SkillsView extends Vue {
 

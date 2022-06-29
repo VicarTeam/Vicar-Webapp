@@ -53,10 +53,6 @@ export default class Damage extends Vue {
   }
 
   private onClick(nr: number) {
-    if (this.isDisabled(nr)) {
-      return;
-    }
-
     const types = this.getTypes();
     types[nr - 1] = this.getNext(types[nr - 1]);
     this.$forceUpdate();
@@ -69,6 +65,8 @@ export default class Damage extends Vue {
       return DamageType.Superficial;
     } else if (type === DamageType.Superficial) {
       return DamageType.Heavy;
+    } else if (type === DamageType.Heavy) {
+      return DamageType.Full;
     }
     return DamageType.None;
   }
@@ -89,7 +87,9 @@ export default class Damage extends Vue {
     border: 1px solid var(--primary-color);
     &.disabled {
       opacity: 0.5;
-      cursor: not-allowed;
+    }
+    &.full {
+      background-color: var(--primary-color);
     }
     &.superficial {
       background: linear-gradient(to bottom left, transparent calc(50% - 2px), var(--primary-color) calc(50% - 1px), var(--primary-color) calc(50% + 1px), transparent calc(50% + 2px)) no-repeat 0px 0px / 100px 100px;

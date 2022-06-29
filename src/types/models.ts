@@ -83,7 +83,8 @@ export enum Generation {
 export enum DamageType {
     None = "none",
     Superficial = "superficial",
-    Heavy = "heavy"
+    Heavy = "heavy",
+    Full = "full"
 }
 
 export const SortedSkillsAndAttribute = {
