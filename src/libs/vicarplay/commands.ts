@@ -16,7 +16,7 @@ const Command = (...names: string[]) => {
     return (target: Object, propertyKey: string, descriptor: PropertyDescriptor) => {
         if (descriptor.value) {
             names.forEach(name => {
-                registeredCommands[name] = (char, input) => descriptor.value.call(target, char, input);
+                registeredCommands[name.toLowerCase()] = (char, input) => descriptor.value.call(target, char, input);
             });
             usages.push({
                 key: names[0],
@@ -42,7 +42,7 @@ class CommandHandler {
 
     public handle(char: ICharacter|undefined, line: string): [any, boolean]|undefined {
         const parts = line.split("\n").join(" ").trim().split(" ");
-        const command = parts[0];
+        const command = parts[0].trim().toLowerCase();
         const input = parts.slice(1).join(" ");
 
         if (registeredCommands[command]) {

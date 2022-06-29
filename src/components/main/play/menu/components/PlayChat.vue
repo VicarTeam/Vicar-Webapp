@@ -109,8 +109,8 @@ export default class PlayChat extends Vue {
       isPrivate: receiver !== undefined
     };
 
-    if (this.writingMessage.startsWith("/")) {
-        const result = commandHandler.handle(this.editingCharacter, this.writingMessage.substring(1));
+    if (this.writingMessage.trim().startsWith("/")) {
+        const result = commandHandler.handle(this.editingCharacter, this.writingMessage.trim().substring(1));
         if (!result) {
           return;
         }
