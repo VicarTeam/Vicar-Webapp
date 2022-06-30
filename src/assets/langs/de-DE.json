@@ -99,8 +99,8 @@
   "viewer.save": "Speichern",
   "viewer.mode.enable": "Modus: Vorschau",
   "viewer.mode.disable": "Modus: Leveln",
-  "viewer.modal.addexp": "Erfahrungspunkte hinzufügen",
-  "viewer.modal.addexp.btn": "Hinzufügen",
+  "viewer.modal.addexp": "Erfahrungspunkte ändern",
+  "viewer.modal.addexp.btn": "Ändern",
   "viewer.modal.level.costs": "Kosten: {xp} EXP",
   "viewer.modal.level.btn": "Abschließen",
   "viewer.modal.level.bloodpotency": "Blutmacht steigern",
@@ -355,5 +355,6 @@
   "play.voice.ts.password": "Query-Passwort",
   "play.voice.start": "Starten",
   "play.voice.stop": "Stoppen",
-  "play.history": "Zuletzt erstellte Sitzungen"
+  "play.history": "Zuletzt erstellte Sitzungen",
+  "play.history.date": "vom {date}"
 }

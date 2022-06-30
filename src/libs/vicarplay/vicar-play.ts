@@ -193,14 +193,14 @@ class VicarPlay {
         }
     }
 
-    public createSession(username: string, name: string, tsName: string, dcName: string): Promise<ISession> {
+    public createSession(username: string, name: string, tsName: string, dcName: string, integrationData: IVoiceIntegrationData|null = null): Promise<ISession> {
         return new Promise<ISession>((resolve, reject) => {
             if (this.isRunning) {
                 reject();
                 return;
             }
 
-            this.voiceIntegrationData = DefaultVoiceIntegration();
+            this.voiceIntegrationData = integrationData ?? DefaultVoiceIntegration();
 
             ackCallbacks = {};
 
@@ -309,11 +309,21 @@ class VicarPlay {
             }
 
             if (this.session.isHost) {
-                this.sessionHistory.push({
-                    name: this.session.name,
-                    voiceData: this.voiceIntegrationData,
-                    date: new Date()
-                });
+                const sessionHistory = this.sessionHistory.find(x => x.name === this.session.name);
+                if (sessionHistory) {
+                    sessionHistory.date = Date.now();
+                } else {
+                    this.sessionHistory.push({
+                        name: this.session.name,
+                        voiceData: this.voiceIntegrationData,
+                        date: Date.now()
+                    });
+                }
+
+                if (this.sessionHistory.length > 10) {
+                    this.sessionHistory.shift();
+                }
+
                 localStorage.setItem("sessionHistory", JSON.stringify(this.sessionHistory));
                 this.broadcast("session:closed");
             } else {

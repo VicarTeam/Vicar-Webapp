@@ -48,6 +48,6 @@ export interface IPacket {
 
 export interface ILastPlaySession {
     name: string;
-    date: Date;
+    date: number;
     voiceData: IVoiceIntegrationData;
 }

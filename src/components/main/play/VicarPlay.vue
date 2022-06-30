@@ -15,7 +15,9 @@
       </button>
     </div>
 
-    <div class="d-flex flex-column flex-grow-1" style="gap: 3rem">
+    <div class="d-flex flex-column flex-grow-1" style="gap: 1rem">
+      <b>{{$t('play.history')}}:</b>
+      <LastSession v-for="s in lastSessions" :session="s"/>
     </div>
 
     <CreateSessionModal ref="createSessionModal"/>
@@ -36,9 +38,10 @@ import Blur from "@/components/modal/Blur.vue";
 import WrappedSpinner from "@/components/spinners/WrappedSpinner.vue";
 import ConnectSessionModal from "@/components/main/play/modals/ConnectSessionModal.vue";
 import {vicarPlay} from "@/libs/vicarplay/vicar-play";
+import LastSession from "@/components/main/play/LastSession.vue";
 
 @Component({
-  components: {ConnectSessionModal, WrappedSpinner, Blur, CreateSessionModal}
+  components: {LastSession, ConnectSessionModal, WrappedSpinner, Blur, CreateSessionModal}
 })
 export default class VicarPlay extends Vue {
 
@@ -61,6 +64,16 @@ export default class VicarPlay extends Vue {
     this.username = localStorage.getItem("play:username") || "";
     this.tsName = localStorage.getItem("play:tsName") || "";
     this.discordName = localStorage.getItem("play:discordName") || "";
+  }
+
+  private get lastSessions() {
+    return [...vicarPlay.sessionHistory].sort((a, b) => {
+      if (!a.date || !b.date) {
+        return -1;
+      }
+
+      return b.date - a.date;
+    });
   }
 
   private saveUsername() {
@@ -91,6 +104,21 @@ export default class VicarPlay extends Vue {
   private toggleLoader(visible: boolean, text: string = "") {
     this.loadingText = text;
     this.loading = visible;
+  }
+
+  @Provide("play:get-username")
+  private getUsername() {
+    return this.username;
+  }
+
+  @Provide("play:get-dcname")
+  private getDcName() {
+    return this.discordName;
+  }
+
+  @Provide("play:get-tsname")
+  private getTsName() {
+    return this.tsName;
   }
 }
 </script>
