@@ -23,10 +23,14 @@ export default class CreateSessionModal extends Vue {
   private show: boolean = false;
   private name: string = "";
   private username: string = "";
+  private tsName: string = "";
+  private discordName: string = "";
 
-  public showModal(username: string) {
+  public showModal(username: string, tsName: string, dcName: string) {
     this.name = "";
     this.username = username;
+    this.tsName = tsName;
+    this.discordName = dcName;
     this.show = true;
   }
 
@@ -38,7 +42,7 @@ export default class CreateSessionModal extends Vue {
     try {
       this.toggleLoader(true, this.$t('play.create.loading').toString());
 
-      await vicarPlay.createSession(this.username, this.name);
+      await vicarPlay.createSession(this.username, this.name, this.tsName, this.discordName);
       this.show = false;
     } catch (e) {
       console.error(e);

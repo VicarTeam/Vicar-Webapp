@@ -1,6 +1,6 @@
 <template>
   <div class="playchat">
-    <div class="history">
+    <div class="history" ref="history">
       <div class="message" v-for="(m, i) in vicarPlay.getChatMessages()" :key="i" :class="{'host': m.sender.isHost, 'private': m.isPrivate}">
         <span v-if="isNormalMessage(m)">
           <span v-if="m.sender.isHost">(GM) </span>{{m.sender.name}} &dash; {{m.content}}
@@ -83,6 +83,9 @@ export default class PlayChat extends Vue {
   @Ref("imageUploader")
   private imageUploader!: HTMLInputElement;
 
+  @Ref("history")
+  private historyDiv!: HTMLDivElement;
+
   @State("editingCharacter")
   private editingCharacter!: ICharacter|undefined;
 
@@ -92,6 +95,12 @@ export default class PlayChat extends Vue {
 
   mounted() {
     CommandHandler.uploadImage = this.uploadImage;
+  }
+
+  updated() {
+    this.$nextTick(() => {
+      this.historyDiv.scrollTop = this.historyDiv.scrollHeight;
+    });
   }
 
   private sendMessage() {

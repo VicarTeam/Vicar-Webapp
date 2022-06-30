@@ -1,4 +1,5 @@
 import Peer from "peerjs";
+import {IVoiceIntegrationData} from "@/libs/vicarplay/voice-integration";
 
 export enum MessageType {
     BroadcastMessage,
@@ -32,12 +33,21 @@ export interface IHostedSession extends ISession {
 
 export interface IPlayer {
     name: string;
+    tsName: string;
+    dcName: string;
     id: string;
     isHost: boolean;
+    isMain: boolean;
 }
 
 export interface IPacket {
     sender: IPlayer;
     name: string;
     payload: any[];
+}
+
+export interface ILastPlaySession {
+    name: string;
+    date: number;
+    voiceData: IVoiceIntegrationData;
 }

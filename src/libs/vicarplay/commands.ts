@@ -78,7 +78,10 @@ export class CommandHandler {
                 content: "/[" + usage.names + "] " + i18n.t("play.chat.help." + usage.key),
                 isPrivate: false, sender: {
                     name: "",
+                    dcName: "",
+                    tsName: "",
                     isHost: false,
+                    isMain: true,
                     id: ""
                 }, type: MessageType.Raw
             });

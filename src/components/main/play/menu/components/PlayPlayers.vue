@@ -8,9 +8,15 @@
     </div>
     <div class="player">
       <span class="text you"><b>{{vicarPlay.session.host.name}}</b></span>
+      <div v-if="vicarPlay.voiceIntegration" class="kick iconbtn" @click="movePlayer(vicarPlay.me)">
+        <i class="fa-solid" :class="{'fa-user-group': vicarPlay.me.isMain, 'fa-user': !vicarPlay.me.isMain}"></i>
+      </div>
     </div>
     <div class="player" v-for="p in players">
       <span class="text">{{p.name}}</span>
+      <div v-if="vicarPlay.voiceIntegration" class="kick iconbtn" @click="movePlayer(p)">
+        <i class="fa-solid" :class="{'fa-user-group': p.isMain, 'fa-user': !p.isMain}"></i>
+      </div>
       <div class="kick iconbtn" @click="vicarPlay.kickPlayer(p)">
         <i class="fa-solid fa-right-from-bracket"></i>
       </div>
@@ -49,6 +55,17 @@ export default class PlayPlayers extends Vue {
     setTimeout(() => {
       this.copyIcon = "fa-paste";
     }, 1500);
+  }
+
+  private async movePlayer(player: IPlayer) {
+    if (vicarPlay.voiceIntegration) {
+      try {
+        await vicarPlay.voiceIntegration.movePlayer(player, player.isMain);
+        player.isMain = !player.isMain;
+      } catch (e) {
+        console.error(e);
+      }
+    }
   }
 }
 </script>
