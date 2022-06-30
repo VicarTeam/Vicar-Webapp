@@ -9,6 +9,7 @@
     </div>
     <div class="footer">
       <MenuTab v-if="vicarPlay.session.isHost" icon="fa-users" tab="PlayPlayers" v-model="tab"/>
+      <MenuTab v-if="vicarPlay.session.isHost" icon="fa-microphone" tab="PlayVoiceIntegration" v-model="tab"/>
       <MenuTab icon="fa-message" tab="PlayChat" v-model="tab"/>
 
       <div class="iconbtn" style="pointer-events: auto; margin-top: 0.5rem; margin-left: auto" @click="locked = !locked">
@@ -29,9 +30,10 @@ import PlayChat from "@/components/main/play/menu/components/PlayChat.vue";
 import PlayPlayers from "@/components/main/play/menu/components/PlayPlayers.vue";
 import IconButton from "@/components/IconButton.vue";
 import interact from "interactjs";
+import PlayVoiceIntegration from "@/components/main/play/menu/components/PlayVoiceIntegration.vue";
 
 @Component({
-  components: {IconButton, PlayPlayers, PlayChat, MenuTab}
+  components: {PlayVoiceIntegration, IconButton, PlayPlayers, PlayChat, MenuTab}
 })
 export default class PlayMenu extends Vue {
 
