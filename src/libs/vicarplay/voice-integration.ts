@@ -1,5 +1,5 @@
 import {IPlayer} from "@/libs/vicarplay/types";
-import {Client, Guild, Intents} from "discord.js";
+import axios, {Axios} from "axios";
 
 export enum VoiceType {
     Discord = "dc", TeamSpeak = "ts"
@@ -7,6 +7,7 @@ export enum VoiceType {
 
 export interface IVoiceIntegrationData {
     type: VoiceType;
+    url: string;
     mainChannel: string;
     privateChannel: string;
     dcToken: string;
@@ -18,62 +19,60 @@ export interface IVoiceIntegrationData {
     tsPassword: string;
 }
 
-export abstract class VoiceIntegration {
+export class VoiceIntegration {
 
-    public constructor(public data: IVoiceIntegrationData) { }
+    private readonly axios: Axios|null = null;
+    private currentSession: string|null = null;
 
-    public abstract start(): Promise<void>;
-    public abstract stop(): Promise<void>;
-    public abstract movePlayer(player: IPlayer, toPrivate: boolean): Promise<void>;
-}
-
-export class TeamSpeakIntegration extends VoiceIntegration {
-
-    async start(): Promise<void> {
-
+    public constructor(public data: IVoiceIntegrationData) {
+        this.axios = axios.create({
+            baseURL: data.url + (data.url.endsWith("/") ? "" : "/")
+        });
     }
 
-    async stop(): Promise<void> {
-
-    }
-
-    movePlayer(player: IPlayer, toPrivate: boolean): Promise<void> {
-        return Promise.resolve(undefined);
-    }
-
-    private generateRandomString(): string {
-        return Math.random().toString(36).substring(2, 8);
-    }
-}
-
-export class DiscordIntegration extends VoiceIntegration {
-
-    private client: Client|null = null;
-    private guild: Guild|null = null;
-
-    async start(): Promise<void> {
-        this.client = new Client({intents: [Intents.FLAGS.GUILDS]});
-        await this.client.login(this.data.dcToken);
-
-        this.guild = await this.client.guilds.fetch(this.data.dcGuild);
-        if (!this.guild) {
-            await this.client.destroy();
-            throw new Error("Could not find guild");
+    public async start(): Promise<void> {
+        if (!this.axios) {
+            return;
         }
+
+        const res = (await this.axios.post<{session: string}>(`/session/${this.data.type}`, {
+            dcToken: this.data.dcToken,
+            dcGuild: this.data.dcGuild,
+            tsHost: this.data.tsHost,
+            tsPort: this.data.tsPort,
+            tsQueryPort: this.data.tsQueryPort,
+            tsUsername: this.data.tsUsername,
+            tsPassword: this.data.tsPassword,
+            mainChannel: this.data.mainChannel,
+            privateChannel: this.data.privateChannel
+        })).data;
+
+        this.currentSession = res.session;
     }
 
-    stop(): Promise<void> {
-        return Promise.resolve(undefined);
+    public async stop(): Promise<void> {
+        if (!this.axios || !this.currentSession) {
+            return;
+        }
+
+        await this.axios.delete(`/session/${this.currentSession}`);
     }
 
-    movePlayer(player: IPlayer, toPrivate: boolean): Promise<void> {
-        return Promise.resolve(undefined);
+    public async movePlayer(player: IPlayer, toPrivate: boolean): Promise<void> {
+        if (!this.axios || !this.currentSession) {
+            return;
+        }
+
+        await this.axios.patch(`/session/${this.currentSession}/player/move`, {
+            player: player, toPrivate
+        });
     }
 }
 
 export const DefaultVoiceIntegration: () => IVoiceIntegrationData = () => {
     return {
         type: VoiceType.Discord,
+        url: "",
         mainChannel: "",
         privateChannel: "",
         dcToken: "",

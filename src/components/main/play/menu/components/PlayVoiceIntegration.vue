@@ -8,6 +8,10 @@
     </select>
 
     <div style="display: flex; gap: 1rem">
+      <input class="form-control" type="text" :placeholder="$t('play.voice.url')" v-model="vicarPlay.voiceIntegrationData.url"/>
+    </div>
+
+    <div style="display: flex; gap: 1rem">
       <input class="form-control" type="text" :placeholder="$t('play.voice.mainchannel')" v-model="vicarPlay.voiceIntegrationData.mainChannel"/>
       <input class="form-control" type="text" :placeholder="$t('play.voice.privatechannel')" v-model="vicarPlay.voiceIntegrationData.privateChannel"/>
     </div>
@@ -45,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import {DiscordIntegration, TeamSpeakIntegration, VoiceType} from "@/libs/vicarplay/voice-integration";
+import {VoiceIntegration, VoiceType} from "@/libs/vicarplay/voice-integration";
 import {Component, Vue} from "vue-property-decorator";
 import {vicarPlay} from "@/libs/vicarplay/vicar-play";
 
@@ -59,9 +63,7 @@ export default class PlayVoiceIntegration extends Vue {
 
   private async startVoiceIntegration() {
     try {
-      const integration = vicarPlay.voiceIntegrationData.type === VoiceType.Discord
-          ? new DiscordIntegration(vicarPlay.voiceIntegrationData)
-          : new TeamSpeakIntegration(vicarPlay.voiceIntegrationData);
+      const integration = new VoiceIntegration(this.vicarPlay.voiceIntegrationData);
       await integration.start();
       vicarPlay.voiceIntegration = integration;
     } catch (e) {

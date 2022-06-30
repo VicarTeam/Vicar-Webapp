@@ -343,6 +343,7 @@
   "play.dc.name": "Discord-Name#XXXX",
   "play.voice.mainchannel": "Haupt-Channel",
   "play.voice.privatechannel": "Privat-Channel",
+  "play.voice.url": "Server-URL",
   "play.voice.dc": "Discord",
   "play.voice.dc.token": "Bot-Token",
   "play.voice.dc.guild": "Gilde",

@@ -34,6 +34,10 @@
         <TOCItem :title="$t('data.trait.merits')" paragraph="flaws-merits"/>
         <TOCItem :title="$t('data.trait.backgrounds')" paragraph="flaws-backgrounds"/>
       </TOCMenu>
+
+      <TOCMenu :title="$t('data.predatortype')" paragraph="predator">
+        <TOCItem v-for="p in predatorTypes" :title="p.name" :paragraph="'predator-' + p.id"/>
+      </TOCMenu>
     </div>
     <div class="text-content">
       <section>
@@ -205,6 +209,15 @@
           </section>
         </section>
       </section>
+
+      <section>
+        <h2 ref="predator">{{$t('data.predatortype')}}</h2>
+
+        <section v-for="p in predatorTypes">
+          <h3 :ref="'predator-' + p.id">{{p.name}}</h3>
+          <small>{{p.description}}</small>
+        </section>
+      </section>
     </div>
   </div>
 </template>
@@ -215,7 +228,7 @@ import TOCMenu from "@/components/main/lexicon/toc/TOCMenu.vue";
 import TOCItem from "@/components/main/lexicon/toc/TOCItem.vue";
 import DataManager from "@/libs/data-manager";
 import {IClan} from "@/types/models";
-import {IBloodRitual, IDiscipline, IDisciplineAbility, ITraitPack} from "@/types/data";
+import {IBloodRitual, IDiscipline, IDisciplineAbility, IPredatorType, ITraitPack} from "@/types/data";
 
 @Component({
   components: {TOCItem, TOCMenu}
@@ -227,9 +240,9 @@ export default class Lexicon extends Vue {
   private disciplines: IDiscipline[] = [];
   private disciplineAbilities: IDisciplineAbility[] = [];
   private bloodRituals: IBloodRitual[][] = [];
-
   private merits: ITraitPack[] = [];
   private backgrounds: ITraitPack[] = [];
+  private predatorTypes: IPredatorType[] = [];
 
   mounted() {
     this.clans = this.data.selectedLanguage.books.map(b => b.clans).flat().sort((a, b) => a.name.localeCompare(b.name));
@@ -259,6 +272,13 @@ export default class Lexicon extends Vue {
       }
       return [];
     });
+
+    this.predatorTypes = DataManager.selectedLanguage.books.flatMap(book => {
+      if (book && book.predatorTypes) {
+        return book.predatorTypes;
+      }
+      return [];
+    }).sort((a, b) => a.name.localeCompare(b.name));
   }
 
   private filterPacks(packs: ITraitPack[], forFlaw: boolean): ITraitPack[] {
