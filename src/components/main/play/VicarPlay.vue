@@ -2,10 +2,12 @@
   <div class="d-flex flex-grow-1" style="padding: 3rem; gap: 3rem;">
     <div class="d-flex flex-column" style="width: 20rem; gap: 1rem">
       <input :disabled="vicarPlay.isRunning" class="form-control" type="text" :placeholder="$t('play.username')" v-model="username" @input="saveUsername"/>
-      <button v-if="!vicarPlay.isRunning" class="btn btn-primary" :disabled="!username" style="height: 4rem" @click="createSessionModal.showModal(username)">
+      <input :disabled="vicarPlay.isRunning" class="form-control" type="text" :placeholder="$t('play.ts.name')" v-model="tsName" @input="saveTsName"/>
+      <input :disabled="vicarPlay.isRunning" class="form-control" type="text" :placeholder="$t('play.dc.name')" v-model="discordName" @input="saveDiscordName"/>
+      <button v-if="!vicarPlay.isRunning" class="btn btn-primary" :disabled="!username" style="height: 4rem" @click="createSessionModal.showModal(username, tsName, discordName)">
         {{$t('play.create')}}
       </button>
-      <button v-if="!vicarPlay.isRunning" class="btn btn-primary" :disabled="!username" style="height: 4rem" @click="connectSessionModal.showModal(username)">
+      <button v-if="!vicarPlay.isRunning" class="btn btn-primary" :disabled="!username" style="height: 4rem" @click="connectSessionModal.showModal(username, tsName, discordName)">
         {{$t('play.connect')}}
       </button>
       <button v-if="vicarPlay.isRunning" style="height: 4rem" class="btn btn-primary" @click="closeSession">
@@ -46,18 +48,31 @@ export default class VicarPlay extends Vue {
   @Ref("connectSessionModal")
   private connectSessionModal!: ConnectSessionModal;
 
-  vicarPlay = vicarPlay;
+  private vicarPlay = vicarPlay;
 
   private username: string = "";
+  private tsName: string = "";
+  private discordName: string = "";
+
   private loading: boolean = false;
   private loadingText: string = "";
 
   mounted() {
     this.username = localStorage.getItem("play:username") || "";
+    this.tsName = localStorage.getItem("play:tsName") || "";
+    this.discordName = localStorage.getItem("play:discordName") || "";
   }
 
   private saveUsername() {
     localStorage.setItem("play:username", this.username);
+  }
+
+  private saveTsName() {
+    localStorage.setItem("play:tsName", this.tsName);
+  }
+
+  private saveDiscordName() {
+    localStorage.setItem("play:discordName", this.discordName);
   }
 
   private async closeSession() {

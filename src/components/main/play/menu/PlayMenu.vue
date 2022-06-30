@@ -9,7 +9,7 @@
     </div>
     <div class="footer">
       <MenuTab v-if="vicarPlay.session.isHost" icon="fa-users" tab="PlayPlayers" v-model="tab"/>
-      <MenuTab v-if="vicarPlay.session.isHost" icon="fa-microphone" tab="PlayVoiceIntegration" v-model="tab"/>
+      <MenuTab v-if="vicarPlay.session.isHost && (vicarPlay.me.tsName || vicarPlay.me.dcName)" icon="fa-microphone" tab="PlayVoiceIntegration" v-model="tab"/>
       <MenuTab icon="fa-message" tab="PlayChat" v-model="tab"/>
 
       <div class="iconbtn" style="pointer-events: auto; margin-top: 0.5rem; margin-left: auto" @click="locked = !locked">

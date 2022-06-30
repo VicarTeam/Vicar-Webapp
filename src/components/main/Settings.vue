@@ -35,7 +35,7 @@ export default class Settings extends Vue {
   }
 
   private get appVersion(): string {
-    return process.env.VERSION;
+    return process.env.VERSION!;
   }
 }
 </script>

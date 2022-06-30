@@ -1,8 +1,17 @@
-import {IHostedSession, IMessage, IPacket, IPlayer, ISession, MessageType} from "@/libs/vicarplay/types";
+import {
+    IHostedSession,
+    ILastPlaySession,
+    IMessage,
+    IPacket,
+    IPlayer,
+    ISession,
+    MessageType
+} from "@/libs/vicarplay/types";
 import Peer, {DataConnection} from "peerjs";
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
 import EventBus from "@/libs/event-bus";
+import {DefaultVoiceIntegration, IVoiceIntegrationData, VoiceIntegration} from "@/libs/vicarplay/voice-integration";
 
 const RegisteredReceivers = Symbol('RegisteredReceivers');
 let ackCallbacks: {[name: string]: Function} = {};
@@ -57,6 +66,10 @@ function Receiver<T extends { new(...args: any[]): {} }>(Base: T) {
 class VicarPlay {
 
     public chatSendTo: string = "@all";
+    public voiceIntegrationData: IVoiceIntegrationData = null!;
+    public voiceIntegration: VoiceIntegration|null = null;
+
+    public readonly sessionHistory: ILastPlaySession[] = [];
 
     private _session: ISession|null;
     private _me: IPlayer|null;
@@ -66,6 +79,7 @@ class VicarPlay {
     constructor() {
         this._session = null;
         this._me = null;
+        this.sessionHistory = JSON.parse(localStorage.getItem('sessionHistory') || '[]');
         EventBus.$on("closing", this.onAppClosing);
     }
 
@@ -179,12 +193,14 @@ class VicarPlay {
         }
     }
 
-    public createSession(username: string, name: string): Promise<ISession> {
+    public createSession(username: string, name: string, tsName: string, dcName: string): Promise<ISession> {
         return new Promise<ISession>((resolve, reject) => {
             if (this.isRunning) {
                 reject();
                 return;
             }
+
+            this.voiceIntegrationData = DefaultVoiceIntegration();
 
             ackCallbacks = {};
 
@@ -193,8 +209,10 @@ class VicarPlay {
                 this._chat = [];
                 this._me = {
                     id,
+                    dcName, tsName,
                     name: username,
-                    isHost: true
+                    isHost: true,
+                    isMain: true
                 };
                 this._session = <IHostedSession>{
                     isHost: true, players: [],
@@ -213,7 +231,7 @@ class VicarPlay {
         });
     }
 
-    public connectToSession(username: string, hostId: string): Promise<ISession> {
+    public connectToSession(username: string, hostId: string, tsName: string, dcName: string): Promise<ISession> {
         return new Promise<ISession>((resolve, reject) => {
             if (this.isRunning) {
                 reject();
@@ -226,8 +244,10 @@ class VicarPlay {
             peer.on("open", async id => {
                 this._me = {
                     id,
+                    dcName, tsName,
                     name: username,
-                    isHost: false
+                    isHost: false,
+                    isMain: true
                 };
 
                 this.sendToIdViaPeer(peer, hostId, "player:join", [
@@ -289,6 +309,12 @@ class VicarPlay {
             }
 
             if (this.session.isHost) {
+                this.sessionHistory.push({
+                    name: this.session.name,
+                    voiceData: this.voiceIntegrationData,
+                    date: new Date()
+                });
+                localStorage.setItem("sessionHistory", JSON.stringify(this.sessionHistory));
                 this.broadcast("session:closed");
             } else {
                 this.sendHost("player:left");

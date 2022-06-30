@@ -339,7 +339,20 @@
   "lexicon.toc.disciplines": "Disziplinen",
   "lexicon.toc.disciplines.abilites": "Kräfte",
   "play.voice.title": "Sprachchat-Integration",
-  "play.voice.software": "Software",
-  "play.voice.software.dc": "Discord",
-  "play.voice.software.ts": "TeamSpeak 3"
+  "play.ts.name": "TeamSpeak-Name",
+  "play.dc.name": "Discord-Name#XXXX",
+  "play.voice.mainchannel": "Haupt-Channel",
+  "play.voice.privatechannel": "Privat-Channel",
+  "play.voice.dc": "Discord",
+  "play.voice.dc.token": "Bot-Token",
+  "play.voice.dc.guild": "Gilde",
+  "play.voice.ts": "TeamSpeak 3",
+  "play.voice.ts.host": "Hostname",
+  "play.voice.ts.port": "Server-Port",
+  "play.voice.ts.queryport": "Query-Port (opt)",
+  "play.voice.ts.username": "Query-Benutzername",
+  "play.voice.ts.password": "Query-Passwort",
+  "play.voice.start": "Starten",
+  "play.voice.stop": "Stoppen",
+  "play.history": "Zuletzt erstellte Sitzungen"
 }

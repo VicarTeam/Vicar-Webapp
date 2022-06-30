@@ -23,10 +23,14 @@ export default class ConnectSessionModal extends Vue {
   private show: boolean = false;
   private sessionId: string = "";
   private username: string = "";
+  private tsName: string = "";
+  private discordName: string = "";
 
-  public showModal(username: string) {
+  public showModal(username: string, tsName: string, dcName: string) {
     this.sessionId = "";
     this.username = username;
+    this.tsName = tsName;
+    this.discordName = dcName;
     this.show = true;
   }
 
@@ -38,7 +42,7 @@ export default class ConnectSessionModal extends Vue {
     try {
       this.toggleLoader(true, this.$t('play.connect.loading').toString());
 
-      await vicarPlay.connectToSession(this.username, this.sessionId);
+      await vicarPlay.connectToSession(this.username, this.sessionId, this.tsName, this.discordName);
       this.show = false;
     } catch (e) {
       console.error(e);
