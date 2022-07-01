@@ -82,6 +82,7 @@ export class CommandHandler {
                     tsName: "",
                     isHost: false,
                     isMain: true,
+                    isSyncLoading: false,
                     id: ""
                 }, type: MessageType.Raw
             });

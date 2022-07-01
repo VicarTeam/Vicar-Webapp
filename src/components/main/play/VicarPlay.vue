@@ -17,7 +17,7 @@
 
     <div class="d-flex flex-column flex-grow-1" style="gap: 1rem">
       <b>{{$t('play.history')}}:</b>
-      <LastSession v-for="s in lastSessions" :session="s"/>
+      <LastSession v-for="(s, i) in lastSessions" :session="s" :key="i"/>
     </div>
 
     <CreateSessionModal ref="createSessionModal"/>
@@ -39,9 +39,15 @@ import WrappedSpinner from "@/components/spinners/WrappedSpinner.vue";
 import ConnectSessionModal from "@/components/main/play/modals/ConnectSessionModal.vue";
 import {vicarPlay} from "@/libs/vicarplay/vicar-play";
 import LastSession from "@/components/main/play/LastSession.vue";
+import AvatarZoomModal from "@/components/main/play/modals/AvatarZoomModal.vue";
+import SyncCharacterHostModal from "@/components/main/play/modals/sync/SyncCharacterHostModal.vue";
+import EventBus from "@/libs/event-bus";
+import {IPlayer} from "@/libs/vicarplay/types";
 
 @Component({
-  components: {LastSession, ConnectSessionModal, WrappedSpinner, Blur, CreateSessionModal}
+  components: {
+    SyncCharacterHostModal,
+    AvatarZoomModal, LastSession, ConnectSessionModal, WrappedSpinner, Blur, CreateSessionModal}
 })
 export default class VicarPlay extends Vue {
 

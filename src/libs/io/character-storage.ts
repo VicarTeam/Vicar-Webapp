@@ -1,6 +1,7 @@
 import {ICharacter, ICharacterDirectory} from "@/types/models";
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
+import {vicarPlay} from "@/libs/vicarplay/vicar-play";
 
 export default class CharacterStorage {
 
@@ -63,6 +64,12 @@ export default class CharacterStorage {
 
     public static saveCharacter(character: ICharacter) {
         localStorage.setItem("character-" + character.id, JSON.stringify(character));
+
+        if (vicarPlay.isRunning && vicarPlay.syncingChar) {
+            if (character.id === vicarPlay.syncingChar.id) {
+                vicarPlay.sendHost("send:sync-char", character);
+            }
+        }
     }
 
     public static addCharacter(character: ICharacter): string {

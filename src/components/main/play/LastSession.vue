@@ -28,7 +28,7 @@ export default class LastSession extends Vue {
     const tsName = this.getTsName();
     const discordName = this.getDiscordName();
 
-    vicarPlay.createSession(username, this.session.name, tsName, discordName, this.session.voiceData);
+    vicarPlay.createSession(username, this.session.name, tsName, discordName, this.session.voiceData, true);
   }
 
   private getFormattedDate() {

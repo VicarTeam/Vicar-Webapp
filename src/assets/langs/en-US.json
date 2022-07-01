@@ -355,5 +355,10 @@
   "play.voice.start": "Start",
   "play.voice.stop": "Stop",
   "play.history": "Last sessions created",
-  "play.history.date": "at {date}"
+  "play.history.date": "at {date}",
+  "play.sync.select.host": "Choose which character to update",
+  "play.sync.select.host.new": "New character",
+  "play.sync.select.host.btn": "Request",
+  "play.sync.select.player": "Choose character to synchronize",
+  "play.sync.syncing": "Character is synchronized"
 }

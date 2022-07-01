@@ -43,6 +43,7 @@ import Character from "@/components/main/characters/Character.vue";
 import CharacterDirectory from "@/components/main/characters/CharacterDirectory.vue";
 import CreateDirectoryModal from "@/components/main/characters/modals/CreateDirectoryModal.vue";
 import {Container} from "vue-dndrop";
+import EventBus from "@/libs/event-bus";
 
 @Component({
   components: {
@@ -68,6 +69,14 @@ export default class Characters extends Vue {
 
   @Ref("vicarShare")
   private vicarShare!: VicarShare;
+
+  mounted() {
+    EventBus.$on("update-character-list", this.updateCharacterList);
+  }
+
+  destroyed() {
+    EventBus.$off("update-character-list", this.updateCharacterList);
+  }
 
   private async importCharacterFromFile(event: {target: {files: FileList}}) {
     try {

@@ -57,7 +57,7 @@
           <div class="stat">
             <b>{{ $t('character.hunger') }}:</b>
             <Squares :max="5" :amount="editingCharacter.hunger"
-                     @click="v => editingCharacter.hunger = v === editingCharacter.hunger ? 0 : v"/>
+                     @click="v => {editingCharacter.hunger = v === editingCharacter.hunger ? 0 : v; saveChar();}"/>
           </div>
         </div>
       </div>
@@ -68,45 +68,45 @@
       <div class="column">
         <div class="form-group">
           <label>{{ $t('character.chronicle') }}: <TipButton :content="$t('character.chronicle.tip')"/></label>
-          <input class="form-control" type="text" v-model="editingCharacter.chronicle"/>
+          <input class="form-control" type="text" v-model="editingCharacter.chronicle" @input="saveChar"/>
         </div>
 
         <div class="form-group">
           <label>{{$t('character.chronicleprinciples')}}: <TipButton :content="$t('character.chronicleprinciples.tip')"/></label>
-          <textarea class="form-control" v-model="editingCharacter.chroniclePrinciples"/>
+          <textarea class="form-control" v-model="editingCharacter.chroniclePrinciples" @input="saveChar"/>
         </div>
       </div>
       <div class="column">
         <div class="form-group">
           <label>{{ $t('character.concept') }}: <TipButton :content="$t('character.concept.tip')"/></label>
-          <input class="form-control" type="text" v-model="editingCharacter.concept"/>
+          <input class="form-control" type="text" v-model="editingCharacter.concept" @input="saveChar"/>
         </div>
 
         <div class="form-group">
           <label>{{$t('character.anchorsandbeliefs')}}: <TipButton :content="$t('character.anchorsandbeliefs.tip')"/></label>
-          <textarea class="form-control" v-model="editingCharacter.anchorsAndBeliefs"/>
+          <textarea class="form-control" v-model="editingCharacter.anchorsAndBeliefs" @input="saveChar"/>
         </div>
       </div>
       <div class="column">
         <div class="form-group">
           <label>{{ $t('character.ambition') }}: <TipButton :content="$t('character.ambition.tip')"/></label>
-          <input class="form-control" type="text" v-model="editingCharacter.ambition"/>
+          <input class="form-control" type="text" v-model="editingCharacter.ambition" @input="saveChar"/>
         </div>
 
         <div class="form-group">
           <label>{{$t('character.backstory')}}:</label>
-          <textarea class="form-control" v-model="editingCharacter.backstory"/>
+          <textarea class="form-control" v-model="editingCharacter.backstory" @input="saveChar"/>
         </div>
       </div>
       <div class="column">
         <div class="form-group">
           <label>{{ $t('character.desire') }}: <TipButton :content="$t('character.desire.tip')"/></label>
-          <input class="form-control" type="text" v-model="editingCharacter.desire"/>
+          <input class="form-control" type="text" v-model="editingCharacter.desire" @input="saveChar"/>
         </div>
 
         <div class="form-group">
           <label>{{$t('character.notes')}}:</label>
-          <textarea class="form-control" v-model="editingCharacter.notes"/>
+          <textarea class="form-control" v-model="editingCharacter.notes" @input="saveChar"/>
         </div>
       </div>
     </div>
@@ -167,6 +167,7 @@ import Col from "@/components/viewer/pdf/Col.vue";
 import Row from "@/components/viewer/pdf/Row.vue";
 import Humanity from "@/components/progress/tracker/Humanity.vue";
 import Damage from "@/components/progress/tracker/Damage.vue";
+import CharacterStorage from "@/libs/io/character-storage";
 
 @Component({
   components: {
@@ -189,6 +190,10 @@ export default class ProfileView extends Vue {
   private editName = "";
 
   LevelType = LevelType;
+
+  private saveChar() {
+    CharacterStorage.saveCharacter(this.editingCharacter);
+  }
 
   private getBloodPotency(): IBloodPotencyData {
     return DataManager.selectedLanguage.bloodPotencyTable.find(x => x.value === this.editingCharacter.bloodPotency)!;

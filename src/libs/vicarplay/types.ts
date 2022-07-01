@@ -29,6 +29,7 @@ export interface ISession {
 
 export interface IHostedSession extends ISession {
     players: IPlayer[];
+    syncChars: SyncChars;
 }
 
 export interface IPlayer {
@@ -38,6 +39,7 @@ export interface IPlayer {
     id: string;
     isHost: boolean;
     isMain: boolean;
+    isSyncLoading: boolean;
 }
 
 export interface IPacket {
@@ -50,4 +52,7 @@ export interface ILastPlaySession {
     name: string;
     date: number;
     voiceData: IVoiceIntegrationData;
+    syncChars: SyncChars;
 }
+
+export type SyncChars = {[key: string]: string};

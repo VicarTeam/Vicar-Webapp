@@ -5,13 +5,15 @@ import {
     IPacket,
     IPlayer,
     ISession,
-    MessageType
+    MessageType, SyncChars
 } from "@/libs/vicarplay/types";
 import Peer, {DataConnection} from "peerjs";
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
 import EventBus from "@/libs/event-bus";
 import {DefaultVoiceIntegration, IVoiceIntegrationData, VoiceIntegration} from "@/libs/vicarplay/voice-integration";
+import {ICharacter} from "@/types/models";
+import CharacterStorage from "@/libs/io/character-storage";
 
 const RegisteredReceivers = Symbol('RegisteredReceivers');
 let ackCallbacks: {[name: string]: Function} = {};
@@ -65,6 +67,7 @@ function Receiver<T extends { new(...args: any[]): {} }>(Base: T) {
 @Receiver
 class VicarPlay {
 
+    public syncingChar: ICharacter|null = null;
     public chatSendTo: string = "@all";
     public voiceIntegrationData: IVoiceIntegrationData = null!;
     public voiceIntegration: VoiceIntegration|null = null;
@@ -81,6 +84,42 @@ class VicarPlay {
         this._me = null;
         this.sessionHistory = JSON.parse(localStorage.getItem('sessionHistory') || '[]');
         EventBus.$on("closing", this.onAppClosing);
+    }
+
+    @ReceivePacket("send:sync-char")
+    private onSyncCharSend(player: IPlayer, char: ICharacter) {
+        if (!this.session.isHost) {
+            return;
+        }
+
+        const session = <IHostedSession>this.session;
+        if (!session.syncChars[player.id]) {
+            return;
+        }
+
+        const charId = session.syncChars[player.id];
+        const existingChar = CharacterStorage.loadedCharacters.find(x => x.id === charId);
+        if (!existingChar) {
+            return;
+        }
+
+        Object.entries(char).forEach(([key, value]) => {
+            if (key === 'id') {
+                return;
+            }
+
+            //@ts-ignore
+            existingChar[key] = value;
+        });
+    }
+
+    @ReceivePacket("request:sync-char")
+    private onSyncCharRequest(player: IPlayer, ack: (char: ICharacter) => void) {
+        if (this.session.isHost) {
+            return;
+        }
+
+        EventBus.$emit("show-synccharplayermodal", ack);
     }
 
     @ReceivePacket("player:join")
@@ -109,6 +148,7 @@ class VicarPlay {
 
         const session = <IHostedSession>this.session;
         session.players = session.players.filter(x => x.id !== player.id);
+        delete session.syncChars[player.id];
 
         const message: IMessage = {
             type: MessageType.Status,
@@ -193,13 +233,14 @@ class VicarPlay {
         }
     }
 
-    public createSession(username: string, name: string, tsName: string, dcName: string, integrationData: IVoiceIntegrationData|null = null): Promise<ISession> {
+    public createSession(username: string, name: string, tsName: string, dcName: string, integrationData: IVoiceIntegrationData|null = null, copyId: boolean = false): Promise<ISession> {
         return new Promise<ISession>((resolve, reject) => {
             if (this.isRunning) {
                 reject();
                 return;
             }
 
+            this.syncingChar = null;
             this.voiceIntegrationData = integrationData ?? DefaultVoiceIntegration();
 
             ackCallbacks = {};
@@ -212,15 +253,23 @@ class VicarPlay {
                     dcName, tsName,
                     name: username,
                     isHost: true,
-                    isMain: true
+                    isMain: true,
+                    isSyncLoading: false
                 };
                 this._session = <IHostedSession>{
                     isHost: true, players: [],
                     host: this._me,
-                    name, peer
+                    name, peer,
+                    syncChars: {}
                 };
 
-                resolve(this.session);
+                if (copyId) {
+                    navigator.clipboard.writeText(id).then(() => {
+                        resolve(this.session);
+                    });
+                } else {
+                    resolve(this.session);
+                }
             });
             peer.on("error", e => {
                reject(e);
@@ -238,6 +287,7 @@ class VicarPlay {
                 return;
             }
 
+            this.syncingChar = null;
             ackCallbacks = {};
 
             const peer = new Peer();
@@ -247,7 +297,8 @@ class VicarPlay {
                     dcName, tsName,
                     name: username,
                     isHost: false,
-                    isMain: true
+                    isMain: true,
+                    isSyncLoading: false
                 };
 
                 this.sendToIdViaPeer(peer, hostId, "player:join", [
@@ -288,6 +339,7 @@ class VicarPlay {
 
         const session = <IHostedSession>this.session;
         session.players = session.players.filter(x => x.id !== player.id);
+        delete session.syncChars[player.id];
         this.sendTo(player, "session:closed", []);
 
         const message: IMessage = {
@@ -316,7 +368,8 @@ class VicarPlay {
                     this.sessionHistory.push({
                         name: this.session.name,
                         voiceData: this.voiceIntegrationData,
-                        date: Date.now()
+                        date: Date.now(),
+                        syncChars: (<IHostedSession>this.session).syncChars
                     });
                 }
 
