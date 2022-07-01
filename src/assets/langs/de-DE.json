@@ -318,7 +318,7 @@
   "play.chat.hungercheck.against": "{status} mit {success} Erfolgen gegen {diff} ",
   "play.chat.check.complete_failure": "Totaler Fehlschlag",
   "play.chat.check.bestial_failure": "Bestialischer Fehlschlag",
-  "play.chat.check.failure": "Fehlschag",
+  "play.chat.check.failure": "Fehlschlag",
   "play.chat.check.min_triumph": "Mindestens einen Erfolg",
   "play.chat.check.triumph": "Triumph",
   "play.chat.check.critical_triumph": "Kritischer Triumph",
@@ -356,5 +356,10 @@
   "play.voice.start": "Starten",
   "play.voice.stop": "Stoppen",
   "play.history": "Zuletzt erstellte Sitzungen",
-  "play.history.date": "vom {date}"
+  "play.history.date": "vom {date}",
+  "play.sync.select.host": "Wähle welcher Charakter aktualisiert werden soll",
+  "play.sync.select.host.new": "Neuer Charakter",
+  "play.sync.select.host.btn": "Anfragen",
+  "play.sync.select.player": "Wähle zu synchronisierenden Charakter",
+  "play.sync.syncing": "Charakter wird synchronisiert"
 }

@@ -17,7 +17,7 @@
         <div v-else-if="m.type === MessageType.SecretCommand" class="secret-command">
           <i><b>{{$t('play.chat.secret')}} | </b>{{m.content}}</i>
         </div>
-        <div v-else-if="m.type === MessageType.PrivateAvatar || m.type === MessageType.BroadcastAvatar" class="avatar" @click="avatarZoomModal.showModal(m.content)" :class="{'host': m.sender.isHost, 'private': m.isPrivate}">
+        <div v-else-if="m.type === MessageType.PrivateAvatar || m.type === MessageType.BroadcastAvatar" class="avatar" @click="showAvatarZoomModal(m.content)" :class="{'host': m.sender.isHost, 'private': m.isPrivate}">
           <span><span v-if="m.sender.isHost">(GM) </span>{{m.sender.name}}:</span>
           <img :src="m.content"/>
         </div>
@@ -55,30 +55,27 @@
     </div>
 
     <input hidden type="file" accept="image/png, image/gif, image/jpeg" ref="imageUploader" @change="onImageUploader($event)"/>
-    <AvatarZoomModal ref="avatarZoomModal"/>
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Provide, Ref, Vue} from "vue-property-decorator";
+import {Component, Inject, Ref, Vue} from "vue-property-decorator";
 import {vicarPlay} from "@/libs/vicarplay/vicar-play";
 import {IHostedSession, IMessage, IPlayer, MessageType} from "@/libs/vicarplay/types";
-import AvatarZoomModal from "@/components/main/play/modals/AvatarZoomModal.vue";
 import {CommandHandler, commandHandler} from "@/libs/vicarplay/commands";
 import {State} from "vuex-class";
 import {ICharacter} from "@/types/models";
 import IconButton from "@/components/IconButton.vue";
+import AvatarZoomModal from "@/components/main/play/modals/AvatarZoomModal.vue";
+import EventBus from "@/libs/event-bus";
 
 @Component({
-  components: {IconButton, AvatarZoomModal}
+  components: {IconButton}
 })
 export default class PlayChat extends Vue {
 
   vicarPlay = vicarPlay;
   MessageType = MessageType;
-
-  @Ref("avatarZoomModal")
-  private avatarZoomModal!: AvatarZoomModal;
 
   @Ref("imageUploader")
   private imageUploader!: HTMLInputElement;
@@ -218,6 +215,10 @@ export default class PlayChat extends Vue {
   private uploadImage(cb: (img: string) => void) {
     this.imageUploadChange = cb;
     this.imageUploader.click();
+  }
+
+  private showAvatarZoomModal(url: string) {
+    EventBus.$emit("play:show-avatar-zoom-modal", url);
   }
 }
 </script>

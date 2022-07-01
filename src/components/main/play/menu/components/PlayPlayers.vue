@@ -13,28 +13,33 @@
       </div>
     </div>
     <div class="player" v-for="p in players">
-      <span class="text">{{p.name}}</span>
-      <div v-if="vicarPlay.voiceIntegration" class="kick iconbtn" @click="movePlayer(p)">
-        <i class="fa-solid" :class="{'fa-user-group': p.isMain, 'fa-user': !p.isMain}"></i>
+      <span class="text">{{p.name}}<small v-if="isPlayerSyncing(p)"> - <i>{{$t('play.sync.syncing')}}</i></small></span>
+      <div class="kick iconbtn" v-if="!isPlayerSyncing(p)" @click="startPlayerCharSync(p)" :class="{'loading': p.isSyncLoading}">
+        <i class="fa-solid fa-rotate"></i>
       </div>
       <div class="kick iconbtn" @click="vicarPlay.kickPlayer(p)">
         <i class="fa-solid fa-right-from-bracket"></i>
+      </div>
+      <div v-if="vicarPlay.voiceIntegration" class="kick iconbtn" @click="movePlayer(p)">
+        <i class="fa-solid" :class="{'fa-user-group': p.isMain, 'fa-user': !p.isMain}"></i>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Inject, Ref, Vue} from "vue-property-decorator";
 import {vicarPlay} from "@/libs/vicarplay/vicar-play";
 import {IHostedSession, IPlayer} from "@/libs/vicarplay/types";
+import SyncCharacterHostModal from "@/components/main/play/modals/sync/SyncCharacterHostModal.vue";
+import EventBus from "@/libs/event-bus";
 
 @Component({
   components: {}
 })
 export default class PlayPlayers extends Vue {
 
-  vicarPlay = vicarPlay;
+  private vicarPlay = vicarPlay;
   private copyIcon: string = "fa-paste";
 
   private get players(): IPlayer[] {
@@ -66,6 +71,22 @@ export default class PlayPlayers extends Vue {
         console.error(e);
       }
     }
+  }
+
+  private startPlayerCharSync(player: IPlayer) {
+    if (player.isSyncLoading) {
+      return;
+    }
+
+    this.showSyncCharacterHostModal(player);
+  }
+
+  private showSyncCharacterHostModal(player: IPlayer) {
+    EventBus.$emit("play:show-sync-character-host-modal", player);
+  }
+
+  private isPlayerSyncing(player: IPlayer) {
+    return (<IHostedSession>vicarPlay.session).syncChars[player.id] !== undefined;
   }
 }
 </script>

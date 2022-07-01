@@ -36,7 +36,7 @@
       </TOCMenu>
 
       <TOCMenu :title="$t('data.predatortype')" paragraph="predator">
-        <TOCItem v-for="p in predatorTypes" :title="p.name" :paragraph="'predator-' + p.id"/>
+        <TOCItem v-for="p in predatorTypes" :title="p.name" :paragraph="'predator-' + p.id" :key="p.id"/>
       </TOCMenu>
     </div>
     <div class="text-content">
