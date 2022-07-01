@@ -318,7 +318,7 @@
   "play.chat.hungercheck.against": "{status} mit {success} Erfolgen gegen {diff} ",
   "play.chat.check.complete_failure": "Totaler Fehlschlag",
   "play.chat.check.bestial_failure": "Bestialischer Fehlschlag",
-  "play.chat.check.failure": "Fehlschag",
+  "play.chat.check.failure": "Fehlschlag",
   "play.chat.check.min_triumph": "Mindestens einen Erfolg",
   "play.chat.check.triumph": "Triumph",
   "play.chat.check.critical_triumph": "Kritischer Triumph",

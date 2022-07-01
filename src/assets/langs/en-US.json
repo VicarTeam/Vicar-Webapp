@@ -355,5 +355,5 @@
   "play.voice.start": "Start",
   "play.voice.stop": "Stop",
   "play.history": "Last sessions created",
-  "play.history.date": "from {date}"
+  "play.history.date": "at {date}"
 }

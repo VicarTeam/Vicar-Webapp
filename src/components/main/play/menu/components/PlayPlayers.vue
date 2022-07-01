@@ -14,11 +14,11 @@
     </div>
     <div class="player" v-for="p in players">
       <span class="text">{{p.name}}</span>
-      <div v-if="vicarPlay.voiceIntegration" class="kick iconbtn" @click="movePlayer(p)">
-        <i class="fa-solid" :class="{'fa-user-group': p.isMain, 'fa-user': !p.isMain}"></i>
-      </div>
       <div class="kick iconbtn" @click="vicarPlay.kickPlayer(p)">
         <i class="fa-solid fa-right-from-bracket"></i>
+      </div>
+      <div v-if="vicarPlay.voiceIntegration" class="kick iconbtn" @click="movePlayer(p)">
+        <i class="fa-solid" :class="{'fa-user-group': p.isMain, 'fa-user': !p.isMain}"></i>
       </div>
     </div>
   </div>
