@@ -78,12 +78,18 @@ class VicarPlay {
     private _me: IPlayer|null;
     private _menuOpen: boolean = false;
     private _chat: IMessage[] = [];
+    private _keepAliveInterval: number|null = null;
 
     constructor() {
         this._session = null;
         this._me = null;
         this.sessionHistory = JSON.parse(localStorage.getItem('sessionHistory') || '[]');
         EventBus.$on("closing", this.onAppClosing);
+    }
+
+    @ReceivePacket("keep-alive")
+    private onKeepAlive(sender: IPlayer, ack: () => void) {
+        ack();
     }
 
     @ReceivePacket("send:sync-char")
@@ -163,6 +169,11 @@ class VicarPlay {
     private onSessionClosed() {
         if (this.session.isHost) {
             return;
+        }
+
+        if (this._keepAliveInterval) {
+            clearInterval(this._keepAliveInterval);
+            this._keepAliveInterval = null;
         }
 
         this.session.peer.destroy();
@@ -263,6 +274,14 @@ class VicarPlay {
                     syncChars: {}
                 };
 
+                this._keepAliveInterval = setInterval(() => {
+                    const session = <IHostedSession>this.session;
+                    [...session.players].forEach(x => {
+                        const timeout = setTimeout(() => this.onPlayerLeftPacket(x), 4000);
+                        this.sendTo(x, "keep-alive", [() => clearTimeout(timeout)]);
+                    });
+                }, 5000);
+
                 if (copyId) {
                     navigator.clipboard.writeText(id).then(() => {
                         resolve(this.session);
@@ -310,6 +329,11 @@ class VicarPlay {
                         resolve(this.session);
                     }
                 ]);
+
+                this._keepAliveInterval = setInterval(() => {
+                    const timeout = setTimeout(() => this.onSessionClosed(), 4000);
+                    this.sendHost("keep-alive", () => clearTimeout(timeout));
+                }, 5000);
             });
             peer.on("error", e => {
                 reject(e);
@@ -360,7 +384,13 @@ class VicarPlay {
                 return;
             }
 
+            if (this._keepAliveInterval) {
+                clearInterval(this._keepAliveInterval);
+                this._keepAliveInterval = null;
+            }
+
             if (this.session.isHost) {
+
                 const sessionHistory = this.sessionHistory.find(x => x.name === this.session.name);
                 if (sessionHistory) {
                     sessionHistory.date = Date.now();
