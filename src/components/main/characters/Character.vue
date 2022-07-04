@@ -22,7 +22,7 @@
     </div>
 
     <div class="actions">
-      <IconButton v-if="vicarPlay.isRunning && vicarPlay.me.isHost" icon="fa-file-image" @click="sendAvatar"/>
+      <IconButton v-if="VicarPlayClient.isInSession() && VicarPlayClient.amIHost()" icon="fa-file-image" @click="sendAvatar"/>
       <IconButton icon="fa-trash" @click="beginCharDeletion(character)"/>
       <IconButton icon="fa-copy" @click="cloneCharacter(character)"/>
       <IconButton icon="fa-file-arrow-down" @click="exportCharacter(character)"/>
@@ -41,13 +41,15 @@ import {ICharacter} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
 import FileCreator from "@/libs/io/file-creator";
 import {Mutation} from "vuex-class";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
 import {IMessage, MessageType} from "@/libs/vicarplay/types";
+import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
 @Component({
   components: {IconButton, Avatar, Bullet}
 })
 export default class Character extends Vue {
+
+  private VicarPlayClient = VicarPlayClient;
 
   @Prop({required: true})
   private character!: ICharacter;
@@ -57,8 +59,6 @@ export default class Character extends Vue {
 
   @Mutation("setLevelMode")
   private setLevelMode!: (mode: boolean) => void;
-
-  vicarPlay = vicarPlay;
 
   private cloneCharacter(character: ICharacter) {
     const newChar = {...character};
@@ -78,19 +78,19 @@ export default class Character extends Vue {
   }
 
   private sendAvatar() {
-    if (!vicarPlay.isRunning || !vicarPlay.me.isHost) {
+    if (!VicarPlayClient.isInSession() || !VicarPlayClient.amIHost()) {
       return;
     }
 
-    const receiver = vicarPlay.getChatReceiver();
+    const receiver = VicarPlayClient.getChatReceiver();
     const message: IMessage = {
-      type: vicarPlay.chatSendTo === "@all" ? MessageType.BroadcastAvatar : MessageType.PrivateAvatar,
+      type: VicarPlayClient.chatSendTo === "@all" ? MessageType.BroadcastAvatar : MessageType.PrivateAvatar,
       content: this.character.avatar,
-      sender: vicarPlay.me,
-      isPrivate: receiver !== undefined
+      sender: VicarPlayClient.me!,
+      receiver
     };
 
-    vicarPlay.sendChatMessage(message, receiver);
+    VicarPlayClient.sendChatMessage(message);
   }
 
   @Inject("begin-char-deletion")

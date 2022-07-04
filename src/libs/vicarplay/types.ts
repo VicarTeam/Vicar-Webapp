@@ -13,21 +13,14 @@ export enum MessageType {
     Raw
 }
 
-export interface IMessage {
-    type: MessageType;
-    content: any;
-    sender: IPlayer;
-    isPrivate: boolean;
-}
-
-export interface ISession {
+export interface IOldSession {
     name: string;
     host: IPlayer;
     isHost: boolean;
     peer: Peer;
 }
 
-export interface IHostedSession extends ISession {
+export interface IHostedSession extends IOldSession {
     players: IPlayer[];
     syncChars: SyncChars;
 }
@@ -48,11 +41,35 @@ export interface IPacket {
     payload: any[];
 }
 
+export type SyncChars = {[key: string]: string};
+
+// ----------- NEW VERSION -----------
+
 export interface ILastPlaySession {
     name: string;
     date: number;
     voiceData: IVoiceIntegrationData;
-    syncChars: SyncChars;
 }
 
-export type SyncChars = {[key: string]: string};
+export interface IClientIdenity {
+    socketId: string;
+    username: string;
+    tsName: string;
+    discordName: string;
+    isHost: boolean;
+}
+
+export interface ISessionState {
+    id: string;
+    name: string;
+    host: IClientIdenity;
+    chatHistory: IMessage[];
+    players: IClientIdenity[];
+}
+
+export interface IMessage {
+    type: MessageType;
+    content: any;
+    sender: IClientIdenity;
+    receiver?: IClientIdenity;
+}

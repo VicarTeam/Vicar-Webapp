@@ -18,7 +18,7 @@ import {Component, Inject, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import CharacterStorage from "@/libs/io/character-storage";
 import {IHostedSession, IPlayer} from "@/libs/vicarplay/types";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
+import {vicarPlay} from "@/libs/vicarplay/vicar-play-old";
 import {ICharacter} from "@/types/models";
 import EventBus from "@/libs/event-bus";
 

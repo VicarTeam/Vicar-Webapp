@@ -1,7 +1,7 @@
 import {ICharacter} from "@/types/models";
 import {i18n} from "@/libs/i18n";
 import {IMessage, MessageType} from "@/libs/vicarplay/types";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
+import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
 type Usage = {
     key: string;
@@ -76,15 +76,7 @@ export class CommandHandler {
         usages.forEach(usage => {
             result.messages.push({
                 content: "/[" + usage.names + "] " + i18n.t("play.chat.help." + usage.key),
-                isPrivate: false, sender: {
-                    name: "",
-                    dcName: "",
-                    tsName: "",
-                    isHost: false,
-                    isMain: true,
-                    isSyncLoading: false,
-                    id: ""
-                }, type: MessageType.Raw
+                receiver: undefined!, sender: undefined!, type: MessageType.Raw
             });
         });
         return [result, true];
@@ -276,13 +268,13 @@ export class CommandHandler {
     @Command("image", "img", "i")
     private image(char: ICharacter|undefined, input: string) {
         const send = (img: string) => {
-            const receiver = vicarPlay.getChatReceiver();
-            vicarPlay.sendChatMessage({
-                type: vicarPlay.chatSendTo === "@all" ? MessageType.BroadcastAvatar : MessageType.PrivateAvatar,
+            const receiver = VicarPlayClient.getChatReceiver();
+            VicarPlayClient.sendChatMessage({
+                type: VicarPlayClient.chatSendTo === "@all" ? MessageType.BroadcastAvatar : MessageType.PrivateAvatar,
                 content: img,
-                sender: vicarPlay.me,
-                isPrivate: receiver !== undefined
-            }, receiver);
+                sender: VicarPlayClient.me!,
+                receiver
+            });
         };
 
         if (!input || input.trim().length <= 0) {

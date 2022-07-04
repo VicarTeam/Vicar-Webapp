@@ -51,7 +51,7 @@
 <script lang="ts">
 import {VoiceIntegration, VoiceType} from "@/libs/vicarplay/voice-integration";
 import {Component, Vue} from "vue-property-decorator";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
+import {vicarPlay} from "@/libs/vicarplay/vicar-play-old";
 
 @Component({
   components: {}

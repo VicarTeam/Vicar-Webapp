@@ -1,17 +1,17 @@
 <template>
   <div class="d-flex flex-grow-1" style="padding: 3rem; gap: 3rem;">
     <div class="d-flex flex-column" style="width: 20rem; gap: 1rem">
-      <input :disabled="vicarPlay.isRunning" class="form-control" type="text" :placeholder="$t('play.username')" v-model="username" @input="saveUsername"/>
-      <input :disabled="vicarPlay.isRunning" class="form-control" type="text" :placeholder="$t('play.ts.name')" v-model="tsName" @input="saveTsName"/>
-      <input :disabled="vicarPlay.isRunning" class="form-control" type="text" :placeholder="$t('play.dc.name')" v-model="discordName" @input="saveDiscordName"/>
-      <button v-if="!vicarPlay.isRunning" class="btn btn-primary" :disabled="!username" style="height: 4rem" @click="createSessionModal.showModal(username, tsName, discordName)">
+      <input :disabled="VicarPlayClient.isInSession()" class="form-control" type="text" :placeholder="$t('play.username')" v-model="username" @input="saveUsername"/>
+      <input :disabled="VicarPlayClient.isInSession()" class="form-control" type="text" :placeholder="$t('play.ts.name')" v-model="tsName" @input="saveTsName"/>
+      <input :disabled="VicarPlayClient.isInSession()" class="form-control" type="text" :placeholder="$t('play.dc.name')" v-model="discordName" @input="saveDiscordName"/>
+      <button v-if="!VicarPlayClient.isInSession()" class="btn btn-primary" :disabled="!username" style="height: 4rem" @click="createSessionModal.showModal(username, tsName, discordName)">
         {{$t('play.create')}}
       </button>
-      <button v-if="!vicarPlay.isRunning" class="btn btn-primary" :disabled="!username" style="height: 4rem" @click="connectSessionModal.showModal(username, tsName, discordName)">
+      <button v-if="!VicarPlayClient.isInSession()" class="btn btn-primary" :disabled="!username" style="height: 4rem" @click="connectSessionModal.showModal(username, tsName, discordName)">
         {{$t('play.connect')}}
       </button>
-      <button v-if="vicarPlay.isRunning" style="height: 4rem" class="btn btn-primary" @click="closeSession">
-        {{$t('play.' + (vicarPlay.session.isHost ? 'close' : 'disconnect'))}}
+      <button v-if="VicarPlayClient.isInSession()" style="height: 4rem" class="btn btn-primary" @click="closeSession">
+        {{$t('play.' + (VicarPlayClient.amIHost() ? 'close' : 'disconnect'))}}
       </button>
     </div>
 
@@ -37,12 +37,11 @@ import CreateSessionModal from "@/components/main/play/modals/CreateSessionModal
 import Blur from "@/components/modal/Blur.vue";
 import WrappedSpinner from "@/components/spinners/WrappedSpinner.vue";
 import ConnectSessionModal from "@/components/main/play/modals/ConnectSessionModal.vue";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
 import LastSession from "@/components/main/play/LastSession.vue";
 import AvatarZoomModal from "@/components/main/play/modals/AvatarZoomModal.vue";
 import SyncCharacterHostModal from "@/components/main/play/modals/sync/SyncCharacterHostModal.vue";
-import EventBus from "@/libs/event-bus";
-import {IPlayer} from "@/libs/vicarplay/types";
+import VicarPlayClient from "@/libs/vicarplay/vicar-play";
+import {Socket} from "vue-socket.io-extended";
 
 @Component({
   components: {
@@ -57,7 +56,7 @@ export default class VicarPlay extends Vue {
   @Ref("connectSessionModal")
   private connectSessionModal!: ConnectSessionModal;
 
-  private vicarPlay = vicarPlay;
+  private VicarPlayClient = VicarPlayClient;
 
   private username: string = "";
   private tsName: string = "";
@@ -73,7 +72,7 @@ export default class VicarPlay extends Vue {
   }
 
   private get lastSessions() {
-    return [...vicarPlay.sessionHistory].sort((a, b) => {
+    return [...VicarPlayClient.sessionHistory].sort((a, b) => {
       if (!a.date || !b.date) {
         return -1;
       }
@@ -98,12 +97,17 @@ export default class VicarPlay extends Vue {
     this.toggleLoader(true, this.$t("play.closing").toString());
 
     try {
-      await vicarPlay.close();
+      VicarPlayClient.closeSession();
     } catch (e) {
       console.error(e);
-    } finally {
       this.toggleLoader(false);
     }
+  }
+
+  @Socket("session:closed")
+  private onSessionClosed() {
+    VicarPlayClient.session = null;
+    this.toggleLoader(false);
   }
 
   @Provide("play:toggle-loader")

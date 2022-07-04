@@ -6,7 +6,7 @@
 
     <TipModal ref="tipModal"/>
 
-    <PlayMenu v-if="vicarPlay.isMenuOpen()" style="position: absolute; right: 0.5rem; top: 5rem; z-index: 11; margin-right: 0; margin-top: 0"/>
+    <PlayMenu v-if="VicarPlayClient.isMenuOpen" style="position: absolute; right: 0.5rem; top: 5rem; z-index: 11; margin-right: 0; margin-top: 0"/>
 
     <AvatarZoomModal ref="avatarZoomModal"/>
     <SyncCharacterHostModal ref="syncCharacterHostModal"/>
@@ -18,20 +18,20 @@
 import {Component, Provide, Ref, Vue} from "vue-property-decorator";
 import TipModal from "@/components/editor/TipModal.vue";
 import PlayMenu from "@/components/main/play/menu/PlayMenu.vue";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
 import EventBus from "@/libs/event-bus";
 import {ICharacter} from "@/types/models";
 import SyncCharacterPlayerModal from "@/components/main/play/modals/sync/SyncCharacterPlayerModal.vue";
 import SyncCharacterHostModal from "@/components/main/play/modals/sync/SyncCharacterHostModal.vue";
 import AvatarZoomModal from "@/components/main/play/modals/AvatarZoomModal.vue";
 import {IPlayer} from "@/libs/vicarplay/types";
+import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
 @Component({
   components: {AvatarZoomModal, SyncCharacterHostModal, SyncCharacterPlayerModal, TipModal, PlayMenu}
 })
 export default class App extends Vue {
 
-  private vicarPlay = vicarPlay;
+  private VicarPlayClient = VicarPlayClient;
 
   @Ref("contentWrapper")
   private contentWrapper!: HTMLDivElement;

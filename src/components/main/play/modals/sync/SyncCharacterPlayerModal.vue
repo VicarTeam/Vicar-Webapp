@@ -17,7 +17,7 @@ import {Component, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {ICharacter} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
+import {vicarPlay} from "@/libs/vicarplay/vicar-play-old";
 
 @Component({
   components: {Modal}

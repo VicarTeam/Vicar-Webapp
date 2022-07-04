@@ -1,11 +1,11 @@
 ﻿import * as data from "@/types/data";
 import {
     AttributeKeys,
-    fillDefaults, IAttributeData,
+    fillDefaults,
     ICharacter,
     IClan,
     ILanguage,
-    ILeveledDisciplineAbility, ISkillData, SkillKeys
+    ILeveledDisciplineAbility, SkillKeys
 } from "@/types/models";
 import {i18n} from "@/libs/i18n";
 import {

@@ -1,53 +1,63 @@
 <template>
   <div class="playplayers">
     <div class="sessionid">
-      <div class="id"><b>{{$t('play.players.id')}}:</b> {{vicarPlay.session.host.id}}</div>
+      <div class="id"><b>{{$t('play.players.id')}}:</b> {{VicarPlayClient.session.id}}</div>
       <div class="copy iconbtn" @click="copyId">
         <i class="fa-solid" :class="copyIcon"></i>
       </div>
     </div>
     <div class="player">
-      <span class="text you"><b>{{vicarPlay.session.host.name}}</b></span>
-      <div v-if="vicarPlay.voiceIntegration" class="kick iconbtn" @click="movePlayer(vicarPlay.me)">
+      <span class="text you">
+        <b>{{VicarPlayClient.session.host.username}}</b>
+        <small v-if="VicarPlayClient.amIHost()"> ({{$t('play.players.you')}})</small>
+      </span>
+<!--      <div v-if="vicarPlay.voiceIntegration" class="kick iconbtn" @click="movePlayer(vicarPlay.me)">
         <i class="fa-solid" :class="{'fa-user-group': vicarPlay.me.isMain, 'fa-user': !vicarPlay.me.isMain}"></i>
-      </div>
+      </div>-->
     </div>
     <div class="player" v-for="p in players">
-      <span class="text">{{p.name}}<small v-if="isPlayerSyncing(p)"> - <i>{{$t('play.sync.syncing')}}</i></small></span>
-      <div class="kick iconbtn" v-if="!isPlayerSyncing(p)" @click="startPlayerCharSync(p)" :class="{'loading': p.isSyncLoading}">
+      <span class="text">
+        {{p.username}}
+        <small v-if="VicarPlayClient.me.socketId === p.socketId"> ({{$t('play.players.you')}})</small>
+        <small v-if="isPlayerSyncing(p)"> - <i>{{$t('play.sync.syncing')}}</i></small>
+      </span>
+<!--      <div class="kick iconbtn" v-if="!isPlayerSyncing(p)" @click="startPlayerCharSync(p)" :class="{'loading': p.isSyncLoading}">
         <i class="fa-solid fa-rotate"></i>
-      </div>
-      <div class="kick iconbtn" @click="vicarPlay.kickPlayer(p)">
+      </div>-->
+      <div v-if="VicarPlayClient.amIHost()" class="kick iconbtn" @click="VicarPlayClient.kickPlayer(p)">
         <i class="fa-solid fa-right-from-bracket"></i>
       </div>
-      <div v-if="vicarPlay.voiceIntegration" class="kick iconbtn" @click="movePlayer(p)">
+<!--      <div v-if="vicarPlay.voiceIntegration" class="kick iconbtn" @click="movePlayer(p)">
         <i class="fa-solid" :class="{'fa-user-group': p.isMain, 'fa-user': !p.isMain}"></i>
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Inject, Ref, Vue} from "vue-property-decorator";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
-import {IHostedSession, IPlayer} from "@/libs/vicarplay/types";
-import SyncCharacterHostModal from "@/components/main/play/modals/sync/SyncCharacterHostModal.vue";
+import {Component, Vue} from "vue-property-decorator";
+import {IClientIdenity, IPlayer} from "@/libs/vicarplay/types";
 import EventBus from "@/libs/event-bus";
+import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
 @Component({
   components: {}
 })
 export default class PlayPlayers extends Vue {
 
-  private vicarPlay = vicarPlay;
+  private VicarPlayClient = VicarPlayClient;
   private copyIcon: string = "fa-paste";
 
-  private get players(): IPlayer[] {
-    return [...(<IHostedSession>this.vicarPlay.session).players].sort((a, b) => {
-      if (a.name < b.name) {
+  private get players(): IClientIdenity[] {
+    if (!VicarPlayClient.session) {
+      return [];
+    }
+
+    return [...VicarPlayClient.session.players].sort((a, b) => {
+      if (a.username < b.username) {
         return -1;
       }
-      if (a.name > b.name) {
+      if (a.username > b.username) {
         return 1;
       }
       return 0;
@@ -55,7 +65,7 @@ export default class PlayPlayers extends Vue {
   }
 
   private copyId() {
-    navigator.clipboard.writeText(vicarPlay.session.host.id);
+    navigator.clipboard.writeText(VicarPlayClient.session!.id);
     this.copyIcon = "fa-check";
     setTimeout(() => {
       this.copyIcon = "fa-paste";
@@ -63,30 +73,30 @@ export default class PlayPlayers extends Vue {
   }
 
   private async movePlayer(player: IPlayer) {
-    if (vicarPlay.voiceIntegration) {
+    /*if (vicarPlay.voiceIntegration) {
       try {
         await vicarPlay.voiceIntegration.movePlayer(player, player.isMain);
         player.isMain = !player.isMain;
       } catch (e) {
         console.error(e);
       }
-    }
+    }*/
   }
 
-  private startPlayerCharSync(player: IPlayer) {
-    if (player.isSyncLoading) {
+  private startPlayerCharSync(player: IClientIdenity) {
+    /*if (player.isSyncLoading) {
       return;
-    }
+    }*/
 
     this.showSyncCharacterHostModal(player);
   }
 
-  private showSyncCharacterHostModal(player: IPlayer) {
+  private showSyncCharacterHostModal(player: IClientIdenity) {
     EventBus.$emit("play:show-sync-character-host-modal", player);
   }
 
-  private isPlayerSyncing(player: IPlayer) {
-    return (<IHostedSession>vicarPlay.session).syncChars[player.id] !== undefined;
+  private isPlayerSyncing(player: IClientIdenity) {
+    return false;
   }
 }
 </script>

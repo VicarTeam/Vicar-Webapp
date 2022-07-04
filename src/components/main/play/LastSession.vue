@@ -11,7 +11,8 @@
 import {Component, Inject, Prop, Vue} from "vue-property-decorator";
 import {ILastPlaySession} from "@/libs/vicarplay/types";
 import IconButton from "@/components/IconButton.vue";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
+import {vicarPlay} from "@/libs/vicarplay/vicar-play-old";
+import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
 @Component({
   components: {IconButton}
@@ -28,7 +29,9 @@ export default class LastSession extends Vue {
     const tsName = this.getTsName();
     const discordName = this.getDiscordName();
 
-    vicarPlay.createSession(username, this.session.name, tsName, discordName, this.session.voiceData, true);
+    VicarPlayClient.socket.emit("session:init", "create", {
+      username, tsName, discordName
+    }, this.session.name);
   }
 
   private getFormattedDate() {

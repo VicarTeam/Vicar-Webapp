@@ -1,15 +1,15 @@
 <template>
-  <interact v-if="vicarPlay.isRunning" class="playmenu card"
+  <interact v-if="VicarPlayClient.isInSession()" class="playmenu card"
             resizable :resizeOption="resizeOptions" @resizemove="resizeMove"
             :draggable="!locked" :dragOption="dragOptions" @dragmove="dragMove"
             :style="{'width': currentWidth + 'px', 'height': currentHeight + 'px', transform: `translate(${currentX}px, ${currentY}px)`}" :class="{'opaque': opaque}">
-    <b class="title">{{vicarPlay.session.name}}</b>
+    <b class="title">{{VicarPlayClient.session.name}}</b>
     <div class="content">
       <component :is="tab"/>
     </div>
     <div class="footer">
-      <MenuTab v-if="vicarPlay.session.isHost" icon="fa-users" tab="PlayPlayers" v-model="tab"/>
-      <MenuTab v-if="vicarPlay.session.isHost && (vicarPlay.me.tsName || vicarPlay.me.dcName)" icon="fa-microphone" tab="PlayVoiceIntegration" v-model="tab"/>
+      <MenuTab icon="fa-users" tab="PlayPlayers" v-model="tab"/>
+      <MenuTab v-if="VicarPlayClient.amIHost() && (VicarPlayClient.me.tsName || VicarPlayClient.me.discordName)" icon="fa-microphone" tab="PlayVoiceIntegration" v-model="tab"/>
       <MenuTab icon="fa-message" tab="PlayChat" v-model="tab"/>
 
       <div class="iconbtn" style="pointer-events: auto; margin-top: 0.5rem; margin-left: auto" @click="locked = !locked">
@@ -24,20 +24,20 @@
 
 <script lang="ts">
 import {Component, Inject, Vue} from "vue-property-decorator";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
 import MenuTab from "@/components/main/play/menu/MenuTab.vue";
 import PlayChat from "@/components/main/play/menu/components/PlayChat.vue";
 import PlayPlayers from "@/components/main/play/menu/components/PlayPlayers.vue";
 import IconButton from "@/components/IconButton.vue";
 import interact from "interactjs";
 import PlayVoiceIntegration from "@/components/main/play/menu/components/PlayVoiceIntegration.vue";
+import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
 @Component({
   components: {PlayVoiceIntegration, IconButton, PlayPlayers, PlayChat, MenuTab}
 })
 export default class PlayMenu extends Vue {
 
-  private vicarPlay = vicarPlay;
+  private VicarPlayClient = VicarPlayClient;
   private currentWidth: number = 500;
   private currentHeight: number = 600;
   private currentX: number = 0;

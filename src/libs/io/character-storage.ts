@@ -1,7 +1,7 @@
 import {ICharacter, ICharacterDirectory} from "@/types/models";
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
+import {vicarPlay} from "@/libs/vicarplay/vicar-play-old";
 
 export default class CharacterStorage {
 
