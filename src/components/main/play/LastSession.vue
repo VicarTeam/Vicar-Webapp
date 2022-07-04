@@ -3,7 +3,7 @@
     <div class="text">
       <b>{{session.name}}</b><i v-if="session.date" style="margin-left: 0.5rem">{{$t('play.history.date', {date: getFormattedDate()})}}</i>
     </div>
-    <IconButton v-if="!vicarPlay.isRunning && getUsername()" icon="fa-arrows-rotate" @click="reopenSession"/>
+    <IconButton v-if="!VicarPlayClient.isInSession() && getUsername()" icon="fa-arrows-rotate" @click="reopenSession"/>
   </div>
 </template>
 
@@ -11,7 +11,6 @@
 import {Component, Inject, Prop, Vue} from "vue-property-decorator";
 import {ILastPlaySession} from "@/libs/vicarplay/types";
 import IconButton from "@/components/IconButton.vue";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play-old";
 import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
 @Component({
@@ -19,7 +18,7 @@ import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 })
 export default class LastSession extends Vue {
 
-  private vicarPlay = vicarPlay;
+  private VicarPlayClient = VicarPlayClient;
 
   @Prop({required: true})
   private session!: ILastPlaySession;
