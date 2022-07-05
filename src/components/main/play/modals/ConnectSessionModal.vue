@@ -13,7 +13,7 @@
 <script lang="ts">
 import {Component, Inject, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
+import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
 @Component({
   components: {Modal}
@@ -42,7 +42,11 @@ export default class ConnectSessionModal extends Vue {
     try {
       this.toggleLoader(true, this.$t('play.connect.loading').toString());
 
-      await vicarPlay.connectToSession(this.username, this.sessionId, this.tsName, this.discordName);
+      VicarPlayClient.socket.emit("session:init", "connect", {
+        username: this.username,
+        tsName: this.tsName,
+        discordName: this.discordName
+      }, this.sessionId);
       this.show = false;
     } catch (e) {
       console.error(e);

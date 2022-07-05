@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import store from "@/store";
+import LoadingView from "@/views/LoadingView.vue";
 
 Vue.use(VueRouter)
 

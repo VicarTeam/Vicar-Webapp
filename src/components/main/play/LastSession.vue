@@ -3,7 +3,7 @@
     <div class="text">
       <b>{{session.name}}</b><i v-if="session.date" style="margin-left: 0.5rem">{{$t('play.history.date', {date: getFormattedDate()})}}</i>
     </div>
-    <IconButton v-if="!vicarPlay.isRunning && getUsername()" icon="fa-arrows-rotate" @click="reopenSession"/>
+    <IconButton v-if="!VicarPlayClient.isInSession() && getUsername()" icon="fa-arrows-rotate" @click="reopenSession"/>
   </div>
 </template>
 
@@ -11,14 +11,14 @@
 import {Component, Inject, Prop, Vue} from "vue-property-decorator";
 import {ILastPlaySession} from "@/libs/vicarplay/types";
 import IconButton from "@/components/IconButton.vue";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
+import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
 @Component({
   components: {IconButton}
 })
 export default class LastSession extends Vue {
 
-  private vicarPlay = vicarPlay;
+  private VicarPlayClient = VicarPlayClient;
 
   @Prop({required: true})
   private session!: ILastPlaySession;
@@ -28,7 +28,10 @@ export default class LastSession extends Vue {
     const tsName = this.getTsName();
     const discordName = this.getDiscordName();
 
-    vicarPlay.createSession(username, this.session.name, tsName, discordName, this.session.voiceData, true);
+    VicarPlayClient.voiceIntegrationData = this.session.voiceData;
+    VicarPlayClient.socket.emit("session:init", "create", {
+      username, tsName, discordName
+    }, this.session.name);
   }
 
   private getFormattedDate() {

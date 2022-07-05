@@ -1,24 +1,24 @@
 <template>
-  <div class="playchat">
+  <div class="playchat" v-if="VicarPlayClient.session">
     <div class="history" ref="history">
-      <div class="message" v-for="(m, i) in vicarPlay.getChatMessages()" :key="i" :class="{'host': m.sender.isHost, 'private': m.isPrivate}">
+      <div class="message" v-for="(m, i) in VicarPlayClient.session.chatHistory" :key="i" :class="{'host': m.sender.isHost, 'private': m.receiver !== undefined}">
         <span v-if="isNormalMessage(m)">
-          <span v-if="m.sender.isHost">(GM) </span>{{m.sender.name}} &dash; {{m.content}}
+          <span v-if="m.sender.isHost">(GM) </span>{{m.sender.username}} &dash; {{m.content}}
         </span>
         <span v-else-if="(m.type === MessageType.BroadcastCommand || m.type === MessageType.PrivateCommand) && m.content['resultType'] === 'hungercheck'">
-          <span v-if="m.sender.isHost">(GM) </span>{{m.sender.name}} &dash; {{$t('play.chat.hungercheck' + (m.content['isDuel'] ? '.against' : ''), {status: m.content['status'], success: m.content['success'], diff: m.content['diff']})}}
+          <span v-if="m.sender.isHost">(GM) </span>{{m.sender.username}} &dash; {{$t('play.chat.hungercheck' + (m.content['isDuel'] ? '.against' : ''), {status: m.content['status'], success: m.content['success'], diff: m.content['diff']})}}
           <span v-if="m.content['rolls'].length > 0 || m.content['hunger'].length > 0">(<span class="normal">{{m.content['rolls']}}</span><span class="hunger">{{m.content['hunger']}}</span>)</span>
         </span>
         <div v-else-if="m.type === MessageType.Status" class="status">
           <span class="border"></span>
-          <small class="content">{{$t('play.status.' + m.content, {name: m.sender.name})}}</small>
+          <small class="content">{{$t('play.status.' + m.content, {name: m.sender.username})}}</small>
           <span class="border"></span>
         </div>
         <div v-else-if="m.type === MessageType.SecretCommand" class="secret-command">
           <i><b>{{$t('play.chat.secret')}} | </b>{{m.content}}</i>
         </div>
         <div v-else-if="m.type === MessageType.PrivateAvatar || m.type === MessageType.BroadcastAvatar" class="avatar" @click="showAvatarZoomModal(m.content)" :class="{'host': m.sender.isHost, 'private': m.isPrivate}">
-          <span><span v-if="m.sender.isHost">(GM) </span>{{m.sender.name}}:</span>
+          <span><span v-if="m.sender.isHost">(GM) </span>{{m.sender.username}}:</span>
           <img :src="m.content"/>
         </div>
         <small v-else-if="m.type === MessageType.Raw">
@@ -28,7 +28,7 @@
     </div>
     <div class="inputs">
       <div class="ta-wrapper">
-        <textarea draggable="true" class="form-control" v-model="writingMessage" @keypress.enter="sendMessage"
+        <textarea draggable="true" class="form-control" v-model="writingMessage" @keypress.enter="sendMessage($event)"
                   @drop="onSendingImageDrop($event)" :disabled="sendingImage">
         </textarea>
         <div v-if="sendingImage" class="ta-image">
@@ -40,10 +40,10 @@
       </div>
       <div class="actions">
         <div class="row" style="flex-shrink: 0">
-          <select class="form-control" v-model="vicarPlay.chatSendTo">
+          <select class="form-control" v-model="VicarPlayClient.chatSendTo">
             <option value="@all">{{$t('play.chat.sendmode.all')}}</option>
-            <option v-if="!vicarPlay.session.isHost" :value="vicarPlay.session.host.id">{{$t('play.chat.sendmode.host')}}</option>
-            <option v-for="p in getPlayers()" :key="p.id" :value="p.id">{{$t('play.chat.sendmode.private', {player: p.name})}}</option>
+            <option v-if="!VicarPlayClient.amIHost()" :value="VicarPlayClient.session.host.socketId">{{$t('play.chat.sendmode.host')}}</option>
+            <option v-for="p in getPlayers()" :key="p.socketId" :value="p.socketId">{{$t('play.chat.sendmode.private', {player: p.username})}}</option>
           </select>
         </div>
         <div class="row" style="flex-grow: 1">
@@ -59,23 +59,22 @@
 </template>
 
 <script lang="ts">
-import {Component, Inject, Ref, Vue} from "vue-property-decorator";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play";
-import {IHostedSession, IMessage, IPlayer, MessageType} from "@/libs/vicarplay/types";
+import {Component, Ref, Vue} from "vue-property-decorator";
+import {IClientIdenity, IMessage, MessageType} from "@/libs/vicarplay/types";
 import {CommandHandler, commandHandler} from "@/libs/vicarplay/commands";
 import {State} from "vuex-class";
 import {ICharacter} from "@/types/models";
 import IconButton from "@/components/IconButton.vue";
-import AvatarZoomModal from "@/components/main/play/modals/AvatarZoomModal.vue";
 import EventBus from "@/libs/event-bus";
+import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
 @Component({
   components: {IconButton}
 })
 export default class PlayChat extends Vue {
 
-  vicarPlay = vicarPlay;
-  MessageType = MessageType;
+  private VicarPlayClient = VicarPlayClient;
+  private MessageType = MessageType;
 
   @Ref("imageUploader")
   private imageUploader!: HTMLInputElement;
@@ -92,6 +91,10 @@ export default class PlayChat extends Vue {
 
   mounted() {
     CommandHandler.uploadImage = this.uploadImage;
+
+    this.$nextTick(() => {
+      this.historyDiv.scrollTop = this.historyDiv.scrollHeight;
+    });
   }
 
   updated() {
@@ -100,72 +103,82 @@ export default class PlayChat extends Vue {
     });
   }
 
-  private sendMessage() {
-    const receiver = vicarPlay.getChatReceiver();
+  private sendMessage(e: KeyboardEvent) {
+    if (e) {
+      e.preventDefault();
+    }
+
+    if (!VicarPlayClient.session || !VicarPlayClient.me) {
+      return false;
+    }
+
+    const receiver = VicarPlayClient.getChatReceiver();
     if (this.sendingImage !== null) {
-      vicarPlay.sendChatMessage({
-        type: vicarPlay.chatSendTo === "@all" ? MessageType.BroadcastAvatar : MessageType.PrivateAvatar,
+      VicarPlayClient.sendChatMessage({
+        type: VicarPlayClient.chatSendTo === "@all" ? MessageType.BroadcastAvatar : MessageType.PrivateAvatar,
         content: this.sendingImage,
-        sender: vicarPlay.me,
-        isPrivate: receiver !== undefined
-      }, receiver);
+        sender: VicarPlayClient.me,
+        receiver
+      });
       this.sendingImage = null;
-      return;
+      return false;
     }
 
     if (this.writingMessage.trim().length <= 0) {
-      return;
+      return false;
     }
 
     const message: IMessage = {
-      type: vicarPlay.chatSendTo === "@all" ? MessageType.BroadcastMessage : MessageType.PrivateMessage,
+      type: VicarPlayClient.chatSendTo === "@all" ? MessageType.BroadcastMessage : MessageType.PrivateMessage,
       content: this.writingMessage,
-      sender: vicarPlay.me,
-      isPrivate: receiver !== undefined
+      sender: VicarPlayClient.me,
+      receiver
     };
 
     if (this.writingMessage.trim().startsWith("/")) {
         const result = commandHandler.handle(this.editingCharacter, this.writingMessage.trim().substring(1));
+        this.writingMessage = "";
+
         if (!result) {
-          this.writingMessage = "";
-          return;
+          return false;
         }
 
         const [data, secret] = result;
         if (typeof data !== 'string' && data["resultType"] === 'help') {
           const msgs: IMessage[] = data["messages"];
           msgs.forEach(msg => {
-            vicarPlay.getChatMessages().push(msg);
+            VicarPlayClient.session!.chatHistory.push(msg);
           });
 
-          this.writingMessage = "";
-          return;
+          return false;
         }
 
         message.content = data;
 
         if (secret) {
           message.type = MessageType.SecretCommand;
-          vicarPlay.getChatMessages().push(message);
-          return;
+          VicarPlayClient.session!.chatHistory.push(message);
+          return false;
         }
 
-        message.type = vicarPlay.chatSendTo === "@all" ? MessageType.BroadcastCommand : MessageType.PrivateCommand;
+        message.type = VicarPlayClient.chatSendTo === "@all" ? MessageType.BroadcastCommand : MessageType.PrivateCommand;
     }
 
-    vicarPlay.sendChatMessage(message, receiver);
+    VicarPlayClient.sendChatMessage(message);
     this.writingMessage = "";
+
+    return false;
   }
 
-  private getPlayers(): IPlayer[] {
-    if (!vicarPlay.session.isHost) {
+  private getPlayers(): IClientIdenity[] {
+    if (!VicarPlayClient.session || !VicarPlayClient.amIHost()) {
       return [];
     }
-    return [...(<IHostedSession>this.vicarPlay.session).players].sort((a, b) => {
-      if (a.name < b.name) {
+    return [...VicarPlayClient.session.players].sort((a, b) => {
+      if (a.username < b.username) {
         return -1;
       }
-      if (a.name > b.name) {
+      if (a.username > b.username) {
         return 1;
       }
       return 0;
