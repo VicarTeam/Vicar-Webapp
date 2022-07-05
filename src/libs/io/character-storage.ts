@@ -2,6 +2,8 @@ import {ICharacter, ICharacterDirectory} from "@/types/models";
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
 import VicarPlayClient from "@/libs/vicarplay/vicar-play";
+import { readTextFile, writeTextFile, removeFile, createDir } from "@tauri-apps/api/fs";
+import { join, localDataDir } from "@tauri-apps/api/path";
 
 export default class CharacterStorage {
 
@@ -9,24 +11,26 @@ export default class CharacterStorage {
     public static loadedCharacters: ICharacter[] = [];
     public static loadedDirectories: ICharacterDirectory[] = [];
 
-    public static initialize() {
-        const directories = localStorage.getItem("character-directories");
+    public static async initialize() {
+        console.log("Is Tauri App: " + this.isTauriApp());
+
+        const directories = await this.readStorage("character-directories");
         if (directories) {
             this.loadedDirectories = JSON.parse(directories);
             this.loadedDirectories.sort((a, b) => a.name.localeCompare(b.name));
         }
 
-        const characterIds = localStorage.getItem("character-ids");
+        const characterIds = await this.readStorage("character-ids");
         if (characterIds) {
             this.loadedCharacterIds = JSON.parse(characterIds);
         }
 
-        this.loadedCharacterIds.forEach(id => {
-            const character = localStorage.getItem("character-" + id);
+        for (const id of this.loadedCharacterIds) {
+            const character = await this.readStorage("character-" + id);
             if (character) {
                 this.loadedCharacters.push(JSON.parse(character));
             }
-        });
+        }
     }
 
     public static addDirectory(directory: ICharacterDirectory) {
@@ -50,7 +54,9 @@ export default class CharacterStorage {
                     if (character) {
                         const characterData = JSON.parse(character);
                         if (characterData.directory === directory.id) {
-                            localStorage.removeItem("character-" + id);
+                            this.removeStorage("character-" + id).catch(e => {
+                                console.error(e);
+                            });
                             this.loadedCharacters = this.loadedCharacters.filter(character => character.id !== id);
                             this.loadedCharacterIds.splice(this.loadedCharacterIds.indexOf(id), 1);
                         }
@@ -63,7 +69,9 @@ export default class CharacterStorage {
     }
 
     public static saveCharacter(character: ICharacter) {
-        localStorage.setItem("character-" + character.id, JSON.stringify(character));
+        this.writeStorage("character-" + character.id, JSON.stringify(character)).catch(e => {
+            console.error(e);
+        });
 
         if (VicarPlayClient.isInSession() && VicarPlayClient.syncingChar) {
             if (character.id === VicarPlayClient.syncingChar.id) {
@@ -79,7 +87,9 @@ export default class CharacterStorage {
         this.saveCharacterIds();
 
         this.loadedCharacters.push(character);
-        localStorage.setItem("character-" + character.id, JSON.stringify(character));
+        this.writeStorage("character-" + character.id, JSON.stringify(character)).catch(e => {
+            console.error(e);
+        });
 
         return character.id;
     }
@@ -94,7 +104,9 @@ export default class CharacterStorage {
             if (index >= 0) {
                 this.loadedCharacters.splice(index, 1);
 
-                localStorage.removeItem("character-" + character.id);
+                this.removeStorage("character-" + character.id).catch(e => {
+                    console.error(e);
+                });
             }
         }
     }
@@ -114,10 +126,106 @@ export default class CharacterStorage {
     }
 
     private static saveCharacterIds() {
-        localStorage.setItem("character-ids", JSON.stringify(this.loadedCharacterIds));
+        this.writeStorage("character-ids", JSON.stringify(this.loadedCharacterIds)).catch(e => {
+            console.error(e);
+        });
     }
 
     public static saveCharacterDirectories() {
-        localStorage.setItem("character-directories", JSON.stringify(this.loadedDirectories));
+        this.writeStorage("character-directories", JSON.stringify(this.loadedDirectories)).catch(e => {
+            console.error(e);
+        });
+    }
+
+    public static async migrateCharacters() {
+        const newDirectoryIds: {[old: string]: string} = {};
+
+        const directories = localStorage.getItem("character-directories");
+        if (directories) {
+            const oldDirectories = JSON.parse(directories);
+            oldDirectories.forEach((directory: ICharacterDirectory) => {
+                if (this.loadedDirectories.find(d => d.id === directory.id)) {
+                    newDirectoryIds[directory.id] = uuidv4();
+                }
+                directory.id = newDirectoryIds[directory.id] || directory.id;
+                this.loadedDirectories.push(directory);
+            });
+
+            this.loadedDirectories.sort((a, b) => a.name.localeCompare(b.name));
+            this.saveCharacterDirectories();
+        }
+
+        const characterIds = localStorage.getItem("character-ids");
+        if (characterIds) {
+            const oldCharacterIds = JSON.parse(characterIds);
+
+            oldCharacterIds.forEach((id: string) => {
+                const characterJson = localStorage.getItem("character-" + id);
+                if (characterJson) {
+                    const character = JSON.parse(characterJson);
+                    if (character) {
+                        this.addCharacter(character);
+                    }
+                }
+            });
+        }
+    }
+
+    private static async writeStorage(name: string, value: string) {
+        try {
+            if (!this.isTauriApp()) {
+                localStorage.setItem(name, value);
+            } else {
+                const path = await this.getBaseStoragePath();
+                const fileName = await join(path, name + ".json");
+                await writeTextFile(fileName, value);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    private static async readStorage(name: string): Promise<string|null> {
+        try {
+            if (!this.isTauriApp()) {
+                return localStorage.getItem(name);
+            }
+
+            const path = await this.getBaseStoragePath();
+            const fileName = await join(path, name + ".json");
+            return await readTextFile(fileName);
+        } catch (e) {
+            console.error(e);
+            return null;
+        }
+    }
+
+    private static async removeStorage(name: string) {
+        try {
+            if (!this.isTauriApp()) {
+                localStorage.removeItem(name);
+            } else {
+                const path = await this.getBaseStoragePath();
+                const fileName = await join(path, name + ".json");
+                await removeFile(fileName);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    private static async getBaseStoragePath(): Promise<string> {
+        if (!this.isTauriApp()) {
+            return "";
+        } else {
+            const path = await join(await localDataDir(), "Vicar");
+            await createDir(path, {recursive: true});
+            return path;
+        }
+    }
+
+    private static isTauriApp() {
+        // @ts-ignore
+        return !!window.__TAURI__;
     }
 }
