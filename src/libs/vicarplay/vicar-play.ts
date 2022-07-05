@@ -2,12 +2,13 @@ import {Socket, io} from "socket.io-client";
 import {SettingsData} from "@/libs/io/settings";
 import {
     IClientIdenity,
-    IHostedSession,
     ILastPlaySession,
     IMessage,
-    IPlayer,
     ISessionState
 } from "@/libs/vicarplay/types";
+import EventBus from "@/libs/event-bus";
+import {ICharacter} from "@/types/models";
+import CharacterStorage from "@/libs/io/character-storage";
 
 class VicarPlay {
 
@@ -16,9 +17,10 @@ class VicarPlay {
 
     public isMenuOpen = false;
     public chatSendTo: string = "@all";
+    public syncingChar: ICharacter | null = null;
 
-    public session: ISessionState|null = null;
-    public me: IClientIdenity|null = null;
+    public session: ISessionState | null = null;
+    public me: IClientIdenity | null = null;
 
     public init() {
         this.sessionHistory = JSON.parse(localStorage.getItem('sessionHistory') || '[]');
@@ -31,6 +33,9 @@ class VicarPlay {
         this.socket.on("session:closed", this.onSessionClosed);
         this.socket.on("chat:message", this.onChatMessage);
         this.socket.on("players:update", this.onPlayersUpdate);
+        this.socket.on("sync-char:request", this.onSyncCharRequest);
+        this.socket.on("sync-char:response", this.onSyncCharResponse);
+        this.socket.on("sync-char:update", this.onSyncCharUpdate);
     }
 
     public isInSession(): boolean {
@@ -70,7 +75,7 @@ class VicarPlay {
         this.socket.emit("chat:message", message);
     }
 
-    public getChatReceiver(): IClientIdenity|undefined {
+    public getChatReceiver(): IClientIdenity | undefined {
         if (!this.session) {
             return undefined;
         }
@@ -95,6 +100,7 @@ class VicarPlay {
         this.isMenuOpen = false;
         this.session = null;
         this.me = null;
+        this.syncingChar = null;
         this.chatSendTo = "@all";
     }
 
@@ -106,16 +112,82 @@ class VicarPlay {
         this.session.chatHistory.push(message);
     }
 
-    private onPlayersUpdate = (mode: "add"|"remove", player: IClientIdenity) => {
+    private onPlayersUpdate = (mode: "add" | "remove", player: IClientIdenity) => {
         if (!this.session) {
             return;
         }
 
         if (mode === "add") {
+            player["isSyncLoading"] = false;
+            player["syncingCharId"] = null;
+
             this.session.players.push(player);
         } else {
             this.session.players = this.session.players.filter(x => x.socketId !== player.socketId);
         }
+    }
+
+    private onSyncCharRequest = (savingChar: string) => {
+        EventBus.$emit("show-synccharplayermodal", savingChar);
+    }
+
+    private onSyncCharResponse = (targetSocketId: string, savingChar: string, char: ICharacter) => {
+        if (!this.session) {
+            return;
+        }
+
+        const player = this.session.players.find(x => x.socketId === targetSocketId);
+        if (!player) {
+            return;
+        }
+
+        if (savingChar === "@new") {
+            CharacterStorage.addCharacter(char);
+            player.syncingCharId = char.id;
+        } else {
+            const existingChar = CharacterStorage.loadedCharacters.find(x => x.id === savingChar);
+            if (!existingChar) {
+                return;
+            }
+
+            Object.entries(char).forEach(([key, value]) => {
+                if (key === "id") {
+                    return;
+                }
+                // @ts-ignore
+                existingChar[key] = value;
+            });
+            CharacterStorage.saveCharacter(existingChar);
+            player.syncingCharId = savingChar;
+        }
+
+        player.isSyncLoading = false;
+    }
+
+    private onSyncCharUpdate = (targetSocketId: string, char: ICharacter) => {
+        if (!this.session) {
+            return;
+        }
+
+        const player = this.session.players.find(x => x.socketId === targetSocketId);
+        if (!player) {
+            return;
+        }
+
+        const existingChar = CharacterStorage.loadedCharacters.find(x => x.id === player.syncingCharId);
+        if (!existingChar) {
+            return;
+        }
+
+        Object.entries(char).forEach(([key, value]) => {
+                if (key === "id") {
+                    return;
+                }
+                // @ts-ignore
+                existingChar[key] = value;
+            }
+        );
+        CharacterStorage.saveCharacter(existingChar);
     }
 }
 

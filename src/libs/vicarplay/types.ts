@@ -1,18 +1,6 @@
 import Peer from "peerjs";
 import {IVoiceIntegrationData} from "@/libs/vicarplay/voice-integration";
 
-export enum MessageType {
-    BroadcastMessage,
-    PrivateMessage,
-    BroadcastCommand,
-    PrivateCommand,
-    SecretCommand,
-    BroadcastAvatar,
-    PrivateAvatar,
-    Status,
-    Raw
-}
-
 export interface IOldSession {
     name: string;
     host: IPlayer;
@@ -45,6 +33,18 @@ export type SyncChars = {[key: string]: string};
 
 // ----------- NEW VERSION -----------
 
+export enum MessageType {
+    BroadcastMessage,
+    PrivateMessage,
+    BroadcastCommand,
+    PrivateCommand,
+    SecretCommand,
+    BroadcastAvatar,
+    PrivateAvatar,
+    Status,
+    Raw
+}
+
 export interface ILastPlaySession {
     name: string;
     date: number;
@@ -57,6 +57,9 @@ export interface IClientIdenity {
     tsName: string;
     discordName: string;
     isHost: boolean;
+
+    isSyncLoading: boolean;
+    syncingCharId: string|null;
 }
 
 export interface ISessionState {

@@ -4,7 +4,7 @@
       <span>{{$t('play.sync.select.host')}}:</span>
       <select class="form-control" v-model="character">
         <option value="@new">{{$t('play.sync.select.host.new')}}</option>
-        <option v-for="c in characters" :value="c.char" :key="c.char.id">{{c.text}}</option>
+        <option v-for="c in characters" :value="c.char.id" :key="c.char.id">{{c.text}}</option>
       </select>
       <div style="width: 100%; display: flex; justify-content: center; align-items: center; margin-top: 1rem">
         <button class="btn btn-primary" @click="requestCharSync">{{$t('play.sync.select.host.btn')}}</button>
@@ -14,13 +14,12 @@
 </template>
 
 <script lang="ts">
-import {Component, Inject, Vue} from "vue-property-decorator";
+import {Component, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import CharacterStorage from "@/libs/io/character-storage";
-import {IHostedSession, IPlayer} from "@/libs/vicarplay/types";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play-old";
+import {IClientIdenity} from "@/libs/vicarplay/types";
 import {ICharacter} from "@/types/models";
-import EventBus from "@/libs/event-bus";
+import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
 interface ICharacterOption {
   text: string;
@@ -33,11 +32,11 @@ interface ICharacterOption {
 export default class SyncCharacterHostModal extends Vue {
 
   private show: boolean = false;
-  private player: IPlayer | null = null;
-  private character: "@new"|ICharacter = "@new";
+  private player: IClientIdenity | null = null;
+  private character: string = "@new";
   private characters: ICharacterOption[] = [];
 
-  public showModal(player: IPlayer) {
+  public showModal(player: IClientIdenity) {
     this.characters = CharacterStorage.getSortedCharacters().flatMap(s => {
       return s.characters.sort((a, b) => a.name.localeCompare(b.name)).map(c => {
         return {
@@ -58,28 +57,12 @@ export default class SyncCharacterHostModal extends Vue {
       return;
     }
 
-    if (!vicarPlay.isRunning || !vicarPlay.me.isHost) {
+    if (!VicarPlayClient.isInSession() || !VicarPlayClient.amIHost()) {
       return;
     }
 
     this.player.isSyncLoading = true;
-    vicarPlay.sendPlayer(this.player, "request:sync-char", (syncChar: ICharacter) => {
-      if (this.character === "@new") {
-        CharacterStorage.addCharacter(syncChar);
-        (<IHostedSession>vicarPlay.session).syncChars[this.player!.id] = syncChar.id;
-      } else {
-        Object.entries(syncChar).forEach(([key, value]) => {
-          if (key === "id") {
-            return;
-          }
-          // @ts-ignore
-          this.character[key] = value;
-        });
-        (<IHostedSession>vicarPlay.session).syncChars[this.player!.id] = this.character.id;
-      }
-      this.player!.isSyncLoading = false;
-      EventBus.$emit("update-character-list");
-    });
+    VicarPlayClient.socket.emit("sync-char:request", this.player.socketId, this.character);
     this.show = false;
   }
 }

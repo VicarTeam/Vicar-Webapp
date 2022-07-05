@@ -21,9 +21,9 @@
         <small v-if="VicarPlayClient.me.socketId === p.socketId"> ({{$t('play.players.you')}})</small>
         <small v-if="isPlayerSyncing(p)"> - <i>{{$t('play.sync.syncing')}}</i></small>
       </span>
-<!--      <div class="kick iconbtn" v-if="!isPlayerSyncing(p)" @click="startPlayerCharSync(p)" :class="{'loading': p.isSyncLoading}">
+      <div class="kick iconbtn" v-if="!isPlayerSyncing(p) && VicarPlayClient.amIHost()" @click="startPlayerCharSync(p)" :class="{'loading': p.isSyncLoading}">
         <i class="fa-solid fa-rotate"></i>
-      </div>-->
+      </div>
       <div v-if="VicarPlayClient.amIHost()" class="kick iconbtn" @click="VicarPlayClient.kickPlayer(p)">
         <i class="fa-solid fa-right-from-bracket"></i>
       </div>
@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
-import {IClientIdenity, IPlayer} from "@/libs/vicarplay/types";
+import {IClientIdenity} from "@/libs/vicarplay/types";
 import EventBus from "@/libs/event-bus";
 import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
@@ -72,7 +72,7 @@ export default class PlayPlayers extends Vue {
     }, 1500);
   }
 
-  private async movePlayer(player: IPlayer) {
+  private async movePlayer(player: IClientIdenity) {
     /*if (vicarPlay.voiceIntegration) {
       try {
         await vicarPlay.voiceIntegration.movePlayer(player, player.isMain);
@@ -84,9 +84,9 @@ export default class PlayPlayers extends Vue {
   }
 
   private startPlayerCharSync(player: IClientIdenity) {
-    /*if (player.isSyncLoading) {
+    if (player.isSyncLoading) {
       return;
-    }*/
+    }
 
     this.showSyncCharacterHostModal(player);
   }
@@ -96,7 +96,7 @@ export default class PlayPlayers extends Vue {
   }
 
   private isPlayerSyncing(player: IClientIdenity) {
-    return false;
+    return !!player.syncingCharId;
   }
 }
 </script>

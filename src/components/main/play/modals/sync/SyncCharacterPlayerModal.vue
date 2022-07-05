@@ -17,7 +17,7 @@ import {Component, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {ICharacter} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
-import {vicarPlay} from "@/libs/vicarplay/vicar-play-old";
+import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
 @Component({
   components: {Modal}
@@ -27,24 +27,24 @@ export default class SyncCharacterPlayerModal extends Vue {
   private show: boolean = false;
   private character: ICharacter = null!;
   private characters: ICharacter[] = [];
-  private callback: (char: ICharacter) => void = null!;
+  private savingChar: string = null!;
 
-  public showModal(callback: (char: ICharacter) => void) {
+  public showModal(savingChar: string) {
     this.characters = [...CharacterStorage.loadedCharacters].sort((a, b) => {
       return a.name.localeCompare(b.name);
     });
     this.character = this.characters[0];
-    this.callback = callback;
+    this.savingChar = savingChar;
     this.show = true;
   }
 
   private finishCharSync() {
-    if (!this.character || !this.callback || !vicarPlay.isRunning || vicarPlay.me.isHost) {
+    if (!this.character || !this.savingChar || !VicarPlayClient.isInSession() || VicarPlayClient.amIHost()) {
       return;
     }
 
-    vicarPlay.syncingChar = this.character;
-    this.callback(this.character);
+    VicarPlayClient.syncingChar = this.character;
+    VicarPlayClient.socket.emit("sync-char:response", this.savingChar, this.character);
     this.show = false;
   }
 }
