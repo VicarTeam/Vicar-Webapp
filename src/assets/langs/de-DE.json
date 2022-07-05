@@ -364,5 +364,6 @@
   "play.sync.syncing": "Charakter wird synchronisiert",
   "main.settings.devmode": "Entwicklermodus",
   "main.settings.vps": "VicarPlay Server",
-  "play.players.you": "Du"
+  "play.players.you": "Du",
+  "main.characters.migrate": "Charaktere migrieren"
 }

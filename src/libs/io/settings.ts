@@ -11,7 +11,7 @@ export class SettingsData {
     }
 
     public static getVicarPlayServer() {
-        return localStorage.getItem("settings:vicarplayServer") || "http://localhost:19987";
+        return localStorage.getItem("settings:vicarplayServer") || "https://vicarplay.polaryx.de";
     }
 
     public static setVicarPlayServer(value: string) {

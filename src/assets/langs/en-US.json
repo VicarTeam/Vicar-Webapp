@@ -360,5 +360,9 @@
   "play.sync.select.host.new": "New character",
   "play.sync.select.host.btn": "Request",
   "play.sync.select.player": "Choose character to synchronize",
-  "play.sync.syncing": "Character is synchronized"
+  "play.sync.syncing": "Character is synchronized",
+  "main.settings.devmode": "Developer Mode",
+  "main.settings.vps": "VicarPlay Server",
+  "play.players.you": "You",
+  "main.characters.migrate": "Migrate Characters"
 }

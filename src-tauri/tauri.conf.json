@@ -1,6 +1,7 @@
 {
   "$schema": "..\\node_modules/@tauri-apps/cli\\schema.json",
   "build": {
+    "withGlobalTauri": true,
     "beforeBuildCommand": "",
     "beforeDevCommand": "",
     "devPath": "Set automatically by Vue CLI plugin",
@@ -8,11 +9,17 @@
   },
   "package": {
     "productName": "Vicar",
-    "version": "1.1.6"
+    "version": "1.1.7"
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "all": true,
+      "fs": {
+        "all": true,
+        "scope": [
+          "$LOCALDATA/**"
+        ]
+      }
     },
     "bundle": {
       "active": true,

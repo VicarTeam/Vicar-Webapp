@@ -25,7 +25,7 @@ export default class LoadingView extends Vue {
     await DataManager.load();
 
     this.state = UpdateState.LoadingCharacters;
-    CharacterStorage.initialize();
+    await CharacterStorage.initialize();
 
     this.state = UpdateState.Finishing;
     await this.$router.push({name: 'main'});

@@ -13,9 +13,12 @@
           <input class="form-control" v-model="vpsUrl"/>
         </div>
         <div class="form-group d-flex align-items-center">
-          <div class="custom-switch d-flex align-items-center">
+          <div class="custom-switch d-flex align-items-center flex-grow-1">
             <input type="checkbox" id="switch-1" v-model="devMode">
             <label for="switch-1">{{$t('main.settings.devmode')}}</label>
+          </div>
+          <div class="d-flex align-items-center flex-shrink-0">
+            <button class="btn btn-primary" @click="migrateCharacters">{{$t('main.characters.migrate')}}</button>
           </div>
         </div>
         <div class="form-group mb-0" style="font-style: italic; width: 100%; text-align: right">
@@ -30,6 +33,7 @@
 import {Component, Vue} from "vue-property-decorator";
 import {AVAILABLE_LOCALES, i18n, setLocale} from "@/libs/i18n";
 import {SettingsData} from "@/libs/io/settings";
+import CharacterStorage from "@/libs/io/character-storage";
 
 @Component({
   components: {}
@@ -43,6 +47,10 @@ export default class Settings extends Vue {
 
   mounted() {
     this.selectedLocale = i18n.locale;
+  }
+
+  private async migrateCharacters() {
+    await CharacterStorage.migrateCharacters();
   }
 
   private get vpsUrl(): string {
