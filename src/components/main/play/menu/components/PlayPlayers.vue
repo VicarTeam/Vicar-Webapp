@@ -11,9 +11,9 @@
         <b>{{VicarPlayClient.session.host.username}}</b>
         <small v-if="VicarPlayClient.amIHost()"> ({{$t('play.players.you')}})</small>
       </span>
-<!--      <div v-if="vicarPlay.voiceIntegration" class="kick iconbtn" @click="movePlayer(vicarPlay.me)">
-        <i class="fa-solid" :class="{'fa-user-group': vicarPlay.me.isMain, 'fa-user': !vicarPlay.me.isMain}"></i>
-      </div>-->
+      <div v-if="VicarPlayClient.amIHost() && VicarPlayClient.isVoiceIntegrationActive" class="kick iconbtn" @click="movePlayer(VicarPlayClient.me)">
+        <i class="fa-solid" :class="{'fa-user-group': VicarPlayClient.me.isInVoiceMain, 'fa-user': !VicarPlayClient.me.isInVoiceMain}"></i>
+      </div>
     </div>
     <div class="player" v-for="p in players">
       <span class="text">
@@ -27,9 +27,9 @@
       <div v-if="VicarPlayClient.amIHost()" class="kick iconbtn" @click="VicarPlayClient.kickPlayer(p)">
         <i class="fa-solid fa-right-from-bracket"></i>
       </div>
-<!--      <div v-if="vicarPlay.voiceIntegration" class="kick iconbtn" @click="movePlayer(p)">
-        <i class="fa-solid" :class="{'fa-user-group': p.isMain, 'fa-user': !p.isMain}"></i>
-      </div>-->
+      <div v-if="VicarPlayClient.amIHost() && VicarPlayClient.isVoiceIntegrationActive" class="kick iconbtn" @click="movePlayer(p)">
+        <i class="fa-solid" :class="{'fa-user-group': p.isInVoiceMain, 'fa-user': !p.isInVoiceMain}"></i>
+      </div>
     </div>
   </div>
 </template>
@@ -73,14 +73,9 @@ export default class PlayPlayers extends Vue {
   }
 
   private async movePlayer(player: IClientIdenity) {
-    /*if (vicarPlay.voiceIntegration) {
-      try {
-        await vicarPlay.voiceIntegration.movePlayer(player, player.isMain);
-        player.isMain = !player.isMain;
-      } catch (e) {
-        console.error(e);
-      }
-    }*/
+    if (VicarPlayClient.isVoiceIntegrationActive) {
+      VicarPlayClient.socket.emit("voice:move-player", player.socketId, player.isInVoiceMain);
+    }
   }
 
   private startPlayerCharSync(player: IClientIdenity) {

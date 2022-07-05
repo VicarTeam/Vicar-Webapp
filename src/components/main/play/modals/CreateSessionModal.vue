@@ -14,6 +14,7 @@
 import {Component, Inject, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import VicarPlayClient from "@/libs/vicarplay/vicar-play";
+import {DefaultVoiceIntegration} from "@/libs/vicarplay/voice-integration";
 
 @Component({
   components: {Modal}
@@ -42,6 +43,7 @@ export default class CreateSessionModal extends Vue {
     try {
       this.toggleLoader(true, this.$t('play.create.loading').toString());
 
+      VicarPlayClient.voiceIntegrationData = DefaultVoiceIntegration();
       VicarPlayClient.socket.emit("session:init", "create", {
         username: this.username,
         tsName: this.tsName,

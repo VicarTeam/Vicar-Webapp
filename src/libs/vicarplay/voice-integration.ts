@@ -1,5 +1,3 @@
-import {IClientIdenity} from "@/libs/vicarplay/types";
-
 export enum VoiceType {
     Discord = "dc", TeamSpeak = "ts"
 }
@@ -15,27 +13,6 @@ export interface IVoiceIntegrationData {
     tsQueryPort: number;
     tsUsername: string;
     tsPassword: string;
-}
-
-export class VoiceIntegration {
-
-    private currentSession: string|null = null;
-
-    public constructor(public data: IVoiceIntegrationData) {
-
-    }
-
-    public async start(): Promise<void> {
-
-    }
-
-    public async stop(): Promise<void> {
-
-    }
-
-    public async movePlayer(player: IClientIdenity, toPrivate: boolean): Promise<void> {
-
-    }
 }
 
 export const DefaultVoiceIntegration: () => IVoiceIntegrationData = () => {

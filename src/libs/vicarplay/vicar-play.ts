@@ -9,6 +9,7 @@ import {
 import EventBus from "@/libs/event-bus";
 import {ICharacter} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
+import {IVoiceIntegrationData} from "@/libs/vicarplay/voice-integration";
 
 class VicarPlay {
 
@@ -18,6 +19,9 @@ class VicarPlay {
     public isMenuOpen = false;
     public chatSendTo: string = "@all";
     public syncingChar: ICharacter | null = null;
+
+    public voiceIntegrationData: IVoiceIntegrationData = null!;
+    public isVoiceIntegrationActive: boolean = false;
 
     public session: ISessionState | null = null;
     public me: IClientIdenity | null = null;
@@ -36,6 +40,8 @@ class VicarPlay {
         this.socket.on("sync-char:request", this.onSyncCharRequest);
         this.socket.on("sync-char:response", this.onSyncCharResponse);
         this.socket.on("sync-char:update", this.onSyncCharUpdate);
+        this.socket.on("voice:state", this.onVoiceState);
+        this.socket.on("voice:client-state", this.onVoiceClientState);
     }
 
     public isInSession(): boolean {
@@ -58,7 +64,7 @@ class VicarPlay {
             } else {
                 this.sessionHistory.push({
                     name: this.session.name,
-                    voiceData: null!,
+                    voiceData: this.voiceIntegrationData,
                     date: Date.now()
                 });
             }
@@ -102,6 +108,7 @@ class VicarPlay {
         this.me = null;
         this.syncingChar = null;
         this.chatSendTo = "@all";
+        this.isVoiceIntegrationActive = false;
     }
 
     private onChatMessage = (message: IMessage) => {
@@ -118,6 +125,7 @@ class VicarPlay {
         }
 
         if (mode === "add") {
+            player["isInVoiceMain"] = false;
             player["isSyncLoading"] = false;
             player["syncingCharId"] = null;
 
@@ -188,6 +196,38 @@ class VicarPlay {
             }
         );
         CharacterStorage.saveCharacter(existingChar);
+    }
+
+    private onVoiceState = (state: boolean, voiceStates: {[key: string]: boolean}) => {
+        if (!this.session) {
+            return;
+        }
+
+        if (state) {
+            this.session.players.forEach(p => {
+                p.isInVoiceMain = voiceStates[p.socketId] || false;
+            });
+        }
+
+        this.isVoiceIntegrationActive = state;
+    }
+
+    private onVoiceClientState = (targetSocketId: string, state: boolean) => {
+        if (!this.session || !this.me || !this.amIHost()) {
+            return;
+        }
+
+        if (this.me.socketId === targetSocketId) {
+            this.me.isInVoiceMain = state;
+            return;
+        }
+
+        const player = this.session.players.find(x => x.socketId === targetSocketId);
+        if (!player) {
+            return;
+        }
+
+        player.isInVoiceMain = state;
     }
 }
 

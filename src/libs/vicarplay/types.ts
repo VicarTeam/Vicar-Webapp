@@ -60,6 +60,8 @@ export interface IClientIdenity {
 
     isSyncLoading: boolean;
     syncingCharId: string|null;
+
+    isInVoiceMain: boolean;
 }
 
 export interface ISessionState {
