@@ -314,7 +314,7 @@
   {
     "id": 6,
     "name": "Erpresser",
-    "description": "Diese Blutsverwandten erwerben Blut im Austausch für geleistete Dienste.",
+    "description": "Der Erpresser zwingt seine Opfer gerne, für ihn zu bluten. Angeblich erhält der Erpresser das Blut als Gegenleistung für Dienstleistungen wie Sicherheit oder Überwachung, aber so oft wie das Bedürfnis nach Schutz real ist, so oft ist es auch eine Fiktion, um das Geschäft akzeptabel zu machen.",
     "actions": [
       {
         "description": "Zusätzliche Spezialisierung: Einschüchtern (Nötigung) oder Diebeshandwerk (Sicherheit)",
