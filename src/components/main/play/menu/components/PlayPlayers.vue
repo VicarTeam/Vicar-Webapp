@@ -11,8 +11,8 @@
         <b>{{VicarPlayClient.session.host.username}}</b>
         <small v-if="VicarPlayClient.amIHost()"> ({{$t('play.players.you')}})</small>
       </span>
-      <div v-if="VicarPlayClient.amIHost() && VicarPlayClient.isVoiceIntegrationActive" class="kick iconbtn" @click="movePlayer(VicarPlayClient.me)">
-        <i class="fa-solid" :class="{'fa-user-group': VicarPlayClient.me.isInVoiceMain, 'fa-user': !VicarPlayClient.me.isInVoiceMain}"></i>
+      <div v-if="VicarPlayClient.amIHost() && VicarPlayClient.isVoiceIntegrationActive" class="kick iconbtn" @click="movePlayer(VicarPlayClient.session.host)">
+        <i class="fa-solid" :class="{'fa-user-group': hostVoiceState, 'fa-user': !hostVoiceState}"></i>
       </div>
     </div>
     <div class="player" v-for="p in players">
@@ -47,6 +47,10 @@ export default class PlayPlayers extends Vue {
 
   private VicarPlayClient = VicarPlayClient;
   private copyIcon: string = "fa-paste";
+
+  private get hostVoiceState() {
+    return this.VicarPlayClient.session?.host.isInVoiceMain;
+  }
 
   private get players(): IClientIdenity[] {
     if (!VicarPlayClient.session) {

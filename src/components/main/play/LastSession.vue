@@ -28,6 +28,7 @@ export default class LastSession extends Vue {
     const tsName = this.getTsName();
     const discordName = this.getDiscordName();
 
+    VicarPlayClient.voiceIntegrationData = this.session.voiceData;
     VicarPlayClient.socket.emit("session:init", "create", {
       username, tsName, discordName
     }, this.session.name);

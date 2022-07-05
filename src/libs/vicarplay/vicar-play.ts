@@ -68,6 +68,8 @@ class VicarPlay {
                     date: Date.now()
                 });
             }
+
+            localStorage.setItem('sessionHistory', JSON.stringify(this.sessionHistory));
         }
 
         this.socket.emit("session:close");
@@ -199,11 +201,12 @@ class VicarPlay {
     }
 
     private onVoiceState = (state: boolean, voiceStates: {[key: string]: boolean}) => {
-        if (!this.session) {
+        if (!this.session || !this.me || !this.me.isHost) {
             return;
         }
 
         if (state) {
+            this.session.host.isInVoiceMain = voiceStates[this.me.socketId] || false;
             this.session.players.forEach(p => {
                 p.isInVoiceMain = voiceStates[p.socketId] || false;
             });
@@ -217,8 +220,8 @@ class VicarPlay {
             return;
         }
 
-        if (this.me.socketId === targetSocketId) {
-            this.me.isInVoiceMain = state;
+        if (this.session.host.socketId === targetSocketId) {
+            this.session.host.isInVoiceMain = state;
             return;
         }
 
