@@ -243,6 +243,8 @@ export interface ICharacter {
     backstory: string;
     notes: string;
     bloodRituals: IBloodRitual[];
+    useAdavancedDisciplines: boolean;
+    allowLearningOfAllPowers: boolean;
 }
 
 export interface ICategory {
@@ -325,5 +327,7 @@ export const DefaultCharacter: () => ICharacter = () => ({
     chroniclePrinciples: "",
     anchorsAndBeliefs: "",
     backstory: "",
-    notes: ""
+    notes: "",
+    useAdavancedDisciplines: false,
+    allowLearningOfAllPowers: false
 });

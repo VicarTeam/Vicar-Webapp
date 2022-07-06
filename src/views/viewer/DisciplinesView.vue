@@ -4,7 +4,7 @@
       <div class="discipline card" v-for="d in editingCharacter.disciplines">
         <div class="top">
           <div class="d-flex align-items-center" style="gap: 0.5rem; flex-grow: 1">
-            <LevelButton v-if="d.currentLevel - 1 < 5" @click="levelDiscipline(d)"/>
+            <LevelButton v-if="d.currentLevel - 1 < getMaxDisciplineLevel(d)" @click="levelDiscipline(d)"/>
             <b>{{d.discipline.name}}</b>
             <TipButton :content="d.discipline.summary"/>
           </div>
@@ -82,6 +82,13 @@ export default class DisciplinesView extends Vue {
 
     return (DataManager.isClanDiscipline(this.editingCharacter.clan, selection.discipline)
         ? levelResolver.resolveClanDiscipline : levelResolver.resolveOtherDiscipline)(this.editingCharacter, selection);
+  }
+
+  private getMaxDisciplineLevel(selection: IDisciplineSelection) {
+    if (this.editingCharacter.allowLearningOfAllPowers) {
+      return Infinity;
+    }
+    return this.editingCharacter.useAdavancedDisciplines ? 10 : 5;
   }
 }
 </script>

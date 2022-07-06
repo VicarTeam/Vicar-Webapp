@@ -364,5 +364,9 @@
   "main.settings.devmode": "Developer Mode",
   "main.settings.vps": "VicarPlay Server",
   "play.players.you": "You",
-  "main.characters.migrate": "Migrate Characters"
+  "main.characters.migrate": "Migrate Characters",
+  "main.characters.create.allbooks": "Use all books",
+  "viewer.saved": "Saved!",
+  "character.advanced.rules": "Gamemaster Rules",
+  "character.advanced.disciplines": "Advanced Disciplines"
 }

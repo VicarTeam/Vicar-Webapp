@@ -367,5 +367,8 @@
   "play.players.you": "Du",
   "main.characters.migrate": "Charaktere migrieren",
   "main.characters.create.allbooks": "Alle Bücher verwenden",
-  "viewer.saved": "Gespichert!"
+  "viewer.saved": "Gespichert!",
+  "character.advanced.rules": "Spielleiter-Regeln",
+  "character.advanced.disciplines": "Erweiterte Disziplinen",
+  "character.advanced.powers": "Alle Kräfte erlernen können"
 }
