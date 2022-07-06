@@ -74,7 +74,7 @@
   "editor.disciplines.level": "Level",
   "editor.disciplines.notselectable": "Requirements not met",
   "editor.disciplines.requirement": "Requirement",
-  "editor.disciplines.combo": "Combination",
+  "editor.disciplines.combo": "Amalgam",
   "editor.disciplines.costs": "Costs",
   "editor.disciplines.dices": "Dice Supplies",
   "editor.disciplines.system": "System",
@@ -368,5 +368,6 @@
   "main.characters.create.allbooks": "Use all books",
   "viewer.saved": "Saved!",
   "character.advanced.rules": "Gamemaster Rules",
-  "character.advanced.disciplines": "Advanced Disciplines"
+  "character.advanced.disciplines": "Advanced Disciplines",
+  "character.advanced.disciplines.minpotency": "Minimum Blood Potency"
 }
