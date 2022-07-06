@@ -34,6 +34,7 @@ import {IBloodRitual} from "@/types/data";
 import TipButton from "@/components/editor/TipButton.vue";
 import BloodRitualInfoModal from "@/components/viewer/modals/BloodRitualInfoModal.vue";
 import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vue";
+import CharacterStorage from "@/libs/io/character-storage";
 
 @Component({
   components: {ConfirmDeleteModal, BloodRitualInfoModal, TipButton, ChooseBloodRitualModal, LevelButton}
@@ -63,6 +64,7 @@ export default class BloodRitualsView extends Vue {
   private deleteBloodRitual(ritual: IBloodRitual) {
     this.confirmDeleteModal.showModal(ritual.name, () => {
       this.editingCharacter.bloodRituals = this.editingCharacter.bloodRituals.filter(x => x.id !== ritual.id);
+      CharacterStorage.saveCharacter(this.editingCharacter);
     });
   }
 

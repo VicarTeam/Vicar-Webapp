@@ -12,6 +12,7 @@
         </div>
         <div class="abilities">
           <div class="ability" v-for="a in d.abilities">
+            <i class="iconbtnprim fa-solid fa-xmark" v-if="editingCharacter.fullCustomization" @click="deleteDisciplineAbility(d, a)"></i>
             <small class="name">{{a.name}} - <i><b>{{$t('editor.disciplines.level')}}</b>: {{a.level}}</i></small>
             <TipButton class="tip" :override="true" @click="abilityInfoModal.showModal(a, d.discipline)"/>
           </div>
@@ -26,6 +27,7 @@
     <DisciplineAbilityInfoModal ref="abilityInfoModal"/>
     <ChooseDisciplineAbilityModal ref="chooseAbilityModal"/>
     <NewDisciplineModal ref="newDisciplineModal"/>
+    <ConfirmDeleteModal ref="confirmDeleteModal"/>
   </div>
 </template>
 
@@ -42,9 +44,12 @@ import {levelResolver} from "@/libs/resolvers/level-resolver";
 import DataManager from "@/libs/data-manager";
 import CharacterStorage from "@/libs/io/character-storage";
 import NewDisciplineModal from "@/components/viewer/modals/leveling/NewDisciplineModal.vue";
+import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vue";
+import {IDisciplineAbility} from "@/types/data";
 
 @Component({
   components: {
+    ConfirmDeleteModal,
     NewDisciplineModal,
     LevelButton, ChooseDisciplineAbilityModal, DisciplineAbilityInfoModal, Dots, TipButton}
 })
@@ -64,6 +69,17 @@ export default class DisciplinesView extends Vue {
 
   @Ref("newDisciplineModal")
   private newDisciplineModal!: NewDisciplineModal;
+
+  @Ref("confirmDeleteModal")
+  private confirmDeleteModal!: ConfirmDeleteModal;
+
+  private deleteDisciplineAbility(selection: IDisciplineSelection, ability: IDisciplineAbility) {
+    this.confirmDeleteModal.showModal(selection.discipline.name + " " + (selection.currentLevel - 1) + " - " + ability.name, () => {
+      selection.abilities = selection.abilities.filter(a => a.id !== ability.id);
+      selection.currentLevel--;
+      CharacterStorage.saveCharacter(this.editingCharacter);
+    });
+  }
 
   private levelDiscipline(selection: IDisciplineSelection) {
     const costs = this.getLevelCost(selection);
