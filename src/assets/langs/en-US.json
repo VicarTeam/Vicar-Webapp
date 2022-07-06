@@ -371,5 +371,7 @@
   "character.advanced.disciplines": "Advanced Disciplines",
   "character.advanced.disciplines.minpotency": "Minimum Blood Potency",
   "character.info.migrate": "Migrate",
-  "character.advanced.customization": "Full Customization"
+  "character.advanced.customization": "Full Customization",
+  "character.advanced.customization.delete": "Do you really want to delete {element}?",
+  "character.advanced.customization.delete.confirm": "Delete"
 }
