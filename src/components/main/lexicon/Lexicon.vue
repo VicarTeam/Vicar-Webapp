@@ -18,7 +18,7 @@
       <TOCMenu :title="$t('lexicon.toc.disciplines')" paragraph="disciplines">
         <TOCMenu v-for="d in disciplines" :key="d.id" :title="d.name" :paragraph="'discipline-' + d.id">
           <TOCMenu :title="$t('lexicon.toc.disciplines.abilites')" :paragraph="'discipline-' + d.id + '-abilities'">
-            <TOCItem v-for="i in [1, 2, 3, 4, 5]" :key="i" :title="$t('editor.disciplines.level') + ' ' + i" :paragraph="'discipline-' + d.id + '-abilities' + i"/>
+            <TOCItem v-for="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" :key="i" :title="$t('editor.disciplines.level') + ' ' + i" :paragraph="'discipline-' + d.id + '-abilities' + i"/>
           </TOCMenu>
           <TOCMenu v-if="d.id === 3" :title="$t('viewer.tab.bloodrituals')" paragraph="bloodrituals">
             <TOCItem v-for="i in [1, 2, 3, 4, 5]" :key="i" :title="$t('editor.disciplines.level') + ' ' + i" :paragraph="'bloodrituals-' + i"/>

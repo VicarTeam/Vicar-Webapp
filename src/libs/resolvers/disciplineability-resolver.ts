@@ -25,6 +25,14 @@ class DisciplineAbilityResolver {
         return true;
     }
 
+    @ResolveRestriction("minBloodPotency")
+    private resolveMinBloodPotency(char: ICharacter, data: number, dicipline: IDisciplineSelection): boolean {
+        if (!dicipline) {
+            return false;
+        }
+        return char.bloodPotency >= data;
+    }
+
     @ResolveRestriction("requirement")
     private resolveRequirement(char: ICharacter, requirement: number, dicipline: IDisciplineSelection): boolean {
         if (!dicipline) {

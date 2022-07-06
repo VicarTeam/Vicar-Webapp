@@ -63,6 +63,7 @@ export interface IDisciplineAbility {
     name: string;
     combination?: IDisciplineCombo;
     requirement?: number;
+    minBloodPotency?: number;
     summary: string;
     costs: string;
     diceSupplies?: string;
