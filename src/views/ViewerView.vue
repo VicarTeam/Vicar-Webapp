@@ -3,6 +3,7 @@
     <div class="d-flex top-bar">
       <div class="actions">
         <IconButton icon="fa-angles-left" @click="backToMain"/>
+        <IconButton icon="fa-info" @click="characterInfoModal.showModal(editingCharacter)"/>
         <Avatar :src="editingCharacter.avatar" style="width: 3rem; height: 3rem;"/>
       </div>
       <Tabs class="center" @before-change="switchTab" v-model="selectedTab">
@@ -19,13 +20,15 @@
           <IconButton icon="fa-pen" style="width: 2rem; height: 2rem" @click="addExpModal.showModal()"/>
         </small>
         <button class="btn btn-primary ml-10" @click="setLevelMode(!isLevelMode)">{{$t('viewer.mode.' + (isLevelMode ? 'disable' : 'enable'))}}</button>
-        <button class="btn btn-primary ml-10" @click="saveCurrentCharacter">{{$t('viewer.save')}}</button>
+        <button class="btn btn-primary ml-10" @click="saveCurrentCharacter">{{saveText}}</button>
       </div>
     </div>
     <div style="width: 100%; height: calc(100vh - 4.2rem - 3px); overflow-x: hidden; overflow-y: auto">
       <router-view/>
     </div>
+
     <AddExpModal ref="addExpModal"/>
+    <CharacterInfoModal ref="characterInfoModal"/>
   </div>
 </template>
 
@@ -39,9 +42,10 @@ import Avatar from "@/components/Avatar.vue";
 import Tab from "@/components/tabs/Tab.vue";
 import CharacterStorage from "@/libs/io/character-storage";
 import AddExpModal from "@/components/viewer/modals/AddExpModal.vue";
+import CharacterInfoModal from "@/components/viewer/modals/CharacterInfoModal.vue";
 
 @Component({
-  components: {AddExpModal, Tab, Avatar, IconButton, Tabs}
+  components: {CharacterInfoModal, AddExpModal, Tab, Avatar, IconButton, Tabs}
 })
 export default class ViewerView extends Vue {
 
@@ -54,6 +58,9 @@ export default class ViewerView extends Vue {
   @Ref("addExpModal")
   private addExpModal!: AddExpModal;
 
+  @Ref("characterInfoModal")
+  private characterInfoModal!: CharacterInfoModal;
+
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character?: ICharacter) => void;
 
@@ -61,6 +68,7 @@ export default class ViewerView extends Vue {
   private setLevelMode!: (isLevelMode: boolean) => void;
 
   private selectedTab: string = "viewer-profile";
+  private saveText: string = this.$t("viewer.save").toString();
 
   mounted() {
     this.$router.push({name: 'viewer-profile'});
@@ -75,6 +83,10 @@ export default class ViewerView extends Vue {
   private saveCurrentCharacter() {
     if (this.editingCharacter) {
       CharacterStorage.saveCharacter(this.editingCharacter);
+      this.saveText = this.$t('viewer.saved').toString();
+      setTimeout(() => {
+        this.saveText = this.$t('viewer.save').toString();
+      }, 1000);
     }
   }
 

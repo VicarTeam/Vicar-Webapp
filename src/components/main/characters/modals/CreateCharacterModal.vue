@@ -35,16 +35,7 @@
       </div>
       <div class="form-group">
         <label>{{$t('main.characters.create.books')}}:</label>
-        <div style="height: 14rem; overflow-x: hidden; overflow-y: auto; width: 100%">
-          <div class="custom-checkbox">
-            <input type="checkbox" id="book-0" v-model="useAllBooks" @change="toggleAllBooks">
-            <label for="book-0">Alle Bücher verwenden</label>
-          </div>
-          <div class="custom-checkbox" v-for="book in books" :key="book.id" style="margin-top: 0.2rem">
-            <input :disabled="book.id === 1" type="checkbox" :id="'book-' + book.id" v-model="book.active">
-            <label :for="'book-' + book.id">{{$t('data.books.' + book.id)}}</label>
-          </div>
-        </div>
+        <BookSelection ref="bookSelection"/>
       </div>
       <div style="text-align: center">
         <button class="btn btn-primary" @click="startCreateCharacter">{{$t('main.characters.create.start')}}</button>
@@ -54,19 +45,23 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Ref, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {DefaultCharacter, Generation, ICharacter, ICharacterDirectory, Sex} from "@/types/models";
 import {Mutation} from "vuex-class";
 import {EditorHistory} from "@/libs/editor-history";
+import BookSelection from "@/components/editor/BookSelection.vue";
 
 @Component({
-  components: {Modal}
+  components: {BookSelection, Modal}
 })
 export default class CreateCharacterModal extends Vue {
 
   private Sex = Sex;
   private Generation = Generation;
+
+  @Ref("bookSelection")
+  private bookSelection!: BookSelection;
 
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character?: ICharacter) => void;
@@ -77,29 +72,13 @@ export default class CreateCharacterModal extends Vue {
   private show = false;
   private name: string = "";
   private sex: Sex = Sex.Divers;
-  private useAllBooks: boolean = false;
   private generation: number = 13;
   private generationEra: Generation = Generation.Children;
   private dir: ICharacterDirectory|undefined = undefined;
 
-  private books: ({id: number; active: boolean})[] = [
-    {id: 1, active: true},
-    {id: 2, active: false},
-    {id: 3, active: false},
-    {id: 4, active: false},
-    {id: 5, active: false},
-    {id: 6, active: false},
-    {id: 7, active: false}
-  ]
-
   public showModal(dir?: ICharacterDirectory) {
     this.dir = dir;
     this.show = true;
-  }
-
-  private toggleAllBooks() {
-    this.books.forEach(book => book.active = this.useAllBooks);
-    this.books.find(book => book.id === 1)!.active = true;
   }
 
   private startCreateCharacter() {
@@ -112,7 +91,7 @@ export default class CreateCharacterModal extends Vue {
     char.sex = this.sex;
     char.generation = this.generation;
     char.generationEra = this.generationEra;
-    char.books = this.books.filter(book => book.active).map(book => book.id);
+    char.books = this.bookSelection.activeBooks;
 
     this.setDirectoryForCharCreation(this.dir);
 
