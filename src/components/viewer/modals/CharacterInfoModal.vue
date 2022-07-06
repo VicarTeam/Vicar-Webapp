@@ -15,6 +15,10 @@
           <input type="checkbox" id="pow" v-model="character.allowLearningOfAllPowers" @change="save">
           <label for="pow">{{$t('character.advanced.powers')}}</label>
         </div>
+        <div class="custom-checkbox d-flex align-items-center">
+          <input type="checkbox" id="cust" v-model="character.fullCustomization" @change="save">
+          <label for="cust">{{$t('character.advanced.customization')}}</label>
+        </div>
       </div>
       <div class="d-flex justify-content-center align-items-center" v-if="isNotUpToDate()">
         <button class="btn btn-primary" @click="migrateChar">{{$t('character.info.migrate')}}</button>
@@ -43,6 +47,7 @@ export default class CharacterInfoModal extends Vue {
     this.character = character;
     this.character["useAdavancedDisciplines"] = this.character["useAdavancedDisciplines"] || false;
     this.character["allowLearningOfAllPowers"] = this.character["allowLearningOfAllPowers"] || false;
+    this.character["fullCustomization"] = this.character["fullCustomization"] || false;
     this.show = true;
   }
 

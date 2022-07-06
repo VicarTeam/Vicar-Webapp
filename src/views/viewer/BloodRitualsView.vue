@@ -8,6 +8,7 @@
       <div class="list">
         <div class="entry" v-for="r in sortedRituals">
           <div class="name">
+            <i class="iconbtnprim fa-solid fa-xmark" v-if="editingCharacter.fullCustomization" @click="deleteBloodRitual(r)"></i>
             <small>
               {{r.name}} - {{$t('editor.disciplines.level')}}: {{r.level}}
             </small>
@@ -19,6 +20,7 @@
 
     <ChooseBloodRitualModal ref="levelBloodRitualModal"/>
     <BloodRitualInfoModal ref="bloodRitualInfoModal"/>
+    <ConfirmDeleteModal ref="confirmDeleteModal"/>
   </div>
 </template>
 
@@ -31,9 +33,11 @@ import {ICharacter, IDisciplineSelection} from "@/types/models";
 import {IBloodRitual} from "@/types/data";
 import TipButton from "@/components/editor/TipButton.vue";
 import BloodRitualInfoModal from "@/components/viewer/modals/BloodRitualInfoModal.vue";
+import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vue";
+import CharacterStorage from "@/libs/io/character-storage";
 
 @Component({
-  components: {BloodRitualInfoModal, TipButton, ChooseBloodRitualModal, LevelButton}
+  components: {ConfirmDeleteModal, BloodRitualInfoModal, TipButton, ChooseBloodRitualModal, LevelButton}
 })
 export default class BloodRitualsView extends Vue {
 
@@ -46,12 +50,22 @@ export default class BloodRitualsView extends Vue {
   @Ref("bloodRitualInfoModal")
   private bloodRitualInfoModal!: BloodRitualInfoModal;
 
+  @Ref("confirmDeleteModal")
+  private confirmDeleteModal!: ConfirmDeleteModal;
+
   private addNewTrait() {
     const selection: IDisciplineSelection = this.editingCharacter.disciplines.find(d => d.discipline.id === 3)!;
     if (!selection) {
       return;
     }
     this.levelBloodRitualModal.showModal(() => {}, selection, Infinity, true);
+  }
+
+  private deleteBloodRitual(ritual: IBloodRitual) {
+    this.confirmDeleteModal.showModal(ritual.name, () => {
+      this.editingCharacter.bloodRituals = this.editingCharacter.bloodRituals.filter(x => x.id !== ritual.id);
+      CharacterStorage.saveCharacter(this.editingCharacter);
+    });
   }
 
   private get sortedRituals(): IBloodRitual[] {
@@ -95,6 +109,9 @@ export default class BloodRitualsView extends Vue {
         gap: 0.5rem;
         .name {
           flex-grow: 1;
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
         }
         .tip {
           flex-shrink: 0;
