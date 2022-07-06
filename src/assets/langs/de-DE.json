@@ -372,5 +372,6 @@
   "character.advanced.disciplines": "Erweiterte Disziplinen",
   "character.advanced.powers": "Alle Kräfte erlernen können",
   "character.advanced.disciplines.minpotency": "Minimale Blutmacht",
-  "character.info.migrate": "Migrieren"
+  "character.info.migrate": "Migrieren",
+  "character.advanced.customization": "Volle Editierbarkeit"
 }

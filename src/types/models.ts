@@ -247,6 +247,7 @@ export interface ICharacter {
     bloodRituals: IBloodRitual[];
     useAdavancedDisciplines: boolean;
     allowLearningOfAllPowers: boolean;
+    fullCustomization: boolean;
     version: number;
 }
 
@@ -333,5 +334,6 @@ export const DefaultCharacter: () => ICharacter = () => ({
     notes: "",
     useAdavancedDisciplines: false,
     allowLearningOfAllPowers: false,
+    fullCustomization: false,
     version: CurrentCharacterVersion
 });

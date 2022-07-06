@@ -9,7 +9,7 @@
       <div class="list">
         <div class="entry" v-for="t in getTransformedData(editingCharacter.merits, false)">
           <LevelButton v-if="getTraitLevel(t) < 5" @click="levelTraitModal.showModal(t, 'merits')"/>
-          <LevelButton v-if="!t.isLocked" @click="removeTraitModal.showModal(t, 'merits', false)" icon="fa-xmark"/>
+          <i class="iconbtnprim fa-solid fa-xmark" v-bind="$attrs" @click="removeTraitModal.showModal(t, 'merits', false)" v-if="editingCharacter.fullCustomization"></i>
           <div class="name">
             <small>
               <i style="color: #989898">{{$t('data.trait.merit')}}</i> - {{t.pack.name}}: {{t.name}}{{getTraitSuffix(t)}} - <i><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(t)}}</i>
@@ -20,7 +20,7 @@
 
         <div class="entry" v-for="t in getTransformedData(editingCharacter.backgrounds, false)">
           <LevelButton v-if="getTraitLevel(t) < 5" @click="levelTraitModal.showModal(t, 'backgrounds')"/>
-          <LevelButton v-if="!t.isLocked" @click="removeTraitModal.showModal(t, 'backgrounds', false)" icon="fa-xmark"/>
+          <i class="iconbtnprim fa-solid fa-xmark" v-bind="$attrs" @click="removeTraitModal.showModal(t, 'backgrounds', false)" v-if="editingCharacter.fullCustomization"></i>
           <div class="name">
             <small>
               <i style="color: #989898">{{$t('data.trait.background')}}</i> - {{t.pack.name}}: {{t.name}}{{getTraitSuffix(t)}} - <i><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(t)}}</i>
@@ -38,7 +38,7 @@
 
       <div class="list">
         <div class="entry" v-for="t in getTransformedData(editingCharacter.merits, true)">
-          <LevelButton v-if="!t.isLocked" @click="removeTraitModal.showModal(t, 'merits', true)" icon="fa-xmark"/>
+          <i class="iconbtnprim fa-solid fa-xmark" v-bind="$attrs" @click="removeTraitModal.showModal(t, 'merits', true)" v-if="editingCharacter.fullCustomization"></i>
           <div class="name">
             <small>
               <i style="color: #989898">{{$t('data.trait.merit')}}</i> - {{t.pack.name}}: {{t.name}}{{getTraitSuffix(t)}} - <i><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(t)}}</i>
@@ -48,7 +48,7 @@
         </div>
 
         <div class="entry" v-for="t in getTransformedData(editingCharacter.backgrounds, true)">
-          <LevelButton v-if="!t.isLocked" @click="removeTraitModal.showModal(t, 'backgrounds', true)" icon="fa-xmark"/>
+          <i class="iconbtnprim fa-solid fa-xmark" v-bind="$attrs" @click="removeTraitModal.showModal(t, 'backgrounds', true)" v-if="editingCharacter.fullCustomization"></i>
           <div class="name">
             <small>
               <i style="color: #989898">{{$t('data.trait.background')}}</i> - {{t.pack.name}}: {{t.name}}{{getTraitSuffix(t)}} - <i><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{getTraitLevel(t)}}</i>

@@ -370,5 +370,6 @@
   "character.advanced.rules": "Gamemaster Rules",
   "character.advanced.disciplines": "Advanced Disciplines",
   "character.advanced.disciplines.minpotency": "Minimum Blood Potency",
-  "character.info.migrate": "Migrate"
+  "character.info.migrate": "Migrate",
+  "character.advanced.customization": "Full Customization"
 }
