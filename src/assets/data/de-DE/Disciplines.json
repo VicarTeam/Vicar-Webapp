@@ -101,6 +101,65 @@
           "system": "Der Anwender muss keine Proben ablegen, um seine Gedanken in den Verstand einer anderen Person, sei es Vampir oder Sterblicher, zu projizieren, er muss sie aber im Sichtfeld haben. Um den Verstand eines Sterblichen in Sichtweite zu lesen, muss er eine Probe auf Entschlossenheit + Auspex vs. Geistesschärfe + Ausflüchte ablegen, während er ihnen in die Augen sieht. (Außer der Sterbliche lässt es zu, dann muss nicht gewürfelt werden.) Ein Triumph bedeutet, dass der Vampir oberflächliche Gedanken als Bilderflut wahrnimmt. Bei höherer Differenz kann der Anwender nach älteren oder tiefer verborgenen Erinnerungen stöbern. Ein kritischer Triumph gewährt ihm einen Blick auf ein verständlicheres Bild der aktuellen Gedanken und Intentionen des Opfers. Um den Verstand eines unfreiwilligen Vampirs zu lesen, muss er vor dem Wurf einen Punkt Willenskraft investieren.",
           "duration": "Etwa 1 Minute pro Wallungs-Check. Bei freiwilligen Opfern lässt sich das auf eine Szene erweitern."
         }
+      ],
+      "6": [
+        {
+          "id": 10,
+          "name": "Das Träumen",
+          "minBloodPotency": 5,
+          "summary": "Blutsverwandte mit dieser Kraft überwinden einige der normalen Beschränkungen von Torpor und Tagesschlaf. Ihre Körper sind nicht mehr ansprechbar wie die anderer Blutsverwandter, aber ihr Geist bleibt lebendig und wach.",
+          "costs": "keine",
+          "system": "Sobald du diese Fähigkeit besitzt, fällst du nicht mehr vollständig in Bewusstlosigkeit, wenn du dich in Torpor oder Tagschlaf befindest. Dein Körper ist nicht mehr ansprechbar, aber dein Geist kann die Kreaturen um dich herum berühren und dir Einblicke in ihre Gedanken, Gefühle und Aktivitäten gewähren. Die Form, die dies annimmt, hängt von deiner Spezialisierung innerhalb der Auspex-Disziplin ab. Wenn du über Hellsichtigkeit verfügst, kannst du davon ausgehen, dass du diese Fähigkeit im Tagesschlaf oder in der Erstarrung ständig einsetzt. Wenn du über Telepathie verfügst, kannst du dich ohne Einschränkung mit Personen in deiner Nähe (innerhalb von ein oder zwei Häuserblocks) telepathisch unterhalten, darfst aber nicht die invasiveren Eigenschaften der Telepathiekraft nutzen. Wenn du die Fähigkeit Besessenheit besitzt, kannst du einen Punkt Oberflächlichen Willenskraftschaden auf dich nehmen, um einen Sterblichen in der Nähe deines Körpers zu besetzen. Wenn du diese Fähigkeit einsetzt, ist keine Sichtlinie erforderlich.",
+          "duration": "passiv"
+        }
+      ],
+      "7": [
+        {
+          "id": 11,
+          "name": "Geistige Verbindung",
+          "minBloodPotency": 6,
+          "requirement": 9,
+          "summary": "Diese Fähigkeit ermöglicht es dem Benutzer, über große Entfernungen und mit mehreren Zielen gleichzeitig telepathisch zu kommunizieren.",
+          "costs": "Ein Wallungs-Check (zusätzlich zu einem für Telepathie)",
+          "system": "Solange diese Fähigkeit aktiv ist, kannst du Telepathie ohne Sichtlinie und auf mehrere Ziele gleichzeitig anwenden und deinen Zielen sogar erlauben, sich telepathisch miteinander zu unterhalten, indem du deinen Geist als Medium benutzt. Wenn du Telepathie auf wirklich weit entfernte Ziele anwenden willst (mehr als eine Meile entfernt), kann der Geschichtenerzähler von dir eine Probe auf Entschlossenheit + Auspex gegen einen Schwierigkeitsgrad verlangen, den er auf der Grundlage der Entfernung des Ziels von dir festlegt. Die maximale Entfernung, über die du mit dieser Fähigkeit Telepathie einsetzen kannst, beträgt 50 Meilen.",
+          "duration": "eine Szene"
+        }
+      ],
+      "8": [
+        {
+          "id": 12,
+          "name": "Psychische Angriffe",
+          "minBloodPotency": 7,
+          "summary": "Der Blutsverwandte entfesselt eine Explosion mentaler Energie auf ein Ziel, die dessen Geist und Willen versengt.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Entschlossenheit + Auspex vs. Fassung + Entschlossenheit (oder Auspex, wenn das Ziel Punkte darin hat)",
+          "system": "Wenn du diese Fähigkeit aktivierst, wählst du ein Ziel aus, das du sehen kannst, und versuchst, dessen Geist mit psychischer Energie zu beschießen. Führe einen Wurf auf Entschlossenheit + Auspex durch, der durch ihre Gelassenheit + Entschlossenheit (oder Auspex, wenn das Ziel Punkte in Auspex besitzt) angefochten wird. Wenn du gewinnst, fügst du der Willenskraft des Ziels oberflächlichen Schaden in Höhe der Marge zu. Wenn dieser Schaden die Willenskraftanzeige des Ziels mit Erhöhtem Schaden auffüllt, stirbt es (wenn es sterblich ist) oder verfällt in Torpor (wenn es ein Vampir ist).",
+          "duration": "einen Angriff"
+        }
+      ],
+      "9": [
+        {
+          "id": 13,
+          "name": "Das geistige Auge",
+          "minBloodPotency": 8,
+          "summary": "Mit dieser Fähigkeit kann der Benutzer Ereignisse in großer Entfernung von ihm wahrnehmen.",
+          "costs": "zwei Wallungs-Checks",
+          "diceSupplies": "Intelligenz + Auspex",
+          "system": "Wenn du diese Fähigkeit aktivierst, legst du eine Intelligenz + Auspex-Probe gegen eine vom Geschichtenerzähler festgelegte Schwierigkeit ab, um zu versuchen, dein Bewusstsein aus deinem Körper in einen anderen Teil der Welt zu projizieren. Der Schwierigkeitsgrad sollte von der Entfernung des Ortes zu dir und eventuellen Schutzzaubern gegen magisches Eindringen abhängen, die dort vorhanden sind. Wenn du erfolgreich bist, kannst du den Zielort so erleben, als wärst du dort, obwohl du nichts beeinflussen kannst und kein Zeichen gibst, dass dein Geist dort ist. Solange diese Fähigkeit aktiv ist, nimmst du keine Empfindungen deines physischen Körpers wahr, außer plötzlichen Schmerz. Anwender von Auspex-Kräften können deine projizierte Anwesenheit erkennen, aber du kannst sie mit Verdunklungskräften verbergen, wenn du sie besitzt.",
+          "duration": "eine Szene"
+        }
+      ],
+      "10": [
+        {
+          "id": 14,
+          "name": "Der Puls der Canaille",
+          "minBloodPotency": 9,
+          "summary": "Blutsverwandte mit dieser Macht sind in der Lage, das kollektive Unterbewusstsein der Sterblichen in einem Gebiet anzuzapfen, ihre Einstellungen, Sorgen, Tendenzen und Perspektiven zu erfahren und das Vorhandensein von Blutsbanden oder anderen übernatürlichen Fesseln, die sie binden könnten, zu spüren.",
+          "costs": "zwei Wallungs-Checks",
+          "diceSupplies": "Fassung + Auspex",
+          "system": "Lege eine Fassung + Auspex-Probe ab, wenn du diese Kraft aktivierst. Das Ergebnis bestimmt deinen Erfolg bei der Synthese des massiven Zustroms an mentalen Informationen, die du von den Sterblichen um dich herum erhältst. Diese Macht kann dem Blutsverwandten, der sie einsetzt, Verständnis für soziale Bewegungen, moderne Perspektiven und sogar neue Technologien verleihen. Wenn du einen vom Geschichtenerzähler festgelegten versteckten Schwierigkeitsgrad bestehst, erhältst du außerdem ein intuitives Gespür für die Blutsbande und andere übernatürliche Herrschaften, die innerhalb der sterblichen Bevölkerung in deinem Gebiet existieren. Wenn du genügend Erfolge erzielst, erfährst du vielleicht sofort die genaue Identität eines oder mehrerer Sklaven- und Regentenpaare oder den Inhalt einer untergetauchten Direktive, die noch im Geist eines Sterblichen schlummert. Die wiederholte Anwendung dieser Fähigkeit kann es älteren Vampiren ermöglichen, sich an moderne Sichtweisen und Technologien anzupassen, was es ihnen möglicherweise erlaubt, die archaischen Schwächen zu entfernen.",
+          "duration": "eine Szene"
+        }
       ]
     }
   },
@@ -199,6 +258,66 @@
           "system": "Gegen tödliche Befehle muss man sich nun wehren (die entsprechenden Proben finden sich bei der jeweiligen Kraft), da der Befehl nicht mehr automatisch fehlschlägt.",
           "duration": "passiv"
         }
+      ],
+      "6": [
+        {
+          "id": 10,
+          "name": "Meinung einpflanzen",
+          "minBloodPotency": 5,
+          "summary": "Mit dieser Fähigkeit kann der Anwender einem Opfer grundlegende Überzeugungen, Meinungen oder Persönlichkeitsmerkmale einprägen, so dass es tiefgreifend verändert wird, ohne dass ihm bewusst wird, dass die Veränderung mehr als natürlich ist.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Manipulation + Beherrschung",
+          "system": "Wenn du diese Macht anwendest, beschreibst du dem Opfer die Art der Veränderung, die du ihm einpflanzen möchtest. Bei einem sterblichen Opfer legt der Geschichtenerzähler einen Schwierigkeitsgrad fest, der davon abhängt, wie sehr die einzupflanzende Eigenschaft der Natur des Opfers widerspricht; ein Vampir kann sich mit Intelligenz + Entschlossenheit gegen deine Probe auf Manipulation + Beherrschung wehren. Bei einem Sieg wird die von dir beschriebene Eigenschaft in den Wesenskern des Opfers integriert. Du kannst diese Fähigkeit auch nutzen, um dem Opfer nach den gleichen Regeln Eigenschaften zu entziehen. Gelingt dir jedoch eine solche Probe, erleidet das Opfer einen erhöhten Willenskraftschaden in Höhe von 4 der Marge bei der Probe, mindestens jedoch 1.",
+          "duration": "Permanent"
+        }
+      ],
+      "7": [
+        {
+          "id": 11,
+          "name": "Fäden der Marionette",
+          "minBloodPotency": 6,
+          "summary": "Vampire mit dieser Kraft haben die unheimliche Fähigkeit, gepfählte oder erstarrte Vampire als Puppenspieler einzusetzen.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Manipulation + Beherrschung",
+          "system": "Wenn du diese Fähigkeit aktivierst, kannst du Hypnose auf einen einzelnen gefesselten oder erstarrten Vampir anwenden und ihn wie eine Marionette manipulieren. Mache einen Manipulations- + Beherrschungs-Test mit einem Schwierigkeitsgrad von 4. Bei einem Sieg kannst du Hypnose für den Rest der Szene auf das Ziel anwenden; bei einem kritischen Sieg musst du diese Fähigkeit nicht erneut einsetzen, um Hypnose auch in Zukunft auf den gefesselten oder erstarrten Vampir anzuwenden, vorausgesetzt, er wurde seit dem kritischen Sieg nicht entfesselt oder aus dem Torpor erwacht. Das Vampiropfer besteht automatisch die Prüfung gegen deine Anwendung von Hypnose und führt deine Befehle automatisch und ausdrücklich aus, ohne wirkliche Anzeichen von Bewusstsein zu geben oder sich mehr als für die Aufgabe unbedingt erforderlich zu bewegen. Wenn der Befehl ausgeführt wurde, kehren sie in die absolute Stille zurück, die durch ihre Erstarrung oder den Pflock auferlegt wurde.",
+          "duration": "eine Szene (unbestimmt bei einem kritischen Sieg)"
+        }
+      ],
+      "8": [
+        {
+          "id": 12,
+          "name": "Ferne Beherrschung",
+          "minBloodPotency": 7,
+          "summary": "Mit dieser Fähigkeit kann ein Vampir seine Opfer befehligen, ohne sich im selben Raum zu befinden, geschweige denn Augenkontakt zu haben.",
+          "costs": "Ein Wallungs-Check (plus die Kosten für die verstärkte Kraft)",
+          "diceSupplies": "Entschlossenheit + Beherrschung",
+          "system": "Aktiviere diese Fähigkeit, wenn du eine andere Beherrschungsfähigkeit, wie z. B. Hypnose, einsetzt. Sie ignorieren die normalen Beschränkungen von Beherrschung, einschließlich des Erfordernisses des Augenkontakts; es ist nicht einmal notwendig, dass das Opfer Sie hört. Mit dieser Fähigkeit kannst du höchstens Opfer in derselben Stadt befehligen, nicht darüber hinaus.",
+          "duration": "eine Szene"
+        }
+      ],
+      "9": [
+        {
+          "id": 13,
+          "name": "Tragen die Stimme des Meisters weiter",
+          "minBloodPotency": 8,
+          "requirement": 6,
+          "summary": "Diese Macht erlaubt es dem Anwender, einen Sklaven mit der Intensität seiner Befehle zu beaufschlagen. Solche Sklaven können Befehle mit der Macht der Beherrschung ihres Meisters im Rücken erteilen.",
+          "costs": "Wie die eingebettete Kraft",
+          "system": "Wenn du die Untergetauchte Direktive benutzt, kannst du die Macht eines deiner eigenen Befehle in deinen Thrall einbetten, um sie später zu nutzen. Entscheide, welchen Befehl und welche Macht du in deinen Shrall einbetten willst; bezahle die Kosten und lege sofort eine Probe ab, die für die Macht erforderlich ist (notiere die Ergebnisse). Legen Sie dann die Bedingungen fest, unter denen Ihr Shrall den Befehl aktivieren soll. Wenn du ihm zum Beispiel den Befehl \"Verteidige mich\" gibst, kannst du ihn anweisen, ihn nur zu benutzen, wenn er sich in tödlicher Gefahr befindet. Wenn er ihn benutzt, verwendet er deine Ergebnisse für den Test und alle Erweiterungen der Beherrschung, die du aktiviert hast, als du diese Macht benutzt hast (z. B. Massenmanipulation), aber ansonsten wird er als derjenige betrachtet, der die Macht aktiviert. Du kannst mit dieser Macht mehrere Beherrschungsbefehle in einen einzigen Shrall einbetten.",
+          "duration": "Bis zur Verwendung"
+        }
+      ],
+      "10": [
+        {
+          "id": 14,
+          "name": "Blick des Tyrannen",
+          "minBloodPotency": 9,
+          "summary": "Diese Kraft ermöglicht es dem Anwender, das Vertrauen des Opfers in seine eigenen Fähigkeiten auf übernatürliche Weise zu zerstören.",
+          "costs": "zwei Wallungs-Checks",
+          "diceSupplies": "Entschlossenheit + Beherrschung vs. Fassung + Entschlossenheit",
+          "system": "Lege eine Probe auf Fassung + Beherrschung gegen die Fassung + Entschlossenheit des Opfers ab und wähle die Attribute Körperlich, Sozial oder Geistig. Bei einem Sieg werden die Attribute des Opfers in der gewählten Kategorie um eine Zahl verringert, die der Marge im Wettbewerb entspricht (mindestens jedoch um 1). Bei einem kritischen Sieg hält dieser Effekt auf unbestimmte Zeit an. Das Opfer kann seine Attribute pro Nacht um einen Punkt wiederherstellen, indem es eine Probe auf Fassung + Entschlossenheit mit Schwierigkeitsgrad 3 besteht. Das Opfer kann nur einen solchen Versuch pro Nacht machen.",
+          "duration": "eine Szene (unbestimmt bei einem kritischen Sieg)"
+        }
       ]
     }
   },
@@ -286,6 +405,70 @@
           "diceSupplies": "Entschlossenheit + Blutmagie vs. Fassung + Okkultismus oder Seelenstärke",
           "system": "Der Anwender zahlt die Kosten, berührt das Opfer (im Kampf oder ähnlichen Situation ist ein Wurf auf Geschicklichkeit + Sportlichkeit nötig) und würfelt auf Entschlossenheit + Blutmagie vs. Fassung + Okkultismus. (Vampire mit Seelenstärke können mit Fassung + Seelenstärke widerstehen.) Bei einem Triumph verursacht jeder Differenzpunkt beim Opfer einen Punkt Schweren Schaden. Sterbliche, die wenigstens einen Schadenspunkt erleiden, sterben einen qualvollen Tod. Vampire erhalten 1 Hunger pro zugefügtem Schadenspunkt, bis der Hunger auf 5 ansteigt.",
           "duration": "eine Runde"
+        }
+      ],
+      "6": [
+        {
+          "id": 9,
+          "name": "Abgetragener Zahn",
+          "minBloodPotency": 5,
+          "summary": "Mit dieser Macht kann der Zauberer die Reißzähne eines Blutsverwandten in sein Zahnfleisch zurückzwingen und ihn so daran hindern, sich mit Bissattacken zu ernähren.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Entschlossenheit + Blutmagie vs. Fassung + Entschlossenheit",
+          "system": "Wenn du den Wettbewerb gewinnst, werden die Reißzähne des Opfers für den Rest der Szene (bei einem kritischen Sieg für den Rest der Nacht) zurück in sein Zahnfleisch gezwungen. Solange die Reißzähne ummantelt sind, kann das Opfer keine vampirischen Bissattacken ausführen, und wenn es sich ernährt, muss es dies ohne Biss tun. Dieser Effekt bleibt auch dann erhalten, wenn das Opfer in einen Rasereizustand verfällt.",
+          "duration": "eine Szene (oder eine Nacht bei einem kritischen Sieg)"
+        }
+      ],
+      "7": [
+        {
+          "id": 10,
+          "name": "Blutpuppenspiel",
+          "minBloodPotency": 6,
+          "combination": {
+            "id": 2,
+            "level": 4
+          },
+          "summary": "Der Blutzauberer kann das Blut eines Opfers direkt mit seinem Geist kontrollieren und es in eine ruckartige Marionette verwandeln, die nach dem Willen des Zauberers handelt.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Manipulation + Blutmagie vs. Widerstandsfähigkeit + Entschlossenheit + Seelenstärke (falls das Opfer sie hat)",
+          "system": "Wenn du den Wettbewerb gewinnst, kannst du alle Bewegungen des Opfers für eine Anzahl von Runden kontrollieren, die 1 + der Gewinnmarge entspricht. Bei einem kritischen Sieg kontrollierst du die Bewegungen des Opfers für den Rest der Szene. Sterbliche verlieren automatisch. In jeder Runde, in der du ihre Bewegungen kontrollierst, entscheidest du, was sie tun werden, aber du kannst sie nur zu rein physischen Aktionen zwingen, nicht zum Einsatz von Disziplinen, Sprache usw. Wenn die Aktion des Opfers einen Würfelpool erfordert, kannst du ihn aus den Statistiken des Opfers zusammenstellen, aber die Anzahl der Würfel darf nicht höher sein als dein Ergebnis bei der ursprünglichen Probe auf Manipulation + Blut-Zauberei, um die Kontrolle über den Körper zu erlangen. Die Manipulation des Körpers eines Opfers zählt als kleine Aktion, die einen Malus von 2 Würfeln auf andere Würfe in dieser Runde verursacht, es sei denn, du besitzt Schnelle Reflexe.",
+          "duration": "Bis zu einer Szene"
+        }
+      ],
+      "8": [
+        {
+          "id": 11,
+          "name": "Korrupter Körper",
+          "minBloodPotency": 7,
+          "summary": "Diese Macht erlaubt es dem Vampir, die Lebenskraft eines anderen Vampirs zu beeinträchtigen, so dass sie dessen Fleisch verdirbt, anstatt es zu erhalten.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Geistesschärfe + Blutmagie vs. Widerstandsfähigkeit + Seelenstärke",
+          "system": "Du kannst nur andere Vampire mit dieser Fähigkeit angreifen. Wenn du den Wettbewerb gewinnst, kannst du eines ihrer körperlichen Attribute deiner Wahl um eine Zahl von 1 + deinen Vorsprung bei der Probe verringern, mindestens jedoch um 1. Bei einem kritischen Sieg hält dies für den Rest der Nacht an.",
+          "duration": "eine Szene (eine Nacht bei einem kritischen Sieg)"
+        }
+      ],
+      "9": [
+        {
+          "id": 12,
+          "name": "Abschiedsgruß",
+          "minBloodPotency": 8,
+          "summary": "Diese Macht entzieht dem Opfer vorübergehend die Vorteile seines Alters und seiner Blutmacht und zwingt es, vorübergehend die Schwäche und Verletzlichkeit der höheren Generationen zu spüren.",
+          "costs": "zwei Wallungs-Checks",
+          "diceSupplies": "Entschlossenheit + Blutmagie vs. Widerstandsfähigkeit + Seelenstärke + Blutmacht",
+          "system": "Wenn du den Wettbewerb gewinnst, wird die Generation des Opfers für eine Anzahl von Runden, die 1 + der Marge bei der Prüfung entspricht (eine Szene bei einem kritischen Sieg), auf 13 erhöht. Das bedeutet, dass die Blutmacht des Opfers auf 3 begrenzt ist, solange der Effekt anhält, und dass sie möglicherweise sinkt, wenn sie zu Beginn größer als 3 war.",
+          "duration": "Bis zu einer Szene"
+        }
+      ],
+      "10": [
+        {
+          "id": 13,
+          "name": "Trübe Bindung",
+          "minBloodPotency": 9,
+          "summary": "Diese Macht korrumpiert die Hingabe des Blutsbandes in Hass und verwandelt loyale Diener in tödliche Feinde.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Manipulation + Blutmagie",
+          "system": "Lege eine Probe auf Manipulation + Blutmagie gegen einen Schwierigkeitsgrad ab, der der Bindungsstärke + Fassung des Ziels entspricht (das Ziel muss ein Blutsklave sein). Bei einem Sieg verwandelt sich die Hingabe des Ziels an seinen Regenten in absoluten Hass. Das Vampiropfer muss jedes Mal, wenn es seinen Regnanten sieht, eine Probe auf Rasereizustand gegen einen Schwierigkeitsgrad ablegen, der der Bindungsstärke entspricht, solange der Effekt anhält. Bei einem kritischen Erfolg ist die Umkehrung des Blutsbandes permanent und hält an, bis die Stärke des Bandes auf 0 sinkt (gemäß den normalen Regeln für schwindende Blutsbande). Wenn die Stärke 0 erreicht, wird das Band gebrochen und der Sklave hat die Emotionen gegenüber seinem ehemaligen Regenten, die für ihn und seine Situation natürlich sind.",
+          "duration": "eine Szene (oder bis die Bindung bei einem kritischen Sieg gebrochen wird)"
         }
       ]
     }
@@ -381,6 +564,63 @@
           "system": "Der Spieler kann in von der Erzählerin beschriebene Ereignisse eingreifen, im angemessenen Rahmen. Er kann seinen Charakter durch eine Tür schlüpfen lassen, bevor diese sich schließt, einen Hinterhalt umgehen, nachdem er ausgelöst wurde, einer Explosion ausweichen und so weiter. Die Handlung muss angemessen sein und darf nicht länger als ein paar Sekunden dauern. Die Erzählerin bestimmt, auf welche Fähigkeit im Zweifelsfall gewürfelt werden muss, um eine Handlung mit dieser Kraft erfolgreich auszuführen.",
           "duration": "etwa eine Handlung, nach Ermessen der Erzählerin"
         }
+      ],
+      "6": [
+        {
+          "id": 9,
+          "name": "Schnelligkeit des Pulsschlags",
+          "minBloodPotency": 5,
+          "summary": "Benutzer der erweiterten Geschwindigkeit sind einfach in der Lage, mehr und schneller zu erledigen.",
+          "costs": "ein Wallungs-Check",
+          "system": "Wenn du diese Fähigkeit aktivierst, kannst du sofort einen weiteren Zug zusätzlich zu deinem aktuellen Zug machen (die Aktivierung von Geschwindigkeit zählt nicht als deine Aktion für den aktuellen Zug). Du kannst mit dieser Fähigkeit nur einen zusätzlichen Zug pro Runde machen, und dieser findet in derselben Zeit statt wie der Rest der Runde.",
+          "duration": "eine Runde"
+        }
+      ],
+      "7": [
+        {
+          "id": 10,
+          "name": "Blume des Todes",
+          "minBloodPotency": 6,
+          "summary": "Diese Kraft ermöglicht es dir, deine Angriffe mit übernatürlicher Geschwindigkeit auszuführen und Verteidigungsanlagen zu umgehen, bevor sie überhaupt zum Einsatz kommen können.",
+          "costs": "ein Wallungs-Check",
+          "system": "Solange diese Fähigkeit aktiv ist, addierst du deinen Wert für Geschwindigkeit zu Angriffen, die auf Geschicklichkeit basieren (z.B. Bogenschießen, Pistolen, Rapiere, Wurfdolche usw.).",
+          "duration": "eine Szene"
+        }
+      ],
+      "8": [
+        {
+          "id": 11,
+          "name": "Stotterschritt",
+          "minBloodPotency": 7,
+          "summary": "Blutsverwandte mit dieser Fähigkeit scheinen einfach für einen Moment in die Existenz hinein- und wieder herauszuflimmern und weichen Angriffen schneller aus, als das Auge sehen kann.",
+          "costs": "ein Wallungs-Check",
+          "system": "Solange diese Fähigkeit aktiv ist, erhältst du 3 automatische Erfolge bei Ausweichtests, und du erleidest keinen Malus, wenn du in deinem Zug mehrmals ausweichst.",
+          "duration": "eine Szene"
+        }
+      ],
+      "9": [
+        {
+          "id": 12,
+          "name": "Unermüdlicher Tritt",
+          "minBloodPotency": 8,
+          "requirement": 2,
+          "summary": "Mit dieser Leistung können sie stundenlang die Geschwindigkeit moderner Fahrzeuge erreichen.",
+          "costs": "zwei Wallungs-Checks",
+          "diceSupplies": "Widerstandsfähigkeit + Geschwindigkeit",
+          "system": "Wenn du diese Kraft aktivierst, erhältst du die Fähigkeit, eine Zeit lang mit unglaublicher Geschwindigkeit zu rennen. Lege einen Test auf Widerstandsfähigkeit + Geschwindigkeit ab, um festzustellen, wie lange du diese Geschwindigkeit aufrechterhalten kannst; jeder Erfolg gewährt dir eine halbe Stunde Sprint mit Geschwindigkeiten, die mit langsameren Autobahnfahrzeugen mithalten können (5060 mph). Bei einem kritischen Erfolg hält diese Kraft für den Rest der Nacht an.",
+          "duration": "variabel"
+        }
+      ],
+      "10": [
+        {
+          "id": 13,
+          "name": "Zwischen den Sekunden",
+          "minBloodPotency": 9,
+          "summary": "Auf dieser Stufe der Geschwindigkeit ist es fast unmöglich, mit jemandem zu konkurrieren, der nicht eine vergleichbare Bewertung in der Disziplin besitzt.",
+          "costs": "zwei Wallungs-Checks",
+          "system": "Solange diese Fähigkeit aktiv ist, scheitern alle Angriffe gegen dich automatisch, mit Ausnahme der Angriffe, die mit Unfehlbares Auge oder Blitzschlag ausgeführt werden, gegen die du dich normal verteidigst (oder einen Gegenangriff ausführst).",
+          "duration": "eine Szene"
+        }
       ]
     }
   },
@@ -463,6 +703,69 @@
           "costs": "keine",
           "system": "Erhöht außerhalb des Kampfes die Schwierigkeit für Proben, um einen Vampir zu pfählen, um 3. Im Nahkampf durchdringt der Pflock nur bei einem kritischen Triumph das Herz des Anwenders. Selbst wenn er gepfählt wurde, kann der Anwender einmal pro Stunde einen Wallungs-Check ablegen und auf Körperkraft + Entschlossenheit (Schwierigkeit 5) würfeln. Bei einem Triumph löst er sich aus der Lähmung, während der Pflock aus seinem Körper gedrängt wird. Bei Hunger 5 kann er nicht versuchen, den Pflock zu entfernen.",
           "duration": "passiv"
+        }
+      ],
+      "6": [
+        {
+          "id": 9,
+          "name": "Lokis Geschenk",
+          "minBloodPotency": 5,
+          "summary": "Blutsverwandte mit dieser Fähigkeit haben gelernt, eine Vielzahl von Formen mit Gestaltwandeln zu meistern. Sie können sich in jede Kreatur verwandeln, deren Blut sie gekostet haben.",
+          "costs":"keine",
+          "diceSupplies": "Geistesschärfe + Gestaltwandeln",
+          "system": "Du erhältst die Fähigkeit, die Form einer Kreatur zu lernen, wenn du ihr Blut trinkst. Lege eine Probe auf Geistesschärfe + Gestaltwandeln gegen eine vom Geschichtenerzähler festgelegte Schwierigkeit ab, die sich nach der Notwendigkeit individueller Spezifität richtet (z.B.: um eine neue Tierart zu beherrschen, ohne das exakte Aussehen eines Individuums nachzubilden, Schwierigkeitsgrad 3; um einen individuellen Sterblichen exakt zu simulieren, Schwierigkeitsgrad 6). Wenn du dich mit Tiergestalt oder Metamorphose verwandelst, kannst du jede Form annehmen, die du mit dieser Fähigkeit gelernt hast.",
+          "duration": "Gemäß der augmentierten Kraft"
+        }
+      ],
+      "7": [
+        {
+          "id": 10,
+          "name": "Umkehrung des Fleisches",
+          "minBloodPotency": 6,
+          "combination": {
+            "id": 9,
+            "level": 3
+          },
+          "summary": "Diese Kraft erlaubt es dem Anwender, einen Gestaltwandler durch die Beherrschung des Gestaltwandelns und der Bestie zurück in seine wahre Form zu zwingen.",
+          "costs": "zwei Wallungs-Checks",
+          "diceSupplies": "Entschlossenheit + Gestaltwandeln vs. Fassung + Entschlossenheit",
+          "system": "Wenn du diese Fähigkeit aktivierst, wähle eine Kreatur, die sich gerade in einer anderen Form als ihrer eigenen befindet (d.h. durch eine Gestaltwandeln-Kraft oder eine angeborene Verwandlung der Lupine) und führe einen Wettkampf zwischen Entschlossenheit + Gestaltwandeln gegen Fassung + Entschlossenheit. Bei einem Sieg zwingst du das Ziel, seine nächste Runde damit zu verbringen, sich wieder in seine wahre Form zu verwandeln. Für die Dauer des Kampfes kann das Opfer seine wahre Gestalt nicht verlassen. Bei einem kritischen Sieg hält dieser Effekt bis zum Ende der Nacht an.",
+          "duration":"eine Szene (eine Nacht bei einem kritischen Sieg)"
+        }
+      ],
+      "8": [
+        {
+          "id": 11,
+          "name": "Glückseliger Schlummer",
+          "minBloodPotency": 7,
+          "requirement": 7,
+          "summary": "Vampire mit dieser Fähigkeit haben gelernt, tagsüber in Form von Nebel zu schlummern und sind gegen alles außer Feuer und direktem Sonnenlicht immun.",
+          "costs": "ein Wallungs-Check",
+          "system": "Aktiviere sie nur, wenn du dich in deiner Nebelform befindest. Diese Kraft verlängert deine Nebelform bis zu deinem nächsten Erwachen aus dem Tagesschlaf. Während diese Kraft aktiv ist, erleidest du nur Schaden durch direktes Sonnenlicht, Feuer und immaterielle übernatürliche Angriffe. Du könntest zum Beispiel als Nebel unter den Ästen der Bäume in einem dichten Wald schlummern, ohne Schaden zu nehmen, obwohl nur wenig Sonnenlicht durch die Äste dringt. Wenn du aus irgendeinem Grund aus dem Tagesschlaf erwachst, nimmst du wieder deine wahre Gestalt an. Diese Fähigkeit entspricht in jeder anderen Hinsicht den Regeln für die Nebelform.",
+          "duration": "Bis zu deinem nächsten Erwachen aus dem Tagesschlaf"
+        }
+      ],
+      "9": [
+        {
+          "id": 12,
+          "name": "Das verborgene Kriechen des Todes",
+          "minBloodPotency": 8,
+          "requirement": 4,
+          "summary": "Diese Fähigkeit erweitert die Verschmelzung mit der Erde, indem sie dem Anwender erlaubt, sich langsam durch die Erde zu bewegen, während er verschmolzen ist.",
+          "costs":"keine",
+          "system": "Wenn du die Verschmelzung mit der Erde benutzt, kannst du dich im Schritttempo durch feste Erde bewegen. Selbst im Tagesschlaf oder in der Erstarrung ist dein Geist in der Lage, dich durch reinen Instinkt zu einem gewünschten Ziel voranzutreiben. Wenn du diese Fähigkeit nutzen willst, wähle ein Ziel, das du kennst und zu dem du dich vernünftig bewegen könntest, wenn du über der Erde reist. Vorausgesetzt, das Ziel ist durch ein durchgehendes Band aus natürlicher Erde (nicht aus Beton oder anderen künstlichen Materialien), das groß genug ist, um deinen Körper durchzulassen, mit deinem aktuellen Standort verbunden, bewegst du dich im Schritttempo durch die Erde dorthin. Wenn du dort ankommst, bleibst du am Zielort bewegungslos, bis du die Verschmelzung mit der Erde wieder verlässt. Du kannst die Verschmelzung mit der Erde freiwillig vorzeitig beenden, wenn du diese Fähigkeit besitzt. Mit dieser Kraft kannst du unter Böden oder Fundamenten auftauchen, aber sie hilft dir nicht, solche Barrieren zu durchbrechen. Du könntest dich also unter das Fundament eines Gebäudes begeben, um dir heimlich Zugang zu verschaffen, aber du müsstest einen Test machen, um den Beton zu durchbrechen, um tatsächlich Zugang zu erhalten.",
+          "duration": "passiv"
+        }
+      ],
+      "10": [
+        {
+          "id": 13,
+          "name": "Form des inneren Tieres",
+          "minBloodPotency": 9,
+          "summary": "Diese Kraft, die an die hybride Crinos-Kriegsform der Lupinen erinnert, verwandelt den Anwender in eine furchterregende Bestie von einzigartigem Aussehen. Blutsverwandte, die sich in diese Form verwandeln, sind zu unglaublicher Zerstörung fähig.",
+          "costs": "zwei Wallungs-Checks",
+          "system": "Es ist keine Prüfung erforderlich, aber die Verwandlung benötigt eine ganze Runde, um sie abzuschließen. Nach der Verwandlung nimmst du die Gestalt einer bestialischen Monstrosität mit furchterregenden und tödlichen natürlichen Waffen an. Ähnlich wie bei Lupinen erhöhen sich während der Verwandlung alle deine körperlichen Attribute um 3 und du heilst pro Runde 1 Punkt oberflächlichen Gesundheitsschaden. Während der Verwandlung sind deine wilden Waffen automatisch aktiv und werden als leichte, durchdringende Waffen mit einem Schadenswert von +4 behandelt. Außerdem erleidest du einen Malus von 2 Würfeln auf alle Tests auf Rasereizustand.",
+          "duration": "eine Szene"
         }
       ]
     }
@@ -562,6 +865,71 @@
           "system": "Ehrfurcht, Abschreckung und Entzücken können live via Bildschirm oder Telefon übertragen werden. Bei Entzücken muss der Name des Opfers klar und deutlich genannt werden, da die Kraft nur eine Person auf einmal beeinflusst. Alle anderen, die die Übertragung sehen, finden den Anwender lediglich sehr charmant, aber nicht auf übernatürliche Weise.",
           "duration": "siehe eingesetzte Kraft"
         }
+      ],
+      "6": [
+        {
+          "id": 9,
+          "name": "Funken Liebe",
+          "minBloodPotency": 5,
+          "requirement": 5,
+          "summary": "Vampire mit dieser Macht können die Herzen ihrer Opfer entflammen und ihnen die leidenschaftlichste Liebe oder die tiefste Hingabe entlocken, je nachdem, was sie für richtig halten. Diese Intensität der Emotionen ist von der Blutsband kaum zu unterscheiden.",
+          "costs": "zwei Wallungs-Checks",
+          "diceSupplies": "Charisma + Präsenz vs. Geistesschärfe + Fassung",
+          "system": "Mache einen Test von Charisma + Präsenz gegen Geistesschärfe + Fassung deines Opfers. Bei einem Sieg erschaffst du ein Blutsband zwischen euch beiden, wobei du der Regent bist und das Opfer der Sklave, versteht sich. Das Band beginnt mit einer Bindungsstärke von 3, bei einem kritischen Sieg beginnt die Bindungsstärke bei 6. Du entscheidest, ob sich diese Bindung als Liebe, Leidenschaft oder einfach als hingebungsvolle Loyalität manifestiert.",
+          "duration": "Permanent"
+        }
+      ],
+      "7": [
+        {
+          "id": 10,
+          "name": "Aphrodites Vergnügungen",
+          "minBloodPotency": 6,
+          "summary": "Diese Macht erlaubt es dem Anwender, Blutband direkt zu manipulieren und nach Belieben Sklaven von anderen Blutsverwandten zu stehlen.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Manipulation + Präsenz vs. Bindungsstärke + Blutmacht des Regnanten",
+          "system": "Wenn du diese Fähigkeit einsetzt, kannst du ein Blutband zwischen dir und einem anderen Individuum übertragen. Dies könnte bedeuten, dass du die Regentschaft über den Sklaven eines anderen Vampirs an dich reißt, oder dass du deine eigene Regentschaft auf einen deiner Untergebenen überträgst, damit dieser deine Blutbande für dich verwaltet. Sowohl der Sklave als auch der betreffende Regent müssen anwesend sein, wenn du diese Macht aktivierst. Führe eine Probe auf Manipulation + Präsenz gegen Bindungsstärke + Blutmacht des Regenten durch; der Regent der fraglichen Bindung führt diesen Anfechtungswurf durch. Wenn der Regnant ein williger Teilnehmer ist, kann er sich entscheiden, zu versagen. Bei einem Sieg gelingt dir die Manipulation des Bandes. Du kannst Fesseln nicht direkt zwischen anderen Blutsverwandten übertragen; du musst die Fessel zunächst selbst übernehmen und dann diese Macht erneut einsetzen, um sie an einen Dritten weiterzugeben.",
+          "duration": "Permanent"
+        }
+      ],
+      "8": [
+        {
+          "id": 11,
+          "name": "Unheilige Buße",
+          "minBloodPotency": 7,
+          "requirement": 4,
+          "summary": "Diese Macht zwingt das Opfer, Schuldgefühle und Reue für das zu empfinden, was der Anwender ihm aufträgt zu bereuen.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Manipulation + Präsenz vs. Intelligenz + Entschlossenheit",
+          "system": "Aktiviere diese Fähigkeit, wenn du einem Opfer befiehlst, etwas zu bereuen, was es getan hat. Lege eine Probe auf Manipulation + Anwesenheit gegen Intelligenz + Geistesschärfe ab. Bei einem Sieg wird das Opfer von Schuldgefühlen, Trauer und Reue überwältigt und bricht hilflos an Ort und Stelle zusammen, während es von seinen negativen Emotionen überwältigt wird. Das Opfer ist für eine Anzahl von Runden, die 1 + der Spanne des Wurfs entspricht, nicht in der Lage, sich zu verteidigen, und erleidet einen erhöhten Willenskraftschaden in Höhe der Spanne. Danach werden alle Markierungen entfernt. Bei einem kritischen Sieg ist das Opfer für den Rest der Szene nicht mehr in der Lage, einen Schutzwurf zur eigenen Verteidigung durchzuführen.",
+          "duration": "Bis zu einer Szene"
+        }
+      ],
+      "9": [
+        {
+          "id": 12,
+          "name": "Den unerlaubten Gedanken unterdrücken",
+          "minBloodPotency": 8,
+          "combination": {
+            "id": 1,
+            "level": 4
+          },
+          "summary": "Diese Macht bewirkt, dass der Verstand des Opfers eine bestimmte Erinnerung oder einen bestimmten Gedanken der Wahl des Vampirs an den Gedanken des Anwenders dieser Macht bindet und so verhindert, dass das Opfer auf dieses Konzept zugreifen kann.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Intelligenz + Präsenz vs. Intelligenz + Fassung",
+          "system": "Wenn Sie diese Fähigkeit einsetzen, sagen Sie dem Opfer, dass Sie möchten, dass es an Sie denkt, anstatt an eine einzelne Erinnerung oder einen Gedanken, den Sie zum Zeitpunkt der Aktivierung beschreiben. Du könntest zum Beispiel sagen: \"Denk nicht daran, wie sehr du deine tote Frau vermisst, sondern daran, wie sehr du mich liebst.\" oder \"Denk nicht daran, dass du vorhast, mich zu töten, sondern daran, dass du vorhast, mich zu küssen.\", Mache einen Test von Intelligenz + Präsenz gegen Intelligenz + Fassung. Sterbliche Opfer fallen automatisch durch. Bei einem Sieg wird der Geist des Opfers jedes Mal, wenn es sich sonst mit dem von dir unterdrückten Inhalt beschäftigen würde, von Gedanken an dich erfüllt, was es daran hindert, tatsächlich daran zu denken. Dieser Effekt hält eine Nacht lang an, oder bei einem kritischen Sieg auf unbestimmte Zeit.",
+          "duration": "eine Nacht (dauerhaft bei einem kritischen Sieg)"
+        }
+      ],
+      "10": [
+        {
+          "id": 13,
+          "name": "Unsterbliche Loyalität",
+          "minBloodPotency": 9,
+          "summary": "Vampire auf dieser Stufe der Präsenz haben einen unentwirrbaren Einfluss auf den Geist derer, die sie beeinflussen. Nur wenige Kräfte, ob magisch oder weltlich, sind in der Lage, ihren Griff zu brechen oder dem Einfluss ihrer Präsenz zu widerstehen.",
+          "costs":"keine",
+          "system": "Deine Anwesenheitskräfte setzen alle anderen bewusstseinsverändernden Wirkungen außer Kraft, die auf ein Opfer einwirken könnten, selbst Blutband. Solange jemand von einer deiner Gegenwartskräfte betroffen ist, werden alle bewusstseinsverändernden Wirkungen, die von jemand anderem als dir ausgehen, unterdrückt. Dieser Effekt gilt auch für diejenigen, die mit dir blutsverwandt sind, solange ihre Bindung andauert. Sie sind völlig immun gegen die Präsenz und das Dominat anderer Kreaturen. Sie haben nur einen Meister.",
+          "duration": "passiv"
+        }
       ]
     }
   },
@@ -657,6 +1025,63 @@
           "system": "Sobald die Kraft aktiviert wurde, erleidet der Vampir keine Nachteile mehr durch Schaden auf seine Gesundheit, wie körperliche Beeinträchtigungen. Zusätzlich kann er mit jeder Schadensstufe auf seiner Gesundheit, egal ob Schwerer oder Leichter Schaden, ein körperliches Attribut um einen Punkt erhöhen (abgeleitete Werte werden davon nicht beeinflusst). Mit dieser Kraft lassen sich die Attribute des Anwenders nicht auf einen Wert steigern, der seinen Blutschubwert + 6 überschreitet.",
           "duration": "eine Szene"
         }
+      ],
+      "6": [
+        {
+          "id": 10,
+          "name": "Die Rüstung der Könige",
+          "minBloodPotency": 5,
+          "summary": "Diese Kraft verleiht dem Fleisch des Anwenders eine übernatürliche Biegsamkeit, so dass Schläge abprallen und Waffen beim Aufprall zerbrechen.",
+          "costs": "ein Wallungs-Check",
+          "system": "Während diese Fähigkeit aktiv ist, darfst du beim Ausweichen Widerstandsfähigkeit + Sportlichkeit + Seelenstärke würfeln. Wenn dir ein Angriff mit einer Waffe keinen Schaden zufügt, während diese Fähigkeit aktiv ist, wird die Waffe zerstört, es sei denn, sie ist auf übernatürliche Weise gegen Zerstörung geschützt; Schwerter zerbrechen an deinem eisernen Fleisch, Kugeln prallen zurück und lassen die Waffe explodieren, aus der sie stammen, geballte Fäuste knirschen, während ihre Knochen an deinem unbeweglichen Kiefer zerschellen usw. Die einzige Ausnahme ist der durch Feuer verursachte Schaden.",
+          "duration": "eine Szene"
+        }
+      ],
+      "7": [
+        {
+          "id": 11,
+          "name": "Unbeugsamer Geist",
+          "minBloodPotency": 6,
+          "requirement": 2,
+          "summary": "Der Geist des Anwenders rebelliert automatisch gegen seine Beherrschung und wirft die Fesseln der übernatürlichen Kontrolle genüsslich ab.",
+          "costs":"keine",
+          "diceSupplies": "Entschlossenheit + Seelenstärke",
+          "system": "Wenn du Kräften unterliegst, die deinen Geist in irgendeiner Weise beeinflussen, legst du in jeder Runde automatisch eine Probe auf Entschlossenheit + Seelenstärke ab, um zu versuchen, ihren Einfluss abzuwehren. Du legst diese Probe gegen einen vom Geschichtenerzähler festgelegten Schwierigkeitsgrad oder gegen die Probe des Anwenders ab, je nachdem, was für die Fähigkeit angemessen ist. Das bedeutet, dass selbst wenn Erinnerungen aus deinem Geist entfernt oder umgeschrieben werden, oder wenn Direktiven in dein Unterbewusstsein eingepflanzt werden, wird sich dein Geist auf natürliche Weise in seinen unveränderten Zustand zurückversetzen. Schließlich können Sie nicht die bewusstseinsverändernden Wirkungen von Drogen jeglicher Art, ob übernatürlich oder nicht, erfahren.",
+          "duration":"passiv"
+        }
+      ],
+      "8": [
+        {
+          "id": 12,
+          "name": "Repariere das untote Fleisch",
+          "minBloodPotency": 7,
+          "summary": "Diese Kraft erlaubt es dem Vampir, sein verletztes Fleisch viel schneller zu heilen als jeder andere Blutsverwandte, vorausgesetzt, er hat Zugang zu ausreichend Blut.",
+          "costs":"keine",
+          "system": "Anstatt nur einen Punkt schweren Gesundheitsschadens pro Nacht heilen zu können, kannst du in einer einzigen Nacht eine beliebige Menge schweren Schadens heilen. Für jeden Punkt sind jedoch immer noch drei Wallungs-Proben erforderlich, um ihn zu heilen.",
+          "duration": "k.A."
+        }
+      ],
+      "9": [
+        {
+          "id": 13,
+          "name": "Arm des Prometheus",
+          "minBloodPotency": 8,
+          "summary": "Die Blutsverwandten konzentrieren die Kraft ihrer Lebenskraft auf ein einziges Glied und schützen es für kurze Zeit vor jeglichem Schaden.",
+          "costs": "zwei Wallungs-Checks",
+          "system": "Um diese Fähigkeit zu nutzen, ist keine Probe erforderlich. Solange sie aktiv ist, ist eine Gliedmaße deiner Wahl völlig immun gegen Schaden. Dies kann dir sogar erlauben, in Feuer oder Sonnenlicht zu greifen und unverletzt wieder herauszukommen, vorausgesetzt natürlich, dass nur das betroffene Glied ausgesetzt ist.",
+          "duration": "eine Szene"
+        }
+      ],
+      "10": [
+        {
+          "id": 14,
+          "name": "Ewige Wachsamkeit",
+          "minBloodPotency": 9,
+          "summary": "Diese fast schon mythische Fähigkeit erlaubt es dem Benutzer, bei Tageslicht wach zu bleiben, wobei er nur geringfügige Nachteile erleidet, vorausgesetzt natürlich, er hält sich vom Sonnenlicht fern.",
+          "costs": "zwei Wallungs-Checks",
+          "system": "Aktiviere diese Fähigkeit, wenn du kurz vor dem Tagesschlaf stehst; sie erlaubt dir, für die Dauer des Tages wach zu bleiben, anstatt in den Schlummer zu fallen. Außerdem wird die Obergrenze deiner Würfelpools, die du durch Handlungen bei Tageslicht erreichst, um deinen Entschlusskraftwert erhöht, solange du dich in schwachem Licht oder Dunkelheit befindest.",
+          "duration": "ein Tag"
+        }
       ]
     }
   },
@@ -749,6 +1174,75 @@
           "summary": "Mit bloßen Händen kann der Vampir schwere Verletzungen verursachen, die sowohl bei Sterblichen als auch bei Vampiren tödlich sein können. Er kann jemanden zerstückeln, durchbohren, aufspießen, enthaupten oder sogar jemandem das Herz aus der Brust reißen.",
           "costs": "ein Wallungs-Check",
           "system": "Eine Szene lang kann der Anwender sowohl bei Sterblichen als auch bei übernatürlichen Wesen im Handgemenge Schweren Schaden auf Gesundheit verursachen, da er wahrhaftig mit bloßen Händen Fleisch aufreißen und seine Gegner Stück für Stück auseinandernehmen kann.",
+          "duration": "eine Szene"
+        }
+      ],
+      "6": [
+        {
+          "id": 10,
+          "name": "Unaufhaltsames Momentum",
+          "minBloodPotency": 5,
+          "combo": {
+            "id": 4,
+            "level": 4
+          },
+          "summary": "Diese Kraft kombiniert die Vorteile von Stärke und Geschwindigkeit und ermöglicht es dem Vampir, sich mit unvorstellbarer Geschwindigkeit zu bewegen und seinen Körper mit unglaublichem Schwung durch Hindernisse zu drücken. Es ist eine der maskaradenbrechendsten Kräfte, die den Blutsverwandten zur Verfügung stehen.",
+          "costs": "ein Wallungs-Check",
+          "system": "Solange diese Fähigkeit aktiv ist, kannst du dich durch feste Objekte hindurchzwängen, die weniger dick sind als deine Stärke in Metern, wenn du dich bewegst. Mit dieser Fähigkeit kannst du durch Wände rennen, Stahltüren von Bunkern durchbrechen oder dich mit verschwommener Geschwindigkeit zu deinem Ziel durchgraben und dabei eine Spur der absoluten Zerstörung hinterlassen. Wenn du versuchst, dich durch Material zu zwängen, das zu dick ist, um von dieser Kraft durchdrungen zu werden (dicker als dein Potenzwert in Metern), dann kommst du zum Stillstand, nachdem du dich nur so weit durch das Material gegraben hast, und hinter dir bleibt ein grob vampirähnlicher Tunnel zurück. Wenn dies geschieht, lässt die Wirkung der Macht nach.",
+          "duration": "eine Szene"
+        }
+      ],
+      "7": [
+        {
+          "id": 11,
+          "name": "Unzerbrechlicher Griff",
+          "minBloodPotency": 6,
+          "requirement": 6,
+          "summary": "Mit dieser Kraft kann der Anwender eine Kreatur oder einen Gegenstand gegen fast jede Kraft festhalten.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Körperkraft + Stärke vs. Körperkraft + Stärke",
+          "system": "Solange diese Kraft aktiv ist, können Gegenstände, die du festhältst, und Kreaturen, die du gepackt hast, nicht gegen deinen Willen aus deinem Griff entfernt werden. Nur eine Kreatur, die ebenfalls Zugang zu mindestens einer fortgeschrittenen Potenzkraft hat, hat die Chance, deinen Griff zu brechen. In einem solchen Fall musst du einen umstrittenen Wurf mit Körperkraft + Stärke durchführen, um das Ergebnis zu ermitteln.",
+          "duration": "eine Szene"
+        }
+      ],
+      "8": [
+        {
+          "id": 12,
+          "name": "Unbewegliches Objekt",
+          "minBloodPotency": 7,
+          "combination": {
+            "id": 7,
+            "level": 5
+          },
+          "summary": "Diese Kraft erlaubt es den Blutsverwandten, sich gegen jede Kraft zu wehren, die versucht, sie von ihrem Standort zu entfernen.",
+          "costs": "ein Wallungs-Check",
+          "system": "Blutsverwandte, die diese Kraft besitzen, können nicht gegen ihren Willen bewegt werden. Sie widerstehen allen Versuchen, dies zu tun; selbst der Aufprall eines Sattelschleppers, der mit Highway-Geschwindigkeit fährt, kann sie nicht bewegen, es sei denn, sie wollen bewegt werden, auch wenn er Schaden anrichten könnte. Die meisten Blutsverwandten mit dieser Fähigkeit aktivieren auch Fleisch aus Marmor, so dass sie aus solchen Zusammenstößen unbeschadet hervorgehen können. Wie bei Unzerbrechlicher Griff kann jedoch eine Kreatur mit Zugang zu mindestens einer fortgeschrittenen Potenzkraft einen angefochtenen Wurf von Körperkraft + Stärke machen, um zu versuchen, den Anwender dieser Kraft zu bewegen.",
+          "duration":"passiv"
+        }
+      ],
+      "9": [
+        {
+          "id": 13,
+          "name": "Juggernaut",
+          "minBloodPotency": 8,
+          "combination": {
+            "id": 7,
+            "level": 5
+          },
+          "summary": "Blutsverwandte mit dieser Fähigkeit sind fast unmöglich zu töten. Wenn sie in Torpor verfallen, werden sie nicht bewusstlos und bleiben unbeweglich liegen, sondern ihr Tier übernimmt die höheren Gehirnfunktionen und verteidigt sich aus reinem Instinkt, indem sie gedankenlos zerstört, bis alle Bedrohungen beseitigt sind.",
+          "costs":"keine",
+          "system": "Wenn deine Lebenspunkteanzeige voll mit schwerem Schaden ist und die letzten Punkte des Schadens nicht durch Feuer, Enthauptung oder Sonnenlicht verursacht wurden, trittst du sofort in einen Rasereizustand ein, ohne eine Probe zu machen. Solange dieser Rasereizustand anhält, kannst du nicht durch den Einsatz von Willenskraft die Kontrolle übernehmen; dein Bewusstsein befindet sich in Starre, und dein Tier ist völlig entfesselt. Solange dieser Rasereizustand anhält, hat zusätzlicher schwerer Schaden keine Auswirkungen auf dich, es sei denn, er wird durch Enthauptung, Feuer oder Sonnenlicht verursacht; in diesem Fall führt er zu deinem endgültigen Tod. Deine Stärke erhöht sich um 3, bis der Rasereizustand endet, und deine Bestie setzt alle deine physischen Disziplinierungskräfte ein, um sich vor Schaden zu schützen und Bedrohungen zu beseitigen. Deine Bestie vernichtet jede mögliche Bedrohung in der Umgebung und handelt dabei rein instinktiv. Selbst Verbündete, sofern sie nicht vor dir fliehen, werden zur Zielscheibe der Zerstörung durch deine Bestie. Wenn keine Feinde mehr zu sehen sind, bringt dich deine Bestie an einen sicheren Ort vor der Sonne und beendet den Rasereizustand. Wenn er zu Ende ist, fällst du in eine wahre Starre.",
+          "duration":"passiv"
+        }
+      ],
+      "10": [
+        {
+          "id": 14,
+          "name": "Mächtig",
+          "minBloodPotency": 9,
+          "summary": "Auf dieser Stärkestufe ist die Kraft des Vampirs von mythischem Ausmaß, er kann Flugzeuge anheben, Panzer werfen, Bäume aus dem Boden reißen und natürlich Blutsverwandte mit Leichtigkeit in Stücke reißen.",
+          "costs": "zwei Wallungs-Checks",
+          "system": "Solange diese Fähigkeit aktiv ist, erhältst du bei jeder Probe, bei der es um Körperkraft oder Stärke geht, 5 automatische Erfolge, zusätzlich zu denen, die du aus deinem Würfelpool erhältst. Für viele kampffreie Kraftproben bedeutet dies, dass du nicht einmal würfeln musst.",
           "duration": "eine Szene"
         }
       ]
@@ -851,6 +1345,64 @@
           "system": "Anstelle einer Willenskraftprobe, um einer Furcht- oder Zornraserei zu widerstehen, würfelst du auf Geistesschärfe + Tierhaftigkeit vs. Fassung + Entschlossenheit des Opfers. Schlägt der Wurf des Anwenders fehl, verfällt er in Raserei, als hätte er die Probe auf Willenskraft nicht bestanden. Bei einem Triumph erlebt das Opfer die Raserei anstelle des Anwenders. Spätere Impulse können noch immer eine Raserei in dem Vampir auslösen, aber er kann die Kraft anwenden, solange er in der Lage ist, Wallungs-Checks durchzuführen und weitere Opfer zur Verfügung stehen. Mit dieser Kraft kein eine Hungerraserei nicht übertragen werden.",
           "duration": "Dauer der Raserei (siehe S. 220)"
         }
+      ],
+      "6": [
+        {
+          "id": 10,
+          "name": "Blutecho",
+          "minBloodPotency": 5,
+          "summary": "Der Anwender erweitert seine Sinne durch den Geist und Körper der Kreaturen, die sein Blut in sich tragen. Diese Kraft kann es dem Anwender ermöglichen, mit den Sinnen seiner ghouled Tiere auf unglaubliche Entfernungen zu beobachten.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Fassung + Tierhaftigkeit",
+          "system": "Der bloße Besitz dieser Fähigkeit vergrößert die Reichweite des \"Wilden Flüsterns\" des Anwenders erheblich und ermöglicht es ihm, mit Tieren zu kommunizieren, die er kennt und die bis zu 10 Meilen entfernt sind. Zusätzlich kann der Anwender einen Wallungs-Check machen, um seine Sinne auf das flüsternde Echo seines Blutes einzustellen, das durch die Körper der Tiere, die er ghouled hat, schlägt, egal wo auf der Welt. Der Anwender macht eine Probe auf Fassung + Tierhaftigkeit gegen eine vom Geschichtenerzähler festgelegte Schwierigkeit (im Allgemeinen eine Schwierigkeit von 4 für eine Entfernung von weniger als 50 Meilen, 5 für 50500 Meilen, 7 für 5001000 Meilen, 10 für 1000 oder mehr), um mit einer einzelnen Kreatur in Verbindung zu treten, die ihre Vitae gekostet hat. Gelingt ihm dies, kann er mit diesem Tier über sein Wildes Flüstern kommunizieren und es mit Geist einsaugen anvisieren. Solange diese Fähigkeit anhält, kann der Anwender mit so vielen Tieren, die seine Lebenskraft gekostet haben, Kontakt aufnehmen, wie er möchte, muss aber für jedes Tier eine neue Probe ablegen.",
+          "duration": "eine Szene"
+        }
+      ],
+      "7": [
+        {
+          "id": 11,
+          "name": "Bezwinge das Tier",
+          "minBloodPotency": 6,
+          "summary": "Blutsverwandte mit dieser Kraft haben eine bemerkenswerte Beherrschung ihrer Bestie erlangt, die es ihnen ermöglicht, nach Belieben in einen Rasereizustand einzutreten oder ihn zu verlassen.",
+          "costs": "ein Wallungs-Check",
+          "system": "Wenn du diese Fähigkeit aktivierst, kannst du wählen, ob du in einen Rasereizustand einer Art deiner Wahl eintrittst oder einen laufenden Rasereizustand beendest. Wenn du in einem Rasereizustand bei 5 Hunger die Prüfung auf Wallung nicht bestehst, fällst du sofort in Starre. Zusätzlich kannst du diese Fähigkeit aktivieren, um die Effekte von Bestialischen Fehlschlägen und Unordentlichen Kritischen Treffern für eine Szene zu negieren.",
+          "duration": "eine Szene"
+        }
+      ],
+      "8": [
+        {
+          "id": 12,
+          "name": "Das gefangene Tier verspotten",
+          "minBloodPotency": 7,
+          "summary": "Diese Macht erlaubt es Blutsverwandten, die Wut und den Hunger des Tieres im Blut anderer Blutsverwandter zu schüren und sie ohne gewöhnliche Provokation in Rasereizustand zu versetzen.",
+          "costs": "zwei Wallungs-Checks",
+          "diceSupplies": "Manipulation + Tierhaftigkeit vs. Fassung + Entschlossenheit",
+          "system": "Du kannst diese Fähigkeit bei einem Blutsverwandten einsetzen, den du sehen kannst, indem du einen Test auf Manipulation + Tierhaftigkeit gegen die Fassung + Entschlossenheit des Ziels machst. Wenn du diesen Test gewinnst, zwingst du das Ziel, in einen Rasereizustand eines Typs deiner Wahl zu verfallen.",
+          "duration": "Bis der Rasereizustand endet"
+        }
+      ],
+      "9": [
+        {
+          "id": 13,
+          "name": "Das Tier im Inneren befreien",
+          "minBloodPotency": 8,
+          "summary": "Blutsverwandte mit dieser Fähigkeit sind in der Lage, im Rasereizustand ein gewisses Maß an Kontrolle über sich selbst auszuüben und sich die natürliche Wildheit ihrer Bestie zunutze zu machen.",
+          "costs": "ein Wallungs-Check",
+          "system": "Du kannst diese Fähigkeit nur aktivieren, wenn du dich in einem Rasereizustand befindest. Während sie aktiv ist, unterliegst du nicht den normalen Beschränkungen, Willenskraft oder mentale Disziplinen während eines Rasereizustands auszugeben, und wenn du während des Rasereizustands Willenskraftschaden erleidest, um dich zu kontrollieren, heilst du diesen Schaden, wenn der Rasereizustand endet.",
+          "duration": "Bis der Rasereizustand endet"
+        }
+      ],
+      "10": [
+        {
+          "id": 14,
+          "name": "Die Augen des Waldes",
+          "minBloodPotency": 9,
+          "summary": "Auf dieser Stufe der Tierhaftigkeit ist der Anwender in der Lage, seinen Geist mit dem Geist aller Tiere im Umkreis von mehreren Meilen zu vereinen und mit ihren Augen zu sehen und mit ihren Ohren zu hören.",
+          "costs": "zwei Wallungs-Checks",
+          "diceSupplies": "Fassung + Tierhaftigkeit",
+          "system": "Während diese Fähigkeit aktiv ist, kannst du eine Probe auf Fassung + Tierhaftigkeit ablegen, um Kreaturen aufzuspüren, nach Gegenständen oder Orten zu suchen oder auf andere Weise das Geschehen im Umkreis von 10 Meilen um dich herum wahrzunehmen. Die Informationen, die du mit dieser Fähigkeit erlangen kannst, sind auf die beschränkt, die du mit den Sinnen der Tiere in der Umgebung erlangen könntest; sie sind begrenzt durch ihre natürlichen Sinne (ein Wurm oder eine Spinne kann zum Beispiel kein Gespräch für dich belauschen) und durch die Verteilung der Tiere in der Umgebung. Wenn du dich in deinem Zufluchtsort aufhältst, müssen Kreaturen, die sich in der unmittelbaren Umgebung deines Zufluchtsortes bewegen und nicht von Obfuscate abgeschirmt sind, einen Test auf Schwierigkeit 4 (Geschicklichkeit + Verstohlenheit) bestehen, damit du nicht automatisch auf ihre Bewegungen aufmerksam wirst. Dieser Effekt funktioniert passiv und ist immer aktiv, wenn du diese Fähigkeit erworben hast.",
+          "duration": "eine Szene"
+        }
       ]
     }
   },
@@ -948,6 +1500,70 @@
           "diceSupplies": "Geistesschärfe + Verdunkelung, Manipulation + Darbietung",
           "system": "Der Anwender muss das zu kopierende Gesicht mindestens fünf Minuten lang aus verschiedenen Winkeln studieren. Zudem muss der Anwender die Person weitere zehn Minuten beobachten, um die Stimme und die Verhaltensweisen der Person nachzuahmen. Der Anwender kann nur menschliches Aussehen kopieren, keine tierischen Gestalten. Die Erzählerin würfelt dann verborgen auf Geistesschärfe + Verdunkelung (Schwierigkeit 4). Bei einem Fehlschlag ist die Ähnlichkeit wenig überzeugend und alle, die der kopierten Person nahestehen, bemerken automatisch, dass etwas nicht stimmt. Bei einem Triumph wird eine überzeugende Illusion erschaffen, aber der Anwender muss auf Manipulation + Darbietung würfeln, um die Sprechweise und das Verhalten der Person nachzuahmen. Bei einem kritischen Triumph wird eine perfekte Illusion erschaffen und es ist keine weitere Probe nötig. Das Unsichtbare spüren (Auspex 1) kann die Maske nach den allgemeinen Regeln durchschauen.",
           "duration": "eine Szene"
+        }
+      ],
+      "6": [
+        {
+          "id": 10,
+          "name": "Fröhliche Akzeptanz",
+          "minBloodPotency": 5,
+          "summary": "Diese Fähigkeit ermöglicht es dem Benutzer, mit Objekten zu interagieren, während sie verschleiert sind, ohne Aufmerksamkeit zu erregen.",
+          "costs": "ein Wallungs-Check",
+          "system": "Du kannst diese Fähigkeit aktivieren, während du durch eine Verdunklung wie Unsichtbarer Durchgang verdeckt bist. Während diese Kraft aktiv ist, kannst du frei mit Objekten interagieren, ohne deine Verdunklung zu brechen, vorausgesetzt, du unternimmst keine gewaltsamen Aktionen, wie z.B. ein Wesen anzugreifen oder ein Objekt zu zerstören. Du kannst jedoch Türen öffnen, Schlösser knacken, Schubladen durchwühlen, Schmuck stehlen und andere Handlungen ausführen, die keine Gewalt beinhalten, ohne Aufmerksamkeit zu erregen.",
+          "duration": "eine Szene"
+        }
+      ],
+      "7": [
+        {
+          "id": 11,
+          "name": "Spiegel der Zwillinge",
+          "minBloodPotency": 6,
+          "requirement": 7,
+          "summary": "Diese Fähigkeit bewirkt, dass Beobachter glauben, dass der Benutzer an dem Ort, an dem sie ihn zuletzt vor seiner Aktivierung beobachtet haben, alltäglichen Tätigkeiten nachgeht.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Geistesschärfe + Verdunklung vs. Geistesschärfe + Wahrnehmung",
+          "system": "Du kannst diese Fähigkeit aktivieren, wenn du eine andere Fähigkeit der Verdunklung aktivierst, z. B. Unsichtbare Passage, und die zusätzlichen Kosten für die Verstärkung dieser Fähigkeit zahlen. Beobachter nehmen dich so wahr, als wärst du dort geblieben, wo du warst, als du diese Fähigkeit aktiviert hast, und hättest eine banale Handlung ausgeführt, wie z. B. eine Zeitung lesen, in deinem Handy scrollen oder Musik über deine Kopfhörer hören. Die Fähigkeit hält Beobachter davon ab, mit dir zu interagieren; mache eine Geistesschärfe + Verdunklung gegen die Geistesschärfe + Aufmerksamkeit aller Vampire, die dich beobachten, wenn du die Fähigkeit aktivierst; Sterbliche fallen automatisch durch. Wenn ein beobachtender Vampir diesen Wettbewerb gewinnt, bemerken sie, dass du von deinem vorherigen Standort verschwunden bist, obwohl sie dich möglicherweise immer noch nicht entdecken können (sie müssen einen separaten Test gegen dich für Verschwinden machen, wenn du dich entscheidest, diese Verstärkung ebenfalls anzuwenden).",
+          "duration": "Gemäß der augmentierten Kraft"
+        }
+      ],
+      "8": [
+        {
+          "id": 12,
+          "name": "Festung des Schweigens",
+          "minBloodPotency": 7,
+          "summary": "Diese Kraft unterdrückt alle Geräusche in der Umgebung des Anwenders und hüllt den Bereich in absolute Stille, so dass der Lärm von Schüssen oder Zähnen, die sich in tödliche Kehlen bohren, unterdrückt wird.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Entschlossenheit + Verdunklung vs. Geistesschärfe + Wahrnehmung",
+          "system": "Wenn du diese Fähigkeit aktivierst, werden alle Geräusche in deiner unmittelbaren Umgebung (d.h. ein Radius von 5 Metern, ein einzelner Raum, eine Gasse usw.) unterdrückt. Sogar Schüsse oder Explosionen können mit dieser Kraft zum Schweigen gebracht werden. Sterbliche können keine Geräusche hören, die aus dem betroffenen Gebiet kommen, aber Vampire mit geschärften Sinnen können eine Probe auf Geistesschärfe + Wahrnehmung machen (und ihre Auspizien für geschärfte Sinne nur addieren, wenn sie diese gerade aktiv haben), um zu versuchen, Geräusche aus dem Gebiet zu hören. Sie werden durch deine Entschlossenheit + Verdunklung herausgefordert; wenn du gewinnst, können sie überhaupt nichts hören. Wenn sie gewinnen, können sie einige Geräusche aus dem betroffenen Gebiet wahrnehmen, auch wenn sie immer noch extrem gedämpft sind. Der Geschichtenerzähler kann Vampiren mit geschärften Sinnen erlauben, einen passiven Test auf Geistesschärfe + Bewusstheit gegen diese Fähigkeit zu machen.",
+          "duration": "eine Szene (oder bis zum vorzeitigen Ende)"
+        }
+      ],
+      "9": [
+        {
+          "id": 13,
+          "name": "Schleier der zornigen Unwissenheit",
+          "minBloodPotency": 8,
+          "combination": {
+            "id": 2,
+            "level": 4
+          },
+          "summary": "Diese Macht hält das Opfer in seiner eigenen persönlichen Hölle der Nichtexistenz gefangen, unfähig, sich Gehör zu verschaffen oder von seiner Umgebung gesehen zu werden, egal was es tut.",
+          "costs": "zwei Wallungs-Checks",
+          "diceSupplies": "Intelligenz + Verdunklung vs. Geistesschärfe + Entschlossenheit",
+          "system": "Der Vampir muss in der Lage sein, auf irgendeine Weise mit seinem Opfer zu kommunizieren, so dass es Worte liest oder hört wie \"niemand wird dich schreien hören\" oder etwas Ähnliches. Der Vampir muss anwesend sein, damit die Macht wirksam wird. Gelingt dem Vampir die Probe, so kann das Opfer von anderen Kreaturen als dem Vampir oder einer Kreatur mit mindestens Auspex 4 und dem Gespür für das Unsichtbare nicht wahrgenommen werden. Das Opfer gilt als verdunkelt mit den Vorteilen der Unbeschwerten Akzeptanz, kann aber seine Verdunklung nicht wirklich durchbrechen. Wenn sie gewalttätig werden, bemerken die Menschen in der Nähe dies zwar und reagieren entsprechend, aber sie können das Opfer nicht erkennen, egal wie eng ihre Verbindung ist, und sobald die Gewalttätigkeit beendet ist, werden sie sich des Opfers sofort wieder nicht bewusst. Diejenigen mit Auspex (wie oben beschrieben) können diesen Mesmerismus für sich selbst durchdringen, wenn ihr Wurf die ursprüngliche Probe des Anwenders auf Intelligenz + Verdunklung übertrifft. Wenn ein solches Individuum \"Blick in die Seele\" auf das Opfer anwendet und einen kritischen Sieg erringt, wird das Opfer von dem verfluchten Mesmerismus befreit, der es bindet.",
+          "duration": "eine Nacht (dauerhaft bei einem kritischen Sieg)"
+        }
+      ],
+      "10": [
+        {
+          "id": 14,
+          "name": "Der verblassende Blick der Erinnerung",
+          "minBloodPotency": 9,
+          "summary": "Blutsverwandte, die die Verdunklung wirklich beherrschen, brauchen sich nicht darum zu kümmern, die Maskerade durch ihre Ernährung zu durchbrechen, denn wenn sie einem Sterblichen den letzten Tropfen entziehen, nehmen sie auch die Erinnerung an das Opfer aus dem Geist derer, die sie kannten.",
+          "costs": "Keine, oder zwei Wallungs-Checks",
+          "diceSupplies": "Manipulation + Verdunklung",
+          "system": "Wenn du einem sterblichen Opfer den letzten Tropfen entnimmst und es damit tötest, durchdringt die Macht deiner Verdunklung sein Blut, während sie in deinen Adern pulsiert und sich auf übernatürliche Weise in den Köpfen derer ausbreitet, die das Opfer zu Lebzeiten kannten. Das Opfer verschwindet langsam aus dem Gedächtnis der Sterblichen, bis nur noch ein unerklärliches Gefühl der Abwesenheit übrig ist. Selbst harte Beweise für die Existenz des Opfers, wie Geburtsurkunden und Videoaufzeichnungen, lösen nur eine kurzzeitige Erinnerung aus, die schnell wieder in seliges Vergessen übergeht. Das anfängliche Verblassen tritt im Laufe einer Woche nach dem Tod des Opfers ein. Der Anwender kann auch versuchen, diese Kraft auf Vampire auszuweiten. Dazu muss er zwei Wallungs-Proben und einen Wurf auf Manipulation + Verdunklung machen. Das Ergebnis dieses Wurfs bestimmt den Schwierigkeitsgrad für die Intelligenz- und Entschlossenheitsprobe eines Vampirs, um sich an Informationen über das Opfer zu erinnern, was nur möglich ist, wenn er durch einen eindeutigen Beweis an die Existenz des Opfers erinnert wird. Bei einem kritischen Erfolg bei einem dieser Tests erhält der Vampir seine Erinnerungen an das Opfer zurück und ist nicht weiter vom Gedächtnisverlust für dieses Opfer betroffen. Ein Vampir, der \"Stärkung der inneren Fassade\" oder \"Unbezwingbarer Geist\" besitzt, bleibt von dieser Fähigkeit unberührt, es sei denn, der Anwender erzielt einen kritischen Erfolg bei der ersten Manipulations- und Verdunklungsprobe.",
+          "duration": "passiv, permanent"
         }
       ]
     }
@@ -1131,6 +1747,120 @@
           "diceSupplies": "Entschlossenheit + Vergessenheit vs. Entschlossenheit + Okkultismus oder Seelenstärke",
           "system": "Der Vampir macht zwei Wallungs-Proben, um genügend Lebenskraft zu verbrauchen, um beide Hände zu bedecken, und berührt das Opfer. Nachdem er Entschlossenheit + Vergessenheit gegen Entschlossenheit + Okkultismus des Opfers gewürfelt hat (wer Seelenstärke hat, kann sie anstelle von Okkultismus verwenden), erleidet das Opfer für jeden Punkt der Marge des Vampirs zwei Punkte erhöhten Willenskraftschaden. Der Angriff zersetzt den Geist des Opfers, bis es nur noch eine zerbrochene Hülle ist, und wenn es durch diese Macht beeinträchtigt ist, kehrt es nach dem Tod nicht als Gespenst zurück. Geschichtenerzähler können entscheiden, dass die geistzerstörende Natur dieser Macht Markel rechtfertigt, obwohl wie immer eine angemessene Überzeugung diese abmildern kann.",
           "duration": "ein Zug"
+        }
+      ],
+      "6": [
+        {
+          "id": 19,
+          "name": "Schattenzuflucht (Lasombra)",
+          "minBloodPotency": 5,
+          "requirement": 8,
+          "summary": "Diese Kraft erlaubt es dem Benutzer, ein schattenhaftes Echo seines eigenen Zufluchtsortes im Labyrinth zu erhalten. Der Vampir kann hier den Tag verbringen, sicher vor der Sonne.",
+          "costs": "ein Wallungs-Check",
+          "system": "Sie müssen sich in absoluter Dunkelheit befinden, um diese Kraft zu aktivieren. Wenn du das tust, trittst du in die Dunkelheit selbst und tauchst im Labyrinth auf, wo du ein schattenhaftes Echo eines deiner Zufluchtsorte in der realen Welt kultiviert hast. Alles, was sich in der normalen Welt in diesem Zufluchtsort befindet (mit Ausnahme von Lebewesen), ist als schattenhafte Nachbildung vorhanden, obwohl es nicht aus dem Labyrinth herausgebracht werden kann und keine Nahrung oder magische Wirkung bietet. Funktionen, die eine Interaktion mit der Außenwelt erfordern, wie z. B. das Internet oder Telefongespräche, funktionieren in deiner Schattenoase nicht. Während du dich in deiner Schattenoase aufhältst, trittst du nicht in den Tagesschlaf ein, auch wenn es in der realen Welt Tag ist. Du musst jedoch jede Nacht einen Wallungs-Check machen, um festzustellen, ob du hungriger wirst. Du kannst einen Wallungs-Check machen, um die reale Welt wieder zu betreten, wo du sie verlassen hast.",
+          "duration": "bis zu 24 Stunden"
+        },
+        {
+          "id": 20,
+          "name": "Totenglocke (Hecata)",
+          "minBloodPotency": 5,
+          "summary": "Die Sinne des Nekromanten sind so gut mit den Schattenlanden verbunden, dass er den Übergang der Seelen vom Leben in den Tod um sich herum spüren kann.",
+          "costs":"keine",
+          "diceSupplies": "Geistesschärfe + Vergessenheit",
+          "system": "Du bist dir aller Todesfälle bewusst, die in deiner Umgebung (etwa ein Stadtviertel) stattfinden. Du spürst ständig den Übergang von Seelen, von den kleinsten Insekten bis zu den Sterblichen, die du aussaugst und zurücklässt. Bei jedem einzelnen Todesfall kannst du die Art der Kreatur unterscheiden, die gestorben ist, ob es sich um ein Insekt, ein kleines Tier, ein großes Tier oder einen Menschen handelt. Wenn du den Tod eines Menschen spürst, kannst du auch eine Probe auf Geistesschärfe + Vergessenheit gegen einen Schwierigkeitsgrad von 4 ablegen, um den Namen des Sterblichen zu erfahren. Wenn du danach eine Fessel spürst, die dem Geist dieses Sterblichen gehört, erkennst du automatisch, wem sie gehört.",
+          "duration":"passiv"
+        }
+      ],
+      "7": [
+        {
+          "id": 21,
+          "name": "Dunkle Sicht (Lasombra)",
+          "minBloodPotency": 6,
+          "requirement": 5,
+          "summary": "Diese Kraft erweitert die Schattenperspektive und ermöglicht es dir, deine Sinne von Schatten zu Schatten zu schicken und durch die Dunkelheit deines Reiches zu reisen.",
+          "costs":"keine",
+          "diceSupplies": "Geistesschärfe + Vergessenheit",
+          "system": "Wenn du die Schattenperspektive einsetzt, erhältst du die Fähigkeit, deine Sinne von dem Schatten, den du gerade wahrnimmst, zu jedem anderen Schatten zu schicken, den du von diesem Punkt aus sehen kannst. Auf diese Weise kannst du von einem dunklen Fleck zum nächsten hüpfen und dich weit von deinem eigentlichen Aufenthaltsort entfernen, während du fast völlig unentdeckt bleibst.",
+          "duration":"passiv"
+        },
+        {
+          "id": 22,
+          "name": "Consilium Mortuus (Hecata)",
+          "minBloodPotency": 6,
+          "summary": "Diese Kraft erlaubt es dem Vampir, Erinnerungen aus dem Geist von Kreaturen zu verschlingen, die er aussaugt. Es ist eine mächtige Methode des Verhörs, auch wenn der Informant leider verstorben ist.",
+          "diceSupplies": "Intelligenz + Vergessenheit",
+          "costs": "ein Wallungs-Check",
+          "system": "Aktiviere diese Fähigkeit, wenn du einer Kreatur den letzten Tropfen entziehst. Lege eine Probe auf Intelligenz + Vergessenheit mit einem Schwierigkeitsgrad von 4 ab. Bei einem Sieg erhältst du eine Anzahl von Erinnerungen des Opfers, die 1 + die Spanne entspricht. Jede Erinnerung dient als die direkteste Antwort des Opfers auf eine Frage, die du dem Geschichtenerzähler stellst, wenn du diese Fähigkeit einsetzt. Der Geschichtenerzähler kann entscheiden, dass mehr als eine Erinnerung erforderlich ist, um deine erste Frage vollständig zu beantworten, aber wenn du in der Lage bist, genügend Erinnerungen zu verschlingen, kannst du vielleicht 2 oder sogar mehr Fragen stellen. Die Erinnerungen, die Sie erhalten, werden in Ihren eigenen Geist aufgenommen und können wie jede andere Erinnerung überprüft werden. Wenn du bei diesem Test einen unordentlichen kritischen Punkt erhältst, versuchst du versehentlich, das Opfer zu entmündigen (falls es sich um einen Blutsverwandten handelt).",
+          "duration": "permanent"
+        }
+      ],
+      "8": [
+        {
+          "id": 23,
+          "name": "Die Dunkelheit im Inneren (Lasombra)",
+          "minBloodPotency": 7,
+          "requirement": 9,
+          "combination": {
+            "id": 2,
+            "level": 4
+          },
+          "summary": "Diese Kraft bewirkt, dass sich mehrere Schatten vom Schatten des Anwenders ausbreiten und sich abspalten, um ihm als Inkarnation der Dunkelheit zu dienen.",
+          "costs": "ein Wallungs-Check",
+          "diceSupplies": "Manipulation + Vergessenheit",
+          "system": "Lege eine Probe auf Manipulation + Vergessenheit auf Schwierigkeitsgrad 5 ab, wenn du diese Fähigkeit aktivierst. Wenn du den Test gewinnst, spaltet sich eine Anzahl von Schatten von dir ab, die 1 + der Marge im Test entspricht. Diese Schatten haben die Spielstatistiken von Gespenstern, mit der Ausnahme, dass sie durch extrem helles Licht (5000 Lumen oder mehr; zum Vergleich: eine typische LED-Taschenlampe strahlt etwa 100 Lumen ab) erhöhten Schaden erleiden. Sie dienen dir bedingungslos und du kannst ihnen telepathische Befehle erteilen. Bei einem kritischen Sieg bleiben diese Schatten eine ganze Nacht lang erhalten, anstatt nur eine einzige Szene.",
+          "duration":"eine Szene (eine Nacht bei einem kritischen Sieg)"
+        },
+        {
+          "id": 24,
+          "name": "Wahrer Tod (Hecata)",
+          "minBloodPotency": 7,
+          "summary": "Der Nekromant lässt sein Blut vorübergehend verstummen, so dass sein untoter Körper einfach tot ist, ohne den schnellen Verfall zu erleiden, der den endgültigen Tod begleitet.",
+          "costs": "ein Wallungs-Check",
+          "system": "Wenn du diese Kraft aktivierst, wird dein Körper schlaff und du fällst bewusstlos, als würdest du einen Tagesschlaf halten. Aus dieser Form des Tagesschlafs kannst du nicht vorzeitig erwachen; er endet erst mit dem Einbruch der nächsten Nacht. Während er aktiv ist, ist dein Körper nicht von einem normalen, frischen menschlichen Leichnam zu unterscheiden. Er erleidet keinen Schaden durch Sonnenlicht, und obwohl er Schaden durch Feuer erleiden kann, ist er nicht besonders anfällig dafür wie ein Vampir. Wenn die Leiche so viel Schaden durch Feuer nimmt, dass sie vollständig zerstört wird, oder wenn der Kopf abgetrennt wird, erleidet man sofort den endgültigen Tod. Der Leichnam scheint auf keiner Ebene bemerkenswert zu sein, vorausgesetzt, du leidest nicht an maskenbildenden Bannern wie dem Aussehen eines Nosferatu oder den bestialischen Zügen eines Gangrel nach dem Wahnsinn. Selbst bei der Sezierung scheint die Leiche ein normaler menschlicher Körper zu sein, sofern keine solchen Banns vorhanden sind.",
+          "duration": "bis zur nächsten Nacht"
+        }
+      ],
+      "9": [
+        {
+          "id": 25,
+          "name": "Oubliette (Lasombra)",
+          "minBloodPotency": 8,
+          "summary": "Diese ominöse Fähigkeit erlaubt es dem Anwender, ein Opfer in sein eigenes persönliches Gefängnis im Labyrinth zu ziehen, wo es im Schatten gefangen bleibt, bis der Vampir es befreit.",
+          "costs": "zwei Wallungs-Checks",
+          "diceSupplies": "Manipulation + Vergessenheit vs. Geistesschärfe + Entschlossenheit",
+          "system": "Der Vampir macht einen Test auf Manipulation + Vergessenheit gegen die Geistesschärfe + Entschlossenheit des Opfers. Bei einem Sieg schlängeln sich Schatten aus dem Anwender heraus und verfolgen das Opfer, um es schließlich in die Dunkelheit hinunterzuziehen. Die Verfolgung dauert eine Anzahl von Runden, die 4 der Gewinnspanne des Vampirs entspricht; am Ende wickeln sich die Schatten um das Opfer und ziehen es in seine eigene kleine Tasche des Labyrinths hinab. Die Schatten trotzen allem außer dem hellsten Licht; wenn sie nachts eingesetzt werden, gibt es kaum eine Chance zu entkommen, wenn der Vampir den Wettbewerb gewonnen hat. Sobald das Opfer in das Labyrinth hineingezogen wird, findet es sich in einem kleinen, völlig schwarzen Raum wieder, dessen Gestaltung nur dem Vampir vorbehalten ist, der diese Fähigkeit einsetzt, der aber immer keine Decke hat und nur einen winzigen Lichtpunkt, der den Ausgang der Oubliette weit oben anzeigt. Blutsverwandte mit Vergessenheit's Sight, Heightened Senses oder Eyes of the Beast können diese Fähigkeit aktivieren, um in der Oubliette sehen zu können. Das Opfer kann versuchen zu entkommen, indem es die Wände der Oubliette hochklettert, allerdings erfordert dies eine Probe auf Entschlossenheit + Okkultismus (oder Vergessenheit oder Blutzauberei) auf Schwierigkeitsgrad 8 und keine Prüfung der körperlichen Fähigkeiten. Wenn sie gewinnen, treten sie aus dem Schatten heraus, in den sie eingetreten sind; dasselbe geschieht, wenn die Macht endet, was das Opfer möglicherweise ins direkte Sonnenlicht schleudert.",
+          "duration": "eine Nacht (dauerhaft bei einem kritischen Sieg)"
+        },
+        {
+          "id": 26,
+          "name": "Diese Untoten-Spirale fortsetzen (Hecata)",
+          "minBloodPotency": 8,
+          "summary": "Vampire mit dieser Macht beherrschen ihren eigenen untoten Zustand, so dass sie sich aus der Erstarrung erheben und andere aus der Erstarrung wiedererwecken können.",
+          "costs": "1 Punkt schwerer Willenskraftschaden, wenn man sie gegen sich selbst einsetzt; ein Wallungs-Check, wenn sie gegen einen anderen eingesetzt wird",
+          "diceSupplies": "Entschlossenheit + Vergessenheit",
+          "system": "Während du dich in Torpor befindest, hast du jede Nacht die Möglichkeit, dich freiwillig vor deiner Zeit zu wecken. Dies geschieht bei Sonnenuntergang, wenn du aus dem Tagesschlaf erwachen würdest, wenn du nicht in Torpor wärst. Wenn du von dieser Möglichkeit Gebrauch machst, erleidest du 1 Punkt Schaden durch erhöhte Willenskraft und erwachst sofort aus der Erstarrung. Du kannst diese Fähigkeit auch aktivieren, um einen anderen Vampir vorzeitig aus dem Winterschlaf zu erwecken. Wenn du das tust, gib einen Wallungs-Check aus. Lege eine Probe auf Entschlossenheit + Vergessenheit mit einem Schwierigkeitsgrad ab, der der Blutpotenz des Ziels entspricht. Bei einem Sieg reißt du das Ziel aus der Erstarrung, obwohl du dich vor seinem wahrscheinlichen Rasereizustand in Acht nehmen solltest.",
+          "duration": "sofort"
+        }
+      ],
+      "10": [
+        {
+          "id": 27,
+          "name": "Tchernabog (Lasombra)",
+          "minBloodPotency": 9,
+          "summary": "Diese Fähigkeit gehört zu den unheiligsten, unheimlichsten und beeindruckendsten aller Disziplinen. Sie erlaubt es dem Vampir, die Sonne für eine begrenzte Zeit auszulöschen und sich und andere Blutsverwandte wie unter dem Schleier der Nacht umherstreifen zu lassen.",
+          "costs": "zwei Wallungs-Checks",
+          "diceSupplies": "Entschlossenheit + Vergessenheit",
+          "system": "Lege eine Probe auf Entschlossenheit + Vergessenheit mit einem Schwierigkeitsgrad von 8 ab, wenn du diese Fähigkeit aktivierst, die nur durchgeführt werden kann, wenn die Sonne am Himmel steht. Bei einem Sieg schlängeln sich die Schatten über das Gesicht der Sonne, verdunkeln den Himmel und hüllen das Gebiet um dich herum für eine Weile in die Finsternis der Nacht. Dieses Gebiet kann ein einzelnes Gebäude, ein ganzer Stadtblock oder auch nur ein 50-Meter-Radius um dich herum sein; der Geschichtenerzähler entscheidet über den Umfang dieser Macht, je nachdem, was erzählerisch angemessen ist. Innerhalb des betroffenen Gebietes erwachen Blutsverwandte aus dem Tagesschlaf und erleiden keine negativen Auswirkungen, wenn sie bei Tageslicht wach sind, noch nehmen sie Schaden durch Sonnenlicht (da es keines gibt). Wenn sie das Gebiet verlassen, befolgen sie die normalen Regeln für das Agieren bei Tageslicht. Das betroffene Gebiet bewegt sich nicht mit dir. Bei einem kritischen Sieg bewegt sich der Bereich jedoch nicht nur mit dir (er bleibt auf dich zentriert), sondern bleibt auch für den Rest des Tages bestehen.",
+          "duration": "eine Szene, ein Tag bei einem kritischen Sieg"
+        },
+        {
+          "id": 28,
+          "name": "Aneignung (Hecata)",
+          "minBloodPotency": 9,
+          "summary": "Der Höhepunkt der Nekromantie ist die Gewissheit des eigenen Todes und der eigenen Rückkehr ins Unleben. Diese Macht erlaubt es dem Nekromanten, unmittelbar nach seinem endgültigen Tod als Gespenst aufzutauchen.",
+          "costs":"keine",
+          "system": "Wenn du den endgültigen Tod erleidest, mache eine Probe auf Entschlossenheit + Vergessenheit gegen eine Schwierigkeit, die 15 deiner Blutpotenz entspricht. Bei einem Sieg erhebst du dich sofort als Gespenst aus deinem Körper. Du hast dieselben Spielstatistiken wie ein Gespenst, aber du bist immateriell (obwohl du Objekte telekinetisch manipulieren kannst, als würdest du sie mit deinem Körper bewegen), du bist unsichtbar, außer für diejenigen, die Unsichtbares spüren oder ein Äquivalent benutzen, du kannst nur geistige Disziplinen anwenden und du erhältst die besonderen Stärken und Fähigkeiten des Gespenstes (siehe S. 377). Du kannst als Gespenst eine Anzahl von Tagen in den Hautlanden bleiben, die 1 + deiner Marge bei der ursprünglichen Probe entspricht. Wenn du die Fähigkeit Fest der Leidenschaft besitzt, kannst du dich in dieser Form von anderen Gespenstern ernähren, wodurch sich deine Zeit in den Hautlanden für jeden gestillten \"Hunger\"-Punkt um 1 Tag verlängert. Diese Fähigkeit bietet dir eine geringe Chance, in dein untotes Dasein zurückzukehren. Wenn es dir gelingt, einen Sterblichen dazu zu bringen, die gesamte Asche deines endgültigen Todes und eine Blutmenge zu verzehren, die ausreicht, um 10 Hungerpunkte zu stillen, kannst du seinen Geist aus seinem Körper verdrängen und das Blut, das er getrunken hat, mit deiner Essenz durchtränken und den Wirt in einen Vampir mit deinem Geist, deinem Verstand und all deinen vampirischen Fähigkeiten verwandeln. Wenn du erfolgreich bist, kehrst du in die Welt zurück, wie du warst, nur in einer neuen körperlichen Hülle.",
+          "duration": "Permanent"
         }
       ]
     }

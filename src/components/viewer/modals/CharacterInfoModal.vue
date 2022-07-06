@@ -5,7 +5,7 @@
         <label><b>{{$t('main.characters.create.books')}}:</b></label>
         <BookSelection :disabled="true" :books="activatedBooks"/>
       </div>
-      <div class="form-group d-flex flex-column mb-0">
+      <div class="form-group d-flex flex-column" :class="{'mb-0': !isNotUpToDate()}">
         <label><b>{{$t('character.advanced.rules')}}:</b></label>
         <div class="custom-checkbox d-flex align-items-center">
           <input type="checkbox" id="disc" v-model="character.useAdavancedDisciplines" @change="save">
@@ -16,6 +16,9 @@
           <label for="pow">{{$t('character.advanced.powers')}}</label>
         </div>
       </div>
+      <div class="d-flex justify-content-center align-items-center" v-if="isNotUpToDate()">
+        <button class="btn btn-primary" @click="migrateChar">{{$t('character.info.migrate')}}</button>
+      </div>
     </div>
   </Modal>
 </template>
@@ -23,9 +26,10 @@
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
-import {ICharacter} from "@/types/models";
+import {CurrentCharacterVersion, ICharacter} from "@/types/models";
 import BookSelection, {ActivatableBook} from "@/components/editor/BookSelection.vue";
 import CharacterStorage from "@/libs/io/character-storage";
+import {migrationResolver} from "@/libs/resolvers/migration-resolver";
 
 @Component({
   components: {BookSelection, Modal}
@@ -46,12 +50,22 @@ export default class CharacterInfoModal extends Vue {
     CharacterStorage.saveCharacter(this.character);
   }
 
+  private migrateChar() {
+    migrationResolver.migrate(this.character);
+    this.$forceUpdate();
+  }
+
+  private isNotUpToDate(): boolean {
+    return !this.character["version"] || this.character["version"] < CurrentCharacterVersion;
+  }
+
   private get activatedBooks(): ActivatableBook[] {
     return BookSelection.defaultBooks().map(b => ({
       ...b,
       activated: this.character.books.includes(b.id)
     }));
   }
+
 }
 </script>
 

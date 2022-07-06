@@ -206,6 +206,8 @@ export interface ICharacterDirectory {
     open: boolean;
 }
 
+export const CurrentCharacterVersion = 1;
+
 export interface ICharacter {
     directory?: string;
     id: string;
@@ -245,6 +247,7 @@ export interface ICharacter {
     bloodRituals: IBloodRitual[];
     useAdavancedDisciplines: boolean;
     allowLearningOfAllPowers: boolean;
+    version: number;
 }
 
 export interface ICategory {
@@ -329,5 +332,6 @@ export const DefaultCharacter: () => ICharacter = () => ({
     backstory: "",
     notes: "",
     useAdavancedDisciplines: false,
-    allowLearningOfAllPowers: false
+    allowLearningOfAllPowers: false,
+    version: CurrentCharacterVersion
 });

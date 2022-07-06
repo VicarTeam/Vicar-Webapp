@@ -369,5 +369,6 @@
   "viewer.saved": "Saved!",
   "character.advanced.rules": "Gamemaster Rules",
   "character.advanced.disciplines": "Advanced Disciplines",
-  "character.advanced.disciplines.minpotency": "Minimum Blood Potency"
+  "character.advanced.disciplines.minpotency": "Minimum Blood Potency",
+  "character.info.migrate": "Migrate"
 }
