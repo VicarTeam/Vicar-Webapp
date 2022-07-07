@@ -115,6 +115,7 @@
                 <h6>{{a.name}}</h6>
                 <small><i>{{a.summary}}</i></small>
                 <hr>
+                <small v-if="a.minBloodPotency"><b>{{$t('character.advanced.disciplines.minpotency')}}</b>: {{a.minBloodPotency}}</small>
                 <small v-if="a.requirement"><b>{{$t('editor.disciplines.requirement')}}</b>: {{getRequirement(a)}}</small>
                 <small v-if="a.combination"><b>{{$t('editor.disciplines.combo')}}</b>: {{getCombo(a)}}</small>
                 <hr v-if="a.combination || a.requirement">
