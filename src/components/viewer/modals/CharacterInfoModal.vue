@@ -42,12 +42,19 @@ export default class CharacterInfoModal extends Vue {
 
   private show: boolean = false;
   private character: ICharacter = null!;
+  private activatedBooks: ActivatableBook[] = [];
 
   public showModal(character: ICharacter) {
     this.character = character;
     this.character["useAdavancedDisciplines"] = this.character["useAdavancedDisciplines"] || false;
     this.character["allowLearningOfAllPowers"] = this.character["allowLearningOfAllPowers"] || false;
     this.character["fullCustomization"] = this.character["fullCustomization"] || false;
+    this.activatedBooks = [...BookSelection.defaultBooks()].map(book => {
+      return {
+        id: book.id,
+        active: this.character.books.includes(book.id)
+      };
+    });
     this.show = true;
   }
 
@@ -63,14 +70,6 @@ export default class CharacterInfoModal extends Vue {
   private isNotUpToDate(): boolean {
     return !this.character["version"] || this.character["version"] < CurrentCharacterVersion;
   }
-
-  private get activatedBooks(): ActivatableBook[] {
-    return BookSelection.defaultBooks().map(b => ({
-      ...b,
-      activated: this.character.books.includes(b.id)
-    }));
-  }
-
 }
 </script>
 
