@@ -47,7 +47,7 @@
 import {Component, Inject, Vue} from "vue-property-decorator";
 import TipButton from "@/components/editor/TipButton.vue";
 import {ICharacter, IClan} from "@/types/models";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import {Mutation, State} from "vuex-class";
 import EditorForm from "@/components/editor/EditorForm.vue";
 import Bullet from "@/components/Bullet.vue";

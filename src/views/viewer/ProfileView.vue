@@ -162,7 +162,7 @@ import TipButton from "@/components/editor/TipButton.vue";
 import LevelButton from "@/components/viewer/LevelButton.vue";
 import BloodPotencyModal from "@/components/viewer/modals/leveling/BloodPotencyModal.vue";
 import {IBloodPotencyData} from "@/types/data";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import Col from "@/components/viewer/pdf/Col.vue";
 import Row from "@/components/viewer/pdf/Row.vue";
 import Humanity from "@/components/progress/tracker/Humanity.vue";

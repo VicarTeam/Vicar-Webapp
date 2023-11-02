@@ -1,6 +1,6 @@
 import {ICharacter, ILockableTrait} from "@/types/models";
 import {IFlawChoice, IPTAction, ITraitPack, PTActionType} from "@/types/data";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 
 export default class PTActionHandler {
 

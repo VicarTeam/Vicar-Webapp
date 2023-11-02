@@ -19,7 +19,7 @@
 import {Component, Vue} from "vue-property-decorator";
 import {IDiscipline, IDisciplineAbility} from "@/types/data";
 import {ILeveledDisciplineAbility} from "@/types/models";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import Modal from "@/components/modal/Modal.vue";
 
 @Component({

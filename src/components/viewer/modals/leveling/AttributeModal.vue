@@ -18,7 +18,7 @@ import {AttributeKeys, IAttributeData, ICharacter} from "@/types/models";
 import {levelResolver} from "@/libs/resolvers/level-resolver";
 import Bullet from "@/components/Bullet.vue";
 import CharacterStorage from "@/libs/io/character-storage";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 
 @Component({
   components: {Bullet, Modal}

@@ -28,7 +28,7 @@ import {Component, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {ICharacter, IDisciplineSelection} from "@/types/models";
 import {State} from "vuex-class";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import {IBloodRitual} from "@/types/data";
 
 @Component({

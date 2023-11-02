@@ -8,7 +8,7 @@
 import {Component, Vue} from "vue-property-decorator";
 import Spinner from "@/components/spinners/Spinner.vue";
 import {UpdateState} from "@/libs/backend";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import CharacterStorage from "@/libs/io/character-storage";
 import WrappedSpinner from "@/components/spinners/WrappedSpinner.vue";
 

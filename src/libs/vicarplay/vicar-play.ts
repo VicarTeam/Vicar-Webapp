@@ -29,7 +29,7 @@ class VicarPlay {
     public init() {
         this.sessionHistory = JSON.parse(localStorage.getItem('sessionHistory') || '[]');
 
-        this.socket = io(SettingsData.getVicarPlayServer(), {
+        /*this.socket = io(SettingsData.getVicarPlayServer(), {
             reconnection: true
         });
 
@@ -41,7 +41,7 @@ class VicarPlay {
         this.socket.on("sync-char:response", this.onSyncCharResponse);
         this.socket.on("sync-char:update", this.onSyncCharUpdate);
         this.socket.on("voice:state", this.onVoiceState);
-        this.socket.on("voice:client-state", this.onVoiceClientState);
+        this.socket.on("voice:client-state", this.onVoiceClientState);*/
     }
 
     public isInSession(): boolean {

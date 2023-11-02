@@ -1,4 +1,4 @@
-﻿import DataManager from "@/libs/data-manager";
+﻿import DataManager from "@/libs/data/data-manager";
 
 export enum UpdateState {
     Initializing,

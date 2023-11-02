@@ -17,7 +17,7 @@ import {Component, Prop, Vue} from "vue-property-decorator";
 import {Action, Mutation, State} from "vuex-class";
 import {AttributeKeys, ICharacter, ICharacterDirectory} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import {EditorHistory} from "@/libs/editor-history";
 
 @Component({

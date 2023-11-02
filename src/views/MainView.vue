@@ -2,7 +2,7 @@
   <div class="d-flex flex-column">
     <Tabs class="flex-shrink-0" style="position: relative" v-model="selectedTab">
       <Tab :value="0" :text="$t('main.tabs.characters').toString()"/>
-      <Tab :value="1" :text="$t('main.tabs.vicarplay').toString()"/>
+<!--      <Tab :value="1" :text="$t('main.tabs.vicarplay').toString()"/>-->
       <Tab :value="2" :text="$t('main.tabs.lexicon').toString()"/>
       <Tab :value="3" :text="$t('main.tabs.settings').toString()"/>
 

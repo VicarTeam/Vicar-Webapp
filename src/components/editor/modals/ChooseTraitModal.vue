@@ -56,7 +56,7 @@ import Modal from "@/components/modal/Modal.vue";
 import {State} from "vuex-class";
 import {ICharacter, IUsingTraitPacks} from "@/types/models";
 import {ITrait, ITraitPack} from "@/types/data";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
 import PTActionHandler from "@/libs/ptaction-handler";
 import CharacterStorage from "@/libs/io/character-storage";
@@ -255,7 +255,14 @@ export default class ChooseTraitModal extends Vue {
   }
 
   private get backgrounds(): ITraitPack[] {
-    return this.filterTraitPacks([...this.data.backgrounds]).sort((a, b) => a.name.localeCompare(b.name));
+    return this.filterTraitPacks([...this.data.backgrounds])
+      .filter(x => {
+        if (!this.isFlaw && this.editingCharacter && this.editingCharacter.clan.id === 15 && x.id === 11) {
+          return false; // Caitiffs aren't allowed to use positive status background when creating char
+        }
+        return true;
+      })
+      .sort((a, b) => a.name.localeCompare(b.name));
   }
 
   private get isReady(): boolean {

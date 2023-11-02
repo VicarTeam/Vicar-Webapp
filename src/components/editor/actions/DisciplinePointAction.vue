@@ -15,7 +15,7 @@ import {Component} from "vue-property-decorator";
 import PTActionBase from "@/components/editor/actions/PTActionBase";
 import {IDiscipline, IRestriction} from "@/types/data";
 import {ICharacter} from "@/types/models";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import TipButton from "@/components/editor/TipButton.vue";
 
 export type DisciplinePointActionData = {

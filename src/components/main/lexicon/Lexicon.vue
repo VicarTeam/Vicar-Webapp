@@ -231,7 +231,7 @@
 import {Component, Provide, Vue} from "vue-property-decorator";
 import TOCMenu from "@/components/main/lexicon/toc/TOCMenu.vue";
 import TOCItem from "@/components/main/lexicon/toc/TOCItem.vue";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import {IClan} from "@/types/models";
 import {IBloodRitual, IDiscipline, IDisciplineAbility, IPredatorType, ITraitPack} from "@/types/data";
 

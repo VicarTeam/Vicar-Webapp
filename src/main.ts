@@ -18,7 +18,7 @@ import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 VicarPlayClient.init();
 
 Vue.config.productionTip = false
-Vue.use(VueSocketIO, VicarPlayClient.socket);
+//Vue.use(VueSocketIO, VicarPlayClient.socket);
 Vue.use(VueResizeText);
 // @ts-ignore
 Vue.use(VueInteractJs);

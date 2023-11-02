@@ -31,7 +31,7 @@ import {Component, Vue} from "vue-property-decorator";
 import {State} from "vuex-class";
 import {ICharacter} from "@/types/models";
 import EditorForm from "@/components/editor/EditorForm.vue";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import {IPredatorType, PTActionType} from "@/types/data";
 import TipButton from "@/components/editor/TipButton.vue";
 import AdditionalSpecializationAction from "@/components/editor/actions/AdditionalSpecializationAction.vue";

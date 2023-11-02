@@ -1,7 +1,7 @@
 import {CurrentCharacterVersion, ICharacter} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
 import {RestrictionType} from "@/types/data";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 
 type ResolverCallback = (char: ICharacter) => void;
 const registeredResolvers: {[version: number]: ResolverCallback} = {};

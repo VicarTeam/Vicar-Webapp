@@ -34,7 +34,7 @@ import {Component, Prop, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {ICharacter, IDisciplineSelection, ILeveledDisciplineAbility} from "@/types/models";
 import {State} from "vuex-class";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import {disciplineAbilityResolver} from "@/libs/resolvers/disciplineability-resolver";
 
 export type ChooseAbilityCallback = (ability: ILeveledDisciplineAbility) => void;
