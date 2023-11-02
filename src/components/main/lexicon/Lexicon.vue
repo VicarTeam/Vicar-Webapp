@@ -89,6 +89,10 @@
             {{c.description}}
           </div>
           <section>
+            <h4 :ref="'clan-' + c.id + '-bane'">{{$t('lexicon.toc.clans.bane')}}</h4>
+            <p>{{c.curse}}</p>
+          </section>
+          <section>
             <h4 :ref="'clan-' + c.id + '-disciplines'">{{$t('lexicon.toc.clans.disciplines')}}</h4>
             <ul>
               <li v-for="d in c.disciplines" style="margin-bottom: 0">
