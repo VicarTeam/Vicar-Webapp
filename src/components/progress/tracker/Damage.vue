@@ -24,7 +24,7 @@ export default class Damage extends Vue {
   private editingCharacter!: ICharacter;
 
   private mounted() {
-    if (this.hasAdvancedHealth() && (!this.editingCharacter.healthDamage || this.editingCharacter.healthDamage.length <= 10)) {
+    if (this.hasResilience() && (!this.editingCharacter.healthDamage || this.editingCharacter.healthDamage.length <= 10)) {
       this.editingCharacter.healthDamage ||= DefaultDamageArray();
       this.editingCharacter.healthDamage.push(...[DamageType.None, DamageType.None, DamageType.None, DamageType.None, DamageType.None]);
       CharacterStorage.saveCharacter(this.editingCharacter);
@@ -40,7 +40,7 @@ export default class Damage extends Vue {
   }
 
   private isDisabled(nr: number) {
-    if (this.propKey === "health" && this.hasAdvancedHealth()) {
+    if (this.propKey === "health" && this.hasResilience()) {
       const health = this.editingCharacter.health;
       const fortitudeLevel = this.fortitudeLevel;
       return nr > health + fortitudeLevel;
@@ -59,7 +59,7 @@ export default class Damage extends Vue {
   }
 
   private get dots(): number[] {
-    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ...(this.propKey === "health" && this.hasAdvancedHealth() ? [11, 12, 13, 14, 15] : [])];
+    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ...(this.propKey === "health" && this.hasResilience() ? [11, 12, 13, 14, 15] : [])];
   }
 
   private get typesKey(): "healthDamage"|"willpowerDamage" {
@@ -85,7 +85,7 @@ export default class Damage extends Vue {
     return DamageType.None;
   }
 
-  private hasAdvancedHealth(): boolean {
+  private hasResilience(): boolean {
     for (const discipline of this.editingCharacter.disciplines) {
       if (discipline.discipline.id === 7) { // Fortitude
         return discipline.abilities.some(a => a.id === 1); // Resilience

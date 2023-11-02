@@ -20,7 +20,7 @@
           <IconButton icon="fa-pen" style="width: 2rem; height: 2rem" @click="addExpModal.showModal()"/>
         </small>
         <button class="btn btn-primary ml-10" @click="setLevelMode(!isLevelMode)">{{$t('viewer.mode.' + (isLevelMode ? 'disable' : 'enable'))}}</button>
-        <button class="btn btn-primary ml-10" @click="saveCurrentCharacter">{{saveText}}</button>
+        <button class="btn btn-primary ml-10" @click="saveCurrentCharacter">{{!saveText || saveText.trim().length <= 0 ? this.$t('viewer.save').toString() : saveText}}</button>
       </div>
     </div>
     <div style="width: 100%; height: calc(100vh - 4.2rem - 3px); overflow-x: hidden; overflow-y: auto">

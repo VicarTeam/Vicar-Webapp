@@ -1,7 +1,7 @@
 <template>
   <div class="disciplines-view">
     <div class="disciplines">
-      <div class="discipline card" v-for="d in editingCharacter.disciplines">
+      <div class="discipline card" v-for="d in sortedDisciplines">
         <div class="top">
           <div class="d-flex align-items-center" style="gap: 0.5rem; flex-grow: 1">
             <LevelButton v-if="d.currentLevel - 1 < getMaxDisciplineLevel(d)" @click="levelDiscipline(d)"/>
@@ -11,7 +11,7 @@
           <Dots :amount="Math.min(d.currentLevel - 1, 5)" :max="5"/>
         </div>
         <div class="abilities">
-          <div class="ability" v-for="a in d.abilities">
+          <div class="ability" v-for="a in sortedDisciplineAbilities(d)">
             <i class="iconbtnprim fa-solid fa-xmark" v-if="editingCharacter.fullCustomization" @click="deleteDisciplineAbility(d, a)"></i>
             <small class="name">{{a.name}} - <i><b>{{$t('editor.disciplines.level')}}</b>: {{a.level}}</i></small>
             <TipButton class="tip" :override="true" @click="abilityInfoModal.showModal(a, d.discipline)"/>
@@ -77,6 +77,11 @@ export default class DisciplinesView extends Vue {
     this.confirmDeleteModal.showModal(selection.discipline.name + " " + (selection.currentLevel - 1) + " - " + ability.name, () => {
       selection.abilities = selection.abilities.filter(a => a.id !== ability.id);
       selection.currentLevel--;
+
+      if (selection.abilities.length <= 0) {
+        this.editingCharacter.disciplines = this.editingCharacter.disciplines.filter(d => d.discipline.id !== selection.discipline.id);
+      }
+
       CharacterStorage.saveCharacter(this.editingCharacter);
     });
   }
@@ -105,6 +110,22 @@ export default class DisciplinesView extends Vue {
       return Infinity;
     }
     return this.editingCharacter.useAdavancedDisciplines ? 10 : 5;
+  }
+
+  private sortedDisciplineAbilities(selection: IDisciplineSelection) {
+    return selection.abilities.sort((a, b) => {
+      return a.level - b.level;
+    });
+  }
+
+  private get sortedDisciplines(): IDisciplineSelection[] {
+    if (!this.editingCharacter) {
+      return [];
+    }
+
+    return this.editingCharacter.disciplines.sort((a, b) => {
+      return b.currentLevel - a.currentLevel;
+    });
   }
 }
 </script>
