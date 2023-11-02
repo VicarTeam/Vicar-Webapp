@@ -1,30 +1,31 @@
 {
-  "$schema": "..\\node_modules/@tauri-apps/cli\\schema.json",
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
-    "withGlobalTauri": true,
-    "beforeBuildCommand": "",
-    "beforeDevCommand": "",
+    "beforeBuildCommand": "yarn build",
+    "beforeDevCommand": "yarn serve",
     "devPath": "Set automatically by Vue CLI plugin",
     "distDir": "Set automatically by Vue CLI plugin"
   },
   "package": {
     "productName": "Vicar",
-    "version": "1.1.9"
+    "version": "1.2.0"
   },
   "tauri": {
     "allowlist": {
-      "all": true,
       "fs": {
         "all": true,
         "scope": [
           "$LOCALDATA/**"
         ]
+      },
+      "path": {
+        "all": true
       }
     },
     "bundle": {
       "active": true,
       "category": "DeveloperTool",
-      "copyright": "(c) 2022 VicarTeam",
+      "copyright": "(c) 2023 VicarTeam",
       "deb": {
         "depends": []
       },
@@ -58,12 +59,7 @@
       "csp": null
     },
     "updater": {
-      "active": true,
-      "endpoints": [
-        "https://vicar.app/updater.json"
-      ],
-      "dialog": true,
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDM3NEY2Njk1NUU1OUI1QTkKUldTcHRWbGVsV1pQTi9VcStLdi9ac2hwb2xlVkFJVlFMZ1FDcmlKK0RVYm9SVzg0bnh1bHFRcUsK"
+      "active": false
     },
     "windows": [
       {
@@ -71,7 +67,7 @@
         "height": 720,
         "resizable": true,
         "title": "Vicar",
-        "width": 1280,
+        "width": 1280
       }
     ]
   }

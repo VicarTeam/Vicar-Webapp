@@ -19,7 +19,6 @@ import {Component, Provide, Ref, Vue} from "vue-property-decorator";
 import TipModal from "@/components/editor/TipModal.vue";
 import PlayMenu from "@/components/main/play/menu/PlayMenu.vue";
 import EventBus from "@/libs/event-bus";
-import {ICharacter} from "@/types/models";
 import SyncCharacterPlayerModal from "@/components/main/play/modals/sync/SyncCharacterPlayerModal.vue";
 import SyncCharacterHostModal from "@/components/main/play/modals/sync/SyncCharacterHostModal.vue";
 import AvatarZoomModal from "@/components/main/play/modals/AvatarZoomModal.vue";
