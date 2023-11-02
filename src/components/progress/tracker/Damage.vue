@@ -1,5 +1,5 @@
 <template>
-  <div class="squares" v-if="editingCharacter">
+  <div class="squares" :class="dots.length > 10 ? 'wrap' : ''" v-if="editingCharacter">
     <span v-for="i in dots" class="square" :class="getClasses(i)" @click="onClick(i)">
       <span class="for-cross"></span>
     </span>
@@ -23,15 +23,29 @@ export default class Damage extends Vue {
   @State("editingCharacter")
   private editingCharacter!: ICharacter;
 
+  private mounted() {
+    if (this.hasAdvancedHealth() && (!this.editingCharacter.healthDamage || this.editingCharacter.healthDamage.length <= 10)) {
+      this.editingCharacter.healthDamage ||= DefaultDamageArray();
+      this.editingCharacter.healthDamage.push(...[DamageType.None, DamageType.None, DamageType.None, DamageType.None, DamageType.None]);
+      CharacterStorage.saveCharacter(this.editingCharacter);
+    }
+  }
+
   private getClasses(nr: number): any {
     const classes: {[key: string]: boolean} = {};
-    classes["ml-10"] = nr === 6;
+    classes["mll"] = nr === 6;
     classes["disabled"] = this.isDisabled(nr);
     classes[this.getTypes()[nr - 1]] = true;
     return classes;
   }
 
   private isDisabled(nr: number) {
+    if (this.propKey === "health" && this.hasAdvancedHealth()) {
+      const health = this.editingCharacter.health;
+      const fortitudeLevel = this.fortitudeLevel;
+      return nr > health + fortitudeLevel;
+    }
+
     return nr > this.editingCharacter[this.propKey];
   }
 
@@ -45,7 +59,7 @@ export default class Damage extends Vue {
   }
 
   private get dots(): number[] {
-    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ...(this.propKey === "health" && this.hasAdvancedHealth() ? [11, 12, 13, 14, 15] : [])];
   }
 
   private get typesKey(): "healthDamage"|"willpowerDamage" {
@@ -70,21 +84,47 @@ export default class Damage extends Vue {
     }
     return DamageType.None;
   }
+
+  private hasAdvancedHealth(): boolean {
+    for (const discipline of this.editingCharacter.disciplines) {
+      if (discipline.discipline.id === 7) { // Fortitude
+        return discipline.abilities.some(a => a.id === 1); // Resilience
+      }
+    }
+
+    return false;
+  }
+
+  private get fortitudeLevel(): number {
+    for (const discipline of this.editingCharacter.disciplines) {
+      if (discipline.discipline.id === 7) { // Fortitude
+        return Math.min(discipline.currentLevel, 5);
+      }
+    }
+
+    return 0;
+  }
 }
 </script>
 
 <style scoped lang="scss">
 .squares {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.4rem;
   align-items: center;
   user-select: none;
+  &.wrap {
+    flex-wrap: wrap;
+  }
   .square {
     position: relative;
     width: 1rem;
     height: 1rem;
     cursor: pointer;
     border: 1px solid var(--primary-color);
+    &.mll {
+      margin-left: 1rem;
+    }
     &.disabled {
       opacity: 0.5;
     }
