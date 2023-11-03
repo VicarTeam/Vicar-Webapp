@@ -1,6 +1,10 @@
 <template>
   <div class="d-flex flex-grow-1 lexicon">
     <div class="sidenav">
+      <TOCMenu v-for="(s, i) in customLexicon.prepend.toc" :key="i" :title="s.title.text" :paragraph="s.title.paragraph">
+        <TOCItem v-for="(sb, j) in s.subtitles" :key="j" :title="sb.text" :paragraph="sb.paragraph"/>
+      </TOCMenu>
+
       <TOCMenu :title="$t('character.bloodpotency')" paragraph="bloodpotency">
         <TOCItem :title="$t('character.bloodpotency.spurt')" paragraph="bloodpotency-spurt"/>
         <TOCItem :title="$t('character.bloodpotency.healing')" paragraph="bloodpotency-healing"/>
@@ -38,10 +42,34 @@
       <TOCMenu :title="$t('data.predatortype')" paragraph="predator">
         <TOCItem v-for="p in predatorTypes" :title="p.name" :paragraph="'predator-' + p.id" :key="p.id"/>
       </TOCMenu>
+
+      <TOCMenu v-for="(s, i) in customLexicon.append.toc" :key="i" :title="s.title.text" :paragraph="s.title.paragraph">
+        <TOCItem v-for="(sb, j) in s.subtitles" :key="j" :title="sb.text" :paragraph="sb.paragraph"/>
+      </TOCMenu>
     </div>
     <div class="text-content">
+      <section v-for="(s, i) in customLexicon.prepend.sections" :key="i" :style="i === 0 ? {'margin-top': 0} : {}">
+        <h2 :ref="s.paragraph">{{s.title}}</h2>
+        <template v-for="(it, j) in s.items">
+          <p v-if="it.type === 'paragraph'" :key="j">{{it.text}}</p>
+          <ul v-if="it.type === 'list'" :key="j">
+            <li v-for="(li, k) in it.items" :key="k">{{li}}</li>
+          </ul>
+        </template>
+
+        <section v-for="(sb, j) in s.sections" :key="j">
+          <h5 :ref="sb.paragraph">{{sb.title}}</h5>
+          <template v-for="(it, k) in sb.items">
+            <p v-if="it.type === 'paragraph'" :key="k">{{it.text}}</p>
+            <ul v-if="it.type === 'list'" :key="k">
+              <li v-for="(li, l) in it.items" :key="l">{{li}}</li>
+            </ul>
+          </template>
+        </section>
+      </section>
+
       <section>
-        <h2 ref="bloodpotency" style="margin-top: 0">{{$t('character.bloodpotency')}}</h2>
+        <h2 ref="bloodpotency" :style="customLexicon.prepend.sections.length > 0 ? {} : {'margin-top': 0}">{{$t('character.bloodpotency')}}</h2>
         <h5 ref="bloodpotency-spurt">{{$t('character.bloodpotency.spurt')}}</h5>
         <p>{{$t('character.bloodpotency.spurt.desc')}}</p>
         <h5 ref="bloodpotency-healing">{{$t('character.bloodpotency.healing')}}</h5>
@@ -223,6 +251,26 @@
           <small>{{p.description}}</small>
         </section>
       </section>
+
+      <section v-for="(s, i) in customLexicon.append.sections" :key="i">
+        <h2 :ref="s.paragraph">{{s.title}}</h2>
+        <template v-for="(it, j) in s.items">
+          <p v-if="it.type === 'paragraph'" :key="j">{{it.text}}</p>
+          <ul v-if="it.type === 'list'" :key="j">
+            <li v-for="(li, k) in it.items" :key="k">{{li}}</li>
+          </ul>
+        </template>
+
+        <section v-for="(sb, j) in s.sections" :key="j">
+          <h5 :ref="sb.paragraph">{{sb.title}}</h5>
+          <template v-for="(it, k) in sb.items">
+            <p v-if="it.type === 'paragraph'" :key="k">{{it.text}}</p>
+            <ul v-if="it.type === 'list'" :key="k">
+              <li v-for="(li, l) in it.items" :key="l">{{li}}</li>
+            </ul>
+          </template>
+        </section>
+      </section>
     </div>
   </div>
 </template>
@@ -234,6 +282,7 @@ import TOCItem from "@/components/main/lexicon/toc/TOCItem.vue";
 import DataManager from "@/libs/data/data-manager";
 import {IClan} from "@/types/models";
 import {IBloodRitual, IDiscipline, IDisciplineAbility, IPredatorType, ITraitPack} from "@/types/data";
+import {ISectionatedCustomLexicon, ILexiconItem, ILexiconTextItem, ILexiconList} from "@/types/custom-lexicon";
 
 @Component({
   components: {TOCItem, TOCMenu}
@@ -308,6 +357,10 @@ export default class Lexicon extends Vue {
       return "";
     }
     return this.disciplineAbilities.find(a => a.id === ability.requirement)?.name ?? "";
+  }
+
+  private get customLexicon(): ISectionatedCustomLexicon {
+    return this.data.selectedLanguage.customLexicon;
   }
 
   @Provide("go-to-paragraph")

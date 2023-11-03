@@ -7,6 +7,7 @@
     ITrait,
     ITraitPack
 } from "@/types/data";
+import {ISectionatedCustomLexicon} from "@/types/custom-lexicon";
 
 export enum LevelType {
     Attribute,
@@ -144,6 +145,7 @@ export interface ILanguage {
     readonly books: IBook[];
     readonly bloodPotencyTable: IBloodPotencyData[];
     readonly bloodRituals: IBloodRitual[];
+    readonly customLexicon: ISectionatedCustomLexicon;
 }
 
 export interface IBook {

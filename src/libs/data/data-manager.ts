@@ -19,6 +19,15 @@ import {
 } from "@/types/data";
 import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
 import {DataSync} from "@/libs/data/data-sync";
+import {
+    ICustomLexicon, ICustomLexiconTOC,
+    ILexiconItem,
+    ILexiconSection, ILexiconSubsection,
+    ILexiconTextItem,
+    ISectionatedCustomLexicon
+} from "@/types/custom-lexicon";
+//@ts-ignore
+import {v4 as uuidv4} from 'uuid';
 
 export default class DataManager {
 
@@ -79,7 +88,8 @@ export default class DataManager {
                         predatorTypes: predatorTypes.filter(p => book.predatorTypes.includes(p.id))
                     };
                 }),
-                bloodPotencyTable, bloodRituals
+                bloodPotencyTable, bloodRituals,
+                customLexicon: this.getCustomLexicon(DataSync.loadFile(`${langKey}/CustomLexicon.json`))
             });
         }
     }
@@ -192,5 +202,72 @@ export default class DataManager {
             return input;
         }
         return input.filter(value => !value.restriction || restrictionResolver.resolve(char, value.restriction));
+    }
+
+    private static getCustomLexicon(rawLexicon: ICustomLexicon): ISectionatedCustomLexicon {
+        const convertLexiconList = (items: ILexiconItem[]): {sections: ILexiconSection[], toc: ICustomLexiconTOC[]} => {
+            const sections: ILexiconSection[] = [];
+            const toc: ICustomLexiconTOC[] = [];
+            let currentSection: ILexiconSection|null = null;
+            let currentSubsection: ILexiconSubsection|null = null;
+            let currentTocSection: ICustomLexiconTOC|null = null;
+
+            for (const item of items) {
+                if (item.type === "title") {
+                    currentSubsection = null;
+                    currentSection = {
+                        title: (<ILexiconTextItem>item).text,
+                        paragraph: "clpt-" + uuidv4(),
+                        items: [],
+                        sections: []
+                    };
+                    currentTocSection = {
+                        title: {
+                            paragraph: currentSection.paragraph,
+                            text: currentSection.title
+                        },
+                        subtitles: []
+                    };
+                    sections.push(currentSection);
+                    toc.push(currentTocSection);
+                    continue;
+                }
+
+                if (!currentSection) {
+                    continue;
+                }
+
+                if (item.type === "subtitle") {
+                    currentSubsection = {
+                        title: (<ILexiconTextItem>item).text,
+                        paragraph: "clpst-" + uuidv4(),
+                        items: []
+                    };
+                    currentTocSection!.subtitles.push({
+                        paragraph: currentSubsection.paragraph,
+                        text: currentSubsection.title
+                    });
+                    currentSection.sections.push(currentSubsection);
+                    continue;
+                }
+
+                if (item.type === "paragraph" || item.type === "list") {
+                    if (currentSubsection) {
+                        currentSubsection.items.push(item);
+                    } else {
+                        currentSection.items.push(item);
+                    }
+                }
+            }
+
+            return {
+                sections, toc
+            };
+        };
+
+        return {
+            prepend: convertLexiconList(rawLexicon.prepend),
+            append: convertLexiconList(rawLexicon.append)
+        };
     }
 }
