@@ -18,6 +18,7 @@ import {
     ITraitPack
 } from "@/types/data";
 import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
+import {DataSync} from "@/libs/data/data-sync";
 
 export default class DataManager {
 
@@ -29,12 +30,15 @@ export default class DataManager {
     }
 
     public static async load() {
-        const meta: data.IEdition = (await import("@/assets/data/Meta.json")).default;
+        await DataSync.sync();
+
+        const meta: data.IEdition = DataSync.loadFile("Meta.json");
+        console.log(meta);
 
         for (const langKey of meta.languages) {
-            const disciplines: data.IDiscipline[] = (await import(`@/assets/data/${langKey}/Disciplines.json`)).default;
+            const disciplines: data.IDiscipline[] = DataSync.loadFile(`${langKey}/Disciplines.json`);
 
-            const clans: IClan[] = (<data.IClan[]>(await import(`@/assets/data/${langKey}/Clans.json`)).default).map(clan => {
+            const clans: IClan[] = (<data.IClan[]>(DataSync.loadFile(`${langKey}/Clans.json`))).map(clan => {
                 return {
                     id: clan.id,
                     name: clan.name,
@@ -46,23 +50,23 @@ export default class DataManager {
                 };
             });
 
-            const merits: ITraitPack[] = (<data.ITraitPack[]>(await import(`@/assets/data/${langKey}/Merits.json`)).default).map(merit => {
+            const merits: ITraitPack[] = (<data.ITraitPack[]>(DataSync.loadFile(`${langKey}/Merits.json`))).map(merit => {
                 merit.type = "merits";
                 merit.advantages = merit.advantages.map(advantage => fillDefaults<ITrait>(advantage, DefaultTrait));
                 merit.disadvantages = merit.disadvantages.map(disadvantage => fillDefaults<ITrait>(disadvantage, DefaultTrait));
                 return merit;
             });
 
-            const backgrounds: ITraitPack[] = (<data.ITraitPack[]>(await import(`@/assets/data/${langKey}/Backgrounds.json`)).default).map(merit => {
+            const backgrounds: ITraitPack[] = (<data.ITraitPack[]>(DataSync.loadFile(`${langKey}/Backgrounds.json`))).map(merit => {
                 merit.type = "backgrounds";
                 merit.advantages = merit.advantages.map(advantage => fillDefaults<ITrait>(advantage, DefaultTrait));
                 merit.disadvantages = merit.disadvantages.map(disadvantage => fillDefaults<ITrait>(disadvantage, DefaultTrait));
                 return merit;
             });
 
-            const predatorTypes: IPredatorType[] = (await import(`@/assets/data/${langKey}/PredatorTypes.json`)).default;
-            const bloodPotencyTable: IBloodPotencyData[] = (await import(`@/assets/data/${langKey}/BloodPotencyTable.json`)).default;
-            const bloodRituals: IBloodRitual[] = (await import(`@/assets/data/${langKey}/BloodRituals.json`)).default;
+            const predatorTypes: IPredatorType[] = (DataSync.loadFile(`${langKey}/PredatorTypes.json`));
+            const bloodPotencyTable: IBloodPotencyData[] = (DataSync.loadFile(`${langKey}/BloodPotencyTable.json`));
+            const bloodRituals: IBloodRitual[] = (DataSync.loadFile(`${langKey}/BloodRituals.json`));
 
             this.languages.push({
                 key: langKey,

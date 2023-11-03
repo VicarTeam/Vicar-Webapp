@@ -8,17 +8,18 @@
             <option v-for="lang in availableLocales" :key="lang.code" :value="lang.code">{{lang.name}}</option>
           </select>
         </div>
-        <div class="form-group">
+<!--        <div class="form-group">
           <label>{{$t("main.settings.vps")}}</label>
           <input class="form-control" v-model="vpsUrl"/>
+        </div>-->
+        <div class="form-group d-flex align-items-center justify-content-between">
+          <button class="btn btn-primary" @click="syncData">{{$t('main.settings.syncdata')}}</button>
+          <button class="btn btn-primary" @click="migrateCharacters">{{$t('main.characters.migrate')}}</button>
         </div>
         <div class="form-group d-flex align-items-center">
           <div class="custom-switch d-flex align-items-center flex-grow-1">
             <input type="checkbox" id="switch-1" v-model="devMode">
             <label for="switch-1">{{$t('main.settings.devmode')}}</label>
-          </div>
-          <div class="d-flex align-items-center flex-shrink-0">
-            <button class="btn btn-primary" @click="migrateCharacters">{{$t('main.characters.migrate')}}</button>
           </div>
         </div>
         <div class="form-group mb-0" style="font-style: italic; width: 100%; text-align: right">
@@ -34,6 +35,7 @@ import {Component, Vue} from "vue-property-decorator";
 import {AVAILABLE_LOCALES, i18n, setLocale} from "@/libs/i18n";
 import {SettingsData} from "@/libs/io/settings";
 import CharacterStorage from "@/libs/io/character-storage";
+import {DataSync} from "@/libs/data/data-sync";
 
 @Component({
   components: {}
@@ -47,6 +49,10 @@ export default class Settings extends Vue {
 
   mounted() {
     this.selectedLocale = i18n.locale;
+  }
+
+  private async syncData() {
+    await DataSync.sync(true);
   }
 
   private async migrateCharacters() {

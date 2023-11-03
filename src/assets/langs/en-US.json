@@ -363,6 +363,7 @@
   "play.sync.syncing": "Character is synchronized",
   "main.settings.devmode": "Developer Mode",
   "main.settings.vps": "VicarPlay Server",
+  "main.settings.syncdata": "Sync Data",
   "play.players.you": "You",
   "main.characters.migrate": "Migrate Characters",
   "main.characters.create.allbooks": "Use all books",
