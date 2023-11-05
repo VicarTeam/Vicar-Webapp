@@ -47,6 +47,7 @@ export default class NewSpecializationModal extends Vue {
       return;
     }
 
+    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
     this.editingCharacter.exp -= this.neededExp;
     this.data.specialization.push(this.specialization);
     CharacterStorage.saveCharacter(this.editingCharacter);

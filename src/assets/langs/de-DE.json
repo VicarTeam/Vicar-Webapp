@@ -399,5 +399,6 @@
   "character.inventory.transfer.confirm": "Bestätigen",
   "character.inventory.amount.change.zero": "Du bist gerade dabei den Gegenstand \"{name}\" auf eine Anzahl kleiner 1 zu setzen. Möchtest du den Gegenstand löschen oder behalten?",
   "character.inventory.amount.change.zero.keep": "Behalten",
-  "character.inventory.amount.change.zero.delete": "Löschen"
+  "character.inventory.amount.change.zero.delete": "Löschen",
+  "character.advanced.usedexp": "Verwendete Erfahrung"
 }

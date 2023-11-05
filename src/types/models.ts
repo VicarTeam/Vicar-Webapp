@@ -253,6 +253,7 @@ export interface ICharacter {
     fullCustomization: boolean;
     version: number;
     inventory: IInventory;
+    usedExp: number;
 }
 
 export interface ICategory {
@@ -364,6 +365,7 @@ export const DefaultCharacter: () => ICharacter = () => ({
     allowLearningOfAllPowers: false,
     fullCustomization: false,
     version: CurrentCharacterVersion,
+    usedExp: 0,
     inventory: {
         carriedItems: [],
         ownedItems: [],

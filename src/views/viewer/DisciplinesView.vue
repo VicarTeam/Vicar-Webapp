@@ -92,6 +92,7 @@ export default class DisciplinesView extends Vue {
       selection.abilities.push({...ability, usedLevel: selection.currentLevel});
       selection.currentLevel++;
       selection.abilities = this.sortedDisciplineAbilities(selection.abilities);
+      this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + costs;
       this.editingCharacter.exp -= costs;
       this.editingCharacter.disciplines = this.sortedDisciplines;
       CharacterStorage.saveCharacter(this.editingCharacter);

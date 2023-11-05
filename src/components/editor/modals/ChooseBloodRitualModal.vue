@@ -63,6 +63,12 @@ export default class ChooseBloodRitualModal extends Vue {
   private addCurrentAbility() {
     if (this.canSelectAbility && this.discipline) {
       this.editingCharacter.bloodRituals.push({...this.ritual!});
+
+      if (this.withCosts) {
+        this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.costs;
+        this.editingCharacter.exp -= this.costs;
+      }
+
       this.callback();
       this.shown = false;
     }

@@ -5,6 +5,10 @@
         <label><b>{{$t('main.characters.create.books')}}:</b></label>
         <BookSelection :disabled="true" :books="activatedBooks"/>
       </div>
+      <div class="form-group d-flex flex-column">
+        <label><b>{{$t('character.advanced.usedexp')}}:</b></label>
+        <i style="opacity: 0.7">{{character.usedExp || 0}} EXP</i>
+      </div>
       <div class="form-group d-flex flex-column" :class="{'mb-0': !isNotUpToDate()}">
         <label><b>{{$t('character.advanced.rules')}}:</b></label>
         <div class="custom-checkbox d-flex align-items-center">

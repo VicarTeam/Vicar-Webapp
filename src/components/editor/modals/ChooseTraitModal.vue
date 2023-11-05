@@ -133,7 +133,9 @@ export default class ChooseTraitModal extends Vue {
     });
 
     if (this.calculateCosts) {
-      this.editingCharacter.exp -= this.calculateCosts(this.selectedTrait, this.customLevel);
+      const costs = this.calculateCosts(this.selectedTrait, this.customLevel);
+      this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + costs;
+      this.editingCharacter.exp -= costs;
       CharacterStorage.saveCharacter(this.editingCharacter);
     }
 

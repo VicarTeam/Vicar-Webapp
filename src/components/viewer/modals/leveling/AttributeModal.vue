@@ -41,6 +41,7 @@ export default class AttributeModal extends Vue {
       return;
     }
 
+    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
     this.editingCharacter.exp -= this.neededExp;
     this.data.value++;
 
