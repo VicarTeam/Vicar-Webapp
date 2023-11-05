@@ -146,6 +146,7 @@ export interface ILanguage {
     readonly bloodPotencyTable: IBloodPotencyData[];
     readonly bloodRituals: IBloodRitual[];
     readonly customLexicon: ISectionatedCustomLexicon;
+    readonly items: IGroupItems[];
 }
 
 export interface IBook {
@@ -251,6 +252,7 @@ export interface ICharacter {
     allowLearningOfAllPowers: boolean;
     fullCustomization: boolean;
     version: number;
+    inventory: IInventory;
 }
 
 export interface ICategory {
@@ -268,6 +270,30 @@ export interface ISkillData {
     key: SkillKeys;
     value: number;
     specialization: string[];
+}
+
+export interface IInventory {
+    carriedItems: IItemStack[];
+    ownedItems: IItemStack[];
+    bank: number;
+    cash: number;
+}
+
+export interface IItemStack {
+    item: IItem;
+    amount: number;
+}
+
+export interface IItem {
+    isCustom: boolean;
+    name: string;
+    description: string;
+    category: string;
+}
+
+export interface IGroupItems {
+    category: string;
+    items: IItem[];
 }
 
 export const DefaultDamageArray: () => DamageType[] = () => {
@@ -337,5 +363,11 @@ export const DefaultCharacter: () => ICharacter = () => ({
     useAdavancedDisciplines: false,
     allowLearningOfAllPowers: false,
     fullCustomization: false,
-    version: CurrentCharacterVersion
+    version: CurrentCharacterVersion,
+    inventory: {
+        carriedItems: [],
+        ownedItems: [],
+        cash: 0,
+        bank: 0
+    }
 });

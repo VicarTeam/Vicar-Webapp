@@ -39,6 +39,7 @@ export class DataSync {
   public static loadFile<T>(fileName: string): T {
     if (!this._data) {
       this._data = JSON.parse(localStorage.getItem("__data__") || "{}");
+      console.log(this._data);
     }
 
     return JSON.parse(this._data![fileName]);

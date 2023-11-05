@@ -3,7 +3,7 @@ import {
     AttributeKeys,
     fillDefaults,
     ICharacter,
-    IClan,
+    IClan, IGroupItems, IItem,
     ILanguage,
     ILeveledDisciplineAbility, SkillKeys
 } from "@/types/models";
@@ -42,7 +42,6 @@ export default class DataManager {
         await DataSync.sync();
 
         const meta: data.IEdition = DataSync.loadFile("Meta.json");
-        console.log(meta);
 
         for (const langKey of meta.languages) {
             const disciplines: data.IDiscipline[] = DataSync.loadFile(`${langKey}/Disciplines.json`);
@@ -77,6 +76,35 @@ export default class DataManager {
             const bloodPotencyTable: IBloodPotencyData[] = (DataSync.loadFile(`${langKey}/BloodPotencyTable.json`));
             const bloodRituals: IBloodRitual[] = (DataSync.loadFile(`${langKey}/BloodRituals.json`));
 
+            const items: IItem[] = (DataSync.loadFile<IItem[]>(`${langKey}/Items.json`)).map(x => ({...x, isCustom: false}));
+            const groupedItems: IGroupItems[] = [];
+            const allItems: IItem[] = [];
+
+            for (const item of items) {
+                const group = groupedItems.find(g => g.category === item.category);
+                if (group) {
+                    group.items.push(item);
+                } else {
+                    groupedItems.push({
+                        category: item.category,
+                        items: [item]
+                    });
+                }
+
+                allItems.push(item);
+            }
+
+            groupedItems.forEach(x => {
+                x.items.sort((a, b) => a.name.localeCompare(b.name));
+            });
+
+            groupedItems.sort((a, b) => a.category.localeCompare(b.category));
+            allItems.sort((a, b) => a.name.localeCompare(b.name));
+            groupedItems.unshift({
+                category: langKey === "de-DE" ? "-- Alle Gegenstände --" : "-- All items --",
+                items: allItems
+            });
+
             this.languages.push({
                 key: langKey,
                 books: meta.books.map(book => {
@@ -88,7 +116,7 @@ export default class DataManager {
                         predatorTypes: predatorTypes.filter(p => book.predatorTypes.includes(p.id))
                     };
                 }),
-                bloodPotencyTable, bloodRituals,
+                bloodPotencyTable, bloodRituals, items: groupedItems,
                 customLexicon: this.getCustomLexicon(DataSync.loadFile(`${langKey}/CustomLexicon.json`))
             });
         }

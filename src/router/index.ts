@@ -71,6 +71,11 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/viewer/ProfileView.vue')
       },
       {
+        path: 'inventory',
+        name: 'viewer-inventory',
+        component: () => import('@/views/viewer/InventoryView.vue')
+      },
+      {
         path: 'attributes',
         name: 'viewer-attributes',
         component: () => import('@/views/viewer/AttributesView.vue')

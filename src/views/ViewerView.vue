@@ -7,13 +7,14 @@
         <Avatar :src="editingCharacter.avatar" style="width: 3rem; height: 3rem;"/>
       </div>
       <Tabs class="center" @before-change="switchTab" v-model="selectedTab">
-        <Tab value="viewer-profile" :text="$t('viewer.tab.profile').toString()"/>
-        <Tab value="viewer-attributes" :text="$t('viewer.tab.attributes').toString()"/>
-        <Tab value="viewer-skills" :text="$t('viewer.tab.skills').toString()"/>
-        <Tab value="viewer-disciplines" :text="$t('viewer.tab.disciplines').toString()"/>
-        <Tab v-if="editingCharacter.bloodRituals && editingCharacter.bloodRituals.length > 0" value="viewer-bloodrituals" :text="$t('viewer.tab.bloodrituals').toString()"/>
-        <Tab value="viewer-traits" :text="$t('viewer.tab.traits').toString()"/>
-        <Tab value="viewer-pdf" :text="$t('viewer.tab.pdf').toString()"/>
+        <Tab value="viewer-profile" :text="$t('viewer.tab.profile').toString()" ref="tabProfile"/>
+        <Tab value="viewer-inventory" :text="$t('viewer.tab.inventory').toString()" ref="tabInventory"/>
+        <Tab value="viewer-attributes" :text="$t('viewer.tab.attributes').toString()" ref="tabAttributes"/>
+        <Tab value="viewer-skills" :text="$t('viewer.tab.skills').toString()" ref="tabSkills"/>
+        <Tab value="viewer-disciplines" :text="$t('viewer.tab.disciplines').toString()" ref="tabDisciplines"/>
+        <Tab v-if="editingCharacter.bloodRituals && editingCharacter.bloodRituals.length > 0" value="viewer-bloodrituals" :text="$t('viewer.tab.bloodrituals').toString()" ref="tabBloodRituals"/>
+        <Tab value="viewer-traits" :text="$t('viewer.tab.traits').toString()" ref="tabTraits"/>
+<!--        <Tab value="viewer-pdf" :text="$t('viewer.tab.pdf').toString()"/>-->
       </Tabs>
       <div class="actions">
         <small style="color: #afafaf; display: flex; gap: 0.5rem; justify-content: center; align-items: center">EXP: <b>{{editingCharacter.exp}}</b>
@@ -44,6 +45,38 @@ import CharacterStorage from "@/libs/io/character-storage";
 import AddExpModal from "@/components/viewer/modals/AddExpModal.vue";
 import CharacterInfoModal from "@/components/viewer/modals/CharacterInfoModal.vue";
 
+const TabHotkeys = [
+  {
+    tab: "tabProfile",
+    keys: ["ALT+P", "Escape", "ALT+1"]
+  },
+  {
+    tab: "tabInventory",
+    keys: ["ALT+I", "ALT+2"]
+  },
+  {
+    tab: "tabAttributes",
+    keys: ["ALT+A", "ALT+3"]
+  },
+  {
+    tab: "tabSkills",
+    keys: ["ALT+F", "ALT+4"]
+  },
+  {
+    tab: "tabDisciplines",
+    keys: ["ALT+D", "ALT+5"]
+  },
+  {
+    tab: "tabBloodRituals",
+    keys: ["ALT+B"],
+    condition: (character: ICharacter) => character.bloodRituals && character.bloodRituals.length > 0
+  },
+  {
+    tab: "tabTraits",
+    keys: ["ALT+V", "ALT+6"]
+  }
+];
+
 @Component({
   components: {CharacterInfoModal, AddExpModal, Tab, Avatar, IconButton, Tabs}
 })
@@ -72,6 +105,31 @@ export default class ViewerView extends Vue {
 
   mounted() {
     this.$router.push({name: 'viewer-profile'});
+    window.addEventListener('keydown', this.onKeyDown);
+  }
+
+  destroyed() {
+    window.removeEventListener('keydown', this.onKeyDown);
+  }
+
+  private onKeyDown(event: KeyboardEvent) {
+    if (event.altKey) {
+      const tab = TabHotkeys.find(tab => tab.keys.includes("ALT+" + event.key.toUpperCase()));
+      if (tab) {
+        const character = this.editingCharacter;
+        if (character && (!tab.condition || tab.condition(character))) {
+          const el = this.$refs[tab.tab];
+          if (el) {
+            (el as any).$el.click();
+          }
+        }
+      }
+    } else if (event.key === "Escape") {
+      const el = this.$refs["tabProfile"];
+      if (el) {
+        (el as any).$el.click();
+      }
+    }
   }
 
   private switchTab(name: string) {
