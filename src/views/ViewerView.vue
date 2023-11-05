@@ -30,6 +30,7 @@
 
     <AddExpModal ref="addExpModal"/>
     <CharacterInfoModal ref="characterInfoModal"/>
+    <DicePoolCalculatorModal ref="dicePoolCalculatorModal"/>
   </div>
 </template>
 
@@ -44,6 +45,7 @@ import Tab from "@/components/tabs/Tab.vue";
 import CharacterStorage from "@/libs/io/character-storage";
 import AddExpModal from "@/components/viewer/modals/AddExpModal.vue";
 import CharacterInfoModal from "@/components/viewer/modals/CharacterInfoModal.vue";
+import DicePoolCalculatorModal from "@/components/main/characters/modals/DicePoolCalculatorModal.vue";
 
 const TabHotkeys = [
   {
@@ -78,7 +80,7 @@ const TabHotkeys = [
 ];
 
 @Component({
-  components: {CharacterInfoModal, AddExpModal, Tab, Avatar, IconButton, Tabs}
+  components: {DicePoolCalculatorModal, CharacterInfoModal, AddExpModal, Tab, Avatar, IconButton, Tabs}
 })
 export default class ViewerView extends Vue {
 
@@ -93,6 +95,9 @@ export default class ViewerView extends Vue {
 
   @Ref("characterInfoModal")
   private characterInfoModal!: CharacterInfoModal;
+
+  @Ref("dicePoolCalculatorModal")
+  private dicePoolCalculatorModal!: DicePoolCalculatorModal;
 
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character?: ICharacter) => void;
@@ -124,11 +129,17 @@ export default class ViewerView extends Vue {
           }
         }
       }
-    } else if (event.key === "Escape") {
+    }
+
+    if (event.key === "Escape") {
       const el = this.$refs["tabProfile"];
       if (el) {
         (el as any).$el.click();
       }
+    }
+
+    if (event.ctrlKey && event.key === " " && this.editingCharacter) {
+      this.dicePoolCalculatorModal.showModal(this.editingCharacter, this.selectedTab === "viewer-disciplines");
     }
   }
 

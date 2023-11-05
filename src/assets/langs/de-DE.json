@@ -400,5 +400,17 @@
   "character.inventory.amount.change.zero": "Du bist gerade dabei den Gegenstand \"{name}\" auf eine Anzahl kleiner 1 zu setzen. Möchtest du den Gegenstand löschen oder behalten?",
   "character.inventory.amount.change.zero.keep": "Behalten",
   "character.inventory.amount.change.zero.delete": "Löschen",
-  "character.advanced.usedexp": "Verwendete Erfahrung"
+  "character.advanced.usedexp": "Verwendete Erfahrung",
+
+  "character.modal.pool-calcuator": "Würfelpool für \"{name}\" berechnen",
+  "character.modal.pool-calcuator.search_not_found": "nichts gefunden",
+  "character.modal.pool-calcuator.discipline": "Ist für Disziplin?",
+  "character.modal.pool-calcuator.attribute": "Wähle ein Attribut",
+  "character.modal.pool-calcuator.skill": "Wähle eine Fähigkeit/Disziplin",
+  "character.modal.pool-calcuator.result": "Verfügbare Würfel",
+  "character.modal.pool-calcuator.bonus": "Weitere Boni/Mali",
+  "character.modal.pool-calcuator.result.text.no-hunger": "Würfel",
+  "character.modal.pool-calcuator.result.text.hunger.1": "Würfel davon",
+  "character.modal.pool-calcuator.result.text.hunger.2": "Hungerwürfel und",
+  "character.modal.pool-calcuator.result.text.hunger.3": "normale Würfel"
 }
