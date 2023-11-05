@@ -34,7 +34,8 @@
         <div class="row">
           <div class="stat" style="margin-right: 5rem">
             <b>{{ $t('character.sire') }}:</b>
-            <small>{{ editingCharacter.sire }}</small>
+            <small v-if="!editingCharacter.fullCustomization">{{ editingCharacter.sire }}</small>
+            <input v-else class="form-control" type="text" v-model="editingCharacter.sire"/>
           </div>
           <div class="stat">
             <b>{{ $t('character.health') }}:</b>
