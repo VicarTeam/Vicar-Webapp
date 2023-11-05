@@ -401,7 +401,6 @@
   "character.inventory.amount.change.zero.keep": "Behalten",
   "character.inventory.amount.change.zero.delete": "Löschen",
   "character.advanced.usedexp": "Verwendete Erfahrung",
-
   "character.modal.pool-calcuator": "Würfelpool für \"{name}\" berechnen",
   "character.modal.pool-calcuator.search_not_found": "nichts gefunden",
   "character.modal.pool-calcuator.discipline": "Ist für Disziplin?",
