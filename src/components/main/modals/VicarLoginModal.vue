@@ -22,6 +22,7 @@ export default class VicarLoginModal extends Vue {
 
   public show() {
     this.step = 0;
+    this.loading = false;
     this.registerAlias = '';
     this.registerEmail = '';
     this.recoverEmail = '';
