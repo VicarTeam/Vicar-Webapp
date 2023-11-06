@@ -59,14 +59,6 @@ export default class Settings extends Vue {
     await CharacterStorage.migrateCharacters();
   }
 
-  private get vpsUrl(): string {
-    return SettingsData.getVicarPlayServer();
-  }
-
-  private set vpsUrl(value: string) {
-    SettingsData.setVicarPlayServer(value);
-  }
-
   private get devMode(): boolean {
     return SettingsData.isDevMode();
   }

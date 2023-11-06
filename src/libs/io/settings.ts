@@ -10,12 +10,12 @@ export class SettingsData {
         localStorage.setItem("settings:devMode", value ? "true" : "false");
     }
 
-    public static getVicarPlayServer() {
-        return localStorage.getItem("settings:vicarplayServer") || "https://vicarplay.polaryx.de";
+    public static getVicarNetUrl() {
+        return localStorage.getItem("settings:vicarNet") || "http://localhost:25319";
     }
 
-    public static setVicarPlayServer(value: string) {
-        localStorage.setItem("settings:vicarplayServer", value);
+    public static setVicarNetUrl(value: string) {
+        localStorage.setItem("settings:vicarNet", value.endsWith("/") ? value.slice(0, -1) : value);
     }
 
     public static getLanguage() {

@@ -1,7 +1,6 @@
 import {ICharacter, ICharacterDirectory} from "@/types/models";
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
-import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 import { readTextFile, writeTextFile, removeFile, createDir } from "@tauri-apps/api/fs";
 import { join, localDataDir } from "@tauri-apps/api/path";
 
@@ -72,12 +71,6 @@ export default class CharacterStorage {
         this.writeStorage("character-" + character.id, JSON.stringify(character)).catch(e => {
             console.error(e);
         });
-
-        if (VicarPlayClient.isInSession() && VicarPlayClient.syncingChar) {
-            if (character.id === VicarPlayClient.syncingChar.id) {
-                VicarPlayClient.socket.emit("sync-char:update", character);
-            }
-        }
     }
 
     public static addCharacter(character: ICharacter): string {

@@ -22,7 +22,6 @@
     </div>
 
     <div class="actions">
-      <IconButton v-if="VicarPlayClient.isInSession() && VicarPlayClient.amIHost()" icon="fa-file-image" @click="sendAvatar"/>
       <IconButton icon="fa-trash" @click="beginCharDeletion(character)"/>
       <IconButton icon="fa-copy" @click="cloneCharacter(character)"/>
       <IconButton icon="fa-file-arrow-down" @click="exportCharacter(character)"/>
@@ -41,15 +40,11 @@ import {ICharacter} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
 import FileCreator from "@/libs/io/file-creator";
 import {Mutation} from "vuex-class";
-import {IMessage, MessageType} from "@/libs/vicarplay/types";
-import VicarPlayClient from "@/libs/vicarplay/vicar-play";
 
 @Component({
   components: {IconButton, Avatar, Bullet}
 })
 export default class Character extends Vue {
-
-  private VicarPlayClient = VicarPlayClient;
 
   @Prop({required: true})
   private character!: ICharacter;
@@ -75,22 +70,6 @@ export default class Character extends Vue {
     this.setLevelMode(false);
     this.setEditingCharacter(character);
     this.$router.push({name: 'viewer'});
-  }
-
-  private sendAvatar() {
-    if (!VicarPlayClient.isInSession() || !VicarPlayClient.amIHost()) {
-      return;
-    }
-
-    const receiver = VicarPlayClient.getChatReceiver();
-    const message: IMessage = {
-      type: VicarPlayClient.chatSendTo === "@all" ? MessageType.BroadcastAvatar : MessageType.PrivateAvatar,
-      content: this.character.avatar,
-      sender: VicarPlayClient.me!,
-      receiver
-    };
-
-    VicarPlayClient.sendChatMessage(message);
   }
 
   @Inject("begin-char-deletion")
