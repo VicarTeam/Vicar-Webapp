@@ -39,6 +39,7 @@ import {ICharacter} from "@/types/models";
 import EnterReceiverModal from "@/components/main/characters/share/modals/EnterReceiverModal.vue";
 import CharReceivedModal from "@/components/main/characters/share/modals/CharReceivedModal.vue";
 import CharacterStorage from "@/libs/io/character-storage";
+import {VicarNet} from "@/libs/io/vicar-net";
 
 @Component({
   components: {CharReceivedModal, EnterReceiverModal, WrappedSpinner, Blur, TipButton}
@@ -63,8 +64,13 @@ export default class VicarShare extends Vue {
 
     this.initialising = true;
     this.peer = new Peer();
-    this.peer.on("open", (id: string) => {
+    this.peer.on("open", async (id: string) => {
       this.peerId = id;
+
+      if (VicarNet.isLoggedIn) {
+        await VicarNet.bindVicarShareIdToAlias(id);
+      }
+
       this.initialising = false;
     });
     this.peer.on("connection", conn => {
@@ -86,6 +92,10 @@ export default class VicarShare extends Vue {
     this.peer!.destroy();
     this.peer = null;
     this.peerId = null;
+
+    if (VicarNet.isLoggedIn) {
+      VicarNet.unbindVicarShareIdFromAlias();
+    }
   }
 
   private copy() {
@@ -101,8 +111,10 @@ export default class VicarShare extends Vue {
 
   public shareCharacter(char: ICharacter) {
     if (this.isAvailable) {
-      this.enterReceiverModal.showModal(char, id => {
-        const conn = this.peer!.connect(id);
+      this.enterReceiverModal.showModal(char, async id => {
+        const resolvedId = await VicarNet.resolveVicarShareId(id);
+
+        const conn = this.peer!.connect(resolvedId);
         conn.on("open", () => {
           conn.send(char);
         });

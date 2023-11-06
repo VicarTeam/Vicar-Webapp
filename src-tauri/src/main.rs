@@ -42,13 +42,20 @@ async fn download_data_bundle() -> Result<String, String> {
 }
 
 #[tauri::command]
-async fn post_request(url: String, json: String) -> Result<(u16, String), String> {
-    let res = reqwest::Client::builder().build().unwrap()
+async fn post_request(url: String, json: String, headers: Vec<(String, String)>) -> Result<(u16, String), String> {
+    let builder = reqwest::Client::builder().build().unwrap()
         .post(&url)
-        .header("Content-Type", "application/json")
-        .body(json)
+        .header("Content-Type", "application/json");
+
+    let mut builder = builder;
+    for (key, value) in headers {
+        builder = builder.header(key, value);
+    }
+
+    let res = builder.body(json)
         .send()
         .await;
+
     if res.is_err() {
         return Err("Failed to send POST request".to_string());
     }
@@ -125,8 +132,15 @@ async fn put_request(url: String, json: String) -> Result<(u16, String), String>
 }
 
 #[tauri::command]
-async fn delete_request(url: String) -> Result<(u16, String), String> {
-    let res = reqwest::Client::builder().build().unwrap().delete(&url).send().await;
+async fn delete_request(url: String, headers: Vec<(String, String)>) -> Result<(u16, String), String> {
+    let builder = reqwest::Client::builder().build().unwrap().delete(&url);
+    let mut builder = builder;
+
+    for (key, value) in headers {
+        builder = builder.header(key, value);
+    }
+
+    let res = builder.send().await;
     if res.is_err() {
         return Err("Failed to send DELETE request".to_string());
     }

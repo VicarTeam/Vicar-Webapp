@@ -342,5 +342,18 @@
   "character.modal.pool-calcuator.result.text.no-hunger": "Würfel",
   "character.modal.pool-calcuator.result.text.hunger.1": "Würfel davon",
   "character.modal.pool-calcuator.result.text.hunger.2": "Hungerwürfel und",
-  "character.modal.pool-calcuator.result.text.hunger.3": "normale Würfel"
+  "character.modal.pool-calcuator.result.text.hunger.3": "normale Würfel",
+
+  "main.settings.vicarnet": "VicarNet",
+  "main.settings.vicarnet.login": "Bei VicarNet einloggen",
+  "main.settings.vicarnet.logout": "Ausloggen",
+  "main.vicarnet.login.or": "ODER",
+  "main.vicarnet.login.register.alias": "Alias",
+  "main.vicarnet.login.register.email": "E-Mail",
+  "main.vicarnet.login.register.submit": "Mit neuem Konto einloggen",
+  "main.vicarnet.login.recover.submit": "Bestehendes Konto wiederherstellen",
+  "main.vicarnet.login.loading.1": "Frage VicarNet nach Bestätigung an...",
+  "main.vicarnet.login.loading.2": "Logge dich ein...",
+  "main.vicarnet.login.enter-code": "Bestätigungscode eingeben (per E-Mail erhalten)",
+  "main.vicarnet.login.enter-code.submit": "Bestätigen"
 }
