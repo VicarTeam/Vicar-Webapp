@@ -26,6 +26,21 @@ export interface IBloodRitual {
     system: string;
 }
 
+export interface IOblivionCeremony {
+    id: number;
+    level: number;
+    name: string;
+    cost: string;
+    roll: string;
+    summary: string;
+    requires: number|undefined;
+    cult: string|undefined;
+    ingredients: string;
+    execution: string;
+    system: string;
+    duration: string|undefined;
+}
+
 export interface IEdition {
     languages: string[];
     books: IBook[];

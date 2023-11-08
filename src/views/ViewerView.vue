@@ -12,7 +12,7 @@
         <Tab value="viewer-attributes" :text="$t('viewer.tab.attributes').toString()" ref="tabAttributes"/>
         <Tab value="viewer-skills" :text="$t('viewer.tab.skills').toString()" ref="tabSkills"/>
         <Tab value="viewer-disciplines" :text="$t('viewer.tab.disciplines').toString()" ref="tabDisciplines"/>
-        <Tab v-if="editingCharacter.bloodRituals && editingCharacter.bloodRituals.length > 0" value="viewer-bloodrituals" :text="$t('viewer.tab.bloodrituals').toString()" ref="tabBloodRituals"/>
+        <Tab v-if="editingCharacter.bloodRituals || editingCharacter.oblivionCeremonies" value="viewer-bloodrituals" :text="$t('viewer.tab.rituals').toString()" ref="tabBloodRituals"/>
         <Tab value="viewer-traits" :text="$t('viewer.tab.traits').toString()" ref="tabTraits"/>
 <!--        <Tab value="viewer-pdf" :text="$t('viewer.tab.pdf').toString()"/>-->
       </Tabs>
@@ -70,7 +70,7 @@ const TabHotkeys = [
   },
   {
     tab: "tabBloodRituals",
-    keys: ["ALT+B"],
+    keys: ["ALT+R"],
     condition: (character: ICharacter) => character.bloodRituals && character.bloodRituals.length > 0
   },
   {

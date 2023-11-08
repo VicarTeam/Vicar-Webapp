@@ -115,6 +115,29 @@ export default class DicePoolCalculatorModal extends Vue {
       opts.push(...discOpts.sort((a, b) => a.name.localeCompare(b.name)));
     }
 
+    const opt = (key: AttributeKeys) => {
+      return {
+        name: this.$t(`data.attribute.${key}`).toString() + ` (${this.getAttrVal(key)})`,
+        value: key
+      };
+    }
+
+    opts.push({
+      name: this.$t('viewer.tab.attributes').toString(),
+      value: '',
+      isCategory: true
+    });
+
+    opts.push(opt(AttributeKeys.Strength));
+    opts.push(opt(AttributeKeys.Dexterity));
+    opts.push(opt(AttributeKeys.Stamina));
+    opts.push(opt(AttributeKeys.Charisma));
+    opts.push(opt(AttributeKeys.Manipulation));
+    opts.push(opt(AttributeKeys.Composure));
+    opts.push(opt(AttributeKeys.Intelligence));
+    opts.push(opt(AttributeKeys.Wits));
+    opts.push(opt(AttributeKeys.Resolve));
+
     return opts;
   }
 }

@@ -3,6 +3,7 @@ import {Vue, Component} from 'vue-property-decorator';
 import Modal from "@/components/modal/Modal.vue";
 import {VicarNet} from "@/libs/io/vicar-net";
 import WrappedSpinner from "@/components/spinners/WrappedSpinner.vue";
+import {SettingsData} from "@/libs/io/settings";
 
 @Component({
   components: {WrappedSpinner, Modal}
@@ -29,6 +30,14 @@ export default class VicarLoginModal extends Vue {
     this.confirmCode = '';
     this.isRegister = false;
     this.visible = true;
+  }
+
+  private get vicarUrl() {
+    return SettingsData.getVicarNetUrl();
+  }
+
+  private set vicarUrl(value: string) {
+    SettingsData.setVicarNetUrl(value);
   }
 
   private get canRegister() {
@@ -99,33 +108,39 @@ export default class VicarLoginModal extends Vue {
     <div style="display: flex; flex-direction: column">
       <b style="width: 100%; text-align: center">{{$t('main.settings.vicarnet.login')}}</b>
 
-      <div v-if="step === 0" style="width: 100%; display: flex; flex-direction: row; gap: 2rem">
-        <div style="width: 50%; display: flex; flex-direction: column; gap: 0.5rem">
-          <div class="form-group mb-0">
-            <label>{{$t('main.vicarnet.login.register.alias')}}</label>
-            <input type="text" class="form-control" v-model="registerAlias">
-          </div>
-          <div class="form-group mb-0">
-            <label>{{$t('main.vicarnet.login.register.email')}}</label>
-            <input type="email" class="form-control" v-model="registerEmail">
-          </div>
-
-          <button class="btn btn-primary" style="margin-top: 1.5rem" :disabled="!canRegister" @click="beginRegister">{{$t('main.vicarnet.login.register.submit')}}</button>
+      <div v-if="step === 0" style="width: 100%; display: flex; flex-direction: column; gap: 0.5rem">
+        <div class="form-group">
+          <label>{{$t('main.settings.vicarnet.url')}}</label>
+          <input type="text" class="form-control" v-model="vicarUrl">
         </div>
+        <div style="width: 100%; display: flex; flex-direction: row; gap: 2rem">
+          <div style="width: 50%; display: flex; flex-direction: column; gap: 0.5rem">
+            <div class="form-group mb-0">
+              <label>{{$t('main.vicarnet.login.register.alias')}}</label>
+              <input type="text" class="form-control" v-model="registerAlias">
+            </div>
+            <div class="form-group mb-0">
+              <label>{{$t('main.vicarnet.login.register.email')}}</label>
+              <input type="email" class="form-control" v-model="registerEmail">
+            </div>
 
-        <div style="display: flex; height: 100%; justify-content: center; align-items: center; flex-direction: column; gap: 0.5rem">
-          <div style="width: 1px; height: 100%; background-color: rgba(255, 255, 255, 0.2)"></div>
-          <i>{{$t('main.vicarnet.login.or')}}</i>
-          <div style="width: 1px; height: 100%; background-color: rgba(255, 255, 255, 0.2)"></div>
-        </div>
-
-        <div style="width: 50%; display: flex; flex-direction: column; gap: 0.5rem">
-          <div class="form-group mb-0">
-            <label>{{$t('main.vicarnet.login.register.email')}}</label>
-            <input type="email" class="form-control" v-model="recoverEmail">
+            <button class="btn btn-primary" style="margin-top: 1.5rem" :disabled="!canRegister" @click="beginRegister">{{$t('main.vicarnet.login.register.submit')}}</button>
           </div>
 
-          <button class="btn btn-primary" style="margin-top: auto" :disabled="!canRecover" @click="beginRecover">{{$t('main.vicarnet.login.recover.submit')}}</button>
+          <div style="display: flex; height: 100%; justify-content: center; align-items: center; flex-direction: column; gap: 0.5rem">
+            <div style="width: 1px; height: 100%; background-color: rgba(255, 255, 255, 0.2)"></div>
+            <i>{{$t('main.vicarnet.login.or')}}</i>
+            <div style="width: 1px; height: 100%; background-color: rgba(255, 255, 255, 0.2)"></div>
+          </div>
+
+          <div style="width: 50%; display: flex; flex-direction: column; gap: 0.5rem">
+            <div class="form-group mb-0">
+              <label>{{$t('main.vicarnet.login.register.email')}}</label>
+              <input type="email" class="form-control" v-model="recoverEmail">
+            </div>
+
+            <button class="btn btn-primary" style="margin-top: auto" :disabled="!canRecover" @click="beginRecover">{{$t('main.vicarnet.login.recover.submit')}}</button>
+          </div>
         </div>
       </div>
 

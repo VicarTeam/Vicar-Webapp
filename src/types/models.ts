@@ -1,7 +1,7 @@
 ﻿import {
     IBloodPotencyData, IBloodRitual,
     IDiscipline,
-    IDisciplineAbility,
+    IDisciplineAbility, IOblivionCeremony,
     IPredatorType, IPTAction,
     ISkillSpreadType,
     ITrait,
@@ -145,6 +145,7 @@ export interface ILanguage {
     readonly books: IBook[];
     readonly bloodPotencyTable: IBloodPotencyData[];
     readonly bloodRituals: IBloodRitual[];
+    readonly oblivionCeremonies: IOblivionCeremony[];
     readonly customLexicon: ISectionatedCustomLexicon;
     readonly items: IGroupItems[];
 }
@@ -248,6 +249,7 @@ export interface ICharacter {
     backstory: string;
     notes: string;
     bloodRituals: IBloodRitual[];
+    oblivionCeremonies: IOblivionCeremony[];
     useAdavancedDisciplines: boolean;
     allowLearningOfAllPowers: boolean;
     fullCustomization: boolean;
@@ -357,6 +359,7 @@ export const DefaultCharacter: () => ICharacter = () => ({
     backgrounds: {
         packs: []
     },
+    oblivionCeremonies: [],
     chroniclePrinciples: "",
     anchorsAndBeliefs: "",
     backstory: "",

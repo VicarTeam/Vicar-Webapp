@@ -1,12 +1,12 @@
 <template>
   <div class="bloodrituals-view">
-    <div class="rituals card">
+    <div v-if="editingCharacter.bloodRituals && editingCharacter.bloodRituals > 0" class="rituals card">
       <div class="title">
         <b>{{$t('viewer.tab.bloodrituals')}}</b>
-        <LevelButton icon="fa-plus" class="ml-10" @click="addNewTrait"/>
+        <LevelButton icon="fa-plus" class="ml-10" @click="addNewBloodRitual"/>
       </div>
       <div class="list">
-        <div class="entry" v-for="r in sortedRituals">
+        <div class="entry" v-for="r in sortedBloodRituals">
           <div class="name">
             <i class="iconbtnprim fa-solid fa-xmark" v-if="editingCharacter.fullCustomization" @click="deleteBloodRitual(r)"></i>
             <small>
@@ -53,7 +53,7 @@ export default class BloodRitualsView extends Vue {
   @Ref("confirmDeleteModal")
   private confirmDeleteModal!: ConfirmDeleteModal;
 
-  private addNewTrait() {
+  private addNewBloodRitual() {
     const selection: IDisciplineSelection = this.editingCharacter.disciplines.find(d => d.discipline.id === 3)!;
     if (!selection) {
       return;
@@ -68,7 +68,7 @@ export default class BloodRitualsView extends Vue {
     });
   }
 
-  private get sortedRituals(): IBloodRitual[] {
+  private get sortedBloodRituals(): IBloodRitual[] {
     return [...(this.editingCharacter.bloodRituals||[])].sort((a, b) => {
       if (a.level !== b.level) {
         return a.level - b.level;

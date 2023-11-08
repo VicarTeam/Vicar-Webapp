@@ -11,7 +11,7 @@ import {i18n} from "@/libs/i18n";
 import {
     DefaultTrait, IBloodPotencyData, IBloodRitual,
     IDiscipline, IDisciplineAbility,
-    IFlawChoice,
+    IFlawChoice, IOblivionCeremony,
     IPredatorType,
     IRestrictionHolder,
     ITrait,
@@ -75,6 +75,7 @@ export default class DataManager {
             const predatorTypes: IPredatorType[] = (DataSync.loadFile(`${langKey}/PredatorTypes.json`));
             const bloodPotencyTable: IBloodPotencyData[] = (DataSync.loadFile(`${langKey}/BloodPotencyTable.json`));
             const bloodRituals: IBloodRitual[] = (DataSync.loadFile(`${langKey}/BloodRituals.json`));
+            const oblivionCeremonies: data.IOblivionCeremony[] = (DataSync.loadFile(`${langKey}/OblivionCeremonies.json`));
 
             const items: IItem[] = (DataSync.loadFile<IItem[]>(`${langKey}/Items.json`)).map(x => ({...x, isCustom: false}));
             const groupedItems: IGroupItems[] = [];
@@ -116,7 +117,7 @@ export default class DataManager {
                         predatorTypes: predatorTypes.filter(p => book.predatorTypes.includes(p.id))
                     };
                 }),
-                bloodPotencyTable, bloodRituals, items: groupedItems,
+                bloodPotencyTable, bloodRituals, items: groupedItems, oblivionCeremonies,
                 customLexicon: this.getCustomLexicon(DataSync.loadFile(`${langKey}/CustomLexicon.json`))
             });
         }
@@ -132,6 +133,18 @@ export default class DataManager {
             arr[lvl].push(ritual);
         }
         return arr;
+    }
+
+    public static normalOblivionCeremoniesAsArray(): IOblivionCeremony[][] {
+        const arr: IOblivionCeremony[][] = [];
+        for (const ritual of DataManager.selectedLanguage.oblivionCeremonies) {
+            const lvl = ritual.level - 1;
+            if (arr[lvl] === undefined) {
+                arr[lvl] = [];
+            }
+            arr[lvl].push(ritual);
+        }
+        return arr.map(x => x.sort((a, b) => a.name.localeCompare(b.name)));
     }
 
     public static normalDisciplineAbilitiesAsArray(discipline: IDiscipline): IDisciplineAbility[][] {

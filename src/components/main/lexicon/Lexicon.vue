@@ -27,6 +27,9 @@
           <TOCMenu v-if="d.id === 3" :title="$t('viewer.tab.bloodrituals')" paragraph="bloodrituals">
             <TOCItem v-for="i in [1, 2, 3, 4, 5]" :key="i" :title="$t('editor.disciplines.level') + ' ' + i" :paragraph="'bloodrituals-' + i"/>
           </TOCMenu>
+          <TOCMenu v-if="d.id === 11" :title="$t('viewer.tab.oblivionceremonies')" paragraph="oblivionceremonies">
+            <TOCItem v-for="i in [1, 2, 3, 4, 5]" :key="i" :title="$t('editor.disciplines.level') + ' ' + i" :paragraph="'oblivionceremonies-' + i"/>
+          </TOCMenu>
         </TOCMenu>
       </TOCMenu>
 
@@ -176,6 +179,28 @@
               </section>
             </section>
           </section>
+
+          <section v-if="d.id === 11">
+            <h4 ref="oblivionceremonies">{{$t('viewer.tab.oblivionceremonies')}}</h4>
+
+            <section v-for="(br, i) in oblivionCeremonies">
+              <h5 :ref="'oblivionceremonies-' + (i + 1)">{{$t('editor.disciplines.level')}} {{i + 1}}</h5>
+
+              <section v-for="r in br">
+                <h6>{{r.name}}</h6>
+                <small><i>{{r.summary}}</i></small>
+                <hr>
+                <p v-if="findOblivionDiscipline(r.requires)"><b>{{$t('editor.disciplines.oblivionceremonies.required_power')}}</b>: {{findOblivionDiscipline(r.requires).name}}</p>
+                <p v-if="r.cult"><b>{{$t('editor.desciplines.oblivionceremonies.cult')}}</b>: {{r.cult}}</p>
+                <p><b>{{$t('editor.disciplines.costs')}}</b>: {{r.cost}}</p>
+                <p><b>{{$t('editor.desciplines.oblivionceremonies.roll')}}</b>: {{r.roll}}</p>
+                <p><b>{{$t('editor.disciplines.bloodritual.ingredients')}}</b>: {{r.ingredients}}</p>
+                <p><b>{{$t('editor.disciplines.bloodritual.execution')}}</b>: {{r.execution}}</p>
+                <p><b>{{$t('editor.disciplines.bloodritual.system')}}</b>: {{r.system}}</p>
+                <p v-if="r.duration"><b>{{$t('editor.desciplines.oblivionceremonies.duration')}}</b>: {{r.duration}}</p>
+              </section>
+            </section>
+          </section>
         </section>
       </section>
 
@@ -281,7 +306,14 @@ import TOCMenu from "@/components/main/lexicon/toc/TOCMenu.vue";
 import TOCItem from "@/components/main/lexicon/toc/TOCItem.vue";
 import DataManager from "@/libs/data/data-manager";
 import {IClan} from "@/types/models";
-import {IBloodRitual, IDiscipline, IDisciplineAbility, IPredatorType, ITraitPack} from "@/types/data";
+import {
+  IBloodRitual,
+  IDiscipline,
+  IDisciplineAbility,
+  IOblivionCeremony,
+  IPredatorType,
+  ITraitPack
+} from "@/types/data";
 import {ISectionatedCustomLexicon, ILexiconItem, ILexiconTextItem, ILexiconList} from "@/types/custom-lexicon";
 
 @Component({
@@ -294,6 +326,7 @@ export default class Lexicon extends Vue {
   private disciplines: IDiscipline[] = [];
   private disciplineAbilities: IDisciplineAbility[] = [];
   private bloodRituals: IBloodRitual[][] = [];
+  private oblivionCeremonies: IOblivionCeremony[][] = [];
   private merits: ITraitPack[] = [];
   private backgrounds: ITraitPack[] = [];
   private predatorTypes: IPredatorType[] = [];
@@ -313,6 +346,7 @@ export default class Lexicon extends Vue {
     this.disciplineAbilities = this.disciplines.map(d => this.data.normalToLeveledAbilities(d)).flat();
 
     this.bloodRituals = this.data.normalBloodRitualsAsArray();
+    this.oblivionCeremonies = this.data.normalOblivionCeremoniesAsArray();
 
     this.backgrounds = DataManager.selectedLanguage.books.flatMap(book => {
       if (book && book.backgrounds) {
@@ -357,6 +391,11 @@ export default class Lexicon extends Vue {
       return "";
     }
     return this.disciplineAbilities.find(a => a.id === ability.requirement)?.name ?? "";
+  }
+
+  private findOblivionDiscipline(id: number|undefined): IDisciplineAbility|undefined {
+    if (!id) return undefined;
+    return this.disciplineAbilities.find(a => a.id === id);
   }
 
   private get customLexicon(): ISectionatedCustomLexicon {

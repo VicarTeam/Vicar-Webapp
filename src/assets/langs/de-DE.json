@@ -95,6 +95,8 @@
   "viewer.tab.skills": "Fähigkeiten",
   "viewer.tab.disciplines": "Disziplinen",
   "viewer.tab.bloodrituals": "Blutrituale",
+  "viewer.tab.oblivionceremonies": "Vergessenheitszeremonien",
+  "viewer.tab.rituals": "Rituale",
   "viewer.tab.pdf": "PDF",
   "viewer.save": "Speichern",
   "viewer.mode.enable": "Modus: Vorschau",
@@ -345,6 +347,7 @@
   "character.modal.pool-calcuator.result.text.hunger.3": "normale Würfel",
 
   "main.settings.vicarnet": "VicarNet",
+  "main.settings.vicarnet.url": "VicarNet URL",
   "main.settings.vicarnet.login": "Bei VicarNet einloggen",
   "main.settings.vicarnet.logout": "Ausloggen",
   "main.vicarnet.login.or": "ODER",
@@ -355,5 +358,10 @@
   "main.vicarnet.login.loading.1": "Frage VicarNet nach Bestätigung an...",
   "main.vicarnet.login.loading.2": "Logge dich ein...",
   "main.vicarnet.login.enter-code": "Bestätigungscode eingeben (per E-Mail erhalten)",
-  "main.vicarnet.login.enter-code.submit": "Bestätigen"
+  "main.vicarnet.login.enter-code.submit": "Bestätigen",
+
+  "editor.desciplines.oblivionceremonies.roll": "Zeremonienwurf",
+  "editor.desciplines.oblivionceremonies.duration": "Dauer",
+  "editor.desciplines.oblivionceremonies.cult": "Praktiziert von",
+  "editor.disciplines.oblivionceremonies.required_power": "Benötigte Disziplinsfähigkeit"
 }
