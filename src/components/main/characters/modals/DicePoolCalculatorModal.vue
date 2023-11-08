@@ -118,7 +118,7 @@ export default class DicePoolCalculatorModal extends Vue {
     const opt = (key: AttributeKeys) => {
       return {
         name: this.$t(`data.attribute.${key}`).toString() + ` (${this.getAttrVal(key)})`,
-        value: key
+        value: this.getAttrVal(key)
       };
     }
 
