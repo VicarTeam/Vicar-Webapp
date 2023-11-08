@@ -395,7 +395,16 @@ export default class Lexicon extends Vue {
 
   private findOblivionDiscipline(id: number|undefined): IDisciplineAbility|undefined {
     if (!id) return undefined;
-    return this.disciplineAbilities.find(a => a.id === id);
+    const disc = this.data.getDiscipline(11);
+    if (!disc) return undefined;
+    for (const abilities of Object.values(disc.levels)) {
+      for (const ability of abilities) {
+        if (ability.id === id) {
+          return ability;
+        }
+      }
+    }
+    return undefined;
   }
 
   private get customLexicon(): ISectionatedCustomLexicon {

@@ -12,7 +12,7 @@
         <Tab value="viewer-attributes" :text="$t('viewer.tab.attributes').toString()" ref="tabAttributes"/>
         <Tab value="viewer-skills" :text="$t('viewer.tab.skills').toString()" ref="tabSkills"/>
         <Tab value="viewer-disciplines" :text="$t('viewer.tab.disciplines').toString()" ref="tabDisciplines"/>
-        <Tab v-if="editingCharacter.bloodRituals || editingCharacter.oblivionCeremonies" value="viewer-bloodrituals" :text="$t('viewer.tab.rituals').toString()" ref="tabBloodRituals"/>
+        <Tab v-if="canAccessRituals" value="viewer-bloodrituals" :text="$t('viewer.tab.rituals').toString()" ref="tabBloodRituals"/>
         <Tab value="viewer-traits" :text="$t('viewer.tab.traits').toString()" ref="tabTraits"/>
 <!--        <Tab value="viewer-pdf" :text="$t('viewer.tab.pdf').toString()"/>-->
       </Tabs>
@@ -71,7 +71,7 @@ const TabHotkeys = [
   {
     tab: "tabBloodRituals",
     keys: ["ALT+R"],
-    condition: (character: ICharacter) => character.bloodRituals && character.bloodRituals.length > 0
+    condition: (character: ICharacter) => character.bloodRituals.length > 0 || (character.clan.id === 4 || character.clan.id === 5)
   },
   {
     tab: "tabTraits",
@@ -157,6 +157,13 @@ export default class ViewerView extends Vue {
         this.saveText = this.$t('viewer.save').toString();
       }, 1000);
     }
+  }
+
+  private get canAccessRituals(): boolean {
+    if (!this.editingCharacter) {
+      return false;
+    }
+    return this.editingCharacter.bloodRituals.length > 0 || this.editingCharacter.clan.id === 4 || this.editingCharacter.clan.id === 5 || this.editingCharacter.fullCustomization;
   }
 
   private backToMain() {

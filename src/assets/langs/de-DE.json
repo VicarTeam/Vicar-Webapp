@@ -95,7 +95,6 @@
   "viewer.tab.skills": "Fähigkeiten",
   "viewer.tab.disciplines": "Disziplinen",
   "viewer.tab.bloodrituals": "Blutrituale",
-  "viewer.tab.oblivionceremonies": "Vergessenheitszeremonien",
   "viewer.tab.rituals": "Rituale",
   "viewer.tab.pdf": "PDF",
   "viewer.save": "Speichern",
@@ -360,6 +359,8 @@
   "main.vicarnet.login.enter-code": "Bestätigungscode eingeben (per E-Mail erhalten)",
   "main.vicarnet.login.enter-code.submit": "Bestätigen",
 
+  "viewer.tab.oblivionceremonies": "Vergessenheitszeremonien",
+  "editor.disciplines.oblivionceremonies.title": "Vergessenheitszeremonie auswählen",
   "editor.desciplines.oblivionceremonies.roll": "Zeremonienwurf",
   "editor.desciplines.oblivionceremonies.duration": "Dauer",
   "editor.desciplines.oblivionceremonies.cult": "Praktiziert von",
