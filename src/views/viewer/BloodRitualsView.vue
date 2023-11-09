@@ -1,6 +1,6 @@
 <template>
   <div class="bloodrituals-view">
-    <div v-if="editingCharacter.bloodRituals > 0 || editingCharacter.fullCustomization" class="rituals card">
+    <div v-if="editingCharacter.bloodRituals.length > 0 || editingCharacter.fullCustomization" class="rituals card">
       <div class="title">
         <b>{{$t('viewer.tab.bloodrituals')}}</b>
         <LevelButton icon="fa-plus" class="ml-10" @click="addNewBloodRitual"/>
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div v-if="editingCharacter.oblivionCeremonies > 0 || editingCharacter.clan.id === 4 || editingCharacter.clan.id === 5 || editingCharacter.fullCustomization" class="rituals card">
+    <div v-if="(editingCharacter.oblivionCeremonies && editingCharacter.oblivionCeremonies.length > 0) || editingCharacter.clan.id === 4 || editingCharacter.clan.id === 5 || editingCharacter.fullCustomization" class="rituals card">
       <div class="title">
         <b>{{$t('viewer.tab.oblivionceremonies')}}</b>
         <LevelButton icon="fa-plus" class="ml-10" @click="addNewOblivionCeremony"/>
