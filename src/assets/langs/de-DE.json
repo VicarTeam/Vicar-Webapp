@@ -172,6 +172,7 @@
   "data.trait.backgrounds": "Hintergründe",
   "data.trait.merit": "Vorzug",
   "data.trait.background": "Hintergrund",
+  "data.trait.custom": "Benutzerdefiniert",
   "data.category.physical": "Körperlich",
   "data.category.social": "Gesellschaftlich",
   "data.category.mental": "Geistig",
@@ -364,5 +365,10 @@
   "editor.desciplines.oblivionceremonies.roll": "Zeremonienwurf",
   "editor.desciplines.oblivionceremonies.duration": "Dauer",
   "editor.desciplines.oblivionceremonies.cult": "Praktiziert von",
-  "editor.disciplines.oblivionceremonies.required_power": "Benötigte Disziplinsfähigkeit"
+  "editor.disciplines.oblivionceremonies.required_power": "Benötigte Disziplinsfähigkeit",
+  "editor.traits.modal.custom": "Benutzerdefiniert",
+  "editor.traits.modal.custom.desc": "In Absprache deines Spielleiters kannst du hierüber eigene Vorteile und Schwächen erstellen.",
+  "editor.traits.modal.custom.type": "Typ (Vorzug oder Hintergrund)",
+  "editor.traits.modal.custom.type.merit": "Vorzug",
+  "editor.traits.modal.custom.type.background": "Hintergrund"
 }
