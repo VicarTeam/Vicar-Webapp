@@ -1,8 +1,8 @@
 import {invoke} from "@tauri-apps/api/tauri";
 import {SettingsData} from "@/libs/io/settings";
 
-export async function get<T>(url: string): Promise<[number, T]> {
-  const response = await invoke<[number, string]>("get_request", {url: buildUrl(url)});
+export async function get<T>(url: string, headers?: {[key: string]: string}): Promise<[number, T]> {
+  const response = await invoke<[number, string]>("get_request", {url: buildUrl(url), headers: buildHeaders(headers)});
   return [response[0], JSON.parse(response[1])];
 }
 
@@ -11,8 +11,8 @@ export async function post<T>(url: string, body?: any, headers?: {[key: string]:
   return [response[0], JSON.parse(response[1])];
 }
 
-export async function patch<T>(url: string, body?: any): Promise<[number, T]> {
-  const response = await invoke<[number, string]>("patch_request", {url: buildUrl(url), json: JSON.stringify(body || {})});
+export async function patch<T>(url: string, body?: any, headers?: {[key: string]: string}): Promise<[number, T]> {
+  const response = await invoke<[number, string]>("patch_request", {url: buildUrl(url), json: JSON.stringify(body || {}), headers: buildHeaders(headers)});
   return [response[0], JSON.parse(response[1])];
 }
 

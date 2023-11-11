@@ -54,6 +54,7 @@ export interface IClan {
     curse: string;
     disciplines: number[];
     actions?: IPTAction[];
+    symbol?: string;
 }
 
 export interface IDiscipline {
@@ -264,3 +265,11 @@ export const DefinedSpreadTypes: ISkillSpreadType[] = [
         ]
     }
 ];
+
+export interface IHomebrewClan extends IClan {
+    creator: string;
+}
+
+export interface IHomebrewDiscipline extends IDiscipline {
+    creator: string;
+}

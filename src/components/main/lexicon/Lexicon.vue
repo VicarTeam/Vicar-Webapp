@@ -20,9 +20,9 @@
       </TOCMenu>
 
       <TOCMenu :title="$t('lexicon.toc.disciplines')" paragraph="disciplines">
-        <TOCMenu v-for="d in disciplines" :key="d.id" :title="d.name" :paragraph="'discipline-' + d.id">
-          <TOCMenu :title="$t('lexicon.toc.disciplines.abilites')" :paragraph="'discipline-' + d.id + '-abilities'">
-            <TOCItem v-for="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" :key="i" :title="$t('editor.disciplines.level') + ' ' + i" :paragraph="'discipline-' + d.id + '-abilities' + i"/>
+        <TOCMenu v-for="d in disciplines" :key="d.id" :title="d.name" :paragraph="'discipline-' + d.name">
+          <TOCMenu :title="$t('lexicon.toc.disciplines.abilites')" :paragraph="'discipline-' + d.name + '-abilities'">
+            <TOCItem v-for="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" :key="i" :title="$t('editor.disciplines.level') + ' ' + i" :paragraph="'discipline-' + d.name + '-abilities' + i"/>
           </TOCMenu>
           <TOCMenu v-if="d.id === 3" :title="$t('viewer.tab.bloodrituals')" paragraph="bloodrituals">
             <TOCItem v-for="i in [1, 2, 3, 4, 5]" :key="i" :title="$t('editor.disciplines.level') + ' ' + i" :paragraph="'bloodrituals-' + i"/>
@@ -127,7 +127,7 @@
             <h4 :ref="'clan-' + c.id + '-disciplines'">{{$t('lexicon.toc.clans.disciplines')}}</h4>
             <ul>
               <li v-for="d in c.disciplines" style="margin-bottom: 0">
-                <a style="cursor: pointer" @click="goToParagraph('discipline-' + d.id)">{{d.name}}</a>
+                <a style="cursor: pointer" @click="goToParagraph('discipline-' + d.name)">{{d.name}}</a>
               </li>
             </ul>
           </section>
@@ -137,27 +137,27 @@
       <section>
         <h2 ref="disciplines">{{$t('lexicon.toc.disciplines')}}</h2>
         <section v-for="d in disciplines">
-          <h3 :ref="'discipline-' + d.id">{{d.name}}</h3>
+          <h3 :ref="'discipline-' + d.name">{{d.name}}</h3>
           <p>{{d.summary}}</p>
 
           <section>
-            <h4 :ref="'discipline-' + d.id + '-abilities'">{{$t('lexicon.toc.disciplines.abilites')}}</h4>
+            <h4 :ref="'discipline-' + d.name + '-abilities'">{{$t('lexicon.toc.disciplines.abilites')}}</h4>
 
             <section v-for="(abs, i) in data.normalDisciplineAbilitiesAsArray(d)">
-              <h5 :ref="'discipline-' + d.id + '-abilities' + (i + 1)">{{$t('editor.disciplines.level')}} {{i + 1}}</h5>
+              <h5 :ref="'discipline-' + d.name + '-abilities' + (i + 1)">{{$t('editor.disciplines.level')}} {{i + 1}}</h5>
 
               <section v-for="a in abs">
                 <h6>{{a.name}}</h6>
                 <small><i>{{a.summary}}</i></small>
                 <hr>
-                <small v-if="a.minBloodPotency"><b>{{$t('character.advanced.disciplines.minpotency')}}</b>: {{a.minBloodPotency}}</small>
-                <small v-if="a.requirement"><b>{{$t('editor.disciplines.requirement')}}</b>: {{getRequirement(a)}}</small>
-                <small v-if="a.combination"><b>{{$t('editor.disciplines.combo')}}</b>: {{getCombo(a)}}</small>
+                <small v-if="a.minBloodPotency"><b>{{$t('character.advanced.disciplines.minpotency')}}</b>: {{a.minBloodPotency}}<br/></small>
+                <small v-if="a.requirement"><b>{{$t('editor.disciplines.requirement')}}</b>: {{getRequirement(a)}}<br/></small>
+                <small v-if="a.combination"><b>{{$t('editor.disciplines.combo')}}</b>: {{getCombo(a)}}<br/></small>
                 <hr v-if="a.combination || a.requirement">
                 <p><b>{{$t('editor.disciplines.costs')}}</b>: {{a.costs}}</p>
                 <p v-if="a.diceSupplies"><b>{{$t('editor.disciplines.dices')}}</b>: {{a.diceSupplies}}</p>
                 <p><b>{{$t('editor.disciplines.system')}}</b>: <span v-html="a.system"/></p>
-                <small v-if="a.alternatives"><b>{{$t('editor.disciplines.alternatives')}}</b>: {{a.alternatives.join(", ")}}</small>
+                <small v-if="a.alternatives && a.alternatives.length > 0"><b>{{$t('editor.disciplines.alternatives')}}</b>: {{a.alternatives.join(", ")}}</small>
                 <p><b>{{$t('editor.disciplines.duration')}}</b>: {{a.duration}}</p>
               </section>
             </section>
@@ -332,7 +332,7 @@ export default class Lexicon extends Vue {
   private predatorTypes: IPredatorType[] = [];
 
   mounted() {
-    this.clans = this.data.selectedLanguage.books.map(b => b.clans).flat().sort((a, b) => a.name.localeCompare(b.name));
+    this.clans = this.data.selectedLanguage.books.map(b => b.clans).flat().filter(x => x.id !== -1).sort((a, b) => a.name.localeCompare(b.name));
 
     this.clans.forEach(c => {
       c.disciplines.forEach(d => {
@@ -374,6 +374,10 @@ export default class Lexicon extends Vue {
   }
 
   private getClanSymbol(clan: IClan) {
+    if (clan.symbol) {
+      return clan.symbol;
+    }
+
     const images = require.context('@/assets/img/clans', false, /\.png$/)
     return images(`./${clan.id}.png`);
   }

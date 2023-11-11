@@ -9,7 +9,7 @@
       <span><b>{{$t('editor.disciplines.costs')}}</b>: {{ability.costs}}</span>
       <span v-if="ability.diceSupplies"><b>{{$t('editor.disciplines.dices')}}</b>: {{ability.diceSupplies}}</span>
       <span><b>{{$t('editor.disciplines.system')}}</b>: <span v-html="ability.system"/></span>
-      <small v-if="ability.alternatives"><b>{{$t('editor.disciplines.alternatives')}}</b>: {{ability.alternatives.join(", ")}}</small>
+      <small v-if="ability.alternatives && ability.alternatives.length > 0"><b>{{$t('editor.disciplines.alternatives')}}</b>: {{ability.alternatives.join(", ")}}</small>
       <span><b>{{$t('editor.disciplines.duration')}}</b>: {{ability.duration}}</span>
     </div>
   </Modal>

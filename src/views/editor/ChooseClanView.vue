@@ -72,6 +72,10 @@ export default class EditorClanView extends Vue {
   }
 
   private getClanSymbol(clan: IClan) {
+    if (clan.symbol) {
+      return clan.symbol;
+    }
+
     const images = require.context('@/assets/img/clans', false, /\.png$/)
     return images(`./${clan.id}.png`);
   }
@@ -86,7 +90,7 @@ export default class EditorClanView extends Vue {
       books = books.filter(b => this.editingCharacter!.books.includes(b.id));
     }
 
-    return books.map(book => book.clans).flat().sort((a, b) => a.name.localeCompare(b.name));
+    return books.map(book => book.clans).flat().filter(b => b.id >= 0).sort((a, b) => a.name.localeCompare(b.name));
   }
 
   @Inject("show-tip")

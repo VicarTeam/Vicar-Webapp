@@ -71,8 +71,17 @@ async fn post_request(url: String, json: String, headers: Vec<(String, String)>)
 }
 
 #[tauri::command]
-async fn get_request(url: String) -> Result<(u16, String), String> {
-    let res = reqwest::get(&url).await;
+async fn get_request(url: String, headers: Vec<(String, String)>) -> Result<(u16, String), String> {
+    let builder = reqwest::Client::builder().build().unwrap()
+        .get(&url)
+        .header("Content-Type", "application/json");
+
+    let mut builder = builder;
+    for (key, value) in headers {
+        builder = builder.header(key, value);
+    }
+
+    let res = builder.send().await;
     if res.is_err() {
         return Err("Failed to send GET request".to_string());
     }
@@ -88,13 +97,20 @@ async fn get_request(url: String) -> Result<(u16, String), String> {
 }
 
 #[tauri::command]
-async fn patch_request(url: String, json: String) -> Result<(u16, String), String> {
-    let res = reqwest::Client::builder().build().unwrap()
+async fn patch_request(url: String, json: String, headers: Vec<(String, String)>) -> Result<(u16, String), String> {
+    let builder = reqwest::Client::builder().build().unwrap()
         .patch(&url)
-        .header("Content-Type", "application/json")
-        .body(json)
+        .header("Content-Type", "application/json");
+
+    let mut builder = builder;
+    for (key, value) in headers {
+        builder = builder.header(key, value);
+    }
+
+    let res = builder.body(json)
         .send()
         .await;
+
     if res.is_err() {
         return Err("Failed to send PATCH request".to_string());
     }

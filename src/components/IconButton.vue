@@ -1,5 +1,5 @@
 <template>
-  <span class="icon-btn" @click="$emit('click')" v-bind="$attrs">
+  <span class="icon-btn" :class="{disabled}" @click="$emit('click')" v-bind="$attrs">
     <i class="fa-solid" :class="icon"></i>
   </span>
 </template>
@@ -14,6 +14,9 @@ export default class IconButton extends Vue {
 
   @Prop({required: true})
   private icon!: string;
+
+  @Prop({default: false})
+  private disabled!: boolean;
 }
 </script>
 
@@ -29,11 +32,15 @@ export default class IconButton extends Vue {
   display: flex;
   justify-content: center;
   align-items: center;
-  &:hover {
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  &:not(.disabled):hover {
     background-color: var(--primary-color-light);
     color: #fff;
   }
-  &:active {
+  &:not(.disabled):active {
     background-color: var(--primary-color);
     color: #fff;
   }

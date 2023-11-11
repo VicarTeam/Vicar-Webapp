@@ -166,6 +166,7 @@ export interface IClan {
     readonly curse: string;
     readonly disciplines: IDiscipline[];
     readonly actions: IPTAction[];
+    symbol?: string;
 }
 
 export interface IUsingTraitPack {

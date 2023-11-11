@@ -28,10 +28,12 @@ import {
 } from "@/types/custom-lexicon";
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
+import {HomebrewManager} from "@/libs/data/homebrew-manager";
 
 export default class DataManager {
 
     public static readonly languages: ILanguage[] = [];
+    private static initialized = false;
 
     public static get selectedLanguage(): ILanguage {
         return this.languages.find(lang => lang.key === i18n.locale)
@@ -39,6 +41,12 @@ export default class DataManager {
     }
 
     public static async load() {
+        if (this.initialized) {
+            return;
+        }
+
+        this.initialized = true;
+
         await DataSync.sync();
 
         const meta: data.IEdition = DataSync.loadFile("Meta.json");
@@ -106,9 +114,11 @@ export default class DataManager {
                 items: allItems
             });
 
+            const homebrewContent = await HomebrewManager.initContent(disciplines);
+
             this.languages.push({
                 key: langKey,
-                books: meta.books.map(book => {
+                books: [...meta.books.map(book => {
                     return {
                         id: book.id,
                         clans: clans.filter(clan => book.clans.includes(clan.id)),
@@ -116,11 +126,27 @@ export default class DataManager {
                         backgrounds: backgrounds.filter(background => book.backgrounds.includes(background.id)),
                         predatorTypes: predatorTypes.filter(p => book.predatorTypes.includes(p.id))
                     };
-                }),
+                }), homebrewContent],
                 bloodPotencyTable, bloodRituals, items: groupedItems, oblivionCeremonies,
                 customLexicon: this.getCustomLexicon(DataSync.loadFile(`${langKey}/CustomLexicon.json`))
             });
         }
+
+        await HomebrewManager.loadInstalledContent();
+    }
+
+    public static normalDisciplinesAsArray(): IDiscipline[] {
+        const arr: IDiscipline[] = [];
+        for (const book of DataManager.selectedLanguage.books) {
+            for (const clan of book.clans) {
+                for (const discipline of clan.disciplines) {
+                    if (arr.find(d => d.id === discipline.id) === undefined) {
+                        arr.push(discipline);
+                    }
+                }
+            }
+        }
+        return arr.sort((a, b) => a.name.localeCompare(b.name));
     }
 
     public static normalBloodRitualsAsArray(): IBloodRitual[][] {
