@@ -157,19 +157,6 @@ export class HomebrewManager {
     await this.saveInstalledContent();
   }
 
-  public static findHomebrewDiscipline(id: number) {
-    const realid = id >= HomebrewIdOffset ? id - HomebrewIdOffset : id;
-    return this._installedContent.cachedDisciplines.find(discipline => discipline.id === realid)
-      || this._installedContent.ownDisciplines.find(discipline => discipline.id === realid)
-      || this._installedContent.disciplines.find(discipline => discipline.id === realid);
-  }
-
-  public static findHomebrewClan(id: number) {
-    const realid = id >= HomebrewIdOffset ? id - HomebrewIdOffset : id;
-    return this._installedContent.clans.find(clan => clan.id === realid)
-      || this._installedContent.ownClans.find(clan => clan.id === realid);
-  }
-
   public static get installedContent() {
     return this._installedContent;
   }
@@ -212,6 +199,20 @@ export class HomebrewManager {
     }
 
     return this.findHomebrewDiscipline(id);
+  }
+
+  private static findHomebrewDiscipline(id: number) {
+    const realid = id >= HomebrewIdOffset ? id - HomebrewIdOffset : id;
+    const d = this._installedContent.cachedDisciplines.find(discipline => discipline.id === realid)
+      || this._installedContent.ownDisciplines.find(discipline => discipline.id === realid)
+      || this._installedContent.disciplines.find(discipline => discipline.id === realid);
+    if (d) {
+      if (d.id < HomebrewIdOffset) {
+        d.id += HomebrewIdOffset;
+      }
+    }
+
+    return d;
   }
 
   private static async saveInstalledContent() {

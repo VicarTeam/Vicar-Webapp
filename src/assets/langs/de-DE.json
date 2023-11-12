@@ -418,5 +418,6 @@
   "homebrew.invitecode.submit": "Inhalt installieren",
   "homebrew.uninstall.confirm": "Inhalt {name} sicher deinstallieren?",
   "character.homebrew.update": "Homebrew-Content aktualisieren",
+  "character.homebrew.updated": "Aktualisiert!",
   "main.confirmmodal.button": "Bestätigen"
 }

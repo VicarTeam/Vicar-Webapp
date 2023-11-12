@@ -29,7 +29,7 @@
     </div>
 
     <AddExpModal ref="addExpModal"/>
-    <CharacterInfoModal ref="characterInfoModal"/>
+    <CharacterInfoModal ref="characterInfoModal" @updated="$forceUpdate()"/>
     <DicePoolCalculatorModal ref="dicePoolCalculatorModal"/>
   </div>
 </template>

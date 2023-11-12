@@ -13,9 +13,9 @@
       </TOCMenu>
 
       <TOCMenu :title="$t('lexicon.toc.clans')" paragraph="clans">
-        <TOCMenu v-for="c in clans" :key="c.id" :title="c.name" :paragraph="'clan-' + c.id">
-          <TOCItem :title="$t('lexicon.toc.clans.bane')" :paragraph="'clan-' + c.id + '-bane'"/>
-          <TOCItem :title="$t('lexicon.toc.clans.disciplines')" :paragraph="'clan-' + c.id + '-disciplines'"/>
+        <TOCMenu v-for="c in clans" :key="c.id" :title="c.name" :paragraph="'clan-' + c.name">
+          <TOCItem :title="$t('lexicon.toc.clans.bane')" :paragraph="'clan-' + c.name + '-bane'"/>
+          <TOCItem :title="$t('lexicon.toc.clans.disciplines')" :paragraph="'clan-' + c.name + '-disciplines'"/>
         </TOCMenu>
       </TOCMenu>
 
@@ -113,18 +113,18 @@
         <p>{{$t('editor.clan.tip.content')}}</p>
 
         <section v-for="c in clans">
-          <h3 :ref="'clan-' + c.id">{{c.name}}</h3>
+          <h3 :ref="'clan-' + c.name">{{c.name}}</h3>
           <span style="color: #ababab"><i>"{{c.slogan}}"</i></span>
           <div style="margin-top: 0.5rem;overflow: auto;">
             <img style="filter: var(--image-to-primary-color-filter); float: left; width: 10rem; margin-right: 1rem; margin-bottom: 1rem" :src="getClanSymbol(c)"/>
             {{c.description}}
           </div>
           <section>
-            <h4 :ref="'clan-' + c.id + '-bane'">{{$t('lexicon.toc.clans.bane')}}</h4>
+            <h4 :ref="'clan-' + c.name + '-bane'">{{$t('lexicon.toc.clans.bane')}}</h4>
             <p>{{c.curse}}</p>
           </section>
           <section>
-            <h4 :ref="'clan-' + c.id + '-disciplines'">{{$t('lexicon.toc.clans.disciplines')}}</h4>
+            <h4 :ref="'clan-' + c.name + '-disciplines'">{{$t('lexicon.toc.clans.disciplines')}}</h4>
             <ul>
               <li v-for="d in c.disciplines" style="margin-bottom: 0">
                 <a style="cursor: pointer" @click="goToParagraph('discipline-' + d.name)">{{d.name}}</a>

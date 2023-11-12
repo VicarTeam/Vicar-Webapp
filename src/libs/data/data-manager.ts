@@ -135,12 +135,25 @@ export default class DataManager {
         await HomebrewManager.loadInstalledContent();
     }
 
+    public static findAvailableClan(books: number[], clanId: number): IClan|undefined {
+        for (const book of DataManager.selectedLanguage.books) {
+            if (books.includes(book.id)) {
+                const clan = book.clans.find(c => c.id === clanId);
+                if (clan) {
+                    return clan;
+                }
+            }
+        }
+        return undefined;
+    }
+
     public static normalDisciplinesAsArray(): IDiscipline[] {
         const arr: IDiscipline[] = [];
         for (const book of DataManager.selectedLanguage.books) {
             for (const clan of book.clans) {
                 for (const discipline of clan.disciplines) {
                     if (arr.find(d => d.id === discipline.id) === undefined) {
+                        console.log(discipline);
                         arr.push(discipline);
                     }
                 }

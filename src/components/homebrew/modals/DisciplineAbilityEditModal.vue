@@ -112,7 +112,7 @@ export default class DisciplineAbilityEditModal extends Vue {
 
 <template>
   <Modal :shown="visible" @close="visible = false">
-    <div class="w-550 d-flex flex-column" style="gap: 0.8rem; font-size: 1rem">
+    <div class="w-550 d-flex flex-column" style="gap: 0.8rem; font-size: 1rem" v-if="ability">
       <div class="form-group mb-0">
         <label>{{$t('homebrew.editor.discipline.ability.name')}}:</label>
         <input type="text" class="form-control" v-model="ability.name"/>

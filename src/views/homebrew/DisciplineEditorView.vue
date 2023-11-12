@@ -39,7 +39,7 @@ export default class DisciplineEditorView extends Vue {
 
     const res = await VicarNet.updateDiscipline(this.discipline);
     if (res) {
-      HomebrewManager.updateOwnDiscipline(this.discipline);
+      await HomebrewManager.updateOwnDiscipline(this.discipline);
       return true;
     }
 
@@ -92,6 +92,8 @@ export default class DisciplineEditorView extends Vue {
     }
 
     this.abilityEditModal.showEdit(this.discipline, ability, index, (ability, index) => {
+      const oldAbility = levels[index];
+      ability.id = oldAbility.id || this.lastAbilityID + 1;
       levels[index] = ability;
       this.$forceUpdate();
     });
