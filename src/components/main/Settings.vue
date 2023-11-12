@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <VicarLoginModal ref="vicarLoginModal" @login="$forceUpdate()"/>
+    <VicarLoginModal ref="vicarLoginModal" @login="onLogin"/>
   </div>
 </template>
 
@@ -52,6 +52,7 @@ import CharacterStorage from "@/libs/io/character-storage";
 import {DataSync} from "@/libs/data/data-sync";
 import {VicarNet} from "@/libs/io/vicar-net";
 import VicarLoginModal from "@/components/main/modals/VicarLoginModal.vue";
+import {VicarSync} from "@/libs/io/vicar-sync";
 
 @Component({
   components: {VicarLoginModal}
@@ -100,8 +101,14 @@ export default class Settings extends Vue {
   }
 
   private logout() {
+    VicarSync.stopRetrieveInterval();
     VicarNet.logout();
     this.$forceUpdate();
+  }
+
+  private onLogin() {
+    this.$forceUpdate();
+    VicarSync.startRetrieveInterval();
   }
 }
 </script>

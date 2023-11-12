@@ -393,4 +393,16 @@ export class VicarNet {
       console.error(e);
     }
   }
+
+  public static async retrieveCharSyncs(ids: string[]): Promise<{[key: string]: string}> {
+    try {
+      const [_, data] = await post<{[key: string]: string}>(`/sync/characters`, {
+        ids
+      });
+      return data;
+    } catch (e) {
+      console.error(e);
+      return {};
+    }
+  }
 }

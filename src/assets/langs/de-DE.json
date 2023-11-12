@@ -418,5 +418,15 @@
   "homebrew.uninstall.confirm": "Inhalt {name} sicher deinstallieren?",
   "character.homebrew.update": "Homebrew-Content aktualisieren",
   "character.homebrew.updated": "Aktualisiert!",
-  "main.confirmmodal.button": "Bestätigen"
+  "main.confirmmodal.button": "Bestätigen",
+
+  "character.sync.enable.text": "Wie möchtest du diesen Charakter mit VicarSync synchronisieren?",
+  "character.sync.enable.type.out": "Zu VicarSync senden/ Auswärts",
+  "character.sync.enable.type.in": "Von VicarSync empfangen/ Einwärts",
+  "character.sync.enable": "Synchronisieren",
+  "character.sync.info.text": "VicarSync-Verwaltung dieses Charakters",
+  "character.sync.info.hashcopy": "Kopieren",
+  "character.sync.info.disable": "Synchronisation entfernen",
+  "character.sync.info.disable.confirm": "Synchronisation entfernen, sicher?",
+  "character.sync.hash": "VicarSync-Charakter-Hash"
 }

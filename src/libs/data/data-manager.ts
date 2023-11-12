@@ -29,6 +29,7 @@ import {
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
 import {HomebrewManager} from "@/libs/data/homebrew-manager";
+import {VicarSync} from "@/libs/io/vicar-sync";
 
 export default class DataManager {
 
@@ -133,6 +134,7 @@ export default class DataManager {
         }
 
         await HomebrewManager.loadInstalledContent();
+        await VicarSync.initialize();
     }
 
     public static findAvailableClan(books: number[], clanId: number): IClan|undefined {
