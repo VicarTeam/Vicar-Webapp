@@ -46,6 +46,7 @@ import CharacterStorage from "@/libs/io/character-storage";
 import AddExpModal from "@/components/viewer/modals/AddExpModal.vue";
 import CharacterInfoModal from "@/components/viewer/modals/CharacterInfoModal.vue";
 import DicePoolCalculatorModal from "@/components/main/characters/modals/DicePoolCalculatorModal.vue";
+import EventBus from "@/libs/event-bus";
 
 const TabHotkeys = [
   {
@@ -110,11 +111,19 @@ export default class ViewerView extends Vue {
 
   mounted() {
     this.$router.push({name: 'viewer-profile'});
+    EventBus.$on("character-updated", this.onCharUpdated);
     window.addEventListener('keydown', this.onKeyDown);
   }
 
   destroyed() {
+    EventBus.$off("character-updated", this.onCharUpdated);
     window.removeEventListener('keydown', this.onKeyDown);
+  }
+
+  private onCharUpdated(charId: string) {
+    if (this.editingCharacter && this.editingCharacter.id === charId) {
+      this.$forceUpdate();
+    }
   }
 
   private onKeyDown(event: KeyboardEvent) {

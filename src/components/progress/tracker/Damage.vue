@@ -71,7 +71,7 @@ export default class Damage extends Vue {
     types[nr - 1] = this.getNext(types[nr - 1]);
     this.$forceUpdate();
 
-    CharacterStorage.saveCharacter(this.editingCharacter);
+    CharacterStorage.saveCharacter(this.editingCharacter, true);
   }
 
   private getNext(type: DamageType): DamageType {

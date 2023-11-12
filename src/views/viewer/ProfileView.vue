@@ -58,7 +58,7 @@
           <div class="stat">
             <b>{{ $t('character.hunger') }}:</b>
             <Squares :max="5" :amount="editingCharacter.hunger"
-                     @click="v => {editingCharacter.hunger = v === editingCharacter.hunger ? 0 : v; saveChar();}"/>
+                     @click="v => {editingCharacter.hunger = v === editingCharacter.hunger ? 0 : v; saveChar(true);}"/>
           </div>
         </div>
       </div>
@@ -192,8 +192,8 @@ export default class ProfileView extends Vue {
 
   LevelType = LevelType;
 
-  private saveChar() {
-    CharacterStorage.saveCharacter(this.editingCharacter);
+  private saveChar(triggerSync: boolean = false) {
+    CharacterStorage.saveCharacter(this.editingCharacter, triggerSync);
   }
 
   private getBloodPotency(): IBloodPotencyData {

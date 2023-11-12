@@ -43,7 +43,7 @@ export default class Humanity extends Vue {
       this.editingCharacter.humanity = nr === this.editingCharacter.humanity ? 0 : nr;
     }
 
-    CharacterStorage.saveCharacter(this.editingCharacter);
+    CharacterStorage.saveCharacter(this.editingCharacter, true);
   }
 }
 </script>

@@ -81,7 +81,7 @@ export default class InventoryView extends Vue {
 
       this[key] = result.toString();
       this.editingCharacter.inventory[key] = result;
-      CharacterStorage.saveCharacter(this.editingCharacter);
+      CharacterStorage.saveCharacter(this.editingCharacter, true);
     } catch (e) {
       this[key] = this.editingCharacter.inventory[key].toString();
       console.log("error while evaluating", e);
@@ -103,7 +103,7 @@ export default class InventoryView extends Vue {
       amount
     });
     this.sortInventory(this.addingItemToInventory);
-    CharacterStorage.saveCharacter(this.editingCharacter);
+    CharacterStorage.saveCharacter(this.editingCharacter, true);
 
     this.addingItemPredefinedCategory = DataManager.selectedLanguage.items[0];
     this.addingItemPredefinedItem = null;
@@ -129,7 +129,7 @@ export default class InventoryView extends Vue {
       amount
     });
     this.sortInventory(this.addingItemToInventory);
-    CharacterStorage.saveCharacter(this.editingCharacter);
+    CharacterStorage.saveCharacter(this.editingCharacter, true);
 
     this.addingItemCustomName = "";
     this.addingItemCustomDescription = "";
@@ -151,7 +151,7 @@ export default class InventoryView extends Vue {
     this.editingCharacter.inventory[this.transferDirection === "bank" ? "cash" : "bank"] += this.transferAmount;
     this.bank = this.editingCharacter.inventory.bank.toString();
     this.cash = this.editingCharacter.inventory.cash.toString();
-    CharacterStorage.saveCharacter(this.editingCharacter);
+    CharacterStorage.saveCharacter(this.editingCharacter, true);
     this.showTransferModal = false;
   }
 
@@ -173,7 +173,7 @@ export default class InventoryView extends Vue {
     this.editingCharacter.inventory[current === "ownedItems" ? "carriedItems" : "ownedItems"].push(item);
     this.sortInventory("ownedItems");
     this.sortInventory("carriedItems");
-    CharacterStorage.saveCharacter(this.editingCharacter);
+    CharacterStorage.saveCharacter(this.editingCharacter, true);
   }
 
   private cloneItem(item: IItemStack, current: "ownedItems"|"carriedItems") {
@@ -181,18 +181,18 @@ export default class InventoryView extends Vue {
       item: {...item.item},
       amount: item.amount
     });
-    CharacterStorage.saveCharacter(this.editingCharacter);
+    CharacterStorage.saveCharacter(this.editingCharacter, true);
   }
 
   private handleItemAmountChange(item: IItemStack, idx: number, current: "ownedItems"|"carriedItems") {
     if (item.amount >= 1) {
-      CharacterStorage.saveCharacter(this.editingCharacter);
+      CharacterStorage.saveCharacter(this.editingCharacter, true);
       return;
     }
 
     this.amountZeroRemoveCallback = () => {
       this.editingCharacter.inventory[current].splice(idx, 1);
-      CharacterStorage.saveCharacter(this.editingCharacter);
+      CharacterStorage.saveCharacter(this.editingCharacter, true);
 
       this.amountZeroRemoveCallback = null;
       this.showAmountZeroWarning = false;
@@ -217,7 +217,7 @@ export default class InventoryView extends Vue {
       }
       return 0;
     });
-    CharacterStorage.saveCharacter(this.editingCharacter);
+    CharacterStorage.saveCharacter(this.editingCharacter, true);
   }
 
   private get canAddPredefined() {

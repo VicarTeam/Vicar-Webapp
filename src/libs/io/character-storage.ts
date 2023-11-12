@@ -2,6 +2,7 @@ import {ICharacter, ICharacterDirectory} from "@/types/models";
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
 import {Storage} from "@/libs/io/storage";
+import {VicarSync} from "@/libs/io/vicar-sync";
 
 export default class CharacterStorage {
 
@@ -64,10 +65,14 @@ export default class CharacterStorage {
         }
     }
 
-    public static saveCharacter(character: ICharacter) {
+    public static saveCharacter(character: ICharacter, triggerSync: boolean = false) {
         Storage.writeStorage("character-" + character.id, JSON.stringify(character)).catch(e => {
             console.error(e);
         });
+
+        if (triggerSync) {
+            VicarSync.triggerCharacterSync(character);
+        }
     }
 
     public static addCharacter(character: ICharacter): string {
