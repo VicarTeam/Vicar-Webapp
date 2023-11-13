@@ -257,6 +257,7 @@ export interface ICharacter {
     version: number;
     inventory: IInventory;
     usedExp: number;
+    connectedFoundryId?: string;
 }
 
 export interface ICategory {

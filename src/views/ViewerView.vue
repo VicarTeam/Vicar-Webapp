@@ -4,6 +4,7 @@
       <div class="actions">
         <IconButton icon="fa-angles-left" @click="backToMain"/>
         <IconButton icon="fa-info" @click="characterInfoModal.showModal(editingCharacter)"/>
+        <IconButton icon="fa-dice" v-if="editingCharacter.connectedFoundryId" @click="diceRollModal.showModal(editingCharacter)"/>
         <Avatar :src="editingCharacter.avatar" style="width: 3rem; height: 3rem;"/>
       </div>
       <Tabs class="center" @before-change="switchTab" v-model="selectedTab">
@@ -31,6 +32,7 @@
     <AddExpModal ref="addExpModal"/>
     <CharacterInfoModal ref="characterInfoModal" @updated="$forceUpdate()"/>
     <DicePoolCalculatorModal ref="dicePoolCalculatorModal"/>
+    <DiceRollModal ref="diceRollModal"/>
   </div>
 </template>
 
@@ -48,6 +50,7 @@ import CharacterInfoModal from "@/components/viewer/modals/CharacterInfoModal.vu
 import DicePoolCalculatorModal from "@/components/main/characters/modals/DicePoolCalculatorModal.vue";
 import EventBus from "@/libs/event-bus";
 import {VicarSync} from "@/libs/io/vicar-sync";
+import DiceRollModal from "@/components/viewer/modals/DiceRollModal.vue";
 
 const TabHotkeys = [
   {
@@ -82,7 +85,7 @@ const TabHotkeys = [
 ];
 
 @Component({
-  components: {DicePoolCalculatorModal, CharacterInfoModal, AddExpModal, Tab, Avatar, IconButton, Tabs}
+  components: {DiceRollModal, DicePoolCalculatorModal, CharacterInfoModal, AddExpModal, Tab, Avatar, IconButton, Tabs}
 })
 export default class ViewerView extends Vue {
 
@@ -100,6 +103,9 @@ export default class ViewerView extends Vue {
 
   @Ref("dicePoolCalculatorModal")
   private dicePoolCalculatorModal!: DicePoolCalculatorModal;
+
+  @Ref("diceRollModal")
+  private diceRollModal!: DiceRollModal;
 
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character?: ICharacter) => void;

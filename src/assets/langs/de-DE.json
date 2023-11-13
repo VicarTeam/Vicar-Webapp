@@ -427,5 +427,10 @@
   "character.sync.info.hashcopy": "Kopieren",
   "character.sync.info.disable": "Synchronisation entfernen",
   "character.sync.info.disable.confirm": "Synchronisation entfernen, sicher?",
-  "character.sync.hash": "VicarSync-Charakter-Hash"
+  "character.sync.hash": "VicarSync-Charakter-Hash",
+  "character.vicartt.foundryid": "FoundryVTT VicarTT ID",
+  "character.vicartt.difficulty": "Schwierigkeit (optional)",
+  "character.vicartt.roll": "In FoundryVTT würfeln",
+  "character.vicartt.roll.modal.title": "Benutzerdefinierten Würfelpool würfel",
+  "character.vicartt.roll.modal.dices": "Anzahl der Würfel"
 }

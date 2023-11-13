@@ -11,7 +11,7 @@ export class SettingsData {
     }
 
     public static getVicarNetUrl() {
-        return localStorage.getItem("settings:vicarNet") || "http://localhost:25319";
+        return localStorage.getItem("settings:vicarNet") || "https://vicar.nauri.io";
     }
 
     public static setVicarNetUrl(value: string) {

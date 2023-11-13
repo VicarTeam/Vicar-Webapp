@@ -1,6 +1,7 @@
 import {get, patch, post, put, del} from "@/libs/io/rest";
 import {IHomebrewClan, IHomebrewDiscipline} from "@/types/data";
 import {ICharacter} from "@/types/models";
+import {DiceRollMessage} from "@/libs/io/vicar-tt";
 
 export interface VicarNetAccount {
   id: number;
@@ -413,6 +414,14 @@ export class VicarNet {
     } catch (e) {
       console.error(e);
       return {};
+    }
+  }
+
+  public static async postDiceRoll(foundryId: string, message: DiceRollMessage) {
+    try {
+      await post(`/vicartt/dice-roll/${foundryId}`, message, this.buildHeaders());
+    } catch (e) {
+      console.error(e);
     }
   }
 }

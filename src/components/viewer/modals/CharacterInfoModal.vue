@@ -27,7 +27,11 @@
       <div class="d-flex justify-content-center align-items-center" v-if="isNotUpToDate()" style="margin-top: 1rem">
         <button class="btn btn-primary" @click="migrateChar">{{$t('character.info.migrate')}}</button>
       </div>
-      <div class="d-flex justify-content-center align-items-center" style="margin-top: 1rem">
+      <div class="mb-0 form-group" style="margin-top: 1rem">
+        <b>{{$t('character.vicartt.foundryid')}}:</b>
+        <input type="text" class="form-control" v-model="vicarTTId">
+      </div>
+      <div class="d-flex justify-content-center align-items-center" style="margin-top: 1rem" v-if="isHomebrewActive">
         <button style="font-size: 1rem" :disabled="homebrewUpdating" class="btn btn-primary" @click="updateHomebrewContent">{{$t(`character.homebrew.update${(homebrewUpdated ? 'd' : '')}`)}}</button>
       </div>
     </div>
@@ -144,6 +148,19 @@ export default class CharacterInfoModal extends Vue {
       this.homebrewUpdated = true;
       setTimeout(() => this.homebrewUpdated = false, 5000);
     }
+  }
+
+  private get vicarTTId() {
+    return this.character.connectedFoundryId || "";
+  }
+
+  private set vicarTTId(id: string) {
+    this.character.connectedFoundryId = id.length > 0 ? id : undefined;
+    this.save();
+  }
+
+  private get isHomebrewActive() {
+    return this.activatedBooks.some(book => book.id >= HomebrewIdOffset && book.active);
   }
 }
 </script>

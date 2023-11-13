@@ -4,6 +4,7 @@ import {AttributeKeys, ICharacter} from "@/types/models";
 import Modal from "@/components/modal/Modal.vue";
 import Dropdown, {IOption} from "@/components/Dropdown.vue";
 import DataManager from "@/libs/data/data-manager";
+import {VicarTT} from "@/libs/io/vicar-tt";
 
 @Component({
   components: {Dropdown, Modal}
@@ -17,11 +18,36 @@ export default class DicePoolCalculatorModal extends Vue {
   private bonus: string = "";
   private selectedAttribute: AttributeKeys|null = null;
   private selectedSkill: number|null = null;
+  private difficulty: string = "";
 
   public showModal(character: ICharacter, isDiscipline: boolean = false) {
     this.character = character;
     this.isDiscipline = isDiscipline;
+    this.selectedAttribute = null;
+    this.selectedSkill = null;
+    this.bonus = "";
     this.show = true;
+  }
+
+  private sendDiceRoll() {
+    const pool = this.pool;
+    if (!pool) {
+      return;
+    }
+
+    const attr = this.attrOptions.find(x => x.value === this.selectedAttribute);
+    const skill = this.skillOptions.find(x => x.value === this.selectedSkill);
+    const attrName = (attr ? attr.name : "").replace(/\(\d+\)/g, "").trim();
+    const skillName = (skill ? skill.name : "").replace(/\(\d+\)/g, "").trim();
+
+    let difficulty: number|undefined = undefined;
+    if (this.difficulty.trim().length > 0 && !isNaN(parseInt(this.difficulty))) {
+      difficulty = parseInt(this.difficulty);
+    }
+
+    VicarTT.rollNamedDiceFor(this.character, `${attrName} + ${skillName}`, pool.simple, pool.hunger, difficulty);
+
+    this.show = false;
   }
 
   private getAttrVal(attr: AttributeKeys): number {
@@ -171,6 +197,14 @@ export default class DicePoolCalculatorModal extends Vue {
           {{$t('character.modal.pool-calcuator.result.text.hunger.3')}}
         </span>
         <span v-else><b>{{pool.total}} </b>{{$t('character.modal.pool-calcuator.result.text.no-hunger')}}</span>
+
+        <template v-if="character.connectedFoundryId">
+          <div style="width: 100%; height: 1px; background-color: var(--primary-color); margin-top: 1rem"></div>
+          <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin-top: 1rem">
+            <input class="form-control" type="text" v-model="difficulty" :placeholder="$t('character.vicartt.difficulty')"/>
+            <button class="btn btn-primary" @click="sendDiceRoll">{{$t('character.vicartt.roll')}}</button>
+          </div>
+        </template>
       </div>
     </div>
   </Modal>
