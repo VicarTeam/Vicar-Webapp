@@ -419,7 +419,6 @@
   "character.homebrew.update": "Homebrew-Content aktualisieren",
   "character.homebrew.updated": "Aktualisiert!",
   "main.confirmmodal.button": "Bestätigen",
-
   "character.sync.enable.text": "Wie möchtest du diesen Charakter mit VicarSync synchronisieren?",
   "character.sync.enable.type.out": "Zu VicarSync senden/ Auswärts",
   "character.sync.enable.type.in": "Von VicarSync empfangen/ Einwärts",
