@@ -390,13 +390,23 @@ export class VicarNet {
         data: charData
       }, this.buildHeaders());
     } catch (e) {
-      console.error(e);
+      // ignore
     }
   }
 
-  public static async retrieveCharSyncs(ids: string[]): Promise<{[key: string]: string}> {
+  public static async postCharLevelSync(roomId: string, charData: string): Promise<void> {
     try {
-      const [_, data] = await post<{[key: string]: string}>(`/sync/characters`, {
+      await post(`/sync/characters/${roomId}/level`, {
+        data: charData
+      }, this.buildHeaders());
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  public static async retrieveCharSyncs(ids: string[]): Promise<{[key: string]: {c: string, l: string}}> {
+    try {
+      const [_, data] = await post<{[key: string]: {c: string, l: string}}>(`/sync/characters`, {
         ids
       });
       return data;

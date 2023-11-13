@@ -8,7 +8,6 @@ export async function get<T>(url: string, headers?: {[key: string]: string}): Pr
 
 export async function post<T>(url: string, body?: any, headers?: {[key: string]: string}): Promise<[number, T]> {
   const response = await invoke<[number, string]>("post_request", {url: buildUrl(url), json: JSON.stringify(body || {}), headers: buildHeaders(headers)});
-  console.log(response);
   return [response[0], JSON.parse(response[1])];
 }
 

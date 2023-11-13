@@ -155,7 +155,6 @@ export default class DataManager {
             for (const clan of book.clans) {
                 for (const discipline of clan.disciplines) {
                     if (arr.find(d => d.id === discipline.id) === undefined) {
-                        console.log(discipline);
                         arr.push(discipline);
                     }
                 }

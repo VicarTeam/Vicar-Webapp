@@ -20,7 +20,7 @@
         <small style="color: #afafaf; display: flex; gap: 0.5rem; justify-content: center; align-items: center">EXP: <b>{{editingCharacter.exp}}</b>
           <IconButton icon="fa-pen" style="width: 2rem; height: 2rem" @click="addExpModal.showModal()"/>
         </small>
-        <button class="btn btn-primary ml-10" @click="setLevelMode(!isLevelMode)">{{$t('viewer.mode.' + (isLevelMode ? 'disable' : 'enable'))}}</button>
+        <button class="btn btn-primary ml-10" @click="switchLevelMode">{{$t('viewer.mode.' + (isLevelMode ? 'disable' : 'enable'))}}</button>
         <button class="btn btn-primary ml-10" @click="saveCurrentCharacter">{{saveText || this.$t('viewer.save').toString()}}</button>
       </div>
     </div>
@@ -47,6 +47,7 @@ import AddExpModal from "@/components/viewer/modals/AddExpModal.vue";
 import CharacterInfoModal from "@/components/viewer/modals/CharacterInfoModal.vue";
 import DicePoolCalculatorModal from "@/components/main/characters/modals/DicePoolCalculatorModal.vue";
 import EventBus from "@/libs/event-bus";
+import {VicarSync} from "@/libs/io/vicar-sync";
 
 const TabHotkeys = [
   {
@@ -158,6 +159,21 @@ export default class ViewerView extends Vue {
     }
   }
 
+  private switchLevelMode() {
+    if (!this.editingCharacter) {
+      return;
+    }
+
+    const newLevelMode = !this.isLevelMode;
+    this.setLevelMode(newLevelMode);
+
+    if (newLevelMode) {
+      VicarSync.beginCharacterLevelSync(this.editingCharacter);
+    } else {
+      VicarSync.endCharacterLevelSync(this.editingCharacter);
+    }
+  }
+
   private saveCurrentCharacter() {
     if (this.editingCharacter) {
       CharacterStorage.saveCharacter(this.editingCharacter);
@@ -176,6 +192,7 @@ export default class ViewerView extends Vue {
   }
 
   private backToMain() {
+    VicarSync.endCharacterLevelSync(this.editingCharacter!);
     this.saveCurrentCharacter();
     this.setEditingCharacter(undefined);
     this.$router.push({name: 'main'});

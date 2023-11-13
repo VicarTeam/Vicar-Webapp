@@ -54,7 +54,7 @@
 
     <Modal :shown="infoSyncModalVisible" @close="infoSyncModalVisible = false">
       <div class="p-10 w-400 d-flex flex-column" style="gap: 1rem; font-size: 1rem">
-        <b style="font-size: 1.2rem">{{$t('character.sync.info.text')}}</b>
+        <b style="font-size: 1.2rem; text-align: center">{{$t('character.sync.info.text')}}</b>
 
         <div class="form-group mb-0" v-if="VicarSync.isCharacterSyncedOut(character)">
           <label>{{$t('character.sync.hash')}}:</label>
@@ -65,7 +65,7 @@
         </div>
 
         <div style="width: 100%; display: flex; justify-content: center; align-items: center">
-          <button class="btn btn-primary" @click="beginUnlinkCharacterWithSync">{{$t(infoSyncModalDisableConfirm ? 'character.sync.info.disable.confirm' : 'character.sync.info.disable')}}</button>
+          <button class="btn btn-dark" @click="beginUnlinkCharacterWithSync">{{$t(infoSyncModalDisableConfirm ? 'character.sync.info.disable.confirm' : 'character.sync.info.disable')}}</button>
         </div>
       </div>
     </Modal>

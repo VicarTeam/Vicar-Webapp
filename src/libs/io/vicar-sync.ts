@@ -15,6 +15,9 @@ export class VicarSync {
   private static readonly syncIntervals: {[key: string]: number} = {};
   private static readonly syncInterval = 1000 * 5;
   private static readonly retrieveInterval = 1000 * 10;
+
+  private static currentlyLevelingCharHash: string | undefined;
+  private static lastLevelingCharHash: string | undefined;
   private static retrieveIntervalId: number | undefined;
   private static map: SyncMap = {
     outs: {},
@@ -94,6 +97,35 @@ export class VicarSync {
     }
   }
 
+  public static beginCharacterLevelSync(char: ICharacter) {
+    if (!this.map.outs[char.id]) {
+      return;
+    }
+
+    this.currentlyLevelingCharHash = this.getLevelData(char);
+  }
+
+  public static endCharacterLevelSync(char: ICharacter) {
+    if (!this.currentlyLevelingCharHash) {
+      return;
+    }
+
+    const levelData = this.getLevelData(char);
+    if (this.currentlyLevelingCharHash === levelData) {
+      this.currentlyLevelingCharHash = undefined;
+      return;
+    }
+
+    if (this.lastLevelingCharHash === levelData) {
+      return;
+    }
+
+    this.currentlyLevelingCharHash = undefined;
+    this.lastLevelingCharHash = levelData;
+
+    VicarNet.postCharLevelSync(this.map.outs[char.id], levelData).then().catch(e => console.error(e));
+  }
+
   public static triggerCharacterSync(char: ICharacter) {
     if (!this.map.outs[char.id]) {
       return;
@@ -142,11 +174,17 @@ export class VicarSync {
 
     const chars = await VicarNet.retrieveCharSyncs(ids);
     for (const [roomId, data] of Object.entries(chars)) {
-      await this.resolveInCharacter(roomId, data);
+      if (data.c) {
+        await this.resolveInCharacter(roomId, data.c, false);
+      }
+
+      if (data.l) {
+        await this.resolveInCharacter(roomId, data.l, true);
+      }
     }
   }
 
-  private static async resolveInCharacter(roomId: string, data: string) {
+  private static async resolveInCharacter(roomId: string, data: string, isLevel: boolean) {
     const charId = this.map.ins[roomId];
     if (!charId) {
       return;
@@ -154,7 +192,7 @@ export class VicarSync {
 
     const existing = CharacterStorage.loadedCharacters.find(c => c.id === charId);
     if (existing) {
-      this.applyCharData(existing, data);
+      (isLevel ? this.applyLevelData : this.applyCharData)(existing, data);
 
       CharacterStorage.saveCharacter(existing);
 
@@ -163,7 +201,7 @@ export class VicarSync {
   }
 
   private static getCharData(char: ICharacter): string {
-    return btoa(JSON.stringify({
+    return btoa(encodeURIComponent(JSON.stringify({
       hunger: char.hunger,
       health: char.health,
       healthDamage: char.healthDamage,
@@ -172,11 +210,11 @@ export class VicarSync {
       humanity: char.humanity,
       stains: char.stains,
       inventory: char.inventory,
-    }));
+    })));
   }
 
   private static applyCharData(char: ICharacter, base64: string) {
-    const data = JSON.parse(atob(base64));
+    const data = JSON.parse(decodeURIComponent(atob(base64)));
     char.hunger = data.hunger;
     char.health = data.health;
     char.healthDamage = data.healthDamage;
@@ -185,6 +223,35 @@ export class VicarSync {
     char.humanity = data.humanity;
     char.stains = data.stains;
     char.inventory = data.inventory;
+  }
+
+  private static getLevelData(char: ICharacter): string {
+    return btoa(encodeURIComponent(JSON.stringify({
+      clan: char.clan,
+      disciplines: char.disciplines,
+      bloodPotency: char.bloodPotency,
+      categories: char.categories,
+      merits: char.merits,
+      backgrounds: char.backgrounds,
+      bloodRituals: char.bloodRituals,
+      oblivionCeremonies: char.oblivionCeremonies,
+      exp: char.exp,
+      usedExp: char.usedExp
+    })));
+  }
+
+  private static applyLevelData(char: ICharacter, base64: string) {
+    const data = JSON.parse(decodeURIComponent(atob(base64)));
+    char.clan = data.clan;
+    char.disciplines = data.disciplines;
+    char.bloodPotency = data.bloodPotency;
+    char.categories = data.categories;
+    char.merits = data.merits;
+    char.backgrounds = data.backgrounds;
+    char.bloodRituals = data.bloodRituals;
+    char.oblivionCeremonies = data.oblivionCeremonies;
+    char.exp = data.exp;
+    char.usedExp = data.usedExp;
   }
 
   private static computeCharSyncOutId(char: ICharacter): string {
