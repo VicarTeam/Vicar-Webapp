@@ -424,5 +424,10 @@
   "character.sync.info.hashcopy": "Copy",
   "character.sync.info.disable": "Remove synchronization",
   "character.sync.info.disable.confirm": "Remove synchronization, are you sure?",
-  "character.sync.hash": "VicarSync Character Hash"
+  "character.sync.hash": "VicarSync Character Hash",
+  "character.vicartt.foundryid": "FoundryVTT VicarTT ID",
+  "character.vicartt.difficulty": "Difficulty (optional)",
+  "character.vicartt.roll": "Roll in FoundryVTT",
+  "character.vicartt.roll.modal.title": "Roll Custom Dice Pool",
+  "character.vicartt.roll.modal.dices": "Number of Dice"
 }
