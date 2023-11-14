@@ -157,6 +157,7 @@ export default class CharacterInfoModal extends Vue {
   private set vicarTTId(id: string) {
     this.character.connectedFoundryId = id.length > 0 ? id : undefined;
     this.save();
+    this.$emit('updated');
   }
 
   private get isHomebrewActive() {

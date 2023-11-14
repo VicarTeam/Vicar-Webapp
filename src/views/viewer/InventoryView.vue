@@ -151,6 +151,7 @@ export default class InventoryView extends Vue {
     this.editingCharacter.inventory[this.transferDirection === "bank" ? "cash" : "bank"] += this.transferAmount;
     this.bank = this.editingCharacter.inventory.bank.toString();
     this.cash = this.editingCharacter.inventory.cash.toString();
+    this.$forceUpdate();
     CharacterStorage.saveCharacter(this.editingCharacter, true);
     this.showTransferModal = false;
   }
@@ -173,6 +174,7 @@ export default class InventoryView extends Vue {
     this.editingCharacter.inventory[current === "ownedItems" ? "carriedItems" : "ownedItems"].push(item);
     this.sortInventory("ownedItems");
     this.sortInventory("carriedItems");
+    this.$forceUpdate();
     CharacterStorage.saveCharacter(this.editingCharacter, true);
   }
 
@@ -181,6 +183,7 @@ export default class InventoryView extends Vue {
       item: {...item.item},
       amount: item.amount
     });
+    this.$forceUpdate();
     CharacterStorage.saveCharacter(this.editingCharacter, true);
   }
 
@@ -192,6 +195,7 @@ export default class InventoryView extends Vue {
 
     this.amountZeroRemoveCallback = () => {
       this.editingCharacter.inventory[current].splice(idx, 1);
+      this.$forceUpdate();
       CharacterStorage.saveCharacter(this.editingCharacter, true);
 
       this.amountZeroRemoveCallback = null;
@@ -217,6 +221,7 @@ export default class InventoryView extends Vue {
       }
       return 0;
     });
+    this.$forceUpdate();
     CharacterStorage.saveCharacter(this.editingCharacter, true);
   }
 
