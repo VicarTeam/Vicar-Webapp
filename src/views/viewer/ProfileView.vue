@@ -34,7 +34,8 @@
         <div class="row">
           <div class="stat" style="margin-right: 5rem">
             <b>{{ $t('character.sire') }}:</b>
-            <small>{{ editingCharacter.sire }}</small>
+            <small v-if="!editingCharacter.fullCustomization">{{ editingCharacter.sire }}</small>
+            <input v-else class="form-control" type="text" v-model="editingCharacter.sire"/>
           </div>
           <div class="stat">
             <b>{{ $t('character.health') }}:</b>
@@ -57,7 +58,7 @@
           <div class="stat">
             <b>{{ $t('character.hunger') }}:</b>
             <Squares :max="5" :amount="editingCharacter.hunger"
-                     @click="v => {editingCharacter.hunger = v === editingCharacter.hunger ? 0 : v; saveChar();}"/>
+                     @click="v => {editingCharacter.hunger = v === editingCharacter.hunger ? 0 : v; saveChar(true);}"/>
           </div>
         </div>
       </div>
@@ -162,7 +163,7 @@ import TipButton from "@/components/editor/TipButton.vue";
 import LevelButton from "@/components/viewer/LevelButton.vue";
 import BloodPotencyModal from "@/components/viewer/modals/leveling/BloodPotencyModal.vue";
 import {IBloodPotencyData} from "@/types/data";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import Col from "@/components/viewer/pdf/Col.vue";
 import Row from "@/components/viewer/pdf/Row.vue";
 import Humanity from "@/components/progress/tracker/Humanity.vue";
@@ -191,8 +192,8 @@ export default class ProfileView extends Vue {
 
   LevelType = LevelType;
 
-  private saveChar() {
-    CharacterStorage.saveCharacter(this.editingCharacter);
+  private saveChar(triggerSync: boolean = false) {
+    CharacterStorage.saveCharacter(this.editingCharacter, triggerSync);
   }
 
   private getBloodPotency(): IBloodPotencyData {

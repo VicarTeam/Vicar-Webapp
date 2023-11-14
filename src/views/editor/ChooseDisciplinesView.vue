@@ -57,7 +57,8 @@ import XButton from "@/components/editor/XButton.vue";
 import ChooseBloodRitualModal from "@/components/editor/modals/ChooseBloodRitualModal.vue";
 
 @Component({
-  components: {ChooseBloodRitualModal, XButton, TipButton, ChooseDisciplineAbilityModal, EditorForm}
+  components: {
+    ChooseBloodRitualModal, XButton, TipButton, ChooseDisciplineAbilityModal, EditorForm}
 })
 export default class ChooseDisciplinesView extends Vue {
 

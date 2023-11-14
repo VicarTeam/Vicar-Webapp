@@ -17,12 +17,12 @@
         <span><b>{{$t('editor.disciplines.costs')}}</b>: {{ability.costs}}</span>
         <span v-if="ability.diceSupplies"><b>{{$t('editor.disciplines.dices')}}</b>: {{ability.diceSupplies}}</span>
         <span><b>{{$t('editor.disciplines.system')}}</b>: <span v-html="ability.system"/></span>
-        <small v-if="ability.alternatives"><b>{{$t('editor.disciplines.alternatives')}}</b>: {{ability.alternatives.join(", ")}}</small>
+        <small v-if="ability.alternatives && ability.alternatives.length > 0"><b>{{$t('editor.disciplines.alternatives')}}</b>: {{ability.alternatives.join(", ")}}</small>
         <span><b>{{$t('editor.disciplines.duration')}}</b>: {{ability.duration}}</span>
       </div>
 
       <div style="width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
-        <span v-if="costs > 0" class="mb-10">{{$t('viewer.modal.level.costs', {xp: this.costs})}}</span>
+        <span v-if="costs > 0" class="mb-10">{{$t('viewer.modal.level.costs', {xp: this.overrideCosts !== -1 ? this.overrideCosts : this.costs})}}</span>
         <button class="btn btn-primary" :disabled="!canSelectAbility" @click="addCurrentAbility">{{$t('editor.choose')}}</button>
       </div>
     </div>
@@ -30,11 +30,11 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue} from "vue-property-decorator";
+import {Component, Prop, Vue, Watch} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {ICharacter, IDisciplineSelection, ILeveledDisciplineAbility} from "@/types/models";
 import {State} from "vuex-class";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import {disciplineAbilityResolver} from "@/libs/resolvers/disciplineability-resolver";
 
 export type ChooseAbilityCallback = (ability: ILeveledDisciplineAbility) => void;
@@ -48,6 +48,7 @@ export default class ChooseDisciplineAbilityModal extends Vue {
   private editingCharacter!: ICharacter|undefined;
 
   private costs: number = -1;
+  private overrideCosts: number = -1;
 
   private shown: boolean = false;
   private ability: ILeveledDisciplineAbility|null = null;
@@ -101,7 +102,20 @@ export default class ChooseDisciplineAbilityModal extends Vue {
 
   private get canSelectAbility(): boolean {
     return !!this.ability && disciplineAbilityResolver.resolve(this.editingCharacter!, this.discipline!, this.ability)
-        && (this.costs === -1 || this.costs <= this.editingCharacter!.exp);
+        && (this.costs === -1 || (this.overrideCosts !== -1 ? this.overrideCosts : this.costs) <= this.editingCharacter!.exp);
+  }
+
+  @Watch("ability")
+  private onAbilityChanged() {
+    if (this.ability) {
+      if (this.ability.level > 5) {
+        this.overrideCosts = this.ability.level * 10; // advanced discipline
+      } else {
+        this.overrideCosts = -1;
+      }
+    } else {
+      this.overrideCosts = -1;
+    }
   }
 }
 </script>

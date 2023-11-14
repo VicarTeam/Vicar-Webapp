@@ -24,7 +24,7 @@ import {levelResolver} from "@/libs/resolvers/level-resolver";
 import Bullet from "@/components/Bullet.vue";
 import CharacterStorage from "@/libs/io/character-storage";
 import {IDiscipline} from "@/types/data";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import ChooseDisciplineAbilityModal from "@/components/editor/modals/ChooseDisciplineAbilityModal.vue";
 
 @Component({
@@ -68,12 +68,16 @@ export default class NewDisciplineModal extends Vue {
       return;
     }
 
+    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
     this.editingCharacter.exp -= this.neededExp;
     this.editingCharacter.disciplines.push({
       discipline: this.discipline,
       currentLevel: 2,
       points: 0,
       abilities: [this.ability]
+    });
+    this.editingCharacter.disciplines = this.editingCharacter.disciplines.sort((a, b) => {
+      return b.currentLevel - a.currentLevel;
     });
     CharacterStorage.saveCharacter(this.editingCharacter);
     this.show = false;

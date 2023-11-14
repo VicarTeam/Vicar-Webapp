@@ -8,40 +8,63 @@
             <option v-for="lang in availableLocales" :key="lang.code" :value="lang.code">{{lang.name}}</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>{{$t("main.settings.vps")}}</label>
-          <input class="form-control" v-model="vpsUrl"/>
+
+        <div style="width: 100%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin-top: 1rem; margin-bottom: 1.5rem"></div>
+
+        <div class="form-group d-flex flex-column">
+          <label>{{$t("main.settings.vicarnet")}}</label>
+
+          <button v-if="!VicarNet.isLoggedIn" class="btn btn-primary" @click="vicarLoginModal.show()">{{$t('main.settings.vicarnet.login')}}</button>
+
+          <div v-else style="display: flex; flex-direction: row; justify-content: center; align-items: center; width: 100%; height: 100%">
+            <input class="form-control" style="flex-grow: 1" readonly v-model="VicarNet.account.alias">
+            <button class="btn btn-primary" style="flex-shrink: 0" @click="logout()">{{$t('main.settings.vicarnet.logout')}}</button>
+          </div>
+        </div>
+
+        <div style="width: 100%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin-top: 1rem; margin-bottom: 2rem"></div>
+
+        <div class="form-group d-flex align-items-center justify-content-between">
+          <button class="btn btn-primary" @click="syncData">{{$t('main.settings.syncdata')}}</button>
+          <button class="btn btn-primary" @click="migrateCharacters">{{$t('main.characters.migrate')}}</button>
         </div>
         <div class="form-group d-flex align-items-center">
           <div class="custom-switch d-flex align-items-center flex-grow-1">
             <input type="checkbox" id="switch-1" v-model="devMode">
             <label for="switch-1">{{$t('main.settings.devmode')}}</label>
           </div>
-          <div class="d-flex align-items-center flex-shrink-0">
-            <button class="btn btn-primary" @click="migrateCharacters">{{$t('main.characters.migrate')}}</button>
-          </div>
+          <small style="margin-top: auto">Vicar v{{appVersion}} (c) {{new Date().getFullYear()}} VicarTeam</small>
         </div>
         <div class="form-group mb-0" style="font-style: italic; width: 100%; text-align: right">
-          <small>Vicar v{{appVersion}} (c) {{new Date().getFullYear()}} VicarTeam</small>
         </div>
       </div>
     </div>
+
+    <VicarLoginModal ref="vicarLoginModal" @login="onLogin"/>
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Ref, Vue} from "vue-property-decorator";
 import {AVAILABLE_LOCALES, i18n, setLocale} from "@/libs/i18n";
 import {SettingsData} from "@/libs/io/settings";
 import CharacterStorage from "@/libs/io/character-storage";
+import {DataSync} from "@/libs/data/data-sync";
+import {VicarNet} from "@/libs/io/vicar-net";
+import VicarLoginModal from "@/components/main/modals/VicarLoginModal.vue";
+import {VicarSync} from "@/libs/io/vicar-sync";
 
 @Component({
-  components: {}
+  components: {VicarLoginModal}
 })
 export default class Settings extends Vue {
 
-  availableLocales = AVAILABLE_LOCALES;
-  setLocale = setLocale;
+  @Ref("vicarLoginModal")
+  private vicarLoginModal!: VicarLoginModal;
+
+  private availableLocales = AVAILABLE_LOCALES;
+  private setLocale = setLocale;
+  private VicarNet = VicarNet;
 
   private selectedLocale = "";
 
@@ -49,16 +72,12 @@ export default class Settings extends Vue {
     this.selectedLocale = i18n.locale;
   }
 
+  private async syncData() {
+    await DataSync.sync(true);
+  }
+
   private async migrateCharacters() {
     await CharacterStorage.migrateCharacters();
-  }
-
-  private get vpsUrl(): string {
-    return SettingsData.getVicarPlayServer();
-  }
-
-  private set vpsUrl(value: string) {
-    SettingsData.setVicarPlayServer(value);
   }
 
   private get devMode(): boolean {
@@ -71,6 +90,25 @@ export default class Settings extends Vue {
 
   private get appVersion(): string {
     return process.env.VERSION!;
+  }
+
+  private get vicarNetUrl(): string {
+    return SettingsData.getVicarNetUrl();
+  }
+
+  private set vicarNetUrl(value: string) {
+    SettingsData.setVicarNetUrl(value);
+  }
+
+  private logout() {
+    VicarSync.stopRetrieveInterval();
+    VicarNet.logout();
+    this.$forceUpdate();
+  }
+
+  private onLogin() {
+    this.$forceUpdate();
+    VicarSync.startRetrieveInterval();
   }
 }
 </script>

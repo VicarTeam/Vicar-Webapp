@@ -11,7 +11,7 @@
 import {Component} from "vue-property-decorator";
 import PTActionBase from "@/components/editor/actions/PTActionBase";
 import {IFlawChoice, ITrait} from "@/types/data";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import {ICharacter} from "@/types/models";
 import PTActionHandler from "@/libs/ptaction-handler";
 

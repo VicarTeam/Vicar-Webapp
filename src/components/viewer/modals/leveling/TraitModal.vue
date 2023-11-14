@@ -55,6 +55,7 @@ export default class TraitModal extends Vue {
       return;
     }
 
+    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
     this.editingCharacter.exp -= this.neededExp;
     if (this.upTrait) {
       trait.name = this.upTrait.name;

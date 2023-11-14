@@ -25,7 +25,7 @@
 import {Component, Ref, Vue} from "vue-property-decorator";
 import Dots from "@/components/progress/Dots.vue";
 import {State} from "vuex-class";
-import {IAttributeData, ICharacter, ISkillData} from "@/types/models";
+import {ICharacter, ISkillData} from "@/types/models";
 import LevelButton from "@/components/viewer/LevelButton.vue";
 import SkillModal from "@/components/viewer/modals/leveling/SkillModal.vue";
 import NewSpecializationModal from "@/components/viewer/modals/leveling/NewSpecializationModal.vue";

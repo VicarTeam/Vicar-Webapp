@@ -22,13 +22,53 @@
     </div>
 
     <div class="actions">
-      <IconButton v-if="VicarPlayClient.isInSession() && VicarPlayClient.amIHost()" icon="fa-file-image" @click="sendAvatar"/>
       <IconButton icon="fa-trash" @click="beginCharDeletion(character)"/>
       <IconButton icon="fa-copy" @click="cloneCharacter(character)"/>
       <IconButton icon="fa-file-arrow-down" @click="exportCharacter(character)"/>
+
+      <IconButton v-if="!VicarSync.isCharacterSyncedOut(character) && !VicarSync.isCharacterSyncedIn(character)" icon="fas fa-link" @click="linkCharacterWithSync(character)"/>
+      <IconButton v-else icon="fas fa-cloud-upload-alt" @click="infoSyncModalVisible = true"/>
+
       <IconButton v-if="isShareAvailable()" icon="fa-share-nodes" @click="shareCharacter(character)"/>
       <IconButton icon="fa-eye" @click="viewCharacter(character)"/>
     </div>
+
+    <Modal :shown="enableSyncModalVisible" @close="enableSyncModalVisible = false">
+      <div class="p-10 w-400 d-flex flex-column" style="gap: 1rem; font-size: 1rem">
+        <b style="font-size: 1.2rem">{{$t('character.sync.enable.text')}}</b>
+        <select class="form-control" v-model="enableSyncModalType">
+          <option value="out">{{$t('character.sync.enable.type.out')}}</option>
+          <option value="in">{{$t('character.sync.enable.type.in')}}</option>
+        </select>
+
+        <div class="form-group mb-0" v-if="enableSyncModalType === 'in'">
+          <label>{{$t('character.sync.hash')}}:</label>
+          <input class="form-control" v-model="enableSyncModalInHash"/>
+        </div>
+
+        <div style="width: 100%; display: flex; justify-content: center; align-items: center">
+          <button class="btn btn-primary" :disabled="enableSyncModalType === 'in' && enableSyncModalInHash.length <= 0" @click="finishLinkCharacterWithSync">{{$t('character.sync.enable')}}</button>
+        </div>
+      </div>
+    </Modal>
+
+    <Modal :shown="infoSyncModalVisible" @close="infoSyncModalVisible = false">
+      <div class="p-10 w-400 d-flex flex-column" style="gap: 1rem; font-size: 1rem">
+        <b style="font-size: 1.2rem; text-align: center">{{$t('character.sync.info.text')}}</b>
+
+        <div class="form-group mb-0" v-if="VicarSync.isCharacterSyncedOut(character)">
+          <label>{{$t('character.sync.hash')}}:</label>
+          <div style="display: flex; justify-content: center; align-items: center">
+            <input class="form-control" :value="VicarSync.getCharacterSyncOutId(character)"/>
+            <button class="btn btn-primary" @click="copySyncOutId">{{$t('character.sync.info.hashcopy')}}</button>
+          </div>
+        </div>
+
+        <div style="width: 100%; display: flex; justify-content: center; align-items: center">
+          <button class="btn btn-dark" @click="beginUnlinkCharacterWithSync">{{$t(infoSyncModalDisableConfirm ? 'character.sync.info.disable.confirm' : 'character.sync.info.disable')}}</button>
+        </div>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -41,15 +81,13 @@ import {ICharacter} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
 import FileCreator from "@/libs/io/file-creator";
 import {Mutation} from "vuex-class";
-import {IMessage, MessageType} from "@/libs/vicarplay/types";
-import VicarPlayClient from "@/libs/vicarplay/vicar-play";
+import {VicarSync} from "@/libs/io/vicar-sync";
+import Modal from "@/components/modal/Modal.vue";
 
 @Component({
-  components: {IconButton, Avatar, Bullet}
+  components: {Modal, IconButton, Avatar, Bullet}
 })
 export default class Character extends Vue {
-
-  private VicarPlayClient = VicarPlayClient;
 
   @Prop({required: true})
   private character!: ICharacter;
@@ -59,6 +97,15 @@ export default class Character extends Vue {
 
   @Mutation("setLevelMode")
   private setLevelMode!: (mode: boolean) => void;
+
+  private VicarSync = VicarSync;
+
+  private enableSyncModalVisible = false;
+  private enableSyncModalType: "in" | "out" = "out";
+  private enableSyncModalInHash = "";
+
+  private infoSyncModalVisible = false;
+  private infoSyncModalDisableConfirm: number | null = null;
 
   private cloneCharacter(character: ICharacter) {
     const newChar = {...character};
@@ -77,20 +124,52 @@ export default class Character extends Vue {
     this.$router.push({name: 'viewer'});
   }
 
-  private sendAvatar() {
-    if (!VicarPlayClient.isInSession() || !VicarPlayClient.amIHost()) {
-      return;
+  private linkCharacterWithSync() {
+    this.enableSyncModalVisible = true;
+  }
+
+  private async finishLinkCharacterWithSync() {
+    if (this.enableSyncModalType === "out") {
+      const hash = await VicarSync.enableCharacterOutSync(this.character);
+      if (hash) {
+        await navigator.clipboard.writeText(hash);
+      }
+    } else {
+      await VicarSync.syncCharacterIn(this.character, this.enableSyncModalInHash);
+    }
+    this.$forceUpdate();
+    this.enableSyncModalVisible = false;
+    this.enableSyncModalInHash = "";
+    this.enableSyncModalType = "out";
+  }
+
+  private async beginUnlinkCharacterWithSync() {
+    if (this.infoSyncModalDisableConfirm === null) {
+      this.infoSyncModalDisableConfirm = setTimeout(() => {
+        this.infoSyncModalDisableConfirm = null;
+      }, 3000);
+    } else {
+      await this.unlinkCharacterWithSync();
+
+      this.infoSyncModalVisible = false;
+
+      clearTimeout(this.infoSyncModalDisableConfirm);
+      this.infoSyncModalDisableConfirm = null;
+    }
+  }
+
+  private async unlinkCharacterWithSync() {
+    if (VicarSync.isCharacterSyncedOut(this.character)) {
+      await VicarSync.disableCharacterOutSync(this.character);
+    } else if (VicarSync.isCharacterSyncedIn(this.character)) {
+      await VicarSync.unsyncCharacterIn(this.character);
     }
 
-    const receiver = VicarPlayClient.getChatReceiver();
-    const message: IMessage = {
-      type: VicarPlayClient.chatSendTo === "@all" ? MessageType.BroadcastAvatar : MessageType.PrivateAvatar,
-      content: this.character.avatar,
-      sender: VicarPlayClient.me!,
-      receiver
-    };
+    this.$forceUpdate();
+  }
 
-    VicarPlayClient.sendChatMessage(message);
+  private async copySyncOutId() {
+    await navigator.clipboard.writeText(VicarSync.getCharacterSyncOutId(this.character));
   }
 
   @Inject("begin-char-deletion")

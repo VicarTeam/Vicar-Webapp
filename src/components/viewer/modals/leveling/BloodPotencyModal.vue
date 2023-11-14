@@ -37,7 +37,7 @@ export default class BloodPotencyModal extends Vue {
     if (this.editingCharacter.exp < this.neededExp) {
       return;
     }
-
+    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
     this.editingCharacter.exp -= this.neededExp;
     this.editingCharacter.bloodPotency++;
     CharacterStorage.saveCharacter(this.editingCharacter);

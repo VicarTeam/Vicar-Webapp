@@ -34,6 +34,7 @@
     <div class="trait card">
       <div class="title">
         <b>{{$t('editor.traits.flaws')}}</b>
+        <LevelButton icon="fa-plus" class="ml-10" @click="addNewFlaw"/>
       </div>
 
       <div class="list">
@@ -100,6 +101,10 @@ export default class TraitsView extends Vue {
 
   private addNewTrait() {
     this.chooseTraitModal.showModal(false, Infinity, (trait, level) => level * 3);
+  }
+
+  private addNewFlaw() {
+    this.chooseTraitModal.showModal(true, Infinity);
   }
 
   private getTransformedData(upacks: IUsingTraitPacks, isFlaw: boolean): ITransformedData[] {

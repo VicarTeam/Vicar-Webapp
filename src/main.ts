@@ -12,13 +12,9 @@ import VueResizeText from 'vue-resize-text';
 import EventBus from "@/libs/event-bus";
 import VueInteractJs from "vue-interactjs";
 import {SettingsData} from "@/libs/io/settings";
-import VueSocketIO from "vue-socket.io-extended";
-import VicarPlayClient from "@/libs/vicarplay/vicar-play";
-
-VicarPlayClient.init();
+import {get} from "@/libs/io/rest";
 
 Vue.config.productionTip = false
-Vue.use(VueSocketIO, VicarPlayClient.socket);
 Vue.use(VueResizeText);
 // @ts-ignore
 Vue.use(VueInteractJs);

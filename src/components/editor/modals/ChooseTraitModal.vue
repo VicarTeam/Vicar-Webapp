@@ -4,15 +4,19 @@
       <div style="width: 100%; display: flex; gap: 1rem; align-items: center;">
         <b style="flex-grow: 1">{{$t('editor.traits.modal.title.' + (isFlaw ? 'flaw' : 'trait'))}}:</b>
         <select class="form-control categorized" v-model="selectedPack" @change="selectTrait(null)">
+
           <option class="category" disabled>{{$t('data.trait.merits')}}</option>
           <option v-for="m in merits" :value="m">{{m.name}}{{getTraitPackBonus(m, "merits", isFlaw) > 0 ? '(+' + getTraitPackBonus(m, "merits", isFlaw) + ')' : ''}}</option>
 
           <option class="category" disabled>{{$t('data.trait.backgrounds')}}</option>
           <option v-for="b in backgrounds" :value="b">{{b.name}}{{getTraitPackBonus(b, "backgrounds", isFlaw) > 0 ? '(+' + getTraitPackBonus(b, "backgrounds", isFlaw) + ')' : ''}}</option>
+
+          <option disabled></option>
+          <option style="font-style: italic; text-align: center" :value="_customPack">[GM] {{$t('editor.traits.modal.custom')}}</option>
         </select>
       </div>
 
-      <div style="width: 100%; display: flex; gap: 2rem; flex-direction: column" v-if="selectedPack">
+      <div style="width: 100%; display: flex; gap: 2rem; flex-direction: column" v-if="selectedPack && selectedPack.id !== _customPack.id">
         <small>{{selectedPack.description}}</small>
 
         <div class="trait-pack-content">
@@ -27,6 +31,37 @@
           <div class="info" :class="{'not-selected': !selectedTrait}">
             <small v-if="!selectedTrait">{{$t('editor.traits.modal.info.notselected')}}</small>
             <small v-else>{{selectedTrait.description}}</small>
+          </div>
+        </div>
+      </div>
+      <div style="width: 100%; display: flex; gap: 2rem; flex-direction: column" v-else-if="selectedPack && selectedPack.id === _customPack.id">
+        <small>{{selectedPack.description}}</small>
+
+        <div style="width: 100%; display: flex; flex-direction: column">
+          <div class="form-group">
+            <label>{{$t('editor.traits.modal.custom.type')}}:</label>
+            <select class="form-control" v-model="customTraitType">
+              <option value="merits">{{$t('editor.traits.modal.custom.type.merit')}}</option>
+              <option value="backgrounds">{{$t('editor.traits.modal.custom.type.background')}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>{{$t('editor.traits.modal.trait.level')}}:</label>
+            <select class="form-control" v-model="customTraitLevel">
+              <option v-for="i in 5" :value="i">{{i}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>{{$t('character.inventory.add.custom.name')}}:</label>
+            <input class="form-control" type="text" v-model="customTraitName"/>
+          </div>
+          <div class="form-group">
+            <label>{{$t('character.inventory.add.custom.description')}}:</label>
+            <textarea class="form-control" v-model="customTraitDescription" style="resize: horizontal"/>
+          </div>
+          <div class="form-group">
+            <label>{{$t('editor.traits.modal.optionals.suffix')}}:</label>
+            <input class="form-control" type="text" v-model="customTraitSpecialization"/>
           </div>
         </div>
       </div>
@@ -55,8 +90,8 @@ import {Component, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {State} from "vuex-class";
 import {ICharacter, IUsingTraitPacks} from "@/types/models";
-import {ITrait, ITraitPack} from "@/types/data";
-import DataManager from "@/libs/data-manager";
+import {ITrait, ITraitPack, TraitSpecialRules} from "@/types/data";
+import DataManager from "@/libs/data/data-manager";
 import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
 import PTActionHandler from "@/libs/ptaction-handler";
 import CharacterStorage from "@/libs/io/character-storage";
@@ -92,6 +127,13 @@ export default class ChooseTraitModal extends Vue {
 
   private calculateCosts: CostsCalculationCallback|null = null;
 
+  private _customPack: ITraitPack = null!;
+  private customTraitType: "merits"|"backgrounds" = "merits";
+  private customTraitLevel: number = 1;
+  private customTraitName: string = "";
+  private customTraitDescription: string = "";
+  private customTraitSpecialization: string = "";
+
   mounted() {
     this.data = {
       backgrounds: DataManager.selectedLanguage.books.flatMap(book => {
@@ -107,6 +149,17 @@ export default class ChooseTraitModal extends Vue {
         return [];
       })
     };
+
+    this._customPack = {
+      id: -42,
+      type: "merits",
+      name: this.$t("editor.traits.modal.custom").toString(),
+      description: this.$t("editor.traits.modal.custom.desc").toString(),
+      isCombinable: false,
+      specialRules: TraitSpecialRules.None,
+      advantages: [],
+      disadvantages: []
+    };
   }
 
   public showModal(isFlaw: boolean, pointsLeft: number, callback: CostsCalculationCallback|null = null) {
@@ -115,26 +168,53 @@ export default class ChooseTraitModal extends Vue {
     this.isFlaw = isFlaw;
     this.pointsLeft = pointsLeft;
     this.calculateCosts = callback;
+    this.customLevel = 0;
+    this.specialization = "";
+    this.customTraitLevel = 1;
+    this.customTraitName = "";
+    this.customTraitDescription = "";
+    this.customTraitSpecialization = "";
+    this.customTraitType = "merits";
     this.show = true;
   }
 
   private addSelectedTrait() {
-    if (!this.isReady || !this.selectedTrait || !this.selectedPack || !this.editingCharacter) {
+    if (!this.isReady || !this.selectedPack || !this.editingCharacter) {
       return;
     }
 
-    const upack = PTActionHandler.initializeTraitPack(this.editingCharacter, this.selectedPack, this.selectedPack.type);
-    (this.isFlaw ? upack.flawTraits : upack.traits).push({
-      ...this.selectedTrait,
-      customLevel: this.customLevel,
-      suffix: this.specialization,
-      isLocked: false,
-      isManual: true
-    });
+    const isCustom = this.selectedPack.id === this._customPack.id;
 
-    if (this.calculateCosts) {
-      this.editingCharacter.exp -= this.calculateCosts(this.selectedTrait, this.customLevel);
-      CharacterStorage.saveCharacter(this.editingCharacter);
+    if (!isCustom) {
+      const upack = PTActionHandler.initializeTraitPack(this.editingCharacter, this.selectedPack, this.selectedPack.type);
+      (this.isFlaw ? upack.flawTraits : upack.traits).push({
+        ...this.selectedTrait!,
+        customLevel: this.customLevel,
+        suffix: this.specialization,
+        isLocked: false,
+        isManual: true
+      });
+
+      if (this.calculateCosts) {
+        const costs = this.calculateCosts(this.selectedTrait!, this.customLevel);
+        this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + costs;
+        this.editingCharacter.exp -= costs;
+        CharacterStorage.saveCharacter(this.editingCharacter);
+      }
+    } else {
+      const upack = PTActionHandler.initializeTraitPack(this.editingCharacter, this._customPack, this.customTraitType);
+      (this.isFlaw ? upack.flawTraits : upack.traits).push({
+        id: 42 * Date.now(),
+        name: this.customTraitName,
+        description: this.customTraitDescription,
+        level: this.customTraitLevel as any,
+        customLevel: this.customTraitLevel,
+        suffix: this.customTraitSpecialization,
+        isLocked: false,
+        isManual: true,
+        isRepeatable: false,
+        actions: []
+      });
     }
 
     this.show = false;
@@ -255,12 +335,29 @@ export default class ChooseTraitModal extends Vue {
   }
 
   private get backgrounds(): ITraitPack[] {
-    return this.filterTraitPacks([...this.data.backgrounds]).sort((a, b) => a.name.localeCompare(b.name));
+    return this.filterTraitPacks([...this.data.backgrounds])
+      .filter(x => {
+        if (!this.isFlaw && this.editingCharacter && this.editingCharacter.clan.id === 15 && x.id === 11) {
+          return false; // Caitiffs aren't allowed to use positive status background when creating char
+        }
+        return true;
+      })
+      .sort((a, b) => a.name.localeCompare(b.name));
   }
 
   private get isReady(): boolean {
+    return this.isReadyForNormalUse || this.isReadyForCustom;
+  }
+
+  private get isReadyForNormalUse(): boolean {
     return !!this.selectedPack && !!this.selectedTrait
-        && (!this.calculateCosts || this.calculateCosts(this.selectedTrait, this.customLevel) <= this.editingCharacter!.exp);
+      && (!this.calculateCosts || this.calculateCosts(this.selectedTrait, this.customLevel) <= this.editingCharacter!.exp);
+  }
+
+  private get isReadyForCustom(): boolean {
+    return !!this.selectedPack && this.selectedPack.id === this._customPack.id
+      && this.customTraitName.length > 0 && this.customTraitDescription.length > 0
+      && this.customTraitLevel >= 1 && this.customTraitLevel <= 5;
   }
 }
 </script>

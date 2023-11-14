@@ -157,7 +157,7 @@ import {State} from "vuex-class";
 import {ICharacter, ILockableTrait, IUsingTraitPacks} from "@/types/models";
 import {IBloodPotencyData, ITraitPack} from "@/types/data";
 import Dots from "@/components/progress/Dots.vue";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 
 export interface ITransformedData extends ILockableTrait {
   pack: ITraitPack;

@@ -1,12 +1,13 @@
 ﻿import {
     IBloodPotencyData, IBloodRitual,
     IDiscipline,
-    IDisciplineAbility,
+    IDisciplineAbility, IOblivionCeremony,
     IPredatorType, IPTAction,
     ISkillSpreadType,
     ITrait,
     ITraitPack
 } from "@/types/data";
+import {ISectionatedCustomLexicon} from "@/types/custom-lexicon";
 
 export enum LevelType {
     Attribute,
@@ -144,6 +145,9 @@ export interface ILanguage {
     readonly books: IBook[];
     readonly bloodPotencyTable: IBloodPotencyData[];
     readonly bloodRituals: IBloodRitual[];
+    readonly oblivionCeremonies: IOblivionCeremony[];
+    readonly customLexicon: ISectionatedCustomLexicon;
+    readonly items: IGroupItems[];
 }
 
 export interface IBook {
@@ -162,6 +166,7 @@ export interface IClan {
     readonly curse: string;
     readonly disciplines: IDiscipline[];
     readonly actions: IPTAction[];
+    symbol?: string;
 }
 
 export interface IUsingTraitPack {
@@ -245,10 +250,14 @@ export interface ICharacter {
     backstory: string;
     notes: string;
     bloodRituals: IBloodRitual[];
+    oblivionCeremonies: IOblivionCeremony[];
     useAdavancedDisciplines: boolean;
     allowLearningOfAllPowers: boolean;
     fullCustomization: boolean;
     version: number;
+    inventory: IInventory;
+    usedExp: number;
+    connectedFoundryId?: string;
 }
 
 export interface ICategory {
@@ -266,6 +275,30 @@ export interface ISkillData {
     key: SkillKeys;
     value: number;
     specialization: string[];
+}
+
+export interface IInventory {
+    carriedItems: IItemStack[];
+    ownedItems: IItemStack[];
+    bank: number;
+    cash: number;
+}
+
+export interface IItemStack {
+    item: IItem;
+    amount: number;
+}
+
+export interface IItem {
+    isCustom: boolean;
+    name: string;
+    description: string;
+    category: string;
+}
+
+export interface IGroupItems {
+    category: string;
+    items: IItem[];
 }
 
 export const DefaultDamageArray: () => DamageType[] = () => {
@@ -328,6 +361,7 @@ export const DefaultCharacter: () => ICharacter = () => ({
     backgrounds: {
         packs: []
     },
+    oblivionCeremonies: [],
     chroniclePrinciples: "",
     anchorsAndBeliefs: "",
     backstory: "",
@@ -335,5 +369,12 @@ export const DefaultCharacter: () => ICharacter = () => ({
     useAdavancedDisciplines: false,
     allowLearningOfAllPowers: false,
     fullCustomization: false,
-    version: CurrentCharacterVersion
+    version: CurrentCharacterVersion,
+    usedExp: 0,
+    inventory: {
+        carriedItems: [],
+        ownedItems: [],
+        cash: 0,
+        bank: 0
+    }
 });

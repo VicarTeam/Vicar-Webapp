@@ -28,7 +28,7 @@ import {Component, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {ICharacter, IDisciplineSelection} from "@/types/models";
 import {State} from "vuex-class";
-import DataManager from "@/libs/data-manager";
+import DataManager from "@/libs/data/data-manager";
 import {IBloodRitual} from "@/types/data";
 
 @Component({
@@ -63,6 +63,12 @@ export default class ChooseBloodRitualModal extends Vue {
   private addCurrentAbility() {
     if (this.canSelectAbility && this.discipline) {
       this.editingCharacter.bloodRituals.push({...this.ritual!});
+
+      if (this.withCosts) {
+        this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.costs;
+        this.editingCharacter.exp -= this.costs;
+      }
+
       this.callback();
       this.shown = false;
     }
