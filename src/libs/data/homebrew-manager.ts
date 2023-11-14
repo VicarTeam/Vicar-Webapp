@@ -203,9 +203,9 @@ export class HomebrewManager {
 
   private static findHomebrewDiscipline(id: number) {
     const realid = id >= HomebrewIdOffset ? id - HomebrewIdOffset : id;
-    const d = this._installedContent.cachedDisciplines.find(discipline => discipline.id === realid)
-      || this._installedContent.ownDisciplines.find(discipline => discipline.id === realid)
-      || this._installedContent.disciplines.find(discipline => discipline.id === realid);
+    const d = this._installedContent.cachedDisciplines.find(discipline => _realid(discipline.id) === realid)
+      || this._installedContent.ownDisciplines.find(discipline => _realid(discipline.id) === realid)
+      || this._installedContent.disciplines.find(discipline => _realid(discipline.id) === realid);
     if (d) {
       if (d.id < HomebrewIdOffset) {
         d.id += HomebrewIdOffset;
@@ -218,4 +218,8 @@ export class HomebrewManager {
   private static async saveInstalledContent() {
     await Storage.writeStorage("homebrew-content", JSON.stringify(this._installedContent));
   }
+}
+
+function _realid(id: number) {
+  return id >= HomebrewIdOffset ? id - HomebrewIdOffset : id;
 }
