@@ -29,6 +29,7 @@ class MigrationResolver {
     }
 
     @ResolveType(0)
+    @ResolveType(1)
     private migrateVersion0(char: ICharacter) {
         for (const selection of char.disciplines) {
             const discipline = DataManager.getDiscipline(selection.discipline.id);

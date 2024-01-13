@@ -211,7 +211,7 @@ export interface ICharacterDirectory {
     open: boolean;
 }
 
-export const CurrentCharacterVersion = 1;
+export const CurrentCharacterVersion = 2;
 
 export interface ICharacter {
     directory?: string;

@@ -126,6 +126,19 @@ export class VicarSync {
     VicarNet.postCharLevelSync(this.map.outs[char.id], levelData).then().catch(e => console.error(e));
   }
 
+  public static triggerCharacterLevelSync(char: ICharacter) {
+    if (!this.map.outs[char.id]) {
+      return;
+    }
+
+    const levelData = this.getLevelData(char);
+
+    this.currentlyLevelingCharHash = undefined;
+    this.lastLevelingCharHash = levelData;
+
+    VicarNet.postCharLevelSync(this.map.outs[char.id], levelData).then().catch(e => console.error(e));
+  }
+
   public static triggerCharacterSync(char: ICharacter) {
     if (!this.map.outs[char.id]) {
       return;
@@ -236,7 +249,11 @@ export class VicarSync {
       bloodRituals: char.bloodRituals,
       oblivionCeremonies: char.oblivionCeremonies,
       exp: char.exp,
-      usedExp: char.usedExp
+      usedExp: char.usedExp,
+      ambition: char.ambition,
+      desire: char.desire,
+      sire: char.sire,
+      notes: char.notes,
     })));
   }
 
@@ -252,6 +269,10 @@ export class VicarSync {
     char.oblivionCeremonies = data.oblivionCeremonies;
     char.exp = data.exp;
     char.usedExp = data.usedExp;
+    char.ambition = data.ambition;
+    char.desire = data.desire;
+    char.sire = data.sire;
+    char.notes = data.notes;
   }
 
   private static computeCharSyncOutId(char: ICharacter): string {

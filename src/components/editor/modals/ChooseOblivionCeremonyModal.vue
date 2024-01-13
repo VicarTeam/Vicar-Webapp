@@ -52,7 +52,7 @@ export default class ChooseBloodRitualModal extends Vue {
   private rituals: IOblivionCeremony[] = [];
   private callback: () => void = null!;
 
-  public showModal(callback: () => void,discipline: IDisciplineSelection, maxLevel = Infinity) {
+  public showModal(callback: () => void, discipline: IDisciplineSelection, maxLevel = Infinity) {
     this.ritual = null;
     this.callback = callback;
     this.maxLevel = maxLevel;
@@ -84,7 +84,7 @@ export default class ChooseBloodRitualModal extends Vue {
 
   private hasNeededAbility(ceremony: IOblivionCeremony): boolean {
     if (!ceremony.requires) return true;
-    return !this.discipline?.abilities?.find(x => x.id === ceremony.id);
+    return !!this.discipline?.abilities?.find(x => x.id === ceremony.requires);
   }
 
   private getNeededAbility(ceremony: IOblivionCeremony): ILeveledDisciplineAbility|undefined {

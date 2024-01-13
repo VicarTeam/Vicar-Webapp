@@ -194,7 +194,7 @@ export default class ViewerView extends Vue {
     if (!this.editingCharacter) {
       return false;
     }
-    return this.editingCharacter.bloodRituals.length > 0 || this.editingCharacter.clan.id === 4 || this.editingCharacter.clan.id === 5 || this.editingCharacter.fullCustomization;
+    return this.editingCharacter.bloodRituals.length > 0 || this.editingCharacter.clan.id === 4 || this.editingCharacter.clan.id === 5 || this.editingCharacter.fullCustomization || (this.editingCharacter.oblivionCeremonies?.length ?? 0) > 0;
   }
 
   private backToMain() {

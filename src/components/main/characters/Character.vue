@@ -27,7 +27,8 @@
       <IconButton icon="fa-file-arrow-down" @click="exportCharacter(character)"/>
 
       <IconButton v-if="!VicarSync.isCharacterSyncedOut(character) && !VicarSync.isCharacterSyncedIn(character)" icon="fas fa-link" @click="linkCharacterWithSync(character)"/>
-      <IconButton v-else icon="fas fa-cloud-upload-alt" @click="infoSyncModalVisible = true"/>
+      <IconButton v-else icon="fas fa-cloud" @click="infoSyncModalVisible = true"/>
+      <IconButton v-if="VicarSync.isCharacterSyncedOut(character)" icon="fas fa-cloud-upload-alt" @click="VicarSync.triggerCharacterLevelSync(character)"/>
 
       <IconButton v-if="isShareAvailable()" icon="fa-share-nodes" @click="shareCharacter(character)"/>
       <IconButton icon="fa-eye" @click="viewCharacter(character)"/>
