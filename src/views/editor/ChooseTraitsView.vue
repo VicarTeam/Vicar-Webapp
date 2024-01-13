@@ -176,11 +176,11 @@ export default class ChooseTraitsView extends Vue {
   }
 
   private hasTraitPointsLeft(): boolean {
-    return this.getUsedTraitPoints() < this.maxTraitPoints + this.maxTraitBonus;
+    return this.getUsedTraitPoints() < this.maxTraitPoints + this.maxTraitBonus && !(this.editingCharacter?.isElder ?? false);
   }
 
   private hasFlawPointsLeft(): boolean {
-    return this.getUsedFlawPoints() < this.maxFlawPoints + this.maxFlawBonus;
+    return this.getUsedFlawPoints() < this.maxFlawPoints + this.maxFlawBonus && !(this.editingCharacter?.isElder ?? false);
   }
 
   private getUsedTraitPoints(): number {

@@ -1,5 +1,5 @@
 <template>
-  <EditorForm :can-go-next="canGoNext" next-step="editor-traits" :fallback-history-char="characterCache" @before-next="applyPredatorType">
+  <EditorForm :can-go-next="canGoNext" :is-finish="isElder" next-step="editor-traits" :fallback-history-char="characterCache" @before-next="applyPredatorType">
     <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
       <div class="choose-predator-type-wrapper">
         <div class="form-group" style="text-align: center">
@@ -122,6 +122,10 @@ export default class ChoosePredatorTypeView extends Vue {
 
   private insertPTAction(action: PTActionBase<any>) {
     this.ptActions.push(action);
+  }
+
+  private get isElder(): boolean {
+    return this.editingCharacter?.isElder ?? false;
   }
 }
 </script>

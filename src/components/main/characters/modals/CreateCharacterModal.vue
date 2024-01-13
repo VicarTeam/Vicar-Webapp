@@ -21,6 +21,7 @@
             <option :value="Generation.Newborn">{{$t('character.generation.' + Generation.Newborn)}}</option>
             <option :value="Generation.Ancillae">{{$t('character.generation.' + Generation.Ancillae)}}</option>
             <option :value="Generation.Older">{{$t('character.generation.' + Generation.Older)}}</option>
+            <option :value="Generation.Elder">{{$t('character.generation.' + Generation.Elder)}}</option>
           </select>
           <input type="number" :min="eraMin" :max="eraMax" class="form-control" :placeholder="$t('main.characters.create.generation')" required="required" v-model="generation">
         </div>
@@ -124,6 +125,20 @@ export default class CreateCharacterModal extends Vue {
       case Generation.Older:
         char.exp = 1000;
         break;
+      case Generation.Elder:
+        char.exp = 666666;
+        char.bloodPotency = 10;
+        char.isElder = true;
+
+        for (const cat of char.categories) {
+          for (const attr of cat.attributes) {
+            attr.value = 5;
+          }
+
+          for (const skill of cat.skills) {
+            skill.value = 5;
+          }
+        }
     }
   }
 
@@ -141,6 +156,9 @@ export default class CreateCharacterModal extends Vue {
       case Generation.Older:
         this.generation = 9;
         break;
+      case Generation.Elder:
+        this.generation = 5;
+        break;
     }
   }
 
@@ -153,6 +171,8 @@ export default class CreateCharacterModal extends Vue {
       case Generation.Ancillae:
         return 10;
       case Generation.Older:
+        return 0;
+      case Generation.Elder:
         return 0;
     }
   }
@@ -167,6 +187,8 @@ export default class CreateCharacterModal extends Vue {
         return 11;
       case Generation.Older:
         return Infinity;
+      case Generation.Elder:
+        return 10;
     }
   }
 }
