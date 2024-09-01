@@ -1,19 +1,44 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import store from "@/store";
+import CharacterStorage from "@/libs/io/character-storage";
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    name: 'loading',
-    component: () => import('../views/LoadingView.vue')
+    name: 'main',
+    component: () => import('@/views/MainView.vue'),
+    beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem('vicar:session')) {
+        next('/login');
+      } else {
+        next();
+      }
+    }
   },
   {
-    path: '/main',
-    name: 'main',
-    component: () => import('@/views/MainView.vue')
+    path: '/login',
+    name: 'login',
+    component: () => null,
+    beforeEnter: async (to, from, next) => {
+      window.location.href = process.env.VUE_APP_API_URL + '/auth/login';
+    },
+  },
+  {
+    path: '/logged-in',
+    name: 'logged-in',
+    component: () => null,
+    beforeEnter: async (to, from, next) => {
+      const session = to.query.session as string;
+      if (session) {
+        localStorage.setItem('vicar:session', session);
+      } else {
+        alert('Failed to log in');
+      }
+      next('/');
+    },
   },
   {
     path: '/editor',
@@ -53,15 +78,23 @@ const routes: Array<RouteConfig> = [
     ]
   },
   {
-    path: '/viewer',
+    path: '/viewer/:characterId',
     name: 'viewer',
     component: () => import('@/views/ViewerView.vue'),
-    beforeEnter: (to, from, next) => {
-      if (store.state.editingCharacter) {
+    beforeEnter: async (to, from, next) => {
+      const characterId = to.params.characterId;
+      const res = await CharacterStorage.preloadCharacter(characterId);
+      if (res === true) {
         next();
-      } else {
-        next('/');
+        return;
       }
+
+      if (res === 'not_authed') {
+        next('/login');
+        return;
+      }
+
+      next('/');
     },
     children: [
       {

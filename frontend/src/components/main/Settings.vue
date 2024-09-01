@@ -11,19 +11,6 @@
 
         <div style="width: 100%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin-top: 1rem; margin-bottom: 1.5rem"></div>
 
-        <div class="form-group d-flex flex-column">
-          <label>{{$t("main.settings.vicarnet")}}</label>
-
-          <button v-if="!VicarNet.isLoggedIn" class="btn btn-primary" @click="vicarLoginModal.show()">{{$t('main.settings.vicarnet.login')}}</button>
-
-          <div v-else style="display: flex; flex-direction: row; justify-content: center; align-items: center; width: 100%; height: 100%">
-            <input class="form-control" style="flex-grow: 1" readonly v-model="VicarNet.account.alias">
-            <button class="btn btn-primary" style="flex-shrink: 0" @click="logout()">{{$t('main.settings.vicarnet.logout')}}</button>
-          </div>
-        </div>
-
-        <div style="width: 100%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin-top: 1rem; margin-bottom: 2rem"></div>
-
         <div class="form-group d-flex align-items-center justify-content-between">
           <button class="btn btn-primary" @click="syncData">{{$t('main.settings.syncdata')}}</button>
           <button class="btn btn-primary" @click="migrateCharacters">{{$t('main.characters.migrate')}}</button>

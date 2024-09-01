@@ -74,6 +74,8 @@ export default class CharacterDirectory extends Vue {
       return;
     }
 
+    const oldDir = this.draggingCharacter.directory;
+
     if (this.directory) {
       this.draggingCharacter.directory = this.directory.id;
     } else {
@@ -82,6 +84,13 @@ export default class CharacterDirectory extends Vue {
 
     CharacterStorage.saveCharacter(this.draggingCharacter);
     this.setDraggingCharacter(undefined);
+
+    if (oldDir) {
+      const count = CharacterStorage.loadedCharacters.filter(c => c.directory === oldDir).length;
+      if (count === 0) {
+        CharacterStorage.loadedDirectories = CharacterStorage.loadedDirectories.filter(d => d.id !== oldDir);
+      }
+    }
 
     setTimeout(() => {
       this.updateCharacterList();

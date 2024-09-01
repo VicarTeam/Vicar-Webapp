@@ -2,13 +2,39 @@ import {ICharacter, ICharacterDirectory} from "@/types/models";
 //@ts-ignore
 import {v4 as uuidv4} from 'uuid';
 import {del, get, post, put} from "@/libs/io/rest";
+import store from "@/store";
 
 export default class CharacterStorage {
 
     public static loadedCharacters: ICharacter[] = [];
     public static loadedDirectories: ICharacterDirectory[] = [];
+    private static initialized: boolean = false;
+
+    public static async preloadCharacter(id: string): Promise<true|'not_found'|'not_authed'> {
+        if (!localStorage.getItem('vicar:session')) {
+            return 'not_authed';
+        }
+
+        if (!this.initialized) {
+            await this.initialize();
+        }
+
+        const existing = this.loadedCharacters.find(character => character.id === id);
+        if (!existing) {
+            return 'not_found';
+        }
+
+        store.commit("setEditingCharacter", existing);
+        return true;
+    }
 
     public static async initialize() {
+        if (this.initialized) {
+            return;
+        }
+
+        this.initialized = true;
+
         const [status, res] = await get<{
             characters: ICharacter[];
             sharedCharacters: ICharacter[];
@@ -37,7 +63,7 @@ export default class CharacterStorage {
     }
 
     public static async saveCharacter(character: ICharacter, triggerSync: boolean = false) {
-        const [status, _] = await put(`characters/${character.id}`, character);
+        const [status, _] = await put(`/characters/${character.id}`, character);
         if (status >= 400) {
             console.error("Failed to save character");
         }
@@ -56,7 +82,7 @@ export default class CharacterStorage {
     }
 
     public static async removeCharacter(character: ICharacter) {
-        const [status, _] = await del(`characters/${character.id}`);
+        const [status, _] = await del(`/characters/${character.id}`);
         if (status >= 400) {
             return;
         }

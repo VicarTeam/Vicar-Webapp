@@ -96,7 +96,7 @@ export default class EditorForm extends Vue {
         this.setLevelMode(false);
         EditorHistory.clear();
         this.setDirectoryForCharCreation();
-        await this.$router.push({name: 'viewer'});
+        await this.$router.push({name: 'viewer', params: {characterId: this.editingCharacter.id}});
       };
       const event = {next: n, cancel: false};
       this.$emit("before-next", event);

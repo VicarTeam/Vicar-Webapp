@@ -81,7 +81,7 @@ export default class Characters extends Vue {
   private async importCharacterFromFile(event: {target: {files: FileList}}) {
     try {
       const content = await FileReaderUtils.readFile(event.target.files);
-      CharacterStorage.addCharacter(JSON.parse(content));
+      await CharacterStorage.addCharacter(JSON.parse(content));
       this.$forceUpdate();
     } catch (e) {
       console.error(e);
