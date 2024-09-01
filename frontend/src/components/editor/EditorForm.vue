@@ -19,6 +19,7 @@ import {AttributeKeys, ICharacter, ICharacterDirectory} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
 import DataManager from "@/libs/data/data-manager";
 import {EditorHistory} from "@/libs/editor-history";
+import FileCreator from "@/libs/io/file-creator";
 
 @Component({
   components: {}
@@ -73,7 +74,7 @@ export default class EditorForm extends Vue {
         n();
       }
     } else {
-      const n = () => {
+      const n = async () => {
         if (!this.editingCharacter) {
           return;
         }
@@ -86,11 +87,16 @@ export default class EditorForm extends Vue {
         this.editingCharacter.health = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Stamina) + 3;
         this.editingCharacter.willpower = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Composure)
             + DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Resolve);
-        CharacterStorage.addCharacter(this.editingCharacter);
+        const res = await CharacterStorage.addCharacter(this.editingCharacter);
+        if (!res) {
+          FileCreator.create("unsaved-character", JSON.stringify(this.editingCharacter));
+          return;
+        }
+
         this.setLevelMode(false);
         EditorHistory.clear();
         this.setDirectoryForCharCreation();
-        this.$router.push({name: 'viewer'});
+        await this.$router.push({name: 'viewer'});
       };
       const event = {next: n, cancel: false};
       this.$emit("before-next", event);

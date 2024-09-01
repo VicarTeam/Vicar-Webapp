@@ -1,6 +1,6 @@
-import {ZipReader, BlobReader, BlobWriter} from "@zip.js/zip.js";
+import {BlobReader, BlobWriter, ZipReader} from "@zip.js/zip.js";
 
-const DOWNLOAD_URL = "https://github.com/VicarTeam/VicarData/releases/latest/download";
+const API_URL = process.env.VUE_APP_API_URL as string;
 
 export class DataSync {
 
@@ -8,10 +8,7 @@ export class DataSync {
   private static _data: {[key: string]: string} | null = null;
 
   public static async sync(force: boolean = false) {
-    this._data = {};
-
-    //TODO: Implement this method
-    /*if (!await this.isNewerAvailable() && !force) {
+    if (!await this.isNewerAvailable() && !force) {
       return;
     }
 
@@ -35,16 +32,15 @@ export class DataSync {
     }
 
     localStorage.setItem("__data__", JSON.stringify(this._data));
-    localStorage.setItem("data__version", await this.retrieveCurrentChecksum());*/
+    localStorage.setItem("data__version", await this.retrieveCurrentChecksum());
   }
 
   public static loadFile<T>(fileName: string): T {
-    /*if (!this._data) {
+    if (!this._data) {
       this._data = JSON.parse(localStorage.getItem("__data__") || "{}");
     }
 
-    return JSON.parse(this._data![fileName]);*/
-    return {} as T;
+    return JSON.parse(this._data![fileName]);
   }
 
   private static async isNewerAvailable() {
@@ -62,16 +58,23 @@ export class DataSync {
       return this._downloadedChecksum;
     }
 
-    //TODO: Implement this method
-    //return this._downloadedChecksum = await invoke<string>("download_data_checksum");
-    return '';
+    try {
+      const response = await fetch(API_URL + "/data/checksum");
+      return await response.text();
+    } catch (e) {
+      console.error(e);
+      return "<error>";
+    }
   }
 
   private static async downloadBundleZip(): Promise<Blob> {
-    //TODO: Implement this method
-    //const base64Data = await invoke<string>("download_data_bundle");
-    //return this.base64ToBlob(base64Data, "application/zip");
-    return new Blob();
+    try {
+      const response = await fetch(API_URL + "/data/bundle");
+      return this.base64ToBlob(await response.text(), "application/zip");
+    } catch (e) {
+      console.error(e);
+      return new Blob();
+    }
   }
 
   private static base64ToBlob(base64Data: string, contentType: string) {

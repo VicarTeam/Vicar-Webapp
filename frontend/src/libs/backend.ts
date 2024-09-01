@@ -12,8 +12,6 @@ export enum UpdateState {
 export class Backend {
 
     public static async initAsync(): Promise<void> {
-        if (process.env.NODE_ENV === 'development') {
-            await DataManager.load();
-        }
+        await DataManager.load();
     }
 }

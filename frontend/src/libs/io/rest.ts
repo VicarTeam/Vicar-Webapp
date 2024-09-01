@@ -5,7 +5,7 @@ export async function get<T>(url: string, headers?: { [key: string]: string }): 
     method: "GET",
     headers: buildHeaders(headers),
   });
-  return [response.status, await response.json()];
+  return [response.status, response.status === 200 ? await response.json() : {message: await response.text()}];
 }
 
 export async function post<T>(url: string, body?: any, headers?: { [key: string]: string }): Promise<[number, T]> {
@@ -14,7 +14,7 @@ export async function post<T>(url: string, body?: any, headers?: { [key: string]
     headers: buildHeaders(headers),
     body: JSON.stringify(body || {}),
   });
-  return [response.status, await response.json()];
+  return [response.status, response.status === 200 ? await response.json() : {message: await response.text()}];
 }
 
 export async function patch<T>(url: string, body?: any, headers?: { [key: string]: string }): Promise<[number, T]> {
@@ -23,7 +23,7 @@ export async function patch<T>(url: string, body?: any, headers?: { [key: string
     headers: buildHeaders(headers),
     body: JSON.stringify(body || {}),
   });
-  return [response.status, await response.json()];
+  return [response.status, response.status === 200 ? await response.json() : {message: await response.text()}];
 }
 
 export async function put<T>(url: string, body?: any, headers?: { [key: string]: string }): Promise<[number, T]> {
@@ -32,7 +32,7 @@ export async function put<T>(url: string, body?: any, headers?: { [key: string]:
     headers: buildHeaders(headers),
     body: JSON.stringify(body || {}),
   });
-  return [response.status, await response.json()];
+  return [response.status, response.status === 200 ? await response.json() : {message: await response.text()}];
 }
 
 export async function del<T>(url: string, headers?: { [key: string]: string }): Promise<[number, T]> {
@@ -40,18 +40,22 @@ export async function del<T>(url: string, headers?: { [key: string]: string }): 
     method: "DELETE",
     headers: buildHeaders(headers),
   });
-  return [response.status, await response.json()];
+  return [response.status, response.status === 200 ? await response.json() : {message: await response.text()}];
 }
 
 function buildUrl(url: string) {
-  const baseUrl = SettingsData.getVicarNetUrl();
-  return `${baseUrl}${url}`;
+  return `${process.env.VUE_APP_API_URL}${url}`;
 }
 
 function buildHeaders(headers?: { [key: string]: string }): Headers {
-  const defaultHeaders = {
+  const defaultHeaders: any = {
     "Content-Type": "application/json",
   };
+
+  const session = localStorage.getItem("vicar:session");
+  if (session) {
+    defaultHeaders["Authorization"] = session;
+  }
 
   return new Headers({
     ...defaultHeaders,

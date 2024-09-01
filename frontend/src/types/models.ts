@@ -216,6 +216,7 @@ export const CurrentCharacterVersion = 2;
 
 export interface ICharacter {
     directory?: string;
+    justViewing?: boolean;
     id: string;
     avatar: string;
     requiredPointSpreads: IRequiredPointSpread[];

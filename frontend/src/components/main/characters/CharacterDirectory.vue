@@ -6,7 +6,6 @@
         <IconButton icon="fa-plus" @click="createCharacter"/>
       </div>
       <div class="actions">
-        <IconButton icon="fa-trash" @click="deleteDirectoryModal.showModal(directory)"/>
         <IconButton :icon="directory.open ? 'fa-chevron-up' : 'fa-chevron-down'" @click="toggleOpen"/>
       </div>
     </div>
@@ -25,8 +24,6 @@
         <Character :character="c"/>
       </Draggable>
     </Container>
-
-    <DeleteDirectoryModal ref="deleteDirectoryModal" @deleted="updateCharacterList()"/>
   </div>
 </template>
 
@@ -38,10 +35,9 @@ import IconButton from "@/components/IconButton.vue";
 import {Container, Draggable} from "vue-dndrop";
 import {Mutation, State} from "vuex-class";
 import CharacterStorage from "@/libs/io/character-storage";
-import DeleteDirectoryModal from "@/components/main/characters/modals/DeleteDirectoryModal.vue";
 
 @Component({
-  components: {DeleteDirectoryModal, IconButton, Character, Container, Draggable}
+  components: {IconButton, Character, Container, Draggable}
 })
 export default class CharacterDirectory extends Vue {
 
@@ -57,13 +53,9 @@ export default class CharacterDirectory extends Vue {
   @Mutation("setDraggingCharacter")
   private setDraggingCharacter!: (character?: ICharacter) => void;
 
-  @Ref("deleteDirectoryModal")
-  private deleteDirectoryModal!: DeleteDirectoryModal;
-
   private toggleOpen() {
     if (this.directory) {
       this.directory.open = !this.directory.open;
-      CharacterStorage.saveCharacterDirectories();
 
       this.$forceUpdate();
     }

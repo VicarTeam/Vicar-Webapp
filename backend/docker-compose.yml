@@ -1,0 +1,9 @@
+version: '3.7'
+name: vicar-backend
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "6662:27017"

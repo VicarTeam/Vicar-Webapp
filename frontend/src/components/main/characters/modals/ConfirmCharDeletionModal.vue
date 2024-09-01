@@ -26,8 +26,8 @@ export default class ConfirmCharDeletionModal extends Vue {
     this.show = true;
   }
 
-  private deleteChar() {
-    CharacterStorage.removeCharacter(this.char);
+  private async deleteChar() {
+    await CharacterStorage.removeCharacter(this.char);
     this.show = false;
     this.$emit("deleted");
   }
