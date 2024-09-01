@@ -4,6 +4,7 @@ import {v4 as uuidv4} from 'uuid';
 import {del, get, post, put} from "@/libs/io/rest";
 import store from "@/store";
 import router from "@/router";
+import {io} from "socket.io-client";
 
 export default class CharacterStorage {
 
@@ -58,6 +59,8 @@ export default class CharacterStorage {
                 }
             }
         }
+
+        this.initializeUpdatingSocket();
     }
 
     public static addDirectory(directory: ICharacterDirectory) {
@@ -149,6 +152,31 @@ export default class CharacterStorage {
                     }
                 }
             });
+        }
+    }
+
+    private static initializeUpdatingSocket() {
+        if (!localStorage.getItem('vicar:session')) {
+            return;
+        }
+
+        const socket = io(process.env.VUE_APP_API_URL as string);
+        socket.on('character_updated', (character: ICharacter) => {
+            this.updateCharacter(character);
+        });
+        socket.emit('authenticate', localStorage.getItem('vicar:session'));
+    }
+
+    private static updateCharacter(char: ICharacter) {
+        const existing = this.loadedCharacters.find(character => character.id === char.id);
+        if (existing) {
+            Object.assign(existing, char);
+
+            if (store.state.editingCharacter) {
+                if (store.state.editingCharacter.id === char.id) {
+                    store.commit("setEditingCharacter", existing);
+                }
+            }
         }
     }
 }

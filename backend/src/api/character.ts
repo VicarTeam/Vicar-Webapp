@@ -1,5 +1,6 @@
 import {Express, Request, Response} from "express";
 import {Character, User} from "../schema";
+import {getSocket} from "../sockets";
 
 export function initCharacterRoutes(app: Express) {
   app.get('/characters', getCharacters);
@@ -52,6 +53,15 @@ async function updateCharacter(req: Request, res: Response) {
   await character.save();
 
   res.json({message: 'OK'});
+
+  for (const viewerId of character.viewers) {
+    const socket = getSocket(viewerId);
+    if (!socket) {
+      continue;
+    }
+
+    socket.emit('character_updated', character.data);
+  }
 }
 
 async function deleteCharacter(req: Request, res: Response) {
