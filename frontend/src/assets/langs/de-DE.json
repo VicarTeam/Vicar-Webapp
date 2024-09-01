@@ -434,5 +434,7 @@
   "character.vicartt.difficulty": "Schwierigkeit (optional)",
   "character.vicartt.roll": "In FoundryVTT würfeln",
   "character.vicartt.roll.modal.title": "Benutzerdefinierten Würfelpool würfel",
-  "character.vicartt.roll.modal.dices": "Anzahl der Würfel"
+  "character.vicartt.roll.modal.dices": "Anzahl der Würfel",
+  "settings.logged-in-as": "Eingeloggt als: ",
+  "settings.logout": "Ausloggen"
 }

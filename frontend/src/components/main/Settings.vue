@@ -9,6 +9,12 @@
           </select>
         </div>
 
+        <div v-if="DataManager.loggedInAs" style="width: 100%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin-top: 1rem; margin-bottom: 1.5rem"></div>
+        <p v-if="DataManager.loggedInAs">
+          {{$t('settings.logged-in-as')}}<b>{{DataManager.loggedInAs}}</b>
+        </p>
+        <button v-if="DataManager.loggedInAs" class="btn btn-primary" style="width: 100%" @click="logout">{{$t('settings.logout')}}</button>
+
         <div style="width: 100%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin-top: 1rem; margin-bottom: 1.5rem"></div>
 
         <div class="form-group d-flex align-items-center justify-content-between">
@@ -20,14 +26,12 @@
             <input type="checkbox" id="switch-1" v-model="devMode">
             <label for="switch-1">{{$t('main.settings.devmode')}}</label>
           </div>
-          <small style="margin-top: auto">Vicar v{{appVersion}} (c) {{new Date().getFullYear()}} VicarTeam</small>
+          <small style="margin-top: auto">Vicar (c) 2022-{{new Date().getFullYear()}} VicarTeam</small>
         </div>
         <div class="form-group mb-0" style="font-style: italic; width: 100%; text-align: right">
         </div>
       </div>
     </div>
-
-    <VicarLoginModal ref="vicarLoginModal" @login="onLogin"/>
   </div>
 </template>
 
@@ -40,8 +44,15 @@ import {DataSync} from "@/libs/data/data-sync";
 import {VicarNet} from "@/libs/io/vicar-net";
 import VicarLoginModal from "@/components/main/modals/VicarLoginModal.vue";
 import {VicarSync} from "@/libs/io/vicar-sync";
+import DataManager from "@/libs/data/data-manager";
+import {post} from "@/libs/io/rest";
 
 @Component({
+  computed: {
+    DataManager() {
+      return DataManager
+    }
+  },
   components: {VicarLoginModal}
 })
 export default class Settings extends Vue {
@@ -55,7 +66,8 @@ export default class Settings extends Vue {
 
   private selectedLocale = "";
 
-  mounted() {
+  async mounted() {
+    await DataManager.loadLogin();
     this.selectedLocale = i18n.locale;
   }
 
@@ -75,27 +87,12 @@ export default class Settings extends Vue {
     SettingsData.setDevMode(value);
   }
 
-  private get appVersion(): string {
-    return process.env.VERSION!;
-  }
-
-  private get vicarNetUrl(): string {
-    return SettingsData.getVicarNetUrl();
-  }
-
-  private set vicarNetUrl(value: string) {
-    SettingsData.setVicarNetUrl(value);
-  }
-
-  private logout() {
-    VicarSync.stopRetrieveInterval();
-    VicarNet.logout();
-    this.$forceUpdate();
-  }
-
-  private onLogin() {
-    this.$forceUpdate();
-    VicarSync.startRetrieveInterval();
+  private async logout() {
+    const [status] = await post(`/auth/logout`);
+    if (status < 400) {
+      localStorage.removeItem('vicar:session');
+      window.location.reload();
+    }
   }
 }
 </script>

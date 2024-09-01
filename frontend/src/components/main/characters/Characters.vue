@@ -11,8 +11,6 @@
       <button class="btn btn-primary" style="height: 4rem" @click="importFiles.click()">
         {{$t('main.characters.import')}}
       </button>
-
-      <VicarShare ref="vicarShare"/>
     </div>
 
     <div class="d-flex flex-column flex-grow-1" style="gap: 3rem">
@@ -67,9 +65,6 @@ export default class Characters extends Vue {
   @Ref("createDirectoryModal")
   private createDirectoryModal!: CreateDirectoryModal;
 
-  @Ref("vicarShare")
-  private vicarShare!: VicarShare;
-
   mounted() {
     EventBus.$on("update-character-list", this.updateCharacterList);
   }
@@ -107,12 +102,12 @@ export default class Characters extends Vue {
 
   @Provide("is-share-available")
   private isShareAvailable(): boolean {
-    return this.vicarShare.isAvailable;
+    return false;
   }
 
   @Provide("share-character")
   private shareCharacter(char: ICharacter) {
-    this.vicarShare.shareCharacter(char);
+
   }
 
   @Provide("create-character")

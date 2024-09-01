@@ -30,15 +30,38 @@ import {
 import {v4 as uuidv4} from 'uuid';
 import {HomebrewManager} from "@/libs/data/homebrew-manager";
 import {VicarSync} from "@/libs/io/vicar-sync";
+import {get} from "@/libs/io/rest";
+import router from "@/router";
 
 export default class DataManager {
 
+    public static loggedInAs: string|null = null;
     public static readonly languages: ILanguage[] = [];
     private static initialized = false;
 
     public static get selectedLanguage(): ILanguage {
         return this.languages.find(lang => lang.key === i18n.locale)
             || this.languages.find(lang => lang.key === i18n.fallbackLocale)!;
+    }
+
+    public static async loadLogin() {
+        if (this.loggedInAs) {
+            return;
+        }
+
+        if (!localStorage.getItem('vicar:session')) {
+            return;
+        }
+
+        const [status, res] = await get<{username: string}>(`/users/@me`);
+        if (status >= 400) {
+            if (status === 401) {
+                await router.push('/login');
+            }
+            return;
+        }
+
+        this.loggedInAs = res.username;
     }
 
     public static async load() {

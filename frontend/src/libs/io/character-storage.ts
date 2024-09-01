@@ -3,6 +3,7 @@ import {ICharacter, ICharacterDirectory} from "@/types/models";
 import {v4 as uuidv4} from 'uuid';
 import {del, get, post, put} from "@/libs/io/rest";
 import store from "@/store";
+import router from "@/router";
 
 export default class CharacterStorage {
 
@@ -41,6 +42,9 @@ export default class CharacterStorage {
         }>(`/characters`);
 
         if (status >= 400) {
+            if (status === 401) {
+                await router.push('/login');
+            }
             return;
         }
 
