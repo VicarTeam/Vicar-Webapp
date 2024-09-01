@@ -12,7 +12,8 @@
     "express": "^4.19.2",
     "helmet": "^7.1.0",
     "memory-cache-node": "^1.4.0",
-    "mongoose": "^8.6.0"
+    "mongoose": "^8.6.0",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "@types/bun": "latest"

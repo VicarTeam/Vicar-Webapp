@@ -26,7 +26,7 @@
       <IconButton icon="fa-copy" @click="cloneCharacter(character)"/>
       <IconButton icon="fa-file-arrow-down" @click="exportCharacter(character)"/>
 
-      <IconButton v-if="isShareAvailable()" icon="fa-share-nodes" @click="shareCharacter(character)"/>
+      <IconButton icon="fa-share-nodes" @click="editViewers(character)"/>
       <IconButton icon="fa-eye" @click="viewCharacter(character)"/>
     </div>
 
@@ -104,6 +104,30 @@ export default class Character extends Vue {
   private infoSyncModalVisible = false;
   private infoSyncModalDisableConfirm: number | null = null;
 
+  private shiftKeyDown = false;
+
+  mounted() {
+    window.addEventListener("keydown", this.onKeydown);
+    window.addEventListener("keyup", this.onKeyup);
+  }
+
+  destroyed() {
+    window.removeEventListener("keydown", this.onKeydown);
+    window.removeEventListener("keyup", this.onKeyup);
+  }
+
+  private onKeydown(e: KeyboardEvent) {
+    if (e.key === "Control") {
+      this.shiftKeyDown = true;
+    }
+  }
+
+  private onKeyup(e: KeyboardEvent) {
+    if (e.key === "Control") {
+      this.shiftKeyDown = false;
+    }
+  }
+
   private cloneCharacter(character: ICharacter) {
     const newChar = {...character};
     newChar.name += " - " + this.$t('character.copy').toString();
@@ -116,6 +140,11 @@ export default class Character extends Vue {
   }
 
   private viewCharacter(character: ICharacter) {
+    if (this.shiftKeyDown) {
+      window.open(this.$router.resolve({name: 'viewer', params: {characterId: character.id}}).href, '_blank')?.focus();
+      return;
+    }
+
     this.setLevelMode(false);
     this.$router.push({name: 'viewer', params: {characterId: character.id}});
   }
@@ -168,6 +197,9 @@ export default class Character extends Vue {
     await navigator.clipboard.writeText(VicarSync.getCharacterSyncOutId(this.character));
   }
 
+  @Inject("edit-viewers")
+  private editViewers!: (character: ICharacter) => void;
+
   @Inject("begin-char-deletion")
   private beginCharDeletion!: (character: ICharacter) => void;
 
@@ -176,9 +208,6 @@ export default class Character extends Vue {
 
   @Inject("is-share-available")
   private isShareAvailable!: () => boolean;
-
-  @Inject("share-character")
-  private shareCharacter!: (character: ICharacter) => void;
 }
 </script>
 

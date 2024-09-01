@@ -433,5 +433,9 @@
   "character.vicartt.roll.modal.title": "Roll Custom Dice Pool",
   "character.vicartt.roll.modal.dices": "Number of Dice",
   "settings.logged-in-as": "Logged in as: ",
-  "settings.logout": "Log out"
+  "settings.logout": "Log out",
+  "character.viewers": "Shared for:",
+  "character.viewers.add": "Share",
+  "character.viewers.remove": "Remove",
+  "character.viewers.notFound": "User not found"
 }

@@ -436,5 +436,9 @@
   "character.vicartt.roll.modal.title": "Benutzerdefinierten Würfelpool würfel",
   "character.vicartt.roll.modal.dices": "Anzahl der Würfel",
   "settings.logged-in-as": "Eingeloggt als: ",
-  "settings.logout": "Ausloggen"
+  "settings.logout": "Ausloggen",
+  "character.viewers": "Freigegeben für:",
+  "character.viewers.add": "Freigeben",
+  "character.viewers.remove": "Freigabe entfernen",
+  "character.viewers.notFound": "Benutzer nicht gefunden"
 }

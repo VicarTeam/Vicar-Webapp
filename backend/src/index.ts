@@ -6,6 +6,7 @@ import {getSession} from "./sessions";
 import {initAuthRoutes} from "./api/auth";
 import {initCharacterRoutes} from "./api/character";
 import {initDataRoutes} from "./api/data";
+import {initUserRoutes} from "./api/user";
 
 mongoose.connect(Bun.env.MONGO_URI as string).then(() => {
   console.log('Connected to MongoDB')
@@ -13,7 +14,7 @@ mongoose.connect(Bun.env.MONGO_URI as string).then(() => {
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json({limit: '100mb'}));
 app.use(helmet.default());
 
 app.use(cors({
@@ -21,6 +22,7 @@ app.use(cors({
 }));
 
 initAuthRoutes(app);
+initDataRoutes(app);
 
 app.use((req, res, next) => {
   if (!req.headers.authorization) {
@@ -38,7 +40,7 @@ app.use((req, res, next) => {
 });
 
 initCharacterRoutes(app);
-initDataRoutes(app);
+initUserRoutes(app);
 
 app.listen(parseInt(Bun.env.PORT as string), () => {
   console.log(`Server is running on port ${Bun.env.PORT}`);

@@ -20,6 +20,7 @@
     <CreateCharacterModal ref="createCharacterModal"/>
     <CreateDirectoryModal ref="createDirectoryModal" @created="updateCharacterList"/>
     <ConfirmCharDeletionModal ref="confirmCharDeletionModal" @deleted="updateCharacterList"/>
+    <CharacterViewersModal ref="characterViewersModal"/>
   </Container>
 </template>
 
@@ -42,9 +43,11 @@ import CharacterDirectory from "@/components/main/characters/CharacterDirectory.
 import CreateDirectoryModal from "@/components/main/characters/modals/CreateDirectoryModal.vue";
 import {Container} from "vue-dndrop";
 import EventBus from "@/libs/event-bus";
+import CharacterViewersModal from "@/components/main/characters/modals/CharacterViewersModal.vue";
 
 @Component({
   components: {
+    CharacterViewersModal,
     CreateDirectoryModal,
     CharacterDirectory, Container,
     Character, VicarShare, IconButton, Bullet, ConfirmCharDeletionModal, Avatar, CreateCharacterModal, Modal}
@@ -65,6 +68,9 @@ export default class Characters extends Vue {
   @Ref("createDirectoryModal")
   private createDirectoryModal!: CreateDirectoryModal;
 
+  @Ref("characterViewersModal")
+  private characterViewersModal!: CharacterViewersModal;
+
   mounted() {
     EventBus.$on("update-character-list", this.updateCharacterList);
   }
@@ -76,7 +82,9 @@ export default class Characters extends Vue {
   private async importCharacterFromFile(event: {target: {files: FileList}}) {
     try {
       const content = await FileReaderUtils.readFile(event.target.files);
-      await CharacterStorage.addCharacter(JSON.parse(content));
+      const char: ICharacter = JSON.parse(content);
+      delete char.directory;
+      await CharacterStorage.addCharacter(char);
       this.$forceUpdate();
     } catch (e) {
       console.error(e);
@@ -85,6 +93,11 @@ export default class Characters extends Vue {
 
   private getSortedCharacters() {
     return CharacterStorage.getSortedCharacters();
+  }
+
+  @Provide("edit-viewers")
+  private editViewers(char: ICharacter) {
+    this.characterViewersModal.showModal(char);
   }
 
   @Provide("begin-char-deletion")

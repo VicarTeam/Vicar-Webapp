@@ -16,8 +16,8 @@ async function getCharacters(req: Request, res: Response) {
   const sharedCharacters = await Character.find({viewers: userId});
 
   res.json({
-    characters,
-    sharedCharacters,
+    characters: characters.map(c => ({...c.data, id: c.id})),
+    sharedCharacters: sharedCharacters.map(c => ({...c.data, id: c.id, justViewing: true})),
   });
 }
 
@@ -49,7 +49,7 @@ async function updateCharacter(req: Request, res: Response) {
 
   await character.save();
 
-  res.send('OK');
+  res.json({message: 'OK'});
 }
 
 async function deleteCharacter(req: Request, res: Response) {
@@ -63,7 +63,7 @@ async function deleteCharacter(req: Request, res: Response) {
 
   await character.deleteOne();
 
-  res.send('OK');
+  res.json({message: 'OK'});
 }
 
 async function shareCharacter(req: Request, res: Response) {
@@ -85,5 +85,5 @@ async function shareCharacter(req: Request, res: Response) {
 
   await character.save();
 
-  res.send('OK');
+  res.json({message: 'OK'});
 }

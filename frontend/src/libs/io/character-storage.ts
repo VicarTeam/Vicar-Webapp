@@ -49,7 +49,7 @@ export default class CharacterStorage {
         }
 
         this.loadedCharacters.push(...res.characters);
-        this.loadedCharacters.push(...res.sharedCharacters);
+        this.loadedCharacters.push(...res.sharedCharacters.map(character => ({...character, justViewing: true})));
 
         for (const character of this.loadedCharacters) {
             if (character.directory) {
@@ -67,6 +67,10 @@ export default class CharacterStorage {
     }
 
     public static async saveCharacter(character: ICharacter, triggerSync: boolean = false) {
+        if (character.justViewing) {
+            return;
+        }
+
         const [status, _] = await put(`/characters/${character.id}`, character);
         if (status >= 400) {
             console.error("Failed to save character");
@@ -81,6 +85,10 @@ export default class CharacterStorage {
 
         character.id = res.id;
         this.loadedCharacters.push(character);
+
+        if (character.directory && !this.loadedDirectories.find(directory => directory.id === character.directory)) {
+            this.loadedDirectories.push({id: character.directory, name: character.directory, open: true});
+        }
 
         return character.id;
     }
