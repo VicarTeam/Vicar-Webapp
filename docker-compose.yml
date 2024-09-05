@@ -1,0 +1,53 @@
+name: vicar-webapp
+version: '3.8'
+
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "6662:27017" # Expose MongoDB on port 6662
+    volumes:
+      - mongo_data:/data/db # Persist MongoDB data
+    networks:
+      - backend-network
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "6660:6660" # Expose backend on port 6660
+    environment:
+      MONGO_URI: "mongodb://mongo:27017" # Reference MongoDB container
+      DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
+      DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
+      DISCORD_REDIRECT_URI: ${DISCORD_REDIRECT_URI}
+      FRONTEND_URL: ${FRONTEND_URL}
+    depends_on:
+      - mongo # Ensure backend starts after MongoDB
+    networks:
+      - backend-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "6680:80" # Expose frontend on port 80
+    networks:
+      - backend-network
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  backend-network:
+    driver: bridge
