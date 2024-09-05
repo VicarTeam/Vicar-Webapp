@@ -6,6 +6,8 @@ import store from "@/store";
 import router from "@/router";
 import {io} from "socket.io-client";
 
+let saveDebounce: number|null = null;
+
 export default class CharacterStorage {
 
     public static loadedCharacters: ICharacter[] = [];
@@ -74,10 +76,16 @@ export default class CharacterStorage {
             return;
         }
 
-        const [status, _] = await put(`/characters/${character.id}`, character);
-        if (status >= 400) {
-            console.error("Failed to save character");
+        if (saveDebounce) {
+            clearTimeout(saveDebounce);
         }
+
+        saveDebounce = setTimeout(async () => {
+            const [status, _] = await put(`/characters/${character.id}`, character);
+            if (status >= 400) {
+                console.error("Failed to save character");
+            }
+        }, 1000);
     }
 
     public static async addCharacter(character: ICharacter): Promise<string|undefined> {
