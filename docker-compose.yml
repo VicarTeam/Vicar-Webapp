@@ -37,6 +37,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        VUE_APP_API_URL: ${VUE_APP_API_URL}
     container_name: frontend
     ports:
       - "6680:80" # Expose frontend on port 80

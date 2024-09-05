@@ -8,8 +8,9 @@ RUN npm i yarn
 RUN yarn
 COPY . .
 
-# TODO: Set the API URL
-ENV VUE_APP_API_URL=http://localhost:6660
+ARG VUE_APP_API_URL
+ENV VUE_APP_API_URL=${VUE_APP_API_URL}
+
 RUN npm run build
 
 FROM nginx:stable-alpine as production-stage
