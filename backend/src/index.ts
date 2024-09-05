@@ -66,6 +66,6 @@ app.use((req, res, next) => {
 initCharacterRoutes(app);
 initUserRoutes(app);
 
-httpServer.listen(parseInt(Bun.env.PORT as string), () => {
-  console.log(`Server is running on port ${Bun.env.PORT}`);
+httpServer.listen(6660, () => {
+  console.log(`Server is running on port 6660`);
 });
