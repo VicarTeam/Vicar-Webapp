@@ -120,11 +120,18 @@ export default class ViewerView extends Vue {
     this.$router.push({name: 'viewer-profile'});
     EventBus.$on("character-updated", this.onCharUpdated);
     window.addEventListener('keydown', this.onKeyDown);
+    
+    if (this.editingCharacter) {
+      document.title = this.editingCharacter.name + " - Vicar";
+    } else {
+      document.title = "Vicar";
+    }
   }
 
   destroyed() {
     EventBus.$off("character-updated", this.onCharUpdated);
     window.removeEventListener('keydown', this.onKeyDown);
+    document.title = "Vicar";
   }
 
   private onCharUpdated(charId: string) {

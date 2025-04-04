@@ -27,7 +27,7 @@
       <IconButton icon="fa-file-arrow-down" @click="exportCharacter(character)"/>
 
       <IconButton icon="fa-share-nodes" @click="editViewers(character)"/>
-      <IconButton icon="fa-eye" @click="viewCharacter(character)"/>
+      <IconButton icon="fa-eye" @click="viewCharacter(character)" @click.shift="viewCharacter(character, true)"/>
     </div>
 
     <Modal :shown="enableSyncModalVisible" @close="enableSyncModalVisible = false">
@@ -139,9 +139,9 @@ export default class Character extends Vue {
     FileCreator.create(char.name + ".json", JSON.stringify(char));
   }
 
-  private viewCharacter(character: ICharacter) {
-    if (this.shiftKeyDown) {
-      window.open(this.$router.resolve({name: 'viewer', params: {characterId: character.id}}).href, '_blank')?.focus();
+  private viewCharacter(character: ICharacter, newTab: boolean = false) {
+    if (this.shiftKeyDown || newTab) {
+      window.open(this.$router.resolve({name: 'viewer', params: {characterId: character.id}}).href, '_blank');
       return;
     }
 
