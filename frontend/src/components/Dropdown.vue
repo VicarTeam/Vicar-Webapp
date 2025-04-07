@@ -48,12 +48,18 @@ export default class Dropdown extends Vue {
   private onInputValueChange() {
     this.$forceUpdate();
   }
+
+  private debounceClose() {
+    setTimeout(() => {
+      this.showOptions = false;
+    }, 200);
+  }
 }
 </script>
 
 <template>
   <div class="vdropdown" v-bind="$attrs">
-    <input type="text" class="form-control" v-model="inputValue" :placeholder="placeholder" style="width: 100%" @focusin="showOptions = true">
+    <input type="text" class="form-control" v-model="inputValue" :placeholder="placeholder" style="width: 100%" @focusin="showOptions = true" @focusout="debounceClose"/>
     <div class="dropdown-menu" v-if="showOptions">
       <a v-for="(i, j) in filteredOptions" :key="j" href="#" class="dropdown-item" :style="i.isCategory ? {'pointer-events': 'none', cursor: 'not-allowed'} : {}" @click="setModelValue(i)">
         <b v-if="i.isCategory">{{i.name}}</b>

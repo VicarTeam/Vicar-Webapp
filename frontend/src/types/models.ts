@@ -261,6 +261,7 @@ export interface ICharacter {
     usedExp: number;
     connectedFoundryId?: string;
     isElder?: boolean;
+    cache?: {[key: string]: any};
 }
 
 export interface ICategory {

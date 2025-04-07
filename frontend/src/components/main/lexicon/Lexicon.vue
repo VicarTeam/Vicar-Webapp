@@ -274,6 +274,14 @@
         <section v-for="p in predatorTypes">
           <h3 :ref="'predator-' + p.id">{{p.name}}</h3>
           <small>{{p.description}}</small>
+          <section>
+            <h5>{{$t('editor.predator.changes')}}</h5>
+            <ul>
+              <li v-for="(pa, i) in p.actions" :key="i">
+                {{pa.description}}
+              </li>
+            </ul>
+          </section>
         </section>
       </section>
 

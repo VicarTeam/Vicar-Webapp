@@ -27,7 +27,7 @@
       <IconButton icon="fa-file-arrow-down" @click="exportCharacter(character)"/>
 
       <IconButton icon="fa-share-nodes" @click="editViewers(character)"/>
-      <IconButton icon="fa-eye" @click="viewCharacter(character)" @click.shift="viewCharacter(character, true)"/>
+      <IconButton icon="fa-eye" @click="viewCharacter(character)"/>
     </div>
 
     <Modal :shown="enableSyncModalVisible" @close="enableSyncModalVisible = false">

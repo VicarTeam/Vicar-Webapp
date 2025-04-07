@@ -37,25 +37,29 @@
             <small v-if="!editingCharacter.fullCustomization">{{ editingCharacter.sire }}</small>
             <input v-else class="form-control" type="text" v-model="editingCharacter.sire"/>
           </div>
-          <div class="stat">
+          <div class="stat" id="hlst-health">
             <b>{{ $t('character.health') }}:</b>
             <Damage prop-key="health"/>
           </div>
-          <div class="stat">
+          <div class="stat" id="hlst-willpower">
             <b>{{ $t('character.willpower') }}:</b>
             <Damage prop-key="willpower"/>
           </div>
         </div>
         <div class="row">
-          <div class="stat" style="margin-right: 5rem">
-            <b>{{ $t('character.bloodpotency') }}: <LevelButton v-if="editingCharacter.bloodPotency < 10" @click="levelBloodPotencyModal.showModal()"/></b>
+          <div class="stat" style="margin-right: 5rem" id="hlst-blood">
+            <b>
+              {{ $t('character.bloodpotency') }}:
+              <LevelButton v-if="editingCharacter.bloodPotency < 10" @click="levelBloodPotencyModal.showModal()"/>
+              <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && editingCharacter.bloodPotency > 0" @click="decreaseBloodPotency"/>
+            </b>
             <Squares :max="10" :amount="editingCharacter.bloodPotency" :margin-at="6"/>
           </div>
-          <div class="stat">
+          <div class="stat" id="hlst-humanity">
             <b>{{ $t('character.humanity') }}:</b>
             <Humanity/>
           </div>
-          <div class="stat">
+          <div class="stat" id="hlst-hunger">
             <b>{{ $t('character.hunger') }}:</b>
             <Squares :max="5" :amount="editingCharacter.hunger"
                      @click="v => {editingCharacter.hunger = v === editingCharacter.hunger ? 0 : v; saveChar(true);}"/>
@@ -146,6 +150,7 @@
     </div>
 
     <BloodPotencyModal ref="levelBloodPotencyModal"/>
+    <ConfirmDeleteModal ref="confirmDeleteModal"/>
   </div>
 </template>
 
@@ -169,9 +174,14 @@ import Row from "@/components/viewer/pdf/Row.vue";
 import Humanity from "@/components/progress/tracker/Humanity.vue";
 import Damage from "@/components/progress/tracker/Damage.vue";
 import CharacterStorage from "@/libs/io/character-storage";
+import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vue";
+import NewSpecializationModal from "@/components/viewer/modals/leveling/NewSpecializationModal.vue";
+import EventBus from "@/libs/event-bus";
 
 @Component({
   components: {
+    NewSpecializationModal,
+    ConfirmDeleteModal,
     Damage,
     Humanity,
     BloodPotencyModal, LevelButton, TipButton, Tab, Tabs, Squares, IconButton, Bullet, Avatar, Row, Col}
@@ -186,6 +196,9 @@ export default class ProfileView extends Vue {
 
   @Ref("levelBloodPotencyModal")
   private levelBloodPotencyModal!: BloodPotencyModal;
+
+  @Ref("confirmDeleteModal")
+  private confirmDeleteModal!: ConfirmDeleteModal;
 
   private isEditName = false;
   private editName = "";
@@ -218,6 +231,13 @@ export default class ProfileView extends Vue {
     if (!e.shiftKey) {
       this.avatarUploader.click();
     }
+  }
+
+  private decreaseBloodPotency() {
+    this.confirmDeleteModal.showModal(this.$t('character.bloodpotency') + ' ' + this.editingCharacter.bloodPotency, () => {
+      this.editingCharacter.bloodPotency--;
+      CharacterStorage.saveCharacter(this.editingCharacter);
+    });
   }
 
   @Inject("update-viewer")

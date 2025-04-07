@@ -33,6 +33,8 @@
     <CharacterInfoModal ref="characterInfoModal" @updated="$forceUpdate()"/>
     <DicePoolCalculatorModal ref="dicePoolCalculatorModal"/>
     <DiceRollModal ref="diceRollModal"/>
+    <HuntCalculatorModal ref="huntCalculatorModal"/>
+    <SearchHighlightModal ref="searchHighlightModal"/>
   </div>
 </template>
 
@@ -51,6 +53,8 @@ import DicePoolCalculatorModal from "@/components/main/characters/modals/DicePoo
 import EventBus from "@/libs/event-bus";
 import {VicarSync} from "@/libs/io/vicar-sync";
 import DiceRollModal from "@/components/viewer/modals/DiceRollModal.vue";
+import HuntCalculatorModal from "@/components/main/characters/modals/HuntCalculatorModal.vue";
+import SearchHighlightModal from "@/components/main/characters/modals/SearchHighlightModal.vue";
 
 const TabHotkeys = [
   {
@@ -85,7 +89,10 @@ const TabHotkeys = [
 ];
 
 @Component({
-  components: {DiceRollModal, DicePoolCalculatorModal, CharacterInfoModal, AddExpModal, Tab, Avatar, IconButton, Tabs}
+  components: {
+    SearchHighlightModal,
+    HuntCalculatorModal,
+    DiceRollModal, DicePoolCalculatorModal, CharacterInfoModal, AddExpModal, Tab, Avatar, IconButton, Tabs}
 })
 export default class ViewerView extends Vue {
 
@@ -107,6 +114,12 @@ export default class ViewerView extends Vue {
   @Ref("diceRollModal")
   private diceRollModal!: DiceRollModal;
 
+  @Ref("huntCalculatorModal")
+  private huntCalculatorModal!: HuntCalculatorModal;
+
+  @Ref("searchHighlightModal")
+  private searchHighlightModal!: SearchHighlightModal;
+
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character?: ICharacter) => void;
 
@@ -115,9 +128,10 @@ export default class ViewerView extends Vue {
 
   private selectedTab: string = "viewer-profile";
   private saveText: string = "";
+  private lastShift: number|null = null;
 
   mounted() {
-    this.$router.push({name: 'viewer-profile'});
+    this.$router.push({name: 'viewer-profile'}).catch(() => {});
     EventBus.$on("character-updated", this.onCharUpdated);
     window.addEventListener('keydown', this.onKeyDown);
     
@@ -162,8 +176,31 @@ export default class ViewerView extends Vue {
     }
 
     if (event.ctrlKey && event.key === " " && this.editingCharacter) {
+      event.preventDefault();
       this.dicePoolCalculatorModal.showModal(this.editingCharacter, this.selectedTab === "viewer-disciplines");
     }
+
+    if (event.altKey && (event.key === "j" || event.key === "h") && this.editingCharacter) {
+      event.preventDefault();
+      this.huntCalculatorModal.showModal(this.editingCharacter);
+    }
+
+    if (event.key === "Shift" && this.editingCharacter) {
+      if (this.lastShift === null) {
+        this.lastShift = Date.now();
+      } else {
+        const diff = Date.now() - this.lastShift;
+        if (diff < 500) {
+          this.lastShift = null;
+
+          this.searchHighlightModal.showModal(this.editingCharacter);
+        } else {
+          this.lastShift = Date.now();
+        }
+      }
+    }
+
+    return false;
   }
 
   private switchTab(name: string) {

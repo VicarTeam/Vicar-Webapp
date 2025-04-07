@@ -11,6 +11,11 @@ const routes: Array<RouteConfig> = [
     name: 'main',
     component: () => import('@/views/MainView.vue'),
     beforeEnter: (to, from, next) => {
+      const stk = to.query.stk as string;
+      if (stk) {
+        localStorage.setItem('vicar:session', stk);
+      }
+
       if (!localStorage.getItem('vicar:session')) {
         next('/login');
       } else {

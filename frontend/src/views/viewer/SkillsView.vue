@@ -3,7 +3,7 @@
     <div class="card category" v-for="cat in editingCharacter.categories">
       <div style="width: 100%; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.3)"><b>{{$t('data.category.' + cat.name)}}</b></div>
 
-      <div class="skill" v-for="skill in cat.skills">
+      <div class="skill" v-for="skill in cat.skills" :id="`hlsk-${skill.key}`">
         <LevelButton v-if="skill.value < 5" @click="levelSkillModal.showModal(skill)"/>
         <LevelButton @click="levelSpecializationModal.showModal(skill)" icon="fa-plus"/>
         <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && skill.value > 0" @click="deleteSkill(skill)"></i>
@@ -25,13 +25,14 @@
 import {Component, Ref, Vue} from "vue-property-decorator";
 import Dots from "@/components/progress/Dots.vue";
 import {State} from "vuex-class";
-import {ICharacter, ISkillData} from "@/types/models";
+import {ICharacter, ISkillData, SkillKeys} from "@/types/models";
 import LevelButton from "@/components/viewer/LevelButton.vue";
 import SkillModal from "@/components/viewer/modals/leveling/SkillModal.vue";
 import NewSpecializationModal from "@/components/viewer/modals/leveling/NewSpecializationModal.vue";
 import TipButton from "@/components/editor/TipButton.vue";
 import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vue";
 import CharacterStorage from "@/libs/io/character-storage";
+import EventBus from "@/libs/event-bus";
 
 @Component({
   components: {ConfirmDeleteModal, NewSpecializationModal, SkillModal, LevelButton, Dots, TipButton}

@@ -1,7 +1,7 @@
 <template>
   <div class="disciplines-view">
     <div class="disciplines">
-      <div class="discipline card" v-for="d in editingCharacter.disciplines">
+      <div class="discipline card" v-for="d in editingCharacter.disciplines" :id="`hldc-${d.discipline.id}`">
         <div class="top">
           <div class="d-flex align-items-center" style="gap: 0.5rem; flex-grow: 1">
             <LevelButton v-if="d.currentLevel - 1 < getMaxDisciplineLevel(d)" @click="levelDiscipline(d)"/>

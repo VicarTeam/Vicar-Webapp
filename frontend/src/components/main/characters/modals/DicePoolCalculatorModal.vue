@@ -26,6 +26,13 @@ export default class DicePoolCalculatorModal extends Vue {
     this.selectedAttribute = null;
     this.selectedSkill = null;
     this.bonus = "";
+
+    if (this.character.cache) {
+      this.selectedAttribute = this.character.cache['dicePoolCalculatorAttribute'] || null;
+      this.selectedSkill = this.character.cache['dicePoolCalculatorSkill'] || null;
+      this.bonus = this.character.cache['dicePoolCalculatorBonus'] || "";
+    }
+
     this.show = true;
   }
 
@@ -63,7 +70,7 @@ export default class DicePoolCalculatorModal extends Vue {
   }
 
   private get pool(): {total: number, simple: number, hunger: number}|null {
-    if (!this.selectedAttribute || !this.selectedSkill) {
+    if (this.selectedAttribute === null || this.selectedSkill === null) {
       return null;
     }
 
@@ -166,11 +173,34 @@ export default class DicePoolCalculatorModal extends Vue {
 
     return opts;
   }
+
+  private handleClose() {
+    this.show = false;
+    this.character.cache = this.character.cache || {};
+
+    if (this.selectedAttribute) {
+      this.character.cache['dicePoolCalculatorAttribute'] = this.selectedAttribute;
+    } else {
+      delete this.character.cache['dicePoolCalculatorAttribute'];
+    }
+
+    if (this.selectedSkill) {
+      this.character.cache['dicePoolCalculatorSkill'] = this.selectedSkill;
+    } else {
+      delete this.character.cache['dicePoolCalculatorSkill'];
+    }
+
+    if (this.bonus) {
+      this.character.cache['dicePoolCalculatorBonus'] = this.bonus;
+    } else {
+      delete this.character.cache['dicePoolCalculatorBonus'];
+    }
+  }
 }
 </script>
 
 <template>
-  <Modal :shown="show" @close="show = false" v-if="character">
+  <Modal :shown="show" @close="handleClose" v-if="character">
     <div class="w-400 d-flex justify-content-center align-items-center flex-column" style="gap: 0.5rem">
       <b>{{$t('character.modal.pool-calcuator', {name: this.character.name})}}:</b>
       <div style="display: flex; flex-direction: row; gap: 1rem; justify-content: center; align-items: center">

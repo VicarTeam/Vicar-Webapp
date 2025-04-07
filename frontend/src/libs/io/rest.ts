@@ -1,5 +1,3 @@
-import { SettingsData } from "@/libs/io/settings";
-
 export async function get<T>(url: string, headers?: { [key: string]: string }): Promise<[number, T]> {
   const response = await fetch(buildUrl(url), {
     method: "GET",
