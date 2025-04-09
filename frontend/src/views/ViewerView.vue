@@ -61,8 +61,8 @@
             <b>{{dicePoolResult.simple}}</b>
             {{$t('character.modal.pool-calcuator.result.text.hunger.3')}}
           </span>
-          <span v-else-if="dicePoolResult.total != -1"><b>{{dicePoolResult.total}} </b>{{$t('character.modal.pool-calcuator.result.text.no-hunger')}}</span>
-          <span>{{$t('character.dice-pool.impossible')}}</span>
+          <span v-else-if="dicePoolResult.total === -1">{{$t('character.dice-pool.impossible')}}</span>
+          <span v-else><b>{{dicePoolResult.total}} </b>{{$t('character.modal.pool-calcuator.result.text.no-hunger')}}</span>
         </div>
       </div>
     </div>

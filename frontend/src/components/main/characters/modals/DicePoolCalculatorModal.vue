@@ -245,8 +245,8 @@ export default class DicePoolCalculatorModal extends Vue {
           <b>{{pool.simple}}</b>
           {{$t('character.modal.pool-calcuator.result.text.hunger.3')}}
         </span>
-        <span v-else-if="pool.total != -1"><b>{{pool.total}} </b>{{$t('character.modal.pool-calcuator.result.text.no-hunger')}}</span>
-        <span>{{$t('character.dice-pool.impossible')}}</span>
+        <span v-else-if="pool.total === -1">{{$t('character.dice-pool.impossible')}}</span>
+        <span v-else><b>{{pool.total}} </b>{{$t('character.modal.pool-calcuator.result.text.no-hunger')}}</span>
 
         <template v-if="character.connectedFoundryId">
           <div style="width: 100%; height: 1px; background-color: var(--primary-color); margin-top: 1rem"></div>
