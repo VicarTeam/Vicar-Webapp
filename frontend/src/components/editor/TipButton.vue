@@ -1,5 +1,5 @@
 <template>
-  <i class="fa-solid fa-circle-question" @click="click"></i>
+  <i class="fa-solid" :class="{danger: danger, 'fa-circle-question': !danger, 'fa-triangle-exclamation': danger}" @click="click"></i>
 </template>
 
 <script lang="ts">
@@ -19,6 +19,9 @@ export default class TipButton extends Vue {
   @Prop({default: false})
   private override!: boolean;
 
+  @Prop({default: false})
+  private danger!: boolean;
+
   private click() {
     if (this.override) {
       this.$emit("click");
@@ -37,6 +40,12 @@ export default class TipButton extends Vue {
   cursor: pointer;
   &:hover {
     color: var(--primary-color);
+  }
+  &.danger {
+    color: var(--primary-color-light);
+    &:hover {
+      color: var(--primary-color);
+    }
   }
 }
 </style>

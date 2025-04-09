@@ -56,7 +56,9 @@
             <Squares :max="10" :amount="editingCharacter.bloodPotency" :margin-at="6"/>
           </div>
           <div class="stat" id="hlst-humanity">
-            <b>{{ $t('character.humanity') }}:</b>
+            <b>
+              {{ $t('character.humanity') }}: <TipButton v-if="editingCharacter.humanity <= 5" :content="$t('character.humanity.malus', {dices: humanityMalus})" danger/>
+            </b>
             <Humanity/>
           </div>
           <div class="stat" id="hlst-hunger">
@@ -158,7 +160,7 @@
 import {Component, Inject, Ref, Vue} from "vue-property-decorator";
 import Avatar from "@/components/Avatar.vue";
 import {State} from "vuex-class";
-import {ICharacter, LevelType} from "@/types/models";
+import {getHumanInteractionMalus, ICharacter, LevelType} from "@/types/models";
 import Bullet from "@/components/Bullet.vue";
 import IconButton from "@/components/IconButton.vue";
 import Squares from "@/components/progress/Squares.vue";
@@ -179,6 +181,7 @@ import NewSpecializationModal from "@/components/viewer/modals/leveling/NewSpeci
 import EventBus from "@/libs/event-bus";
 
 @Component({
+  methods: {getHumanInteractionMalus},
   components: {
     NewSpecializationModal,
     ConfirmDeleteModal,
@@ -238,6 +241,11 @@ export default class ProfileView extends Vue {
       this.editingCharacter.bloodPotency--;
       CharacterStorage.saveCharacter(this.editingCharacter);
     });
+  }
+
+  private get humanityMalus() {
+    const dices = getHumanInteractionMalus(this.editingCharacter);
+    return dices === Number.MIN_SAFE_INTEGER ? '∞ (Wasail)' : dices;
   }
 
   @Inject("update-viewer")

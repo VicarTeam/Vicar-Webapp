@@ -477,5 +477,6 @@
   "character.dice-pool": "Dice Pool",
   "character.dice-pool.unset": "Not selected",
   "character.dice-pool.human": "Human interaction?",
-  "character.dice-pool.impossible": "Impossible (Wasail?!)"
+  "character.dice-pool.impossible": "Impossible (Wasail?!)",
+  "character.humanity.malus": "Malus on human interactions due to low humanity: {dices} Dice deduction"
 }

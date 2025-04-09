@@ -480,5 +480,6 @@
   "character.viewers": "Freigegeben für:",
   "character.viewers.add": "Freigeben",
   "character.viewers.remove": "Freigabe entfernen",
-  "character.viewers.notFound": "Benutzer nicht gefunden"
+  "character.viewers.notFound": "Benutzer nicht gefunden",
+  "character.humanity.malus": "Malus auf menschliche Interaktionen durch geringere Menschlichkeit: {dices} Würfel Abzug"
 }
