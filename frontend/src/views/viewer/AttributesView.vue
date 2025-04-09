@@ -6,7 +6,7 @@
       <div class="attribute" v-for="attr in cat.attributes" :id="`hlat-${attr.key}`">
         <LevelButton v-if="attr.value < 5" @click="levelAttributeModal.showModal(attr)"/>
         <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && attr.value > 0" @click="deleteAttribute(attr)"></i>
-        <small class="name"><TipButton :content="$t('data.attribute.' + attr.key + '.desc')"/> {{$t('data.attribute.' + attr.key)}}</small>
+        <small class="name" @click="setDicePool('attr', $t('data.attribute.' + attr.key).toString(), attr.value, isHumanInteractionAttribute(attr.key))"><TipButton :content="$t('data.attribute.' + attr.key + '.desc')"/> {{$t('data.attribute.' + attr.key)}}</small>
         <Dots :amount="attr.value" :max="5"/>
       </div>
     </div>
@@ -17,16 +17,15 @@
 </template>
 
 <script lang="ts">
-import {Component, Ref, Vue} from "vue-property-decorator";
+import {Component, Inject, Ref, Vue} from "vue-property-decorator";
 import {State} from "vuex-class";
-import {AttributeKeys, IAttributeData, ICharacter, SkillKeys} from "@/types/models";
+import {IAttributeData, ICharacter, isHumanInteractionAttribute} from "@/types/models";
 import Dots from "@/components/progress/Dots.vue";
 import LevelButton from "@/components/viewer/LevelButton.vue";
 import AttributeModal from "@/components/viewer/modals/leveling/AttributeModal.vue";
 import TipButton from "@/components/editor/TipButton.vue";
 import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vue";
 import CharacterStorage from "@/libs/io/character-storage";
-import EventBus from "@/libs/event-bus";
 
 @Component({
   components: {ConfirmDeleteModal, AttributeModal, LevelButton, Dots, TipButton}
@@ -41,6 +40,11 @@ export default class AttributesView extends Vue {
 
   @Ref("confirmDeleteModal")
   private confirmDeleteModal!: ConfirmDeleteModal;
+
+  @Inject("set-dice-pool")
+  private setDicePool!: (type: 'attr'|'skill'|'disc', name: string, value: number, isHuman?: boolean) => void;
+
+  isHumanInteractionAttribute = isHumanInteractionAttribute;
 
   private deleteAttribute(attr: IAttributeData) {
     this.confirmDeleteModal.showModal(this.$t('data.attribute.' + attr.key) + ' ' + attr.value, () => {

@@ -38,6 +38,10 @@ export enum AttributeKeys {
     Resolve = "res"
 }
 
+export function isHumanInteractionAttribute(attr: AttributeKeys): boolean {
+    return attr === AttributeKeys.Charisma || attr === AttributeKeys.Manipulation;
+}
+
 export enum SkillKeys {
     Athletics= "ath",
     Brawl = "bra",
@@ -66,6 +70,16 @@ export enum SkillKeys {
     Politics = "pol",
     Science = "sci",
     Technology = "tec"
+}
+
+export function isHumanInteractionSkill(skill: SkillKeys): boolean {
+    return skill === SkillKeys.Persuasion
+      || skill === SkillKeys.Intimidation
+      || skill === SkillKeys.Subterfuge
+      || skill === SkillKeys.Leadership
+      || skill === SkillKeys.Performance
+      || skill === SkillKeys.Etiquette
+      || skill === SkillKeys.Insight;
 }
 
 export enum Sex {
@@ -382,3 +396,25 @@ export const DefaultCharacter: () => ICharacter = () => ({
         bank: 0
     }
 });
+
+export function getHumanInteractionMalus(char: ICharacter): number {
+    if (char.humanity === 0) {
+        return Number.MIN_SAFE_INTEGER;
+    }
+    if (char.humanity === 1) {
+        return 8;
+    }
+    if (char.humanity === 2) {
+        return 6;
+    }
+    if (char.humanity === 3) {
+        return 4;
+    }
+    if (char.humanity === 4) {
+        return 2;
+    }
+    if (char.humanity === 5) {
+        return 1;
+    }
+    return 0;
+}

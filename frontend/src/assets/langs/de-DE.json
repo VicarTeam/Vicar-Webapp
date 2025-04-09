@@ -346,7 +346,6 @@
   "character.modal.pool-calcuator.result.text.hunger.1": "Würfel davon",
   "character.modal.pool-calcuator.result.text.hunger.2": "Hungerwürfel und",
   "character.modal.pool-calcuator.result.text.hunger.3": "normale Würfel",
-
   "character.modal.hunt-calculator": "Jagd für \"{name}\" berechnen",
   "character.modal.hunt-calculator.current": "Aktueller Hunger",
   "character.modal.hunt-calculator.reduce_to": "Auf \"{val}\" reduzieren",
@@ -383,7 +382,10 @@
   "character.modal.search-highlight.jump": "Hinspringen",
   "character.modal.search-highlight.reset": "Zurücksetzen",
   "character.modal.search-highlight.search": "Suchen...",
-
+  "character.dice-pool": "Würfelpool",
+  "character.dice-pool.unset": "nicht ausgewählt",
+  "character.dice-pool.human": "Menschliche Interaktion?",
+  "character.dice-pool.impossible": "Unmöglich (Wasail?!)",
   "main.settings.vicarnet": "VicarNet",
   "main.settings.vicarnet.url": "VicarNet URL",
   "main.settings.vicarnet.login": "Bei VicarNet einloggen",

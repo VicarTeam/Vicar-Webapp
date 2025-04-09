@@ -8,8 +8,8 @@
         <LevelButton @click="levelSpecializationModal.showModal(skill)" icon="fa-plus"/>
         <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && skill.value > 0" @click="deleteSkill(skill)"></i>
         <i class="iconbtnprim fa-solid fa-trash" v-if="editingCharacter.fullCustomization && skill.specialization.length > 0" @click="deleteSkillSpecs(skill)"></i>
-        <small class="name">
-          <TipButton :content="$t('data.skill.' + skill.key + '.desc')"/> {{$t('data.skill.' + skill.key)}} <span style="color: #a6a6a6" v-if="hasSpecialization(skill)">(<i>{{skill.specialization.join(', ')}}</i>)</span>
+        <small class="name" @click.self="setDicePool('skill', $t('data.skill.' + skill.key).toString(), skill.value, isHumanInteractionSkill(skill.key))">
+          <TipButton :content="$t('data.skill.' + skill.key + '.desc')"/> {{$t('data.skill.' + skill.key)}} <span style="color: #a6a6a6" v-if="hasSpecialization(skill)">(<i><span v-for="s in skill.specialization" style="margin-left: 0.25rem; margin-right: 0.25rem" @click="setDicePool('skill', $t('data.skill.' + skill.key).toString() + ' (' + s + ')', skill.value + 1, isHumanInteractionSkill(skill.key))">{{s}}</span></i>)</span>
         </small>
         <Dots :amount="skill.value" :max="5"/>
       </div>
@@ -22,10 +22,10 @@
 </template>
 
 <script lang="ts">
-import {Component, Ref, Vue} from "vue-property-decorator";
+import {Component, Inject, Ref, Vue} from "vue-property-decorator";
 import Dots from "@/components/progress/Dots.vue";
 import {State} from "vuex-class";
-import {ICharacter, ISkillData, SkillKeys} from "@/types/models";
+import {ICharacter, isHumanInteractionSkill, ISkillData, SkillKeys} from "@/types/models";
 import LevelButton from "@/components/viewer/LevelButton.vue";
 import SkillModal from "@/components/viewer/modals/leveling/SkillModal.vue";
 import NewSpecializationModal from "@/components/viewer/modals/leveling/NewSpecializationModal.vue";
@@ -50,6 +50,11 @@ export default class SkillsView extends Vue {
 
   @Ref("confirmDeleteModal")
   private confirmDeleteModal!: ConfirmDeleteModal;
+
+  @Inject("set-dice-pool")
+  private setDicePool!: (type: 'attr'|'skill'|'disc', name: string, value: number, isHuman?: boolean) => void;
+
+  isHumanInteractionSkill = isHumanInteractionSkill;
 
   private hasSpecialization(skill: ISkillData): boolean {
     return !!skill.specialization && skill.specialization.length > 0;

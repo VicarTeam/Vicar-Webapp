@@ -1,6 +1,6 @@
 <script lang="ts">
-import {Vue, Component, Ref} from 'vue-property-decorator';
-import {AttributeKeys, ICharacter} from "@/types/models";
+import {Vue, Component} from 'vue-property-decorator';
+import {AttributeKeys, getHumanInteractionMalus, ICharacter} from "@/types/models";
 import Modal from "@/components/modal/Modal.vue";
 import Dropdown, {IOption} from "@/components/Dropdown.vue";
 import DataManager from "@/libs/data/data-manager";
@@ -19,12 +19,14 @@ export default class DicePoolCalculatorModal extends Vue {
   private selectedAttribute: AttributeKeys|null = null;
   private selectedSkill: number|null = null;
   private difficulty: string = "";
+  private human: boolean = false;
 
   public showModal(character: ICharacter, isDiscipline: boolean = false) {
     this.character = character;
     this.isDiscipline = isDiscipline;
     this.selectedAttribute = null;
     this.selectedSkill = null;
+    this.human = false;
     this.bonus = "";
 
     if (this.character.cache) {
@@ -82,7 +84,19 @@ export default class DicePoolCalculatorModal extends Vue {
       bonus += parseInt(this.bonus);
     }
 
-    const total = attr + skill + bonus;
+    let total = attr + skill + bonus;
+    if (this.human) {
+      const malus = getHumanInteractionMalus(this.character);
+      if (malus === Number.MIN_SAFE_INTEGER) {
+        return {total: -1, simple: 0, hunger: 0};
+      }
+
+      total -= malus;
+      if (total <= 0) {
+        total = 1;
+      }
+    }
+
     const hunger = Math.min(this.character.hunger, total);
     const simple = total - hunger;
 
@@ -208,12 +222,17 @@ export default class DicePoolCalculatorModal extends Vue {
         <Dropdown :options="skillOptions" v-model="selectedSkill" :placeholder="$t('character.modal.pool-calcuator.skill')"/>
       </div>
       <div style="width: 100%; height: 1px; background-color: var(--primary-color); margin-top: 1rem"></div>
-      <div style="display: flex; justify-content: center; align-items: center; margin-top: 1rem; gap: 1rem;">
-        <input class="form-control" type="text" v-model="bonus" :placeholder="$t('character.modal.pool-calcuator.bonus')" style="width: 50%"/>
+      <div style="display: flex; margin-top: 1rem; gap: 1rem; flex-direction: column">
+        <input class="form-control" type="text" v-model="bonus" :placeholder="$t('character.modal.pool-calcuator.bonus')" style="width: 100%"/>
 
-        <div class="custom-checkbox" style="width: 50%">
+        <div class="custom-checkbox" style="width: 100%">
           <input type="checkbox" id="is-disc" v-model="isDiscipline">
           <label for="is-disc">{{$t('character.modal.pool-calcuator.discipline')}}</label>
+        </div>
+
+        <div class="custom-checkbox d-flex align-items-center" style="pointer-events: all">
+          <input type="checkbox" id="dicehuman" v-model="human">
+          <label for="dicehuman">{{$t('character.dice-pool.human')}}</label>
         </div>
       </div>
       <div style="width: 100%; height: 1px; background-color: var(--primary-color); margin-top: 1rem"></div>
@@ -226,7 +245,8 @@ export default class DicePoolCalculatorModal extends Vue {
           <b>{{pool.simple}}</b>
           {{$t('character.modal.pool-calcuator.result.text.hunger.3')}}
         </span>
-        <span v-else><b>{{pool.total}} </b>{{$t('character.modal.pool-calcuator.result.text.no-hunger')}}</span>
+        <span v-else-if="pool.total != -1"><b>{{pool.total}} </b>{{$t('character.modal.pool-calcuator.result.text.no-hunger')}}</span>
+        <span>{{$t('character.dice-pool.impossible')}}</span>
 
         <template v-if="character.connectedFoundryId">
           <div style="width: 100%; height: 1px; background-color: var(--primary-color); margin-top: 1rem"></div>

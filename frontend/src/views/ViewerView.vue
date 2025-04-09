@@ -35,13 +35,44 @@
     <DiceRollModal ref="diceRollModal"/>
     <HuntCalculatorModal ref="huntCalculatorModal"/>
     <SearchHighlightModal ref="searchHighlightModal"/>
+
+    <div v-if="dicePoolLeft || dicePoolRight" class="simple-dice-calc card">
+      <h4 class="card-title">{{$t('character.dice-pool')}}:</h4>
+      <i class="fa-solid fa-xmark" @click="dicePoolLeft = null; dicePoolRight = null; lastDicePoolSide = 'right'" style="position: absolute; top: 0.75rem; right: 0.75rem; cursor: pointer; font-size: 1.5rem"></i>
+      <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; width: 30rem">
+        <b style="flex: 1; text-align: center">{{getDicePoolName(dicePoolLeft)}}</b>
+        +
+        <b style="flex: 1; text-align: center">{{getDicePoolName(dicePoolRight)}}</b>
+      </div>
+      <div style="margin-top: 0.5rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 20%); width: 100%; display: flex; justify-content: center">
+        <div class="custom-checkbox d-flex align-items-center" style="pointer-events: all">
+          <input type="checkbox" id="dicehuman" v-model="dicePoolHuman">
+          <label for="dicehuman">{{$t('character.dice-pool.human')}}</label>
+        </div>
+      </div>
+
+      <div v-if="dicePoolLeft && dicePoolRight" style="margin-top: 0.5rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 20%); width: 100%">
+        <div style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center" v-if="dicePoolResult">
+          <span v-if="dicePoolResult.hunger > 0">
+            <b><u>{{dicePoolResult.total}}</u> </b>
+            {{$t('character.modal.pool-calcuator.result.text.hunger.1')}}
+            <b style="color: var(--primary-color)">{{dicePoolResult.hunger}}</b>
+            {{$t('character.modal.pool-calcuator.result.text.hunger.2')}}
+            <b>{{dicePoolResult.simple}}</b>
+            {{$t('character.modal.pool-calcuator.result.text.hunger.3')}}
+          </span>
+          <span v-else-if="dicePoolResult.total != -1"><b>{{dicePoolResult.total}} </b>{{$t('character.modal.pool-calcuator.result.text.no-hunger')}}</span>
+          <span>{{$t('character.dice-pool.impossible')}}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import {Component, Prop, Provide, Ref, Vue} from "vue-property-decorator";
 import {Mutation, State} from "vuex-class";
-import {ICharacter} from "@/types/models";
+import {getHumanInteractionMalus, ICharacter} from "@/types/models";
 import Tabs from "@/components/tabs/Tabs.vue";
 import IconButton from "@/components/IconButton.vue";
 import Avatar from "@/components/Avatar.vue";
@@ -55,6 +86,7 @@ import {VicarSync} from "@/libs/io/vicar-sync";
 import DiceRollModal from "@/components/viewer/modals/DiceRollModal.vue";
 import HuntCalculatorModal from "@/components/main/characters/modals/HuntCalculatorModal.vue";
 import SearchHighlightModal from "@/components/main/characters/modals/SearchHighlightModal.vue";
+import DataManager from "@/libs/data/data-manager";
 
 const TabHotkeys = [
   {
@@ -129,11 +161,18 @@ export default class ViewerView extends Vue {
   private selectedTab: string = "viewer-profile";
   private saveText: string = "";
   private lastShift: number|null = null;
+  private altDown: boolean = false;
+
+  private dicePoolLeft: {name: string, value: number}|null = null;
+  private dicePoolRight: {name: string, value: number}|null = null;
+  private dicePoolHuman: boolean = false;
+  private lastDicePoolSide: 'left'|'right' = 'right';
 
   mounted() {
     this.$router.push({name: 'viewer-profile'}).catch(() => {});
     EventBus.$on("character-updated", this.onCharUpdated);
     window.addEventListener('keydown', this.onKeyDown);
+    window.addEventListener('keyup', this.onKeyUp);
     
     if (this.editingCharacter) {
       document.title = this.editingCharacter.name + " - Vicar";
@@ -145,6 +184,7 @@ export default class ViewerView extends Vue {
   destroyed() {
     EventBus.$off("character-updated", this.onCharUpdated);
     window.removeEventListener('keydown', this.onKeyDown);
+    window.removeEventListener('keyup', this.onKeyUp);
     document.title = "Vicar";
   }
 
@@ -155,6 +195,10 @@ export default class ViewerView extends Vue {
   }
 
   private onKeyDown(event: KeyboardEvent) {
+    if (event.key === "Alt") {
+      this.altDown = true;
+    }
+
     if (event.altKey) {
       const tab = TabHotkeys.find(tab => tab.keys.includes("ALT+" + event.key.toUpperCase()));
       if (tab) {
@@ -162,6 +206,7 @@ export default class ViewerView extends Vue {
         if (character && (!tab.condition || tab.condition(character))) {
           const el = this.$refs[tab.tab];
           if (el) {
+            event.preventDefault();
             (el as any).$el.click();
           }
         }
@@ -171,6 +216,7 @@ export default class ViewerView extends Vue {
     if (event.key === "Escape") {
       const el = this.$refs["tabProfile"];
       if (el) {
+        event.preventDefault();
         (el as any).$el.click();
       }
     }
@@ -201,6 +247,12 @@ export default class ViewerView extends Vue {
     }
 
     return false;
+  }
+
+  private onKeyUp(event: KeyboardEvent) {
+    if (event.key === "Alt") {
+      this.altDown = false;
+    }
   }
 
   private switchTab(name: string) {
@@ -248,9 +300,62 @@ export default class ViewerView extends Vue {
     this.$router.push({name: 'main'});
   }
 
+  private getDicePoolName(dicePool: {name: string, value: number}|null): string {
+    if (!dicePool) {
+      return this.$t('character.dice-pool.unset').toString();
+    }
+    return dicePool.name + " (" + dicePool.value + ")";
+  }
+
+  private get dicePoolResult(): {total: number, simple: number, hunger: number}|null {
+    if (this.dicePoolLeft === null || this.dicePoolRight === null || !this.editingCharacter) {
+      return null;
+    }
+
+    let total = this.dicePoolLeft.value + this.dicePoolRight.value;
+    if (this.dicePoolHuman) {
+      const malus = getHumanInteractionMalus(this.editingCharacter);
+      if (malus === Number.MIN_SAFE_INTEGER) {
+        return {total: -1, simple: 0, hunger: 0};
+      }
+
+      total -= malus;
+      if (total <= 0) {
+        total = 1;
+      }
+    }
+
+    const hunger = Math.min(this.editingCharacter.hunger, total);
+    const simple = total - hunger;
+
+    return {total, simple, hunger};
+  }
+
   @Provide("update-viewer")
   private updaterViewer() {
     this.$forceUpdate();
+  }
+
+  @Provide("set-dice-pool")
+  private setDicePool(type: 'attr'|'skill'|'disc', name: string, value: number, isHuman: boolean = false) {
+    if (!this.altDown) {
+      return;
+    }
+
+    if (type === 'disc' || type === 'skill') {
+      this.dicePoolRight = {name, value};
+      this.lastDicePoolSide = 'right';
+    } else {
+      if (this.lastDicePoolSide === 'right') {
+        this.dicePoolLeft = {name, value};
+        this.lastDicePoolSide = 'left';
+      } else {
+        this.dicePoolRight = {name, value};
+        this.lastDicePoolSide = 'right';
+      }
+    }
+
+    this.dicePoolHuman = isHuman;
   }
 }
 </script>
@@ -271,6 +376,34 @@ export default class ViewerView extends Vue {
   }
   .center {
     flex-grow: 1;
+  }
+}
+.simple-dice-calc {
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  opacity: 0.8;
+  pointer-events: none;
+  font-size: 1.1rem;
+  h4 {
+    margin: 0;
+    font-size: 1.4rem;
+    text-align: center;
+  }
+  .fa-xmark {
+    pointer-events: all;
+    &:hover {
+      color: var(--primary-color) !important;
+    }
   }
 }
 </style>

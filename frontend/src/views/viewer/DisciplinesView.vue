@@ -5,7 +5,7 @@
         <div class="top">
           <div class="d-flex align-items-center" style="gap: 0.5rem; flex-grow: 1">
             <LevelButton v-if="d.currentLevel - 1 < getMaxDisciplineLevel(d)" @click="levelDiscipline(d)"/>
-            <b>{{d.discipline.name}}</b>
+            <b @click="setDicePool('disc', d.discipline.name, Math.min(d.currentLevel - 1, 5))">{{d.discipline.name}}</b>
             <TipButton :content="d.discipline.summary"/>
           </div>
           <Dots :amount="Math.min(d.currentLevel - 1, 5)" :max="5"/>
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Ref, Vue} from "vue-property-decorator";
+import {Component, Inject, Ref, Vue} from "vue-property-decorator";
 import {State} from "vuex-class";
 import {ICharacter, IDisciplineSelection, ILeveledDisciplineAbility} from "@/types/models";
 import TipButton from "@/components/editor/TipButton.vue";
@@ -72,6 +72,9 @@ export default class DisciplinesView extends Vue {
 
   @Ref("confirmDeleteModal")
   private confirmDeleteModal!: ConfirmDeleteModal;
+
+  @Inject("set-dice-pool")
+  private setDicePool!: (type: 'attr'|'skill'|'disc', name: string, value: number, isHuman?: boolean) => void;
 
   private deleteDisciplineAbility(selection: IDisciplineSelection, ability: IDisciplineAbility) {
     this.confirmDeleteModal.showModal(selection.discipline.name + " " + (selection.currentLevel - 1) + " - " + ability.name, () => {
