@@ -57,7 +57,7 @@
           </div>
           <div class="stat" id="hlst-humanity">
             <b>
-              {{ $t('character.humanity') }}: <TipButton v-if="editingCharacter.humanity <= 5" :content="$t('character.humanity.malus', {dices: humanityMalus})" danger/>
+              {{ $t('character.humanity') }}: <TipButton v-if="editingCharacter.humanity <= 5" :content="$t('character.humanity.malus', {dices: humanityMalus})" :danger="true"/>
             </b>
             <Humanity/>
           </div>
