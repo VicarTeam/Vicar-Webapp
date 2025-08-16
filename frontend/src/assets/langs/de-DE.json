@@ -323,6 +323,8 @@
   "character.inventory.add.custom.name": "Name",
   "character.inventory.add.custom.description": "Beschreibung",
   "character.inventory.add.select": "Wähle einen Gegenstand",
+  "character.inventory.edit": "In \"{name}\" bearbeiten:",
+  "character.inventory.edit.save": "Gegenstand speichern",
   "character.inventory.custom": "Benutzerdefiniert",
   "character.inventory.amount": "Anzahl (standardmäßig 1)",
   "character.inventory.category": "Kategorie",

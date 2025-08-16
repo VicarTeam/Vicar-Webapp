@@ -32,6 +32,8 @@ export default class InventoryView extends Vue {
   private addingItemPredefinedItem: IItem | null = null;
   private addingItemPredefinedAmount: string = "";
 
+  private editingCustomItem: IItemStack | null = null;
+
   private showTransferModal: boolean = false;
   private transferDirection: "bank" | "cash" = "bank";
   private transferAmount: number = 1;
@@ -65,6 +67,7 @@ export default class InventoryView extends Vue {
     this.addingItemPredefinedItem = null;
     this.addingItemPredefinedAmount = "";
     this.addingItemToInventory = inventory;
+    this.editingCustomItem = null;
   }
 
   private resolveMoneyEval(key: 'bank' | 'cash', allowNegative: boolean = false) {
@@ -119,21 +122,42 @@ export default class InventoryView extends Vue {
     }
 
     const amount = this.convertAmount(this.addingItemCustomAmount);
-    this.editingCharacter.inventory[this.addingItemToInventory].push({
-      item: {
-        isCustom: true,
-        name: this.addingItemCustomName,
-        description: this.addingItemCustomDescription,
-        category: this.$t('character.inventory.custom').toString()
-      },
-      amount
-    });
+
+    if (!this.editingCustomItem) {
+      this.editingCharacter.inventory[this.addingItemToInventory].push({
+        item: {
+          isCustom: true,
+          name: this.addingItemCustomName,
+          description: this.addingItemCustomDescription,
+          category: this.$t('character.inventory.custom').toString()
+        },
+        amount
+      });
+    } else {
+      this.editingCustomItem.item.name = this.addingItemCustomName;
+      this.editingCustomItem.item.description = this.addingItemCustomDescription;
+      this.editingCustomItem.amount = amount;
+    }
+
     this.sortInventory(this.addingItemToInventory);
     CharacterStorage.saveCharacter(this.editingCharacter, true);
 
     this.addingItemCustomName = "";
     this.addingItemCustomDescription = "";
     this.addingItemCustomAmount = "";
+
+    if (this.editingCustomItem) {
+      this.editingCustomItem = null;
+      this.addingItemToInventory = null;
+    }
+  }
+
+  private editCustomItem(item: IItemStack) {
+    this.editingCustomItem = item;
+    this.addingItemCustomName = item.item.name;
+    this.addingItemCustomDescription = item.item.description;
+    this.addingItemCustomAmount = item.amount.toString();
+    this.addingItemToInventory = this.editingCharacter.inventory.carriedItems.includes(item) ? "carriedItems" : "ownedItems";
   }
 
   private transferTo(from: "bank" | "cash") {
@@ -275,6 +299,8 @@ export default class InventoryView extends Vue {
 
           <div class="item-actions">
             <input class="form-control item-amount-edit" type="number" :placeholder="$t('character.inventory.amount')" :step="1" :min="0" v-model.number="i.amount" @input="handleItemAmountChange(i, j, 'carriedItems')"/>
+            <IconButton v-if="i.item.isCustom" icon="fa-edit" style="width: 2rem; height: 2rem; font-size: 1rem" @click="editCustomItem(i)"/>
+            <IconButton v-else icon="fa-copy" style="width: 2rem; height: 2rem; font-size: 1rem; opacity: 0"/>
             <IconButton icon="fa-copy" style="width: 2rem; height: 2rem; font-size: 1rem" @click="cloneItem(i, 'carriedItems')"/>
             <IconButton icon="fa-arrow-right" style="width: 2rem; height: 2rem; font-size: 1rem" @click="transferItem(i, j, 'carriedItems')"/>
           </div>
@@ -291,6 +317,8 @@ export default class InventoryView extends Vue {
 
           <div class="item-actions">
             <input class="form-control item-amount-edit" type="number" :placeholder="$t('character.inventory.amount')" :step="1" :min="0" v-model.number="i.amount" @input="handleItemAmountChange(i, j, 'ownedItems')"/>
+            <IconButton v-if="i.item.isCustom" icon="fa-edit" style="width: 2rem; height: 2rem; font-size: 1rem" @click="editCustomItem(i)"/>
+            <IconButton v-else icon="fa-copy" style="width: 2rem; height: 2rem; font-size: 1rem; opacity: 0"/>
             <IconButton icon="fa-copy" style="width: 2rem; height: 2rem; font-size: 1rem" @click="cloneItem(i, 'ownedItems')"/>
             <IconButton icon="fa-arrow-left" style="width: 2rem; height: 2rem; font-size: 1rem" @click="transferItem(i, j, 'ownedItems')"/>
           </div>
@@ -301,11 +329,11 @@ export default class InventoryView extends Vue {
     <div class="add-item-wrapper" v-show="addingItemToInventory">
       <div class="add-item-box">
         <b style="color: var(--primary-color); font-size: 1.5rem; width: 100%; text-align: center; position: relative">
-          {{$t('character.inventory.add', {name: addingItemToInventory === 'ownedItems' ? $t('character.inventory.owned') : $t('character.inventory.carried')})}}
+          {{$t(`character.inventory.${(!editingCustomItem ? 'add' : 'edit')}`, {name: addingItemToInventory === 'ownedItems' ? $t('character.inventory.owned') : $t('character.inventory.carried')})}}
           <IconButton style="position: absolute; right: 0; top: 0; width: 2rem; height: 2rem; font-size: 1rem" icon="fa-x" @click="addingItemToInventory = null"/>
         </b>
         <div class="add-forms">
-          <div class="add-form">
+          <div v-if="!editingCustomItem" class="add-form">
             <div style="display: flex; flex-direction: column; justify-content: space-around; flex-grow: 1">
               <select class="form-control" v-model="addingItemPredefinedCategory">
                 <option v-for="(g, idx) in DataManager.selectedLanguage.items" :key="idx" :value="g">
@@ -323,7 +351,7 @@ export default class InventoryView extends Vue {
 
             <button class="btn btn-primary" :disabled="!canAddPredefined" @click="addPredefinedItem">{{$t('character.inventory.add.predefined')}}</button>
           </div>
-          <div class="addborder"></div>
+          <div v-if="!editingCustomItem" class="addborder"></div>
           <div class="add-form">
             <div style="display: flex; flex-direction: column; justify-content: space-around; flex-grow: 1">
               <input class="form-control" type="text" :placeholder="$t('character.inventory.add.custom.name')" v-model="addingItemCustomName"/>
@@ -331,7 +359,7 @@ export default class InventoryView extends Vue {
               <input class="form-control" type="number" :placeholder="$t('character.inventory.amount')" :min="1" :step="1" v-model="addingItemCustomAmount"/>
             </div>
 
-            <button class="btn btn-primary" :disabled="!canAddCustom" @click="addCustomItem">{{$t('character.inventory.add.custom')}}</button>
+            <button class="btn btn-primary" :disabled="!canAddCustom" @click="addCustomItem">{{$t(`character.inventory.${!editingCustomItem ? 'add.custom' : 'edit.save'}`)}}</button>
           </div>
         </div>
       </div>

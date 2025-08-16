@@ -320,6 +320,8 @@
   "character.inventory.add.custom.name": "Name",
   "character.inventory.add.custom.description": "Description",
   "character.inventory.add.select": "Select an item",
+  "character.inventory.edit": "Edit in \"{name}\":",
+  "character.inventory.edit.save": "Save item",
   "character.inventory.custom": "Custom",
   "character.inventory.amount": "Quantity (default 1)",
   "character.inventory.category": "Category",

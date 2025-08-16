@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import store from "@/store";
 import CharacterStorage from "@/libs/io/character-storage";
 
 Vue.use(VueRouter)
