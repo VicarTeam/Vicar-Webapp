@@ -169,7 +169,9 @@ export default class ViewerView extends Vue {
   private lastDicePoolSide: 'left'|'right' = 'right';
 
   mounted() {
-    this.$router.push({name: 'viewer-profile'}).catch(() => {});
+    if (this.$router.currentRoute.name === 'viewer') {
+      this.$router.push({name: 'viewer-profile'}).catch(() => {});
+    }
     EventBus.$on("character-updated", this.onCharUpdated);
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
