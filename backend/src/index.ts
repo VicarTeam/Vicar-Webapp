@@ -2,7 +2,6 @@ import express = require('express');
 import * as helmet from 'helmet';
 import cors = require('cors');
 import * as mongoose from "mongoose";
-import {getSession} from "./sessions";
 import {initAuthRoutes} from "./api/auth";
 import {initCharacterRoutes} from "./api/character";
 import {initDataRoutes} from "./api/data";
@@ -10,6 +9,7 @@ import {initUserRoutes} from "./api/user";
 import {Server} from "socket.io";
 import { createServer } from "node:http";
 import {removeSocket, setSocket} from "./sockets";
+import {isAuthenticated} from "./services/auth";
 
 mongoose.connect(Bun.env.MONGO_URI as string).then(() => {
   console.log('Connected to MongoDB')
@@ -24,16 +24,16 @@ const io = new Server(httpServer, {
 });
 
 io.on('connection', socket => {
-  socket.on('authenticate', sessionId => {
-    const userId = getSession(sessionId);
-    if (!userId) {
+  socket.on('authenticate', async sessionId => {
+    const user = await isAuthenticated(sessionId);
+    if (!user) {
       return socket.disconnect();
     }
 
-    setSocket(userId, socket);
+    setSocket(user.id, socket);
 
     socket.on('disconnect', () => {
-      removeSocket(userId);
+      removeSocket(user.id);
     });
   });
 });
@@ -48,17 +48,19 @@ app.use(cors({
 initAuthRoutes(app);
 initDataRoutes(app);
 
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   if (!req.headers.authorization) {
     return res.status(401).send('Unauthorized');
   }
 
-  const userId = getSession(req.headers.authorization);
-  if (!userId) {
+  const sessionId = req.headers.authorization.replace('Bearer ', '');
+  const user = await isAuthenticated(sessionId);
+  if (!user) {
     return res.status(401).send('Unauthorized');
   }
 
-  res.locals.userId = userId;
+  res.locals.user = user;
+  res.locals.userId = user.id;
 
   next();
 });
