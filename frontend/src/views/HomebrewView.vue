@@ -58,10 +58,10 @@ export default class HomebrewView extends Vue {
 <!--        <Tab value="tab-allclans" :text="$t('homebrew.tabs.allclans')"/>
         <Tab value="tab-alldisciplines" :text="$t('homebrew.tabs.alldisciplines')"/>-->
         <Tab value="tab-installed" :text="$t('homebrew.tabs.installed')"/>
-        <Tab v-if="VicarNet.isLoggedIn" value="tab-mycontent" :text="$t('homebrew.tabs.mycontent')"/>
+        <Tab value="tab-mycontent" :text="$t('homebrew.tabs.mycontent')"/>
       </Tabs>
       <div class="actions">
-        <button v-if="VicarNet.isLoggedIn" class="btn btn-primary" @click="startCreateContentModal.show()">{{$t('homebrew.create').toString()}}</button>
+        <button class="btn btn-primary" @click="startCreateContentModal.show()">{{$t('homebrew.create').toString()}}</button>
       </div>
     </div>
     <div class="flex-grow-1" style="width: 100%; height: calc(100vh - 4.2rem*2 - 3px*2); overflow-x: hidden; overflow-y: auto">

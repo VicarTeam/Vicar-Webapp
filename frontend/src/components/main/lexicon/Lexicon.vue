@@ -116,7 +116,7 @@
           <h3 :ref="'clan-' + c.name">{{c.name}}</h3>
           <span style="color: #ababab"><i>"{{c.slogan}}"</i></span>
           <div style="margin-top: 0.5rem;overflow: auto;">
-            <img style="filter: var(--image-to-primary-color-filter); float: left; width: 10rem; margin-right: 1rem; margin-bottom: 1rem" :src="getClanSymbol(c)"/>
+            <ClanSymbol style="filter: var(--image-to-primary-color-filter); float: left; width: 10rem; margin-right: 1rem; margin-bottom: 1rem" :clan="c"/>
             {{c.description}}
           </div>
           <section>
@@ -323,9 +323,10 @@ import {
   ITraitPack
 } from "@/types/data";
 import {ISectionatedCustomLexicon, ILexiconItem, ILexiconTextItem, ILexiconList} from "@/types/custom-lexicon";
+import ClanSymbol from "@/components/ClanSymbol.vue";
 
 @Component({
-  components: {TOCItem, TOCMenu}
+  components: {ClanSymbol, TOCItem, TOCMenu}
 })
 export default class Lexicon extends Vue {
 

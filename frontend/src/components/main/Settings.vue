@@ -46,6 +46,7 @@ import VicarLoginModal from "@/components/main/modals/VicarLoginModal.vue";
 import {VicarSync} from "@/libs/io/vicar-sync";
 import DataManager from "@/libs/data/data-manager";
 import {post} from "@/libs/io/rest";
+import {logout} from "@/libs/auth";
 
 @Component({
   computed: {
@@ -90,7 +91,7 @@ export default class Settings extends Vue {
   private async logout() {
     const [status] = await post(`/auth/logout`);
     if (status < 400) {
-      localStorage.removeItem('vicar:session');
+      await logout();
       window.location.reload();
     }
   }

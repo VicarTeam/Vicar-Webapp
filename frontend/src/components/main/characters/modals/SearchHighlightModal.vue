@@ -180,7 +180,7 @@ export default class SearchHighlightModal extends Vue {
   <Modal :shown="show" @close="show = false" v-if="character">
     <div class="w-400 d-flex justify-content-center align-items-center flex-column" style="gap: 0.5rem">
       <b>{{$t('character.modal.search-highlight')}}:</b>
-      <Dropdown :options="options" v-model="highlight" :placeholder="$t('character.modal.search-highlight.search')"/>
+      <Dropdown v-if="show" :options="options" v-model="highlight" :placeholder="$t('character.modal.search-highlight.search')" :autofocus="true"/>
 
       <div style="display: flex; flex-direction: row; gap: 1rem; justify-content: center; align-items: center; margin-top: 1.5rem">
         <button class="btn" @click="reset">

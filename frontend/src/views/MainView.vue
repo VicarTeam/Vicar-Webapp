@@ -9,7 +9,7 @@
     <div class="flex-grow-1" style="width: 100%; height: calc(100vh - 4.2rem - 3px); overflow-x: hidden; overflow-y: auto">
       <Characters v-if="selectedTab === 0"/>
       <Lexicon v-else-if="selectedTab === 2"/>
-      <HomebrewView v-else-if="selectedTab === 1" ref="homebrewView"/>
+<!--      <HomebrewView v-else-if="selectedTab === 1" ref="homebrewView"/>-->
       <Settings v-else-if="selectedTab === 3"/>
     </div>
   </div>

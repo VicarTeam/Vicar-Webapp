@@ -1,8 +1,15 @@
 import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
+import VueRouter, {Route, RouteConfig} from 'vue-router'
 import CharacterStorage from "@/libs/io/character-storage";
+import {setSession} from "@/libs/auth";
 
 Vue.use(VueRouter)
+
+let firstRoute: Route | null = null;
+
+function _q(to: Route): string {
+  return `?r=${encodeURIComponent(btoa(to.fullPath))}`;
+}
 
 const routes: Array<RouteConfig> = [
   {
@@ -15,6 +22,7 @@ const routes: Array<RouteConfig> = [
         localStorage.setItem('vicar:session', stk);
       }
 
+      if (!firstRoute) firstRoute = to;
       if (!localStorage.getItem('vicar:session')) {
         next('/login');
       } else {
@@ -27,7 +35,8 @@ const routes: Array<RouteConfig> = [
     name: 'login',
     component: () => null,
     beforeEnter: async (to, from, next) => {
-      window.location.href = process.env.VUE_APP_API_URL + '/auth/login';
+      const q = firstRoute ? _q(firstRoute) : '';
+      window.location.href = process.env.VUE_APP_API_URL + '/auth/login' + q;
     },
   },
   {
@@ -35,11 +44,23 @@ const routes: Array<RouteConfig> = [
     name: 'logged-in',
     component: () => null,
     beforeEnter: async (to, from, next) => {
-      const session = to.query.session as string;
-      if (session) {
-        localStorage.setItem('vicar:session', session);
+      const accessToken = to.query.s_atk as string;
+      const refreshToken = to.query.s_rtk as string;
+      const exp = parseInt(to.query.s_exp as string, 10);
+      if (accessToken && refreshToken && exp && !isNaN(exp)) {
+        await setSession({
+          accessToken,
+          refreshToken,
+          exp
+        });
       } else {
         alert('Failed to log in');
+      }
+      const r = to.query.r as string;
+      if (r) {
+        const redirectPath = atob(decodeURIComponent(r));
+        next(redirectPath);
+        return;
       }
       next('/');
     },
@@ -86,6 +107,7 @@ const routes: Array<RouteConfig> = [
     name: 'viewer',
     component: () => import('@/views/ViewerView.vue'),
     beforeEnter: async (to, from, next) => {
+      if (!firstRoute) firstRoute = to;
       const characterId = to.params.characterId;
       const res = await CharacterStorage.preloadCharacter(characterId);
       if (res === true) {

@@ -11,7 +11,7 @@
           <label class="required">{{$t('editor.clan')}}: <TipButton :title="$t('editor.clan.tip.title')" :content="$t('editor.clan.tip.content')"/></label>
 
           <div class="card clan-info" style="margin: 0; width: 55rem" v-if="editingCharacter.clan">
-            <img :src="getClanSymbol(editingCharacter.clan)"/>
+            <ClanSymbol :clan="clan"/>
             <div class="text">
               <b>{{editingCharacter.clan.name}}</b>
               <small>"<i>{{editingCharacter.clan.slogan}}</i>" <bullet/> <i>{{$t('editor.clan.curse')}}: </i><TipButton :content="editingCharacter.clan.curse"/></small>
@@ -33,7 +33,7 @@
 
           <div class="clans">
             <div class="clan" v-for="clan in clans" :key="clan.id" @click="editingCharacter.clan = clan">
-              <img :src="getClanSymbol(clan)"/>
+              <ClanSymbol :clan="clan"/>
               <small>{{clan.name}}</small>
             </div>
           </div>
@@ -52,9 +52,10 @@ import {Mutation, State} from "vuex-class";
 import EditorForm from "@/components/editor/EditorForm.vue";
 import Bullet from "@/components/Bullet.vue";
 import PTActionHandler from "@/libs/ptaction-handler";
+import ClanSymbol from "@/components/ClanSymbol.vue";
 
 @Component({
-  components: {Bullet, EditorForm, TipButton}
+  components: {ClanSymbol, Bullet, EditorForm, TipButton}
 })
 export default class EditorClanView extends Vue {
 
@@ -69,15 +70,6 @@ export default class EditorClanView extends Vue {
     for (const action of this.editingCharacter.clan.actions) {
       PTActionHandler.handle(this.editingCharacter, action);
     }
-  }
-
-  private getClanSymbol(clan: IClan) {
-    if (clan.symbol) {
-      return clan.symbol;
-    }
-
-    const images = require.context('@/assets/img/clans', false, /\.png$/)
-    return images(`./${clan.id}.png`);
   }
 
   private get canGoNext() {
@@ -115,17 +107,6 @@ export default class EditorClanView extends Vue {
       padding: 1rem;
       gap: 1rem;
       display: flex;
-
-      img {
-        width: 35%;
-        height: auto;
-        max-height: 15rem;
-        margin: auto;
-        object-fit: contain;
-        float: left;
-        -webkit-user-drag: none;
-        filter: var(--image-to-primary-color-filter);
-      }
 
       .text {
         display: flex;

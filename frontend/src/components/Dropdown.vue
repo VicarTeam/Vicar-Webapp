@@ -1,5 +1,5 @@
 <script lang="ts">
-import {Vue, Component, Prop, Watch} from 'vue-property-decorator';
+import {Vue, Component, Prop, Watch, Ref} from 'vue-property-decorator';
 
 export interface IOption {
   name: string;
@@ -18,6 +18,12 @@ export default class Dropdown extends Vue {
   @Prop({required: true})
   private value!: any;
 
+  @Prop({default: false})
+  private autofocus!: boolean;
+
+  @Ref()
+  private dropdownInput!: HTMLInputElement;
+
   private inputValue: string = '';
   private showOptions: boolean = false;
 
@@ -28,6 +34,14 @@ export default class Dropdown extends Vue {
   mounted() {
     this.inputValue = (this.options.find((option) => option.value === this.value)?.name || '');
     this.showOptions = false;
+
+    if (this.autofocus) {
+      this.$nextTick(() => {
+        if (this.dropdownInput) {
+          this.dropdownInput.focus();
+        }
+      });
+    }
   }
 
   private setModelValue(option: IOption) {
@@ -59,7 +73,7 @@ export default class Dropdown extends Vue {
 
 <template>
   <div class="vdropdown" v-bind="$attrs">
-    <input type="text" class="form-control" v-model="inputValue" :placeholder="placeholder" style="width: 100%" @focusin="showOptions = true" @focusout="debounceClose"/>
+    <input type="text" class="form-control" v-model="inputValue" :placeholder="placeholder" style="width: 100%" @focusin="showOptions = true" @focusout="debounceClose" ref="dropdownInput"/>
     <div class="dropdown-menu" v-if="showOptions">
       <a v-for="(i, j) in filteredOptions" :key="j" href="#" class="dropdown-item" :style="i.isCategory ? {'pointer-events': 'none', cursor: 'not-allowed'} : {}" @click="setModelValue(i)">
         <b v-if="i.isCategory">{{i.name}}</b>
