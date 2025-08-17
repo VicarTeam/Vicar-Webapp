@@ -1,7 +1,7 @@
 import * as express from 'express';
 import axios from "axios";
 import {MemoryCache} from "memory-cache-node";
-import {authenticate, destroyUserSession, refreshToken} from "../services/auth";
+import {authenticate, destroyUserSession, getUserIdRegardlessOfExpired, refreshToken} from "../services/auth";
 
 const preAuthCache = new MemoryCache<string, string>(1, Number.MAX_SAFE_INTEGER);
 
@@ -87,9 +87,13 @@ async function logout(req: express.Request, res: express.Response) {
     return res.status(401).send('Unauthorized');
   }
   sessionId = sessionId.replace('Bearer ', '');
+  const userId = await getUserIdRegardlessOfExpired(sessionId);
+  if (!userId) {
+    return res.status(401).send('Unauthorized');
+  }
 
-  await destroyUserSession(sessionId);
-  res.send('Logged out');
+  await destroyUserSession(userId);
+  res.json({ message: 'Logged out successfully' });
 }
 
 async function refreshTokens(req: express.Request, res: express.Response) {

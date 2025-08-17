@@ -114,6 +114,20 @@ export async function createTokens(userId: string): Promise<TokenPair> {
   };
 }
 
+export async function getUserIdRegardlessOfExpired(token: string): Promise<string|undefined> {
+  try {
+    const decoded = jwt.verify(token, SECRET, { algorithms: ['HS256'], ignoreExpiration: true }) as jwt.JwtPayload;
+    if (decoded.type !== 'access' && decoded.type !== 'refresh') {
+      return undefined; // Not a valid token type
+    }
+
+    return decoded.sub; // Return the user ID from the token
+  } catch (err) {
+    console.error('Token verification failed:', err);
+    return undefined; // Invalid token
+  }
+}
+
 function createToken(userId: string, type: 'access' | 'refresh', expiresIn: number): Promise<Token> {
   return new Promise<Token>(async (resolve, reject) => {
     const now = Date.now();
