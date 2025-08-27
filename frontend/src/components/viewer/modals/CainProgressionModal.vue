@@ -120,6 +120,7 @@ export default class CainProgressionModal extends Vue {
   }
   set rawLevel(v: number) {
     if (this.editingCharacter) {
+      const oldLevel = this.rawLevel;
       (this.editingCharacter as any).cainsMarkLevel = Math.max(-5, Math.min(5, v));
 
       if (this.editingCharacter.cainsMarkLevel === -5) {
@@ -132,6 +133,14 @@ export default class CainProgressionModal extends Vue {
         this.editingCharacter.useAdavancedDisciplines = true;
         this.editingCharacter.generation = 1;
         this.editingCharacter.generationEra = Generation.CainesInheritance;
+        this.editingCharacter.bloodPotency += 2;
+        this.editingCharacter.bloodPotency = Math.min(10, this.editingCharacter.bloodPotency);
+      } else if (this.editingCharacter.cainsMarkLevel === 1) {
+        this.editingCharacter.bloodPotency += 1;
+        this.editingCharacter.bloodPotency = Math.min(10, this.editingCharacter.bloodPotency);
+      } else if (this.editingCharacter.cainsMarkLevel === 0 && oldLevel === 1) {
+        this.editingCharacter.bloodPotency -= 1;
+        this.editingCharacter.bloodPotency = Math.max(1, this.editingCharacter.bloodPotency);
       }
 
       CharacterStorage.saveCharacter(this.editingCharacter).then(() => {});
