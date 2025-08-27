@@ -285,9 +285,9 @@ export default class ViewerView extends Vue {
     }
   }
 
-  private saveCurrentCharacter() {
+  private async saveCurrentCharacter() {
     if (this.editingCharacter) {
-      CharacterStorage.saveCharacter(this.editingCharacter);
+      await CharacterStorage.saveCharacter(this.editingCharacter);
       this.saveText = this.$t('viewer.saved').toString();
       setTimeout(() => {
         this.saveText = this.$t('viewer.save').toString();
@@ -329,7 +329,11 @@ export default class ViewerView extends Vue {
 
     EventBus.$emit("moc-granted");
 
-    this.saveCurrentCharacter();
+    await this.saveCurrentCharacter();
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   }
 
   private getDicePoolName(dicePool: {name: string, value: number}|null): string {
