@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 import {RefreshToken, User} from "../schema";
 import mongoose from "mongoose";
 
-const SECRET = Bun.env.JWT_SECRET as string;
+const SECRET = Bun.env.JWT_SECRET as string || "82FD43545DE86D765DC9286B419CF";
 const ACCESS_TOKEN_EXPIRY = 60 * 15; // 15 minutes
 const REFRESH_TOKEN_EXPIRY = 60 * 60 * 24 * 90; // 90 days
 
