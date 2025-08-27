@@ -91,6 +91,7 @@
 <script lang="ts">
 import {Vue, Component, Emit, Prop, Ref} from 'vue-property-decorator';
 import CainProgressionModal from "@/components/viewer/modals/CainProgressionModal.vue";
+import EventBus from "@/libs/event-bus";
 
 type PathKind = 'black' | 'red' | 'none';
 
@@ -108,6 +109,20 @@ export default class MarkOfCain extends Vue {
   phase: '' | 'expand' | 'flash' | 'slam' = '';
   showActivation = false;
   landed = false;
+
+  mounted() {
+    EventBus.$on("moc-granted", this.onMocGranted.bind(this));
+  }
+
+  destroyed() {
+    EventBus.$off("moc-granted", this.onMocGranted.bind(this));
+  }
+
+  private onMocGranted() {
+    if (this.showProgression) {
+      this.$forceUpdate();
+    }
+  }
 
   get fillWidth(): string {
     const clamped = Math.max(0, Math.min(5, this.level));

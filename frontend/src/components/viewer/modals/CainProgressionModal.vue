@@ -84,6 +84,7 @@ import Modal from '@/components/modal/Modal.vue';
 import CharacterStorage from "@/libs/io/character-storage";
 import {i18n} from "@/libs/i18n";
 import Blur from "@/components/modal/Blur.vue";
+import EventBus from "@/libs/event-bus";
 
 type PathKind = 'black' | 'red' | 'none';
 
@@ -100,6 +101,18 @@ export default class CainProgressionModal extends Vue {
   };
 
   private show = false;
+
+  mounted() {
+    EventBus.$on("moc-granted", this.onMocGranted.bind(this));
+  }
+
+  destroyed() {
+    EventBus.$off("moc-granted", this.onMocGranted.bind(this));
+  }
+
+  private onMocGranted() {
+    this.$forceUpdate();
+  }
 
   get rawLevel(): number {
     const v = Number((this.editingCharacter as any).cainsMarkLevel ?? 0);

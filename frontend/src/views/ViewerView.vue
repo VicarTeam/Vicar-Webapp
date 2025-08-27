@@ -327,10 +327,7 @@ export default class ViewerView extends Vue {
     this.editingCharacter.hasCainsMark = true;
     this.editingCharacter.cainsMarkLevel = 0;
 
-    const currentTab = this.$router.currentRoute.name;
-    await this.$router.push({name: 'viewer-attributes'});
-    await this.$nextTick();
-    await this.$router.push({name: currentTab as string});
+    EventBus.$emit("moc-granted");
 
     this.saveCurrentCharacter();
   }

@@ -215,6 +215,18 @@ export default class ProfileView extends Vue {
 
   LevelType = LevelType;
 
+  mounted() {
+    EventBus.$on("moc-granted", this.onMocGranted.bind(this));
+  }
+
+  destroyed() {
+    EventBus.$off("moc-granted", this.onMocGranted.bind(this));
+  }
+
+  private onMocGranted() {
+    this.$forceUpdate();
+  }
+
   private saveChar(triggerSync: boolean = false) {
     CharacterStorage.saveCharacter(this.editingCharacter, triggerSync);
   }
