@@ -89,6 +89,7 @@ import DiceRollModal from "@/components/viewer/modals/DiceRollModal.vue";
 import HuntCalculatorModal from "@/components/main/characters/modals/HuntCalculatorModal.vue";
 import SearchHighlightModal from "@/components/main/characters/modals/SearchHighlightModal.vue";
 import MarkOfCain from "@/components/viewer/MarkOfCain.vue";
+import router from "@/router";
 
 const TabHotkeys = [
   {
@@ -326,10 +327,10 @@ export default class ViewerView extends Vue {
     this.editingCharacter.hasCainsMark = true;
     this.editingCharacter.cainsMarkLevel = 0;
 
-    const currentTab = this.selectedTab;
-    this.selectedTab = "";
+    const currentTab = this.$router.currentRoute;
+    await this.$router.push({name: 'viewer-attributes'});
     await this.$nextTick();
-    this.selectedTab = currentTab;
+    await this.$router.push(currentTab);
 
     this.saveCurrentCharacter();
   }
