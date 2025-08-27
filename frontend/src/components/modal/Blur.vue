@@ -1,5 +1,5 @@
 <template>
-  <div class="blur" :class="{'disabled': disabled}">
+  <div class="blur" :class="{'disabled': disabled, 'hard': hard}">
     <slot></slot>
   </div>
 </template>
@@ -14,6 +14,9 @@ export default class Blur extends Vue {
 
   @Prop({default: false})
   private disabled!: boolean;
+
+  @Prop({default: false})
+  private hard!: boolean;
 }
 </script>
 
@@ -31,8 +34,12 @@ export default class Blur extends Vue {
   align-items: center;
   overflow-x: hidden;
   overflow-y: auto;
-  .disabled {
+  &.disabled {
     background-color: transparent;
+  }
+  &.hard {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(0.5rem) !important;
   }
 }
 </style>

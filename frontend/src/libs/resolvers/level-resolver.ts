@@ -45,16 +45,28 @@ class LevelResolver {
 
     @ResolveType(LevelType.ClanDiscipline)
     public resolveClanDiscipline(char: ICharacter, disc: IDisciplineSelection): number {
+        if (char.cainsMarkLevel === 5) {
+            return disc.currentLevel * 3;
+        }
+
         return disc.currentLevel * 5;
     }
 
     @ResolveType(LevelType.OtherDiscipline)
     public resolveOtherDiscipline(char: ICharacter, disc: IDisciplineSelection): number {
+        if (char.cainsMarkLevel === 5) {
+            return disc.currentLevel * 3;
+        }
+
         return disc.currentLevel * 7;
     }
 
     @ResolveType(LevelType.CaitiffDiscipline)
     public resolveCaitiffDiscipline(char: ICharacter, disc: IDisciplineSelection): number {
+        if (char.cainsMarkLevel === 5) {
+            return disc.currentLevel * 3;
+        }
+
         return disc.currentLevel * 6;
     }
 

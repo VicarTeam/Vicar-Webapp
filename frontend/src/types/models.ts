@@ -94,6 +94,7 @@ export enum Generation {
     Ancillae = "ancillae",
     Older = "older",
     Elder = "elder",
+    CainesInheritance = "cainesinheritance"
 }
 
 export enum DamageType {
@@ -276,6 +277,8 @@ export interface ICharacter {
     connectedFoundryId?: string;
     isElder?: boolean;
     cache?: {[key: string]: any};
+    hasCainsMark?: boolean;
+    cainsMarkLevel?: -5|-4|-3|-2|-1|0|1|2|3|4|5;
 }
 
 export interface ICategory {

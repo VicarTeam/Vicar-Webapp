@@ -28,8 +28,8 @@
         <button class="btn btn-primary" @click="migrateChar">{{$t('character.info.migrate')}}</button>
       </div>
       <div class="mb-0 form-group" style="margin-top: 1rem">
-        <b>{{$t('character.vicartt.foundryid')}}:</b>
-        <input type="text" class="form-control" v-model="vicarTTId">
+        <b>{{$t('character.bonus-code')}}:</b>
+        <input type="text" class="form-control" v-model="bonusCode" @keydown.enter="enterBonusCode">
       </div>
       <div class="d-flex justify-content-center align-items-center" style="margin-top: 1rem" v-if="isHomebrewActive">
         <button style="font-size: 1rem" :disabled="homebrewUpdating" class="btn btn-primary" @click="updateHomebrewContent">{{$t(`character.homebrew.update${(homebrewUpdated ? 'd' : '')}`)}}</button>
@@ -61,6 +61,8 @@ export default class CharacterInfoModal extends Vue {
   private homebrewUpdating: boolean = false;
   private homebrewUpdated: boolean = false;
 
+  private bonusCode = "";
+
   public showModal(character: ICharacter) {
     this.character = character;
     this.character["useAdavancedDisciplines"] = this.character["useAdavancedDisciplines"] || false;
@@ -72,6 +74,7 @@ export default class CharacterInfoModal extends Vue {
         active: this.character.books.includes(book.id)
       };
     });
+    this.bonusCode = "";
     this.show = true;
   }
 
@@ -150,14 +153,22 @@ export default class CharacterInfoModal extends Vue {
     }
   }
 
-  private get vicarTTId() {
-    return this.character.connectedFoundryId || "";
-  }
+  private enterBonusCode() {
+    if (this.bonusCode.trim().length === 0) {
+      return;
+    }
 
-  private set vicarTTId(id: string) {
-    this.character.connectedFoundryId = id.length > 0 ? id : undefined;
-    this.save();
-    this.$emit('updated');
+    try {
+      const code = this.bonusCode.trim().toUpperCase().replaceAll(' ', '_');
+      if (code === "KAINS_MAL") {
+        if (!this.character.hasCainsMark) {
+          this.$emit('cain-mark-granted');
+          this.show = false;
+        }
+      }
+    } finally {
+      this.bonusCode = "";
+    }
   }
 
   private get isHomebrewActive() {

@@ -30,6 +30,11 @@
           <i> {{ $t('data.predatortype') }}:</i> {{ editingCharacter.predatorType.name }}
         </span>
       </div>
+
+      <div class="middle-meta">
+        <MarkOfCain :show-progression="mocActive" :path="mocPath" :level="mocLevel" @updated="$forceUpdate()"/>
+      </div>
+
       <div class="stats">
         <div class="row">
           <div class="stat" style="margin-right: 5rem">
@@ -50,10 +55,10 @@
           <div class="stat" style="margin-right: 5rem" id="hlst-blood">
             <b>
               {{ $t('character.bloodpotency') }}:
-              <LevelButton v-if="editingCharacter.bloodPotency < 10" @click="levelBloodPotencyModal.showModal()"/>
+              <LevelButton v-if="editingCharacter.bloodPotency < 10 && editingCharacter.cainsMarkLevel !== -5" @click="levelBloodPotencyModal.showModal()"/>
               <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && editingCharacter.bloodPotency > 0" @click="decreaseBloodPotency"/>
             </b>
-            <Squares :max="10" :amount="editingCharacter.bloodPotency" :margin-at="6"/>
+            <Squares :max="10" :amount="editingCharacter.bloodPotency" :margin-at="6" target-type="bloodpotency"/>
           </div>
           <div class="stat" id="hlst-humanity">
             <b>
@@ -179,10 +184,12 @@ import CharacterStorage from "@/libs/io/character-storage";
 import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vue";
 import NewSpecializationModal from "@/components/viewer/modals/leveling/NewSpecializationModal.vue";
 import EventBus from "@/libs/event-bus";
+import MarkOfCain from "@/components/viewer/MarkOfCain.vue";
 
 @Component({
-  methods: {getHumanInteractionMalus},
+  methods: {},
   components: {
+    MarkOfCain,
     NewSpecializationModal,
     ConfirmDeleteModal,
     Damage,
@@ -248,6 +255,30 @@ export default class ProfileView extends Vue {
     return dices === Number.MIN_SAFE_INTEGER ? '∞ (Wasail)' : dices;
   }
 
+  private get mocActive() {
+    return !!this.editingCharacter?.hasCainsMark;
+  }
+
+  private get mocLevel() {
+    if (!this.editingCharacter || !this.editingCharacter.hasCainsMark || !this.editingCharacter.cainsMarkLevel) {
+      return 0;
+    }
+
+    return this.editingCharacter.cainsMarkLevel;
+  }
+
+  private get mocPath(): 'black'|'red'|'none' {
+    if (!this.editingCharacter || !this.editingCharacter.hasCainsMark || !this.editingCharacter.cainsMarkLevel) {
+      return 'none';
+    }
+
+    if (this.editingCharacter.cainsMarkLevel < 0) {
+      return 'red';
+    }
+
+    return 'black';
+  }
+
   @Inject("update-viewer")
   private updateViewer!: () => void;
 }
@@ -264,10 +295,10 @@ export default class ProfileView extends Vue {
     padding: 2rem;
     display: flex;
     align-items: center;
+    flex-shrink: 0;
     gap: 2rem;
 
     .info {
-      flex-grow: 1;
       display: flex;
       flex-direction: column;
 
@@ -283,6 +314,14 @@ export default class ProfileView extends Vue {
         font-weight: normal;
         color: #9f9f9f;
       }
+    }
+
+    .middle-meta {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
     }
 
     .stats {

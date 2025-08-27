@@ -1,11 +1,13 @@
 <template>
-  <div class="d-flex flex-column" v-if="editingCharacter">
+  <div id="viewer-wrapper" class="d-flex flex-column" v-if="editingCharacter">
     <div class="d-flex top-bar">
       <div class="actions">
         <IconButton icon="fa-angles-left" @click="backToMain"/>
         <IconButton icon="fa-info" @click="characterInfoModal.showModal(editingCharacter)"/>
         <IconButton icon="fa-dice" v-if="editingCharacter.connectedFoundryId" @click="diceRollModal.showModal(editingCharacter)"/>
         <Avatar :src="editingCharacter.avatar" style="width: 3rem; height: 3rem;"/>
+
+        <MarkOfCain ref="markOfCain" @flash="onCainsMarkFlash()"/>
       </div>
       <Tabs class="center" @before-change="switchTab" v-model="selectedTab">
         <Tab value="viewer-profile" :text="$t('viewer.tab.profile').toString()" ref="tabProfile"/>
@@ -30,7 +32,7 @@
     </div>
 
     <AddExpModal ref="addExpModal"/>
-    <CharacterInfoModal ref="characterInfoModal" @updated="$forceUpdate()"/>
+    <CharacterInfoModal ref="characterInfoModal" @updated="$forceUpdate()" @cain-mark-granted="onCainsMarkGranted()"/>
     <DicePoolCalculatorModal ref="dicePoolCalculatorModal"/>
     <DiceRollModal ref="diceRollModal"/>
     <HuntCalculatorModal ref="huntCalculatorModal"/>
@@ -70,7 +72,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Provide, Ref, Vue} from "vue-property-decorator";
+import {Component, Provide, Ref, Vue} from "vue-property-decorator";
 import {Mutation, State} from "vuex-class";
 import {getHumanInteractionMalus, ICharacter} from "@/types/models";
 import Tabs from "@/components/tabs/Tabs.vue";
@@ -86,7 +88,7 @@ import {VicarSync} from "@/libs/io/vicar-sync";
 import DiceRollModal from "@/components/viewer/modals/DiceRollModal.vue";
 import HuntCalculatorModal from "@/components/main/characters/modals/HuntCalculatorModal.vue";
 import SearchHighlightModal from "@/components/main/characters/modals/SearchHighlightModal.vue";
-import DataManager from "@/libs/data/data-manager";
+import MarkOfCain from "@/components/viewer/MarkOfCain.vue";
 
 const TabHotkeys = [
   {
@@ -122,6 +124,7 @@ const TabHotkeys = [
 
 @Component({
   components: {
+    MarkOfCain,
     SearchHighlightModal,
     HuntCalculatorModal,
     DiceRollModal, DicePoolCalculatorModal, CharacterInfoModal, AddExpModal, Tab, Avatar, IconButton, Tabs}
@@ -151,6 +154,9 @@ export default class ViewerView extends Vue {
 
   @Ref("searchHighlightModal")
   private searchHighlightModal!: SearchHighlightModal;
+
+  @Ref("markOfCain")
+  private markOfCain!: MarkOfCain;
 
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character?: ICharacter) => void;
@@ -300,6 +306,32 @@ export default class ViewerView extends Vue {
     this.saveCurrentCharacter();
     this.setEditingCharacter(undefined);
     this.$router.push({name: 'main'});
+  }
+
+  private async onCainsMarkGranted() {
+    if (!this.editingCharacter) {
+      return;
+    }
+
+    await (this.markOfCain as any).runSequence();
+
+    this.$forceUpdate();
+  }
+
+  private async onCainsMarkFlash() {
+    if (!this.editingCharacter) {
+      return;
+    }
+
+    this.editingCharacter.hasCainsMark = true;
+    this.editingCharacter.cainsMarkLevel = 0;
+
+    const currentTab = this.selectedTab;
+    this.selectedTab = "";
+    await this.$nextTick();
+    this.selectedTab = currentTab;
+
+    this.saveCurrentCharacter();
   }
 
   private getDicePoolName(dicePool: {name: string, value: number}|null): string {

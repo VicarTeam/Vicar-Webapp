@@ -170,9 +170,7 @@ export default class CreateCharacterModal extends Vue {
         return 12;
       case Generation.Ancillae:
         return 10;
-      case Generation.Older:
-        return 0;
-      case Generation.Elder:
+      default:
         return 0;
     }
   }
@@ -185,10 +183,10 @@ export default class CreateCharacterModal extends Vue {
         return 13;
       case Generation.Ancillae:
         return 11;
-      case Generation.Older:
-        return Infinity;
       case Generation.Elder:
         return 10;
+      default:
+        return Infinity;
     }
   }
 }

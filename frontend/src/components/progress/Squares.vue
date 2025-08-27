@@ -1,5 +1,5 @@
 <template>
-  <div class="squares">
+  <div class="squares" :class="{bpblocked: blookedDueToRedPathBloodPotency}">
     <span v-for="i in dots" class="square" :class="{'active': i <= amount, 'ml-10': isMargin(i)}" @click="onClick(i)"></span>
   </div>
 </template>
@@ -24,6 +24,9 @@ export default class Squares extends Vue {
   @Prop({default: -1})
   private marginAt!: number;
 
+  @Prop({default: ""})
+  private targetType!: string;
+
   @State("editingCharacter")
   private editingCharacter!: ICharacter;
 
@@ -39,7 +42,13 @@ export default class Squares extends Vue {
     return dots;
   }
 
+  private get blookedDueToRedPathBloodPotency() {
+    return this.targetType === 'bloodpotency' && this.editingCharacter?.cainsMarkLevel === -5;
+  }
+
   private onClick(i: number) {
+    if (this.blookedDueToRedPathBloodPotency) return;
+
     this.$emit('click', i);
     CharacterStorage.saveCharacter(this.editingCharacter);
   }
@@ -59,6 +68,18 @@ export default class Squares extends Vue {
     border: 1px solid var(--primary-color);
     &.active {
       background-color: var(--primary-color);
+    }
+  }
+  &.bpblocked {
+    opacity: 0.3;
+    cursor: not-allowed !important;
+    .square {
+      border-color: #fff093;
+      cursor: not-allowed !important;
+      &.active {
+        background-color: #fff093;
+        box-shadow: 0 0 10px #fff093;
+      }
     }
   }
 }
