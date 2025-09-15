@@ -148,7 +148,7 @@
           <input class="form-control" type="text" v-model="editingCharacter.desire" @input="saveChar"/>
         </div>
         <div v-else-if="isWerewolf" class="form-group" style="height: 6rem; display: flex; flex-direction: column">
-          <label style="text-align: center; font-weight: bold">Ansehen</label>
+          <label style="text-align: center; font-weight: bold">Ansehen ({{totalRenown}})</label>
           <div style="display: flex; justify-content: space-between">
             <div style="display: flex; flex-direction: column">
               <label>
@@ -297,7 +297,7 @@ import NewSpecializationModal from "@/components/viewer/modals/leveling/NewSpeci
 import EventBus from "@/libs/event-bus";
 import MarkOfCain from "@/components/viewer/MarkOfCain.vue";
 import {GameLine} from "@/types/gameline";
-import {IWerewolfW5Sheet, W5RenownKey} from "@/types/w5";
+import {IW5Renown, IWerewolfW5Sheet, W5RenownKey} from "@/types/w5";
 import RenownModal from "@/components/viewer/modals/leveling/RenownModal.vue";
 
 @Component({
@@ -475,6 +475,10 @@ export default class ProfileView extends Vue {
     }
 
     return 'black';
+  }
+
+  private get totalRenown() {
+    return (this.editingCharacter as any).renown.reduce((sum: any, r: IW5Renown) => sum + r.value, 0);
   }
 
   private get isVampire() {

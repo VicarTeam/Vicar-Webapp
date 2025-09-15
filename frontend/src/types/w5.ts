@@ -21,6 +21,7 @@ export enum W5GiftCategory {
   Tribal = "tribal",
   Auspice = "auspice",
   Native = "native",
+  Rite = "rite",
 }
 
 export interface IW5Gift {

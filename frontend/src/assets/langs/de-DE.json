@@ -574,7 +574,7 @@
   "character.gifts": "Gaben",
   "character.gifts.description": "Gaben sind besondere Fähigkeiten, die ein Werwolf durch seine Verbindung zur spirituellen Welt erlangt. Sie spiegeln die Kräfte und Eigenschaften wider, die der Werwolf von den Geistern und der Natur erhält. Gaben können in verschiedenen Situationen eingesetzt werden, um den Werwolf zu unterstützen, zu schützen oder zu stärken. Es sei denn eine Gabe sagt etwas anderes, können Gaben nur in den übernatürlichen Formen des Werwolfs - Glabro, Hispo oder Crinos - eingesetzt werden.",
   "character.gifts.category": "Entstammung",
-  "character.gifts.category.tribe": "Stamm",
+  "character.gifts.category.tribal": "Stamm",
   "character.gifts.category.auspice": "Auspizium",
   "character.gifts.category.native": "Angeboren",
   "character.gifts.action": "Aktion",

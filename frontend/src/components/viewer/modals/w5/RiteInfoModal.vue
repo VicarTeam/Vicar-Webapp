@@ -5,8 +5,6 @@
       <small><i>{{ability.description}}</i></small>
       <hr>
       <small v-if="!ability.pool || !ability.system"><b>{{$t('character.rites.social')}}</b>: {{$t('character.rites.social.description')}}</small>
-      <span><b>{{$t('editor.disciplines.costs')}}</b>: {{ability.cost}}</span>
-      <span><b>{{$t('editor.gifts.action')}}</b>: {{ability.action}}</span>
       <span v-if="ability.pool"><b>{{$t('editor.disciplines.dices')}}</b>: {{ability.pool}}</span>
       <span v-if="ability.system"><b>{{$t('editor.disciplines.system')}}</b>: <span v-html="ability.system"/></span>
     </div>

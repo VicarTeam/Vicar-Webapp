@@ -179,6 +179,11 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/viewer/TraitsView.vue')
       },
       {
+        path: 'gifts',
+        name: 'viewer-gifts',
+        component: () => import('@/views/viewer/GiftsView.vue')
+      },
+      {
         path: 'pdf',
         name: 'viewer-pdf',
         component: () => import('@/views/viewer/PdfView.vue')
