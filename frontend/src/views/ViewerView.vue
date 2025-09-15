@@ -7,15 +7,16 @@
         <IconButton icon="fa-dice" v-if="editingCharacter.connectedFoundryId" @click="diceRollModal.showModal(editingCharacter)"/>
         <Avatar :src="editingCharacter.avatar" style="width: 3rem; height: 3rem;"/>
 
-        <MarkOfCain ref="markOfCain" @flash="onCainsMarkFlash()"/>
+        <MarkOfCain v-if="isVampire" ref="markOfCain" @flash="onCainsMarkFlash()"/>
       </div>
       <Tabs class="center" @before-change="switchTab" v-model="selectedTab">
         <Tab value="viewer-profile" :text="$t('viewer.tab.profile').toString()" ref="tabProfile"/>
         <Tab value="viewer-inventory" :text="$t('viewer.tab.inventory').toString()" ref="tabInventory"/>
         <Tab value="viewer-attributes" :text="$t('viewer.tab.attributes').toString()" ref="tabAttributes"/>
         <Tab value="viewer-skills" :text="$t('viewer.tab.skills').toString()" ref="tabSkills"/>
-        <Tab value="viewer-disciplines" :text="$t('viewer.tab.disciplines').toString()" ref="tabDisciplines"/>
-        <Tab v-if="canAccessRituals" value="viewer-bloodrituals" :text="$t('viewer.tab.rituals').toString()" ref="tabBloodRituals"/>
+        <Tab v-if="isVampire" value="viewer-disciplines" :text="$t('viewer.tab.disciplines').toString()" ref="tabDisciplines"/>
+        <Tab v-if="canAccessRituals && isVampire" value="viewer-bloodrituals" :text="$t('viewer.tab.rituals').toString()" ref="tabBloodRituals"/>
+        <Tab v-if="isWerewolf" value="viewer-gifts" text="Gaben & Riten"/>
         <Tab value="viewer-traits" :text="$t('viewer.tab.traits').toString()" ref="tabTraits"/>
 <!--        <Tab value="viewer-pdf" :text="$t('viewer.tab.pdf').toString()"/>-->
       </Tabs>
@@ -89,7 +90,9 @@ import DiceRollModal from "@/components/viewer/modals/DiceRollModal.vue";
 import HuntCalculatorModal from "@/components/main/characters/modals/HuntCalculatorModal.vue";
 import SearchHighlightModal from "@/components/main/characters/modals/SearchHighlightModal.vue";
 import MarkOfCain from "@/components/viewer/MarkOfCain.vue";
-import router from "@/router";
+import {GameLine} from "@/types/gameline";
+import {hardSetTheme} from "@/libs/theme";
+import {IWerewolfW5Sheet, W5RenownKey} from "@/types/w5";
 
 const TabHotkeys = [
   {
@@ -176,6 +179,8 @@ export default class ViewerView extends Vue {
   private lastDicePoolSide: 'left'|'right' = 'right';
 
   mounted() {
+    hardSetTheme(this.editingCharacter?.game);
+
     if (this.$router.currentRoute.name === 'viewer') {
       this.$router.push({name: 'viewer-profile'}).catch(() => {});
     }
@@ -195,6 +200,8 @@ export default class ViewerView extends Vue {
     window.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('keyup', this.onKeyUp);
     document.title = "Vicar";
+
+    hardSetTheme();
   }
 
   private onCharUpdated(charId: string) {
@@ -204,6 +211,10 @@ export default class ViewerView extends Vue {
   }
 
   private onKeyDown(event: KeyboardEvent) {
+    if (!this.isVampire) {
+      return; // all other games are not fully supported yet
+    }
+
     if (event.key === "Alt") {
       this.altDown = true;
     }
@@ -299,6 +310,9 @@ export default class ViewerView extends Vue {
     if (!this.editingCharacter) {
       return false;
     }
+    if (!this.isVampire) {
+      return false;
+    }
     return this.editingCharacter.bloodRituals.length > 0 || this.editingCharacter.clan.id === 4 || this.editingCharacter.clan.id === 5 || this.editingCharacter.fullCustomization || (this.editingCharacter.oblivionCeremonies?.length ?? 0) > 0;
   }
 
@@ -365,6 +379,14 @@ export default class ViewerView extends Vue {
     const simple = total - hunger;
 
     return {total, simple, hunger};
+  }
+
+  private get isVampire() {
+    return this.editingCharacter?.game !== GameLine.Mage && this.editingCharacter?.game !== GameLine.Werewolf;
+  }
+
+  private get isWerewolf() {
+    return this.editingCharacter?.game === GameLine.Werewolf;
   }
 
   @Provide("update-viewer")

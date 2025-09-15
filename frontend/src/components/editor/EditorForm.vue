@@ -20,6 +20,7 @@ import CharacterStorage from "@/libs/io/character-storage";
 import DataManager from "@/libs/data/data-manager";
 import {EditorHistory} from "@/libs/editor-history";
 import FileCreator from "@/libs/io/file-creator";
+import {hardSetTheme} from "@/libs/theme";
 
 @Component({
   components: {}
@@ -96,6 +97,7 @@ export default class EditorForm extends Vue {
         this.setLevelMode(false);
         EditorHistory.clear();
         this.setDirectoryForCharCreation();
+        hardSetTheme();
         await this.$router.push({name: 'viewer', params: {characterId: this.editingCharacter.id}});
       };
       const event = {next: n, cancel: false};
@@ -111,6 +113,7 @@ export default class EditorForm extends Vue {
       this.setEditingCharacter(EditorHistory.pop());
       this.$router.back();
     } else {
+      hardSetTheme();
       this.setDirectoryForCharCreation();
       this.setEditingCharacter();
       EditorHistory.clear();

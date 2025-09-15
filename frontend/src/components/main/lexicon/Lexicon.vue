@@ -323,7 +323,7 @@ import {
   ITraitPack
 } from "@/types/data";
 import {ISectionatedCustomLexicon, ILexiconItem, ILexiconTextItem, ILexiconList} from "@/types/custom-lexicon";
-import ClanSymbol from "@/components/ClanSymbol.vue";
+import ClanSymbol from "@/components/symbols/ClanSymbol.vue";
 
 @Component({
   components: {ClanSymbol, TOCItem, TOCMenu}

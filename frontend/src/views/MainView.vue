@@ -26,6 +26,7 @@ import Lexicon from "@/components/main/lexicon/Lexicon.vue";
 import HomebrewView from "@/views/HomebrewView.vue";
 import CharacterStorage from "@/libs/io/character-storage";
 import {nextTick} from "vue";
+import {hardSetTheme} from "@/libs/theme";
 
 @Component({
   components: {HomebrewView, Lexicon, Characters, Spinner, Settings, Tab, Tabs}
@@ -38,6 +39,8 @@ export default class MainView extends Vue {
     if (!localStorage.getItem('vicar:session')) {
       return;
     }
+
+    hardSetTheme();
 
     await CharacterStorage.initialize();
     this.$forceUpdate();

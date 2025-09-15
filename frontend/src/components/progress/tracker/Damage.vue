@@ -11,6 +11,7 @@ import {Component, Prop, Vue} from "vue-property-decorator";
 import {State} from "vuex-class";
 import {DamageType, DefaultDamageArray, ICharacter} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
+import {GameLine} from "@/types/gameline";
 
 @Component({
   components: {}
@@ -62,6 +63,10 @@ export default class Damage extends Vue {
     return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ...(this.propKey === "health" && this.hasResilience() ? [11, 12, 13, 14, 15] : [])];
   }
 
+  private get isVampire() {
+    return this.editingCharacter?.game !== GameLine.Mage && this.editingCharacter?.game !== GameLine.Werewolf;
+  }
+
   private get typesKey(): "healthDamage"|"willpowerDamage" {
     return this.propKey === "health" ? "healthDamage" : "willpowerDamage";
   }
@@ -86,6 +91,10 @@ export default class Damage extends Vue {
   }
 
   private hasResilience(): boolean {
+    if (!this.isVampire) {
+      return false;
+    }
+
     for (const discipline of this.editingCharacter.disciplines) {
       if (discipline.discipline.id === 7) { // Fortitude
         return discipline.abilities.some(a => a.id === 1); // Resilience
@@ -96,6 +105,10 @@ export default class Damage extends Vue {
   }
 
   private get fortitudeLevel(): number {
+    if (!this.isVampire) {
+      return 0;
+    }
+
     for (const discipline of this.editingCharacter.disciplines) {
       if (discipline.discipline.id === 7) { // Fortitude
         return Math.min(discipline.currentLevel, 5);

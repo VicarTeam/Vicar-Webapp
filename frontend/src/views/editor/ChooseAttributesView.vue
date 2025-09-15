@@ -32,6 +32,7 @@ import {State} from "vuex-class";
 import {ICharacter} from "@/types/models";
 import EditorForm from "@/components/editor/EditorForm.vue";
 import TipButton from "@/components/editor/TipButton.vue";
+import {IEdition5Sheet} from "@/types/gameline";
 
 type PointUsage = {
   point: number;
@@ -44,7 +45,7 @@ type PointUsage = {
 export default class ChooseAttributesView extends Vue {
 
   @State("editingCharacter")
-  private editingCharacter!: ICharacter|undefined;
+  private editingCharacter!: IEdition5Sheet|undefined;
 
   private isPointAvailable(val: number) {
     const amount = this.getAvailableAmount(val);

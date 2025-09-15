@@ -143,7 +143,6 @@ export interface ITraitPack extends IRestrictionHolder {
     type: "merits" | "backgrounds";
     name: string;
     description: string;
-    isCombinable: boolean;
     specialRules: TraitSpecialRules;
     advantages: ITrait[];
     disadvantages: ITrait[];

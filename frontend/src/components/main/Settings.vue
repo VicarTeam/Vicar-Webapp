@@ -2,12 +2,12 @@
   <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center">
     <div class="w-500 mw-full">
       <div class="card">
-        <div class="form-group">
+<!--        <div class="form-group">
           <label>{{$t("main.settings.language")}}</label>
           <select class="form-control" v-model="selectedLocale" @change="setLocale(selectedLocale)">
             <option v-for="lang in availableLocales" :key="lang.code" :value="lang.code">{{lang.name}}</option>
           </select>
-        </div>
+        </div>-->
 
         <div v-if="DataManager.loggedInAs" style="width: 100%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin-top: 1rem; margin-bottom: 1.5rem"></div>
         <p v-if="DataManager.loggedInAs">

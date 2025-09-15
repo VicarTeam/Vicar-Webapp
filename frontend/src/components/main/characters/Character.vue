@@ -1,24 +1,26 @@
 <template>
-  <div class="character-entry">
+  <div class="character-entry" :class="{w5: character.game === GameLine.Werewolf, m20: character.game === GameLine.Mage}">
     <Avatar :src="character.avatar" style="width: 5rem; height: 5rem"/>
 
     <div class="info">
       <span class="title">{{character.name}}</span>
       <span class="subtitle">
-            {{$t('character.sex.' + character.sex)}}
-            <bullet/>
-            {{character.concept}}
-            <bullet v-if="character.concept"/>
-            <i> Clan:</i> {{character.clan.name}}
-            <bullet/>
-            {{character.clan.slogan}}
-            <bullet/>
-            <i> Generation:</i> {{character.generation}} ({{$t('character.generation.' + character.generationEra)}})
-            <bullet v-if="character.chronicle"/>
-            {{character.chronicle}}
-            <bullet v-if="character.exp > 0"/>
-            <span v-if="character.exp > 0"><i> EXP:</i> {{character.exp}}</span>
-          </span>
+        {{$t('character.sex.' + character.sex)}}
+        <bullet/>
+        {{character.concept}}
+        <bullet v-if="character.concept"/>
+        <span v-if="character.clan"><i> Clan:</i> {{character.clan.name}}</span>
+        <span v-else-if="character.tribe"><i> {{$t('character.tribe')}}:</i> {{character.tribe.name}}</span>
+        <bullet/>
+        <span v-if="character.clan">{{character.clan.slogan}}</span>
+        <span v-else-if="character.auspice">{{character.auspice.name}}</span>
+        <bullet v-if="character.game === GameLine.Vampire || !character.game"/>
+        <span v-if="character.game === GameLine.Vampire || !character.game"><i> Generation:</i> {{character.generation}} ({{$t('character.generation.' + character.generationEra)}})</span>
+        <bullet v-if="character.chronicle"/>
+        {{character.chronicle}}
+        <bullet v-if="character.exp > 0"/>
+        <span v-if="character.exp > 0"><i> EXP:</i> {{character.exp}}</span>
+      </span>
     </div>
 
     <div class="actions">
@@ -80,14 +82,17 @@ import FileCreator from "@/libs/io/file-creator";
 import {Mutation} from "vuex-class";
 import {VicarSync} from "@/libs/io/vicar-sync";
 import Modal from "@/components/modal/Modal.vue";
+import {GameLine, IBaseSheet} from "@/types/gameline";
 
 @Component({
   components: {Modal, IconButton, Avatar, Bullet}
 })
 export default class Character extends Vue {
 
+  GameLine = GameLine;
+
   @Prop({required: true})
-  private character!: ICharacter;
+  private character!: IBaseSheet;
 
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character: ICharacter) => void;
@@ -155,12 +160,12 @@ export default class Character extends Vue {
 
   private async finishLinkCharacterWithSync() {
     if (this.enableSyncModalType === "out") {
-      const hash = await VicarSync.enableCharacterOutSync(this.character);
+      const hash = await VicarSync.enableCharacterOutSync(this.character as ICharacter);
       if (hash) {
         await navigator.clipboard.writeText(hash);
       }
     } else {
-      await VicarSync.syncCharacterIn(this.character, this.enableSyncModalInHash);
+      await VicarSync.syncCharacterIn(this.character as ICharacter, this.enableSyncModalInHash);
     }
     this.$forceUpdate();
     this.enableSyncModalVisible = false;
@@ -184,17 +189,17 @@ export default class Character extends Vue {
   }
 
   private async unlinkCharacterWithSync() {
-    if (VicarSync.isCharacterSyncedOut(this.character)) {
-      await VicarSync.disableCharacterOutSync(this.character);
-    } else if (VicarSync.isCharacterSyncedIn(this.character)) {
-      await VicarSync.unsyncCharacterIn(this.character);
+    if (VicarSync.isCharacterSyncedOut(this.character as ICharacter)) {
+      await VicarSync.disableCharacterOutSync(this.character as ICharacter);
+    } else if (VicarSync.isCharacterSyncedIn(this.character as ICharacter)) {
+      await VicarSync.unsyncCharacterIn(this.character as ICharacter);
     }
 
     this.$forceUpdate();
   }
 
   private async copySyncOutId() {
-    await navigator.clipboard.writeText(VicarSync.getCharacterSyncOutId(this.character));
+    await navigator.clipboard.writeText(VicarSync.getCharacterSyncOutId(this.character as ICharacter));
   }
 
   @Inject("edit-viewers")
@@ -221,6 +226,12 @@ export default class Character extends Vue {
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  &.w5 {
+    border-color: #0e2e8c !important;
+  }
+  &.m20 {
+    border-color: #6f2dbd !important;
+  }
   .info {
     flex-grow: 1;
     display: flex;
@@ -234,6 +245,8 @@ export default class Character extends Vue {
     .subtitle {
       font-size: 1.1rem;
       color: #939393;
+      display: flex;
+      gap: 0.25rem;
     }
   }
   .actions {

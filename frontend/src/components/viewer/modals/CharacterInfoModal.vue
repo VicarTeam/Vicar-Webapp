@@ -1,7 +1,7 @@
 <template>
   <Modal :shown="show" @close="show = false">
     <div class="character-info" v-if="character">
-      <div class="form-group">
+      <div v-if="isVampire" class="form-group">
         <label><b>{{$t('main.characters.create.books')}}:</b></label>
         <BookSelection :disabled="true" :books="activatedBooks"/>
       </div>
@@ -11,11 +11,11 @@
       </div>
       <div class="form-group d-flex flex-column" :class="{'mb-0': !isNotUpToDate()}">
         <label><b>{{$t('character.advanced.rules')}}:</b></label>
-        <div class="custom-checkbox d-flex align-items-center">
+        <div v-if="isVampire" class="custom-checkbox d-flex align-items-center">
           <input type="checkbox" id="disc" v-model="character.useAdavancedDisciplines" @change="save">
           <label for="disc">{{$t('character.advanced.disciplines')}}</label>
         </div>
-        <div class="custom-checkbox d-flex align-items-center">
+        <div v-if="isVampire" class="custom-checkbox d-flex align-items-center">
           <input type="checkbox" id="pow" v-model="character.allowLearningOfAllPowers" @change="save">
           <label for="pow">{{$t('character.advanced.powers')}}</label>
         </div>
@@ -24,14 +24,14 @@
           <label for="cust">{{$t('character.advanced.customization')}}</label>
         </div>
       </div>
-      <div class="d-flex justify-content-center align-items-center" v-if="isNotUpToDate()" style="margin-top: 1rem">
+      <div v-if="isVampire && isNotUpToDate()" class="d-flex justify-content-center align-items-center" style="margin-top: 1rem">
         <button class="btn btn-primary" @click="migrateChar">{{$t('character.info.migrate')}}</button>
       </div>
-      <div class="mb-0 form-group" style="margin-top: 1rem">
+      <div v-if="isVampire" class="mb-0 form-group" style="margin-top: 1rem">
         <b>{{$t('character.bonus-code')}}:</b>
         <input type="text" class="form-control" v-model="bonusCode" @keydown.enter="enterBonusCode">
       </div>
-      <div class="d-flex justify-content-center align-items-center" style="margin-top: 1rem" v-if="isHomebrewActive">
+      <div v-if="isVampire && isHomebrewActive" class="d-flex justify-content-center align-items-center" style="margin-top: 1rem">
         <button style="font-size: 1rem" :disabled="homebrewUpdating" class="btn btn-primary" @click="updateHomebrewContent">{{$t(`character.homebrew.update${(homebrewUpdated ? 'd' : '')}`)}}</button>
       </div>
     </div>
@@ -48,6 +48,7 @@ import {migrationResolver} from "@/libs/resolvers/migration-resolver";
 import {HomebrewIdOffset, HomebrewManager} from "@/libs/data/homebrew-manager";
 import DataManager from "@/libs/data/data-manager";
 import {IHomebrewDiscipline} from "@/types/data";
+import {GameLine} from "@/types/gameline";
 
 @Component({
   components: {BookSelection, Modal}
@@ -65,15 +66,17 @@ export default class CharacterInfoModal extends Vue {
 
   public showModal(character: ICharacter) {
     this.character = character;
-    this.character["useAdavancedDisciplines"] = this.character["useAdavancedDisciplines"] || false;
-    this.character["allowLearningOfAllPowers"] = this.character["allowLearningOfAllPowers"] || false;
     this.character["fullCustomization"] = this.character["fullCustomization"] || false;
-    this.activatedBooks = [...BookSelection.defaultBooks()].map(book => {
-      return {
-        id: book.id,
-        active: this.character.books.includes(book.id)
-      };
-    });
+    if (this.isVampire) {
+      this.character["useAdavancedDisciplines"] = this.character["useAdavancedDisciplines"] || false;
+      this.character["allowLearningOfAllPowers"] = this.character["allowLearningOfAllPowers"] || false;
+      this.activatedBooks = [...BookSelection.defaultBooks()].map(book => {
+        return {
+          id: book.id,
+          active: this.character.books.includes(book.id)
+        };
+      });
+    }
     this.bonusCode = "";
     this.show = true;
   }
@@ -173,6 +176,10 @@ export default class CharacterInfoModal extends Vue {
 
   private get isHomebrewActive() {
     return this.activatedBooks.some(book => book.id >= HomebrewIdOffset && book.active);
+  }
+
+  private get isVampire() {
+    return this.character?.game !== GameLine.Mage && this.character?.game !== GameLine.Werewolf;
   }
 }
 </script>

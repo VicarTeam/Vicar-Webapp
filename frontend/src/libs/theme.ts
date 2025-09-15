@@ -1,0 +1,98 @@
+import {GameLine} from "@/types/gameline";
+
+type Vars = Record<string, string>;
+
+const THEMES: Record<GameLine, Vars> = {
+  [GameLine.Vampire]: {
+    "--primary-color": "#8c0e2e",
+    "--primary-color-light": "#be1640",
+    "--primary-color-very-light": "#f3c7cb",
+    "--primary-color-dark": "#72152d",
+    "--primary-color-very-dark": "#301923",
+    "--primary-box-shadow-color": "rgba(245, 34, 45, 0.3)",
+    "--primary-box-shadow-color-darker": "rgba(245, 34, 45, 0.6)",
+    "--text-color-on-primary-color-bg": "#ffffff",
+    "--lm-card-bg-image": "linear-gradient(#f7f7f7, #ced6e0)",
+    "--lm-card-border-color": "#ffffff",
+    "--lm-card-box-shadow": "0 0 0 1px rgba(0, 0, 0, 0.15)",
+    "--dm-card-bg-image": "linear-gradient(#191c20, #111417)",
+    "--dm-card-border-color": "rgba(255, 255, 255, 0.1)",
+    "--dm-card-box-shadow": "0 0 0 1px rgba(0, 0, 0, 0.2)",
+    "--lm-input-box-shadow": "0 0.2rem 0 rgba(0,0,0,0.05)",
+    "--dm-input-box-shadow": "0 0.2rem 0 rgba(0,0,0,0.05)",
+    "--lm-button-primary-bg-image": "linear-gradient(var(--primary-color), var(--primary-color-dark))",
+    "--lm-button-primary-bg-image-hover": "linear-gradient(var(--primary-color-light), var(--primary-color-dark))",
+    "--lm-button-primary-bg-image-active": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--lm-button-primary-bg-image-active-hover": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--dm-button-primary-bg-image": "linear-gradient(var(--primary-color), var(--primary-color-dark))",
+    "--dm-button-primary-bg-image-hover": "linear-gradient(var(--primary-color-light), var(--primary-color-dark))",
+    "--dm-button-primary-bg-image-active": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--dm-button-primary-bg-image-active-hover": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--image-to-primary-color-filter": "invert(10%) sepia(59%) saturate(4471%) hue-rotate(332deg) brightness(104%) contrast(100%)",
+    "--dm-input-border-color": "var(--primary-color)"
+  },
+  [GameLine.Werewolf]: {
+    "--primary-color": "#0e2e8c",
+    "--primary-color-light": "#1640be",
+    "--primary-color-very-light": "#c7d7f3",
+    "--primary-color-dark": "#152d72",
+    "--primary-color-very-dark": "#0d1830",
+    "--primary-box-shadow-color": "rgba(24, 88, 240, 0.25)",
+    "--primary-box-shadow-color-darker": "rgba(24, 88, 240, 0.45)",
+    "--text-color-on-primary-color-bg": "#ffffff",
+    "--lm-card-bg-image": "linear-gradient(#f7f7f7, #ced6e0)",
+    "--lm-card-border-color": "#ffffff",
+    "--lm-card-box-shadow": "0 0 0 1px rgba(0, 0, 0, 0.15)",
+    "--dm-card-bg-image": "linear-gradient(#191c20, #111417)",
+    "--dm-card-border-color": "rgba(255, 255, 255, 0.1)",
+    "--dm-card-box-shadow": "0 0 0 1px rgba(0, 0, 0, 0.2)",
+    "--lm-input-box-shadow": "0 0.2rem 0 rgba(0,0,0,0.05)",
+    "--dm-input-box-shadow": "0 0.2rem 0 rgba(0,0,0,0.05)",
+    "--lm-button-primary-bg-image": "linear-gradient(var(--primary-color), var(--primary-color-dark))",
+    "--lm-button-primary-bg-image-hover": "linear-gradient(var(--primary-color-light), var(--primary-color-dark))",
+    "--lm-button-primary-bg-image-active": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--lm-button-primary-bg-image-active-hover": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--dm-button-primary-bg-image": "linear-gradient(var(--primary-color), var(--primary-color-dark))",
+    "--dm-button-primary-bg-image-hover": "linear-gradient(var(--primary-color-light), var(--primary-color-dark))",
+    "--dm-button-primary-bg-image-active": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--dm-button-primary-bg-image-active-hover": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--image-to-primary-color-filter": "invert(22%) sepia(53%) saturate(1827%) hue-rotate(202deg) brightness(90%) contrast(95%)",
+    "--dm-input-border-color": "var(--primary-color)"
+  },
+  [GameLine.Mage]: {
+    "--primary-color": "#6f2dbd",
+    "--primary-color-light": "#8a39d7",
+    "--primary-color-very-light": "#e9d7fb",
+    "--primary-color-dark": "#4e2090",
+    "--primary-color-very-dark": "#2e1556",
+    "--primary-box-shadow-color": "rgba(146, 77, 225, 0.25)",
+    "--primary-box-shadow-color-darker": "rgba(146, 77, 225, 0.5)",
+    "--text-color-on-primary-color-bg": "#ffffff",
+    "--lm-card-bg-image": "linear-gradient(#f7f7f7, #ced6e0)",
+    "--lm-card-border-color": "#ffffff",
+    "--lm-card-box-shadow": "0 0 0 1px rgba(0, 0, 0, 0.15)",
+    "--dm-card-bg-image": "linear-gradient(#191c20, #111417)",
+    "--dm-card-border-color": "rgba(255, 255, 255, 0.1)",
+    "--dm-card-box-shadow": "0 0 0 1px rgba(0, 0, 0, 0.2)",
+    "--lm-input-box-shadow": "0 0.2rem 0 rgba(0,0,0,0.05)",
+    "--dm-input-box-shadow": "0 0.2rem 0 rgba(0,0,0,0.05)",
+    "--lm-button-primary-bg-image": "linear-gradient(var(--primary-color), var(--primary-color-dark))",
+    "--lm-button-primary-bg-image-hover": "linear-gradient(var(--primary-color-light), var(--primary-color-dark))",
+    "--lm-button-primary-bg-image-active": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--lm-button-primary-bg-image-active-hover": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--dm-button-primary-bg-image": "linear-gradient(var(--primary-color), var(--primary-color-dark))",
+    "--dm-button-primary-bg-image-hover": "linear-gradient(var(--primary-color-light), var(--primary-color-dark))",
+    "--dm-button-primary-bg-image-active": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--dm-button-primary-bg-image-active-hover": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--image-to-primary-color-filter": "invert(18%) sepia(58%) saturate(2576%) hue-rotate(262deg) brightness(92%) contrast(98%)",
+    "--dm-input-border-color": "var(--primary-color)"
+  }
+};
+
+export function hardSetTheme(game?: GameLine) {
+  const root = document.documentElement;
+  const vars = THEMES[game ?? GameLine.Vampire];
+  for (const [prop, val] of Object.entries(vars)) {
+    root.style.setProperty(prop, val, "important");
+  }
+}

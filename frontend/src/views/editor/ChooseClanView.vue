@@ -52,7 +52,7 @@ import {Mutation, State} from "vuex-class";
 import EditorForm from "@/components/editor/EditorForm.vue";
 import Bullet from "@/components/Bullet.vue";
 import PTActionHandler from "@/libs/ptaction-handler";
-import ClanSymbol from "@/components/ClanSymbol.vue";
+import ClanSymbol from "@/components/symbols/ClanSymbol.vue";
 
 @Component({
   components: {ClanSymbol, Bullet, EditorForm, TipButton}

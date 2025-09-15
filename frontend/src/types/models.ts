@@ -3,11 +3,11 @@
     IDiscipline,
     IDisciplineAbility, IOblivionCeremony,
     IPredatorType, IPTAction,
-    ISkillSpreadType,
     ITrait,
     ITraitPack
 } from "@/types/data";
 import {ISectionatedCustomLexicon} from "@/types/custom-lexicon";
+import {IEdition5Sheet} from "@/types/gameline";
 
 export enum LevelType {
     Attribute,
@@ -229,16 +229,8 @@ export interface ICharacterDirectory {
 
 export const CurrentCharacterVersion = 2;
 
-export interface ICharacter {
-    directory?: string;
-    justViewing?: boolean;
-    id: string;
-    avatar: string;
-    requiredPointSpreads: IRequiredPointSpread[];
+export interface ICharacter extends IEdition5Sheet {
     books: number[];
-    name: string;
-    sex: Sex;
-    concept: string;
     predatorType: IPredatorType;
     chronicle: string;
     ambition: string;
@@ -248,20 +240,11 @@ export interface ICharacter {
     desire: string;
     generationEra: Generation;
     generation: number;
-    health: number;
-    healthDamage?: DamageType[];
-    willpower: number;
-    willpowerDamage?: DamageType[];
     hunger: number;
     humanity: number;
     stains?: number;
     resonance: string;
     bloodPotency: number;
-    skillspread: ISkillSpreadType;
-    categories: ICategory[];
-    merits: IUsingTraitPacks;
-    backgrounds: IUsingTraitPacks;
-    exp: number;
     chroniclePrinciples: string;
     anchorsAndBeliefs: string;
     backstory: string;
@@ -272,10 +255,8 @@ export interface ICharacter {
     allowLearningOfAllPowers: boolean;
     fullCustomization: boolean;
     version: number;
-    inventory: IInventory;
     usedExp: number;
     connectedFoundryId?: string;
-    isElder?: boolean;
     cache?: {[key: string]: any};
     hasCainsMark?: boolean;
     cainsMarkLevel?: -5|-4|-3|-2|-1|0|1|2|3|4|5;

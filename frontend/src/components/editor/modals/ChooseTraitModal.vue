@@ -86,7 +86,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Prop, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {State} from "vuex-class";
 import {ICharacter, IUsingTraitPacks} from "@/types/models";
@@ -95,6 +95,8 @@ import DataManager from "@/libs/data/data-manager";
 import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
 import PTActionHandler from "@/libs/ptaction-handler";
 import CharacterStorage from "@/libs/io/character-storage";
+import {GameLine} from "@/types/gameline";
+import {traits} from "@/.data/w5";
 
 export type ChooseTraitData = {
   merits: ITraitPack[];
@@ -112,6 +114,9 @@ export default class ChooseTraitModal extends Vue {
 
   @State("editingCharacter")
   private editingCharacter!: ICharacter|undefined;
+
+  @Prop({default: () => GameLine.Vampire})
+  private gameline!: GameLine;
 
   private selectedPack: ITraitPack|null = null;
   private selectedTrait: ITrait|null = null;
@@ -135,27 +140,13 @@ export default class ChooseTraitModal extends Vue {
   private customTraitSpecialization: string = "";
 
   mounted() {
-    this.data = {
-      backgrounds: DataManager.selectedLanguage.books.flatMap(book => {
-        if (book && book.backgrounds) {
-          return book.backgrounds;
-        }
-        return [];
-      }),
-      merits: DataManager.selectedLanguage.books.flatMap(book => {
-        if (book && book.merits) {
-          return book.merits;
-        }
-        return [];
-      })
-    };
+    this.data = this.getTraitsForEdition();
 
     this._customPack = {
       id: -42,
       type: "merits",
       name: this.$t("editor.traits.modal.custom").toString(),
       description: this.$t("editor.traits.modal.custom.desc").toString(),
-      isCombinable: false,
       specialRules: TraitSpecialRules.None,
       advantages: [],
       disadvantages: []
@@ -244,8 +235,10 @@ export default class ChooseTraitModal extends Vue {
   }
 
   private filterTraits(pack: ITraitPack, traits: ITrait[]): ITrait[] {
-    if (!this.isFlaw && pack.id === StatusId && this.editingCharacter!.clan.id === 15 && !this.calculateCosts) {
-      return []; // Caitiffs aren't allowed to use positive status background when creating char
+    if (this.editingCharacter?.game === GameLine.Vampire) {
+      if (!this.isFlaw && pack.id === StatusId && this.editingCharacter!.clan.id === 15 && !this.calculateCosts) {
+        return []; // Caitiffs aren't allowed to use positive status background when creating char
+      }
     }
 
     const pointsRequirement = traits.filter(t => t.level <= this.pointsLeft);
@@ -337,8 +330,10 @@ export default class ChooseTraitModal extends Vue {
   private get backgrounds(): ITraitPack[] {
     return this.filterTraitPacks([...this.data.backgrounds])
       .filter(x => {
-        if (!this.isFlaw && this.editingCharacter && this.editingCharacter.clan.id === 15 && x.id === 11) {
-          return false; // Caitiffs aren't allowed to use positive status background when creating char
+        if (this.editingCharacter?.game === GameLine.Vampire) {
+          if (!this.isFlaw && this.editingCharacter && this.editingCharacter.clan.id === 15 && x.id === 11) {
+            return false; // Caitiffs aren't allowed to use positive status background when creating char
+          }
         }
         return true;
       })
@@ -358,6 +353,30 @@ export default class ChooseTraitModal extends Vue {
     return !!this.selectedPack && this.selectedPack.id === this._customPack.id
       && this.customTraitName.length > 0 && this.customTraitDescription.length > 0
       && this.customTraitLevel >= 1 && this.customTraitLevel <= 5;
+  }
+
+  private getTraitsForEdition(): ChooseTraitData {
+    if (this.gameline === GameLine.Werewolf) {
+      return {
+        backgrounds: traits.filter(x => x.type === "backgrounds"),
+        merits: traits.filter(x => x.type === "merits"),
+      };
+    }
+
+    return {
+      backgrounds: DataManager.selectedLanguage.books.flatMap(book => {
+        if (book && book.backgrounds) {
+          return book.backgrounds;
+        }
+        return [];
+      }),
+      merits: DataManager.selectedLanguage.books.flatMap(book => {
+        if (book && book.merits) {
+          return book.merits;
+        }
+        return [];
+      })
+    };
   }
 }
 </script>

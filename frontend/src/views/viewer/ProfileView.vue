@@ -15,14 +15,26 @@
           <IconButton icon="fa-check" @click="editingCharacter.name = editName; isEditName = false"/>
           <IconButton icon="fa-x" @click="isEditName = false"/>
         </div>
-        <span class="side">
+        <span v-if="isVampire" class="side">
           {{ $t('character.sex.' + editingCharacter.sex) }}
           <bullet/>
           <i> Clan:</i> {{ editingCharacter.clan.name }}
           <bullet/>
           {{ editingCharacter.clan.slogan }} <TipButton :content="editingCharacter.clan.curse"/>
         </span>
-        <span class="side" style="margin-top: 0.2rem">
+        <span v-else-if="isWerewolf" class="side">
+          {{ $t('character.sex.' + editingCharacter.sex) }}
+          <bullet/>
+          <i> Stamm:</i> {{ editingCharacter.tribe.name }}
+          <bullet/>
+          <i> Patrongeist:</i> {{ editingCharacter.tribe.patron.name }}
+          <bullet/>
+          <i> Gunst <TipButton :content="editingCharacter.tribe.favor"/></i>
+          <bullet style="margin-left: 0.25rem"/>
+          <i> Bann <TipButton :content="editingCharacter.tribe.ban"/></i>
+
+        </span>
+        <span v-if="isVampire" class="side" style="margin-top: 0.2rem">
           <i>Generation:</i> {{
             editingCharacter.generation
           }} ({{ $t('character.generation.' + editingCharacter.generationEra) }})
@@ -32,12 +44,12 @@
       </div>
 
       <div class="middle-meta">
-        <MarkOfCain :show-progression="mocActive" :path="mocPath" :level="mocLevel" @updated="$forceUpdate()"/>
+        <MarkOfCain v-if="isVampire" :show-progression="mocActive" :path="mocPath" :level="mocLevel" @updated="$forceUpdate()"/>
       </div>
 
       <div class="stats">
         <div class="row">
-          <div class="stat" style="margin-right: 5rem">
+          <div v-if="isVampire" class="stat" style="margin-right: 5rem">
             <b>{{ $t('character.sire') }}:</b>
             <small v-if="!editingCharacter.fullCustomization">{{ editingCharacter.sire }}</small>
             <input v-else class="form-control" type="text" v-model="editingCharacter.sire"/>
@@ -52,7 +64,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="stat" style="margin-right: 5rem" id="hlst-blood">
+          <div v-if="isVampire" class="stat" style="margin-right: 5rem" id="hlst-blood">
             <b>
               {{ $t('character.bloodpotency') }}:
               <LevelButton v-if="editingCharacter.bloodPotency < 10 && editingCharacter.cainsMarkLevel !== -5" @click="levelBloodPotencyModal.showModal()"/>
@@ -60,16 +72,21 @@
             </b>
             <Squares :max="10" :amount="editingCharacter.bloodPotency" :margin-at="6" target-type="bloodpotency"/>
           </div>
-          <div class="stat" id="hlst-humanity">
+          <div v-if="isVampire" class="stat" id="hlst-humanity">
             <b>
               {{ $t('character.humanity') }}: <TipButton v-if="editingCharacter.humanity <= 5" :content="$t('character.humanity.malus', {dices: humanityMalus})" :danger="true"/>
             </b>
             <Humanity/>
           </div>
-          <div class="stat" id="hlst-hunger">
+          <div v-if="isVampire" class="stat" id="hlst-hunger">
             <b>{{ $t('character.hunger') }}:</b>
             <Squares :max="5" :amount="editingCharacter.hunger"
                      @click="v => {editingCharacter.hunger = v === editingCharacter.hunger ? 0 : v; saveChar(true);}"/>
+          </div>
+          <div v-else-if="isWerewolf" class="stat">
+            <b>Rage: <TipButton :content="$t('viewer.w5.rage')"/></b>
+            <Squares :max="5" :amount="editingCharacter.rage"
+                     @click="v => {editingCharacter.rage = v === editingCharacter.rage ? 0 : v; saveChar(true);}"/>
           </div>
         </div>
       </div>
@@ -100,9 +117,24 @@
         </div>
       </div>
       <div class="column">
-        <div class="form-group">
+        <div v-if="isVampire" class="form-group">
           <label>{{ $t('character.ambition') }}: <TipButton :content="$t('character.ambition.tip')"/></label>
           <input class="form-control" type="text" v-model="editingCharacter.ambition" @input="saveChar"/>
+        </div>
+        <div v-else-if="isWerewolf" class="form-group" style="height: 6rem; display: flex; flex-direction: column">
+          <label style="text-align: center; font-weight: bold">Verfall</label>
+          <div style="display: flex; justify-content: space-between">
+            <div style="display: flex; flex-direction: column">
+              <label style="text-align: left">Harano <TipButton :content="$t('viewer.w5.harano')"/></label>
+              <Squares :max="5" :amount="editingCharacter.harano"
+                       @click="v => {editingCharacter.harano = v === editingCharacter.harano ? 0 : v; saveChar(true);}"/>
+            </div>
+            <div style="display: flex; flex-direction: column">
+              <label style="text-align: right"><TipButton :content="$t('viewer.w5.hauglosk')"/> Hauglosk</label>
+              <Squares :max="5" :amount="editingCharacter.hauglosk"
+                       @click="v => {editingCharacter.hauglosk = v === editingCharacter.hauglosk ? 0 : v; saveChar(true);}"/>
+            </div>
+          </div>
         </div>
 
         <div class="form-group">
@@ -111,9 +143,38 @@
         </div>
       </div>
       <div class="column">
-        <div class="form-group">
+        <div v-if="isVampire" class="form-group">
           <label>{{ $t('character.desire') }}: <TipButton :content="$t('character.desire.tip')"/></label>
           <input class="form-control" type="text" v-model="editingCharacter.desire" @input="saveChar"/>
+        </div>
+        <div v-else-if="isWerewolf" class="form-group" style="height: 6rem; display: flex; flex-direction: column">
+          <label style="text-align: center; font-weight: bold">Ansehen</label>
+          <div style="display: flex; justify-content: space-between">
+            <div style="display: flex; flex-direction: column">
+              <label>
+                Ruhm
+                <LevelButton v-if="gloryRenown < 5" @click="levelRenown(RenownKey.Glory)"/>
+              </label>
+              <Squares :max="5" :amount="gloryRenown"
+                       @click="v => {gloryRenown = v === gloryRenown ? 0 : v; saveChar(true);}"/>
+            </div>
+            <div style="display: flex; flex-direction: column">
+              <label style="text-align: center">
+                Ehre
+                <LevelButton v-if="honorRenown < 5" @click="levelRenown(RenownKey.Honor)"/>
+              </label>
+              <Squares :max="5" :amount="honorRenown"
+                       @click="v => {honorRenown = v === honorRenown ? 0 : v; saveChar(true);}"/>
+            </div>
+            <div style="display: flex; flex-direction: column">
+              <label style="text-align: right">
+                Weisheit
+                <LevelButton v-if="wisdomRenown < 5" @click="levelRenown(RenownKey.Wisdom)"/>
+              </label>
+              <Squares :max="5" :amount="wisdomRenown"
+                       @click="v => {wisdomRenown = v === wisdomRenown ? 0 : v; saveChar(true);}"/>
+            </div>
+          </div>
         </div>
 
         <div class="form-group">
@@ -125,7 +186,7 @@
     <Tabs/>
 
     <div style="width: 100%; padding: 2rem; flex-direction: column; justify-content: center; align-items: center">
-      <Row style="width: 100%">
+      <Row v-if="isVampire" style="width: 100%">
         <Col style="width: calc(100%/3); justify-content: center; align-items: center">
           <Row><b>{{$t('character.bloodpotency.spurt')}}</b>: <TipButton :content="$t('character.bloodpotency.spurt.desc')"/></Row>
           <Row><small>{{getBloodPotency().bleedingSpurt}} {{$t('character.dice')}}</small></Row>
@@ -140,7 +201,7 @@
         </Col>
       </Row>
 
-      <Row style="width: 100%; margin-top: 1rem">
+      <Row v-if="isVampire" style="width: 100%; margin-top: 1rem">
         <Col style="width: calc(100%/3); justify-content: center; align-items: center">
           <Row><b>{{$t('character.bloodpotency.rouserepeat')}}</b>: <TipButton :content="$t('character.bloodpotency.rouserepeat.desc')"/></Row>
           <Row><small>{{$t('character.bloodpotency.rouserepeat.val', {x: getBloodPotency().rouseRepeatDisciplineLevel})}}</small></Row>
@@ -154,9 +215,59 @@
           <Row><small>{{getBloodPotency().pray}}</small></Row>
         </Col>
       </Row>
-    </div>
 
+      <Row v-if="isWerewolf" style="width: 100%">
+        <Col style="width: 100%; text-align: center">
+          <div>
+            <bullet/><bullet/><bullet/>
+            <b>Formen des Garou</b>
+            <bullet/><bullet/><bullet/>
+          </div>
+        </Col>
+      </Row>
+      <Row v-if="isWerewolf" style="width: 100%; margin-top: 1rem">
+        <Col style="width: calc(100%/5); justify-content: center; align-items: center">
+          <Row><b>Homid</b></Row>
+          <Row>Kosten: frei</Row>
+          <Row>Immun gegen Silber</Row>
+        </Col>
+        <Col style="width: calc(100%/5); justify-content: center; align-items: center">
+          <Row><b>Glabro</b></Row>
+          <Row>Kosten: 1 Rage-Test</Row>
+          <Row>Körperliche Tests: Bonus von 2 Würfeln</Row>
+          <Row>Soziale Tests: Malus von 2 Würfeln</Row>
+          <Row>Regenerierung: 1 pro Rage-Test</Row>
+        </Col>
+        <Col style="width: calc(100%/5); justify-content: center; align-items: center">
+          <Row><b>Crinos</b></Row>
+          <Row>Kosten: 2 Rage-Test</Row>
+          <Row><span style="text-align: center">Pro Runde 1 Willenskraft ausgeben oder in Raserei verfallen</span></Row>
+          <Row>+4 Leben</Row>
+          <Row>Körperliche Tests: Bonus von 4 Würfeln</Row>
+          <Row>Soziale & Heimlichkeit Tests: fehlschlag</Row>
+          <Row>Regenerierung: 2 pro Rage-Test</Row>
+          <Row>Biss: +1 schwerer Schaden</Row>
+          <Row>Verursacht Delirium</Row>
+        </Col>
+        <Col style="width: calc(100%/5); justify-content: center; align-items: center">
+          <Row><b>Hispo</b></Row>
+          <Row>Kosten: 1 Rage-Test</Row>
+          <Row>Körperliche Tests: Bonus von 2 Würfeln</Row>
+          <Row>Soziale Tests: nur mit Wölfen und Garou</Row>
+          <Row>Regenerierung: 1 pro Rage-Test</Row>
+          <Row>Biss: +1 schwerer Schaden</Row>
+        </Col>
+        <Col style="width: calc(100%/5); justify-content: center; align-items: center">
+          <Row><b>Lupus</b></Row>
+          <Row>Kosten: frei</Row>
+          <Row>Immun gegen Silber</Row>
+          <Row>Soziale Tests: nur mit Wölfen und Garou</Row>
+        </Col>
+      </Row>
+    </div>
+>
     <BloodPotencyModal ref="levelBloodPotencyModal"/>
+    <RenownModal ref="levelRenownModal"/>
     <ConfirmDeleteModal ref="confirmDeleteModal"/>
   </div>
 </template>
@@ -185,10 +296,14 @@ import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vu
 import NewSpecializationModal from "@/components/viewer/modals/leveling/NewSpecializationModal.vue";
 import EventBus from "@/libs/event-bus";
 import MarkOfCain from "@/components/viewer/MarkOfCain.vue";
+import {GameLine} from "@/types/gameline";
+import {IWerewolfW5Sheet, W5RenownKey} from "@/types/w5";
+import RenownModal from "@/components/viewer/modals/leveling/RenownModal.vue";
 
 @Component({
   methods: {},
   components: {
+    RenownModal,
     MarkOfCain,
     NewSpecializationModal,
     ConfirmDeleteModal,
@@ -198,6 +313,8 @@ import MarkOfCain from "@/components/viewer/MarkOfCain.vue";
 })
 export default class ProfileView extends Vue {
 
+  RenownKey = W5RenownKey;
+
   @State("editingCharacter")
   private editingCharacter!: ICharacter;
 
@@ -206,6 +323,9 @@ export default class ProfileView extends Vue {
 
   @Ref("levelBloodPotencyModal")
   private levelBloodPotencyModal!: BloodPotencyModal;
+
+  @Ref("levelRenownModal")
+  private levelRenownModal!: RenownModal;
 
   @Ref("confirmDeleteModal")
   private confirmDeleteModal!: ConfirmDeleteModal;
@@ -231,6 +351,13 @@ export default class ProfileView extends Vue {
     CharacterStorage.saveCharacter(this.editingCharacter, triggerSync);
   }
 
+  private levelRenown(renownKey: W5RenownKey) {
+    if (!this.isWerewolf) {
+      return;
+    }
+    this.levelRenownModal.showModal(this.editingCharacter as any as IWerewolfW5Sheet, renownKey);
+  }
+
   private getBloodPotency(): IBloodPotencyData {
     return DataManager.selectedLanguage.bloodPotencyTable.find(x => x.value === this.editingCharacter.bloodPotency)!;
   }
@@ -250,7 +377,7 @@ export default class ProfileView extends Vue {
   }
 
   private changeAvatar(e: MouseEvent) {
-    if (!e.shiftKey) {
+    if (e.shiftKey) {
       this.avatarUploader.click();
     }
   }
@@ -262,16 +389,71 @@ export default class ProfileView extends Vue {
     });
   }
 
+  private get gloryRenown(): number {
+    return this.getRenownValue(W5RenownKey.Glory);
+  }
+
+  private set gloryRenown(value: number) {
+    this.setRenownValue(W5RenownKey.Glory, value);
+  }
+
+  private get honorRenown(): number {
+    return this.getRenownValue(W5RenownKey.Honor);
+  }
+
+  private set honorRenown(value: number) {
+    this.setRenownValue(W5RenownKey.Honor, value);
+  }
+
+  private get wisdomRenown(): number {
+    return this.getRenownValue(W5RenownKey.Wisdom);
+  }
+
+  private set wisdomRenown(value: number) {
+    this.setRenownValue(W5RenownKey.Wisdom, value);
+  }
+
+  private getRenownValue(key: W5RenownKey): number {
+    if (!this.editingCharacter || !this.isWerewolf) {
+      return 0;
+    }
+    return (this.editingCharacter as any as IWerewolfW5Sheet).renown.find(x => x.key === key)?.value || 0;
+  }
+
+  private setRenownValue(key: W5RenownKey, value: number) {
+    if (!this.editingCharacter || !this.isWerewolf) {
+      return;
+    }
+    const renown = (this.editingCharacter as any as IWerewolfW5Sheet).renown.find(x => x.key === key);
+    if (renown) {
+      renown.value = value;
+    } else {
+      (this.editingCharacter as any as IWerewolfW5Sheet).renown.push({key, value});
+    }
+  }
+
   private get humanityMalus() {
+    if (!this.isVampire) {
+      return '';
+    }
+
     const dices = getHumanInteractionMalus(this.editingCharacter);
     return dices === Number.MIN_SAFE_INTEGER ? '∞ (Wasail)' : dices;
   }
 
   private get mocActive() {
+    if (!this.isVampire) {
+      return false;
+    }
+
     return !!this.editingCharacter?.hasCainsMark;
   }
 
   private get mocLevel() {
+    if (!this.isVampire) {
+      return 0;
+    }
+
     if (!this.editingCharacter || !this.editingCharacter.hasCainsMark || !this.editingCharacter.cainsMarkLevel) {
       return 0;
     }
@@ -280,6 +462,10 @@ export default class ProfileView extends Vue {
   }
 
   private get mocPath(): 'black'|'red'|'none' {
+    if (!this.isVampire) {
+      return 'none';
+    }
+
     if (!this.editingCharacter || !this.editingCharacter.hasCainsMark || !this.editingCharacter.cainsMarkLevel) {
       return 'none';
     }
@@ -289,6 +475,14 @@ export default class ProfileView extends Vue {
     }
 
     return 'black';
+  }
+
+  private get isVampire() {
+    return this.editingCharacter?.game !== GameLine.Mage && this.editingCharacter?.game !== GameLine.Werewolf;
+  }
+
+  private get isWerewolf() {
+    return this.editingCharacter?.game === GameLine.Werewolf;
   }
 
   @Inject("update-viewer")

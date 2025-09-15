@@ -3,11 +3,11 @@ import Vue from "vue";
 
 Vue.use(VueI18n);
 
-export const AVAILABLE_LOCALES = [{name: "Deutsch", code: "de-DE"}, {name: "English", code: "en-US"}];
+export const AVAILABLE_LOCALES = [{name: "Deutsch", code: "de-DE"}, /*{name: "English", code: "en-US"}*/];
 
 const loadedLocales: LocaleMessages = {};
 
-export const DEFAULT_LOCALE = "en-US";
+export const DEFAULT_LOCALE = "de-DE";
 
 import enUS from '@/assets/langs/en-US.json';
 loadedLocales["en-US"] = enUS;
@@ -16,8 +16,14 @@ import deDE from '@/assets/langs/de-DE.json';
 import {SettingsData} from "@/libs/io/settings";
 loadedLocales["de-DE"] = deDE;
 
+let loadedLocale = SettingsData.getLanguage();
+if (!AVAILABLE_LOCALES.find(l => l.code === loadedLocale)) {
+    loadedLocale = DEFAULT_LOCALE;
+    SettingsData.setLanguage(loadedLocale);
+}
+
 export const i18n = new VueI18n({
-    locale: SettingsData.getLanguage(),
+    locale: loadedLocale,
     fallbackLocale: DEFAULT_LOCALE,
     messages: loadedLocales
 });

@@ -5,15 +5,23 @@
         <b><i class="fa-solid fa-circle-question"></i> {{$t('main.characters.create.tip.title')}}</b><br/>
         <small>{{$t('main.characters.create.tip.subtitle')}}</small><br/>
         <ul style="font-size: 1.2rem">
-          <li style="margin-bottom: 0 !important;" v-for="i in [1, 2, 3, 4, 5]">{{$t(`main.characters.create.tip.question${i}`)}}</li>
+          <li style="margin-bottom: 0 !important;" v-for="i in [1, 2, 3, 4, 5]">{{$t(`main.characters.create.tip.${gameline}.question${i}`)}}</li>
         </ul>
         <hr>
       </div>
       <div class="form-group">
+        <div class="sex-select">
+          <div :class="{'active': gameline === GameLine.Vampire}" @click="gameline = GameLine.Vampire" style="border-right: 1px solid var(--primary-color);">{{$t('character.creation-start.v5')}}</div>
+          <div :class="{'active': gameline === GameLine.Werewolf}" @click="gameline = GameLine.Werewolf" style="border-left: 1px solid var(--primary-color); border-right: 1px solid var(--primary-color)">{{$t('character.creation-start.w5')}}</div>
+<!--          <div :class="{'active': gameline === GameLine.Mage}" @click="gameline = GameLine.Mage" style="border-left: 1px solid var(&#45;&#45;primary-color);">{{$t('character.creation-start.m20')}}</div>-->
+        </div>
+      </div>
+      <hr/>
+      <div class="form-group">
         <label class="required">{{$t('main.characters.create.name')}}:</label>
         <input type="text" class="form-control" :placeholder="$t('main.characters.create.name')" required="required" v-model="name">
       </div>
-      <div class="form-group">
+      <div v-if="gameline === GameLine.Vampire" class="form-group">
         <label class="required">{{$t('main.characters.create.generation')}}:</label>
         <div class="d-flex" style="gap: 1rem">
           <select v-model="generationEra" @change="onEraChange" class="form-control">
@@ -34,7 +42,7 @@
           <div :class="{'active': sex === Sex.Female}" @click="sex = Sex.Female" style="border-left: 1px solid var(--primary-color);">{{$t('character.sex.f')}}</div>
         </div>
       </div>
-      <div class="form-group">
+      <div v-if="gameline === GameLine.Vampire" class="form-group">
         <label>{{$t('main.characters.create.books')}}:</label>
         <BookSelection ref="bookSelection"/>
       </div>
@@ -46,12 +54,15 @@
 </template>
 
 <script lang="ts">
-import {Component, Ref, Vue} from "vue-property-decorator";
+import {Component, Ref, Vue, Watch} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {DefaultCharacter, Generation, ICharacter, ICharacterDirectory, Sex} from "@/types/models";
 import {Mutation} from "vuex-class";
-import {EditorHistory} from "@/libs/editor-history";
 import BookSelection from "@/components/editor/BookSelection.vue";
+import {GameLine} from "@/types/gameline";
+import {hardSetTheme} from "@/libs/theme";
+import {EditorHistory} from "@/libs/editor-history";
+import {NewW5Sheet} from "@/types/w5";
 
 @Component({
   components: {BookSelection, Modal}
@@ -60,6 +71,7 @@ export default class CreateCharacterModal extends Vue {
 
   private Sex = Sex;
   private Generation = Generation;
+  private GameLine = GameLine;
 
   @Ref("bookSelection")
   private bookSelection!: BookSelection;
@@ -72,6 +84,7 @@ export default class CreateCharacterModal extends Vue {
 
   private show = false;
   private name: string = "";
+  private gameline: GameLine = GameLine.Vampire;
   private sex: Sex = Sex.Divers;
   private generation: number = 13;
   private generationEra: Generation = Generation.Children;
@@ -79,6 +92,7 @@ export default class CreateCharacterModal extends Vue {
 
   public showModal(dir?: ICharacterDirectory) {
     this.dir = dir;
+    this.gameline = GameLine.Vampire;
     this.show = true;
   }
 
@@ -87,19 +101,27 @@ export default class CreateCharacterModal extends Vue {
       return;
     }
 
-    const char = DefaultCharacter();
+    const char = this.newChar();
     char.name = this.name;
     char.sex = this.sex;
-    char.generation = this.generation;
-    char.generationEra = this.generationEra;
-    char.books = this.bookSelection.activeBooks;
 
     this.setDirectoryForCharCreation(this.dir);
 
-    this.applyEra(char);
+    if (this.gameline === GameLine.Vampire) {
+      char.generation = this.generation;
+      char.generationEra = this.generationEra;
+      char.books = this.bookSelection.activeBooks;
+      this.applyEra(char);
+    }
+
     EditorHistory.push(char);
     this.setEditingCharacter(char);
-    this.$router.push({name: 'editor-clan'});
+
+    if (this.gameline === GameLine.Vampire) {
+      this.$router.push({name: 'editor-clan'});
+    } else if (this.gameline === GameLine.Werewolf) {
+      this.$router.push({name: 'editor-auspice'});
+    }
 
     this.show = false;
   }
@@ -187,6 +209,27 @@ export default class CreateCharacterModal extends Vue {
         return 10;
       default:
         return Infinity;
+    }
+  }
+
+  private newChar(): any {
+    if (this.gameline === GameLine.Vampire) {
+      return DefaultCharacter();
+    } else if (this.gameline === GameLine.Werewolf) {
+      return NewW5Sheet();
+    }
+    return undefined;
+  }
+
+  @Watch("gameline")
+  private onGamelineChange() {
+    hardSetTheme(this.gameline);
+  }
+
+  @Watch("show")
+  private onShowChange(val: boolean) {
+    if (!val) {
+      hardSetTheme();
     }
   }
 }

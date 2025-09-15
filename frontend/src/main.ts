@@ -11,6 +11,7 @@ import {i18n} from "@/libs/i18n";
 import VueResizeText from 'vue-resize-text';
 import EventBus from "@/libs/event-bus";
 import VueInteractJs from "vue-interactjs";
+import {hardSetTheme} from "@/libs/theme";
 
 Vue.config.productionTip = false
 Vue.use(VueResizeText);
@@ -24,6 +25,8 @@ function initializeDocumentEvents() {
 }
 
 initializeDocumentEvents();
+
+hardSetTheme();
 
 Backend.initAsync().then(() => {
     new Vue({

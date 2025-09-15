@@ -99,6 +99,26 @@ const routes: Array<RouteConfig> = [
         path: 'traits',
         name: 'editor-traits',
         component: () => import('@/views/editor/ChooseTraitsView.vue')
+      },
+      {
+        path: 'auspice',
+        name: 'editor-auspice',
+        component: () => import('@/views/editor/w5/ChooseAuspiceView.vue')
+      },
+      {
+        path: 'tribe',
+        name: 'editor-tribe',
+        component: () => import('@/views/editor/w5/ChooseTribeView.vue')
+      },
+      {
+        path: 'renown',
+        name: 'editor-renown',
+        component: () => import('@/views/editor/w5/ChooseRenownView.vue')
+      },
+      {
+        path: 'gifts',
+        name: 'editor-gifts',
+        component: () => import('@/views/editor/w5/ChooseGiftsView.vue')
       }
     ]
   },

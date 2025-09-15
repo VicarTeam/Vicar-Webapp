@@ -16,10 +16,6 @@ export default class ClanSymbol extends Vue {
       return images(`./15.png`);
     }
 
-    if (this.clan.symbol) {
-      return this.clan.symbol;
-    }
-
     const images = require.context('@/assets/img/clans', false, /\.png$/)
     return images(`./${this.clan.id}.png`);
   }

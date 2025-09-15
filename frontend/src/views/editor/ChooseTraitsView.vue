@@ -80,7 +80,7 @@
         </div>
       </div>
 
-      <ChooseTraitModal ref="chooseTraitModal"/>
+      <ChooseTraitModal ref="chooseTraitModal" :gameline="editingCharacter.game"/>
     </div>
   </EditorForm>
 </template>
@@ -94,6 +94,7 @@ import ChooseTraitModal from "@/components/editor/modals/ChooseTraitModal.vue";
 import TipButton from "@/components/editor/TipButton.vue";
 import XButton from "@/components/editor/XButton.vue";
 import LevelButton from "@/components/viewer/LevelButton.vue";
+import {IEdition5Sheet} from "@/types/gameline";
 
 @Component({
   components: {LevelButton, XButton, TipButton, ChooseTraitModal, EditorForm}
@@ -101,7 +102,7 @@ import LevelButton from "@/components/viewer/LevelButton.vue";
 export default class ChooseTraitsView extends Vue {
 
   @State("editingCharacter")
-  private editingCharacter!: ICharacter | undefined;
+  private editingCharacter!: IEdition5Sheet | undefined;
 
   @Ref("chooseTraitModal")
   private chooseTraitModal!: ChooseTraitModal;
@@ -116,7 +117,7 @@ export default class ChooseTraitsView extends Vue {
       this.maxTraitBonus = this.editingCharacter.requiredPointSpreads.filter(s => !s.isFlaw).map(s => s.points).reduce((a, b) => a + b, 0);
       this.maxFlawBonus = this.editingCharacter.requiredPointSpreads.filter(s => s.isFlaw).map(s => s.points).reduce((a, b) => a + b, 0);
 
-      if (this.editingCharacter.generationEra === Generation.Ancillae) {
+      if ((this.editingCharacter as ICharacter)['generationEra'] && (this.editingCharacter as ICharacter).generationEra === Generation.Ancillae) {
         this.maxTraitPoints += 2;
         this.maxFlawPoints += 2;
       }

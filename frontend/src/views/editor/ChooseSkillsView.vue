@@ -1,5 +1,5 @@
 <template>
-  <EditorForm :can-go-next="canGoNext" next-step="editor-disciplines" :fallback-history-char="characterCache" @before-next="applyCharacterData">
+  <EditorForm :can-go-next="canGoNext" :next-step="nextStep" :fallback-history-char="characterCache" @before-next="applyCharacterData">
     <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
       <div class="choose-skills-wrapper">
         <div class="form-group mb-5" style="text-align: center">
@@ -54,10 +54,11 @@
 import {Component, Ref, Vue} from "vue-property-decorator";
 import EditorForm from "@/components/editor/EditorForm.vue";
 import {State} from "vuex-class";
-import {ICharacter, SkillKeys} from "@/types/models";
+import {SkillKeys} from "@/types/models";
 import {DefinedSpreadTypes, TraitActionType} from "@/types/data";
 import TipButton from "@/components/editor/TipButton.vue";
 import SkillInfoModal from "@/components/editor/modals/SkillInfoModal.vue";
+import {GameLine, IEdition5Sheet} from "@/types/gameline";
 
 @Component({
   components: {SkillInfoModal, TipButton, EditorForm}
@@ -67,12 +68,12 @@ export default class ChooseSkillsView extends Vue {
   DefinedSpreadTypes = DefinedSpreadTypes;
 
   @State("editingCharacter")
-  private editingCharacter!: ICharacter|undefined;
+  private editingCharacter!: IEdition5Sheet|undefined;
 
   @Ref("skillInfoModal")
   private skillInfoModal!: SkillInfoModal;
 
-  private characterCache: ICharacter|null = null;
+  private characterCache: IEdition5Sheet|null = null;
   private definedSpecializations: {key: SkillKeys, value: string, name: any}[] = [];
   private freeSpecializationKey: SkillKeys | null = null;
   private freeSpecializationName: string = "";
@@ -154,6 +155,13 @@ export default class ChooseSkillsView extends Vue {
 
     const hasNoSkillPointsLeft = this.getAvailablePoints().map(p => this.getAvailableAmount(p)).every(a => a === 0);
     return hasNoSkillPointsLeft && this.definedSpecializations.every(d => d.value.length > 0) && this.freeSpecializationName.length > 0 && this.freeSpecializationKey !== null;
+  }
+
+  private get nextStep(): string {
+    if (this.editingCharacter && this.editingCharacter.game === GameLine.Werewolf) {
+      return 'editor-gifts';
+    }
+    return 'editor-disciplines';
   }
 }
 </script>
