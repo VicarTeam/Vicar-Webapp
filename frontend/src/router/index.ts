@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter, {Route, RouteConfig} from 'vue-router'
 import CharacterStorage from "@/libs/io/character-storage";
 import {setSession} from "@/libs/auth";
+import DataManager from "@/libs/data/data-manager";
 
 Vue.use(VueRouter)
 
@@ -11,12 +12,18 @@ function _q(to: Route): string {
   return `?r=${encodeURIComponent(btoa(to.fullPath))}`;
 }
 
+export function getRedirectQuery(): string {
+  if (!firstRoute) return '';
+  return _q(firstRoute);
+}
+
 const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'main',
     component: () => import('@/views/MainView.vue'),
-    beforeEnter: (to, from, next) => {
+    beforeEnter: async (to, from, next) => {
+      console.warn('Main route beforeEnter', to, from);
       const stk = to.query.stk as string;
       if (stk) {
         localStorage.setItem('vicar:session', stk);
@@ -24,8 +31,13 @@ const routes: Array<RouteConfig> = [
 
       if (!firstRoute) firstRoute = to;
       if (!localStorage.getItem('vicar:session')) {
+        console.warn('No session, redirecting to login');
         next('/login');
       } else {
+        if (!await DataManager.loadLogin(false)) {
+          next('/login');
+          return;
+        }
         next();
       }
     }
@@ -33,11 +45,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/login',
     name: 'login',
-    component: () => null,
-    beforeEnter: async (to, from, next) => {
-      const q = firstRoute ? _q(firstRoute) : '';
-      window.location.href = process.env.VUE_APP_API_URL + '/auth/login' + q;
-    },
+    component: () => import('@/views/LoginView.vue'),
   },
   {
     path: '/logged-in',

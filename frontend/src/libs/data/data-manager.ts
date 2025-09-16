@@ -30,7 +30,7 @@ import {
 import {v4 as uuidv4} from 'uuid';
 import {HomebrewManager} from "@/libs/data/homebrew-manager";
 import {VicarSync} from "@/libs/io/vicar-sync";
-import {get} from "@/libs/io/rest";
+import {get, patch} from "@/libs/io/rest";
 import router from "@/router";
 
 export default class DataManager {
@@ -44,24 +44,27 @@ export default class DataManager {
             || this.languages.find(lang => lang.key === i18n.fallbackLocale)!;
     }
 
-    public static async loadLogin() {
+    public static async loadLogin(routing = true): Promise<boolean> {
         if (this.loggedInAs) {
-            return;
+            return true;
         }
 
         if (!localStorage.getItem('vicar:session')) {
-            return;
+            return true;
         }
 
         const [status, res] = await get<{username: string}>(`/users/@me`);
         if (status >= 400) {
             if (status === 401) {
-                await router.push('/login');
+                if (routing) {
+                  await router.push('/login');
+                }
+                return false;
             }
-            return;
         }
 
         this.loggedInAs = res.username;
+      return true;
     }
 
     public static async load() {
@@ -158,6 +161,16 @@ export default class DataManager {
 
         await HomebrewManager.loadInstalledContent();
         await VicarSync.initialize();
+    }
+
+    public static async changeUserPassword(password: string, oldPassword: string): Promise<boolean> {
+      try {
+        const [status, _] = await patch(`/users/@me/password`, {password, oldPassword});
+        return status === 204;
+      } catch (e) {
+        console.error("Failed to change password", e);
+        return false;
+      }
     }
 
     public static findAvailableClan(books: number[], clanId: number): IClan|undefined {
