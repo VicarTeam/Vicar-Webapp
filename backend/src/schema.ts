@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema(
   {
     discordId: { type: String, required: true, unique: true },
     username: { type: String, required: true, unique: true },
+    password: { type: String },
     shortCode: { type: String },
     installedHomebrew: { type: Object },
     currentAccessToken: { type: String, default: "" },

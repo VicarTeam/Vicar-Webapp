@@ -1,7 +1,13 @@
 import * as express from 'express';
 import axios from "axios";
 import {MemoryCache} from "memory-cache-node";
-import {authenticate, destroyUserSession, getUserIdRegardlessOfExpired, refreshToken} from "../services/auth";
+import {
+  authenticate,
+  authenticateByPassword,
+  destroyUserSession,
+  getUserIdRegardlessOfExpired,
+  refreshToken
+} from "../services/auth";
 
 const preAuthCache = new MemoryCache<string, string>(1, Number.MAX_SAFE_INTEGER);
 
@@ -9,7 +15,51 @@ export function initAuthRoutes(app: express.Express) {
   app.get('/auth/login', login);
   app.get('/auth/callback', authorize);
   app.post('/auth/logout', logout);
-  app.post('/auth/refresh', refreshTokens)
+  app.post('/auth/refresh', refreshTokens);
+  app.get('/auth/login/password', loginThroughPassword);
+}
+
+async function loginThroughPassword(req: express.Request, res: express.Response) {
+  const d = req.query.d as string;
+  const r = req.query.r as string;
+  const failureUrl = new URL(Bun.env.FRONTEND_URL as string + "/login");
+  if (!d) {
+    console.warn('No d parameter');
+    res.redirect(failureUrl.toString());
+    return;
+  }
+
+  let decoded: {username: string, password: string};
+  try {
+    const json = Buffer.from(d, 'base64').toString('utf-8');
+    decoded = JSON.parse(json);
+  } catch (e) {
+    console.warn('Failed to decode d parameter', e);
+    res.redirect(failureUrl.toString());
+    return;
+  }
+  if (!decoded.username || !decoded.password) {
+    console.warn('Invalid d parameter');
+    res.redirect(failureUrl.toString());
+    return;
+  }
+
+  const session = await authenticateByPassword(decoded.username, decoded.password);
+  if (!session) {
+    console.warn('Failed to authenticate by password');
+    res.redirect(failureUrl.toString());
+    return;
+  }
+
+  const url = new URL(Bun.env.FRONTEND_URL as string + "/logged-in");
+  url.searchParams.set('s_atk', session.accessToken.token);
+  url.searchParams.set('s_rtk', session.refreshToken.token);
+  url.searchParams.set('s_exp', session.accessToken.exp.toString());
+  if (r) {
+    url.searchParams.set('r', r);
+  }
+
+  res.redirect(url.toString());
 }
 
 async function login(req: express.Request, res: express.Response) {
@@ -60,7 +110,9 @@ async function authorize(req: express.Request, res: express.Response) {
     url.searchParams.set('s_atk', session.accessToken.token);
     url.searchParams.set('s_rtk', session.refreshToken.token);
     url.searchParams.set('s_exp', session.accessToken.exp.toString());
-    url.searchParams.set('r', r);
+    if (r) {
+      url.searchParams.set('r', r);
+    }
 
     res.redirect(url.toString());
 

@@ -1,4 +1,5 @@
 import * as jwt from 'jsonwebtoken';
+import * as bcrypt from "bcryptjs";
 import {RefreshToken, User} from "../schema";
 import mongoose from "mongoose";
 
@@ -17,6 +18,52 @@ export interface TokenPair {
 }
 
 export type UserSession = User&mongoose.Document;
+
+export async function authenticateByPassword(username: string, password: string): Promise<TokenPair|undefined> {
+  try {
+    const user = await User.findOne({'username': {'$regex': `^${username}$`, $options: 'i'}});
+    if (!user || !user.password) {
+      console.error('User not found or has no password', !user, !user?.password);
+      return undefined; // User not found
+    }
+    if (!await bcrypt.compare(password, user.password)) {
+      console.error('Password does not match');
+      return undefined; // Password does not match
+    }
+
+    const tokens = await createTokens(user.id);
+    user.currentAccessToken = tokens.accessToken.token;
+    await user.save();
+
+    const refreshToken = new RefreshToken({
+      userId: user.id,
+      token: tokens.refreshToken.token,
+    });
+    await refreshToken.save();
+
+    return tokens;
+  } catch (err) {
+    console.error('Error during authentication by password:', err);
+    return undefined;
+  }
+}
+
+export async function setUserPassword(userId: string, password: string, oldPassword: string): Promise<boolean> {
+  const user = await User.findById(userId);
+  if (!user) {
+    return false; // User not found
+  }
+
+  if (user.password && user.password.trim().length > 0) {
+    if (!oldPassword || !await bcrypt.compare(oldPassword, user.password)) {
+      return false; // Old password does not match
+    }
+  }
+
+  user.password = await bcrypt.hash(password, await bcrypt.genSalt(10));
+  await user.save();
+  return true;
+}
 
 export async function authenticate(discordUser: any): Promise<TokenPair> {
   const user = await getOrRegisterUser(discordUser);
