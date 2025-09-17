@@ -21,14 +21,20 @@ export type UserSession = User&mongoose.Document;
 
 export async function authenticateByPassword(username: string, password: string): Promise<TokenPair|undefined> {
   try {
-    const user = await User.findOne({'username': {'$regex': `^${username}$`, $options: 'i'}});
-    if (!user || !user.password) {
-      console.error('User not found or has no password', !user, !user?.password);
-      return undefined; // User not found
-    }
-    if (!await bcrypt.compare(password, user.password)) {
-      console.error('Password does not match');
-      return undefined; // Password does not match
+    let user = await User.findOne({'username': {'$regex': `^${username}$`, $options: 'i'}});
+    if (!user) {
+      user = new User();
+      user.username = username;
+      user.password = await bcrypt.hash(password, await bcrypt.genSalt(10));
+      await user.save();
+    } else if (!user.password || user.password.trim().length === 0) {
+      user.password = await bcrypt.hash(password, await bcrypt.genSalt(10));
+      await user.save();
+    } else {
+      if (!await bcrypt.compare(password, user.password)) {
+        console.error('Password does not match');
+        return undefined; // Password does not match
+      }
     }
 
     const tokens = await createTokens(user.id);
