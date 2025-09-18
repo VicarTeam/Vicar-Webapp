@@ -32,6 +32,7 @@ export async function authenticateByPassword(username: string, password: string)
       user.password = await bcrypt.hash(password, await bcrypt.genSalt(10));
       await user.save();
     } else {
+      console.log('User found, verifying password:', user.username, user.password);
       if (!await bcrypt.compare(password, user.password)) {
         console.error('Password does not match');
         return undefined; // Password does not match
