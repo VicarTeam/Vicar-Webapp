@@ -1,12 +1,12 @@
 <script lang="ts">
 import {Vue, Component, Prop} from 'vue-property-decorator';
-import {IM20Tradition} from "@/types/m20";
+import {M20Sphere} from "@/types/m20";
 
 @Component({})
-export default class TraditionSymbol extends Vue {
+export default class SphereSymbol extends Vue {
 
   @Prop({required: true})
-  private tradition!: IM20Tradition;
+  private sphere!: M20Sphere;
 
   private errored: boolean = false;
 
@@ -15,8 +15,8 @@ export default class TraditionSymbol extends Vue {
       return '';
     }
 
-    const images = require.context('@/assets/img/traditions', false, /\.webp$/)
-    return images(`./${this.tradition.id}.webp`);
+    const images = require.context('@/assets/img/spheres', false, /\.webp$/)
+    return images(`./${this.sphere}.webp`);
   }
 }
 </script>

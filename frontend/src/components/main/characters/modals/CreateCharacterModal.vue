@@ -63,6 +63,7 @@ import {GameLine} from "@/types/gameline";
 import {hardSetTheme} from "@/libs/theme";
 import {EditorHistory} from "@/libs/editor-history";
 import {NewW5Sheet} from "@/types/w5";
+import {NewMageSheet} from "@/types/m20";
 
 @Component({
   components: {BookSelection, Modal}
@@ -121,6 +122,8 @@ export default class CreateCharacterModal extends Vue {
       this.$router.push({name: 'editor-clan'});
     } else if (this.gameline === GameLine.Werewolf) {
       this.$router.push({name: 'editor-auspice'});
+    } else if (this.gameline === GameLine.Mage) {
+      this.$router.push({name: 'editor-identity'});
     }
 
     this.show = false;
@@ -217,6 +220,8 @@ export default class CreateCharacterModal extends Vue {
       return DefaultCharacter();
     } else if (this.gameline === GameLine.Werewolf) {
       return NewW5Sheet();
+    } else if (this.gameline === GameLine.Mage) {
+      return NewMageSheet();
     }
     return undefined;
   }

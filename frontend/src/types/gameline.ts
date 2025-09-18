@@ -14,6 +14,7 @@ export interface IBaseSheet {
   justViewing?: boolean;
   avatar: string;
   name: string;
+  notes: string;
   sex: Sex;
   concept: string;
   inventory: IInventory;

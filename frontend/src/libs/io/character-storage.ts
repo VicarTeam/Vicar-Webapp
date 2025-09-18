@@ -5,6 +5,7 @@ import {del, get, post, put} from "@/libs/io/rest";
 import store from "@/store";
 import router from "@/router";
 import {io} from "socket.io-client";
+import {checkSession} from "@/libs/auth";
 
 let saveDebounce: number|null = null;
 
@@ -15,7 +16,8 @@ export default class CharacterStorage {
     private static initialized: boolean = false;
 
     public static async preloadCharacter(id: string): Promise<true|'not_found'|'not_authed'> {
-        if (!localStorage.getItem('vicar:session')) {
+      const result = await checkSession();
+        if (result.status === 'not_found') {
             return 'not_authed';
         }
 

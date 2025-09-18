@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter, {Route, RouteConfig} from 'vue-router'
 import CharacterStorage from "@/libs/io/character-storage";
-import {setSession} from "@/libs/auth";
+import {checkSession, setSession} from "@/libs/auth";
 import DataManager from "@/libs/data/data-manager";
 
 Vue.use(VueRouter)
@@ -29,8 +29,10 @@ const routes: Array<RouteConfig> = [
         localStorage.setItem('vicar:session', stk);
       }
 
+      const result = await checkSession();
+
       if (!firstRoute) firstRoute = to;
-      if (!localStorage.getItem('vicar:session')) {
+      if (result.status === 'not_found') {
         console.warn('No session, redirecting to login');
         next('/login');
       } else {
@@ -127,6 +129,26 @@ const routes: Array<RouteConfig> = [
         path: 'gifts',
         name: 'editor-gifts',
         component: () => import('@/views/editor/w5/ChooseGiftsView.vue')
+      },
+      {
+        path: 'identity',
+        name: 'editor-identity',
+        component: () => import('@/views/editor/m20/ChooseIdentityView.vue')
+      },
+      {
+        path: 'tradition',
+        name: 'editor-tradition',
+        component: () => import('@/views/editor/m20/ChooseTraditionView.vue')
+      },
+      {
+        path: 'm20-attributes',
+        name: 'editor-m20-attributes',
+        component: () => import('@/views/editor/m20/ChooseAttributesView.vue')
+      },
+      {
+        path: 'm20-abilities',
+        name: 'editor-m20-abilities',
+        component: () => import('@/views/editor/m20/ChooseAbilitiesView.vue')
       }
     ]
   },

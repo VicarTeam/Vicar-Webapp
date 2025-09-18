@@ -1,12 +1,12 @@
 <script lang="ts">
 import {Vue, Component, Prop} from 'vue-property-decorator';
-import {IW5Auspice} from "@/types/w5";
+import {IM20Tradition} from "@/types/m20";
 
 @Component({})
-export default class AuspiceSymbol extends Vue {
+export default class TraditionSymbol extends Vue {
 
   @Prop({required: true})
-  private auspice!: IW5Auspice;
+  private tradition!: IM20Tradition;
 
   private errored: boolean = false;
 
@@ -15,8 +15,8 @@ export default class AuspiceSymbol extends Vue {
       return '';
     }
 
-    const images = require.context('@/assets/img/auspices', false, /\.png$/)
-    return images(`./${this.auspice.key}.png`);
+    const images = require.context('@/assets/img/traditions', false, /\.webp$/)
+    return images(`./${this.tradition.id}.webp`);
   }
 }
 </script>

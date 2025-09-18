@@ -27,6 +27,7 @@ import HomebrewView from "@/views/HomebrewView.vue";
 import CharacterStorage from "@/libs/io/character-storage";
 import {nextTick} from "vue";
 import {hardSetTheme} from "@/libs/theme";
+import {checkSession} from "@/libs/auth";
 
 @Component({
   components: {HomebrewView, Lexicon, Characters, Spinner, Settings, Tab, Tabs}
@@ -36,7 +37,8 @@ export default class MainView extends Vue {
   private selectedTab = 0;
 
   async mounted() {
-    if (!localStorage.getItem('vicar:session')) {
+    const result = await checkSession();
+    if (result.status === 'not_found') {
       return;
     }
 

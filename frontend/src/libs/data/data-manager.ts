@@ -49,10 +49,6 @@ export default class DataManager {
             return true;
         }
 
-        if (!localStorage.getItem('vicar:session')) {
-            return true;
-        }
-
         const [status, res] = await get<{username: string}>(`/users/@me`);
         if (status >= 400) {
             if (status === 401) {
