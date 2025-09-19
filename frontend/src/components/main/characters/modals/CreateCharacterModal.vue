@@ -13,7 +13,7 @@
         <div class="sex-select">
           <div :class="{'active': gameline === GameLine.Vampire}" @click="gameline = GameLine.Vampire" style="border-right: 1px solid var(--primary-color);">{{$t('character.creation-start.v5')}}</div>
           <div :class="{'active': gameline === GameLine.Werewolf}" @click="gameline = GameLine.Werewolf" style="border-left: 1px solid var(--primary-color); border-right: 1px solid var(--primary-color)">{{$t('character.creation-start.w5')}}</div>
-<!--          <div :class="{'active': gameline === GameLine.Mage}" @click="gameline = GameLine.Mage" style="border-left: 1px solid var(&#45;&#45;primary-color);">{{$t('character.creation-start.m20')}}</div>-->
+          <div :class="{'active': gameline === GameLine.Mage}" @click="gameline = GameLine.Mage" style="border-left: 1px solid var(--primary-color);">{{$t('character.creation-start.m20')}}</div>
         </div>
       </div>
       <hr/>

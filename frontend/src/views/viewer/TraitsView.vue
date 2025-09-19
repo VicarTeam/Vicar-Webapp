@@ -8,7 +8,7 @@
 
       <div class="list">
         <div class="entry" v-for="t in getTransformedData(editingCharacter.merits, false)">
-          <LevelButton v-if="getTraitLevel(t) < 5" @click="levelTraitModal.showModal(t, 'merits')"/>
+          <LevelButton v-if="getTraitLevel(t) < maxLevel" @click="levelTraitModal.showModal(t, 'merits')"/>
           <i class="iconbtnprim fa-solid fa-xmark" v-bind="$attrs" @click="removeTraitModal.showModal(t, 'merits', false)" v-if="editingCharacter.fullCustomization"></i>
           <div class="name">
             <small>
@@ -19,7 +19,7 @@
         </div>
 
         <div class="entry" v-for="t in getTransformedData(editingCharacter.backgrounds, false)">
-          <LevelButton v-if="getTraitLevel(t) < 5" @click="levelTraitModal.showModal(t, 'backgrounds')"/>
+          <LevelButton v-if="getTraitLevel(t) < maxLevel" @click="levelTraitModal.showModal(t, 'backgrounds')"/>
           <i class="iconbtnprim fa-solid fa-xmark" v-bind="$attrs" @click="removeTraitModal.showModal(t, 'backgrounds', false)" v-if="editingCharacter.fullCustomization"></i>
           <div class="name">
             <small>
@@ -77,6 +77,7 @@ import LevelButton from "@/components/viewer/LevelButton.vue";
 import TraitModal from "@/components/viewer/modals/leveling/TraitModal.vue";
 import ChooseTraitModal from "@/components/editor/modals/ChooseTraitModal.vue";
 import RemoveTraitModal from "@/components/viewer/modals/RemoveTraitModal.vue";
+import {GameLine} from "@/types/gameline";
 
 export interface ITransformedData extends ILockableTrait {
   pack: ITraitPack;
@@ -130,6 +131,13 @@ export default class TraitsView extends Vue {
 
   private getTraitLevel(trait: ITransformedData) {
     return parseInt((trait.customLevel ?? trait.level).toString());
+  }
+
+  private get maxLevel() {
+    if (this.editingCharacter?.game === GameLine.Mage) {
+      return 10;
+    }
+    return 5;
   }
 }
 </script>

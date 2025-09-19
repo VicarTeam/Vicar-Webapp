@@ -47,6 +47,12 @@ export default class ChooseAttributesView extends Vue {
   private socialPriority: AttributePriority = AttributePriority.None;
   private mentalPriority: AttributePriority = AttributePriority.None;
 
+  private onBeforeNext() {
+    for (const attr of physicalAttributes) {
+      this.editingCharacter.attributes[attr]++;
+    }
+  }
+
   private get selectablePhysicalPriorities(): AttributePriority[] {
     const used = [this.socialPriority, this.mentalPriority];
     return priorities.filter(x => !used.includes(x as AttributePriority)) as AttributePriority[];
@@ -144,7 +150,7 @@ export default class ChooseAttributesView extends Vue {
 </script>
 
 <template>
-  <EditorForm :can-go-next="canGoNext" next-step="editor-m20-abilities">
+  <EditorForm :can-go-next="canGoNext" next-step="editor-m20-abilities" @before-next="onBeforeNext">
     <div v-if="editingCharacter" class="attributes-view">
       <div class="card" style="width: 50rem">
         <small>{{$t('m20.editor.choose_attribute')}}</small>
@@ -184,7 +190,6 @@ export default class ChooseAttributesView extends Vue {
           </div>
         </div>
 
-        <!-- Social -->
         <div class="card">
           <h6>{{$t('m20.attribute_category.social')}}</h6>
           <select class="form-control" v-model="socialPriority">
@@ -217,7 +222,6 @@ export default class ChooseAttributesView extends Vue {
           </div>
         </div>
 
-        <!-- Mental -->
         <div class="card">
           <h6>{{$t('m20.attribute_category.mental')}}</h6>
           <select class="form-control" v-model="mentalPriority">

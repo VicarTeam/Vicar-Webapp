@@ -94,7 +94,7 @@ import ChooseTraitModal from "@/components/editor/modals/ChooseTraitModal.vue";
 import TipButton from "@/components/editor/TipButton.vue";
 import XButton from "@/components/editor/XButton.vue";
 import LevelButton from "@/components/viewer/LevelButton.vue";
-import {IEdition5Sheet} from "@/types/gameline";
+import {GameLine, IEdition5Sheet} from "@/types/gameline";
 
 @Component({
   components: {LevelButton, XButton, TipButton, ChooseTraitModal, EditorForm}
@@ -120,6 +120,10 @@ export default class ChooseTraitsView extends Vue {
       if ((this.editingCharacter as ICharacter)['generationEra'] && (this.editingCharacter as ICharacter).generationEra === Generation.Ancillae) {
         this.maxTraitPoints += 2;
         this.maxFlawPoints += 2;
+      }
+
+      if (this.editingCharacter.game === GameLine.Mage) {
+        this.maxFlawPoints = 0; // no need for flaws in mage
       }
     }
   }

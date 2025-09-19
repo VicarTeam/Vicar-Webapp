@@ -48,7 +48,7 @@
           <div class="form-group">
             <label>{{$t('editor.traits.modal.trait.level')}}:</label>
             <select class="form-control" v-model="customTraitLevel">
-              <option v-for="i in 5" :value="i">{{i}}</option>
+              <option v-for="i in maxLevel" :value="i">{{i}}</option>
             </select>
           </div>
           <div class="form-group">
@@ -290,7 +290,7 @@ export default class ChooseTraitModal extends Vue {
 
     let currentMax = Infinity;
 
-    for (let i = this.selectedTrait.level; i <= 5; i++) {
+    for (let i = this.selectedTrait.level; i <= this.maxLevel; i++) {
       if (i > this.pointsLeft) {
         break;
       }
@@ -352,7 +352,14 @@ export default class ChooseTraitModal extends Vue {
   private get isReadyForCustom(): boolean {
     return !!this.selectedPack && this.selectedPack.id === this._customPack.id
       && this.customTraitName.length > 0 && this.customTraitDescription.length > 0
-      && this.customTraitLevel >= 1 && this.customTraitLevel <= 5;
+      && this.customTraitLevel >= 1 && this.customTraitLevel <= this.maxLevel;
+  }
+
+  private get maxLevel() {
+    if (this.editingCharacter?.game === GameLine.Mage) {
+      return 10;
+    }
+    return 5;
   }
 
   private getTraitsForEdition(): ChooseTraitData {

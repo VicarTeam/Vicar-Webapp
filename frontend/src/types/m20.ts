@@ -1,5 +1,5 @@
 import {GameLine, IBaseSheet} from "@/types/gameline";
-import {Sex} from "@/types/models";
+import {IUsingTraitPacks, Sex} from "@/types/models";
 
 export enum M20Sphere {
   None = 'none',
@@ -148,6 +148,8 @@ export interface IMageSheet extends IBaseSheet {
   };
   attributes: { [key in M20Attribute]: number };
   abilities: { [key in M20Ability]: number };
+  merits: IUsingTraitPacks;
+  backgrounds: IUsingTraitPacks;
 }
 
 export function NewMageSheet(): IMageSheet {
@@ -239,6 +241,12 @@ export function NewMageSheet(): IMageSheet {
       [M20Ability.Science]: 0,
     },
     notes: "",
+    merits: {
+      packs: []
+    },
+    backgrounds: {
+      packs: []
+    },
   };
 }
 
