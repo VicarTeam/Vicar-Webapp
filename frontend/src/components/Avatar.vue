@@ -18,7 +18,7 @@ export default class Avatar extends Vue {
 
   private get realSrc(): string {
     if (!this.src || this.src.trim().length === 0) {
-      return require("@/assets/img/placeholder.jpg");
+      return '/img/placeholder.jpg';
     }
 
     return this.src;

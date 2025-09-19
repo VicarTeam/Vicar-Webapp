@@ -13,7 +13,7 @@ export default class LoginView extends Vue {
 
   private loginWithDiscord() {
     this.disabled = true;
-    window.location.href = process.env.VUE_APP_API_URL + '/auth/login' + getRedirectQuery();
+    window.location.href = (import.meta as any).env.VITE_APP_API_URL + '/auth/login' + getRedirectQuery();
   }
 
   private async loginWithPassword() {
@@ -34,7 +34,7 @@ export default class LoginView extends Vue {
     } else {
       queryString += '&';
     }
-    window.location.href = process.env.VUE_APP_API_URL + '/auth/login/password' + queryString + 'd=' + data;
+    window.location.href = (import.meta as any).env.VITE_APP_API_URL + '/auth/login/password' + queryString + 'd=' + data;
   }
 
   private get canLoginWithPassword() {

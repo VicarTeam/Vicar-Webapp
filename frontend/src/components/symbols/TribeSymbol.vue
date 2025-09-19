@@ -1,6 +1,7 @@
 <script lang="ts">
 import {Vue, Component, Prop} from 'vue-property-decorator';
 import {IW5Tribe} from "@/types/w5";
+import {getImageUrl} from "@/libs/assets";
 
 @Component({})
 export default class TribeSymbol extends Vue {
@@ -12,11 +13,10 @@ export default class TribeSymbol extends Vue {
 
   private getSource() {
     if (this.errored) {
-      return '';
+      return '/img/ankh.png';
     }
 
-    const images = require.context('@/assets/img/tribes', false, /\.webp$/)
-    return images(`./${this.tribe.id}.webp`);
+    return getImageUrl('tribes', this.tribe.id + '.webp');
   }
 }
 </script>

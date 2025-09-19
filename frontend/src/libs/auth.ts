@@ -89,7 +89,7 @@ export async function refreshIfNeeded(): Promise<RefreshResult> {
   const { accessToken, refreshToken } = status;
 
   try {
-    const url = new URL("/auth/refresh", process.env.VUE_APP_API_URL || window.location.origin);
+    const url = new URL("/auth/refresh", (import.meta as any).env.VITE_APP_API_URL || window.location.origin);
     url.searchParams.set("rtk", refreshToken);
 
     const resp = await fetch(url.toString(), {

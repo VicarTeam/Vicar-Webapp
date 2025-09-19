@@ -49,7 +49,7 @@ export async function del<T>(url: string, headers?: { [key: string]: string }): 
 }
 
 function buildUrl(url: string) {
-  return `${process.env.VUE_APP_API_URL}${url}`;
+  return `${(import.meta as any).env.VITE_APP_API_URL}${url}`;
 }
 
 async function buildHeaders(headers?: { [key: string]: string }): Promise<Headers> {

@@ -1,6 +1,7 @@
 <script lang="ts">
 import {Vue, Component, Prop} from 'vue-property-decorator';
 import {IM20Tradition} from "@/types/m20";
+import {getImageUrl} from "@/libs/assets";
 
 @Component({})
 export default class TraditionSymbol extends Vue {
@@ -12,11 +13,10 @@ export default class TraditionSymbol extends Vue {
 
   private getSource() {
     if (this.errored) {
-      return '';
+      return '/img/ankh.png';
     }
 
-    const images = require.context('@/assets/img/traditions', false, /\.webp$/)
-    return images(`./${this.tradition.id}.webp`);
+    return getImageUrl('traditions', this.tradition.id + '.webp');
   }
 }
 </script>

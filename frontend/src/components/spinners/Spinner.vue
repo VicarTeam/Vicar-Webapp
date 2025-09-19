@@ -1,6 +1,6 @@
 ﻿<template>
   <div class="spinner-wrapper">
-    <img alt="spinner" src="@/assets/img/ankh.png" style="height: 30rem"/>
+    <img alt="spinner" src="/img/ankh.png" style="height: 30rem"/>
   </div>
 </template>
 

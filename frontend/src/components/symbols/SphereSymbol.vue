@@ -1,6 +1,7 @@
 <script lang="ts">
 import {Vue, Component, Prop} from 'vue-property-decorator';
 import {M20Sphere} from "@/types/m20";
+import {getImageUrl} from "@/libs/assets";
 
 @Component({})
 export default class SphereSymbol extends Vue {
@@ -12,11 +13,10 @@ export default class SphereSymbol extends Vue {
 
   private getSource() {
     if (this.errored) {
-      return '';
+      return '/img/ankh.png';
     }
 
-    const images = require.context('@/assets/img/spheres', false, /\.webp$/)
-    return images(`./${this.sphere}.webp`);
+    return getImageUrl('spheres', this.sphere + '.webp');
   }
 }
 </script>

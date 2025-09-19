@@ -324,6 +324,7 @@ import {
 } from "@/types/data";
 import {ISectionatedCustomLexicon, ILexiconItem, ILexiconTextItem, ILexiconList} from "@/types/custom-lexicon";
 import ClanSymbol from "@/components/symbols/ClanSymbol.vue";
+import {findImage, getImageUrl} from "@/libs/assets";
 
 @Component({
   components: {ClanSymbol, TOCItem, TOCMenu}
@@ -387,8 +388,7 @@ export default class Lexicon extends Vue {
       return clan.symbol;
     }
 
-    const images = require.context('@/assets/img/clans', false, /\.png$/)
-    return images(`./${clan.id}.png`);
+    return getImageUrl('clans', clan.id + '.png');
   }
 
   private getCombo(ability: IDisciplineAbility): string {

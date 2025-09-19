@@ -170,7 +170,7 @@ export default class CharacterStorage {
             return;
         }
 
-        const socket = io(process.env.VUE_APP_API_URL as string);
+        const socket = io((import.meta as any).env.VITE_APP_API_URL as string);
         socket.on('character_updated', (character: ICharacter) => {
             this.updateCharacter(character);
         });

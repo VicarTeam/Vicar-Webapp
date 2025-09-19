@@ -1,6 +1,7 @@
 <script lang="ts">
 import {Vue, Component, Prop} from 'vue-property-decorator';
 import {IW5Auspice} from "@/types/w5";
+import {getImageUrl} from "@/libs/assets";
 
 @Component({})
 export default class AuspiceSymbol extends Vue {
@@ -15,8 +16,7 @@ export default class AuspiceSymbol extends Vue {
       return '';
     }
 
-    const images = require.context('@/assets/img/auspices', false, /\.png$/)
-    return images(`./${this.auspice.key}.png`);
+    return getImageUrl('auspices', this.auspice.key + '.png');
   }
 }
 </script>

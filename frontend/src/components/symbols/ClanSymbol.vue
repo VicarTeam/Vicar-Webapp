@@ -1,6 +1,7 @@
 <script lang="ts">
 import {Vue, Component, Prop} from 'vue-property-decorator';
 import {IClan} from "@/types/models";
+import {getImageUrl} from "@/libs/assets";
 
 @Component({})
 export default class ClanSymbol extends Vue {
@@ -12,12 +13,10 @@ export default class ClanSymbol extends Vue {
 
   private getClanSymbol() {
     if (this.errored) {
-      const images = require.context('@/assets/img/clans', false, /\.png$/)
-      return images(`./15.png`);
+      return getImageUrl('clans', '15.png');
     }
 
-    const images = require.context('@/assets/img/clans', false, /\.png$/)
-    return images(`./${this.clan.id}.png`);
+    return getImageUrl('clans', `${this.clan.id}.png`);
   }
 }
 </script>

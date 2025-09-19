@@ -1,6 +1,6 @@
 import {BlobReader, BlobWriter, ZipReader} from "@zip.js/zip.js";
 
-const API_URL = process.env.VUE_APP_API_URL as string;
+const API_URL = (import.meta as any).env.VITE_APP_API_URL as string;
 
 export class DataSync {
 

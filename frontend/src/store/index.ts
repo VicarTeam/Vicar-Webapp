@@ -18,7 +18,7 @@ export const state: State = {
     draggingCharacter: undefined
 }
 
-const plugins = process.env.NODE_ENV === 'development' ? [vuexLocal.plugin] : [];
+const plugins = (import.meta as any).env.MODE === 'development' ? [vuexLocal.plugin] : [];
 
 export default new Vuex.Store({
   state,
