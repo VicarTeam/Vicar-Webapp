@@ -5,10 +5,10 @@
         <b style="flex-grow: 1">{{$t('editor.traits.modal.title.' + (isFlaw ? 'flaw' : 'trait'))}}:</b>
         <select class="form-control categorized" v-model="selectedPack" @change="selectTrait(null)">
 
-          <option class="category" disabled>{{$t('data.trait.merits')}}</option>
+          <option v-if="merits.length > 0" class="category" disabled>{{$t('data.trait.merits')}}</option>
           <option v-for="m in merits" :value="m">{{m.name}}{{getTraitPackBonus(m, "merits", isFlaw) > 0 ? '(+' + getTraitPackBonus(m, "merits", isFlaw) + ')' : ''}}</option>
 
-          <option class="category" disabled>{{$t('data.trait.backgrounds')}}</option>
+          <option v-if="backgrounds.length > 0" class="category" disabled>{{$t('data.trait.backgrounds')}}</option>
           <option v-for="b in backgrounds" :value="b">{{b.name}}{{getTraitPackBonus(b, "backgrounds", isFlaw) > 0 ? '(+' + getTraitPackBonus(b, "backgrounds", isFlaw) + ')' : ''}}</option>
 
           <option disabled></option>
@@ -97,6 +97,7 @@ import PTActionHandler from "@/libs/ptaction-handler";
 import CharacterStorage from "@/libs/io/character-storage";
 import {GameLine} from "@/types/gameline";
 import {traits} from "@/.data/w5";
+import {traits as m20traits} from "@/.data/m20";
 
 export type ChooseTraitData = {
   merits: ITraitPack[];
@@ -216,6 +217,9 @@ export default class ChooseTraitModal extends Vue {
   }
 
   private getTraitPackBonusSpread(pack: ITraitPack, type: "backgrounds"|"merits", isFlaw: boolean) {
+    if (!this.editingCharacter || this.editingCharacter.game === GameLine.Mage) {
+      return null;
+    }
     return this.editingCharacter!.requiredPointSpreads.find(s => s.type === type && s.isFlaw === isFlaw && s.packId === pack.id);
   }
 
@@ -367,6 +371,12 @@ export default class ChooseTraitModal extends Vue {
       return {
         backgrounds: traits.filter(x => x.type === "backgrounds"),
         merits: traits.filter(x => x.type === "merits"),
+      };
+    }
+    if (this.gameline === GameLine.Mage) {
+      return {
+        backgrounds: m20traits,
+        merits: []
       };
     }
 

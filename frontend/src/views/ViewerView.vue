@@ -11,6 +11,7 @@
       </div>
       <Tabs class="center" @before-change="switchTab" v-model="selectedTab">
         <Tab value="viewer-profile" :text="$t('viewer.tab.profile').toString()" ref="tabProfile"/>
+        <Tab v-if="isMage" value="viewer-tradition" text="Allianz" />
         <Tab value="viewer-inventory" :text="$t('viewer.tab.inventory').toString()" ref="tabInventory"/>
         <Tab value="viewer-attributes" :text="$t('viewer.tab.attributes').toString()" ref="tabAttributes"/>
         <Tab value="viewer-skills" :text="$t('viewer.tab.skills').toString()" ref="tabSkills"/>
@@ -21,6 +22,7 @@
 <!--        <Tab value="viewer-pdf" :text="$t('viewer.tab.pdf').toString()"/>-->
       </Tabs>
       <div class="actions">
+        <small v-if="isMage && editingCharacter.freebiePoints > 0" style="color: #afafaf; margin-right: 1rem">Freebie: {{editingCharacter.freebiePoints}}</small>
         <small style="color: #afafaf; display: flex; gap: 0.5rem; justify-content: center; align-items: center">EXP: <b>{{editingCharacter.exp}}</b>
           <IconButton v-if="!editingCharacter.justViewing" icon="fa-pen" style="width: 2rem; height: 2rem" @click="addExpModal.showModal()"/>
         </small>
@@ -38,6 +40,7 @@
     <DiceRollModal ref="diceRollModal"/>
     <HuntCalculatorModal ref="huntCalculatorModal"/>
     <SearchHighlightModal ref="searchHighlightModal"/>
+    <M20LevelModal ref="m20LevelModal"/>
 
     <div v-if="dicePoolLeft || dicePoolRight" class="simple-dice-calc card">
       <h4 class="card-title">{{$t('character.dice-pool')}}:</h4>
@@ -92,7 +95,8 @@ import SearchHighlightModal from "@/components/main/characters/modals/SearchHigh
 import MarkOfCain from "@/components/viewer/MarkOfCain.vue";
 import {GameLine} from "@/types/gameline";
 import {hardSetTheme} from "@/libs/theme";
-import {IWerewolfW5Sheet, W5RenownKey} from "@/types/w5";
+import M20LevelModal from "@/components/viewer/modals/leveling/M20LevelModal.vue";
+import {M20Ability, M20Attribute, M20Sphere} from "@/types/m20";
 
 const TabHotkeys = [
   {
@@ -128,6 +132,7 @@ const TabHotkeys = [
 
 @Component({
   components: {
+    M20LevelModal,
     MarkOfCain,
     SearchHighlightModal,
     HuntCalculatorModal,
@@ -162,6 +167,9 @@ export default class ViewerView extends Vue {
   @Ref("markOfCain")
   private markOfCain!: MarkOfCain;
 
+  @Ref("m20LevelModal")
+  private m20LevelModal!: M20LevelModal;
+
   @Mutation("setEditingCharacter")
   private setEditingCharacter!: (character?: ICharacter) => void;
 
@@ -184,6 +192,9 @@ export default class ViewerView extends Vue {
     if (this.$router.currentRoute.name === 'viewer') {
       this.$router.push({name: 'viewer-profile'}).catch(() => {});
     }
+
+    this.selectedTab = (this.$router.currentRoute.name as string) || "viewer-profile";
+
     EventBus.$on("character-updated", this.onCharUpdated);
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
@@ -389,9 +400,18 @@ export default class ViewerView extends Vue {
     return this.editingCharacter?.game === GameLine.Werewolf;
   }
 
+  private get isMage() {
+    return this.editingCharacter?.game === GameLine.Mage;
+  }
+
   @Provide("update-viewer")
   private updaterViewer() {
     this.$forceUpdate();
+  }
+
+  @Provide("request-m20-level")
+  private requestM20Leveling(type: 'attribute'|'ability'|'sphere'|'arete'|'willpower', subject?: M20Ability|M20Attribute|M20Sphere) {
+    this.m20LevelModal.showModal(type, subject);
   }
 
   @Provide("set-dice-pool")

@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <div class="trait card">
+    <div v-if="!isMage" class="trait card">
       <div class="title">
         <b>{{$t('editor.traits.flaws')}}</b>
         <LevelButton icon="fa-plus" class="ml-10" @click="addNewFlaw"/>
@@ -61,7 +61,7 @@
     </div>
 
     <TraitModal ref="levelTraitModal"/>
-    <ChooseTraitModal ref="chhoseTraitModal"/>
+    <ChooseTraitModal ref="chhoseTraitModal" :gameline="editingCharacter.game"/>
     <RemoveTraitModal ref="removeTraitModal"/>
   </div>
 </template>
@@ -138,6 +138,10 @@ export default class TraitsView extends Vue {
       return 10;
     }
     return 5;
+  }
+
+  private get isMage() {
+    return this.editingCharacter?.game === GameLine.Mage;
   }
 }
 </script>

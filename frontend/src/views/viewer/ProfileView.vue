@@ -32,8 +32,19 @@
           <i> Gunst <TipButton :content="editingCharacter.tribe.favor"/></i>
           <bullet style="margin-left: 0.25rem"/>
           <i> Bann <TipButton :content="editingCharacter.tribe.ban"/></i>
-
         </span>
+        <span v-else-if="isMage" class="side">
+          {{ $t('character.sex.' + editingCharacter.sex) }}
+          <bullet/>
+          <i style="cursor: pointer; user-select: none" @click="showTip($t('m20.archetype.description'))"> {{$t('m20.archetype.nature')}}:</i> {{ editingCharacter.nature.name }} <TipButton :content="editingCharacter.nature.description" style="margin-right: 0.25rem"/>
+          <bullet/>
+          <i style="cursor: pointer; user-select: none" @click="showTip($t('m20.archetype.description'))"> {{$t('m20.archetype.demeanor')}}:</i> {{ editingCharacter.demeanor.name }} <TipButton :content="editingCharacter.demeanor.description" style="margin-right: 0.25rem"/>
+          <bullet/>
+          <i style="cursor: pointer; user-select: none" @click="showTip($t('m20.essence.description'))"> {{$t('m20.essence')}}:</i> {{ $t('m20.essence.' + editingCharacter.essence) }} <TipButton :content="$t('m20.essence.' + editingCharacter.essence + '.description')" style="margin-right: 0.25rem"/>
+          <bullet/>
+          <i style="cursor: pointer; user-select: none" @click="showTip($t('m20.tradition.description'))"> {{$t('m20.tradition')}}:</i> {{ editingCharacter.tradition.name }}
+        </span>
+
         <span v-if="isVampire" class="side" style="margin-top: 0.2rem">
           <i>Generation:</i> {{
             editingCharacter.generation
@@ -59,7 +70,7 @@
             <Damage prop-key="health"/>
           </div>
           <div class="stat" id="hlst-willpower">
-            <b>{{ $t('character.willpower') }}:</b>
+            <b><LevelButton v-if="isMage && editingCharacter.willpower < 10" style="margin-right: 0.25rem" @click="requestLevel('willpower')"/>{{ $t('character.willpower') }}:</b>
             <Damage prop-key="willpower"/>
           </div>
         </div>
@@ -100,7 +111,11 @@
           <input class="form-control" type="text" v-model="editingCharacter.chronicle" @input="saveChar"/>
         </div>
 
-        <div class="form-group">
+        <div v-if="isMage" class="form-group">
+          <label>Fokus:</label>
+          <textarea class="form-control" v-model="editingCharacter.focus" @input="saveChar"/>
+        </div>
+        <div v-else class="form-group">
           <label>{{$t('character.chronicleprinciples')}}: <TipButton :content="$t('character.chronicleprinciples.tip')"/></label>
           <textarea class="form-control" v-model="editingCharacter.chroniclePrinciples" @input="saveChar"/>
         </div>
@@ -111,7 +126,11 @@
           <input class="form-control" type="text" v-model="editingCharacter.concept" @input="saveChar"/>
         </div>
 
-        <div class="form-group">
+        <div v-if="isMage" class="form-group">
+          <label>Wunder: <TipButton :content="$t('m20.wonder.description')"/></label>
+          <textarea class="form-control" v-model="editingCharacter.wonders" @input="saveChar"/>
+        </div>
+        <div v-else class="form-group">
           <label>{{$t('character.anchorsandbeliefs')}}: <TipButton :content="$t('character.anchorsandbeliefs.tip')"/></label>
           <textarea class="form-control" v-model="editingCharacter.anchorsAndBeliefs" @input="saveChar"/>
         </div>
@@ -133,6 +152,24 @@
               <label style="text-align: right"><TipButton :content="$t('viewer.w5.hauglosk')"/> Hauglosk</label>
               <Squares :max="5" :amount="editingCharacter.hauglosk"
                        @click="v => {editingCharacter.hauglosk = v === editingCharacter.hauglosk ? 0 : v; saveChar(true);}"/>
+            </div>
+          </div>
+        </div>
+        <div v-else-if="isMage" class="form-group" style="height: 6rem; display: flex; flex-direction: column">
+          <label style="text-align: center; font-weight: bold">Quintessenz & Paradoxon <TipButton :content="$t('m20.quintessence_and_paradoxon')"/></label>
+
+          <div style="display: flex; justify-content: space-between">
+            <div style="display: flex; flex-direction: column">
+              <label style="text-align: left">
+                Quintessenz
+              </label>
+              <Squares :max="10" :amount="editingCharacter.quintessence"
+                       @click="v => {editingCharacter.quintessence = v === editingCharacter.quintessence ? 0 : v; saveChar(true);}"/>
+            </div>
+            <div style="display: flex; flex-direction: column">
+              <label style="text-align: right">Paradoxon</label>
+              <Squares :max="10" :amount="editingCharacter.paradox"
+                       @click="v => {editingCharacter.paradox = v === editingCharacter.paradox ? 0 : v; saveChar(true);}"/>
             </div>
           </div>
         </div>
@@ -174,6 +211,16 @@
               <Squares :max="5" :amount="wisdomRenown"
                        @click="v => {wisdomRenown = v === wisdomRenown ? 0 : v; saveChar(true);}"/>
             </div>
+          </div>
+        </div>
+        <div v-else-if="isMage" class="form-group" style="height: 6rem; display: flex; flex-direction: column">
+          <label style="text-align: center; font-weight: bold">
+            <LevelButton v-if="editingCharacter.arete < 10" @click="requestLevel('arete')"/>
+            {{$t('m20.arete')}} <TipButton :content="$t('m20.arete.description')"/>
+          </label>
+          <div style="display: flex; justify-content: center; align-content: flex-end; flex: 1">
+            <Squares :max="10" :amount="editingCharacter.arete"
+                     @click="v => {editingCharacter.arete = v === editingCharacter.arete ? 0 : v; saveChar(true);}"/>
           </div>
         </div>
 
@@ -264,8 +311,88 @@
           <Row>Soziale Tests: nur mit Wölfen und Garou</Row>
         </Col>
       </Row>
+
+      <Row v-if="isMage" style="width: 100%">
+        <Col style="width: 100%; text-align: center">
+          <div>
+            <bullet/><bullet/><bullet/>
+            <b>Sphären <TipButton :content="$t('m20.sphere.description')"/></b>
+            <bullet/><bullet/><bullet/>
+          </div>
+        </Col>
+      </Row>
+      <Row v-if="isMage" style="width: 100%; margin-top: 1rem">
+        <Col style="width: calc(100%/3); justify-content: center; align-items: center">
+          <div style="display: flex; justify-content: space-between; align-content: center; width: 30rem; border-bottom: 1px solid var(--primary-color); padding-bottom: 0.5rem; margin-bottom: 0.5rem">
+            <span>
+              <LevelButton v-if="editingCharacter.spheres[Sphere.Correspondence] < 5" @click="requestLevel('sphere', Sphere.Correspondence)"/>
+              {{$t('m20.sphere.correspondence')}} <TipButton :content="$t('m20.sphere.correspondence.description')"/>
+            </span>
+            <Squares :max="5" :amount="editingCharacter.spheres[Sphere.Correspondence]"/>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-content: center; width: 30rem; border-bottom: 1px solid var(--primary-color); padding-bottom: 0.5rem; margin-bottom: 0.5rem">
+            <span>
+              <LevelButton v-if="editingCharacter.spheres[Sphere.Entropy] < 5" @click="requestLevel('sphere', Sphere.Entropy)"/>
+              {{$t('m20.sphere.entropy')}} <TipButton :content="$t('m20.sphere.entropy.description')"/>
+            </span>
+            <Squares :max="5" :amount="editingCharacter.spheres[Sphere.Entropy]"/>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-content: center; width: 30rem; border-bottom: 1px solid var(--primary-color); padding-bottom: 0.5rem; margin-bottom: 0.5rem">
+            <span>
+              <LevelButton v-if="editingCharacter.spheres[Sphere.Forces] < 5" @click="requestLevel('sphere', Sphere.Forces)"/>
+              {{$t('m20.sphere.forces')}} <TipButton :content="$t('m20.sphere.forces.description')"/>
+            </span>
+            <Squares :max="5" :amount="editingCharacter.spheres[Sphere.Forces]"/>
+          </div>
+        </Col>
+        <Col style="width: calc(100%/3); justify-content: center; align-items: center">
+          <div style="display: flex; justify-content: space-between; align-content: center; width: 30rem; border-bottom: 1px solid var(--primary-color); padding-bottom: 0.5rem; margin-bottom: 0.5rem">
+            <span>
+              <LevelButton v-if="editingCharacter.spheres[Sphere.Life] < 5" @click="requestLevel('sphere', Sphere.Life)"/>
+              {{$t('m20.sphere.life')}} <TipButton :content="$t('m20.sphere.life.description')"/>
+            </span>
+            <Squares :max="5" :amount="editingCharacter.spheres[Sphere.Life]"/>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-content: center; width: 30rem; border-bottom: 1px solid var(--primary-color); padding-bottom: 0.5rem; margin-bottom: 0.5rem">
+            <span>
+              <LevelButton v-if="editingCharacter.spheres[Sphere.Matter] < 5" @click="requestLevel('sphere', Sphere.Matter)"/>
+              {{$t('m20.sphere.matter')}} <TipButton :content="$t('m20.sphere.matter.description')"/>
+            </span>
+            <Squares :max="5" :amount="editingCharacter.spheres[Sphere.Matter]"/>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-content: center; width: 30rem; border-bottom: 1px solid var(--primary-color); padding-bottom: 0.5rem; margin-bottom: 0.5rem">
+            <span>
+              <LevelButton v-if="editingCharacter.spheres[Sphere.Mind] < 5" @click="requestLevel('sphere', Sphere.Mind)"/>
+              {{$t('m20.sphere.mind')}} <TipButton :content="$t('m20.sphere.mind.description')"/>
+            </span>
+            <Squares :max="5" :amount="editingCharacter.spheres[Sphere.Mind]"/>
+          </div>
+        </Col>
+        <Col style="width: calc(100%/3); justify-content: center; align-items: center">
+          <div style="display: flex; justify-content: space-between; align-content: center; width: 30rem; border-bottom: 1px solid var(--primary-color); padding-bottom: 0.5rem; margin-bottom: 0.5rem">
+            <span>
+              <LevelButton v-if="editingCharacter.spheres[Sphere.Spirit] < 5" @click="requestLevel('sphere', Sphere.Spirit)"/>
+              {{$t('m20.sphere.spirit')}} <TipButton :content="$t('m20.sphere.spirit.description')"/>
+            </span>
+            <Squares :max="5" :amount="editingCharacter.spheres[Sphere.Spirit]"/>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-content: center; width: 30rem; border-bottom: 1px solid var(--primary-color); padding-bottom: 0.5rem; margin-bottom: 0.5rem">
+            <span>
+              <LevelButton v-if="editingCharacter.spheres[Sphere.Time] < 5" @click="requestLevel('sphere', Sphere.Time)"/>
+              {{$t('m20.sphere.time')}} <TipButton :content="$t('m20.sphere.time.description')"/>
+            </span>
+            <Squares :max="5" :amount="editingCharacter.spheres[Sphere.Time]"/>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-content: center; width: 30rem; border-bottom: 1px solid var(--primary-color); padding-bottom: 0.5rem; margin-bottom: 0.5rem">
+            <span>
+              <LevelButton v-if="editingCharacter.spheres[Sphere.Prime] < 5" @click="requestLevel('sphere', Sphere.Prime)"/>
+              {{$t('m20.sphere.prime')}} <TipButton :content="$t('m20.sphere.prime.description')"/>
+            </span>
+            <Squares :max="5" :amount="editingCharacter.spheres[Sphere.Prime]"/>
+          </div>
+        </Col>
+      </Row>
     </div>
->
     <BloodPotencyModal ref="levelBloodPotencyModal"/>
     <RenownModal ref="levelRenownModal"/>
     <ConfirmDeleteModal ref="confirmDeleteModal"/>
@@ -299,6 +426,7 @@ import MarkOfCain from "@/components/viewer/MarkOfCain.vue";
 import {GameLine} from "@/types/gameline";
 import {IW5Renown, IWerewolfW5Sheet, W5RenownKey} from "@/types/w5";
 import RenownModal from "@/components/viewer/modals/leveling/RenownModal.vue";
+import {M20Sphere, RequestLevelFn} from "@/types/m20";
 
 @Component({
   methods: {},
@@ -314,6 +442,7 @@ import RenownModal from "@/components/viewer/modals/leveling/RenownModal.vue";
 export default class ProfileView extends Vue {
 
   RenownKey = W5RenownKey;
+  Sphere = M20Sphere;
 
   @State("editingCharacter")
   private editingCharacter!: ICharacter;
@@ -329,6 +458,9 @@ export default class ProfileView extends Vue {
 
   @Ref("confirmDeleteModal")
   private confirmDeleteModal!: ConfirmDeleteModal;
+
+  @Inject("request-m20-level")
+  private requestLevel!: RequestLevelFn;
 
   private isEditName = false;
   private editName = "";
@@ -489,8 +621,15 @@ export default class ProfileView extends Vue {
     return this.editingCharacter?.game === GameLine.Werewolf;
   }
 
+  private get isMage() {
+    return this.editingCharacter?.game === GameLine.Mage;
+  }
+
   @Inject("update-viewer")
   private updateViewer!: () => void;
+
+  @Inject("show-tip")
+  private showTip!: (content: any, title?: any) => void;
 }
 </script>
 

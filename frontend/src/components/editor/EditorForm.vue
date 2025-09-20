@@ -1,10 +1,10 @@
 <template>
   <div class="editor-form">
-    <div class="pane">
+    <div class="pane" :class="{ 'full-height': showOnly }">
       <slot></slot>
     </div>
 
-    <div class="toolbar">
+    <div v-if="!showOnly" class="toolbar">
       <button class="btn" @click="back">{{ $t('editor.toolbar.' + (!isCancel ? 'back' : 'cancel')) }}</button>
       <div class="fill"></div>
       <button class="btn btn-primary" @click="next" :disabled="!canGoNext">{{ $t('editor.toolbar.' + (!isFinish ? 'next' : 'finish')) }}</button>
@@ -14,18 +14,22 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
-import {Action, Mutation, State} from "vuex-class";
+import {Mutation, State} from "vuex-class";
 import {AttributeKeys, ICharacter, ICharacterDirectory} from "@/types/models";
 import CharacterStorage from "@/libs/io/character-storage";
-import DataManager from "@/libs/data/data-manager";
 import {EditorHistory} from "@/libs/editor-history";
 import FileCreator from "@/libs/io/file-creator";
 import {hardSetTheme} from "@/libs/theme";
+import {GameLine} from "@/types/gameline";
+import DataManager from "@/libs/data/data-manager";
 
 @Component({
   components: {}
 })
 export default class EditorForm extends Vue {
+
+  @Prop({default: false})
+  private showOnly!: boolean;
 
   @Prop({default: null})
   private fallbackHistoryChar!: ICharacter|null;
@@ -61,6 +65,10 @@ export default class EditorForm extends Vue {
   private setDirectoryForCharCreation!: (dir?: ICharacterDirectory) => void;
 
   private next() {
+    if (this.showOnly) {
+      return;
+    }
+
     if (!this.editingCharacter || !this.canGoNext) {
       return;
     }
@@ -84,10 +92,13 @@ export default class EditorForm extends Vue {
           this.editingCharacter.directory = this.directoryForCharCreation.id;
         }
 
-        this.editingCharacter.requiredPointSpreads = [];
-        this.editingCharacter.health = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Stamina) + 3;
-        this.editingCharacter.willpower = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Composure)
+        if (this.editingCharacter.game !== GameLine.Mage) {
+          this.editingCharacter.requiredPointSpreads = [];
+          this.editingCharacter.health = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Stamina) + 3;
+          this.editingCharacter.willpower = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Composure)
             + DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Resolve);
+        }
+
         const res = await CharacterStorage.addCharacter(this.editingCharacter);
         if (!res) {
           FileCreator.create("unsaved-character", JSON.stringify(this.editingCharacter));
@@ -135,6 +146,10 @@ export default class EditorForm extends Vue {
     max-height: calc(100% - 5rem);
     overflow-x: hidden;
     overflow-y: auto;
+    &.full-height {
+      height: 100%;
+      max-height: 100%;
+    }
   }
   .toolbar {
     height: 5rem;

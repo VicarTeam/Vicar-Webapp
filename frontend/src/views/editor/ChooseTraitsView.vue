@@ -1,5 +1,5 @@
 <template>
-  <EditorForm :can-go-next="canGoNext" next-step="editor-attributes">
+  <EditorForm :can-go-next="canGoNext" :next-step="isMage ? 'editor-m20-finishing-touches' : 'editor-attributes'">
     <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
       <div class="choose-traits-wrapper">
         <div class="form-group" style="text-align: center">
@@ -43,7 +43,7 @@
             </div>
           </div>
 
-          <div class="card m-0 mt-20 w-500 trait-pack">
+          <div v-if="editingCharacter.game !== GameLine.Mage" class="card m-0 mt-20 w-500 trait-pack">
             <span class="d-flex justify-content-center align-items-center mb-10"
                   style="width: 100%; border-bottom: 1px solid rgba(255, 255, 255, 0.4)">
               <small>{{ $t('editor.traits.flaws') }}: </small><b class="ml-5">{{ getUsedFlawPoints() }}</b>/{{ maxFlawPoints }}{{maxFlawBonus > 0 ? ' (+' + maxFlawBonus + ')' : ''}}<TipButton class="ml-10" :content="$t('editor.traits.bonus')" v-if="maxFlawBonus > 0"/>
@@ -101,6 +101,8 @@ import {GameLine, IEdition5Sheet} from "@/types/gameline";
 })
 export default class ChooseTraitsView extends Vue {
 
+  GameLine = GameLine;
+
   @State("editingCharacter")
   private editingCharacter!: IEdition5Sheet | undefined;
 
@@ -114,8 +116,10 @@ export default class ChooseTraitsView extends Vue {
 
   mounted() {
     if (this.editingCharacter) {
-      this.maxTraitBonus = this.editingCharacter.requiredPointSpreads.filter(s => !s.isFlaw).map(s => s.points).reduce((a, b) => a + b, 0);
-      this.maxFlawBonus = this.editingCharacter.requiredPointSpreads.filter(s => s.isFlaw).map(s => s.points).reduce((a, b) => a + b, 0);
+      if (this.editingCharacter.game !== GameLine.Mage) {
+        this.maxTraitBonus = this.editingCharacter.requiredPointSpreads.filter(s => !s.isFlaw).map(s => s.points).reduce((a, b) => a + b, 0);
+        this.maxFlawBonus = this.editingCharacter.requiredPointSpreads.filter(s => s.isFlaw).map(s => s.points).reduce((a, b) => a + b, 0);
+      }
 
       if ((this.editingCharacter as ICharacter)['generationEra'] && (this.editingCharacter as ICharacter).generationEra === Generation.Ancillae) {
         this.maxTraitPoints += 2;
@@ -185,6 +189,9 @@ export default class ChooseTraitsView extends Vue {
   }
 
   private hasFlawPointsLeft(): boolean {
+    if (this.editingCharacter?.game === GameLine.Mage) {
+      return false;
+    }
     return this.getUsedFlawPoints() < this.maxFlawPoints + this.maxFlawBonus && !(this.editingCharacter?.isElder ?? false);
   }
 
@@ -202,6 +209,10 @@ export default class ChooseTraitsView extends Vue {
 
   private get canGoNext(): boolean {
     return !!this.editingCharacter && !this.hasTraitPointsLeft() && !this.hasFlawPointsLeft();
+  }
+
+  private get isMage(): boolean {
+    return this.editingCharacter?.game === GameLine.Mage;
   }
 }
 </script>

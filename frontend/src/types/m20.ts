@@ -1,5 +1,7 @@
 import {GameLine, IBaseSheet} from "@/types/gameline";
-import {IUsingTraitPacks, Sex} from "@/types/models";
+import {DamageType, IUsingTraitPacks, Sex} from "@/types/models";
+
+export type RequestLevelFn = (type: 'attribute'|'ability'|'sphere'|'arete'|'willpower', subject?: M20Ability|M20Attribute|M20Sphere) => void;
 
 export enum M20Sphere {
   None = 'none',
@@ -85,6 +87,7 @@ export enum M20Ability {
   Computer = 'computer',
   Cosmology = 'cosmology',
   Enigmas = 'enigmas',
+  Esoterica = 'esoterics',
   Investigation = 'investigation',
   Law = 'law',
   Medicine = 'medicine',
@@ -111,13 +114,6 @@ export interface IM20Tradition {
   stereotypes: IM20TraditionStereotypes;
 }
 
-export interface IM20Paradigm {
-  // can be 0 for custom paradigms
-  id: number; /** autoIncrement **/
-  name: string;
-  descrtiption: string;
-}
-
 export interface IM20Archetype {
   // can be 0 for custom archetypes
   id: number; /** autoIncrement **/
@@ -128,13 +124,20 @@ export interface IM20Archetype {
 export interface IMageSheet extends IBaseSheet {
   freebiePoints: number;
   concept: string;
-  paradigm: IM20Paradigm;
+  chronicle: string;
+  backstory: string;
+  wonders: string;
+  notes: string;
+  focus: string;
   tradition: IM20Tradition;
   nature: IM20Archetype;
   demeanor: IM20Archetype;
   essence: M20Essence;
+  arete: number;
   quintessence: number;
   paradox: number;
+  willpower: number;
+  willpowerDamage?: DamageType[];
   spheres: {
     [M20Sphere.Correspondence]: number;
     [M20Sphere.Entropy]: number;
@@ -157,11 +160,16 @@ export function NewMageSheet(): IMageSheet {
     freebiePoints: 15,
     avatar: "",
     chronicle: "",
+    backstory: "",
+    willpower: 5,
     concept: "",
+    wonders: "",
     directory: "",
+    arete: 1,
     exp: 0,
     game: GameLine.Mage,
     id: "",
+    focus: "",
     inventory: {
       carriedItems: [],
       ownedItems: [],
@@ -185,7 +193,6 @@ export function NewMageSheet(): IMageSheet {
     tradition: undefined!,
     demeanor: undefined!,
     nature: undefined!,
-    paradigm: undefined!,
     essence: M20Essence.None,
     paradox: 0,
     quintessence: 0,
@@ -233,6 +240,7 @@ export function NewMageSheet(): IMageSheet {
       [M20Ability.Computer]: 0,
       [M20Ability.Cosmology]: 0,
       [M20Ability.Enigmas]: 0,
+      [M20Ability.Esoterica]: 0,
       [M20Ability.Investigation]: 0,
       [M20Ability.Law]: 0,
       [M20Ability.Medicine]: 0,
@@ -307,6 +315,7 @@ export const knowledgeAbilities: M20Ability[] = [
   M20Ability.Computer,
   M20Ability.Cosmology,
   M20Ability.Enigmas,
+  M20Ability.Esoterica,
   M20Ability.Investigation,
   M20Ability.Law,
   M20Ability.Medicine,

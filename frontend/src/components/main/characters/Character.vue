@@ -11,6 +11,7 @@
         <bullet v-if="character.concept"/>
         <span v-if="character.clan"><i> Clan:</i> {{character.clan.name}}</span>
         <span v-else-if="character.tribe"><i> {{$t('character.tribe')}}:</i> {{character.tribe.name}}</span>
+        <span v-else-if="character.tradition"><i> Allianz:</i> {{character.tradition.name}}</span>
         <bullet/>
         <span v-if="character.clan">{{character.clan.slogan}}</span>
         <span v-else-if="character.auspice">{{character.auspice.name}}</span>

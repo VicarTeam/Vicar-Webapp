@@ -139,7 +139,7 @@ export default class ChooseAbilitiesView extends Vue {
 </script>
 
 <template>
-  <EditorForm :can-go-next="canGoNext" next-step="editor-m20-backgrounds">
+  <EditorForm :can-go-next="canGoNext" next-step="editor-traits">
     <div v-if="editingCharacter" class="abilities-view">
       <div class="card header">
         <small>Step Three: Select Abilities — Priorisiere 13 / 9 / 5. Kein Wert über 3.</small>

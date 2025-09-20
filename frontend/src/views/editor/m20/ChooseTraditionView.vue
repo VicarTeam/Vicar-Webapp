@@ -1,5 +1,5 @@
 <script lang="ts">
-import {Component, Vue, Watch} from 'vue-property-decorator';
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 import EditorForm from "@/components/editor/EditorForm.vue";
 import {State} from "vuex-class";
 import {IM20Tradition, IMageSheet, M20TraditionType} from "@/types/m20";
@@ -18,6 +18,9 @@ export default class ChooseTraditionView extends Vue {
 
   @State("editingCharacter")
   private editingCharacter!: IMageSheet;
+
+  @Prop({default: false})
+  private forced!: boolean;
 
   private type: M20TraditionType = M20TraditionType.Tradition;
   private tradition: IM20Tradition = this.selectableTraditions[0];
@@ -52,11 +55,11 @@ export default class ChooseTraditionView extends Vue {
 </script>
 
 <template>
-  <EditorForm :can-go-next="canGoNext" next-step="editor-m20-attributes" @before-next="onBeforeNext">
+  <EditorForm :can-go-next="canGoNext" :show-only="forced" next-step="editor-m20-attributes" @before-next="onBeforeNext">
     <div v-if="editingCharacter" class="tradition-view">
       <div class="card" style="width: 50rem">
         <h6 style="text-align: center">{{$t('m20.tradition')}} <TipButton :content="$t('m20.tradition.description')"/></h6>
-        <select v-model="type" class="form-control">
+        <select v-model="type" class="form-control" :disabled="forced">
           <option :value="M20TraditionType.Tradition">{{$t('m20.tradition.type.tradition')}}</option>
           <option :value="M20TraditionType.Technocracy">{{$t('m20.tradition.type.technocracy')}}</option>
           <option :value="M20TraditionType.Disparate">{{$t('m20.tradition.type.disparate')}}</option>
@@ -66,7 +69,7 @@ export default class ChooseTraditionView extends Vue {
 
       <div class="card" style="width: 70%; margin-top: 0.5rem">
         <h6 style="text-align: center">{{$t('m20.tradition.type.' + type + '.name')}}</h6>
-        <select v-model="tradition" class="form-control">
+        <select v-model="tradition" class="form-control" :disabled="forced">
           <option v-for="item in selectableTraditions" :key="item.id" :value="item">
             {{item.name}}
           </option>

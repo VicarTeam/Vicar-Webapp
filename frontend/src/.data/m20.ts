@@ -1,4 +1,5 @@
 import {IM20Archetype, IM20Tradition, M20Sphere, M20TraditionType} from "@/types/m20";
+import {ITraitPack, TraitSpecialRules} from "@/types/data";
 
 export const archetypes: IM20Archetype[] = [
   {
@@ -509,7 +510,7 @@ export const traditions: IM20Tradition[] = [
   {
     id: 25,
     type: M20TraditionType.Disparate,
-    name: ` Sign in to edit  Wu Lung LogoCraftWuLung Pronounce WOO LUHNG Nicknames Dragon Wizards Faction Disparate Alliance Parent Org Disparate Alliance`,
+    name: `Wu Lung`,
     description: `Die Wu Lung waren mal die Chefs unter den Chi'n Ta in China und hielten sich für die Nachfahren des Gelben Kaisers. Als Meister der Alchemie, der himmlischen Bürokratie und einer speziellen Kampftechnik namens Kuei Lung Chuan konnten die Wu Lung trotzdem nicht verhindern, dass der Kommunismus und das technokratische Paradigma kamen und ihre Macht in China zerstörten. Die modernen Wu Lung haben sich in die Arme der Traditionen geflüchtet und sind entweder der Akashic Brotherhood oder dem Order of Hermes beigetreten.`,
     organization: `Auch wenn die Wu Lung nicht mehr die gleiche soziale Struktur haben wie früher, gibt es noch ein paar Überbleibsel davon. Alle Wu Lung sehen den T’ien Kung te Huang Ti Wu Lung (Himmlischer Kaiser der Drachenzauberer) immer noch als ihren obersten Chef an und seine Partnerin, die Feng Huan Hou Wu (Phönix-Zauberin), als fast gleichwertig. Auch wenn die meisten modernen Drachenzauberer diese beiden nie gesehen haben, wissen sie, dass der rote Faden der Tradition durch diese ehrwürdigen Ältesten weitergeht. Die obersten Chefs ernennen Regionalminister, die die Auswahl der Sifu überwachen. Die meisten modernen Drachenzauberer haben diese beiden Persönlichkeiten nie gesehen, erkennen aber trotzdem an, dass der rote Faden der Tradition durch diese ehrwürdigen Ältesten weitergeht.   Obwohl die meisten modernen Drachenmagier diese beiden Persönlichkeiten noch nie gesehen haben, erkennen sie dennoch an, dass der rote Faden der Tradition und des Erbes durch diese ehrwürdigen Ältesten bewahrt und aufrechterhalten wird. Die obersten Anführer ernennen regionale Minister, die die Auswahl der Sifu oder Lehrer unter der Autorität der Drachenschule (Herrschaft), der Phönixschule (Heilung und Barmherzigkeit) und der Tigerschule (Kampf und Strategie) überwachen. Die Sifu wiederum bilden ihre Schüler und fortgeschrittenen Schüler aus und wählen potenzielle Kandidaten für die Initiation aus. Auf allen Ebenen ist sich ein Drachenmagier sehr bewusst, wo er auf der Leiter der Wu-Lung-Gesellschaft steht und wem er zu dienen hat. Die Sifu bilden ihre Schüler und fortgeschrittenen Schüler aus und wählen potenzielle Kandidaten für die Initiation aus. Auf allen   Die Sifu wiederum bilden ihre Adepten und älteren Schüler aus und wählen potenzielle Kandidaten für die Initiation aus. Auf allen Ebenen ist sich ein Drachenmagier stets bewusst, wo er auf der Leiter der Wu-Lung-Gesellschaft steht, wem er Gehorsam schuldet und welche Verantwortlichkeiten er innerhalb dieser Hierarchie hat.`,
     initiation: `Wu Lung Sifu nutzt Wahrsagerei und Kommunikation mit Vorfahren und Geistführern, um potenzielle neue Rekruten zu finden, die kurz vor dem Erwachen stehen. Diese Sifu kontaktieren dann die potenziellen Initianden durch Visionen und Träume, in der Hoffnung, ein Erwachen auszulösen. Ein idealer Kandidat ist entweder vollständig chinesischer Abstammung oder hat enge chinesische Wurzeln. Junge Menschen mit einer Affinität für internationales Geschäft und Finanzen sind besonders wertvoll.  Wenn sie nicht mit den Traditionen und Werten der vorkommunistischen chinesischen Kultur aufgewachsen ist, macht die Kandidatin eine Zeit lang eine Ausbildung, Tests und Training durch. Wenn die Sifu zufrieden ist, dass die Kandidatin in ihrer Ausbildung genug Fortschritte gemacht und bei ihren Tests gut abgeschnitten hat, wird sie offiziell als Ch'uang Shih oder ältere Schülerin der Wu Lung aufgenommen.`,
@@ -520,5 +521,1687 @@ export const traditions: IM20Tradition[] = [
       technocracy: "Unter den Klauen und Zähnen der Drachen werden sie ihre Seelen an die Höllen der Yama-Könige verkaufen.",
       disparates: "Sie haben die natürliche Ordnung der Dinge ignoriert und sind jetzt nur noch eine zankende Gruppe von unerfahrenen Neulingen, die über ein Chaos herrschen. Unser Bündnis mit ihnen wird bestimmt kurz und fruchtbar sein ... zumindest für uns."
     }
+  }
+];
+
+export const traits: ITraitPack[] = [
+  {
+    id: 1,
+    type: "backgrounds",
+    name: "Verbündete",
+    description: "Wenn du Hilfe brauchst, gibt's Leute, die dir den Rücken freihalten. Diese Verbündeten können coole Freunde, hilfsbereite Tiere, Leute mit Beziehungen, die dir helfen können, Boten oder vielleicht sogar kleine Geister sein, die dir ab und zu einen Gefallen tun, wenn sie gerade Lust dazu haben. Im Allgemeinen bezieht sich dieser Hintergrund auf nicht erwachte Menschen oder ziemlich intelligente Tiere (wie ein Wolfsrudel oder eine Affenbande). Sie wissen wahrscheinlich um die seltsameren Seiten deines Lebens, aber sie kennen weder die Details der Magiergesellschaft noch deine wahren Kräfte, es sei denn, du beschließt, sie zu gefährden, indem du ihnen diese Geheimnisse verrätst. Unabhängig von ihrer Natur oder ihrer Beziehung zu dir sind diese Verbündeten eigenständige Charaktere mit Bedürfnissen, Ängsten, Motivationen und Absichten, die mit den Zielen deines Magiers übereinstimmen, aber gelegentlich auch mit ihnen kollidieren können. Jeder Punkt in diesem Hintergrund gibt dir einen Verbündeten mit einigermaßen nützlichen Fähigkeiten oder zwei Verbündete, die im Wesentlichen Besorgungen machen und Routinearbeiten erledigen. Ab zwei Punkten kannst du die Fähigkeiten deiner moderaten Verbündeten verbessern oder eine größere Anzahl von geringfügigen und moderaten Verbündeten kaufen. Wenn du zum Beispiel zwei Punkte bekommst, könntest du zwei moderate Verbündete auswählen, vier Sidekicks bekommen oder einen einzigen wichtigen Verbündeten schaffen, der fähiger ist als die geringfügigen. Magieanwendende Verbündete zählen als wichtige Verbündete. Wenn deine Verbündeten getötet werden oder auf andere Weise aus deiner Gruppe ausscheiden, verliert dieser Hintergrund die Punkte, die diese Charaktere repräsentierten, bis du neue Verbündete rekrutierst, um die ausgeschiedenen zu ersetzen. In bestimmten Fällen kann dieser Hintergrund mehr als fünf Punkte erreichen – siehe „Hintergrundeigenschaften über fünf“ (S. 301). Eine Reihe von Charakteren findest du in Anhang I.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 1,
+        level: 1,
+        name: "Verbündeter 1",
+        description: "Ein Verbündeter mit mittlerer Stärke oder zwei kleinere Kumpels.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 2,
+        level: 2,
+        name: "Verbündeter 2",
+        description: "Zwei mittelmäßige Verbündete, vier Kumpels oder ein einziger, stärkerer.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 3,
+        level: 3,
+        name: "Verbündeter 3",
+        description: "Drei mittelgroße Verbündete oder eine Mischung aus kleineren und größeren.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 4,
+        level: 4,
+        name: "Verbündeter 4",
+        description: "Vier moderate Verbündete, sechs kleinere Begleiter oder eine Mischung aus allen drei Typen.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 5,
+        level: 5,
+        name: "Verbündeter 5",
+        description: "Fünf moderate Verbündete oder eine Mischung aus kleineren und größeren.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 6,
+        level: 6,
+        name: "Verbündeter 6",
+        description: "Sechs ganz normale Verbündete, eine kleine Gruppe von Kumpels oder ein oder zwei echt mächtige Freunde.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 7,
+        level: 7,
+        name: "Verbündeter 7",
+        description: "Sieben gemäßigte Leute, ein paar Handlanger oder eine Handvoll starker Kumpels.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 8,
+        level: 8,
+        name: "Verbündeter 8",
+        description: "Acht gemäßigte Leute, ein Haufen Anhänger oder ein paar echt harte Typen.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 9,
+        level: 9,
+        name: "Verbündeter 9",
+        description: "Neun gemäßigte Leute, eine private Miliz oder eine Gruppe wichtiger Freunde.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 10,
+        level: 10,
+        name: "Verbündeter 10",
+        description: "Zehn fähige Verbündete, eine kleine Armee oder eine echt tödliche Bande.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 2,
+    type: "backgrounds",
+    name: "Alternative Identität",
+    description: "Manchmal muss man einfach bereit sein, unterzutauchen. Besonders für Gestaltwandler, Klone oder Leute in riskanten Jobs (Spione, Informanten, Attentäter usw.) kann die Fähigkeit, eine andere Identität anzunehmen, den Unterschied zwischen einem neuen Leben und einem anonymen Grab ausmachen. Mit diesem Hintergrund kannst du dich hinter einer falschen Identität verstecken; je höher die Bewertung, desto mehr Unterstützung hast du für die Existenz dieser Identität. Jeder Punkt in „Alternative Identität” sorgt für ein gewisses Maß an offizieller Anerkennung, das einer zunehmenden Überprüfung standhält. Mit einem billigen gefälschten Ausweis kommst du vielleicht an einem Türsteher vorbei, aber die Autobahnpolizei lässt sich davon nicht täuschen! Eine alternative Identität ist an sich nützlich, aber nicht extrem. Du kannst einen neuen Ausweis für kurze Zeit verwenden, aber dann musst du von vorne anfangen, es sei denn, du planst, dein Leben komplett neu aufzubauen. Andere Hintergrundmerkmale können jedoch mit einer alternativen Identität verknüpft werden. Du kannst natürlich keinen neuen Avatar bekommen, aber du hast vielleicht Verbündete, Ressourcen, Spione usw., die mit deinem neuen Ich in Verbindung stehen. Für jeden Punkt im Hintergrund „Alternative Identität” kannst du deinem anderen Ich einen Punkt anderer Hintergrundmerkmale hinzufügen. Natürlich musst du für diese Hintergründe trotzdem Punkte bezahlen – sie sind nicht kostenlos mit dieser Eigenschaft verbunden. Wenn du jedoch deine bisherige Identität aufgeben musst, könnten neue Ressourcen auf dich warten. (Weitere Details findest du in der Seitenleiste „Differenzielle Hintergründe”.) Starke Identitäten halten einer genauen Beobachtung stand. Um eine alternative Identität zu durchschauen, müsste ein Charakter einen Mental-Eigenschaftswert + Untersuchung gegen eine Schwierigkeit deiner alternativen Identität + 3 würfeln. Du kannst diese Eigenschaft mehrmals erwerben, um eine Reihe von alternativen Identitäten widerzuspiegeln. Trotzdem solltest du eine Form von Magie oder Verkleidung einsetzen, um deinen verschiedenen Identitäten ein unterschiedliches Aussehen zu verleihen. Klar, in deinem Führerschein steht vielleicht „Jane Palmer“, aber wenn du immer noch wie Eva Morrissey aussiehst, dich so verhältst und so klingst, wirst du wahrscheinlich als Letztere erkannt.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 11,
+        level: 1,
+        name: "Alternative Identität 1",
+        description: "Ein gefälschter Führerschein, der dir irgendwie ähnlich sieht.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 12,
+        level: 2,
+        name: "Alternative Identität 2",
+        description: "Ein passabler gefälschter Ausweis und ein paar Begleitdokumente.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 13,
+        level: 3,
+        name: "Alternative Identität 3",
+        description: "Seriöse Ausweispapiere und Unterlagen, die bei einer zufälligen Kontrolle durchgehen.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 14,
+        level: 4,
+        name: "Alternative Identität 4",
+        description: "Eine etablierte alternative Identität.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 15,
+        level: 5,
+        name: "Alternative Identität 5",
+        description: "Eine komplett gefälschte Identität mit der ganzen Geschichte, Belegen, Zeugen, gefälschten Familienfotos, anderen Wohnsitzen und so weiter.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 3,
+    type: "backgrounds",
+    name: "Arkan/Tarnung",
+    description: "Du bist ein Meister im Verschwinden. Ob das nun einen nicht ganz so einfachen Trick, die Fähigkeit, die Gedanken von Männern zu vernebeln, nanotechnologische Sinnesstörer oder eine namenlose Kraft der Verschleierung beinhaltet – du hast ein Talent dafür, dich zu verstecken. Besonders im Zeitalter von Handykameras, globalen Datenbanken, elektronischen Ortungsgeräten, DNA-Proben und Überwachungskameras an jeder Ecke ist „Arkan“ – oder seine technokratische Version „Tarnung“ – eine nützliche Eigenschaft. Aufzeichnungen gehen verloren, Kameras funktionieren nicht richtig oder nehmen unscharfe Bilder von dir auf, Leute erinnern sich an „irgendeinen Typen ... oder eine Frau, ich bin mir nicht sicher“. Auch wenn dieses Talent nicht wirklich Unsichtbarkeit ist, hilft es dir, dich in Menschenmengen zu verstecken, deine Gesichtszüge vor der Kamera zu verwischen und dich in einer zunehmend überwachten Welt durchzuschlängeln. Für mystische Magier ist Arkan eine Verzerrung der Realität, die durch Schwankungen metaphysischer Energie verursacht wird, wie Echos oder Resonanz. Für die Technokratie ist das ein vollkommen erklärbares Phänomen ... und sie wird dir eine vernünftige Erklärung liefern, sobald diese die strengen Kriterien für die Weitergabe von Informationen erfüllt. Die Union zieht es vor, mysteriöse Personen wie den Geheimagenten John Courage, die diesen Cloaking-Effekt zeigen, im Auge zu behalten; das ist aber leichter gesagt als getan. Im Spiel addierst du deine Arkan-/Cloaking-Punkte als zusätzliche Würfel zu allen Würfen, die mit Heimlichkeit zu tun haben. Deine Gegner reduzieren ihre Wahrnehmungs- oder Ermittlungswürfel um denselben Betrag, wenn jemand versucht, dich aufzuspüren. Dieser Vorteil bleibt bestehen, solange du unauffällig bleibst. Im Kampf können dich die Leute normal sehen, aber Videos oder Bilder von diesem Kampf bleiben verschwommen. Ein getarnter Charakter, der herumrennt, schreit und auffällt, wird auffallen, auch wenn sich die Zeugen nach dem Ereignis wahrscheinlich nicht über seine genaue Beschreibung einig sein werden. Der Arkane/Tarnungseffekt verbirgt keine wirklich einprägsamen Merkmale. Ein Typ mit lila Haaren und Gesichtstätowierungen wird auffallen, auch wenn sich die Leute vielleicht nicht über den Lilaton oder die Muster seiner Tätowierungen einig sind.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 21,
+        level: 1,
+        name: "Arkan/Tarnung 1",
+        description: "Du verschwindest in der Menge.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 22,
+        level: 2,
+        name: "Arkan/Tarnung 2",
+        description: "Deine Anwesenheit verblasst in der Erinnerung.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 23,
+        level: 3,
+        name: "Arkan/Tarnung 3",
+        description: "Du bist die Person, an die sich niemand so leicht erinnert.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 24,
+        level: 4,
+        name: "Arkan/Tarnung 4",
+        description: "Aufzeichnungen, Bilder, sogar Erinnerungen an dich sind rar und schwer zu finden.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 25,
+        level: 5,
+        name: "Arkan/Tarnung 5",
+        description: "Du bist wie ein Geist in dieser Welt, den nur die Leute kennen, denen du vertraust.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 4,
+    type: "backgrounds",
+    name: "Avatar/Genie",
+    description: "Das Erwachen macht den Magier aus. Egal, ob sie es als mystischen inneren Gott oder als wissenschaftlich erklärbare Erleuchtung des höheren Bewusstseins sieht, der Avatar oder Genius lässt einen Willensarbeiter das tun, was er tut. Manche Avatare sind aber stärker und effektiver als andere. Diese Eigenschaft misst dein erwachtes Selbst, zeigt, wie gut es Quintessenz verschieben und halten kann, und sagt, wie echt es in der Wahrnehmung deines Charakters ist. Jeder Magiercharakter hat eine Art Avatar; wenn du jedoch nicht mindestens einen Punkt in dieser Eigenschaft kaufst, ist deine Fähigkeit, tatsächlich viel mit deiner Magie zu erreichen, extrem eingeschränkt. Obwohl deine Zauberwürfe auf Arete basieren und nicht auf dem Avatar, kann dein Charakter keine Quintessenz einsetzen, um seine Zauber zu unterstützen. Die Fähigkeit eines Magiers, Quintessenz zu absorbieren oder einzusetzen, basiert auf der Eigenschaft Avatar. (Siehe den Eintrag zum Merkmal Quintessenz, S. 331-333.) Auch ihr höheres Selbst ist schwach – eher eine Glut als ein Lagerfeuer. Eine hohe Avatar-/Genius-Wertung spiegelt jedoch ein höheres Selbst wider, dessen ausgeprägte Persönlichkeit für den betreffenden Magier sehr real erscheint.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 31,
+        level: 0,
+        name: "Avatar/Genie X",
+        description: "Ein flüchtiger Avatar, der kaum Magie beherrscht.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 32,
+        level: 1,
+        name: "Avatar/Genie 1",
+        description: "Eine bemerkenswerte Präsenz, mit der du einen Punkt Quintessenz aufnehmen oder verbrauchen kannst.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 33,
+        level: 2,
+        name: "Avatar/Genie 2",
+        description: "Eine dynamische Präsenz, mit der du zwei Punkte Quintessenz aufnehmen oder verbrauchen kannst.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 34,
+        level: 3,
+        name: "Avatar/Genie 3",
+        description: "Eine erkennbare Entität, mit der du drei Punkte Quintessenz aufnehmen oder verbrauchen kannst.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 35,
+        level: 4,
+        name: "Avatar/Genie 4",
+        description: "Ein mächtiger Geist, mit dem du vier Punkte Quintessenz aufnehmen oder verbrauchen kannst.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 36,
+        level: 5,
+        name: "Avatar/Genie 5",
+        description: "Eine mächtige Kraft der Erleuchtung, mit der du fünf Punkte Quintessenz aufnehmen oder verbrauchen kannst.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 5,
+    type: "backgrounds",
+    name: "Backup",
+    description: "Du kannst die Kavallerie rufen und bei Bedarf Hilfe erwarten ... allerdings nur in begrenztem Umfang. Dank deiner Mitgliedschaft in einer Organisation kannst du Verstärkung anfordern und ein kleines Team nützlicher Leute schicken lassen, die sich um die Angelegenheit kümmern. Im Gegensatz zu Verbündeten sind diese Leute weitgehend anonym, haben begrenzte Fähigkeiten und sind mehr oder weniger entbehrlich. Im Wesentlichen kommen sie, um einfache Aufgaben zu erledigen, und kehren dann zu der Organisation zurück, der ihr alle angehört. Backup-Charaktere kommen aus einem großen Pool von fähigen, aber nicht erweckten Leuten. Ihre Beziehung zu den Spielercharakteren ist eher eine Frage der Zweckmäßigkeit, ohne besondere Loyalität. Auch wenn sie ihr Leben für den Magier riskieren, ist die Hilfe nicht persönlich. Diese Leute machen einfach nur ihren Job. Verstärkung kommt in der Regel in Form einer Gruppe bewaffneter Soldaten, die herbeieilen, um die Flucht eines Magiers zu decken. Alle wichtigen Aufgaben (oder Opfer) liegen in der Verantwortung des Magiers – die Verstärkung ist nicht da, um schwere Arbeit zu verrichten. In anderen Situationen kann der Hintergrund auch andere Arten von Hilfspersonal darstellen: Rezeptionisten, Studenten, Roadies, Fahrer, Sanitäter, sogar Prostituierte. Ein König oder eine Königin des Dschungels könnte um Hilfe rufen und eine passende Gruppe von Tieren anlocken, vorausgesetzt, dass der Charakter einen storybasierten Grund für diese Loyalität hat. Die Art der Hilfe hängt von der Organisation, der Situation und der Rolle des Magiers innerhalb dieser Gruppe ab. Ein ekstatischer Rockstar könnte Prostituierte und Roadies herbeirufen, während ein Black Suit Polizisten, Reporter oder eine Reinigungstruppe herbeirufen könnte. Und obwohl es leicht ist, die Bedeutung von Studenten, Rezeptionisten oder Bloggern zu unterschätzen, sollte man auch bedenken, dass die Gesellschaft insgesamt mehr auf Informationen als auf Gewalt angewiesen ist. Ein eloquenter Reporter kann im Großen und Ganzen mehr bewirken als ein Dutzend Typen mit Waffen. Typisches Backup-Personal hat Eigenschaften im Bereich von 1 bis 3 und ein oder zwei bemerkenswerte Fähigkeiten. Tiere sind klein (Vögel, Ratten, Fledermäuse, Haushunde oder -katzen usw.), und Geister sind unbedeutende Wesen mit einem einzigen Zweck (Botengeister, Windelementare und so weiter). Elitäre Backup-Agenten – zum Beispiel Söldner, Ninjas, Cyborgs, unbedeutende Geister oder große Raubtiere – kosten doppelt so viel wie typische Agenten, haben aber Eigenschaften im Bereich von 3 bis 5, ungewöhnliche Fähigkeiten oder ernstzunehmendes Kampfpotenzial. Im Grunde genommen werden diese Elite-„Zeitarbeitsagenten” für die Dauer einer einzigen Mission zu Verbündeten und verschwinden dann wieder dorthin, woher sie gekommen sind. Um diesen Hintergrund zu erhalten, muss ein Charakter Teil einer größeren Organisation sein – einer Gang, der Polizei, einer Streitkraft, der Technokratie usw. Unabhängig davon, wie seine Verbindung zu dieser Gruppe aussieht, muss der Magier gelegentlich Aufgaben für die Gruppe erledigen, die ihm Hilfe schickt. Wenn er seinen Teil der Abmachung nicht einhält, wenn seine Verstärkung schwere Verluste erleidet oder wenn er die Agenten und ihre Gruppe auf andere Weise missbraucht, kann dieser Hintergrund reduziert oder entzogen werden.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 41,
+        level: 1,
+        name: "Backup 1",
+        description: "Zwei typische Leute",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 42,
+        level: 2,
+        name: "Backup 2",
+        description: "Vier einfache Leute oder zwei Aushilfen",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 43,
+        level: 3,
+        name: "Backup 3",
+        description: "Sechs Leute",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 44,
+        level: 4,
+        name: "Backup 4",
+        description: "Acht Leute oder vier Aushilfen",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 45,
+        level: 5,
+        name: "Backup 5",
+        description: "10 Leute",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 46,
+        level: 6,
+        name: "Backup 6",
+        description: "12 Leute oder sechs Aushilfen",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 47,
+        level: 7,
+        name: "Backup 7",
+        description: "14 Leute",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 48,
+        level: 8,
+        name: "Backup 8",
+        description: "16 Leute oder acht Aushilfen",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 49,
+        level: 9,
+        name: "Backup 9",
+        description: "18 Leute",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 50,
+        level: 10,
+        name: "Backup 10",
+        description: "20 Leute oder 10 Aushilfen.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 6,
+    type: "backgrounds",
+    name: "Segen",
+    description: "Jemand da draußen hat seine Spuren bei dir hinterlassen. Diese Spuren sind meistens gut, haben aber auch komische Nebenwirkungen. Vielleicht findest du immer ein paar zusätzliche Euro, wenn du sie brauchst, musst aber die Rechnung übernehmen, wenn du mit den Mädels was trinken gehst. Vielleicht hast du Glück in der Liebe, findest aber keine dauerhafte Partnerschaft. Dieser Hintergrund gibt dir einen kleinen Vorteil, aber auch eine damit verbundene Eigenart. Im Spiel bedeutet „Segen”, dass du einen einzigen, kleinen, storybasierten Vorteil bekommst. Dieser Vorteil scheint aus einem Element deiner Charaktergeschichte zu kommen, das mit den Überzeugungen zusammenhängt, die deine Magie beeinflussen. Eine Akashic könnte sich zum Beispiel als von dem Windgott Fei Lian gesegnet betrachten, weil sie immer von einer leichten Brise gekühlt wird; eine Schwester von Hippolyta verirrt sich nie (ein Segen von Athene), während ein einäugiger Syndikat-Boss mit einem beunruhigenden Gefühl von körperlicher und energetischer Androgynität auch kleine Dinge zu wissen scheint, die niemand wissen sollte. (Niemand nennt den Boss tatsächlich Odin, aber das Bild von zwei Raben an der Wand des Bosses deutet auf eine gewisse Vertrautheit hin ...) Gleichzeitig wirkt dieser Vorteil ein wenig ... seltsam. Warum weht eine Brise in dieser verschlossenen Wohnung? Wie hast du den Weg durch dieses Labyrinth gefunden? Ist dieser Boss „er“ ... oder „sie“ ... oder ... ähm, ich glaube, ich nenne ihn einfach „Boss“. Dieses Gefühl der Seltsamkeit könnte als ständiger Teil der Resonanz angesehen werden, als Augenzwinkern deines Schutzgottes, als eine Eigenart lokaler Realitätsströme oder was auch immer sonst passend erscheint. Die naheliegende Erklärung ist, dass es ein Zeichen der Gestalt ist, die dich gesegnet hat, aber so etwas passiert in der realen Welt nicht, oder? Wie die unten aufgeführten Hintergründe „Traum“, „Legende“, „Frühes Leben“ und „Totem“ verbindet „Segen“ deinen Magier mit Kräften, die größer sind als er selbst. Obwohl diese Kräfte in den Augen deines Magiers aus seinen tiefen Überzeugungen zu stammen scheinen (und somit eine latente Form unkontrollierter Magie sein könnten), bleiben sie letztlich mysteriös. Odin wird nicht an der Tür des Chefs auftauchen und sagen: „Hey, rate mal, wer dich androgyn gemacht hat“, obwohl bestimmte storybasierte Eigenheiten die Antwort für jemanden, der mit der nordischen Mythologie vertraut ist, offensichtlich machen könnten. (Das Rabenbild, das eine Auge, die Art und Weise, wie Krähen immer vorbeifliegen, wenn der Chef spazieren geht, solche Dinge.) Der Charakter gibt vielleicht nicht zu, dass er oder sie an den Segen glaubt („Alte Wikingergötter? Lächerlich!“), aber es gibt eine anhaltende Verbindung, die tiefer geht, als irgendjemand ahnt. (Der Boss erinnert sich noch immer gerne an das Buch über nordische Mythologie aus der dritten Klasse ...) Wähle im Spiel eine nicht kampfbezogene, storybasierte Fähigkeit, die deinen Charakter mit einem ungewöhnlichen Talent segnet. Je höher die Bewertung, desto nützlicher wird dieses Talent. Im Gegensatz zum ursprünglichen Eintrag zu Segnungen im Leitfaden zu den Traditionen wird dieses Talent NICHT aus Sphäreneffekten, Vorzügen oder Schwächen ausgewählt, sondern ist eine kleine Wendung des Schicksals, die das Leben des Charakters in Bezug auf die Geschichte beeinflusst – siehe die Beispiele unten. (Der Hintergrund „Segnungen“ – eine offene Reihe von Superkräften mit widersprüchlichen Ursachen, Auswirkungen und Systemen – wurde für diese Ausgabe überarbeitet. Dein Segen-Talent muss bestimmten Richtlinien folgen: • Es basiert auf den Weltanschauungen des Charakters – kurz gesagt, seinem magischen Paradigma. • Es ist mit der persönlichen Geschichte deines Magiers verbunden, wahrscheinlich irgendwo in seiner Kindheit. • Es steht in Verbindung mit einer mächtigen übernatürlichen/mythischen/paranormalen Figur – einem Gott, einem Helden, einem Archetyp, einer Feenkönigin –, deren Gunst zu deinem Charakterkonzept passt. • Es hat keinen Einfluss auf den Kampf, außer vielleicht auf indirekte Weise (deine Messer bleiben scharf, du hast immer eine Kugel in der Kammer, deine Schläge haben filmreife Soundeffekte und so weiter). • Es hat auch keinen Einfluss auf Zauberwürfe. Obwohl ein Segen die Wahl der Sphären des Charakters beeinflussen kann und mit seinem Fokus verbunden sein sollte, ändert er nichts an der Schwierigkeit von Arete-Würfen beim Wirken von Zaubern. • Es ist kein offensichtliches Zeichen für übermenschliche oder unmögliche Phänomene (kein Fliegen, eiserne Haut, feurige Hände usw.) und könnte eine rationale, wissenschaftliche Erklärung haben. • Es hat eine entsprechende seltsame Eigenart, die ebenfalls auf der Geschichte basiert und deren Auswirkungen dem Segen folgen oder ihn widerspiegeln (eine seltsame Brise, ein Auge und eine Vorliebe für Raben, die Tendenz, immer die Richtung zu verwechseln, obwohl man sich nie verirrt, usw.). • Wenn der Charakter das Vertrauen seines offensichtlichen Schutzpatrons missbraucht – zum Beispiel durch eine schwere Beleidigung oder einen Religionswechsel – verschwindet der Segen. (Götter hassen Undankbarkeit ...) Diese Segnungen haben eine klare Verbindung zu der Figur, die deinen Charakter offenbar begünstigt: Ein Typ, der von Pan gesegnet ist, geht immer mit der attraktivsten Frau (oder dem attraktivsten Mann) im Club nach Hause, obwohl er ziemlich behaart ist und stark riecht; die von Allah gesegnete Frau hat ein Händchen für improvisierte Poesie, schreibt aber nie etwas davon auf; die von der Dame des Sees gesegnete Frau hat immer scharfe Messer dabei ... und sie schwimmt wirklich gerne; der Typ mit dem Spitznamen „Luzifer”? Nun, er ist eigentlich kein Teufel oder so, aber er scheint Leute zu allem überreden zu können ... und sieht seine Haut nicht ein bisschen ... rot aus? Segnungen sind nicht unfehlbar. In Situationen mit hohem Einsatz muss der gesegnete Charakter möglicherweise trotzdem würfeln, um erfolgreich zu sein. Wenn zum Beispiel der Typ Luzifer einen wichtigen Charakter zu einem wirklich verrückten Plan überreden will, muss sein Spieler dafür würfeln. Bei solchen Würfen zieht der Geschichtenerzähler pro Punkt in diesem Hintergrund einen Schwierigkeitsgrad von der üblichen Schwierigkeit der Aufgabe ab. Unser Luzifer hat zum Beispiel Segen 4 und zieht daher -4 vom Schwierigkeitsgrad seines Wurfs ab. Auch hier gilt: Ein Segen hat keinen Einfluss auf Kampfaktionen oder Zauberwürfe, also ändert er nichts an solchen Würfen. Wie schon erwähnt, passt dieser Hintergrund gut zu Schicksal, Legende, Vorleben und vor allem Totem. Der Spielleiter hat das letzte Wort über die Auswirkungen und Ausprägungen des Segens und kann einen Segen ablehnen, der nicht in seine Chronik passt, zu mächtig erscheint oder das Spiel zu sehr zugunsten dieses Charakters beeinflusst.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 51,
+        level: 1,
+        name: "Segen 1",
+        description: "Das Leben macht dir kleine Geschenke: Deine Klamotten sehen immer sauber und gebügelt aus, deine Küche wird nie richtig dreckig, du findest Geldscheine auf der Straße usw.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 52,
+        level: 2,
+        name: "Segen 2",
+        description: "Kleine Dinge laufen wie von selbst: Du findest immer einen Parkplatz, gewinnst kleine Beträge, wenn du Lotto spielst, bekommst die Telefonnummer von Leuten, wenn du danach fragst, usw.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 53,
+        level: 3,
+        name: "Segen 3",
+        description: "Du hast eine seltsame Affinität zu bestimmten Dingen: Dein Essen schmeckt immer gut, du verirrst dich nie und verlierst nie deine Schlüssel, Babys schlafen ein, sobald du anfängst, sie zu wiegen, usw.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 54,
+        level: 4,
+        name: "Segen 4",
+        description: "Deine Begabung wird geradezu unheimlich: Kinder halten den Mund, sobald du es ihnen sagst, deine Vorschläge klingen immer vernünftig, du hast Erfolg bei jedem, der dir gefällt, usw.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 55,
+        level: 5,
+        name: "Segen 5",
+        description: "Ein großer Segen begleitet dich: In deinem Portemonnaie und auf deinem Bankkonto ist immer noch ein Dollar übrig, in deiner Waffe ist noch eine letzte Kugel, du kennst Geheimnisse, die niemand wissen dürfte usw.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 7,
+    type: "backgrounds",
+    name: "Zertifizierung",
+    description: "In einer Zeit, in der man für alles Mögliche eine Genehmigung braucht, können die richtigen Zertifizierungen einem eine Menge Ärger ersparen. Vor diesem Hintergrund hat dein Charakter offizielle Papiere, die es ihm erlauben, bestimmte regulierte Tätigkeiten auszuüben: Jagen, Autofahren, Bedienen schwerer Maschinen, Ausüben eines medizinischen Berufs, Besitz bestimmter Waffen und so weiter. Im Allgemeinen sind solche Tätigkeiten mit Risiken verbunden, erfordern eine spezielle Ausbildung, wirken sich auf die Gesellschaft insgesamt aus oder sind eine Kombination aus allen dreien. Einfache Zertifizierungen, wie z. B. ein Angelschein, sind leicht zu bekommen, während wirklich gefährliche oder komplexe Tätigkeiten höhere Zertifizierungsstufen erfordern. Sofern dein Charakter nicht ohne entsprechende Ausbildung eine Genehmigung erhalten hat, benötigst du mindestens einen Punkt in einer entsprechenden Fähigkeit für jeden Punkt in diesem Hintergrund; eine ärztliche Zulassung würde beispielsweise mindestens vier Punkte in Medizin erfordern. Wenn dein Charakter die entsprechenden Fähigkeiten hat (oder die entsprechenden Bestechungsgelder gezahlt hat), kannst du Zertifizierungen für alternative Identitäten bekommen (siehe „Alternative Identität” oben), um einen Charakter mit den richtigen Papieren unter verschiedenen Namen darzustellen. Offizielle Zertifizierungen haben eine gewisse Sichtbarkeit. Zertifizierungen können von den Behörden überprüft werden, und obwohl eine Genehmigung für schwere Waffen dir den Besitz von schwerem Gerät ermöglicht, sorgt sie auch dafür, dass du einer der ersten bist, nach denen die Polizei sucht, wenn jemand mit solchen Waffen ein Verbrechen begeht!",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 61,
+        level: 1,
+        name: "Zertifizierung 1",
+        description: "Jagdschein, Gewerbeschein, Reisepass für ein offenes Land usw. ",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 62,
+        level: 2,
+        name: "Zertifizierung 2",
+        description: "Lehrbefähigungsnachweis, Karosseriebau-Lizenz, PADI-Zertifizierung, CPA, Lkw- oder Motorradführerschein, Grundgenehmigung für Schusswaffen usw.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 63,
+        level: 3,
+        name: "Zertifizierung 3",
+        description: "Waffenschein, Gefahrgutentsorgungslizenz, kirchlich ordinierter Geistlicher, Rettungsschwimmer-Zertifizierung, Privatdetektiv-Lizenz, Privatpilotenlizenz usw.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 64,
+        level: 4,
+        name: "Zertifizierung 4",
+        description: "Waffenschein der Klasse C, staatlich geprüfter Arzt oder Jurist, Berufspilotenlizenz, Geheimdienstmitarbeiter usw.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 65,
+        level: 5,
+        name: "Zertifizierung 5",
+        description: "Diplomatische Immunität, Lizenz zum Töten.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 8,
+    type: "backgrounds",
+    name: "Kapelle/Konstruktion",
+    description: "In der gefährlichen Welt der Erwachten ist es immer gut, ein paar Gleichgesinnte und eine sichere Basis zu haben. Seit dem Goldenen Zeitalter der Magie nennt man solche Orte „Covenants“: Zentren, wo sich eine Gruppe verbündeter Magier ein Gebiet sichert, Ressourcen zusammenlegt und sich hilft und verteidigt, wenn es nötig ist. In späteren Jahren hat der Orden der Vernunft diese Idee übernommen und die Technokratische Union nach diesem Prinzip aufgebaut. Im 20. Jahrhundert nennen Magier der Tradition diese Orte „Chantries“, die Union nennt sie „Konstrukte“ und andere Magier nennen sie so, wie es kulturell angemessen klingt (Tempel, Loge, Moschee usw.). Im Spiel ist eine Chantry oder ein Konstrukt eine Operationsbasis. Ein Charakter mit diesem Hintergrund gehört zu einer solchen Basis und hat bestimmte Vorteile und Pflichten gegenüber der Gruppe, die diese Basis unterhält. Die meisten Agenten der Technokratie gehören standardmäßig zu einem Konstrukt – so funktioniert die Union nun einmal. Mystische Magier haben in dieser Hinsicht mehr Wahlmöglichkeiten, aber viele von ihnen gehören aus praktischen Gründen zu Chantries. Schließlich liegt in der Zahl die Stärke. Da die Regeln zur Charaktererstellung in Mage davon ausgehen, dass Anfänger neu im Spiel der Erwachten sind, beginnt ein Charakter mit diesem Hintergrund als rangniedriges Mitglied einer etablierten Festung. Sie profitiert davon, zu einer Gruppe älterer und erfahrenerer Kollegen zu gehören (die wahrscheinlich vom Spielleiter gespielte Charaktere sind), beginnt aber auch ganz unten in der Hackordnung. Die Älteren lassen sie Besorgungen und Aufgaben in der Chantry erledigen, und sie hat keinen politischen Einfluss innerhalb der Gruppe. Über dieses Stadium hinauszuwachsen, ist einer der Schlüssel zur Entwicklung eines jungen Magiers. Eine Gruppe mystischer Magier kann auch ihre eigene Chantry gründen, eine Option, die Technokraten nicht offensteht. (Die Union sieht solchen Individualismus nicht gerne.) Durch das Sammeln von Punkten unter den Mitgliedern kann die Gruppe die notwendigen Ressourcen zusammenbringen, um einen eigenen Ort zu errichten. Im Spiel spiegeln diese Baupunkte Zeit, Geld, Gefälligkeiten, Arbeit und andere Dinge wider, die für den Aufbau der Festung aufgewendet werden. (Ein punktebasiertes Bausystem war in „The Book of Chantries” enthalten, aber dieses System wurde inzwischen verworfen.) Je mehr Punkte die Gruppe sammelt, desto größer kann die Chantry werden. Sicherer Squat 10-20 Punkte Pool Kleiner Zufluchtsort 21-30 Punkte Pool Mystische Chantry 30-70 Punkte Pool Festung 71-100 Punkte Pool Machtzentrum 101+ Punkte Pool Eine Chantry oder ein Konstrukt kann jede Form annehmen, die angemessen erscheint. Eine könnte ein ländlicher Waldhain sein, eine andere ein verlassenes Kino, eine dritte ein abgelegenes verrücktes Labor und eine vierte könnte sich in einem Bürogebäude, einem Wikinger-Langhaus, einer Anwaltskanzlei oder einer Maschinenwerkstatt einrichten. Chantries und Konstrukte niedriger Stufen verfügen über einige weltliche Ressourcen – einige magische Schutzvorrichtungen, ein Sicherheitssystem, vielleicht eine Handvoll nicht erweckter Helfer, Kommunikationsdienste und so weiter. Auf der Ebene der Mystischen Chantry kann der Ort ein paar paranormale Ausstattungsmerkmale haben: Kristallkugeln, Portale zu Horizon Realms, Geistwächter und so weiter. Festungen und Machtzentren haben umfangreiche weltliche und magische/hypertechnologische Ressourcen; solche Orte sollten im Detail mit dem Storyteller ausgearbeitet werden und erfordern einen enormen Aufwand an Zeit, Macht, Arbeit und Materialien. Die Stabilität dieses Pools hängt von der fortgesetzten Zusammenarbeit und dem Überleben der Mitwirkenden ab. Wenn ein Magier aussteigt oder getötet wird, gehen seine Punkte verloren. Wenn die ganze Gruppe auseinanderbricht, gehen alle Punkte verloren und die Chantry löst sich auf. Überlebende Mitglieder können einige Erfahrungspunkte zusammenlegen und den Unterschied für den verlorenen Beitrag ausgleichen. Andernfalls reiht sich diese Chantry in die vielen zerbrochenen Gemeinschaften und Festungen ein, die in der Geschichte der Magier verstreut sind. Übrigens müssen andere Hintergründe, die mit der Chantry zusammenhängen, separat gekauft werden. Die folgenden Hintergründe können einer Chantry hinzugefügt werden: Verbündete, Arkanes, Verstärkung, Kult, Vertrauter, Einfluss, Bibliothek, Mentor, Knotenpunkt, Gönner, Gefolgsleute, Ressourcen, Spione und Wunder.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 71,
+        level: 2,
+        name: "Kapelle 1",
+        description: "Ein Poolpunkt oder Mitgliedschaft in einem winzigen Squat.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 72,
+        level: 4,
+        name: "Kapelle 2",
+        description: "Zwei Poolpunkte oder Mitgliedschaft in einem kleinen\n" +
+          "Refugium.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 73,
+        level: 6,
+        name: "Kapelle 3",
+        description: "Drei Poolpunkte oder Mitgliedschaft in einer durchschnittlichen Kapelle oder Konstruktion.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 74,
+        level: 8,
+        name: "Kapelle 4",
+        description: "Vier Poolpunkte oder Mitgliedschaft in einer Festung.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 75,
+        level: 10,
+        name: "Kapelle 5",
+        description: "Fünf Poolpunkte oder Mitgliedschaft in einem Power Center.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 9,
+    type: "backgrounds",
+    name: "Kontakte",
+    description: "Du kennst Leute, die Sachen wissen. Auch wenn solche Kontakte nicht so hilfreich oder zuverlässig sind wie Verbündete, können sie dir dabei helfen, Infos zu sammeln, Nachrichten zu verbreiten, Fäden zu ziehen und kleine Gefälligkeiten einzulösen (Tickets für ein ausverkauftes Konzert zu ergattern, eine günstige Wohnung zu finden, ein Treffen mit dem Polizeichef zu organisieren und so weiter). Natürlich werden diese Leute auch gelegentlich deine Hilfe brauchen. Solange ihr euch gegenseitig helft, können diese Leute jedoch sehr nützlich sein. Die Art deiner Kontakte hängt vom Charakterkonzept und der Hintergrundgeschichte deines Charakters ab. Die Ausreißerin Jinx hätte zum Beispiel Kontakte in der Straßengemeinschaft, während der Manager Malcolm Kontakte in der Geschäftswelt hat. Innerhalb ihres Erfahrungsbereichs können Kontakte in der Regel geeignete Informationen finden oder weitergeben; Jinx könnte lernen, wie man ein Auto kurzschließt, und Malcolm könnte Daten über Automobilaktien beschaffen, aber weder Jinx noch Malcolm kennen wahrscheinlich jemanden, der ein Autokennzeichen zurückverfolgen könnte. Wenn du Kontakte außerhalb deines Fachgebiets suchst, kannst du jederzeit neue Kontakte knüpfen oder deine bestehenden Kontakte nutzen, um das zu finden, was du brauchst. (Im Spiel erhöht diese zweite Option die Schwierigkeit deines Wurfs um +2 oder mehr.) Wenn du deine Kontakte in Anspruch nimmst, würfle eine entsprechende soziale Eigenschaft + Kontakte. Die Schwierigkeit hängt von der Art der Informationen ab, die du verbreiten möchtest, oder von der Gefälligkeit, um die du bittest. Bei Erfolg bekommst du, was du brauchst, bei Misserfolg bekommst du fehlerhafte Daten, eine verstümmelte Nachricht oder gar keinen Nutzen. Ein Reinfall bedeutet, dass du jemanden verärgert hast; entweder verrät dich dein Kontakt oder er sagt dir, du sollst zur Hölle fahren, und entfernt sich dann für eine Weile aus deinem Netzwerk. Jeder Punkt in dieser Eigenschaft steht für einen wichtigen Kontakt, einen ausgearbeiteten Charakter wie einen Verbündeten. Du kannst auch zwanglose Kontakte knüpfen, wenn du einen erfolgreichen Wurf für Soziales oder Mentales + Kontakte machst, aber diese Quellen sind schwieriger zu handhaben (d. h. der Wurf hat einen höheren Schwierigkeitsgrad) und bei sensiblen Informationen nicht zuverlässig. Dieser Hintergrund kann mehr als fünf Punkte haben. Für Informationsnetzwerke, die mit sensiblen oder geheimen Informationen handeln, siehe Hintergrund: Spione.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 81,
+        level: 1,
+        name: "Kontakte 1",
+        description: "Ein Kontakt",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 82,
+        level: 2,
+        name: "Kontakte 2",
+        description: "Zwei Kontakte",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 83,
+        level: 3,
+        name: "Kontakte 3",
+        description: "Drei Kontakte",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 84,
+        level: 4,
+        name: "Kontakte 4",
+        description: "Vier Kontakte",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 85,
+        level: 5,
+        name: "Kontakte 5",
+        description: "Fünf Kontakte",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 86,
+        level: 6,
+        name: "Kontakte 6",
+        description: "Sechs Kontakte",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 87,
+        level: 7,
+        name: "Kontakte 7",
+        description: "Sieben Kontakte",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 88,
+        level: 8,
+        name: "Kontakte 8",
+        description: "Acht Kontakte",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 89,
+        level: 9,
+        name: "Kontakte 9",
+        description: "Neun Kontakte",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 90,
+        level: 10,
+        name: "Kontakte 10",
+        description: "Zehn Kontakte",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 10,
+    type: "backgrounds",
+    name: "Kult",
+    description: "Jeder Magier mit Charisma kann Freunde haben; dieser Kult geht aber über bloße Freundschaft hinaus. Diese Anhänger vertrauen und verehren dich so sehr, dass sie, wenn sie versammelt und angeleitet werden, ihren Glauben in deine Rituale einbringen können. Die Art deines Kults ist nicht wichtig. Du könntest eine religiöse Persönlichkeit mit einer Gemeinde sein, ein Künstler mit besonders treuen Fans, ein Professor, dessen Studenten ihn regelrecht verehren, oder etwas Ähnliches. Was zählt, ist der Glaube: Dein Kult sieht dich als jemanden, der Wunder vollbringt, und sie wollen Teil dieser Magie sein ... und das sind sie auch. Wie unter „Verbündete, Assistenten und Kulte“ und „Gemeinsam handeln“ (Kapitel 10, S. 532 und S. 542–543) beschrieben, erhöht eine Gruppe von Assistenten, die einen gemeinsamen Glauben teilen, den Würfelpool des Zauberers bei einem Ritual, das mit ihrer Hilfe durchgeführt wird. Solche Rituale können entweder mystische Künste oder Technomagie beinhalten, solange alle mitmachen. In den meisten Fällen müssen alle beteiligten Charaktere während des Rituals denselben physischen Raum einnehmen; eine mögliche Ausnahme könnte für eine vernetzte Gruppe gemacht werden, die durch Gedankenzauber oder Konferenztechnologie (eine LAN-Party, Videokonferenz usw.) verbunden ist. Auch hier müssen die Helfer jedoch absolut überzeugt sein und – zumindest für den Moment – frei von äußeren Ablenkungen sein. Kultmitglieder sind typische Schläfer: Sie sind nicht besonders geschickt oder versiert, abgesehen von ihrem absoluten Vertrauen in dich. Mächtige Helfer sind Verbündete, Unterstützer, Gefolgsleute oder andere wichtige Charaktere. Diese Leute haben aber einen wichtigen Grund, an das zu glauben, was du tust. Du musst also ihr Vertrauen rechtfertigen. Wenn du ihr Vertrauen willst, dann musst du zumindest so wirken, wie sie es von dir erwarten. Wenn ihr Glaube ins Wanken gerät, verlierst du die Vorteile dieses Hintergrunds. Natürlich kann ein Kult auch größer sein – ein beliebter Evangelist kann Hunderte von Anhängern haben. Ab einem bestimmten Punkt können sie dir aber nur noch begrenzt helfen. Der Rang mit fünf Punkten in diesem Hintergrund bietet den maximalen Vorteil für einen Kult.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 91,
+        level: 1,
+        name: "Kult 1",
+        description: "Kleiner Kult: 3–7 Leute. Leg einen Würfel zum Würfelvorrat eines Rituals dazu, das mit der Hilfe dieser Gruppe gewirkt wird.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 92,
+        level: 2,
+        name: "Kult 2",
+        description: "Kleiner Kult: 8–12 Leute. Wenn diese Gruppe zusammenkommt, kannst du bei Ritualen zwei Würfel mehr werfen.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 93,
+        level: 3,
+        name: "Kult 3",
+        description: "Kleine Kult: 13–17 Leute. Bei Ritualen, die mit der ganzen Gruppe gemacht werden, kannst du drei Würfel dazuwerfen.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 94,
+        level: 4,
+        name: "Kult 4",
+        description: "Große Kult: 18–22 Leute. Leg vier Würfel zu den Ritualen dazu, die mit dieser Gruppe gemacht werden.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 95,
+        level: 5,
+        name: "Kult 5",
+        description: "Riesiger Kult mit 23 bis 30 Leuten. Wenn der ganze Kult zusammen ist, kannst du fünf Würfel zu den Ritualen hinzufügen.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 11,
+    type: "backgrounds",
+    name: "Lehnsgut",
+    description: "Der Geist einer Magierin ist ihre Burg. Dort kann sie allem entfliehen und sich in eine Welt zurückziehen, die sie selbst erschaffen hat. In klassischen und Renaissance-Abhandlungen wird von Gedächtnispalästen gesprochen, in denen eine Person in ihrem Geist eine Struktur aufbaut, die ihr bei der Meditation, beim Lernen, beim Nachdenken und natürlich beim Erinnern hilft. Diese Konstrukte, die aus dem Bewusstsein des Erbauers entstehen, haben keine physische Form, bieten aber dennoch eine Art Zufluchtsort. Mit diesem Hintergrund hast du einen solchen Ort. Kosmologisch gesehen existiert ein Demesne in der Maya als ein semipermanentes Traumreich, das von deinem träumenden Geist inspiriert ist. Dieses Reich könnte etwas sein, das du absichtlich mit dem Talent „Klarträumen” erschaffen hast, oder es könnte an einem Ort existieren, der von deiner unterbewussten Vorstellungskraft heraufbeschworen wurde. So oder so folgt es den Vorgaben deines Bewusstseins und enthält Elemente, die für dich persönlich von Bedeutung sind. Dein Geist könnte einen Tempel errichten, den niemand entweihen kann, ein Blumenfeld zu Ehren deiner Geliebten, eine Bildergalerie, die Menschen oder Orte verewigt, an die du dich erinnern möchtest ... wenn du es träumen kannst, kannst du es erschaffen ... auch wenn du deine Schöpfung vielleicht nicht mehr kontrollieren kannst, sobald das Demesne existiert. Dieses Demesne ist vielleicht kein angenehmer Ort. Auch Alpträume, Stille, Selbstmordgedanken oder andere dunkle Neurosen können ein Demesne hervorbringen. Vielleicht möchtest du ein Albtraumreich erschaffen, entweder als Testgelände, als Fegefeuer oder als Spiegelbild deiner Liebe zu Horrorfilmen. Ob angenehm oder nicht, das Reich kann klein, beeindruckend oder riesig sein. Du selbst weißt vielleicht nicht, wie weitläufig es sein kann. Schließlich steckt unser Geist voller Überraschungen ... Im Spiel spiegelt der Hintergrundwert den Grad deiner Kontrolle über diesen Ort wider, sobald er einmal geschaffen ist. Bei niedrigen Werten kannst du das Reich besuchen, aber nicht beherrschen, während du bei höheren Werten fast jedes Detail deines Reiches bestimmen kannst. (Siehe auch den Eintrag „Klarträumen” auf Seite 294.) Leg das Aussehen und die Beschaffenheit deines Herrschaftsgebiets fest, wahrscheinlich in Zusammenarbeit mit deinem Spielleiter ... der sicherlich einige eigene Elemente hinzufügen wird. Wenn dein Charakter träumt oder meditiert, kann er sein Herrschaftsgebiet mit einem erfolgreichen Wurf auf Wahrnehmung + Herrschaftsgebiet besuchen. Die Schwierigkeit hängt von deiner Situation ab: Unter normalen Umständen wäre die Schwierigkeit 5 oder 6, während der Versuch, es unter schwierigen Umständen (z. B. während einer Folter oder anderen Herausforderungen) zu erreichen, eine Schwierigkeit von 7 bis 9 hätte. Sobald er angekommen ist, kann das Bewusstsein des Charakters frei im Herrschaftsgebiet umherwandern. Obwohl körperliche oder seelische Belastungen das Reich stören können, ist es dennoch ein vertrauter – wenn auch nicht immer einladender – Ort. Ein Demesne hat nichts Physisches an sich. Man begibt sich nicht physisch dorthin und kann auch nichts Physisches aus diesem Reich mitnehmen. Stattdessen schickt ein Reisender seine Astralform in dieses Demesne und lässt seinen Körper zurück. Details dazu findest du unter „Astralreisen” in den Kapiteln Vier und Neun (S. 87) und (S. 476–478). Allerdings brauchst du keine Geistesstärke 3 oder höher, um dein persönliches Demesne zu betreten – die Hintergrundeigenschaft kümmert sich um die Reisevorbereitungen. Ein Magier, der astral reisen kann, kann jedoch aus dem Demesne hinauswandern und von dort aus andere Traum- oder Astralwelten erreichen. Im Demesne spiegelt dein Aussehen deinen Geisteszustand wider. Wenn du ruhig bist, luzid träumst oder es geschafft hast, deine ideale Astralform zu projizieren, siehst du so aus, wie du willst. Unter anderen Umständen könnte deine Besucherform Stress, Angst oder Unsicherheiten verraten, mit denen du in der physischen Welt zu kämpfen hast. Mit einem erfolgreichen Wits + Demesne (oder Lucid Dreaming)-Wurf kannst du dein Aussehen an diesem Punkt anpassen ... und ähnliche Würfe können dir helfen, auch die Traumlandschaft zu verändern. Große Veränderungen erfordern natürlich mehrere Erfolge – siehe oben für mögliche Schwierigkeiten. Da das Demesne selbst den mentalen Zustand seines Schöpfers widerspiegelt, kannst du dich auch mit inneren Problemen innerhalb der Grenzen des Traumreichs auseinandersetzen. Ein erfolgreicher Wurf auf Wahrnehmung + Demesne ermöglicht es dir, unbewusste Konflikte zu entschlüsseln und herauszufinden, was unter der Oberfläche vor sich geht. In diesem Zusammenhang kannst du auch versuchen, auf Erinnerungen zuzugreifen, die im gesamten Demesne versteckt sein könnten. In diesem Fall würfelst du Intelligenz + Meditation oder Demesne (je nachdem, welcher Wert höher ist), wobei die Schwierigkeit und die Anzahl der Erfolge von der Unklarheit dieser Informationen abhängen. Der Name deiner letzten Freundin wäre leicht zu finden, aber der Name des Kindes, das in der dritten Klasse neben dir saß, wäre deutlich schwieriger zu erinnern. Ein geschickter Gedankenzauberer (d. h. Gedankenkontrolle 3 für eine schlafende Person, Gedankenkontrolle 4 für eine wache Person) kann auch das Bewusstsein anderer Menschen in sein Demesne ziehen. Wenn diese Person nicht in das Demesne eintreten möchte, kommt es zu einem Willenskraft-gegen-Willenskraft-Wettstreit (siehe „Widerstand geleistete Aktionen” in Kapitel 8, S. 390), wobei der Gewinner sein Ziel erreicht. Jemand, der gegen den Traum ankämpft, kann alle paar Runden würfeln, um das Reich zu verlassen; bis der Wurf gelingt, ist dieser Charakter aber gefangen. Auch hier geht's nicht um eine physische Falle, obwohl es ziemlich schrecklich sein kann, im Albtraum von jemand anderem festzustecken ... Wenn dein Magier in eine Stille fällt, kannst du seine Willenskraft (Schwierigkeitsgrad 9) würfeln, um in dein Demesne zu gelangen; dort ist er zwar immer noch in der Gedankenwelt gefangen, aber zumindest ist es vertrautes Terrain. Ein paar erfolgreiche Wahrnehmungs- + Demesne-Würfe könnten ihn wieder herausführen. Siehe „Stille” in Kapitel 10 (S. 554-561).",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 101,
+        level: 1,
+        name: "Lehnsgut 1",
+        description: "Du kommst ab und zu mal ins Reich. Du kennst den Namen und ein paar wichtige Sachen.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 102,
+        level: 2,
+        name: "Lehnsgut 2",
+        description: "Als regelmäßiger Besucher hast du das Anwesen schon oft bereist.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 103,
+        level: 3,
+        name: "Lehnsgut 3",
+        description: "In deinen Träumen kennst du diesen Ort ziemlich gut.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 104,
+        level: 4,
+        name: "Lehnsgut 4",
+        description: "Das ist dein Reich, und auch wenn du nicht über alles und jeden darin bestimmen kannst, kennen und erkennen dich die Leute dort als jemanden mit Autorität an.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 105,
+        level: 5,
+        name: "Lehnsgut 5",
+        description: "Herr oder Herrin des Lehens, du kennst und regierst dieses Reich, als wäre es dein Königreich ... denn das ist es auch.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 12,
+    type: "backgrounds",
+    name: "Schicksal",
+    description: "Du bist ein Auserwählter, dazu bestimmt, eine wichtige Rolle im kosmischen Drama zu spielen. Prophezeiungen deuten auf deine zukünftige Größe hin, statistische Analysen weisen auf deine Bedeutung hin. Vor allem aber weißt du, dass du dazu bestimmt bist, etwas Besonderes zu sein. Wenn die Lage düster erscheint, kannst du dich auf dieses Wissen berufen, um sie zu meistern. Einmal pro Spielsitzung kannst du dich auf dieses Schicksalsgefühl berufen, wenn du vor einer schwierigen Herausforderung oder in einer schwierigen Lage stehst. Wenn du vor dieser Krise alle deine Willenskraftpunkte verbraucht hast, kannst du deinen Schicksalswürfelpool gegen Schwierigkeitsgrad 8 würfeln. Mit jedem Erfolg, den du würfelst, bekommst du sofort einen Willenskraftpunkt zurück. Mit diesem wiedergewonnenen Selbstvertrauen kannst du der Niederlage oder dem Tod entgehen und einen weiteren Tag leben, um die Pläne des Schicksals für dich zu verwirklichen. Irgendwann wirst du aber doch deinem endgültigen Schicksal gegenüberstehen. An diesem Tag sagt der Spielleiter: „Es ist dein Moment des Schicksals. Stell dich dieser Krise ganz allein!“ In diesem Moment hast du keine Sonderwürfe mehr. Was auch immer das Schicksal für dich bereithält, es liegt an dir, dieses Schicksal zu erfüllen. Wenn du diese Begegnung überlebst und etwas Denkwürdiges erreichst, verschwindet dieser Hintergrund und wird vielleicht durch einen anderen Hintergrund ersetzt (Entscheidung des Spielleiters), der die dramatische Veränderung deines Lebens widerspiegelt. Wenn du scheiterst, bleibst du mit dem Wissen zurück, dass das Schicksal dich herausgefordert hat und du der Aufgabe nicht gewachsen warst.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 111,
+        level: 1,
+        name: "Schicksal 1",
+        description: "Ein kleines Schicksal; wirf einen Würfel.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 112,
+        level: 2,
+        name: "Schicksal 2",
+        description: "Du bist wichtig; wirf zwei Würfel.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 113,
+        level: 3,
+        name: "Schicksal 3",
+        description: "Du bist wichtig; wirf drei Würfel.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 114,
+        level: 4,
+        name: "Schicksal 4",
+        description: "Du bist für Großes bestimmt; wirf vier Würfel.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 115,
+        level: 5,
+        name: "Schicksal 5",
+        description: "Bald wirst du 'ne Legende sein; wirf fünf Würfel.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 13,
+    type: "backgrounds",
+    name: "Traum/Hypercram",
+    description: "Wissen ist für einen Magier das Wichtigste. Weil sie eine Art Verbindung zum kosmischen Bewusstsein haben, können manche Magier auf Infos zugreifen, die sie nicht selbst gelernt oder geübt haben. Nachdem sie sich ein bisschen Zeit zum Meditieren genommen haben (oder, im Fall von Technokraten und anderen wissenschaftlich denkenden Willensarbeitern, zum Hypercram), können solche Magier vorübergehend auf den Reichtum an Wissen und Erfahrung zugreifen, der da draußen vorhanden ist, und so Fähigkeiten kanalisieren, die sie normalerweise nicht besitzen. In der Geschichte nimmt sich dein Charakter eine kurze Zeit, um sich auf eine bestimmte Situation zu konzentrieren. Je komplexer die Situation ist, desto länger dauert es, darüber zu meditieren. Die Form der Konzentration hängt vom Fokus des Magiers ab und kann von einer BDSM-Sitzung bis zu einer anstrengenden Nacht in der Bibliothek reichen. Ein Gelehrter könnte sich in die Bücher vertiefen und sich in das Studium für eine bevorstehende Prüfung verlieren; ein heidnischer Seher könnte durch den Wald spazieren und sich den Geistern dieses Ortes zuwenden. Spider Chase könnte Feuer spinnen, während Zafira Angelita um die Führung Gottes betet. Im Spiel würfelst du Wahrnehmung + Traum (Schwierigkeitsgrad 6), um Einblicke in die jeweilige Frage zu gewinnen. Solange dein Charakter während seiner Meditationsübung nicht unterbrochen wurde, kann er auf ein gewisses Maß an frei verfügbarem Wissen zurückgreifen, das sich mit der Situation befasst. Wenn der Wurf auf Wahrnehmung + Traum erfolgreich war, kannst du deinen Traumwert durch eine andere Fähigkeit ersetzen, die mit dem Thema deiner Konzentration zusammenhängt. Wenn der Charakter diese Fähigkeit normalerweise nicht hat, kann er sie trotzdem für eine einzige ununterbrochene Aufgabe nutzen, vorausgesetzt, er hat an diesem Tag über ein verwandtes Thema meditiert; wenn er diese Fähigkeit hat, kann er den Traumwert anstelle dieser Fähigkeit verwenden – eine Eigenschaft addiert sich nicht zur anderen. Nehmen wir zum Beispiel an, Spider steht vor einem großen Kampf gegen einen Gegner, der wirklich weiß, was er tut. Ihre geringe Fähigkeit „Schlägerei” reicht dafür nicht aus, also meditiert sie, während sie Feuer wirbelt. In ihrer Vorstellung fliegt Spider mit atemberaubender Geschwindigkeit durch komplexe Katas. Spiders Spieler würfelt vier Erfolge auf den Wurf „Wahrnehmung + Traum” und so verfügt Spider während dieses Kampfes – und nur für die Dauer dieses Kampfes – über vier Punkte „Kampfkunst”, eine Fähigkeit, die sie normalerweise nicht besitzt. Nach dem Kampf verschwindet Spiders Fähigkeit wieder; sie kann sich beim besten Willen nicht daran erinnern, was sie gerade getan hat. Dieser Hintergrund ist nicht zuverlässig. Man bekommt vielleicht eine Fähigkeit, die man nicht erwartet hat, und man kann sich nicht an das festhalten, was man weiß – es ist eher ein Gefühl als eine Gewissheit. Die durch den Traum verliehene Fähigkeit hält für die Dauer einer notwendigen Aufgabe an – einen Kampf, eine Prüfung, eine Vorstandssitzung, ein Rennen und so weiter – und kann nur zur Erfüllung dieser Aufgabe eingesetzt werden. Der Traum kann nur einmal pro Tag genutzt werden, und obwohl die Spielerin angeben kann, was sie lernen möchte, trifft der Spielleiter die endgültige Entscheidung über die durch diesen Traum verliehene Fähigkeit.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 121,
+        level: 1,
+        name: "Traum/Hypercram 1",
+        description: "In Trance kommen einem echt hilfreiche Ideen. Zwei Würfel für die Aufgabe.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 122,
+        level: 2,
+        name: "Traum/Hypercram 2",
+        description: "In Trance kommen einem echt hilfreiche Ideen. Zwei Würfel für die Aufgabe.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 123,
+        level: 3,
+        name: "Traum/Hypercram 3",
+        description: "Deine Meditationen bringen echt was. Drei Würfel für die Aufgabe.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 124,
+        level: 4,
+        name: "Traum/Hypercram 4",
+        description: "Aus einer Trance kannst du echt coole Infos ziehen. Vier Würfel für die Aufgabe.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 125,
+        level: 5,
+        name: "Traum/Hypercram 5",
+        description: "Du hast direkten Zugang zum kollektiven Bewusstsein. Wenn du dich konzentrierst, kannst du unglaubliche Dinge wahrnehmen. Fünf Würfel für diese Aufgabe.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 14,
+    type: "backgrounds",
+    name: "Berühmtheit",
+    description: "Aus irgendeinem Grund bist du in der Sleeper-Welt echt bekannt. Vielleicht bist du ein Hip-Hop-Star, Politiker, Sportler oder Teil der schnelllebigen Promi-Szene, die durch YouTube und Reality-TV entstanden ist. Unter Leuten, die sich auskennen, giltst du als Berühmtheit; je höher deine Bewertung, desto größer dein Ruhm. Diese Eigenschaft ist echt ein zweischneidiges Schwert, macht dich aber ziemlich bekannt. Die Behörden werden dich eher in Ruhe lassen (es sei denn, sie wollen ein Exempel an dir statuieren ...), Fans werden dir eine gewisse Ehrerbietung entgegenbringen, und die Leute werden Dinge von dir glauben, die sie von einer normalen Person nicht akzeptieren würden. Klar, diese Kung-Fu-Superstarin kann ein Loch in eine Ziegelmauer treten – hast du nicht ihren letzten Film gesehen? Und hey, wenn dieser Typ mich so ansehen würde, würde ich auch ohnmächtig werden! Ruhm verleiht Status auf Kosten der Sichtbarkeit und lässt dich mit Zufällen davonkommen, die nur wenige andere Leute schaffen würden. Dieser Hintergrund ergänzt auch soziale Eigenschaften, wenn du versuchst, Dinge zu erledigen. Ein erfolgreicher Charisma-, Manipulation- oder Aussehen + Ruhm-Wurf kann dir viele Türen öffnen. Natürlich werden dich die Leute auch erkennen, also rechne nicht damit, dass du diese kostenlosen Flugtickets erschwindeln oder an den Sicherheitsleuten vorbeikommen kannst, ohne dass sich jemand daran erinnert, dass du das getan hast. Im Zeitalter von Handykameras, YouTube und Überwachungskameras ist es für eine berühmte Person schwer, mit solchen Dingen davonzukommen. Wenn du in der Öffentlichkeit einen Zauber wirkst, gibt es im Handumdrehen Videos davon im Internet. Ruhm ist auch vergänglich, besonders in dieser Zeit der Wegwerf-Prominenten. In der Geschichte musst du immer wieder große Taten vollbringen, um in Erinnerung zu bleiben. Und genauso wie es Leute gibt, die dich für das, was du tust, lieben, gibt es auch Leute, die dich dafür hassen. Ruhm bringt Stalker, Hasser, Kritiker und Diebe mit sich ... und wenn du die nicht in deinem Leben haben willst, warum hast du dich dann entschieden, BERÜHMT zu werden ...?",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 126,
+        level: 1,
+        name: "Berühmtheit 1",
+        description: "Innerhalb einer bestimmten Subkultur kennen die Leute deinen Namen. Vielleicht warst du mal bekannter, aber diese Zeiten sind längst vorbei.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 127,
+        level: 2,
+        name: "Berühmtheit 2",
+        description: "Als lokale Berühmtheit kennst du alle wichtigen Leute in deiner Gemeinde.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 128,
+        level: 3,
+        name: "Berühmtheit 3",
+        description: "Jemand, der bekannt ist, wird von vielen Leuten erkannt.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 129,
+        level: 4,
+        name: "Berühmtheit 4",
+        description: "Als nationale oder vielleicht sogar internationale Persönlichkeit bist du bei vielen Leuten bekannt.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 130,
+        level: 5,
+        name: "Berühmtheit 5",
+        description: "Du bist fast überall bekannt.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 15,
+    type: "backgrounds",
+    name: "Einfluss",
+    description: "Du genießt in der Welt der Schläfer Aufmerksamkeit und Respekt. Vielleicht bist du eine Berühmtheit, ein Bandenchef, ein Politiker oder ein Sektenführer ... oder vielleicht hast du einfach nur viele einflussreiche Freunde. So oder so, wenn du sprichst, hören dir die Leute zu und gehorchen dir oft. Im Allgemeinen spiegelt dieser Hintergrund ein gewisses Maß an sozialer Ehrerbietung wider, die dir auch ohne Würfelwurf zuteilwird. Wenn eine einflussreiche Person einen Raum betritt, wird das bemerkt; die Leute benehmen sich entsprechend, kleine Gefälligkeiten werden angeboten, unmögliche Vereinbarungen werden plötzlich zu deinen Gunsten getroffen ... solche Sachen eben. Durch die Kombination von sozialen Attributen mit diesem Hintergrund (z. B. Manipulation + Einfluss) kannst du dein Mojo bei den entsprechenden Parteien einsetzen. Mentale Attribute (wie Wahrnehmung + Einfluss) helfen dir, Informationen über dein soziales Netzwerk zu finden oder zu sichern. Und obwohl körperliche Eigenschaften dir nicht dabei helfen, durch deinen Einfluss etwas zu erreichen, kann eine auffällige sportliche Leistung (z. B. Ausdauer + Einfluss, um eine dieser „Niemand könnte DAS überleben!“-Stunts widerzuspiegeln) eine große Anzahl von Menschen beeindrucken, wenn du etwas tust, das viele Menschen sehen können. Um den Ruhm bestimmter Personen widerzuspiegeln, kann dieser Hintergrund bis zu 10 betragen. Denk aber daran, dass berühmte und einflussreiche Leute leicht zu erkennen sind und oft Verantwortung für viele Leute tragen (und dafür zur Rechenschaft gezogen werden). Einfluss ist in dieser Hinsicht ein zweischneidiges Schwert, und unkluge Handlungen können deinen Einflusswert senken. Klar, du kannst in ein Restaurant gehen und Leute wie Dreck behandeln – rechne aber mit einigen unangenehmen Reaktionen in den sozialen Medien, sobald du dich umdrehst ...",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 131,
+        level: 1,
+        name: "Einfluss 1",
+        description: "Leute in deinem Beruf erkennen dich an.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 132,
+        level: 2,
+        name: "Einfluss 2",
+        description: "Du hast ein paar Leute, die dir helfen, und ein bisschen Einfluss.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 133,
+        level: 3,
+        name: "Einfluss 3",
+        description: "Die Leute in deinem Bereich finden deine Fähigkeiten echt gut.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 134,
+        level: 4,
+        name: "Einfluss 4",
+        description: "Du hast echt viel Einfluss.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 135,
+        level: 5,
+        name: "Einfluss 5",
+        description: "Du bist echt stark.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 136,
+        level: 6,
+        name: "Einfluss 6",
+        description: "Du hast Einfluss auf die Politik deines Landes.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 137,
+        level: 7,
+        name: "Einfluss 7",
+        description: "Deine Handlungen beeinflussen verschiedene verbündete Nationen.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 138,
+        level: 8,
+        name: "Einfluss 8",
+        description: "Du genießt in ganzen Kulturregionen großen Respekt.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 139,
+        level: 9,
+        name: "Einfluss 9",
+        description: "Deine Macht reicht über ganze gesellschaftspolitische Bereiche. (Die EU, die UNO, der ANC usw.)",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 140,
+        level: 10,
+        name: "Einfluss 10",
+        description: "Dein Einfluss erstreckt sich über die Welt der Sterblichen, und sogar in den Anderswelten wird dir Respekt entgegengebracht.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 16,
+    type: "backgrounds",
+    name: "Legende",
+    description: "Die kollektive Vorstellungskraft der Menschheit dreht sich um dich. Auch wenn du vielleicht nicht wirklich die Reinkarnation von König Artus oder Biggie Smalls bist, erinnerst du auf einer ursprünglichen Ebene an diese Figuren. Die Leute sehen dich als Legende und erwarten deshalb Legendäres von dir. So fungierst du als wandelnder Knotenpunkt, der seine eigene Quintessenz – und möglicherweise auch die Quintessenz anderer Menschen – aufladen kann, indem er der mit ihm verbundenen Legende gerecht wird. Wähle für deine Geschichte eine Legende aus und gestalte deinen Charakter dann nach einigen bekannten Elementen dieser Figur. Rotkäppchen würde einen purpurroten Kapuzenpulli tragen und sich dorthin verirren, wo sie nicht hingehen sollte; Popeye würde seltsam reden, Spinat essen und sich in viele Kämpfe verwickeln lassen. Unser Medienzeitalter schafft Legenden, daher könnte dein Vorbild eine Figur aus der Popkultur sein, auch wenn die Kraft solcher Legenden nicht sehr tiefgreifend ist. Je mehr du der Legende gerecht wirst, desto mehr Energie verleiht sie dir. Im Spiel kannst du deinen Legendenhintergrund nicht mehr als einmal pro Geschichte würfeln. Jeder Erfolg füllt einen Punkt Quintessenz in deinem Pool auf. (Es ist ratsam, einen hohen Avatar-Wert zu wählen, wenn du diesen Hintergrund hast.) Die Schwierigkeit dieses Wurfs hängt davon ab, wie bekannt diese Legende an deinem aktuellen Standort ist; wenn du Sun Tzu verkörperst, könntest du in einer chinesischen Militärakademie viel Anerkennung bekommen, aber der durchschnittliche US-Bürger würde sagen: „Sun WER?“ Die Mindestschwierigkeit des Wurfs ist 6; wenn deine Legende unbekannt ist, kann sie bis zu 9 betragen. Einmal pro Geschichte kannst du auch Gegenstände mit Quintessenz versehen – sie in Tass verwandeln –, wenn sie etwas damit zu tun haben, dass du deiner Legende gerecht wirst. Eine Colt .45, die von einem modernen Jesse James benutzt wurde, würde zum Beispiel durch diese Verbindung eine gewisse Energie bekommen. Solche Gegenstände haben eine starke Ausstrahlung; selbst Schläfer spüren etwas Besonderes an Jimi Hendrix' Gitarre. Charaktere, die Quintessenz nutzen können, können diese Tass für ihre eigenen Zwecke nutzen. Jeder Punkt in diesem Hintergrund ermöglicht es dir, entweder einen einzelnen Gegenstand mit der gesamten Quintessenz des Hintergrundwertes zu versehen oder einen Gegenstand mit einem einzigen Punkt Tass pro Punkt im Hintergrund zu versehen. Legende 5 würde also entweder einen einzelnen Gegenstand mit fünf Punkten Quintessenz füllen oder fünf verschiedene Gegenstände mit jeweils einem Punkt Quintessenz versehen. Sobald diese Tass verbraucht ist, ist sie bis zur nächsten Geschichte weg. Andere erweckte Charaktere können ihre Avatare auch von dir aufladen, wenn sie eine aktive Rolle in deiner Legende spielen. Ein Fan von James Dean, ein Trinkkumpel von Janis Joplin, ein Magier, der mit dem wiedergeborenen Lancelot an der Tafelrunde sitzt – diese Charaktere können auch von diesem wandelnden Knotenpunkt-Effekt profitieren, solange sie im Laufe dieser bestimmten Geschichte an der Legende teilgenommen haben. (Technokraten können diesen Hintergrund auch haben; der wiedergeborene Lancelot könnte ein Cyborg mit einer besonders edlen Persönlichkeit und einem wirklich aktiven Traumleben sein.) Gegenstände oder Tiere können den Hintergrund „Legende” haben, mit denselben Kräften wie die Legende eines Charakters. In diesem Fall erfordert das Element „der Legende gerecht werden”, dass andere Menschen an ihre Verbindung zu dieser Legende glauben. Hendrix' Sunburst Stratocaster könnte eine Legende für sich sein, ein Objekt der Verehrung für Musikliebhaber überall. Eine Magierin, die diese Gitarre in die Hände bekommt, könnte ihren Avatar aufladen, indem sie das Instrument spielt ... was erklärt, warum bestimmte Objekte unter Leuten, die wissen, was sie sind, so begehrt sind und warum Menschen immer wieder weiße Büffel und Der Hirsch töten, wenn sie auftauchen. Legendäre Objekte und Tiere sollten aber Eigentum des Erzählers bleiben. Wenn der Erzähler einem Charakter erlaubt, dieses Objekt oder Tier zu erwerben, wird es zu einem Schatz oder Verbündeten. In allen Fällen hat diese Quintessenz auch eine legendäre Resonanz. Der Rauch eines Joints, den Monsieur Zig Zag herumgereicht hat, wird auch 2015 noch Erinnerungen an die 1960er Jahre wecken, und leise Echos von „Ahiii-ahiii-ahhhh!!!“ folgen den Spuren eines Mannes ohne Namen. Lizzie Bordens Beil macht den Leuten Angst, obwohl die echte Lizzie Borden damit niemanden umgebracht hat. Diese Kraft des Glaubens haftet an der Essenz einer Legenden-Eigenschaft. Menschen, die von einer Legende berührt wurden, wissen, dass sie Teil von etwas Außergewöhnlichem waren. Dieser Hintergrund passt gut zu den folgenden Hintergründen: Schicksal, Frühere Leben und Totem sowie zu bestimmten Vorzügen und Schwächen. Natürlich brauchst du einen überzeugenden Grund, um den Hintergrund „Legende” zu beanspruchen. Es reicht nicht aus, einfach nur wie Jim Morrison auszusehen – du musst in jeder Hinsicht, die zählt, Jim Morrison sein. Viele Leute behaupten, „die neuen Beatles” oder „der nächste Jesus Christus” zu sein, aber die Verbindung muss tiefer gehen als das. Dieser Hintergrund schöpft aus der erhabenen Kraft des Reiches der Archetypen. Wenn diese Kraft nicht echt ist und sich nicht in klarer und beständiger Form zeigt, bist du nur ein weiterer Hochstapler, nicht der echte McCoy.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 141,
+        level: 1,
+        name: "Legende 1",
+        description: "Eine obskure Legende (Clever Gretel, Abou Hassan) oder eine kleine Popkultur-Figur (Betty Boop, Grumpy Cat).",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 142,
+        level: 2,
+        name: "Legende 2",
+        description: "Eine kleine Legende (Sindbad der Seefahrer, Don Quijote) oder eine bekannte Popkultur-Figur (Janis Joplin, die Grinsekatze).",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 143,
+        level: 3,
+        name: "Legende 3",
+        description: "Eine bekannte Legende (Guy Fawkes, Shaka Zulu) oder eine Popkultur-Ikone (Batman, Elvis).",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 144,
+        level: 4,
+        name: "Legende 4",
+        description: "Eine große Legende (George Washington, Geronimo, Rotkäppchen).",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 145,
+        level: 5,
+        name: "Legende 5",
+        description: "Eine echt beliebte Legende (Aschenputtel, König Artus, die Mona Lisa).",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 17,
+    type: "backgrounds",
+    name: "Bibliothek",
+    description: "Wow... braucht man im Internetzeitalter überhaupt noch Bücher? Ja, eigentlich schon. Obwohl das Internet eine nahezu unendliche Menge an Infos bietet, gibt es immer noch viele Infos, die nur in Büchern zu finden sind. Besonders wenn es um esoterische, mystische, historische oder akademische Infos geht, kann eine gute Bibliothek Daten bieten, die keine Internetsuche aufdecken kann. So sehr die Magier des neuen Jahrtausends auch lernen, das Internet zu schätzen (oder sonst unter dem Mangel dieser Wertschätzung zu leiden), sind gedruckte Archive für ernsthafte Studenten der magischen Künste und erleuchteten Hyperwissenschaften immer noch unverzichtbar. Im späten 20. und frühen 21. Jahrhundert spiegelt diese Hintergrundeigenschaft den Zugang zu einem Multimedia-Archiv wider, das für diesen bestimmten Magier von entscheidender Bedeutung ist. Ein altmodischer Magier mag angesichts all dieser Internet-Torheiten den grauen Kopf schütteln, aber selbst er wird wahrscheinlich noch Fotos, Schallplatten, Filmrollen und vielleicht sogar *huch!* DVDs, CDs oder MP3s in seinem Archiv haben, schon allein deshalb, weil so viel aus dem letzten Jahrhundert auf solchen Medien festgehalten wurde. Ein urbaner Hexer könnte eine kleine, aber bedeutende Sammlung klassischer Magiebücher oder alter psychedelischer Magazine aus den 60er Jahren besitzen, die seine Breitbandverbindung ergänzen, und selbst die erhabenste Transhumanistin hat ein paar zerlesene Exemplare von Mondo 2000 oder Piss Clear in ihrer Sammlung. Die genaue Beschaffenheit deiner Bibliothek hängt also von deiner Persönlichkeit ab und bietet dir dennoch uneingeschränkten Zugriff auf eine beeindruckende Menge an Informationen, wenn du sie brauchst. Da dein Bibliothekshintergrund auf einer Sammlung nützlicher Infos für deinen Magier basiert, enthält er Material, das dir bei der Erforschung deiner gewählten Fähigkeiten und Sphären hilft. Du musst deine Sammlung von Zeit zu Zeit erweitern, wenn du dich mit neuen Themen beschäftigst (kein Wunder, dass Magier oft eingefleischte Datenjäger sind), aber dann kannst du Themen recherchieren, die mit diesen Eigenschaften zu tun haben, indem du erfolgreiche Mental-Eigenschaft + Bibliothekswürfe machst. Solche Recherchen erfordern natürlich Zeit und Mühe ... und bei größeren Archiven können sowohl Zeit als auch Mühe erheblich sein! Um riesige Archive widerzuspiegeln, kann dieser Hintergrund über 5 liegen. Eine eng verbundene und vertrauensvolle Gruppe kann diesen Hintergrund auch bündeln und so wirklich beeindruckende Archive schaffen. In diesem Fall entspricht der Bibliothekshintergrund der Gruppe dem Bibliothekshintergrund des Mitglieds mit der höchsten Bewertung in dieser Gruppe, plus einem Punkt für jeden weiteren Mitwirkenden. (Eine Gruppe, deren Mitglieder jeweils eine Bibliotheksbewertung von 3, 2, 2 und 1 haben, hätte einen kombinierten Bibliothekshintergrund von insgesamt 6.) Schließlich wird ein kombiniertes Archiv redundantes Material enthalten ... und wie viele Exemplare von „Harry Potter und der Gefangene von Askaban“ braucht man wirklich?",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 151,
+        level: 1,
+        name: "Bibliothek 1",
+        description: "Du hast ein paar New-Age-Taschenbücher.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 152,
+        level: 2,
+        name: "Bibliothek 2",
+        description: "Viel Fiktion, wenig Substanz.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 153,
+        level: 3,
+        name: "Bibliothek 3",
+        description: "Wenn du dich damit beschäftigst, findest du da ein paar nützliche Sachen.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 154,
+        level: 4,
+        name: "Bibliothek 4",
+        description: "Deine Sammlung geheimnisvoller Daten ist echt beeindruckend.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 155,
+        level: 5,
+        name: "Bibliothek 5",
+        description: "Du hast eine ziemlich gute Sammlung von unterschiedlichem Wissen.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 156,
+        level: 6,
+        name: "Bibliothek 6",
+        description: "Du hast ein riesiges persönliches Archiv.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 157,
+        level: 7,
+        name: "Bibliothek 7",
+        description: "Deine Datenbank hat jede Menge schriftliche, aufgezeichnete und virtuelle Infos.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 158,
+        level: 8,
+        name: "Bibliothek 8",
+        description: "Du hast vollen Zugriff auf ein nationales Archiv.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 159,
+        level: 9,
+        name: "Bibliothek 9",
+        description: "Du hast uneingeschränkten Zugriff auf persönliche, nationale und geheime Datenbanken.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 160,
+        level: 10,
+        name: "Bibliothek 10",
+        description: "Mit genug Zeit (und Hilfe) kannst du auf fast alles zugreifen, was jemals geschrieben und gespeichert wurde. Du verstehst es vielleicht nicht (verdammte Codes, verlorene Sprachen und fremde Sprachen!), aber du könntest es wahrscheinlich finden.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 18,
+    type: "backgrounds",
+    name: "Mentor",
+    description: "Ein „älterer“ Magier hat Interesse an dir gezeigt und bietet dir Training, Anleitung und gelegentliche Hilfe an. Beachte, dass dieser Ältere vielleicht in deinem Alter oder sogar jünger ist, dass das Training darin bestehen könnte, dich von Dächern zu werfen, dass die Anleitung mehr Yoda-Zitate als eine Karate Kid-Marathon enthalten könnte und dass die Hilfe darauf hinauslaufen könnte, dir auf den Kopf zu schlagen, sobald du diesen Abschnitt im fleischgebundenen Grimoire gelesen hast. Die Bewertung dieses Hintergrunds zeigt, wie hilfreich dein Mentor für dich ist, unabhängig von seiner persönlichen Macht. Schließlich nützt ein hermetischer Großmeister seinen Schülern nicht viel, wenn er ihnen nur erlaubt, auf seinem Boden zu schlafen. Die Beziehung zwischen Mentor und Schüler ist oft eine der prägendsten Erfahrungen im Leben eines Magiers. In vielen Fällen entdeckt der Mentor ein interessantes Talent in einem noch nicht erwachten Schlafwandler, weiht den potenziellen Schüler ein und fördert und leitet dann diese Begabung, bis sie zu voller Entfaltung gelangt. Dies gilt insbesondere für Technokraten, die oft kurz vor oder kurz nach ihrer Erleuchtung rekrutiert werden ... oder aber von einem effektiven technokratischen Agenten von ihrer früheren Karriere als Realitätsabweichler bekehrt werden. Mentoren haben natürlich ihre eigenen Ziele, und diese Ziele sind nicht immer offensichtlich. Viele Magier bekommen ihren ersten Eindruck von der Erwachten Gesellschaft durch Mentoren, die distanziert, missbräuchlich, manipulativ, gleichgültig, ineffektiv oder geradezu verrückt sind. Andere lernen natürlich von Ältesten, die sich als liebevoll, fürsorglich, einfühlsam und weise erweisen. Es hängt wirklich von der Persönlichkeit, der Hintergrundgeschichte und der Zugehörigkeit deines Magiers ab. Technokratische Mentoren sind oft (wenn auch nicht immer) kalt und effizient, während Mystiker albern, exzentrisch, distanziert oder eine beliebige Kombination von magischen Eigenschaften sein können, die man sich vorstellen kann. Im Spiel bietet ein Mentor soziale Unterstützung, magische oder technologische Ausbildung, gelegentliche Ressourcen und vielleicht auch Interventionen oder Hilfe, wenn dein Magier wirklich Hilfe braucht. Im Gegenzug erwartet er ein gewisses Maß an Respekt, Gehorsam und Hilfe in der Werkstatt. Das Verhalten eines Schülers, ob gut oder schlecht, wirkt sich auf seinen Mentor aus, daher ist es nicht ratsam, diese Beziehung zu missbrauchen. Besonders für einen jungen und unerfahrenen Magier kann ein wütender Mentor eine schreckliche Sache sein. Wie bei Verbündeten und Vertrauten repräsentiert dieser Hintergrund Storyteller-Charaktere mit ihren eigenen Hintergründen, Persönlichkeiten, Motivationen und Beziehungen zur Welt im Allgemeinen. Dein Geschichtenerzähler kann (und sollte) viel Spaß dabei haben, solche Charaktere zu spielen und Pläne zu verfolgen, die den Schülern oft verborgen bleiben. Denk an die verschiedenen Spiele, die von den Ältesten in der Harry-Potter-Saga gespielt werden – Spiele, bei denen die Schüler selten verstanden, was wirklich vor sich ging. Mentoren geben nichts umsonst; wenn sich jemand für deinen Magier interessiert, steckt immer mehr als nur Freundlichkeit oder Pflichtbewusstsein dahinter!",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 161,
+        level: 1,
+        name: "Mentor 1",
+        description: "Ein unzuverlässiger oder unerfahrener Mentor.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 162,
+        level: 2,
+        name: "Mentor 2",
+        description: "Ein hilfreicher, aber auch etwas schräger Ratgeber.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 163,
+        level: 3,
+        name: "Mentor 3",
+        description: "Ein guter und bemerkenswerter Lehrer.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 164,
+        level: 4,
+        name: "Mentor 4",
+        description: "Ein weiser, hilfsbereiter und angesehener Ältester.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 165,
+        level: 5,
+        name: "Mentor 5",
+        description: "Ein mächtiger Ältester, der sich echt für deinen Erfolg einsetzt.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 19,
+    type: "backgrounds",
+    name: "Knotenpunkt",
+    description: "In einer Welt, in der Magie selten zu sein scheint, hast du Zugang zu einem Wunder: einem Knotenpunkt, an dem du meditieren kannst, um deine innere Quintessenz wiederherzustellen oder feste Energie in verschiedenen Formen zu sammeln. Allerdings musst du möglicherweise kämpfen, um diesen Ort für dich zu behalten – Werwölfe, Geister und rivalisierende Magier sind immer darauf aus, solche Orte ihrer Sammlung hinzuzufügen. Der Knotenpunkt ist vielleicht nicht offensichtlich als magischer Ort erkennbar; die meisten von ihnen sind es nicht. Für Leute, die sich damit auskennen, sind Knotenpunkte aber wie Leuchtfeuer der Energie, die sowohl von Mystikern als auch von Technokraten begehrt sind. In der großen Tradition von Religionen und Imperien überall werden Knotenpunkte oft umgewandelt, um den Zwecken der Gruppen zu dienen, die sie für sich beanspruchen. Die Technokratie schickt Teams, um mystische Knotenpunkte zu säubern, und baut dann Festungen, Labore oder Kraftwerke auf den früheren Anlagen. Mystische Magier weihen solche Gebiete auf ihre eigene Weise, indem sie Tempel über Schluchten, Kirchen über Brunnen und Einkaufszentren oder Computerlabore über dem heiligen Boden errichten, der einst von einer rivalisierenden Gruppe verehrt wurde. Kurz gesagt, Knotenpunkte stellen eine der unangenehmeren Fronten des Aufstiegskrieges dar. Selbst verbündete Magier wie Celestial Choristers und Verbena scheuen sich nicht, die heiligen Stätten der anderen für ihre eigenen Zwecke zu nutzen ... natürlich alles für das größere Wohl! Wie in Kapitel Drei erwähnt, haben Knotenpunkte eine Resonanz, die von der Art der Energie herrührt, aus der sie entstanden sind. Das Tass eines bestimmten Ortes trägt diese Resonanz ebenfalls in sich, und die Form, die das Tass annimmt, folgt der Natur des Knotenpunkts. Ein durch eine Schlacht geschaffener Knoten kann Wut und Traurigkeit ausstrahlen, verkörpert durch Blut, Knochen und Asche; eine Quelle der Hoffnung fühlt sich erfrischend und rein an, mit reinem Wasser-Tass; aber ein Frankenstein-ähnliches Labor fühlt sich gotisch und unheilvoll an, mit Blitz-Quintessenz, die zwischen Generatoren hin und her springt und in Batterien als Tass für den späteren Gebrauch gespeichert wird. Der Gauntlet wird um mystische Knotenpunkte herum tendenziell dünner, verdichtet sich jedoch in technokratischen Knotenpunkten, es sei denn, du verwendest dimensionale wissenschaftliche Verfahren anstelle von Geistermagie. Als Hintergrundmerkmal repräsentiert dieser Knotenpunkt einen Ort, der von deinem Charakter und vielleicht einigen Freunden gehalten wird. Du kannst Hintergrundpunkte sammeln, um einen größeren Knotenpunkt zu kaufen, aber deine Gruppe braucht einen vernünftigen, storybasierten Grund, wenn du die Chronik mit einem Ort großer Macht beginnen willst. Dein Knotenpunkt produziert eine bestimmte Menge an ungenutzter Quintessenz, die dein Avatar aufnehmen kann, während du eine Weile an diesem Ort meditierst, sowie ein bisschen Tass, das in fester Form gesammelt und später an anderer Stelle verwendet werden kann. Die genauen Mengen an Tass und freier Quintessenz hängen von der Art deiner Chronik ab: Der Knotenpunkt einer High-Fantasy-Saga kann bis zu fünf oder zehn Quintessenzpunkte pro Woche für jeden Punkt in der Hintergrundwertung produzieren, während eine Chronik, in der „die Magie stirbt“, Knotenpunkte hat, die nur ein oder zwei Quintessenzpunkte pro Woche für jeden Punkt in dieser Eigenschaft produzieren. Letztendlich bestimmt der Geschichtenerzähler den wöchentlichen Wert eines Knotens. Für Chroniken aus dem Industriezeitalter empfehlen wir zwei Punkte pro Woche und Punkt in der Eigenschaft – die Hälfte davon in freier Quintessenz, die andere Hälfte in Tass. Unabhängig von ihrer Form ist diese Versorgung mit Quintessenz begrenzt. Wenn du sie vollständig in deinen Avatar aufnimmst oder als Tass sammelst, muss dieser Knoten seine Energie wieder auffüllen, bevor er erneut genutzt werden kann. Werwölfe betrachten Knotenpunkte als Caerns: heilige Orte, die von ihrer ursprünglichen Mondgöttin gesegnet sind. Angetrieben von religiöser Inbrunst neigen sie dazu, Knotenpunkte für sich zu beanspruchen, wann immer sie können. Obwohl solche Kreaturen die kalten Fabriken der technokratischen Macht meiden, könnte ein Magier oder eine Kabale mit einem mystischen Knotenpunkt einige große, pelzige Besucher haben, die eine Immobilientransaktion besprechen möchten ...",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 171,
+        level: 1,
+        name: "Knotenpunkt 1",
+        description: "Ein kleiner Ort von geringer Bedeutung. (Caern der Stufe 1.)",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 172,
+        level: 2,
+        name: "Knotenpunkt 2",
+        description: "Ein kleines bisschen metaphysische Energie. (Caern der Stufe Eins.)",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 173,
+        level: 3,
+        name: "Knotenpunkt 3",
+        description: "Ein stetiger Fluss von Quintessenz. (Level-Zwei-Caern.)",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 174,
+        level: 4,
+        name: "Knotenpunkt 4",
+        description: "Ein Energieschub und jede Menge materialisierter Tass. (Level-Zwei-Caern.)",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 175,
+        level: 5,
+        name: "Knotenpunkt 5",
+        description: "Eine mächtige Quelle voller Energie. (Stufe-Drei-Caern.)",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 176,
+        level: 6,
+        name: "Knotenpunkt 6",
+        description: "Ein fokussierter Knotenpunkt, bei dem sowohl Tass- als auch Umgebungsenergie durch Prime Arts oder Wissenschaften verfeinert werden. (Caern der Stufe drei.)",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 177,
+        level: 7,
+        name: "Knotenpunkt 7",
+        description: "Eine echt starke metaphysische Kraft. (Level-Vier-Caern.)",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 178,
+        level: 8,
+        name: "Knotenpunkt 8",
+        description: "Ein seltener und wundersamer Ort, voller verkörperter Urkraft. (Caern der Stufe Vier.)",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 179,
+        level: 9,
+        name: "Knotenpunkt 9",
+        description: "Einer der beeindruckendsten heiligen Orte oder mächtigsten Raffinerien in der materiellen Welt. (Caern der Stufe Fünf.)",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 180,
+        level: 10,
+        name: "Knotenpunkt 10",
+        description: "Einer der seltensten und wertvollsten Orte auf der Erde … und ein sicherer Schauplatz für Kämpfe zwischen den Mächten, die seine Kraft nutzen wollen. (Level Five Caern.)",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 20,
+    type: "backgrounds",
+    name: "Frühere Leben",
+    description: "Reinkarnation ist immer noch ein Thema, über das man diskutiert, sogar unter Magiern. Akashics und Chakravanti bauen ihre ganze Sicht auf die Realität auf dieser Idee auf, aber ihre Verbündeten vom Chorus (ganz zu schweigen von den atheistischen Technokraten) lehnen das Konzept der wiederverwerteten Seelen ab ... oder manchmal sogar die ganze Idee einer Seele! Trotzdem scheint da was zu sein ... eine vertraute Essenz, auf die bestimmte Leute in schwierigen Zeiten zurückgreifen können. Mit diesem Hintergrund kannst du über ein vergangenes Leben meditieren (oder, nach Ermessen des Spielleiters, einen plötzlichen Geistesblitz erleben), um Hilfe in einer aktuellen Situation zu bekommen. Vielleicht erinnert dich der Blick eines imposanten Gegners an die Zeit, als du Stalins Chefagent gegenüberstandest, oder dieses seltsame Buch erinnert dich an die alchemistische Schriftrolle, die du in Byzanz studiert hast. Wenn der Hintergrund „Vergangene Leben” zum Tragen kommt, helfen dir deine Erinnerungen bei deinem aktuellen Dilemma. Spieltechnisch kann der Würfelpool dieses Hintergrunds zum Würfelpool einer anderen Aufgabe hinzugefügt werden. Einmal pro Spielsitzung kannst du auf diesen Erinnerungsschatz zurückgreifen. Jeder Punkt in „Frühere Leben” gibt dir einen Würfel, den du gegen Schwierigkeitsgrad 8 würfeln kannst; jeder Erfolg bei diesem Wurf gibt dir einen zusätzlichen Würfel, den du bei einem späteren Wurf mit einer anderen Fähigkeit verwenden kannst. Diese Würfel können entweder zum Würfelpool einer Fähigkeit hinzugefügt werden, die du bereits besitzt, oder – wie der Hintergrund „Traum” – dir einen temporären Würfelpool für eine Fähigkeit geben, die du normalerweise nicht auf deinem Charakterblatt hast. „Frühere Leben” garantiert keinen Erfolg, kann dir aber ein bisschen zusätzliche Expertise verleihen. Wenn du einen Wurf für „Frühere Leben” vermasselst, landest du mitten in der nächsten Situation. „Traum“ – einen temporären Würfelpool für eine Fähigkeit geben, die du normalerweise nicht auf deinem Charakterblatt hast. „Vergangene Leben“ garantiert keinen Erfolg, kann aber ein bisschen zusätzliche Expertise verleihen. Wenn du einen „Vergangene Leben“-Wurf vermasselst, landest du mitten in einem Trauma aus einem früheren Leben; für einen entscheidenden Moment überwältigen die Erinnerungen deinen Charakter und zerstören jede Chance auf Erfolg im Hier und Jetzt. Das ist besonders beunruhigend, wenn dein Magier nicht an Reinkarnation glaubt! („Was zum Teufel war DAS denn…?“) Für eine Extraportion Awesome Sauce notiere dir Details aus deinem früheren Leben, wenn du diese Eigenschaft erfolgreich einsetzt. Solche Erinnerungen werden dir wahrscheinlich irgendwann wieder nützlich sein…",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 181,
+        level: 1,
+        name: "Frühere Leben 1",
+        description: "Leichte Spuren einer früheren Inkarnation.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 182,
+        level: 2,
+        name: "Frühere Leben 2",
+        description: "Oft habe ich dieses Déjà-vu-Gefühl.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 183,
+        level: 3,
+        name: "Frühere Leben 3",
+        description: "Klare Erinnerungen an andere Leben.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 184,
+        level: 4,
+        name: "Frühere Leben 4",
+        description: "Klare Erinnerung an frühere Erfahrungen und andere Leben.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 185,
+        level: 5,
+        name: "Frühere Leben 5",
+        description: "Welches Leben ist das nochmal?",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 21,
+    type: "backgrounds",
+    name: "Patron",
+    description: "In der Schachbrettpolitik der Ascension-Fraktionen halten sich manche Spieler aus dem Hintergrund raus. Einer von ihnen kümmert sich um dein Wohl ... zumindest im Moment. Wahrscheinlich hast du keine Ahnung, wer dieser Gönner ist, was er will oder wie hoch die Rechnung für seine Dienste am Ende sein wird. Selbst wenn du glaubst zu wissen, wer hinter dieser Freundlichkeit steckt, bleibt die Wahrheit unklar. Diese Person ist kein Mentor oder Verbündeter, sondern ein geheimnisvoller Wohltäter, dessen wahre Ziele dir zumindest im Moment verborgen bleiben. Im Spiel spiegelt der Gönner eine mächtige Partei wider, die die Interessen deines Charakters im Auge hat. Nur der Geschichtenerzähler weiß, was diese Partei vorhat und welches Interesse sie an deinem Charakter hat. Zumindest zu Beginn der Chronik übt dieser Wohltäter auf mysteriöse Weise Einfluss aus: Befehle werden rückgängig gemacht, Verträge abgeschlossen oder gekündigt, Geschenke überreicht, Hinweise gegeben und Fäden gezogen. Magick wird den Grund für diese Gefälligkeiten nicht verraten – der Gönner ist viel zu clever, um sich so leicht erwischen zu lassen. Es gibt eindeutig eine Allianz oder Gemeinsamkeiten, aber die Art dieser Verbindung bleibt unklar. Besonders in paranoiden Labyrinthen wie den hermetischen oder technokratischen Orden kann diese mysteriöse Großzügigkeit sehr beunruhigend sein. Eines Tages, das weißt du, wird der Gönner seine Forderungen einfordern ...",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 191,
+        level: 1,
+        name: "Patron 1",
+        description: "Ein zwielichtiger Typ, der ab und zu die Fäden zieht.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 192,
+        level: 2,
+        name: "Patron 2",
+        description: "Ein hilfsbereiter Gönner, der lieber anonym bleiben will.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 193,
+        level: 3,
+        name: "Patron 3",
+        description: "Ein Vorgesetzter oder Älterer, der dir aus mysteriösen Gründen hilft.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 194,
+        level: 4,
+        name: "Patron 4",
+        description: "Eine mächtige Partei, die dich zu mögen scheint.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 195,
+        level: 5,
+        name: "Patron 5",
+        description: "Ein hochrangiger Magier oder Technokrat, der sich um dein Wohlergehen zu kümmern scheint … zumindest im Moment.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 22,
+    type: "backgrounds",
+    name: "Rang",
+    description: "Du hast einen Titel, der dir in der Gesellschaft etwas Besonderes macht – vielleicht einen militärischen Rang, ein religiöses Amt, eine Führungsposition in einem großen Unternehmen oder einen ähnlich einflussreichen Posten. Diese Position bringt dir Respekt, bestimmte Vorteile, die mit dem Job zusammenhängen, und wahrscheinlich auch die sofortige Ehrerbietung (und Gehorsamkeit) von Leuten, die weniger Macht haben. Natürlich bringt dieser Rang auch Verantwortung mit sich; ein Staatsoberhaupt kann nicht einfach losziehen und Abenteuer erleben, wann immer es ihm gefällt! Es gibt natürlich noch höhere Ränge als die unten aufgeführten, aber die sind für Spielercharaktere nicht geeignet, weil sie zu viel Zeit und Verantwortung erfordern. Dieser Hintergrund ist besonders bei Technokraten verbreitet und verleiht Einfluss – gemäß dieser Hintergrundeigenschaft – in Höhe des Rangwerts. Dieser Einfluss wirkt aber nur auf Leute, die dem Rang unterstehen (z. B. Mitarbeiter eines Managers oder Bürger, die einem Adligen unterstehen), und in Situationen, in denen der Charakter im Rahmen seines Amtes handelt. Andere Leute sind vielleicht nicht so leicht zu beeindrucken. In diesem Fall zählt der Einfluss nur halb so viel wie der Rang oder ein Wert, den der Spielleiter festlegt. (Ein Mullah hat immer noch einen gewissen Einfluss auf Nicht-Muslime, aber nicht so viel wie auf die Gläubigen.) Denk auch daran, dass der Finanzvorstand eines Fortune-500-Unternehmens zwar Einfluss auf Leute hat, die den Kapitalismus leben und atmen, aber eine Gruppe von Occupy-Wall-Street-Demonstranten könnte sehr negativ auf den Rang des Charakters reagieren ... Wenn dein Charakter in offizieller Funktion handelt, kann er auch auf Ressourcen (wiederum als Hintergrund) in Höhe der Hälfte seines Ranges oder einer vom Spielleiter gewählten Stufe als Vorteil seines Amtes zugreifen ... obwohl er sich wahrscheinlich gegenüber seinen Vorgesetzten dafür verantworten muss, wie diese Ressourcen ausgegeben werden! Er könnte auch Ruhm in Höhe der Hälfte seines Ranges unter den Menschen haben, denen er befehligt. Wenn sie aber Einfluss, Ressourcen oder Ruhm unabhängig von diesem Rang haben will, muss sie diese separat erwerben; ein Drill-Sergeant kann durch das Vermögen seiner Familie reich sein, aber dieser Geldfluss kommt nicht über militärische Kanäle zustande. Der Rang kann je nach Amt auch andere Vorteile mit sich bringen. Ein Priester könnte nicht die beste Limousine eines Unternehmens requirieren, aber der Vizepräsident dieses Unternehmens kann das verdammt noch mal sehr wohl! Beachte, dass der Rang den Status innerhalb der Sleeper-Institutionen widerspiegelt. Der Status als Magier hat nichts mit diesem Hintergrund zu tun, obwohl ein Vizepräsident, Priester oder Drill-Sergeant aufgrund seiner Position in der Welt der Sterblichen dennoch bestimmte Erweckte beeindrucken kann.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 201,
+        level: 1,
+        name: "Rang 1",
+        description: "Niedriger Rang: Sergeant, Knappe, Diakon, Schulratsmitglied, Nachwuchsjournalist, Juniormanager, Universitätsdozent.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 202,
+        level: 2,
+        name: "Rang 2",
+        description: "Niedriger Rang: Unteroffizier, Ritter, Prior, Stadtrat, Redakteur, leitender Angestellter, Professor.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 203,
+        level: 3,
+        name: "Rang 3",
+        description: "Mittlere Position: Kapitän, Baron, Abt, Bürgermeister, lokaler Kolumnist, mittleres Management in Unternehmen, festangestellter Professor.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 204,
+        level: 4,
+        name: "Rang 4",
+        description: "Hoher Rang: Major, Graf, Bischof, Gouverneur, Kolumnist, Junior-Vizepräsident, Abteilungsleiter.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 205,
+        level: 5,
+        name: "Rang 5",
+        description: "Führungskräfte: General, Prinz, Erzbischof, Senator, internationaler Korrespondent, Vizepräsident eines Unternehmens, Dekan.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 23,
+    type: "backgrounds",
+    name: "Ressourcen",
+    description: "Wie jeder Syndikatsvertreter dir sagen kann, lässt sich mit Magie gutes Geld verdienen – richtig gutes Geld, wenn du deine Karten richtig ausspielst. Natürlich nennt das Syndikat das, was es tut, nicht Magie – es ist einfach die Kunst des Begehrens, die zu einer Wissenschaft verfeinert wurde. Wie auch immer du es nennen magst, dieser Hintergrund bedeutet, dass du über Bargeld und Güter verfügst ... in den oberen Stufen sogar über sehr viel Bargeld und Güter. Angesichts des unglaublichen Reichtums, den manche Magier ansammeln können, geht dieser Hintergrund bis 10. Dieser Reichtum ist auch nicht nur das Revier des Syndikats. Hermetische Zauberer sind bekannt für ihren Luxus, Choristen können über riesige Ressourcen verfügen und ekstatische Rockstars können mehr Geld verdienen, als irgendjemand genießen darf. Die wahren Finanzgenies sind aber die sogenannten Geldmänner (und -frauen), deren Tradition mit der mittelalterlichen Hochgilde begann und seitdem stark ist. Einige Magier kommen aus solchen alten Geldadel-Familien, andere machen ihr Vermögen selbst. Angesichts des wirtschaftlichen Potenzials von Sphären wie Entropie, Materie, Geist und Leben – warum sollte man nicht nach dem großen Geld streben? Natürlich ist es oft gefährlich, sich zu sehr auf magische Einkünfte zu verlassen. Transaktionen werden heutzutage meist mit virtuellem Geld durchgeführt: Debitkarten, Kreditkarten, Bankabhebungen, Online-Einzahlungen und so weiter. Wenn man mit viel Bargeld herumwirft, fällt man auch auf ... warum sonst haben so viele Papiergeldscheine diese Tracking-Streifen? Eine kluge Magierin verzaubert die Menschen, damit sie ihr Bankkonto füllen; Blei in Gold zu verwandeln ist zu verdächtig (und arbeitsintensiv), um effektiv zu sein. Wie bei so vielen anderen Dingen in dieser techniklastigen Welt ist es für einen Technokraten viel einfacher, solche Hindernisse zu umgehen, als für einen mystischen Magier. Allerdings gibt es in hermetischen Kreisen und bestimmten Hexenzirkeln eine ganze Menge altes Geld. Manche mutige Magier verdienen sogar ihr Vermögen mit dem Schreiben von New-Age-Büchern, Fantasy-Romanen oder Rollenspielen! Hohe Ressourcenwerte erfordern, wie andere hohe Hintergrundwerte auch, Zeit und Mühe, um sie zu kontrollieren. Wenn man nicht aufpasst, ist es einfacher, ein Vermögen zu verlieren, als es zu verdienen. Angesichts der virtuellen Natur des modernen Handels hast du wahrscheinlich keine Stapel von Papiergeld und Edelmetallen herumliegen ... obwohl, wenn du altmodisch genug bist, könnte es sein, dass du das doch tust ...",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 211,
+        level: 1,
+        name: "Ressourcen 1",
+        description: "Du bist ein bisschen besser dran: Du hast 'ne kleine Wohnung und vielleicht 'n günstiges Auto. Nach den örtlichen Maßstäben hast du 'ne Arbeiterklasse-Einkommenssituation.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 212,
+        level: 2,
+        name: "Ressourcen 2",
+        description: "Unterer Mittelstand: Du hast 'ne Eigentumswohnung oder 'ne Mietwohnung, dazu 'n Auto, ein paar Ersparnisse und genug Kohle für gelegentliche Extras.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 213,
+        level: 3,
+        name: "Ressourcen 3",
+        description: "Mittlere Klasse mit Vermögen: Du hast entweder eine Immobilie oder ordentlich Eigenkapital in einer Immobilie, dazu ein Auto, Investitionen und Ersparnisse. Du könntest deinen Lebensstandard auf unbestimmte Zeit halten.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 214,
+        level: 4,
+        name: "Ressourcen 4",
+        description: "Wohlhabend: Du hast ein großes Haus, ein paar Grundstücke und mindestens zwei Autos, dazu noch ordentlich Ersparnisse und Investitionen. Nach lokalen Maßstäben bist du Millionär, und auch wenn das nicht mehr so viel wert ist wie früher, ist es trotzdem nicht zu verachten.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 215,
+        level: 5,
+        name: "Ressourcen 5",
+        description: "Willkommen bei den 1 %: Als Multimillionär hast du ordentlich Vermögen, Investitionen und Ersparnisse.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 216,
+        level: 6,
+        name: "Ressourcen 6",
+        description: "Hollywood-Geld: Was auch immer du willst, du kriegst es.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 217,
+        level: 7,
+        name: "Ressourcen 7",
+        description: "Der Club der Milliardäre. Du kannst ein ganzes Unternehmen oder eine ganze Branche beeinflussen.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 218,
+        level: 8,
+        name: "Ressourcen 8",
+        description: "Reichtum wie Bruce Wayne. Du hast Firmen.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 219,
+        level: 9,
+        name: "Ressourcen 9",
+        description: "So reich wie Tony Stark. Du hast ganze Industrien im Griff.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 220,
+        level: 10,
+        name: "Ressourcen 10",
+        description: "Reichtum wie Bill Gates. Du hast Regierungen in der Hand.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 24,
+    type: "backgrounds",
+    name: "Knappe",
+    description: "„Was darf es heute Abend sein, Chef?“ Wenn die Schlacht vorbei ist (oder kurz bevor sie losgeht), kann ein treuer Gefolgsmann deine Wunden versorgen, deine Waffen schärfen, die Leichen wegschaffen und dafür sorgen, dass du es pünktlich zu deinem Termin um 8 Uhr morgens schaffst. Im Gegensatz zu Verbündeten oder Vertrauten sind solche Gefolgsleute nicht in den mystischen Künsten oder im Kampf bewandert; im Gegensatz zu Verstärkung oder Spionen sind sie keine gesichtslosen Schützen oder Informationsquellen. Jeder Gefolgsmann ist ein treuer Diener, Angestellter, gedankengesteuerter Diener, im Labor erschaffene Konstruktion oder sogar ein sehr unbedeutender Geist, der Ihre Befehle mit einem angemessenen Maß an Loyalität ausführt. Er kümmert sich um Ihr Haus, Ihre Ausrüstung und Ihre gesamten Routinearbeiten. Vielleicht ist er ein erbärmlicher Laborassistent, ein gewöhnlicher Lehrling, ein Liebhaber oder ein treuer Freund. Er ist dein Igor, sie ist deine Moneypenny. Solange du solche Charaktere mit Respekt behandelst (und vielleicht sogar, wenn du das nicht tust), gibt dir dieser Hintergrund zusätzliche Hilfe. Wie bei den oben genannten Hintergründen ist jeder Gefolgsmann ein eigenständiger Storyteller-Charakter. Die Loyalität dieser Figur hängt stark von den Umständen ab, aber im Allgemeinen kann man sich auf sie verlassen, es sei denn, die Lage wird wirklich schlimm. Mit wenigen Ausnahmen sind die Fähigkeiten eines Gefolgsmanns rein alltäglich. Er kann vielleicht etwas Yoga oder hat Büroerfahrung, aber er wird so schnell keine Maschinenpistole in die Hand nehmen! Wenn du eine Gefolgsmann-Figur ausbildest, wird diese Figur stattdessen zu einem Verbündeten. Im Labor erschaffene Konstrukte und Geistdiener sind im Grunde normale Menschen mit einer bestimmten besonderen Fähigkeit und Herkunft, aber ohne außergewöhnliche Kräfte, abgesehen vielleicht von ungewöhnlicher Stärke oder der Fähigkeit, in der Villa herumzuschweben. Ansonsten sind sie ganz normale Leute. Reiche Leute haben mehrere Diener in ihrem Stab, aber man muss nicht reich sein, um diesen Hintergrund zu haben. Eine obdachlose Magierin könnte trotzdem die Loyalität des Kindes genießen, das sie vor seinem gewalttätigen Vater gerettet hat.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 221,
+        level: 1,
+        name: "Knappe 1",
+        description: "Ein Knappe",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 222,
+        level: 2,
+        name: "Knappe 2",
+        description: "Zwei Knappen",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 223,
+        level: 3,
+        name: "Knappe 3",
+        description: "Drei Knappen",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 224,
+        level: 4,
+        name: "Knappe 4",
+        description: "Vier Knappen",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 225,
+        level: 5,
+        name: "Knappe 5",
+        description: "Fünf Knappen",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 25,
+    type: "backgrounds",
+    name: "Spion",
+    description: "Eine Gruppe kleiner Vögel in verschiedenen Nestern hält dich auf dem Laufenden. Diese Informanten sind nicht unbedingt deine Freunde – vielleicht hassen sie dich sogar mit der glühenden Intensität von tausend feurigen Sonnen. Im Moment hast du aber etwas, das sie wollen: Geld, Sex, Drogen, Magie, was auch immer. Als Gegenleistung für diese Gefälligkeit erzählen sie dir, was sie wissen. Spione gibt es in vielen verschiedenen Formen: verärgerte Mitarbeiter, enttäuschte Angestellte, abgestumpfte Groupies, verzweifelte Süchtige, treue Anhänger deiner Sache, Leute, die dir einen Gefallen schulden, Menschen, die ohne dich in großen Schwierigkeiten wären, Opportunisten, die dein Geld mögen, Liebhaber, die sich mit dir gut stellen wollen ... Bestimmte verrückte Wissenschaftler und Technokraten haben sogar spezielle Kreaturen oder winzige Roboter, die ihnen Bericht erstatten. Wie auch immer deine Beziehung zu diesen Spionen sein mag, sie könnten sich gegen dich wenden, wenn du nicht aufpasst. Geld, Magie, bessere Drogen, die Androhung von Folter – all diese Dinge und mehr könnten deine Spione dazu bringen, sich in den Dienst eines anderen zu stellen. Und selbst wenn sie dir treu bleiben, können deine Spione durch falsche Daten oder falsche Eindrücke von dem, was wirklich vor sich geht, in die Irre geführt werden. Sie wissen nur, was sie sehen können. Systemtechnisch gesehen kannst du mit dieser Eigenschaft Informationen ausfindig machen (Intelligenz + Spione), Fehlinformationen, Ablenkungen und Lügen verbreiten (Manipulation + Spione), Menschen aus der Ferne beeindrucken (Charisma + Spione) oder potenzielle Bedrohungen erkennen, bevor sie sich konkretisieren (Wahrnehmung + Spione). Ein echter Spionagechef kann weit über fünf Punkte in dieser Eigenschaft haben, was den beängstigenden Einfluss bestimmter Hermetiker, Technokraten, Selbstjustizler und krimineller Köpfe erklärt.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 231,
+        level: 1,
+        name: "Spion 1",
+        description: "Ein oder zwei Spione an nützlichen Orten – bei der Polizei, der Mafia, der Wall Street usw.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 232,
+        level: 2,
+        name: "Spion 2",
+        description: "Vier bis sechs Leute, die in verschiedenen Bereichen helfen können.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 233,
+        level: 3,
+        name: "Spion 3",
+        description: "Ein paar Spione an nützlichen Orten, dazu ein paar in schwer zugänglichen Bereichen (Pentagon, CIA, UNO usw.) oder ein oder zwei in hochsicheren Bereichen (ein technokratisches Symposium, eine Tradition Chantry, ein geheimes Regierungsbüro usw.).",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 234,
+        level: 4,
+        name: "Spion 4",
+        description: "Infiltratoren in einem ganzen Einflussbereich (der Unterwelt, der Regierung eines Landes, dem internationalen Aktienmarkt usw.) oder eine Handvoll in einem Konstrukt, einer Chantry, einem Vampirclan, einem Werwolfstamm und so weiter.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 235,
+        level: 5,
+        name: "Spion 5",
+        description: "Augen und Ohren in der ganzen Sleeper-Welt oder ein paar Kontakte in der übernatürlichen Welt.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 236,
+        level: 6,
+        name: "Spion 6",
+        description: "Du hast eine kleine Nachrichtenagentur oder einen Geheimdienst auf deiner Gehaltsliste, und die haben auch ein paar Einblicke in übernatürliche Angelegenheiten.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 237,
+        level: 7,
+        name: "Spion 7",
+        description: "Neben den vielen Leuten, die du in der Welt der Sterblichen kennst, hast du auch jede Menge „Freunde” im übernatürlichen Reich.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 238,
+        level: 8,
+        name: "Spion 8",
+        description: "Du hast einen ganzen Geheimdienst, der Infos für dich sammelt und verarbeitet.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 239,
+        level: 9,
+        name: "Spion 9",
+        description: "Big Brother",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 240,
+        level: 10,
+        name: "Spion 10",
+        description: "Big Brother auf globaler Ebene.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 26,
+    type: "backgrounds",
+    name: "Status",
+    description: "Respekt ist wichtig. Zum Glück genießt du in deiner Gruppe einen gewissen Respekt. Dieser Hintergrund zeigt, wie du bei deinen erweckten Freunden – Virtuellen Adepten, Templern, Progenitoren usw. – insgesamt angesehen bist. Auf den höchsten Status-Stufen (4 und 5) erstreckt sich dieser Ruf auch auf verbündete Gruppen (alle Traditionen, Disparate Crafts, Technocracy Conventions) und vielleicht sogar über deine Fraktion hinaus. („Ich habe viel von Ihnen gehört, Mister Leonard – sogar hier haben wir von Ihnen gehört ...“) Was die Geschichte angeht, verschafft Ihnen der Status ein gewisses Maß an Respekt bei verbundenen Magiern. Dies wiederum verschafft Ihnen eine gewisse Ehrerbietung: Die Leute öffnen Ihnen Türen, sprechen Sie mit Ihrem gewünschten Namen und Titel an, schicken Ihnen Einladungen zu besonderen Veranstaltungen und so weiter. Wenn du einen kleinen Gefallen brauchst oder in einen Streit verwickelt bist, verleiht Status deiner Sache ein wenig Gewicht. Im Spiel kannst du diesen Hintergrund zu deinem Würfelpool hinzufügen, wenn du mit Gleichgesinnten zu tun hast; eine bewunderte Virtuelle Adeptin würde zum Beispiel vier Würfel zu ihren Sozialwürfen unter den Adepten hinzufügen. Dieser Bonus wird unter Magiern aus einer anderen, aber verbündeten Sekte halbiert (aufgerundet); dieselbe Adeptin würde unter anderen Traditionen einen Bonus von zwei Würfeln erhalten. Du bekommst diesen Bonus nicht bei Feinden oder Fremden, auch wenn sie dich in der Geschichte vielleicht anerkennen. („Unsere Akten über Sie, Frau Vasquez – oder sollte ich Sie vielleicht ‚Voodoo‘ nennen – sind höchst ... beeindruckend ...“) Natürlich muss der Status auf etwas basieren, was du tust oder getan hast. Eine brandneue Magierin wird keinen Status 5 haben – sie muss ihn sich erst verdienen. Dieser Hintergrund spiegelt den Ruf unter Magiern wider, nicht unter Schlafenden oder anderen Wesen, obwohl bestimmte Wesen, die Bescheid wissen (wie Vampire oder Geistfürsten), einen Magier mit Status 4 oder 5 erkennen könnten. Im Idealfall wird dieser Hintergrund vom Geschichtenerzähler als Belohnung für deine Handlungen während der Chronik gewährt. Du kannst Status auch verlieren, wenn du ihm nicht gerecht wirst; ein Agent, der für seine Feigheit bekannt ist, wird nicht lange Respekt einflößen ...",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 241,
+        level: 1,
+        name: "Status 1",
+        description: "Verstanden; deine Kollegen kennen deinen Namen, wenn er auftaucht.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 242,
+        level: 2,
+        name: "Status 2",
+        description: "Glaubwürdig; du wirst als bemerkenswert angesehen.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 243,
+        level: 3,
+        name: "Status 3",
+        description: "Respektiert; dein Wort hat Gewicht.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 244,
+        level: 4,
+        name: "Status 4",
+        description: "Bewundert; die meisten Leute in deiner Gruppe schauen zu dir auf.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 245,
+        level: 5,
+        name: "Status 5",
+        description: "Verehrt; du wirst als Vorbild für die Prinzipien deiner Gruppe angesehen.",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
+  },
+  {
+    id: 27,
+    type: "backgrounds",
+    name: "Wunder (Gerät/Fetisch/Talisman usw.)",
+    description: "Ein Wunder ist immer ein Wunder, egal wie man es nennt ... und du hast eins. Was ist ein Wunder? Vielleicht ist es ein mystischer Talisman mit magischer Kraft, ein Fetisch, dessen seltsame Eigenschaften von einem Geist kommen, der in seiner Form gefangen ist, oder ein technokratisches oder seltsames wissenschaftliches Gerät, das von der aufgeklärten Wissenschaft zu etwas geformt wurde, das die Technologie der Sterblichen übersteigt. Im Spiel ist ein Wunder einfach ein Gegenstand mit eigenen Sphären-Effekten. Obwohl solche Gegenstände, mit wenigen Ausnahmen, normalerweise nur für Magier funktionieren, hängen die Form und Funktion des Wunders von den Menschen ab, die es geschaffen haben, und von den Methoden, die bei seiner Herstellung angewendet wurden. Solange dein Spielleiter einverstanden ist, kann ein Wunder alles Mögliche sein: ein mit nordischen Runen verzierter Eichenast, eine Plasmakanone, ein Roboter-SUV, eine Bankkarte, die Geld von jedem Konto dieser Bank abhebt, eine verzauberte Gitarre, eine Feder aus Eulenfeder, die in jeder menschlichen Sprache schreiben kann ... Die Form und Funktion des Wunders kann innerhalb gewisser Grenzen alles sein, was du willst. Bestimmte Begriffe (Fetisch, Gerät usw.) definieren bestimmte Arten von Gegenständen. Der Abschnitt „Spielzeugkiste” in Anhang II (siehe S. 651–653) enthält Details, Regeln und eine Reihe von Beispielen für Wunder. Wunder können launisch sein ... insbesondere Fetische, deren Leitgeister eine eigene Persönlichkeit haben. Aber auch Geräte können unheimlich stur sein, wie jeder mit einem pingeligen Auto oder Computer bestätigen kann. Sie haben oft seltsame Auswirkungen auf die Leute, die sie benutzen, vor allem auf Magier, die sich auf Wunder verlassen, so wie Elric von Melniboné sich auf sein Schwert Stormbringer verlässt. In vielen Fällen haben Wunder ausgefeilte Hintergrundgeschichten über ihre Entstehung, Geschichte und Taten. Wenn dein Charakter mit einem Wunder ins Spiel kommt, denk dir eine spannende Geschichte und Beschreibung für diesen Gegenstand aus und gib sie dann deinem Storyteller zur Genehmigung und weiteren Ausarbeitung. Wahrscheinlich hat dein Wunder Geheimnisse, von denen du nichts weißt. Im Idealfall ist ein Wunder mehr als nur ein einfacher „magischer Gegenstand“, sondern ein Wunder in materieller Form – ein fester Beweis für die Realität der Magie.",
+    specialRules: TraitSpecialRules.None,
+    advantages: [
+      {
+        id: 251,
+        level: 1,
+        name: "Wunder 1",
+        description: "Ein Wunder mit einer kleinen Kraft – also ein Wunder, das 1 bis 3 Punkte wert ist.",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 252,
+        level: 2,
+        name: "Wunder 2",
+        description: "Ein Wunder mit einer oder zwei Fähigkeiten, wahrscheinlich mit etwas Quintessenz und einer eigenen Arete. (4–6 Punkte.)",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 253,
+        level: 3,
+        name: "Wunder 3",
+        description: "Ein Wunder mit ein paar coolen Fähigkeiten oder einer richtig beeindruckenden. (7–9 Punkte.)",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 254,
+        level: 4,
+        name: "Wunder 4",
+        description: "Ein Wunder mit beeindruckenden Kräften oder einer starken Wirkung. (10–12 Punkte.)",
+        actions: [],
+        isRepeatable: false
+      },
+      {
+        id: 255,
+        level: 5,
+        name: "Wunder 5",
+        description: "Ein Wunder mit mächtigen Kräften oder einem einzigen vernichtenden Effekt. (13–15 Punkte.)",
+        actions: [],
+        isRepeatable: false
+      }
+    ],
+    disadvantages: []
   }
 ];

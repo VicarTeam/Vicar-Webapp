@@ -149,6 +149,11 @@ const routes: Array<RouteConfig> = [
         path: 'm20-abilities',
         name: 'editor-m20-abilities',
         component: () => import('@/views/editor/m20/ChooseAbilitiesView.vue')
+      },
+      {
+        path: 'm20-finishing-touches',
+        name: 'editor-m20-finishing-touches',
+        component: () => import('@/views/editor/m20/ChooseFinishingTouchesView.vue')
       }
     ]
   },
@@ -212,6 +217,11 @@ const routes: Array<RouteConfig> = [
         path: 'gifts',
         name: 'viewer-gifts',
         component: () => import('@/views/viewer/GiftsView.vue')
+      },
+      {
+        path: 'tradition',
+        name: 'viewer-tradition',
+        component: () => import('@/views/viewer/TraditionView.vue')
       },
       {
         path: 'pdf',
