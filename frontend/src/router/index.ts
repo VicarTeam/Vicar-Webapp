@@ -154,6 +154,16 @@ const routes: Array<RouteConfig> = [
         path: 'm20-finishing-touches',
         name: 'editor-m20-finishing-touches',
         component: () => import('@/views/editor/m20/ChooseFinishingTouchesView.vue')
+      },
+      {
+        path: 'creed',
+        name: 'editor-creed',
+        component: () => import('@/views/editor/h5/ChooseCreedView.vue')
+      },
+      {
+        path: 'edges',
+        name: 'editor-edges',
+        component: () => import('@/views/editor/h5/ChooseEdgesView.vue')
       }
     ]
   },
@@ -222,6 +232,11 @@ const routes: Array<RouteConfig> = [
         path: 'tradition',
         name: 'viewer-tradition',
         component: () => import('@/views/viewer/TraditionView.vue')
+      },
+      {
+        path: 'edges',
+        name: 'viewer-edges',
+        component: () => import('@/views/viewer/EdgesView.vue')
       },
       {
         path: 'pdf',

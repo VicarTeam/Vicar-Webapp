@@ -14,6 +14,7 @@
           <div :class="{'active': gameline === GameLine.Vampire}" @click="gameline = GameLine.Vampire" style="border-right: 1px solid var(--primary-color);">{{$t('character.creation-start.v5')}}</div>
           <div :class="{'active': gameline === GameLine.Werewolf}" @click="gameline = GameLine.Werewolf" style="border-left: 1px solid var(--primary-color); border-right: 1px solid var(--primary-color)">{{$t('character.creation-start.w5')}}</div>
           <div :class="{'active': gameline === GameLine.Mage}" @click="gameline = GameLine.Mage" style="border-left: 1px solid var(--primary-color);">{{$t('character.creation-start.m20')}}</div>
+          <div :class="{'active': gameline === GameLine.Hunter}" @click="gameline = GameLine.Hunter" style="border-left: 1px solid var(--primary-color);">{{$t('character.creation-start.h5')}}</div>
         </div>
       </div>
       <hr/>
@@ -64,6 +65,7 @@ import {hardSetTheme} from "@/libs/theme";
 import {EditorHistory} from "@/libs/editor-history";
 import {NewW5Sheet} from "@/types/w5";
 import {NewMageSheet} from "@/types/m20";
+import {NewH5Sheet} from "@/types/h5";
 
 @Component({
   components: {BookSelection, Modal}
@@ -124,6 +126,8 @@ export default class CreateCharacterModal extends Vue {
       this.$router.push({name: 'editor-auspice'});
     } else if (this.gameline === GameLine.Mage) {
       this.$router.push({name: 'editor-identity'});
+    } else if (this.gameline === GameLine.Hunter) {
+      this.$router.push({name: 'editor-creed'});
     }
 
     this.show = false;
@@ -222,6 +226,8 @@ export default class CreateCharacterModal extends Vue {
       return NewW5Sheet();
     } else if (this.gameline === GameLine.Mage) {
       return NewMageSheet();
+    } else if (this.gameline === GameLine.Hunter) {
+      return NewH5Sheet();
     }
     return undefined;
   }

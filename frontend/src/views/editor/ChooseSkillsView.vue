@@ -161,6 +161,9 @@ export default class ChooseSkillsView extends Vue {
     if (this.editingCharacter && this.editingCharacter.game === GameLine.Werewolf) {
       return 'editor-gifts';
     }
+    if (this.editingCharacter && this.editingCharacter.game === GameLine.Hunter) {
+      return 'editor-edges';
+    }
     return 'editor-disciplines';
   }
 }

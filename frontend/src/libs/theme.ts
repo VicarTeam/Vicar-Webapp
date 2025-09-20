@@ -86,6 +86,34 @@ const THEMES: Record<GameLine, Vars> = {
     "--dm-button-primary-bg-image-active-hover": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
     "--image-to-primary-color-filter": "invert(18%) sepia(58%) saturate(2576%) hue-rotate(262deg) brightness(92%) contrast(98%)",
     "--dm-input-border-color": "var(--primary-color)"
+  },
+  [GameLine.Hunter]: {
+    "--primary-color": "#3b5d2a",
+    "--primary-color-light": "#507f3a",
+    "--primary-color-very-light": "#d4e2cc",
+    "--primary-color-dark": "#2d4520",
+    "--primary-color-very-dark": "#1a2612",
+    "--primary-box-shadow-color": "rgba(59, 93, 42, 0.25)",
+    "--primary-box-shadow-color-darker": "rgba(59, 93, 42, 0.5)",
+    "--text-color-on-primary-color-bg": "#ffffff",
+    "--lm-card-bg-image": "linear-gradient(#f7f7f7, #dfe4df)",
+    "--lm-card-border-color": "#ffffff",
+    "--lm-card-box-shadow": "0 0 0 1px rgba(0, 0, 0, 0.15)",
+    "--dm-card-bg-image": "linear-gradient(#1a1f1a, #111411)",
+    "--dm-card-border-color": "rgba(255, 255, 255, 0.1)",
+    "--dm-card-box-shadow": "0 0 0 1px rgba(0, 0, 0, 0.2)",
+    "--lm-input-box-shadow": "0 0.2rem 0 rgba(0,0,0,0.05)",
+    "--dm-input-box-shadow": "0 0.2rem 0 rgba(0,0,0,0.05)",
+    "--lm-button-primary-bg-image": "linear-gradient(var(--primary-color), var(--primary-color-dark))",
+    "--lm-button-primary-bg-image-hover": "linear-gradient(var(--primary-color-light), var(--primary-color-dark))",
+    "--lm-button-primary-bg-image-active": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--lm-button-primary-bg-image-active-hover": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--dm-button-primary-bg-image": "linear-gradient(var(--primary-color), var(--primary-color-dark))",
+    "--dm-button-primary-bg-image-hover": "linear-gradient(var(--primary-color-light), var(--primary-color-dark))",
+    "--dm-button-primary-bg-image-active": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--dm-button-primary-bg-image-active-hover": "linear-gradient(var(--primary-color-dark), var(--primary-color-very-dark))",
+    "--image-to-primary-color-filter": "invert(28%) sepia(18%) saturate(1190%) hue-rotate(63deg) brightness(92%) contrast(85%)",
+    "--dm-input-border-color": "var(--primary-color)"
   }
 };
 

@@ -5,6 +5,7 @@ export enum GameLine {
   Vampire = 'v5',
   Werewolf = 'w5',
   Mage = 'm20',
+  Hunter = 'h5',
 }
 
 export interface IBaseSheet {

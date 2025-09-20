@@ -64,7 +64,7 @@ export default class Damage extends Vue {
   }
 
   private get isVampire() {
-    return this.editingCharacter?.game !== GameLine.Mage && this.editingCharacter?.game !== GameLine.Werewolf;
+    return this.editingCharacter?.game === GameLine.Vampire || !this.editingCharacter?.game;
   }
 
   private get typesKey(): "healthDamage"|"willpowerDamage" {

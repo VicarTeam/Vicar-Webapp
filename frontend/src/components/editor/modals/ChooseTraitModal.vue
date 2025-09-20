@@ -98,6 +98,7 @@ import CharacterStorage from "@/libs/io/character-storage";
 import {GameLine} from "@/types/gameline";
 import {traits} from "@/.data/w5";
 import {traits as m20traits} from "@/.data/m20";
+import {traits as h5traits} from "@/.data/h5";
 
 export type ChooseTraitData = {
   merits: ITraitPack[];
@@ -377,6 +378,12 @@ export default class ChooseTraitModal extends Vue {
       return {
         backgrounds: m20traits,
         merits: []
+      };
+    }
+    if (this.gameline === GameLine.Hunter) {
+      return {
+        backgrounds: h5traits.filter(x => x.type === "backgrounds"),
+        merits: h5traits.filter(x => x.type === "merits"),
       };
     }
 

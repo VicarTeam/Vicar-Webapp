@@ -1,5 +1,5 @@
 <template>
-  <div class="character-entry" :class="{w5: character.game === GameLine.Werewolf, m20: character.game === GameLine.Mage}">
+  <div class="character-entry" :class="{w5: character.game === GameLine.Werewolf, m20: character.game === GameLine.Mage, h5: this.character.game === GameLine.Hunter}">
     <Avatar :src="character.avatar" style="width: 5rem; height: 5rem"/>
 
     <div class="info">
@@ -12,6 +12,7 @@
         <span v-if="character.clan"><i> Clan:</i> {{character.clan.name}}</span>
         <span v-else-if="character.tribe"><i> {{$t('character.tribe')}}:</i> {{character.tribe.name}}</span>
         <span v-else-if="character.tradition"><i> Allianz:</i> {{character.tradition.name}}</span>
+        <span v-else-if="character.creed"><i> Credo:</i> {{character.creed.name}}</span>
         <bullet/>
         <span v-if="character.clan">{{character.clan.slogan}}</span>
         <span v-else-if="character.auspice">{{character.auspice.name}}</span>
@@ -232,6 +233,9 @@ export default class Character extends Vue {
   }
   &.m20 {
     border-color: #6f2dbd !important;
+  }
+  &.h5 {
+    border-color: #3b5d2a !important;
   }
   .info {
     flex-grow: 1;

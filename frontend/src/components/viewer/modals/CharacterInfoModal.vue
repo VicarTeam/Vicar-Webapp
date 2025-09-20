@@ -179,7 +179,7 @@ export default class CharacterInfoModal extends Vue {
   }
 
   private get isVampire() {
-    return this.character?.game !== GameLine.Mage && this.character?.game !== GameLine.Werewolf;
+    return this.editingCharacter?.game === GameLine.Vampire || !this.editingCharacter?.game;
   }
 }
 </script>

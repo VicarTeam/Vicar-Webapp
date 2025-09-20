@@ -18,6 +18,7 @@
         <Tab v-if="isVampire" value="viewer-disciplines" :text="$t('viewer.tab.disciplines').toString()" ref="tabDisciplines"/>
         <Tab v-if="canAccessRituals && isVampire" value="viewer-bloodrituals" :text="$t('viewer.tab.rituals').toString()" ref="tabBloodRituals"/>
         <Tab v-if="isWerewolf" value="viewer-gifts" text="Gaben & Riten"/>
+        <Tab v-if="isHunter" value="viewer-edges" text="Edges"/>
         <Tab value="viewer-traits" :text="$t('viewer.tab.traits').toString()" ref="tabTraits"/>
 <!--        <Tab value="viewer-pdf" :text="$t('viewer.tab.pdf').toString()"/>-->
       </Tabs>
@@ -393,7 +394,7 @@ export default class ViewerView extends Vue {
   }
 
   private get isVampire() {
-    return this.editingCharacter?.game !== GameLine.Mage && this.editingCharacter?.game !== GameLine.Werewolf;
+    return this.editingCharacter?.game === GameLine.Vampire || !this.editingCharacter?.game;
   }
 
   private get isWerewolf() {
@@ -402,6 +403,10 @@ export default class ViewerView extends Vue {
 
   private get isMage() {
     return this.editingCharacter?.game === GameLine.Mage;
+  }
+
+  private get isHunter() {
+    return this.editingCharacter?.game === GameLine.Hunter;
   }
 
   @Provide("update-viewer")

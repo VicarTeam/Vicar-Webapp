@@ -44,6 +44,14 @@
           <bullet/>
           <i style="cursor: pointer; user-select: none" @click="showTip($t('m20.tradition.description'))"> {{$t('m20.tradition')}}:</i> {{ editingCharacter.tradition.name }}
         </span>
+        <span v-else-if="isHunter" class="side">
+          {{ $t('character.sex.' + editingCharacter.sex) }}
+          <bullet/>
+          <i> Credo:</i> {{ editingCharacter.creed.name }}
+          <bullet/>
+          <i style="cursor: pointer; user-select: none" @click="showTip($t('h5.drive.description'))"> {{$t('h5.drive')}}:</i> {{ editingCharacter.drive.name }} <TipButton :content="editingCharacter.drive.description" style="margin-right: 0.25rem"/>
+          <i style="margin-left: 0.5rem"> Erlösung:</i> <TipButton :content="editingCharacter.drive.redemption" style="margin-right: 0.25rem"/>
+        </span>
 
         <span v-if="isVampire" class="side" style="margin-top: 0.2rem">
           <i>Generation:</i> {{
@@ -72,6 +80,11 @@
           <div class="stat" id="hlst-willpower">
             <b><LevelButton v-if="isMage && editingCharacter.willpower < 10" style="margin-right: 0.25rem" @click="requestLevel('willpower')"/>{{ $t('character.willpower') }}:</b>
             <Damage prop-key="willpower"/>
+          </div>
+          <div v-if="isHunter" class="stat">
+            <b>Verzweiflung:</b>
+            <Squares :max="1" :amount="editingCharacter.despair"
+                     @click="v => {editingCharacter.despair = v === editingCharacter.despair ? 0 : v; saveChar(true);}"/>
           </div>
         </div>
         <div class="row">
@@ -140,6 +153,10 @@
           <label>{{ $t('character.ambition') }}: <TipButton :content="$t('character.ambition.tip')"/></label>
           <input class="form-control" type="text" v-model="editingCharacter.ambition" @input="saveChar"/>
         </div>
+        <div v-else-if="isHunter" class="form-group">
+          <label>{{ $t('character.ambition') }}: <TipButton :content="$t('character.ambition.tip')"/></label>
+          <input class="form-control" type="text" v-model="editingCharacter.ambition" @input="saveChar"/>
+        </div>
         <div v-else-if="isWerewolf" class="form-group" style="height: 6rem; display: flex; flex-direction: column">
           <label style="text-align: center; font-weight: bold">Verfall</label>
           <div style="display: flex; justify-content: space-between">
@@ -181,6 +198,10 @@
       </div>
       <div class="column">
         <div v-if="isVampire" class="form-group">
+          <label>{{ $t('character.desire') }}: <TipButton :content="$t('character.desire.tip')"/></label>
+          <input class="form-control" type="text" v-model="editingCharacter.desire" @input="saveChar"/>
+        </div>
+        <div v-else-if="isHunter" class="form-group">
           <label>{{ $t('character.desire') }}: <TipButton :content="$t('character.desire.tip')"/></label>
           <input class="form-control" type="text" v-model="editingCharacter.desire" @input="saveChar"/>
         </div>
@@ -245,6 +266,36 @@
         <Col style="width: calc(100%/3); justify-content: center; align-items: center">
           <Row><b>{{$t('character.bloodpotency.bonus')}}</b>: <TipButton :content="$t('character.bloodpotency.bonus.desc')"/></Row>
           <Row><small>{{getBloodPotency().disciplineBonus}} {{$t('character.dice')}}</small></Row>
+        </Col>
+      </Row>
+
+      <Row v-if="isHunter" style="width: 100%">
+        <Col style="width: 100%; text-align: center">
+          <div>
+            <bullet/><bullet/><bullet/>
+            <b>Credo: {{editingCharacter.creed.name}} <TipButton :content="editingCharacter.creed.description"/></b>
+            <bullet/><bullet/><bullet/>
+          </div>
+        </Col>
+      </Row>
+      <Row v-if="isHunter" style="width: 100%; margin-top: 1rem">
+        <Col style="width: calc(100%/3); justify-content: flex-start; align-items: center; margin-right: 3rem">
+          <Row><b>Persönlichkeit</b></Row>
+          <Row>
+            <small>{{editingCharacter.creed.personality}}</small>
+          </Row>
+        </Col>
+        <Col style="width: calc(100%/3); justify-content: flex-start; align-items: center">
+          <Row><b>Taktiken</b></Row>
+          <Row>
+            <small style="text-align: center">{{editingCharacter.creed.tactics}}</small>
+          </Row>
+        </Col>
+        <Col style="width: calc(100%/3); justify-content: flex-start; align-items: center; margin-left: 3rem">
+          <Row><b>Gefahren</b></Row>
+          <Row>
+            <small style="text-align: right">{{editingCharacter.creed.dangers}}</small>
+          </Row>
         </Col>
       </Row>
 
@@ -614,7 +665,7 @@ export default class ProfileView extends Vue {
   }
 
   private get isVampire() {
-    return this.editingCharacter?.game !== GameLine.Mage && this.editingCharacter?.game !== GameLine.Werewolf;
+    return this.editingCharacter?.game === GameLine.Vampire || !this.editingCharacter?.game;
   }
 
   private get isWerewolf() {
@@ -623,6 +674,10 @@ export default class ProfileView extends Vue {
 
   private get isMage() {
     return this.editingCharacter?.game === GameLine.Mage;
+  }
+
+  private get isHunter() {
+    return this.editingCharacter?.game === GameLine.Hunter;
   }
 
   @Inject("update-viewer")
