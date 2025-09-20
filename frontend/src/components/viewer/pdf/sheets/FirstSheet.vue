@@ -2,7 +2,7 @@
   <Sheet>
     <Row class="botborder">
       <Col :shrink="true">
-        <img src="@/assets/img/logo.png" style="width: 7cm"/>
+        <img src="/img/logo.png" style="width: 7cm"/>
       </Col>
       <Col :grow="true" :center-horizontally="true" :center-vertically="true">
         <Row style="gap: 3rem">
