@@ -6,7 +6,7 @@ import Bullet from "@/components/Bullet.vue";
 import {IM20Tradition, IMageSheet, M20Ability, M20Attribute, M20Sphere} from "@/types/m20";
 import CharacterStorage from "@/libs/io/character-storage";
 
-type LevelType = 'attribute'|'ability'|'sphere'|'arete'|'willpower';
+type LevelType = 'attribute'|'ability'|'sphere'|'arete'|'willpower'|'';
 type Subject = M20Ability | M20Attribute | M20Sphere | undefined;
 
 @Component({
@@ -17,15 +17,16 @@ export default class M20LevelModal extends Vue {
   @State("editingCharacter")
   private editingCharacter!: IMageSheet;
 
+  private modalKey: string = '';
   private show: boolean = false;
   private type: LevelType = 'attribute';
   private subject?: Subject;
 
   public showModal(type: LevelType, subject?: M20Ability|M20Attribute|M20Sphere) {
+    this.modalKey = `${Date.now()}-${Math.random()}`;
     this.type = type;
     this.subject = subject;
     this.show = true;
-    this.$forceUpdate();
   }
 
   private get tradition(): IM20Tradition | undefined {
@@ -38,31 +39,28 @@ export default class M20LevelModal extends Vue {
     return this.affinitySpheres.includes(s);
   }
 
-  private getValue(): number {
+  private get currentValue(): number {
     switch (this.type) {
-      case 'attribute':
-        return this.editingCharacter.attributes[this.subject as M20Attribute] ?? 0;
-      case 'ability':
-        return this.editingCharacter.abilities[this.subject as M20Ability] ?? 0;
-      case 'sphere':
-        return this.editingCharacter.spheres[this.subject as M20Sphere as never] ?? 0;
-      case 'arete':
-        return this.editingCharacter.arete ?? 0;
-      case 'willpower':
-        return this.editingCharacter.willpower ?? 0;
+      case 'attribute': return this.editingCharacter.attributes[this.subject as M20Attribute] ?? 0;
+      case 'ability':   return this.editingCharacter.abilities[this.subject as M20Ability] ?? 0;
+      case 'sphere':    return this.editingCharacter.spheres[this.subject as M20Sphere as never] ?? 0;
+      case 'arete':     return this.editingCharacter.arete ?? 0;
+      case 'willpower': return this.editingCharacter.willpower ?? 0;
+      default: return 0;
     }
   }
 
   private setValue(v: number) {
     switch (this.type) {
       case 'attribute':
-        this.$set(this.editingCharacter.attributes, this.subject as M20Attribute, v);
+        this.editingCharacter.attributes[this.subject as M20Attribute] = v;
         break;
       case 'ability':
-        this.$set(this.editingCharacter.abilities, this.subject as M20Ability, v);
+        this.editingCharacter.abilities[this.subject as M20Ability] = v;
         break;
       case 'sphere':
-        this.$set(this.editingCharacter.spheres, this.subject as M20Sphere, v);
+        // @ts-ignore
+        this.editingCharacter.spheres[this.subject as M20Sphere] = v;
         break;
       case 'arete':
         this.editingCharacter.arete = v;
@@ -74,109 +72,102 @@ export default class M20LevelModal extends Vue {
   }
 
   private get oldValue(): number {
-    return this.getValue();
+    return this.currentValue;
   }
   private get newValue(): number {
     return this.oldValue + 1;
   }
 
-  private getFreebieCost(): number {
+  private get freebieCost(): number {
     switch (this.type) {
       case 'attribute': return 5;
-      case 'ability': return 2;
-      case 'sphere': return 7;
-      case 'arete': return 4;
+      case 'ability':   return 2;
+      case 'sphere':    return 7;
+      case 'arete':     return 4;
       case 'willpower': return 1;
+      default: return 0;
     }
   }
 
-  private getXpCost(): number {
+  private get xpCost(): number {
     const n = this.newValue;
     switch (this.type) {
-      case 'attribute':
-        return n * 4;
-      case 'ability':
-        return 3;
+      case 'attribute': return n * 4;
+      case 'ability':   return 3;
       case 'sphere': {
         const s = this.subject as M20Sphere;
         if (this.oldValue === 0) return 10;
         return this.isAffinitySphere(s) ? n * 7 : n * 8;
       }
-      case 'arete':
-        return n * 8;
-      case 'willpower':
-        return n;
+      case 'arete':     return n * 8;
+      case 'willpower': return n;
+      default: return 0;
     }
   }
 
   private get canPayWithFP(): boolean {
     const fp = this.editingCharacter.freebiePoints ?? 0;
-    return fp >= this.getFreebieCost();
+    return fp >= this.freebieCost;
   }
-  private spendType(): 'FP' | 'XP' {
+  private get spendType(): 'FP' | 'XP' {
     return this.canPayWithFP ? 'FP' : 'XP';
   }
 
-  private sphereAreteLimitViolated(): boolean {
+  private get sphereAreteLimitViolated(): boolean {
     if (this.type !== 'sphere') return false;
     const arete = this.editingCharacter.arete ?? 1;
     return this.newValue > arete;
   }
 
   private get hasRequirement(): boolean {
-    if (this.spendType() === 'FP' && !this.canPayWithFP) return false;
-    if (this.spendType() === 'XP') {
-      const used = (this.editingCharacter as any).usedExp ?? 0;
+    if (this.type === '') return false;
+    if (this.spendType === 'FP' && !this.canPayWithFP) return false;
+    if (this.spendType === 'XP') {
       const exp = this.editingCharacter.exp ?? 0;
-      if (used + this.getXpCost() > exp) return false;
+      if (this.xpCost > exp) return false;
     }
 
-    return !this.sphereAreteLimitViolated();
+    return !this.sphereAreteLimitViolated;
   }
 
-  private costs(): number {
-    return this.spendType() === 'FP' ? this.getFreebieCost() : this.getXpCost();
+  private get costs(): number {
+    return this.spendType === 'FP' ? this.freebieCost : this.xpCost;
   }
 
   private level() {
     if (!this.hasRequirement) return;
 
     if (this.canPayWithFP) {
-      this.editingCharacter.freebiePoints = Math.max(0, (this.editingCharacter.freebiePoints ?? 0) - this.getFreebieCost());
+      this.editingCharacter.freebiePoints = Math.max(0, (this.editingCharacter.freebiePoints ?? 0) - this.freebieCost);
     } else {
       const used = (this.editingCharacter as any).usedExp ?? 0;
-      (this.editingCharacter as any).usedExp = used + this.getXpCost();
+      (this.editingCharacter as any).usedExp = used + this.xpCost;
+      this.editingCharacter.exp = Math.max(0, (this.editingCharacter.exp ?? 0) - this.xpCost);
     }
 
-    if (this.type === 'arete') {
-      this.setValue(Math.min(3, this.newValue));
-    } else if (this.type === 'sphere') {
-      const arete = this.editingCharacter.arete ?? 1;
-      this.setValue(Math.min(arete, this.newValue));
-    } else {
-      this.setValue(this.newValue);
-    }
+    this.setValue(this.newValue);
 
     CharacterStorage.saveCharacter(this.editingCharacter as any);
     this.show = false;
+    this.type = '';
   }
 }
 </script>
 
 <template>
-  <Modal :shown="show" @close="show = false">
-    <div v-if="show" style="display: flex; flex-direction: column; gap: 1rem; width: 22rem">
-      <div style="width: 100%; text-align: center">
-        {{ getValue() }} &#8594; {{ getValue() + 1 }} <bullet/>
-        Kosten: {{ costs() }} {{ spendType() }}
+  <Modal :shown="show" @close="show = false; type = ''">
+    <div v-if="show" style="display: flex; flex-direction: column; gap: 1rem; width: 22rem" :key="modalKey + 'm'">
+      <div style="width: 100%; text-align: center" :key="modalKey + 'i'">
+        {{ oldValue }} &#8594; {{ newValue }} <bullet/>
+        Kosten: {{ costs }} {{ spendType }}
       </div>
 
-      <div v-if="sphereAreteLimitViolated()" class="alert alert-warning" style="text-align:center">
+      <div v-if="sphereAreteLimitViolated" :key="modalKey + 'a'" class="alert alert-warning" style="text-align:center">
         Sphären dürfen Arete nicht übersteigen.
       </div>
 
       <div style="width: 100%; display: flex; justify-content: center; align-items: center">
-        <button class="btn btn-primary" :disabled="!hasRequirement" @click="level">
+        <button class="btn btn-primary" :disabled="!hasRequirement" @click="level" :key="modalKey + 'b'">
           {{$t('viewer.modal.level.btn')}}
         </button>
       </div>
