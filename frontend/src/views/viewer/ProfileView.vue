@@ -61,7 +61,7 @@
           <i> {{ $t('data.predatortype') }}:</i> {{ editingCharacter.predatorType.name }}
         </span>
         <span v-if="isVampire && mocActive" class="side" style="margin-top: 0.2rem">
-          <i>Generation:</i> 1
+          <i>Generation:</i> 1 ({{editingCharacter.generation}})
           <bullet/>
           <i> {{ $t('data.predatortype') }}:</i> {{ editingCharacter.predatorType.name }}
         </span>
