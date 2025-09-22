@@ -17,7 +17,8 @@
         <span v-if="character.clan">{{character.clan.slogan}}</span>
         <span v-else-if="character.auspice">{{character.auspice.name}}</span>
         <bullet v-if="character.game === GameLine.Vampire || !character.game"/>
-        <span v-if="character.game === GameLine.Vampire || !character.game"><i> Generation:</i> {{character.generation}} ({{$t('character.generation.' + character.generationEra)}})</span>
+        <span v-if="(character.game === GameLine.Vampire || !character.game) && !mocActive"><i> Generation:</i> {{character.generation}} ({{$t('character.generation.' + character.generationEra)}})</span>
+        <span v-if="(character.game === GameLine.Vampire || !character.game) && mocActive"><i> Generation:</i> 1</span>
         <bullet v-if="character.chronicle"/>
         {{character.chronicle}}
         <bullet v-if="character.exp > 0"/>
@@ -202,6 +203,18 @@ export default class Character extends Vue {
 
   private async copySyncOutId() {
     await navigator.clipboard.writeText(VicarSync.getCharacterSyncOutId(this.character as ICharacter));
+  }
+
+  private get mocActive() {
+    if (!this.isVampire) {
+      return false;
+    }
+
+    return !!(this.character as ICharacter)?.hasCainsMark;
+  }
+
+  private get isVampire() {
+    return this.character?.game === GameLine.Vampire || !this.character?.game;
   }
 
   @Inject("edit-viewers")

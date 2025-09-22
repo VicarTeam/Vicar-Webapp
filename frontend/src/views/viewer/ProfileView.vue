@@ -53,10 +53,15 @@
           <i style="margin-left: 0.5rem"> Erlösung:</i> <TipButton :content="editingCharacter.drive.redemption" style="margin-right: 0.25rem"/>
         </span>
 
-        <span v-if="isVampire" class="side" style="margin-top: 0.2rem">
+        <span v-if="isVampire && !mocActive" class="side" style="margin-top: 0.2rem">
           <i>Generation:</i> {{
             editingCharacter.generation
           }} ({{ $t('character.generation.' + editingCharacter.generationEra) }})
+          <bullet/>
+          <i> {{ $t('data.predatortype') }}:</i> {{ editingCharacter.predatorType.name }}
+        </span>
+        <span v-if="isVampire && mocActive" class="side" style="margin-top: 0.2rem">
+          <i>Generation:</i> 1
           <bullet/>
           <i> {{ $t('data.predatortype') }}:</i> {{ editingCharacter.predatorType.name }}
         </span>
