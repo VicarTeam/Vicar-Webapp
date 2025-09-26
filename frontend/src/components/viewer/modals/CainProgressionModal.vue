@@ -11,10 +11,10 @@
       <audio ref="sfxBlack" src="@/assets/audio/whispers.mp3" preload="auto"></audio>
 
       <div style="display: flex; width: 100%; gap: 1rem; justify-content: center; align-items: center; margin-bottom: 2rem">
-        <button class="btn btn-outline mr-5"
+        <button class="btn btn-primary mr-5"
                 :disabled="isLocked"
                 @click="goToRed()">{{$t('character.moc.go-to-red')}}</button>
-        <button class="btn btn-primary ml-5"
+        <button class="btn btn-outline ml-5"
                 :disabled="isLocked"
                 @click="goToBlack()">{{$t('character.moc.go-to-black')}}</button>
       </div>
