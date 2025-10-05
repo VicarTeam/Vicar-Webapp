@@ -12,10 +12,10 @@
 
       <div style="display: flex; width: 100%; gap: 1rem; justify-content: center; align-items: center; margin-bottom: 2rem">
         <button class="btn btn-primary mr-5"
-                :disabled="isLocked || !canGoRed"
+                :disabled="!canGoRed"
                 @click="goToRed()">{{$t('character.moc.go-to-red')}}</button>
         <button class="btn btn-outline ml-5"
-                :disabled="isLocked || !canGoBlack"
+                :disabled="!canGoBlack"
                 @click="goToBlack()">{{$t('character.moc.go-to-black')}}</button>
       </div>
 
@@ -162,18 +162,19 @@ export default class CainProgressionModal extends Vue {
     else this.rawLevel = 0;
   }
 
-  get isLocked(): boolean {
-    return this.levelAbs >= 5;
-  }
-
   get canGoRed(): boolean {
-    if (this.currentPath === 'none' || this.currentPath === 'red') return true;
-    return this.levelAbs < 4;
+    if (this.currentPath === 'none') return true;
+    if (this.currentPath === 'red') return this.levelAbs < 5;
+    if (this.currentPath === 'black') return this.levelAbs < 4;
+
+    return false;
   }
 
   get canGoBlack(): boolean {
-    if (this.currentPath === 'none' || this.currentPath === 'black') return true;
-    return this.levelAbs < 4;
+    if (this.currentPath === 'none') return true;
+    if (this.currentPath === 'black') return this.levelAbs < 5;
+    if (this.currentPath === 'red') return this.levelAbs < 4;
+    return false;
   }
 
   get roman(): string[] { return ['I', 'II', 'III', 'IV', 'V']; }
@@ -248,7 +249,7 @@ export default class CainProgressionModal extends Vue {
   ];
 
   goToRed() {
-    if (this.isLocked || !this.canGoRed) return;
+    if (!this.canGoRed) return;
     if (this.currentPath === 'red') {
       this.increaseLevel();
     } else if (this.currentPath === 'black') {
@@ -262,7 +263,7 @@ export default class CainProgressionModal extends Vue {
   }
 
   goToBlack() {
-    if (this.isLocked || !this.canGoBlack) return;
+    if (!this.canGoBlack) return;
     if (this.currentPath === 'black') {
       this.increaseLevel();
     } else if (this.currentPath === 'red') {
@@ -276,7 +277,6 @@ export default class CainProgressionModal extends Vue {
   }
 
   increaseLevel() {
-    if (this.isLocked) return;
     if (this.currentPath === 'none') return;
     if (this.levelAbs < 5) {
       const newAbs = this.levelAbs + 1;
@@ -288,7 +288,6 @@ export default class CainProgressionModal extends Vue {
   }
 
   decreaseLevel() {
-    if (this.isLocked) return;
     if (this.levelAbs > 0) {
       const newAbs = this.levelAbs - 1;
 
