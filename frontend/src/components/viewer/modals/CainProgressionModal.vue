@@ -162,7 +162,7 @@ export default class CainProgressionModal extends Vue {
     else this.rawLevel = 0;
   }
 
-  get isLocked(): boolean { return this.levelAbs >= 5; }
+  get isLocked(): boolean { return this.levelAbs >= 4; }
   get roman(): string[] { return ['I', 'II', 'III', 'IV', 'V']; }
 
   private keyBase(i: number): string {

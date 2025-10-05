@@ -263,19 +263,9 @@ export default class ViewerView extends Vue {
       this.huntCalculatorModal.showModal(this.editingCharacter);
     }
 
-    if (event.key === "Shift" && this.editingCharacter) {
-      if (this.lastShift === null) {
-        this.lastShift = Date.now();
-      } else {
-        const diff = Date.now() - this.lastShift;
-        if (diff < 500) {
-          this.lastShift = null;
-
-          this.searchHighlightModal.showModal(this.editingCharacter);
-        } else {
-          this.lastShift = Date.now();
-        }
-      }
+    if (event.altKey && event.key === "f" && this.editingCharacter) {
+      event.preventDefault();
+      this.searchHighlightModal.showModal(this.editingCharacter);
     }
 
     return false;
