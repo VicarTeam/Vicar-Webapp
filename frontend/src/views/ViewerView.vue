@@ -263,7 +263,7 @@ export default class ViewerView extends Vue {
       this.huntCalculatorModal.showModal(this.editingCharacter);
     }
 
-    if (event.altKey && event.key === "f" && this.editingCharacter) {
+    if (event.altKey  && event.shiftKey && event.key === "f" && this.editingCharacter) {
       event.preventDefault();
       this.searchHighlightModal.showModal(this.editingCharacter);
     }
