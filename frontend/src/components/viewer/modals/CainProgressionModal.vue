@@ -12,10 +12,10 @@
 
       <div style="display: flex; width: 100%; gap: 1rem; justify-content: center; align-items: center; margin-bottom: 2rem">
         <button class="btn btn-primary mr-5"
-                :disabled="isLocked"
+                :disabled="isLocked || !canGoRed"
                 @click="goToRed()">{{$t('character.moc.go-to-red')}}</button>
         <button class="btn btn-outline ml-5"
-                :disabled="isLocked"
+                :disabled="isLocked || !canGoBlack"
                 @click="goToBlack()">{{$t('character.moc.go-to-black')}}</button>
       </div>
 
@@ -162,7 +162,20 @@ export default class CainProgressionModal extends Vue {
     else this.rawLevel = 0;
   }
 
-  get isLocked(): boolean { return this.levelAbs >= 4; }
+  get isLocked(): boolean {
+    return this.levelAbs >= 5;
+  }
+
+  get canGoRed(): boolean {
+    if (this.currentPath === 'none' || this.currentPath === 'red') return true;
+    return this.levelAbs < 4;
+  }
+
+  get canGoBlack(): boolean {
+    if (this.currentPath === 'none' || this.currentPath === 'black') return true;
+    return this.levelAbs < 4;
+  }
+
   get roman(): string[] { return ['I', 'II', 'III', 'IV', 'V']; }
 
   private keyBase(i: number): string {
@@ -235,7 +248,7 @@ export default class CainProgressionModal extends Vue {
   ];
 
   goToRed() {
-    if (this.isLocked) return;
+    if (this.isLocked || !this.canGoRed) return;
     if (this.currentPath === 'red') {
       this.increaseLevel();
     } else if (this.currentPath === 'black') {
@@ -249,7 +262,7 @@ export default class CainProgressionModal extends Vue {
   }
 
   goToBlack() {
-    if (this.isLocked) return;
+    if (this.isLocked || !this.canGoBlack) return;
     if (this.currentPath === 'black') {
       this.increaseLevel();
     } else if (this.currentPath === 'red') {
