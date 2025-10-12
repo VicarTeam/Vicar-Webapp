@@ -84,3 +84,18 @@
 .vicar-screen-shake {
   animation: screenShake 500ms cubic-bezier(.55, .05, .67, .19) both !important;
 }
+
+.vicar-renegade-border {
+  border-color: #fff093 !important;
+}
+
+.vicar-renegade-bg {
+  background-color: #fff093 !important;
+  &.glow {
+    box-shadow: 0 0 10px #fff093 !important;
+  }
+}
+
+.vicar-renegade-fg {
+  color: #fff093 !important;
+}

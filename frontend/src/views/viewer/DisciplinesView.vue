@@ -1,6 +1,22 @@
 <template>
   <div class="disciplines-view">
     <div class="disciplines">
+      <div v-if="editingCharacter.cainsMarkLevel >= -5" class="discipline card">
+        <div class="top">
+          <div class="d-flex align-items-center" style="gap: 0.5rem; flex-grow: 1">
+            <b @click="setDicePool('disc', LightOfTheRenegade.name, 5)">{{LightOfTheRenegade.name}}</b>
+            <TipButton :content="LightOfTheRenegade.summary"/>
+          </div>
+          <Dots :amount="5" :max="5" :renegade="true"/>
+        </div>
+        <div class="abilities">
+          <div class="ability" v-for="a in renegadeAbiities">
+            <small class="name vicar-renegade-fg">{{a.name}} - <i><b>{{$t('editor.disciplines.level')}}</b>: {{a.level}}</i></small>
+            <TipButton class="tip" :override="true" @click="abilityInfoModal.showModal(a, LightOfTheRenegade)"/>
+          </div>
+        </div>
+      </div>
+
       <div class="discipline card" v-for="d in editingCharacter.disciplines" :id="`hldc-${d.discipline.id}`">
         <div class="top">
           <div class="d-flex align-items-center" style="gap: 0.5rem; flex-grow: 1">
@@ -46,14 +62,19 @@ import CharacterStorage from "@/libs/io/character-storage";
 import NewDisciplineModal from "@/components/viewer/modals/leveling/NewDisciplineModal.vue";
 import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vue";
 import {IDisciplineAbility} from "@/types/data";
+import {LightOfTheRenegade} from "@/.data/v5";
 
 @Component({
+  methods: {
+  },
   components: {
     ConfirmDeleteModal,
     NewDisciplineModal,
     LevelButton, ChooseDisciplineAbilityModal, DisciplineAbilityInfoModal, Dots, TipButton}
 })
 export default class DisciplinesView extends Vue {
+
+  LightOfTheRenegade = LightOfTheRenegade;
 
   @State("editingCharacter")
   private editingCharacter!: ICharacter;
@@ -132,6 +153,17 @@ export default class DisciplinesView extends Vue {
     return this.editingCharacter.disciplines.sort((a, b) => {
       return b.currentLevel - a.currentLevel;
     });
+  }
+
+  private get renegadeAbiities(): ILeveledDisciplineAbility[] {
+    const abilities: ILeveledDisciplineAbility[] = [];
+    for (let i = 1; i <= 5; i++) {
+      const ability = LightOfTheRenegade.levels[i][0];
+      if (ability) {
+        abilities.push({...ability, usedLevel: i, level: i});
+      }
+    }
+    return abilities;
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="dots">
-    <span v-for="i in dots" class="dot" :class="{'active': i <= amount, 'ml-10': isMargin(i)}"></span>
+    <span v-for="i in dots" class="dot" :class="{'active': i <= amount, 'ml-10': isMargin(i), 'vicar-renegade-border': renegade, 'vicar-renegade-bg': renegade, 'glow': renegade}"></span>
   </div>
 </template>
 
@@ -20,6 +20,9 @@ export default class Dots extends Vue {
 
   @Prop({default: -1})
   private marginAt!: number;
+
+  @Prop({default: false})
+  private renegade!: boolean;
 
   private isMargin(i: number): boolean {
     return i === this.marginAt;
