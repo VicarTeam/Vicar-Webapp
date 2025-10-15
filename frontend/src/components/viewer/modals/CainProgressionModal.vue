@@ -132,7 +132,7 @@ export default class CainProgressionModal extends Vue {
         this.editingCharacter.generation = 1;
         this.editingCharacter.generationEra = Generation.CainesInheritance;
         this.editingCharacter.bloodPotency += 2;
-        this.editingCharacter.bloodPotency = Math.min(10, this.editingCharacter.bloodPotency + 10);
+        this.editingCharacter.bloodPotency = Math.min(10, this.editingCharacter.bloodPotency);
       }
 
       CharacterStorage.saveCharacter(this.editingCharacter).then(() => {});
