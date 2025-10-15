@@ -84,6 +84,7 @@ export default class Characters extends Vue {
       const content = await FileReaderUtils.readFile(event.target.files);
       const char: ICharacter = JSON.parse(content);
       delete char.directory;
+      delete char.justViewing;
       await CharacterStorage.addCharacter(char);
       this.$forceUpdate();
     } catch (e) {

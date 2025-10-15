@@ -1,7 +1,7 @@
 <template>
   <div class="disciplines-view">
     <div class="disciplines">
-      <div v-if="editingCharacter.cainsMarkLevel >= -5" class="discipline card">
+      <div v-if="editingCharacter.cainsMarkLevel <= -5" class="discipline card">
         <div class="top">
           <div class="d-flex align-items-center" style="gap: 0.5rem; flex-grow: 1">
             <b @click="setDicePool('disc', LightOfTheRenegade.name, 5)">{{LightOfTheRenegade.name}}</b>

@@ -108,7 +108,7 @@ export default class ChooseDisciplineAbilityModal extends Vue {
   @Watch("ability")
   private onAbilityChanged() {
     if (this.ability) {
-      if (this.ability.level > 5) {
+      if (this.ability.level > 5 && this.editingCharacter?.cainsMarkLevel !== 5) {
         this.overrideCosts = this.ability.level * 10; // advanced discipline
       } else {
         this.overrideCosts = -1;

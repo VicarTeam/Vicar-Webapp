@@ -54,6 +54,7 @@ class LevelResolver {
 
     @ResolveType(LevelType.OtherDiscipline)
     public resolveOtherDiscipline(char: ICharacter, disc: IDisciplineSelection): number {
+      console.log("Resolving Clan Discipline", char.cainsMarkLevel, disc);
         if (char.cainsMarkLevel === 5) {
             return disc.currentLevel * 3;
         }

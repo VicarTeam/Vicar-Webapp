@@ -19,7 +19,6 @@
                 @click="goToBlack()">{{$t('character.moc.go-to-black')}}</button>
       </div>
 
-      <!-- Stepper -->
       <div v-if="levelAbs !== 0" class="path-stepper" :class="'path-' + currentPath">
         <div class="path-stepper--bg"></div>
         <div class="path-stepper--filler" :style="{width: `${(25 * (levelAbs - 1))}%`}"></div>
@@ -133,7 +132,7 @@ export default class CainProgressionModal extends Vue {
         this.editingCharacter.generation = 1;
         this.editingCharacter.generationEra = Generation.CainesInheritance;
         this.editingCharacter.bloodPotency += 2;
-        this.editingCharacter.bloodPotency = Math.min(10, this.editingCharacter.bloodPotency);
+        this.editingCharacter.bloodPotency = Math.min(10, this.editingCharacter.bloodPotency + 10);
       }
 
       CharacterStorage.saveCharacter(this.editingCharacter).then(() => {});
@@ -163,6 +162,7 @@ export default class CainProgressionModal extends Vue {
   }
 
   get canGoRed(): boolean {
+    if (this.editingCharacter.fullCustomization) return true;
     if (this.currentPath === 'none') return true;
     if (this.currentPath === 'red') return this.levelAbs < 5;
     if (this.currentPath === 'black') return this.levelAbs < 4;
@@ -171,6 +171,7 @@ export default class CainProgressionModal extends Vue {
   }
 
   get canGoBlack(): boolean {
+    if (this.editingCharacter.fullCustomization) return true;
     if (this.currentPath === 'none') return true;
     if (this.currentPath === 'black') return this.levelAbs < 5;
     if (this.currentPath === 'red') return this.levelAbs < 4;
@@ -204,6 +205,7 @@ export default class CainProgressionModal extends Vue {
   }
 
   private showAnnounce(kind: 'redUp'|'redDown'|'blackUp'|'blackDown', newLevelAbs: number) {
+    if (this.editingCharacter.fullCustomization) return;
     const pick = (arr: (() => string)[]) => arr[Math.min(Math.max(newLevelAbs-1,0), arr.length-1)]();
     let text = '';
     let css: 'is-red' | 'is-black' = 'is-red';
