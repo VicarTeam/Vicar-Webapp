@@ -54,14 +54,12 @@
         </span>
 
         <span v-if="isVampire && !mocActive" class="side" style="margin-top: 0.2rem">
-          <i>Generation:</i> {{
-            editingCharacter.generation
-          }} ({{ $t('character.generation.' + editingCharacter.generationEra) }})
+          <i>Generation:</i> <input v-if="editingCharacter.fullCustomization" class="form-control" v-model.number="editingCharacter.generation"/><span v-else>{{editingCharacter.generation}}</span> ({{ $t('character.generation.' + editingCharacter.generationEra) }})
           <bullet/>
           <i> {{ $t('data.predatortype') }}:</i> {{ editingCharacter.predatorType.name }}
         </span>
         <span v-if="isVampire && mocActive" class="side" style="margin-top: 0.2rem">
-          <i>Generation:</i> 1 ({{editingCharacter.generation}})
+          <i>Generation:</i> 1 (<input v-if="editingCharacter.fullCustomization" class="form-control" v-model.number="editingCharacter.generation"/><span v-else>{{editingCharacter.generation}}</span>)
           <bullet/>
           <i> {{ $t('data.predatortype') }}:</i> {{ editingCharacter.predatorType.name }}
         </span>
