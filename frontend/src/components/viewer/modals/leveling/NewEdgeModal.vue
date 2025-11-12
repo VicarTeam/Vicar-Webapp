@@ -39,13 +39,14 @@
 
 <script lang="ts">
 import {Component, Ref, Vue} from "vue-property-decorator";
-import { State } from "vuex-class";
+import {State} from "vuex-class";
 import Modal from "@/components/modal/Modal.vue";
-import { IHunterSheet, IH5Edge, H5EdgeCategory } from "@/types/h5";
-import { edges as allEdges } from "@/.data/h5";
+import {H5EdgeCategory, IH5Edge, IHunterSheet} from "@/types/h5";
+import {edges as allEdges} from "@/.data/h5";
 import CharacterStorage from "@/libs/io/character-storage";
 import EdgeInfoModal from "@/components/viewer/modals/EdgeInfoModal.vue";
 import TipButton from "@/components/editor/TipButton.vue";
+import {LevelChangeType} from "@/types/gameline";
 
 @Component({
   components: {TipButton, EdgeInfoModal, Modal }
@@ -110,8 +111,7 @@ export default class NewEdgeModal extends Vue {
       return;
     }
 
-    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
-    this.editingCharacter.exp -= this.neededExp;
+    CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.Edge, this.neededExp, `${this.selectedEdge.name} hinzugefügt`);
     CharacterStorage.saveCharacter(this.editingCharacter as any);
 
     this.onConfirm && this.onConfirm(this.selectedEdge);

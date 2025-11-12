@@ -18,6 +18,7 @@ import {AttributeKeys, IAttributeData, ICharacter, ISkillData} from "@/types/mod
 import {levelResolver} from "@/libs/resolvers/level-resolver";
 import Bullet from "@/components/Bullet.vue";
 import CharacterStorage from "@/libs/io/character-storage";
+import {LevelChangeType} from "@/types/gameline";
 
 @Component({
   components: {Bullet, Modal}
@@ -40,8 +41,7 @@ export default class SkillModal extends Vue {
       return;
     }
 
-    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
-    this.editingCharacter.exp -= this.neededExp;
+    CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.Skill, this.neededExp, `${this.$t(`data.skill.${this.data.key.toLowerCase()}`)}: ${this.data.value} → ${this.data.value + 1}`);
     this.data.value++;
     CharacterStorage.saveCharacter(this.editingCharacter);
     this.show = false;

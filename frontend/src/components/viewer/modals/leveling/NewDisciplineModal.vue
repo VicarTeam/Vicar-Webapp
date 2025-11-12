@@ -19,13 +19,14 @@
 import {Component, Ref, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {State} from "vuex-class";
-import {IAttributeData, ICharacter, IDisciplineSelection, ILeveledDisciplineAbility} from "@/types/models";
+import {ICharacter, ILeveledDisciplineAbility} from "@/types/models";
 import {levelResolver} from "@/libs/resolvers/level-resolver";
 import Bullet from "@/components/Bullet.vue";
 import CharacterStorage from "@/libs/io/character-storage";
 import {IDiscipline} from "@/types/data";
 import DataManager from "@/libs/data/data-manager";
 import ChooseDisciplineAbilityModal from "@/components/editor/modals/ChooseDisciplineAbilityModal.vue";
+import {LevelChangeType} from "@/types/gameline";
 
 @Component({
   components: {ChooseDisciplineAbilityModal, Bullet, Modal}
@@ -68,8 +69,7 @@ export default class NewDisciplineModal extends Vue {
       return;
     }
 
-    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
-    this.editingCharacter.exp -= this.neededExp;
+    CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.Discipline, this.neededExp, `Disziplin: ${this.discipline.name} hinzugefügt`);
     this.editingCharacter.disciplines.push({
       discipline: this.discipline,
       currentLevel: 2,

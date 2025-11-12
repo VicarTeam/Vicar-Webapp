@@ -95,7 +95,7 @@ import DataManager from "@/libs/data/data-manager";
 import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
 import PTActionHandler from "@/libs/ptaction-handler";
 import CharacterStorage from "@/libs/io/character-storage";
-import {GameLine} from "@/types/gameline";
+import {GameLine, LevelChangeType} from "@/types/gameline";
 import {traits} from "@/.data/w5";
 import {traits as m20traits} from "@/.data/m20";
 import {traits as h5traits} from "@/.data/h5";
@@ -190,8 +190,7 @@ export default class ChooseTraitModal extends Vue {
 
       if (this.calculateCosts) {
         const costs = this.calculateCosts(this.selectedTrait!, this.customLevel);
-        this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + costs;
-        this.editingCharacter.exp -= costs;
+        CharacterStorage.trackLevelChange(this.editingCharacter, this.isFlaw ? LevelChangeType.Flaw : LevelChangeType.Trait, costs, this.selectedTrait!.name + " (Level " + this.customLevel + ") hinzugefügt");
         CharacterStorage.saveCharacter(this.editingCharacter);
       }
     } else {

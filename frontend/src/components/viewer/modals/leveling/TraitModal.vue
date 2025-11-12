@@ -14,12 +14,12 @@
 import {Component, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {State} from "vuex-class";
-import {IAttributeData, ICharacter, ILockableTrait} from "@/types/models";
-import {levelResolver} from "@/libs/resolvers/level-resolver";
+import {ICharacter} from "@/types/models";
 import Bullet from "@/components/Bullet.vue";
 import CharacterStorage from "@/libs/io/character-storage";
 import {ITransformedData} from "@/views/viewer/TraitsView.vue";
 import {ITrait} from "@/types/data";
+import {LevelChangeType} from "@/types/gameline";
 
 @Component({
   components: {Bullet, Modal}
@@ -55,8 +55,7 @@ export default class TraitModal extends Vue {
       return;
     }
 
-    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
-    this.editingCharacter.exp -= this.neededExp;
+    CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.Trait, this.neededExp, `${trait.name}: ${this.getTraitLevel()} → ${this.getTraitLevel() + 1}`);
     if (this.upTrait) {
       trait.name = this.upTrait.name;
       trait.level = this.upTrait.level;

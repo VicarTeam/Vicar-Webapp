@@ -6,6 +6,7 @@ import Modal from "@/components/modal/Modal.vue";
 import Bullet from "@/components/Bullet.vue";
 import {State} from "vuex-class";
 import CharacterStorage from "@/libs/io/character-storage";
+import {LevelChangeType} from "@/types/gameline";
 
 @Component({
   components: {Bullet, Modal}
@@ -40,8 +41,7 @@ export default class GiftModal extends Vue {
       return;
     }
 
-    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededXp;
-    this.editingCharacter.exp -= this.neededXp;
+    CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.Gift, this.neededXp, `${this.category === W5GiftCategory.Rite ? 'Ritus' : 'Gabe'}: ${(this.selected as IW5Gift | IW5Rite).name} hinzugefügt`);
 
     if (this.category === W5GiftCategory.Rite) {
       this.editingCharacter.selectedRites.push({...this.selected as IW5Rite});

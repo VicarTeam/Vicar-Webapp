@@ -18,6 +18,7 @@ import {ICharacter} from "@/types/models";
 import {levelResolver} from "@/libs/resolvers/level-resolver";
 import Bullet from "@/components/Bullet.vue";
 import CharacterStorage from "@/libs/io/character-storage";
+import {LevelChangeType} from "@/types/gameline";
 
 @Component({
   components: {Bullet, Modal}
@@ -37,8 +38,9 @@ export default class BloodPotencyModal extends Vue {
     if (this.editingCharacter.exp < this.neededExp) {
       return;
     }
-    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
-    this.editingCharacter.exp -= this.neededExp;
+
+    CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.BloodPotency, this.neededExp, `${this.editingCharacter.bloodPotency} → ${this.editingCharacter.bloodPotency + 1}`);
+
     this.editingCharacter.bloodPotency++;
     CharacterStorage.saveCharacter(this.editingCharacter);
     this.show = false;

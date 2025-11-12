@@ -30,6 +30,8 @@ import {ICharacter, IDisciplineSelection} from "@/types/models";
 import {State} from "vuex-class";
 import DataManager from "@/libs/data/data-manager";
 import {IBloodRitual} from "@/types/data";
+import CharacterStorage from "@/libs/io/character-storage";
+import {LevelChangeType} from "@/types/gameline";
 
 @Component({
   components: {Modal}
@@ -65,8 +67,7 @@ export default class ChooseBloodRitualModal extends Vue {
       this.editingCharacter.bloodRituals.push({...this.ritual!});
 
       if (this.withCosts) {
-        this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.costs;
-        this.editingCharacter.exp -= this.costs;
+        CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.BloodRitual, this.costs, this.ritual!.name + " erlernt");
       }
 
       this.callback();

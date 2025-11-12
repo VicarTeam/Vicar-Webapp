@@ -19,6 +19,7 @@ import {AttributeKeys, IAttributeData, ICharacter, ISkillData} from "@/types/mod
 import {levelResolver} from "@/libs/resolvers/level-resolver";
 import Bullet from "@/components/Bullet.vue";
 import CharacterStorage from "@/libs/io/character-storage";
+import {LevelChangeType} from "@/types/gameline";
 
 @Component({
   components: {Bullet, Modal}
@@ -47,8 +48,8 @@ export default class NewSpecializationModal extends Vue {
       return;
     }
 
-    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
-    this.editingCharacter.exp -= this.neededExp;
+    const translatedSkill = this.$t(`data.skill.${this.data.key.toLowerCase()}`);
+    CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.Specialization, this.neededExp, `${this.specialization} (${translatedSkill}) hinzugefügt`);
     this.data.specialization.push(this.specialization);
     CharacterStorage.saveCharacter(this.editingCharacter);
     this.show = false;

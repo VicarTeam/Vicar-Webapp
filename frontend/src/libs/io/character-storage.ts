@@ -6,6 +6,8 @@ import store from "@/store";
 import router from "@/router";
 import {io} from "socket.io-client";
 import {checkSession} from "@/libs/auth";
+import {IBaseSheet, LevelChangeType} from "@/types/gameline";
+import DataManager from "@/libs/data/data-manager";
 
 let saveDebounce: number|null = null;
 
@@ -165,7 +167,31 @@ export default class CharacterStorage {
         }
     }
 
-    private static initializeUpdatingSocket() {
+  public static trackLevelChange(char: IBaseSheet, type: LevelChangeType, costs: number, changeText: string) {
+      if (!DataManager.isTrackingDisabled) {
+        const beforeExp = char.exp;
+        const afterExp = char.exp - costs;
+
+        char.levelHistory = char.levelHistory || [];
+        char.levelHistory.push({
+          type,
+          date: new Date().toISOString(),
+          text: changeText,
+          exp: {
+            before: beforeExp,
+            after: afterExp,
+            used: costs
+          }
+        });
+
+        char.usedExp = char.usedExp || 0;
+        char.usedExp += costs;
+      }
+
+      char.exp -= costs;
+  }
+
+  private static initializeUpdatingSocket() {
         if (!localStorage.getItem('vicar:session')) {
             return;
         }

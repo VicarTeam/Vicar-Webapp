@@ -38,6 +38,15 @@ export default class DataManager {
     public static loggedInAs: string|null = null;
     public static readonly languages: ILanguage[] = [];
     private static initialized = false;
+    private static trackingDisabled?: boolean = undefined;
+
+    public static get isTrackingDisabled(): boolean {
+        if (this.trackingDisabled === undefined) {
+            const setting = localStorage.getItem("vicar_c::disableTracking");
+            this.trackingDisabled = setting === "true";
+        }
+        return this.trackingDisabled;
+    }
 
     public static get selectedLanguage(): ILanguage {
         return this.languages.find(lang => lang.key === i18n.locale)

@@ -7,7 +7,7 @@
       </div>
       <div class="form-group d-flex flex-column">
         <label><b>{{$t('character.advanced.usedexp')}}:</b></label>
-        <i style="opacity: 0.7">{{character.usedExp || 0}} EXP</i>
+        <i style="opacity: 0.7; display: flex; justify-content: space-between; align-items: center">{{character.usedExp || 0}} EXP <TipButton :override="true" @click="openLevelHistory()"/></i>
       </div>
       <div class="form-group d-flex flex-column" :class="{'mb-0': !isNotUpToDate()}">
         <label><b>{{$t('character.advanced.rules')}}:</b></label>
@@ -35,11 +35,13 @@
         <button style="font-size: 1rem" :disabled="homebrewUpdating" class="btn btn-primary" @click="updateHomebrewContent">{{$t(`character.homebrew.update${(homebrewUpdated ? 'd' : '')}`)}}</button>
       </div>
     </div>
+
+    <LevelHistoryModal ref="levelHistoryModal"/>
   </Modal>
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Ref, Vue} from "vue-property-decorator";
 import Modal from "@/components/modal/Modal.vue";
 import {CurrentCharacterVersion, ICharacter} from "@/types/models";
 import BookSelection, {ActivatableBook} from "@/components/editor/BookSelection.vue";
@@ -49,11 +51,16 @@ import {HomebrewIdOffset, HomebrewManager} from "@/libs/data/homebrew-manager";
 import DataManager from "@/libs/data/data-manager";
 import {IHomebrewDiscipline} from "@/types/data";
 import {GameLine} from "@/types/gameline";
+import TipButton from "@/components/editor/TipButton.vue";
+import LevelHistoryModal from "@/components/viewer/modals/LevelHistoryModal.vue";
 
 @Component({
-  components: {BookSelection, Modal}
+  components: {LevelHistoryModal, TipButton, BookSelection, Modal}
 })
 export default class CharacterInfoModal extends Vue {
+
+  @Ref("levelHistoryModal")
+  private levelHistoryModal!: LevelHistoryModal;
 
   private show: boolean = false;
   private character: ICharacter = null!;
@@ -88,6 +95,10 @@ export default class CharacterInfoModal extends Vue {
   private migrateChar() {
     migrationResolver.migrate(this.character);
     this.$forceUpdate();
+  }
+
+  private openLevelHistory() {
+    this.levelHistoryModal.showModal(this.character);
   }
 
   private isNotUpToDate(): boolean {

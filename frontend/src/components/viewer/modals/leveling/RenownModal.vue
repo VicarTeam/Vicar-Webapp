@@ -16,6 +16,7 @@ import Modal from "@/components/modal/Modal.vue";
 import Bullet from "@/components/Bullet.vue";
 import CharacterStorage from "@/libs/io/character-storage";
 import {IW5Renown, IWerewolfW5Sheet, W5RenownKey} from "@/types/w5";
+import {LevelChangeType} from "@/types/gameline";
 
 @Component({
   components: {Bullet, Modal}
@@ -39,8 +40,8 @@ export default class RenownModal extends Vue {
     if (this.editingCharacter.exp < this.neededExp) {
       return;
     }
-    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
-    this.editingCharacter.exp -= this.neededExp;
+
+    CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.Renown, this.neededExp, `${this.$t('character.renown.' + this.renown.key)}: ${this.renown.value} → ${this.renown.value + 1}`);
     this.renown.value++;
     if (!this.editingCharacter.renown.find(r => r.key === this.renown.key)) {
       this.editingCharacter.renown.push(this.renown);

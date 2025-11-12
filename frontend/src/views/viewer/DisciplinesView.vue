@@ -63,6 +63,7 @@ import NewDisciplineModal from "@/components/viewer/modals/leveling/NewDisciplin
 import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vue";
 import {IDisciplineAbility} from "@/types/data";
 import {LightOfTheRenegade} from "@/.data/v5";
+import {LevelChangeType} from "@/types/gameline";
 
 @Component({
   methods: {
@@ -116,8 +117,7 @@ export default class DisciplinesView extends Vue {
       selection.abilities.push({...ability, usedLevel: selection.currentLevel});
       selection.currentLevel++;
       selection.abilities = this.sortedDisciplineAbilities(selection.abilities);
-      this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + costs;
-      this.editingCharacter.exp -= costs;
+      CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.Discipline, costs, `${ability.name} (${selection.discipline.name}) hinzugefügt`);
       this.editingCharacter.disciplines = this.sortedDisciplines;
       CharacterStorage.saveCharacter(this.editingCharacter);
     }, costs);

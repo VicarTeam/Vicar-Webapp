@@ -5,6 +5,7 @@ import Modal from "@/components/modal/Modal.vue";
 import Bullet from "@/components/Bullet.vue";
 import {IM20Tradition, IMageSheet, M20Ability, M20Attribute, M20Sphere} from "@/types/m20";
 import CharacterStorage from "@/libs/io/character-storage";
+import {LevelChangeType} from "@/types/gameline";
 
 type LevelType = 'attribute'|'ability'|'sphere'|'arete'|'willpower'|'';
 type Subject = M20Ability | M20Attribute | M20Sphere | undefined;
@@ -140,9 +141,7 @@ export default class M20LevelModal extends Vue {
     if (this.canPayWithFP) {
       this.editingCharacter.freebiePoints = Math.max(0, (this.editingCharacter.freebiePoints ?? 0) - this.freebieCost);
     } else {
-      const used = (this.editingCharacter as any).usedExp ?? 0;
-      (this.editingCharacter as any).usedExp = used + this.xpCost;
-      this.editingCharacter.exp = Math.max(0, (this.editingCharacter.exp ?? 0) - this.xpCost);
+      CharacterStorage.trackLevelChange(this.editingCharacter, this.levelChangeType, this.xpCost, `${this.levelChangeLabel()}: ${this.oldValue} → ${this.newValue}`);
     }
 
     this.setValue(this.newValue);
@@ -150,6 +149,28 @@ export default class M20LevelModal extends Vue {
     CharacterStorage.saveCharacter(this.editingCharacter as any);
     this.show = false;
     this.type = '';
+  }
+
+  private levelChangeLabel(): string {
+    switch (this.type) {
+      case 'attribute': return 'Attribut';
+      case 'ability':   return 'Fähigkeit';
+      case 'sphere':    return 'Sphäre';
+      case 'arete':     return 'Arete';
+      case 'willpower': return 'Willenskraft';
+      default: return '';
+    }
+  }
+
+  private get levelChangeType(): LevelChangeType {
+    switch (this.type) {
+      case 'attribute': return LevelChangeType.M20_Attribute;
+      case 'ability':   return LevelChangeType.M20_Ability;
+      case 'sphere':    return LevelChangeType.M20_Sphere;
+      case 'arete':     return LevelChangeType.M20_Arete;
+      case 'willpower': return LevelChangeType.M20_Willpower;
+      default: return LevelChangeType.Unknown;
+    }
   }
 }
 </script>

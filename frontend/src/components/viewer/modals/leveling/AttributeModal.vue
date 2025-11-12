@@ -19,6 +19,7 @@ import {levelResolver} from "@/libs/resolvers/level-resolver";
 import Bullet from "@/components/Bullet.vue";
 import CharacterStorage from "@/libs/io/character-storage";
 import DataManager from "@/libs/data/data-manager";
+import {LevelChangeType} from "@/types/gameline";
 
 @Component({
   components: {Bullet, Modal}
@@ -41,8 +42,9 @@ export default class AttributeModal extends Vue {
       return;
     }
 
-    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
-    this.editingCharacter.exp -= this.neededExp;
+    const translatedAttr = this.$t(`data.attribute.${this.data.key.toLowerCase()}`);
+    CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.Attribute, this.neededExp, `${translatedAttr}: ${this.data.value} → ${this.data.value + 1}`);
+
     this.data.value++;
 
     if (this.data.key === AttributeKeys.Stamina) {

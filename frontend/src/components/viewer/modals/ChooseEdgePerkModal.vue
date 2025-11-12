@@ -49,11 +49,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { State } from "vuex-class";
+import {Component, Vue} from "vue-property-decorator";
+import {State} from "vuex-class";
 import Modal from "@/components/modal/Modal.vue";
 import CharacterStorage from "@/libs/io/character-storage";
-import { IHunterSheet, IH5Edge, IH5Perk, IH5SelectedPerk } from "@/types/h5";
+import {IH5Edge, IH5Perk, IH5SelectedPerk, IHunterSheet} from "@/types/h5";
+import {LevelChangeType} from "@/types/gameline";
 
 @Component({
   components: { Modal }
@@ -97,13 +98,13 @@ export default class ChooseEdgePerkModal extends Vue {
       return;
     }
 
-    this.editingCharacter.usedExp = (this.editingCharacter.usedExp || 0) + this.neededExp;
-    this.editingCharacter.exp -= this.neededExp;
+    const spec = (this.specialization || "").trim();
+    CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.EdgePerk, this.neededExp, this.selectedPerk.name + (spec.length <= 0 ? '' : ` (${spec})`) + " hinzugefügt");
     CharacterStorage.saveCharacter(this.editingCharacter as any);
 
     this.onConfirm && this.onConfirm({
       perk: this.selectedPerk.id,
-      specialization: (this.specialization || "").trim()
+      specialization: spec
     });
 
     this.show = false;
