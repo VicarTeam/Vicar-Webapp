@@ -7,7 +7,7 @@ const HISTORY_KEY = 'vicar::ai-rules-history';
 
 @Component({})
 export default class AIRulesBot extends Vue {
-  private show: boolean = true;
+  private show: boolean = false;
   private history: { question: string; answer: string }[] = [];
   private inputQuestion: string = '';
   private isLoading: boolean = false;
