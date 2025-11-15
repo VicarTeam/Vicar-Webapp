@@ -6,6 +6,7 @@
 
     <TipModal ref="tipModal"/>
     <ConfirmModal ref="confirmModal"/>
+    <AIRulesBot />
   </div>
 </template>
 
@@ -13,9 +14,10 @@
 import {Component, Provide, Ref, Vue} from "vue-property-decorator";
 import TipModal from "@/components/editor/TipModal.vue";
 import ConfirmModal from "@/components/main/modals/ConfirmModal.vue";
+import AIRulesBot from "@/components/AIRulesBot.vue";
 
 @Component({
-  components: {ConfirmModal, TipModal}
+  components: {AIRulesBot, ConfirmModal, TipModal}
 })
 export default class App extends Vue {
 
