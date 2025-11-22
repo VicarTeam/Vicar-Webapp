@@ -4,6 +4,7 @@
       {{directory.name}}
       <div class="actions left">
         <IconButton icon="fa-plus" @click="createCharacter"/>
+        <IconButton v-if="characters.length <= 0" icon="fa-minus" @click="removeDirectory"/>
       </div>
       <div class="actions">
         <IconButton :icon="directory.open ? 'fa-chevron-up' : 'fa-chevron-down'" @click="toggleOpen"/>
@@ -58,6 +59,10 @@ export default class CharacterDirectory extends Vue {
       this.directory.open = !this.directory.open;
 
       this.$forceUpdate();
+
+      if (this.directory.id === "@shared-chars") {
+        localStorage.setItem("vicar::shared-chars-open", this.directory.open ? "1" : "0");
+      }
     }
   }
 
@@ -92,6 +97,17 @@ export default class CharacterDirectory extends Vue {
       }
     }
 
+    setTimeout(() => {
+      this.updateCharacterList();
+    }, 100);
+  }
+
+  private removeDirectory() {
+    if (!this.directory) {
+      return;
+    }
+
+    CharacterStorage.loadedDirectories = CharacterStorage.loadedDirectories.filter(d => d.id !== this.directory!.id);
     setTimeout(() => {
       this.updateCharacterList();
     }, 100);

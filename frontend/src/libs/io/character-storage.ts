@@ -124,7 +124,18 @@ export default class CharacterStorage {
         const directories: {directory: ICharacterDirectory|null, characters: ICharacter[]}[] = [];
 
         const characters = this.loadedCharacters.filter(character => !character.directory || !this.loadedDirectories.find(directory => directory.id === character.directory)).sort((a, b) => a.name.localeCompare(b.name));
-        directories.push({characters, directory: null});
+        const sharedChars = characters.filter(c => c.justViewing);
+        const ownChars = characters.filter(c => !c.justViewing);
+        sharedChars.sort((a, b) => a.name.localeCompare(b.name));
+        ownChars.sort((a, b) => a.name.localeCompare(b.name));
+
+        if (ownChars.length > 0) {
+          directories.push({characters: ownChars, directory: null});
+        }
+
+        if (sharedChars.length > 0) {
+            directories.push({characters: sharedChars, directory: {id: '@shared-chars', name: 'Geteilte Charaktere', open: localStorage.getItem('vicar::shared-chars-open') === "1"}});
+        }
 
         this.loadedDirectories.forEach(directory => {
             const characters = this.loadedCharacters.filter(character => character.directory === directory.id).sort((a, b) => a.name.localeCompare(b.name));
