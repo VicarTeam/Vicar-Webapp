@@ -317,6 +317,15 @@
         </Col>
       </Row>
 
+      <Row v-if="isVampire && resonanceDisciplines" style="width: 100%; margin-top: 3rem">
+        <Col style="width: calc(100%/3); justify-content: center; align-items: center"></Col>
+        <Col style="width: calc(100%/3); justify-content: center; align-items: center">
+          <Row><b>Resonanzvorteile</b></Row>
+          <Row><small>{{resonanceDisciplines}}</small></Row>
+        </Col>
+        <Col style="width: calc(100%/3); justify-content: center; align-items: center"></Col>
+      </Row>
+
       <Row v-if="isWerewolf" style="width: 100%">
         <Col style="width: 100%; text-align: center">
           <div>
@@ -481,6 +490,7 @@ import {GameLine} from "@/types/gameline";
 import {IW5Renown, IWerewolfW5Sheet, W5RenownKey} from "@/types/w5";
 import RenownModal from "@/components/viewer/modals/leveling/RenownModal.vue";
 import {M20Sphere, RequestLevelFn} from "@/types/m20";
+import {getResonanceDisciplines} from "@/.data/v5";
 
 @Component({
   methods: {},
@@ -573,6 +583,13 @@ export default class ProfileView extends Vue {
       this.editingCharacter.bloodPotency--;
       CharacterStorage.saveCharacter(this.editingCharacter);
     });
+  }
+
+  private get resonanceDisciplines(): string {
+    if (this.isVampire) {
+      return getResonanceDisciplines(this.editingCharacter?.resonance).join(", ");
+    }
+    return "";
   }
 
   private get gloryRenown(): number {

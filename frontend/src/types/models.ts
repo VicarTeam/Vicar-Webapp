@@ -229,6 +229,15 @@ export interface ICharacterDirectory {
 
 export const CurrentCharacterVersion = 2;
 
+export enum V5Resonance {
+  Empty = "", // none
+  Choleric = "choleric",
+  Melancholic = "melancholic",
+  Phlegmatic = "phlegmatic",
+  Sanguine = "sanguine",
+  AnimalBlood = "animalblood"
+}
+
 export interface ICharacter extends IEdition5Sheet {
     books: number[];
     predatorType: IPredatorType;
@@ -243,7 +252,7 @@ export interface ICharacter extends IEdition5Sheet {
     hunger: number;
     humanity: number;
     stains?: number;
-    resonance: string;
+    resonance?: V5Resonance;
     bloodPotency: number;
     chroniclePrinciples: string;
     anchorsAndBeliefs: string;
@@ -351,7 +360,7 @@ export const DefaultCharacter: () => ICharacter = () => ({
     stains: 0,
     predatorType: undefined!,
     skillspread: undefined!,
-    resonance: "",
+    resonance: V5Resonance.Empty,
     sire: "",
     willpower: 0,
     willpowerDamage: DefaultDamageArray(),

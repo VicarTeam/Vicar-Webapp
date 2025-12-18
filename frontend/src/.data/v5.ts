@@ -1,4 +1,26 @@
 import type {IDiscipline} from "@/types/data";
+import {V5Resonance} from "@/types/models";
+
+export function getResonanceDisciplines(resonance?: V5Resonance) {
+  // @ts-ignore
+  if (!resonance || resonance === V5Resonance.Empty) {
+    return [];
+  }
+
+  switch (resonance) {
+    case V5Resonance.Choleric:
+      return ["Geschwindigkeit", "Stärke"];
+    case V5Resonance.Melancholic:
+      return ["Seelenstärke", "Verdunklung"];
+    case V5Resonance.Phlegmatic:
+      return ["Auspex", "Beherrschung"];
+    case V5Resonance.Sanguine:
+      return ["Blutmagie", "Präsenz"];
+    case V5Resonance.AnimalBlood:
+      return ["Tierhaftigkeit", "Gestaltwandeln"];
+  }
+}
+
 
 export const LightOfTheRenegade: IDiscipline = {
   id: -3009,

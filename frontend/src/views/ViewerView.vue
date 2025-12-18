@@ -7,6 +7,18 @@
         <IconButton icon="fa-dice" v-if="editingCharacter.connectedFoundryId" @click="diceRollModal.showModal(editingCharacter)"/>
         <Avatar :src="editingCharacter.avatar" style="width: 3rem; height: 3rem;"/>
 
+        <div v-if="isVampire" style="display: flex; gap: 0.5rem; align-items: center; justify-content: center; margin-left: 1rem">
+          <label style="margin-bottom: 0; white-space: nowrap"><b>{{$t('character.resonance')}}</b>:</label>
+          <select class="form-control" v-model="editingCharacter.resonance" @change="onResonanceSave">
+            <option :value="V5Resonance.Empty">Leer/Keine</option>
+            <option :value="V5Resonance.Choleric">Cholerisch (wütend)</option>
+            <option :value="V5Resonance.Melancholic">Melancholisch (traurig/verängstigt)</option>
+            <option :value="V5Resonance.Phlegmatic">Phlegmatisch (gelassen/faul)</option>
+            <option :value="V5Resonance.Sanguine">Sanguinisch (fröhlich/geil)</option>
+            <option :value="V5Resonance.AnimalBlood">Tierblut</option>
+          </select>
+        </div>
+
         <MarkOfCain v-if="isVampire" ref="markOfCain" @flash="onCainsMarkFlash()"/>
       </div>
       <Tabs class="center" @before-change="switchTab" v-model="selectedTab">
@@ -79,7 +91,7 @@
 <script lang="ts">
 import {Component, Provide, Ref, Vue} from "vue-property-decorator";
 import {Mutation, State} from "vuex-class";
-import {getHumanInteractionMalus, ICharacter} from "@/types/models";
+import {getHumanInteractionMalus, ICharacter, V5Resonance} from "@/types/models";
 import Tabs from "@/components/tabs/Tabs.vue";
 import IconButton from "@/components/IconButton.vue";
 import Avatar from "@/components/Avatar.vue";
@@ -98,6 +110,7 @@ import {GameLine} from "@/types/gameline";
 import {hardSetTheme} from "@/libs/theme";
 import M20LevelModal from "@/components/viewer/modals/leveling/M20LevelModal.vue";
 import {M20Ability, M20Attribute, M20Sphere} from "@/types/m20";
+import {getResonanceDisciplines} from "@/.data/v5";
 
 const TabHotkeys = [
   {
@@ -140,6 +153,8 @@ const TabHotkeys = [
     DiceRollModal, DicePoolCalculatorModal, CharacterInfoModal, AddExpModal, Tab, Avatar, IconButton, Tabs}
 })
 export default class ViewerView extends Vue {
+
+  V5Resonance = V5Resonance;
 
   @State("editingCharacter")
   private editingCharacter!: ICharacter|undefined;
@@ -214,6 +229,19 @@ export default class ViewerView extends Vue {
     document.title = "Vicar";
 
     hardSetTheme();
+  }
+
+  private onResonanceSave() {
+    if (!this.editingCharacter || !this.isVampire || !this.editingCharacter.resonance) {
+      return;
+    }
+
+    document.body.classList.add(`vicar-resonance-glow--${this.editingCharacter.resonance}`);
+    setTimeout(() => {
+      document.body.classList.remove(`vicar-resonance-glow--${this.editingCharacter!.resonance}`);
+    }, 5000);
+
+    this.saveCurrentCharacter().then(() => {});
   }
 
   private onCharUpdated(charId: string) {
@@ -449,6 +477,7 @@ export default class ViewerView extends Vue {
   }
   .center {
     flex-grow: 1;
+    margin-right: 5rem;
   }
 }
 .simple-dice-calc {
