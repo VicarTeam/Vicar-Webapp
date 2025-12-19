@@ -318,7 +318,17 @@
       </Row>
 
       <Row v-if="isVampire && resonanceDisciplines" style="width: 100%; margin-top: 3rem">
-        <Col style="width: calc(100%/3); justify-content: center; align-items: center"></Col>
+        <Col style="width: calc(100%/3); justify-content: center; align-items: center">
+          <label style="margin-bottom: 0; white-space: nowrap"><b>{{$t('character.resonance')}}</b>:</label>
+          <select class="form-control" v-model="editingCharacter.resonance" @change="onResonanceSave" style="width: fit-content">
+            <option :value="V5Resonance.Empty">Leer/Keine</option>
+            <option :value="V5Resonance.Choleric">Cholerisch (wütend)</option>
+            <option :value="V5Resonance.Melancholic">Melancholisch (traurig/verängstigt)</option>
+            <option :value="V5Resonance.Phlegmatic">Phlegmatisch (gelassen/faul)</option>
+            <option :value="V5Resonance.Sanguine">Sanguinisch (fröhlich/geil)</option>
+            <option :value="V5Resonance.AnimalBlood">Tierblut</option>
+          </select>
+        </Col>
         <Col style="width: calc(100%/3); justify-content: center; align-items: center">
           <Row><b>Resonanzvorteile</b></Row>
           <Row><small>{{resonanceDisciplines}}</small></Row>
@@ -466,7 +476,7 @@
 import {Component, Inject, Ref, Vue} from "vue-property-decorator";
 import Avatar from "@/components/Avatar.vue";
 import {State} from "vuex-class";
-import {getHumanInteractionMalus, ICharacter, LevelType} from "@/types/models";
+import {getHumanInteractionMalus, ICharacter, LevelType, V5Resonance} from "@/types/models";
 import Bullet from "@/components/Bullet.vue";
 import IconButton from "@/components/IconButton.vue";
 import Squares from "@/components/progress/Squares.vue";
@@ -507,6 +517,7 @@ export default class ProfileView extends Vue {
 
   RenownKey = W5RenownKey;
   Sphere = M20Sphere;
+  V5Resonance = V5Resonance;
 
   @State("editingCharacter")
   private editingCharacter!: ICharacter;
@@ -541,6 +552,19 @@ export default class ProfileView extends Vue {
 
   private onMocGranted() {
     this.$forceUpdate();
+  }
+
+  private onResonanceSave() {
+    if (!this.editingCharacter || !this.isVampire || !this.editingCharacter.resonance) {
+      return;
+    }
+
+    document.body.classList.add(`vicar-resonance-glow--${this.editingCharacter.resonance}`);
+    setTimeout(() => {
+      document.body.classList.remove(`vicar-resonance-glow--${this.editingCharacter!.resonance}`);
+    }, 5000);
+
+    this.saveChar();
   }
 
   private saveChar(triggerSync: boolean = false) {
