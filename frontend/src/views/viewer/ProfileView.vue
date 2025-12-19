@@ -317,7 +317,7 @@
         </Col>
       </Row>
 
-      <Row v-if="isVampire && resonanceDisciplines" style="width: 100%; margin-top: 3rem">
+      <Row v-if="isVampire" style="width: 100%; margin-top: 3rem">
         <Col style="width: calc(100%/3); justify-content: center; align-items: center">
           <label style="margin-bottom: 0; white-space: nowrap"><b>{{$t('character.resonance')}}</b>:</label>
           <select class="form-control" v-model="editingCharacter.resonance" @change="onResonanceSave" style="width: fit-content">
@@ -330,8 +330,8 @@
           </select>
         </Col>
         <Col style="width: calc(100%/3); justify-content: center; align-items: center">
-          <Row><b>Resonanzvorteile</b></Row>
-          <Row><small>{{resonanceDisciplines}}</small></Row>
+          <Row v-if="resonanceDisciplines"><b>Resonanzvorteile</b></Row>
+          <Row v-if="resonanceDisciplines"><small>{{resonanceDisciplines}}</small></Row>
         </Col>
         <Col style="width: calc(100%/3); justify-content: center; align-items: center"></Col>
       </Row>
