@@ -1,11 +1,36 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import {provide, ref, watchEffect} from "vue";
+import {useStore} from "@/app/store.ts";
+import TipModal from "@/components/editor/TipModal.vue";
+import {GameLine} from "@/@types/gameline.ts";
+
+const store = useStore()
+
+const tipModal = ref<InstanceType<typeof TipModal>>()
+
+watchEffect(() => {
+  const gameline = store.currentGameLine;
+
+  setTheme(gameline);
+})
+
+function setTheme(theme: string) {
+  const html = document.documentElement;
+  html.classList.remove("theme--vampire", "theme--werewolf", "theme--mage", "theme--hunter");
+  html.classList.add(`theme--${theme}`);
+}
+
+provide("show-tip", (content: any, title?: any) => {
+  tipModal.value?.showModal(title, content);
+});
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <RouterView />
+
+  <TipModal ref="tipModal"/>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+
+</style>
