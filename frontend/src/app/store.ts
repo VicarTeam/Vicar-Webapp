@@ -8,6 +8,7 @@ export const useStore = defineStore('vicar-main', {
     draggingCharacter: undefined,
     directoryForCharCreation: undefined,
     isLevelMode: false,
+    lexiconOpen: false,
     overrideGameLine: undefined,
   }),
   actions: {
@@ -15,6 +16,15 @@ export const useStore = defineStore('vicar-main', {
       const html = document.documentElement;
       html.classList.remove("theme--v5", "theme--w5", "theme--m20", "theme--h5");
       html.classList.add(`theme--v5`);
+    },
+    openLexicon() {
+      this.lexiconOpen = true
+    },
+    closeLexicon() {
+      this.lexiconOpen = false
+    },
+    toggleLexicon() {
+      this.lexiconOpen = !this.lexiconOpen
     },
   },
   getters: {

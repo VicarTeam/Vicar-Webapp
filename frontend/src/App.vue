@@ -1,36 +1,53 @@
 <script setup lang="ts">
-import {provide, ref, watchEffect} from "vue";
-import {useStore} from "@/app/store.ts";
-import TipModal from "@/components/editor/TipModal.vue";
-import {GameLine} from "@/@types/gameline.ts";
+import { provide, ref, watchEffect, onMounted, onUnmounted } from "vue"
+import { useStore } from "@/app/store.ts"
+import TipModal from "@/components/editor/TipModal.vue"
+import QuickLexiconOverlay from "@/components/main/lexicon/QuickLexiconOverlay.vue"
 
 const store = useStore()
 
 const tipModal = ref<InstanceType<typeof TipModal>>()
 
 watchEffect(() => {
-  const gameline = store.currentGameLine;
-
-  setTheme(gameline);
+  setTheme(store.currentGameLine)
 })
 
 function setTheme(theme: string) {
-  const html = document.documentElement;
-  html.classList.remove("theme--vampire", "theme--werewolf", "theme--mage", "theme--hunter");
-  html.classList.add(`theme--${theme}`);
+  const html = document.documentElement
+  html.classList.remove("theme--vampire", "theme--werewolf", "theme--mage", "theme--hunter")
+  html.classList.add(`theme--${theme}`)
 }
 
+function onKeyDown(e: KeyboardEvent) {
+  const isMac = navigator.platform.toLowerCase().includes("mac")
+  const openCombo = (isMac ? e.metaKey : e.ctrlKey) && e.key.toLowerCase() === "k"
+
+  if (openCombo) {
+    e.preventDefault()
+    store.toggleLexicon()
+    return
+  }
+
+  if (e.key === "Escape" && store.lexiconOpen) {
+    e.preventDefault()
+    store.closeLexicon()
+  }
+}
+
+onMounted(() => window.addEventListener("keydown", onKeyDown))
+onUnmounted(() => window.removeEventListener("keydown", onKeyDown))
+
 provide("show-tip", (content: any, title?: any) => {
-  tipModal.value?.showModal(title, content);
-});
+  tipModal.value?.showModal(title, content)
+})
 </script>
 
 <template>
   <RouterView />
 
-  <TipModal ref="tipModal"/>
+  <QuickLexiconOverlay />
+
+  <TipModal ref="tipModal" />
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

@@ -8,4 +8,5 @@ export interface State {
     directoryForCharCreation?: ICharacterDirectory;
     draggingCharacter?: ICharacter;
     overrideGameLine?: GameLine;
+    lexiconOpen: boolean;
 }
