@@ -18,6 +18,7 @@ const props = withDefaults(
     isFinish?: boolean
     canGoNext: boolean
     nextStep?: string
+    preserveStateOnBack?: boolean
   }>(),
   {
     showOnly: false,
@@ -25,6 +26,7 @@ const props = withDefaults(
     isCancel: false,
     isFinish: false,
     nextStep: "",
+    preserveStateOnBack: false,
   }
 )
 
@@ -45,8 +47,14 @@ async function next() {
   if (!props.isFinish) {
     const n = () => {
       EditorHistory.push(props.fallbackHistoryChar ? props.fallbackHistoryChar : editingCharacter.value!)
+
+      if (props.preserveStateOnBack) {
+        EditorHistory.markSkipNextRestore()
+      }
+
       router.push({ name: props.nextStep })
     }
+
     const event = { next: n, cancel: false }
     emit("before-next", event)
     if (!event.cancel) n()
@@ -88,7 +96,17 @@ async function next() {
 
 function back() {
   if (!props.isCancel) {
-    store.editingCharacter = EditorHistory.pop() as any
+    if (props.preserveStateOnBack) {
+      const skip = EditorHistory.shouldSkipRestore()
+      if (!skip && EditorHistory.length > 0) {
+        store.editingCharacter = EditorHistory.pop() as any
+      }
+    } else {
+      if (EditorHistory.length > 0) {
+        store.editingCharacter = EditorHistory.pop() as any
+      }
+    }
+
     router.back()
     return
   }

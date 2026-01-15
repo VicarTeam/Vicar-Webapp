@@ -69,7 +69,7 @@ const canGoNext = computed(() => {
 </script>
 
 <template>
-  <EditorForm :can-go-next="canGoNext" next-step="editor-skills">
+  <EditorForm :can-go-next="canGoNext" next-step="editor-skills" preserve-state-on-back>
     <div
       v-if="store.editingCharacter"
       class="page"

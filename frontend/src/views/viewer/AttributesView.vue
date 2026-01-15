@@ -39,7 +39,7 @@ function deleteAttribute(attr: IAttributeData | M20Attribute) {
 
   if (!isMage.value) {
     const a = attr as IAttributeData
-    confirmDeleteModal.value?.showModal(`${a.key} ${a.value}`, () => {
+    confirmDeleteModal.value?.showModal(`${getAttributeName(a.key)} ${a.value}`, () => {
       a.value--
       CharacterStorage.saveCharacter(c as any)
     })

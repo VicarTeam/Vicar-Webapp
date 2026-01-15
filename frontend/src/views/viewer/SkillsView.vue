@@ -43,7 +43,7 @@ function deleteSkill(skill: ISkillData | M20Ability) {
 
   if (!isMage.value) {
     const s = skill as ISkillData
-    confirmDeleteModal.value?.showModal(`${s.key} ${s.value}`, () => {
+    confirmDeleteModal.value?.showModal(`${getSkillName(s.key)} ${s.value}`, () => {
       s.value--
       CharacterStorage.saveCharacter(c as any)
     })
@@ -84,13 +84,15 @@ function deleteSkillSpecs(skill: ISkillData) {
           <span v-if="hasSpecialization(skill)" class="specs">
             <i>
             (
-              <span
-                v-for="s in skill.specialization"
-                :key="s"
-                class="spec"
-                @click="setDicePool?.('skill', `${skill.key} (${s})`, skill.value + 1, isHumanInteractionSkill(skill.key))"
-              >
-                {{ s }}
+              <span style="display: inline-flex; gap: 0.25rem; flex-wrap: wrap;">
+                <span
+                  v-for="s in skill.specialization"
+                  :key="s"
+                  class="spec"
+                  @click="setDicePool?.('skill', `${skill.key} (${s})`, skill.value + 1, isHumanInteractionSkill(skill.key))"
+                >
+                  {{ s }}
+                </span>
               </span>
             )
             </i>

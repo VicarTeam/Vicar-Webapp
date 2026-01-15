@@ -41,6 +41,7 @@ const clans = computed<IClan[]>(() => {
     :can-go-next="canGoNext"
     next-step="editor-predator-type"
     :is-cancel="true"
+    preserve-state-on-back
     @before-next="applyClanActions"
   >
     <div v-if="store.editingCharacter" class="page">
