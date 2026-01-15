@@ -78,10 +78,7 @@ function onClick(i: number) {
     transition: transform var(--dur-2) var(--ease-2), filter var(--dur-2) var(--ease-2), border-color var(--dur-2) var(--ease-2);
 
     &.active {
-      background:
-        radial-gradient(240px 140px at 20% 10%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.10), transparent 55%),
-        linear-gradient(180deg, color-mix(in srgb, var(--accent) 18%, var(--bg-3)), var(--bg-2));
+      background: var(--accent);
       border-color: color-mix(in srgb, var(--accent) 55%, rgba(255, 255, 255, 0.12));
       box-shadow: var(--shadow-hairline), 0 14px 34px color-mix(in srgb, var(--accent) 14%, rgba(0, 0, 0, 0.55));
     }
