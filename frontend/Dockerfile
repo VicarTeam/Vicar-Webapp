@@ -10,7 +10,7 @@ RUN bun install
 ARG VUE_APP_API_URL
 ENV VITE_APP_API_URL=${VUE_APP_API_URL}
 
-RUN bun run build
+RUN bun run build-only
 
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
