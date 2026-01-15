@@ -8,6 +8,7 @@ html.theme--v5 {
   --primary-color: #8c0e2e;
   --accent-contrast: #ffffff;
   --image-to-accent-filter: invert(10%) sepia(59%) saturate(4471%) hue-rotate(332deg) brightness(104%) contrast(100%);
+  --image-to-primary-color-filter: invert(10%) sepia(59%) saturate(4471%) hue-rotate(332deg) brightness(104%) contrast(100%);
 }
 
 html.theme--w5 {
@@ -15,6 +16,7 @@ html.theme--w5 {
   --primary-color: #0e2e8c;
   --accent-contrast: #ffffff;
   --image-to-accent-filter: invert(22%) sepia(53%) saturate(1827%) hue-rotate(202deg) brightness(90%) contrast(95%);
+  --image-to-primary-color-filter: invert(22%) sepia(53%) saturate(1827%) hue-rotate(202deg) brightness(90%) contrast(95%);
 }
 
 html.theme--m20 {
@@ -22,6 +24,7 @@ html.theme--m20 {
   --primary-color: #6f2dbd;
   --accent-contrast: #ffffff;
   --image-to-accent-filter: invert(18%) sepia(58%) saturate(2576%) hue-rotate(262deg) brightness(92%) contrast(98%);
+  --image-to-primary-color-filter: invert(18%) sepia(58%) saturate(2576%) hue-rotate(262deg) brightness(92%) contrast(98%);
 }
 
 html.theme--h5 {
@@ -29,4 +32,5 @@ html.theme--h5 {
   --primary-color: #3b5d2a;
   --accent-contrast: #ffffff;
   --image-to-accent-filter: invert(28%) sepia(18%) saturate(1190%) hue-rotate(63deg) brightness(92%) contrast(85%);
+  --image-to-primary-color-filter: invert(28%) sepia(18%) saturate(1190%) hue-rotate(63deg) brightness(92%) contrast(85%);
 }

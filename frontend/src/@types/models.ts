@@ -454,6 +454,23 @@ export enum V5Resonance {
   AnimalBlood = "animalblood"
 }
 
+export function getResonanceByIndex(index: number): V5Resonance {
+  switch (index) {
+    case 1:
+      return V5Resonance.Choleric;
+    case 2:
+      return V5Resonance.Melancholic;
+    case 3:
+      return V5Resonance.Phlegmatic;
+    case 4:
+      return V5Resonance.Sanguine;
+    case 5:
+      return V5Resonance.AnimalBlood;
+    default:
+      return V5Resonance.Empty;
+  }
+}
+
 export interface ICharacter extends IEdition5Sheet {
   books: number[];
   predatorType: IPredatorType;

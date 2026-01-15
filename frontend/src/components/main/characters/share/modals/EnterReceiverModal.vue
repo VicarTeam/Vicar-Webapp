@@ -43,7 +43,6 @@ defineExpose({ showModal })
 .wrap {
   display: flex;
   flex-direction: column;
-  width: min(40rem, calc(100vw - 2rem));
   gap: 1rem;
 }
 .actions {

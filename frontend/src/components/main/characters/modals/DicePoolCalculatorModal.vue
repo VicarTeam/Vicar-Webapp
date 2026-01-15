@@ -230,7 +230,6 @@ defineExpose({ showModal })
 
 <style scoped lang="scss">
 .dpcm {
-  width: min(40rem, 92vw);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;

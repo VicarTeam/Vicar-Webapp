@@ -1,7 +1,6 @@
 <script setup lang="ts">
-
 import {defaultBooks, getBookName} from "@/@types/data.ts";
-import {onMounted} from "vue";
+import {onMounted, watch} from "vue";
 
 export type ActivatableBook = {
   id: number
@@ -30,6 +29,16 @@ onMounted(() => {
   useAllBooks.value = booksModel.value.every((b) => b.active || b.id === 1)
 })
 
+watch(useAllBooks, val => {
+  if (!booksModel.value) {
+    booksModel.value = props.books ?? defaultBooks()
+  }
+
+  for (const b of booksModel.value) b.active = val
+  const core = booksModel.value.find((b) => b.id === 1)
+  if (core) core.active = true
+})
+
 function activeBooks() {
   if (!booksModel.value) {
     return []
@@ -38,23 +47,13 @@ function activeBooks() {
   return booksModel.value.filter((b) => b.active).map((b) => b.id)
 }
 
-function toggleAllBooks() {
-  if (!booksModel.value) {
-    booksModel.value = props.books ?? defaultBooks()
-  }
-
-  for (const b of booksModel.value) b.active = useAllBooks.value
-  const core = booksModel.value.find((b) => b.id === 1)
-  if (core) core.active = true
-}
-
-defineExpose({ activeBooks, toggleAllBooks })
+defineExpose({ activeBooks })
 </script>
 
 <template>
   <div class="book-selection">
     <div class="custom-checkbox" v-if="!disabled">
-      <input type="checkbox" id="book-0" v-model="useAllBooks" @change="toggleAllBooks" />
+      <input type="checkbox" id="book-0" v-model="useAllBooks" />
       <label for="book-0">Alle Bücher verwenden</label>
     </div>
 

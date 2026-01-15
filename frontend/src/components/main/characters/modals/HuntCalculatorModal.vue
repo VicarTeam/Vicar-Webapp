@@ -305,7 +305,6 @@ defineExpose({ showModal })
 
 <style scoped lang="scss">
 .hcm {
-  width: min(46rem, 92vw);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;

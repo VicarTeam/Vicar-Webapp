@@ -86,7 +86,6 @@ defineExpose({ showModal })
 
 <style scoped lang="scss">
 .cv-modal {
-  width: min(28rem, 92vw);
   display: flex;
   flex-direction: column;
   gap: 1rem;

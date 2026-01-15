@@ -7,6 +7,11 @@ import {getGenerationName, getSexName, type ICharacter} from "@/@types/models"
 import CharacterStorage from "@/libs/io/character-storage"
 import FileCreator from "@/libs/io/file-creator"
 import { GameLine, type IBaseSheet } from "@/@types/gameline"
+import {useRouter} from "vue-router";
+import {useStore} from "@/app/store.ts";
+
+const store = useStore()
+const router = useRouter()
 
 const props = defineProps<{
   character: IBaseSheet
@@ -57,7 +62,13 @@ function exportCharacter(char: ICharacter) {
 }
 
 function viewCharacter(character: ICharacter, newTab = false) {
-  //TODO: route to viewer
+  if (ctrlDown.value || newTab) {
+    window.open(router.resolve({name: 'viewer', params: {characterId: character.id}}).href, '_blank');
+    return;
+  }
+
+  store.isLevelMode = false
+  router.push({name: 'viewer', params: {characterId: character.id}});
 }
 
 /*async function finishLinkCharacterWithSync() {

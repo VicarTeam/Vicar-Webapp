@@ -30,7 +30,6 @@ defineExpose({ showModal })
 .skill-info {
   display: flex;
   flex-direction: column;
-  width: min(40rem, calc(100vw - 2rem));
   font-size: 1.25rem;
   gap: 0.5rem;
 }

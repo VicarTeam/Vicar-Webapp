@@ -179,6 +179,11 @@ select {
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
     filter: brightness(1.03);
   }
+
+  option {
+    background: var(--bg-1);
+    color: var(--text-1);
+  }
 }
 
 input[type="checkbox"] {
@@ -187,8 +192,7 @@ input[type="checkbox"] {
 
   width: 16px;
   height: 16px;
-  margin: 0;
-  margin-right: 0.5rem;
+  margin: 0 0.5rem 0 0;
   display: inline-grid;
   place-content: center;
 

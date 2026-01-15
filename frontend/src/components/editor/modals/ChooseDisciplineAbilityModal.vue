@@ -135,7 +135,6 @@ defineExpose({ showModal })
 
 <style scoped lang="scss">
 .wrap {
-  width: min(50rem, calc(100vw - 2rem));
   display: flex;
   flex-direction: column;
   gap: 2rem;

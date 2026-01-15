@@ -19,7 +19,7 @@ export const useStore = defineStore('vicar-main', {
   },
   getters: {
     isVampire(state): boolean {
-      return state.editingCharacter?.game === GameLine.Vampire;
+      return state.editingCharacter?.game === GameLine.Vampire || !state.editingCharacter?.game;
     },
     isWerewolf(state): boolean {
       return state.editingCharacter?.game === GameLine.Werewolf;

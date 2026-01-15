@@ -198,7 +198,10 @@ const minCustomLevel = computed(() => (selectedTrait.value as any)?.level ?? 0)
 
 const traitsList = computed(() => {
   if (!selectedPack.value) return []
-  return filterTraits(selectedPack.value, [...(selectedPack.value as any)[isFlaw.value ? "disadvantages" : "advantages"]]).sort((a: any, b: any) => a.name.localeCompare(b.name))
+  return filterTraits(selectedPack.value, [...(selectedPack.value as any)[isFlaw.value ? "disadvantages" : "advantages"]]).sort((a: ITrait, b: ITrait) => {
+    if ((a as any).level !== (b as any).level) return (a as any).level - (b as any).level
+    return a.name.localeCompare(b.name)
+  })
 })
 
 const merits = computed(() => {
@@ -386,7 +389,6 @@ defineExpose({ showModal })
 $border: 1px solid var(--primary-color) !important;
 
 .wrap {
-  width: min(60rem, calc(100vw - 2rem));
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -397,10 +399,10 @@ $border: 1px solid var(--primary-color) !important;
   display: flex;
   gap: 1rem;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 .top-title {
-  flex-grow: 1;
 }
 
 .trait-pack-content {

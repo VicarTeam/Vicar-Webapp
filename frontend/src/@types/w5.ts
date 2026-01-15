@@ -10,6 +10,23 @@ export enum W5Form {
   Lupus = "lupus",
 }
 
+export function getFormName(form: W5Form): string {
+  switch (form) {
+    case W5Form.Homid:
+      return "Homid";
+    case W5Form.Glabro:
+      return "Glabro";
+    case W5Form.Crinos:
+      return "Crinos";
+    case W5Form.Hispo:
+      return "Hispo";
+    case W5Form.Lupus:
+      return "Lupus";
+    default:
+      return "Unbekannt";
+  }
+}
+
 export enum W5RenownKey {
   none = "none",
   Glory = "glory",
@@ -17,11 +34,39 @@ export enum W5RenownKey {
   Wisdom = "wisdom",
 }
 
+export function getRenownName(key: W5RenownKey): string {
+  switch (key) {
+    case W5RenownKey.Glory:
+      return "Ruhm";
+    case W5RenownKey.Honor:
+      return "Ehre";
+    case W5RenownKey.Wisdom:
+      return "Weisheit";
+    default:
+      return "Keine";
+  }
+}
+
 export enum W5GiftCategory {
   Tribal = "tribal",
   Auspice = "auspice",
   Native = "native",
   Rite = "rite",
+}
+
+export function getGiftCategoryName(category: W5GiftCategory): string {
+  switch (category) {
+    case W5GiftCategory.Tribal:
+      return "Stamm";
+    case W5GiftCategory.Auspice:
+      return "Auspizium";
+    case W5GiftCategory.Native:
+      return "Angeboren";
+    case W5GiftCategory.Rite:
+      return "Ritus";
+    default:
+      return "Unbekannt";
+  }
 }
 
 export interface IW5Gift {

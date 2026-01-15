@@ -1,7 +1,11 @@
 import type {IDiscipline} from "@/@types/data.ts";
-import {V5Resonance} from "@/@types/models.ts";
+import {getResonanceByIndex, V5Resonance} from "@/@types/models.ts";
 
 export function getResonanceDisciplines(resonance?: V5Resonance) {
+  if (typeof resonance === "number") {
+    resonance = getResonanceByIndex(resonance)
+  }
+
   // @ts-ignore
   if (!resonance || resonance === V5Resonance.Empty) {
     return [];
@@ -18,6 +22,8 @@ export function getResonanceDisciplines(resonance?: V5Resonance) {
       return ["Blutmagie", "Präsenz"];
     case V5Resonance.AnimalBlood:
       return ["Tierhaftigkeit", "Gestaltwandeln"];
+    default:
+      return [];
   }
 }
 

@@ -135,7 +135,7 @@ const startCreateCharacter = () => {
   if (gameline.value === GameLine.Vampire) {
     char.generation = generation.value
     char.generationEra = generationEra.value
-    char.books = bookSelection.value?.activeBooks ?? []
+    char.books = bookSelection.value?.activeBooks() ?? []
     applyEra(char)
   }
 

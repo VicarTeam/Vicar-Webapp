@@ -77,7 +77,91 @@ const router = createRouter({
       name: 'editor',
       component: () => import('@/views/EditorView.vue'),
       children: [
-
+        {
+          path: 'clan',
+          name: 'editor-clan',
+          component: () => import('@/views/editor/ChooseClanView.vue')
+        },
+        {
+          path: 'predator-type',
+          name: 'editor-predator-type',
+          component: () => import('@/views/editor/ChoosePredatorTypeView.vue')
+        },
+        {
+          path: 'attributes',
+          name: 'editor-attributes',
+          component: () => import('@/views/editor/ChooseAttributesView.vue')
+        },
+        {
+          path: 'skills',
+          name: 'editor-skills',
+          component: () => import('@/views/editor/ChooseSkillsView.vue')
+        },
+        {
+          path: 'disciplines',
+          name: 'editor-disciplines',
+          component: () => import('@/views/editor/ChooseDisciplinesView.vue')
+        },
+        {
+          path: 'traits',
+          name: 'editor-traits',
+          component: () => import('@/views/editor/ChooseTraitsView.vue')
+        },
+        {
+          path: 'auspice',
+          name: 'editor-auspice',
+          component: () => import('@/views/editor/w5/ChooseAuspiceView.vue')
+        },
+        {
+          path: 'tribe',
+          name: 'editor-tribe',
+          component: () => import('@/views/editor/w5/ChooseTribeView.vue')
+        },
+        {
+          path: 'renown',
+          name: 'editor-renown',
+          component: () => import('@/views/editor/w5/ChooseRenownView.vue')
+        },
+        {
+          path: 'gifts',
+          name: 'editor-gifts',
+          component: () => import('@/views/editor/w5/ChooseGiftsView.vue')
+        },
+        {
+          path: 'identity',
+          name: 'editor-identity',
+          component: () => import('@/views/editor/m20/ChooseIdentityView.vue')
+        },
+        {
+          path: 'tradition',
+          name: 'editor-tradition',
+          component: () => import('@/views/editor/m20/ChooseTraditionView.vue')
+        },
+        {
+          path: 'm20-attributes',
+          name: 'editor-m20-attributes',
+          component: () => import('@/views/editor/m20/ChooseAttributesView.vue')
+        },
+        {
+          path: 'm20-abilities',
+          name: 'editor-m20-abilities',
+          component: () => import('@/views/editor/m20/ChooseAbilitiesView.vue')
+        },
+        {
+          path: 'm20-finishing-touches',
+          name: 'editor-m20-finishing-touches',
+          component: () => import('@/views/editor/m20/ChooseFinishingTouchesView.vue')
+        },
+        {
+          path: 'creed',
+          name: 'editor-creed',
+          component: () => import('@/views/editor/h5/ChooseCreedView.vue')
+        },
+        {
+          path: 'edges',
+          name: 'editor-edges',
+          component: () => import('@/views/editor/h5/ChooseEdgesView.vue')
+        }
       ]
     },
     {
@@ -101,7 +185,56 @@ const router = createRouter({
         next('/');
       },
       children: [
-
+        {
+          path: 'profile',
+          name: 'viewer-profile',
+          component: () => import('@/views/viewer/ProfileView.vue')
+        },
+        {
+          path: 'inventory',
+          name: 'viewer-inventory',
+          component: () => import('@/views/viewer/InventoryView.vue')
+        },
+        {
+          path: 'attributes',
+          name: 'viewer-attributes',
+          component: () => import('@/views/viewer/AttributesView.vue')
+        },
+        {
+          path: 'skills',
+          name: 'viewer-skills',
+          component: () => import('@/views/viewer/SkillsView.vue')
+        },
+        {
+          path: 'disciplines',
+          name: 'viewer-disciplines',
+          component: () => import('@/views/viewer/DisciplinesView.vue')
+        },
+        {
+          path: 'bloodrituals',
+          name: 'viewer-bloodrituals',
+          component: () => import('@/views/viewer/BloodRitualsView.vue')
+        },
+        {
+          path: 'traits',
+          name: 'viewer-traits',
+          component: () => import('@/views/viewer/TraitsView.vue')
+        },
+        {
+          path: 'gifts',
+          name: 'viewer-gifts',
+          component: () => import('@/views/viewer/GiftsView.vue')
+        },
+        {
+          path: 'tradition',
+          name: 'viewer-tradition',
+          component: () => import('@/views/viewer/TraditionView.vue')
+        },
+        {
+          path: 'edges',
+          name: 'viewer-edges',
+          component: () => import('@/views/viewer/EdgesView.vue')
+        }
       ]
     }
   ],

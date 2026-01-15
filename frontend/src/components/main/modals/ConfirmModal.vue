@@ -46,7 +46,6 @@ defineExpose({ showConfirm })
 
 <style scoped lang="scss">
 .confirm-modal {
-  width: min(20rem, calc(100vw - 2rem));
   padding: 1rem;
   display: flex;
   flex-direction: column;

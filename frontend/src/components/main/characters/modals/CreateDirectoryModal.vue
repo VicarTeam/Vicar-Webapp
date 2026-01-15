@@ -38,7 +38,6 @@ defineExpose({ showModal })
 
 <style scoped lang="scss">
 .cdm {
-  width: min(26rem, 92vw);
   display: flex;
   flex-direction: column;
   gap: 1rem;

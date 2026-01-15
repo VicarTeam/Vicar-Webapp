@@ -267,6 +267,19 @@ export const DefinedSpreadTypes: ISkillSpreadType[] = [
   }
 ];
 
+export function getSkillSpreadName(id: number) {
+  switch (id) {
+    case 1:
+      return "Tausendsassa";
+    case 2:
+      return "Ausgewogen";
+    case 3:
+      return "Spezialist";
+    default:
+      return "Unbekannt";
+  }
+}
+
 export interface IHomebrewClan extends IClan {
   creator: string;
 }
@@ -274,8 +287,6 @@ export interface IHomebrewClan extends IClan {
 export interface IHomebrewDiscipline extends IDiscipline {
   creator: string;
 }
-
-
 
 export function defaultBooks(): ActivatableBook[] {
   return [

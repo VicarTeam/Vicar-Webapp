@@ -19,16 +19,18 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <Blur v-if="shown" :disabled="!withBlur" hard>
-    <div class="modal-card card" v-bind="$attrs">
-      <button v-if="withClose" type="button" class="modal-close iconbtn" @click="emit('close')">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <div class="card-content">
-        <slot></slot>
+  <teleport v-if="shown" to="body">
+    <Blur :disabled="!withBlur" hard>
+      <div class="modal-card card" v-bind="$attrs">
+        <button v-if="withClose" type="button" class="modal-close iconbtn" @click="emit('close')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="card-content">
+          <slot></slot>
+        </div>
       </div>
-    </div>
-  </Blur>
+    </Blur>
+  </teleport>
 </template>
 
 <style scoped lang="scss">
