@@ -78,7 +78,7 @@ function deleteSkillSpecs(skill: ISkillData) {
         <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && skill.value > 0" @click="deleteSkill(skill)" />
         <i class="iconbtnprim fa-solid fa-trash" v-if="editingCharacter.fullCustomization && skill.specialization.length > 0" @click="deleteSkillSpecs(skill)" />
 
-        <small class="name" @click.self="setDicePool?.('skill', skill.key, skill.value, isHumanInteractionSkill(skill.key))">
+        <small class="name" @click.self="setDicePool?.('skill', getSkillName(skill.key), skill.value, isHumanInteractionSkill(skill.key))">
           <TipButton :content="getSkillDescription(skill.key)" />
           {{ getSkillName(skill.key) }}
           <span v-if="hasSpecialization(skill)" class="specs">
@@ -89,7 +89,7 @@ function deleteSkillSpecs(skill: ISkillData) {
                   v-for="s in skill.specialization"
                   :key="s"
                   class="spec"
-                  @click="setDicePool?.('skill', `${skill.key} (${s})`, skill.value + 1, isHumanInteractionSkill(skill.key))"
+                  @click="setDicePool?.('skill', `${getSkillName(skill.key)} (${s})`, skill.value + 1, isHumanInteractionSkill(skill.key))"
                 >
                   {{ s }}
                 </span>

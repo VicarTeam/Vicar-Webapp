@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import Blur from '@/components/modal/Blur.vue'
+import {onMounted, onUnmounted} from "vue";
 
 defineOptions({ inheritAttrs: false })
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   shown?: boolean
   withClose?: boolean
   withBlur?: boolean
@@ -16,6 +17,20 @@ withDefaults(defineProps<{
 const emit = defineEmits<{
   (e: 'close'): void
 }>()
+
+onMounted(() => {
+  window.addEventListener("keydown", onKeyDown);
+})
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", onKeyDown);
+})
+
+function onKeyDown(event: KeyboardEvent) {
+  if (event.key.toLowerCase() === "escape" && props.shown) {
+    emit('close')
+  }
+}
 </script>
 
 <template>
@@ -45,7 +60,7 @@ const emit = defineEmits<{
 }
 
 .modal-close {
-  position: absolute;
+  position: fixed;
   top: var(--space-3);
   right: var(--space-3);
   font-size: 1.25rem;

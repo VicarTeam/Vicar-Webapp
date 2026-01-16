@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { computed, inject, ref } from "vue"
 import { useStore } from "@/app/store"
-import {getAttributeName, getCategoryName, type IAttributeData, type ICharacter} from "@/@types/models"
+import {
+  getAttributeDescription,
+  getAttributeName,
+  getCategoryName,
+  type IAttributeData,
+  type ICharacter
+} from "@/@types/models"
 import { isHumanInteractionAttribute } from "@/@types/models"
 import Dots from "@/components/progress/Dots.vue"
 import LevelButton from "@/components/viewer/LevelButton.vue"
@@ -62,8 +68,8 @@ function deleteAttribute(attr: IAttributeData | M20Attribute) {
       <div class="attribute" v-for="attr in cat.attributes" :key="attr.key" :id="`hlat-${attr.key}`">
         <LevelButton v-if="attr.value < 5" @click="levelAttributeModal?.showModal(attr)" />
         <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && attr.value > 0" @click="deleteAttribute(attr)" />
-        <small class="name" @click="setDicePool?.('attr', attr.key, attr.value, isHumanInteractionAttribute(attr.key))">
-          <TipButton :content="attr.key + ' Beschreibung'" />
+        <small class="name" @click="setDicePool?.('attr', getAttributeName(attr.key), attr.value, isHumanInteractionAttribute(attr.key))">
+          <TipButton :content="getAttributeDescription(attr.key)" />
           {{ getAttributeName(attr.key) }}
         </small>
         <Dots :amount="attr.value" :max="5" />
