@@ -65,6 +65,7 @@ function beginAddingItemTo(inventory: "carriedItems" | "ownedItems") {
 }
 
 function convertAmount(amountStr: string): number {
+  if (typeof amountStr === "number") return amountStr >= 1 ? amountStr : 1
   if (!amountStr) return 1
   if (amountStr.trim().length <= 0) return 1
   const amount = parseInt(amountStr, 10)
