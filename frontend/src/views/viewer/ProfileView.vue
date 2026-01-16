@@ -771,12 +771,15 @@ Regeln: Dein Arete-Wert bestimmt, wie viele Würfel du für Zaubereffekte nutzt 
 
 .simple .column {
   display: flex;
+  gap: 0.5rem;
   flex-direction: column;
 }
 
 .simple textarea {
   resize: vertical;
   min-height: 12rem;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
 }
 
 .form-group.compact {
