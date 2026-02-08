@@ -208,6 +208,7 @@ const mocActive = computed(() => {
     <div class="meta">
       <Avatar
         :src="editingCharacter.avatar"
+        :orientation="editingCharacter.avatarOrientation"
         class="avatar"
         :draggable="true"
         @click="changeAvatar($event)"

@@ -23,6 +23,13 @@ export interface IBaseSheet {
   exp: number;
   usedExp: number;
   levelHistory?: ILevelChange[];
+  avatarOrientation: AvatarOrientation;
+}
+
+export enum AvatarOrientation {
+  Center = 'center',
+  Top = 'top',
+  Bottom = 'bottom',
 }
 
 export interface IEdition5Sheet extends IBaseSheet {

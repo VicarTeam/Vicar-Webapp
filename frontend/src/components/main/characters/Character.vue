@@ -122,7 +122,7 @@ function onDragHandleDown(e: PointerEvent) {
       <i class="fa-solid fa-grip-vertical"></i>
     </div>
 
-    <Avatar :src="character.avatar" class="avatar" />
+    <Avatar :src="character.avatar" :orientation="character.avatarOrientation" class="avatar" />
 
     <div class="info">
       <span class="title">{{ character.name }}</span>

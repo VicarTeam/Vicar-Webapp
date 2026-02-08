@@ -290,7 +290,7 @@ onUnmounted(() => {
           v-if="editingCharacter.connectedFoundryId"
           @click="diceRollModal?.showModal(editingCharacter)"
         />
-        <Avatar :src="editingCharacter.avatar" class="top-avatar" />
+        <Avatar :src="editingCharacter.avatar" :orientation="editingCharacter.avatarOrientation" class="top-avatar" />
       </div>
 
       <Tabs class="center" @before-change="switchTab" v-model="selectedTab">

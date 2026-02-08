@@ -7,7 +7,7 @@ import { migrationResolver } from "@/libs/resolvers/migration-resolver.ts"
 import { HomebrewIdOffset } from "@/libs/data/homebrew-manager.ts"
 import DataManager from "@/libs/data/data-manager.ts"
 import {defaultBooks, type IHomebrewDiscipline} from "@/@types/data.ts"
-import { GameLine } from "@/@types/gameline.ts"
+import {AvatarOrientation, GameLine} from "@/@types/gameline.ts"
 import TipButton from "@/components/editor/TipButton.vue"
 import LevelHistoryModal from "@/components/viewer/modals/LevelHistoryModal.vue"
 import { type ICharacter, CurrentCharacterVersion } from "@/@types/models.ts"
@@ -186,6 +186,15 @@ defineExpose({ showModal })
 
       <div v-if="isVampire && isNotUpToDate()" class="center">
         <button class="btn btn-primary" @click="migrateChar">Migrieren</button>
+      </div>
+
+      <div v-if="isVampire" class="form-group mb-0">
+        <b>Avatarausrichtung:</b>
+        <select class="form-control" v-model="character!.avatarOrientation">
+          <option :value="AvatarOrientation.Top">Oben</option>
+          <option :value="undefined">Zentriert</option>
+          <option :value="AvatarOrientation.Bottom">Unten</option>
+        </select>
       </div>
 
       <div v-if="isVampire" class="form-group mb-0">
