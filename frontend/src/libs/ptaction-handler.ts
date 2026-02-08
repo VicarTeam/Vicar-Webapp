@@ -8,9 +8,11 @@ export default class PTActionHandler {
     switch (action.type) {
       case PTActionType.HumanityChange:
         char.humanity += action.data.amount;
+        if (char.humanity > 10) char.humanity = 10;
         break;
       case PTActionType.BloodPotencyChange:
         char.bloodPotency += action.data.amount;
+        if (char.bloodPotency > 10) char.bloodPotency = 10;
         break;
       case PTActionType.AddMerit:
         const merit = DataManager.getMerit(action.data.meritId);

@@ -82,8 +82,13 @@ function onResonanceSave() {
 }
 
 function getBloodPotency(): IBloodPotencyData {
+  return DataManager.selectedLanguage.bloodPotencyTable.find(x => x.value === getBloodPotencyValue())!
+}
+
+function getBloodPotencyValue(): number {
   const c = editingCharacter.value
-  return DataManager.selectedLanguage.bloodPotencyTable.find(x => x.value === (c?.bloodPotency ?? 0))!
+  if (!c) return 0
+  return Math.min(c.bloodPotency, 10)
 }
 
 function onAvatarUpload(e: Event) {
@@ -326,7 +331,7 @@ const mocActive = computed(() => {
                 @click="decreaseBloodPotency"
               />
             </b>
-            <Squares :max="10" :amount="editingCharacter.bloodPotency" :margin-at="6" target-type="bloodpotency" />
+            <Squares :max="10" :amount="getBloodPotencyValue()" :margin-at="6" target-type="bloodpotency" />
           </div>
 
           <div v-if="isVampire" class="stat" id="hlst-humanity">
