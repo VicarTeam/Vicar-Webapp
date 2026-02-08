@@ -451,7 +451,8 @@ export enum V5Resonance {
   Melancholic = "melancholic",
   Phlegmatic = "phlegmatic",
   Sanguine = "sanguine",
-  AnimalBlood = "animalblood"
+  AnimalBlood = "animalblood",
+  Void = "void",
 }
 
 export function getResonanceByIndex(index: number): V5Resonance {
@@ -466,8 +467,52 @@ export function getResonanceByIndex(index: number): V5Resonance {
       return V5Resonance.Sanguine;
     case 5:
       return V5Resonance.AnimalBlood;
+    case 6:
+      return V5Resonance.Void;
     default:
       return V5Resonance.Empty;
+  }
+}
+
+export enum V5ResonanceTemperament {
+  Negligible = "negligible",
+  Fleeting = "fleeting",
+  Intense = "intense",
+  Acute = "acute",
+  Dyscrasia = "dyscrasia"
+}
+
+export function getResonanceTemperamentByIndex(index: number): V5ResonanceTemperament {
+  switch (index) {
+    case 1:
+      return V5ResonanceTemperament.Negligible;
+    case 2:
+      return V5ResonanceTemperament.Fleeting;
+    case 3:
+      return V5ResonanceTemperament.Intense;
+    case 4:
+      return V5ResonanceTemperament.Acute;
+    case 5:
+      return V5ResonanceTemperament.Dyscrasia;
+    default:
+      return V5ResonanceTemperament.Negligible;
+  }
+}
+
+export function getResonanceTemperamentName(temperament: V5ResonanceTemperament | string): string {
+  switch (temperament) {
+    case V5ResonanceTemperament.Negligible:
+      return "vernachlässigbar";
+    case V5ResonanceTemperament.Fleeting:
+      return "flüchtig";
+    case V5ResonanceTemperament.Intense:
+      return "intensiv";
+    case V5ResonanceTemperament.Acute:
+      return "akut";
+    case V5ResonanceTemperament.Dyscrasia:
+      return "Dyskrasie";
+    default:
+      return temperament;
   }
 }
 
@@ -486,6 +531,7 @@ export interface ICharacter extends IEdition5Sheet {
   humanity: number;
   stains?: number;
   resonance?: V5Resonance;
+  resonanceTemperament?: V5ResonanceTemperament;
   bloodPotency: number;
   chroniclePrinciples: string;
   anchorsAndBeliefs: string;

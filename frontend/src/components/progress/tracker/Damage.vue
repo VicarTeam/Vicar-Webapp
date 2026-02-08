@@ -69,7 +69,7 @@ function onClick(nr: number) {
 
   const types = getTypes()
   types[nr - 1] = getNext(types[nr - 1]!)
-  CharacterStorage.saveCharacter(ch, true)
+  CharacterStorage.saveCharacter(ch, true, true)
 }
 
 onMounted(() => {

@@ -20,7 +20,7 @@ function addExp() {
   if (!char) return
   char.exp += parseInt(exp.value.toString())
   char.exp = Math.max(char.exp, 0)
-  CharacterStorage.saveCharacter(char)
+  CharacterStorage.saveCharacter(char, false, true)
   show.value = false
 }
 

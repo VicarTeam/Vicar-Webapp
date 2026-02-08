@@ -22,6 +22,8 @@ export function getResonanceDisciplines(resonance?: V5Resonance) {
       return ["Blutmagie", "Präsenz"];
     case V5Resonance.AnimalBlood:
       return ["Tierhaftigkeit", "Gestaltwandeln"];
+    case V5Resonance.Void:
+      return ["Vergessenheit"];
     default:
       return [];
   }

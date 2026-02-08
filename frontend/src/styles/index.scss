@@ -12,3 +12,96 @@
   height: 100vh;
   font-size: 1.25rem;
 }
+
+.vicar-resonance-glow {
+  &--choleric {
+    animation: resonanceGlowRiseCholeric 5s forwards;
+  }
+  &--melancholic {
+    animation: resonanceGlowRiseMelancholic 5s forwards;
+  }
+  &--phlegmatic {
+    animation: resonanceGlowRisePhlegmatic 5s forwards;
+  }
+  &--sanguine {
+    animation: resonanceGlowRiseSanguine 5s forwards;
+  }
+  &--animalblood {
+    animation: resonanceGlowRiseAnimalblood 5s forwards;
+  }
+  &--void {
+    animation: resonanceGlowRiseVoid 5s forwards;
+  }
+}
+
+@keyframes resonanceGlowRiseCholeric {
+  0% {
+    box-shadow: 0 0 5px #ff4d4d inset;
+  }
+  80% {
+    box-shadow: 0 0 3rem #ff4d4d inset;
+  }
+  100% {
+    box-shadow: 0 0 0 #ff4d4d inset;
+  }
+}
+
+@keyframes resonanceGlowRiseMelancholic {
+  0% {
+    box-shadow: 0 0 5px #4d79ff inset;
+  }
+  80% {
+    box-shadow: 0 0 3rem #4d79ff inset;
+  }
+  100% {
+    box-shadow: 0 0 0 #4d79ff inset;
+  }
+}
+
+@keyframes resonanceGlowRisePhlegmatic {
+  0% {
+    box-shadow: 0 0 5px #66ffff inset;
+  }
+  80% {
+    box-shadow: 0 0 3rem #66ffff inset;
+  }
+  100% {
+    box-shadow: 0 0 0 #66ffff inset;
+  }
+}
+
+@keyframes resonanceGlowRiseSanguine {
+  0% {
+    box-shadow: 0 0 5px #ff66cc inset;
+  }
+  80% {
+    box-shadow: 0 0 3rem #ff66cc inset;
+  }
+  100% {
+    box-shadow: 0 0 0 #ff66cc inset;
+  }
+}
+
+@keyframes resonanceGlowRiseAnimalblood {
+  0% {
+    box-shadow: 0 0 5px #4dff88 inset;
+  }
+  80% {
+    box-shadow: 0 0 3rem #4dff88 inset;
+  }
+  100% {
+    box-shadow: 0 0 0 #4dff88 inset;
+  }
+}
+
+@keyframes resonanceGlowRiseVoid {
+  0% {
+    box-shadow: 0 0 5px #282828 inset;
+  }
+  80% {
+    box-shadow: 0 0 30rem #282828 inset;
+  }
+  100% {
+    box-shadow: 0 0 0 #282828 inset;
+  }
+}

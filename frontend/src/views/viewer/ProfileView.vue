@@ -19,7 +19,14 @@ import EventBus from "@/libs/event-bus"
 import CharacterStorage from "@/libs/io/character-storage"
 import DataManager from "@/libs/data/data-manager"
 import { getResonanceDisciplines } from "@/app/data/v5"
-import {getGenerationName, getSexName, type ICharacter, type V5Resonance} from "@/@types/models"
+import {
+  getGenerationName,
+  getResonanceByIndex,
+  getSexName,
+  type ICharacter,
+  type V5Resonance,
+  V5ResonanceTemperament
+} from "@/@types/models"
 import { getHumanInteractionMalus } from "@/@types/models"
 import type { IBloodPotencyData } from "@/@types/data"
 import type { IW5Renown, IWerewolfW5Sheet, W5RenownKey } from "@/@types/w5"
@@ -64,20 +71,27 @@ onUnmounted(() => {
   EventBus.$off("moc-granted", onMocGranted)
 })
 
-function saveChar(triggerSync = false) {
+function saveChar(triggerSync = false, instant: boolean = false) {
   if (!editingCharacter.value) return
-  CharacterStorage.saveCharacter(editingCharacter.value, triggerSync)
+  CharacterStorage.saveCharacter(editingCharacter.value, triggerSync, instant)
 }
 
 function onResonanceSave() {
   const c = editingCharacter.value
   if (!c || !isVampire.value || !c.resonance) return
 
-  document.body.classList.add(`vicar-resonance-glow--${c.resonance}`)
+  const resonanceKey = getResonanceByIndex(c.resonance as unknown as number);
+  document.body.classList.add(`vicar-resonance-glow--${resonanceKey}`)
   setTimeout(() => {
-    document.body.classList.remove(`vicar-resonance-glow--${c.resonance}`)
+    document.body.classList.remove(`vicar-resonance-glow--${resonanceKey}`)
   }, 5000)
 
+  saveChar()
+}
+
+function onResonanceTemperamentSave() {
+  const c = editingCharacter.value
+  if (!c || !isVampire.value || !c.resonanceTemperament) return
   saveChar()
 }
 
@@ -347,7 +361,7 @@ const mocActive = computed(() => {
             <Squares
               :max="5"
               :amount="editingCharacter.hunger"
-              @click="v => { editingCharacter!.hunger = v === editingCharacter!.hunger ? 0 : v; saveChar(true) }"
+              @click="v => { editingCharacter!.hunger = v === editingCharacter!.hunger ? 0 : v; saveChar(true, true) }"
             />
           </div>
 
@@ -360,7 +374,7 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
             <Squares
               :max="5"
               :amount="(editingCharacter as any as IWerewolfW5Sheet).rage"
-              @click="v => { (editingCharacter as any as IWerewolfW5Sheet).rage = v === (editingCharacter as any as IWerewolfW5Sheet).rage ? 0 : v; saveChar(true) }"
+              @click="v => { (editingCharacter as any as IWerewolfW5Sheet).rage = v === (editingCharacter as any as IWerewolfW5Sheet).rage ? 0 : v; saveChar(true, true) }"
             />
           </div>
         </div>
@@ -547,13 +561,24 @@ Regeln: Dein Arete-Wert bestimmt, wie viele Würfel du für Zaubereffekte nutzt 
       <Row v-if="isVampire" class="row-full mt-lg" wrap>
         <Col class="col-third">
           <label class="nowrap"><b>Resonanz</b>:</label>
-          <select class="form-control fit" v-model="editingCharacter.resonance" @change="onResonanceSave">
-            <option :value="(0 as any)">Leer/Keine</option>
+          <select class="form-control fit" v-model="editingCharacter.resonance" @change="onResonanceSave" style="width: 16rem">
+            <option :disabled="true" :value="undefined">-- Bitte wählen --</option>
+            <option :value="(0 as any)">Keine</option>
             <option :value="(1 as any)">Cholerisch (wütend)</option>
             <option :value="(2 as any)">Melancholisch (traurig/verängstigt)</option>
             <option :value="(3 as any)">Phlegmatisch (gelassen/faul)</option>
             <option :value="(4 as any)">Sanguinisch (fröhlich/geil)</option>
             <option :value="(5 as any)">Tierblut</option>
+            <option :value="(6 as any)">Leer</option>
+          </select>
+          <small class="nowrap" style="margin-top: 1rem">↪ Temperament:</small>
+          <select class="form-control fit" v-model="editingCharacter.resonanceTemperament" @change="onResonanceTemperamentSave" style="width: 16rem">
+            <option :disabled="true" :value="undefined">-- Bitte wählen --</option>
+            <option :value="V5ResonanceTemperament.Negligible">Kein/vernachlässigbar</option>
+            <option :value="V5ResonanceTemperament.Fleeting">flüchtig</option>
+            <option :value="V5ResonanceTemperament.Intense">intensiv</option>
+            <option :value="V5ResonanceTemperament.Acute">akut</option>
+            <option :value="V5ResonanceTemperament.Dyscrasia">Dyskrasie</option>
           </select>
         </Col>
         <Col class="col-third">

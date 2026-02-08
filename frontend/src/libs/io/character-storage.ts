@@ -75,8 +75,16 @@ export default class CharacterStorage {
     this.loadedDirectories.sort((a, b) => a.name.localeCompare(b.name));
   }
 
-  public static async saveCharacter(character: ICharacter, triggerSync: boolean = false) {
+  public static async saveCharacter(character: ICharacter, triggerSync: boolean = false, instant: boolean = false) {
     if (character.justViewing) {
+      return;
+    }
+
+    if (instant) {
+      const [status, _] = await put(`/characters/${character.id}`, character);
+      if (status >= 400) {
+        console.error("Failed to save character");
+      }
       return;
     }
 
