@@ -5,7 +5,6 @@ import type { IClan } from "@/@types/models"
 import type {
   IBloodRitual,
   IDiscipline,
-  IDisciplineAbility,
   IOblivionCeremony,
   IPredatorType,
   ITraitPack,
@@ -31,6 +30,7 @@ type LexiconEntry = {
   text?: string
   tags?: string[]
   payload?: any
+  sub?: LexiconEntry[]
 }
 
 const ui = useStore()
@@ -71,8 +71,9 @@ const index = computed<LexiconEntry[]>(() => {
     .filter((x: any) => x.id !== -1)
 
   let idx = 0;
+  const discToClan = new Map<number, LexiconEntry[]>()
   for (const c of clans) {
-    entries.push({
+    const entry: LexiconEntry = {
       id: `clan:${c.id}:${idx++}`,
       kind: "clan",
       title: c.name,
@@ -80,7 +81,16 @@ const index = computed<LexiconEntry[]>(() => {
       text: (c as any).description || (c as any).curse || "",
       tags: [(c as any).slogan, "clan", "vampire"].filter(Boolean) as string[],
       payload: c,
-    })
+      sub: []
+    }
+
+    entries.push(entry)
+
+    for (const d of c.disciplines) {
+      const list = discToClan.get(d.id) || []
+      list.push(entry)
+      discToClan.set(d.id, list)
+    }
   }
 
   const discs: IDiscipline[] = []
@@ -88,7 +98,7 @@ const index = computed<LexiconEntry[]>(() => {
     for (const d of (c as any).disciplines || []) if (!discs.includes(d)) discs.push(d)
   }
   for (const d of discs) {
-    entries.push({
+    const entry: LexiconEntry = {
       id: `disc:${d.id}:${idx++}`,
       kind: "discipline",
       title: d.name,
@@ -96,20 +106,33 @@ const index = computed<LexiconEntry[]>(() => {
       text: (d as any).summary || "",
       tags: ["discipline"].filter(Boolean) as string[],
       payload: d,
-    })
-  }
+      sub: []
+    }
 
-  const abilities: IDisciplineAbility[] = discs.map((d) => data.normalToLeveledAbilities(d)).flat()
-  for (const a of abilities) {
-    entries.push({
-      id: `ability:${(a as any).id}:${idx++}`,
-      kind: "ability",
-      title: (a as any).name,
-      subtitle: "Kraft",
-      text: [(a as any).summary, (a as any).costs, (a as any).duration].filter(Boolean).join(" • "),
-      tags: [String((a as any).level ?? ""), "ability"].filter(Boolean) as string[],
-      payload: a,
-    })
+    entries.push(entry)
+
+    for (const [level, abilities] of Object.entries(d.levels)) {
+      for (const a of abilities) {
+        const abilityEntry: LexiconEntry = {
+          id: `ability:${(a as any).id}:${idx++}`,
+          kind: "ability",
+          title: (a as any).name,
+          subtitle: `${d.name}-Kraft | Stufe ${level}`,
+          text: [(a as any).summary, (a as any).costs, (a as any).duration].filter(Boolean).join(" • "),
+          tags: [String((a as any).level ?? ""), "ability"].filter(Boolean) as string[],
+          payload: a,
+        }
+
+        entries.push(abilityEntry)
+        entry.sub?.push(abilityEntry)
+      }
+    }
+
+    if (discToClan.has(d.id)) {
+      discToClan.get(d.id)!.forEach(x => {
+        x.sub?.push(entry)
+      })
+    }
   }
 
   const bloodRituals: IBloodRitual[] = data.normalBloodRitualsAsArray().flat() as any
@@ -419,6 +442,20 @@ function kindLabel(k: LexiconKind) {
                   <small v-else class="text-muted">Keine Vorschau verfügbar.</small>
                 </template>
               </div>
+
+              <div v-if="active.sub" class="qlx-sub">
+                <h4>Verwandte Einträge</h4>
+                <button
+                  v-for="s in active.sub"
+                  :key="s.id"
+                  type="button"
+                  class="qlx-sub-item"
+                  @click="pick(s)"
+                >
+                  <span class="qlx-kind">{{ kindLabel(s.kind) }}</span>
+                  {{ s.title }} <small v-if="s.subtitle">» {{ s.subtitle }}</small>
+                </button>
+              </div>
             </div>
 
             <div v-else class="qlx-preview-inner qlx-empty">
@@ -644,6 +681,37 @@ function kindLabel(k: LexiconKind) {
   margin-top: 0.9rem;
   font-size: 1.05rem;
   line-height: 1.6;
+}
+
+.qlx-sub {
+  margin-top: 1.25rem;
+}
+
+.qlx-sub h4 {
+  margin-bottom: 0.75rem;
+}
+
+.qlx-sub-item {
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.65rem;
+  margin-bottom: 0.45rem;
+  transition: transform var(--dur-2) var(--ease-2), background var(--dur-2) var(--ease-2), border-color var(--dur-2) var(--ease-2);
+  &:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  &:active {
+    background: radial-gradient(420px 160px at 10% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 55%),
+    rgba(255, 255, 255, 0.04);
+    border-color: color-mix(in srgb, var(--accent) 35%, rgba(255, 255, 255, 0.10));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
 }
 
 .qlx-sep {

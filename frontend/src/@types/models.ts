@@ -1,13 +1,16 @@
 ﻿import type {
-  IBloodPotencyData, IBloodRitual,
+  IBloodPotencyData,
+  IBloodRitual,
   IDiscipline,
-  IDisciplineAbility, IOblivionCeremony,
-  IPredatorType, IPTAction,
+  IDisciplineAbility,
+  IOblivionCeremony,
+  IPredatorType,
+  IPTAction,
   ITrait,
   ITraitPack
 } from "@/@types/data";
 import type {ISectionatedCustomLexicon} from "@/@types/custom-lexicon";
-import type {IEdition5Sheet} from "@/@types/gameline";
+import {AvatarOrientation, type IEdition5Sheet} from "@/@types/gameline";
 
 export enum LevelType {
   Attribute,
@@ -624,6 +627,7 @@ export const DefaultCharacter: () => ICharacter = () => ({
 
     return category;
   }),
+  avatarOrientation: AvatarOrientation.Center,
   disciplines: [],
   chronicle: "",
   clan: undefined!,

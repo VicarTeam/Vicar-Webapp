@@ -59,16 +59,16 @@ export interface IClan {
   symbol?: string;
 }
 
+export interface IRestrictionHolder {
+  restriction?: IRestriction;
+}
+
 export interface IDiscipline {
   id: number;
   name: string;
   summary?: string;
   levels: { [key: number]: IDisciplineAbility[] };
   note?: string;
-}
-
-export interface IRestrictionHolder {
-  restriction?: IRestriction;
 }
 
 export interface IDisciplineCombo {
