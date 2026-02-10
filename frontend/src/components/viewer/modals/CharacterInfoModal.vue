@@ -12,6 +12,7 @@ import TipButton from "@/components/editor/TipButton.vue"
 import LevelHistoryModal from "@/components/viewer/modals/LevelHistoryModal.vue"
 import { type ICharacter, CurrentCharacterVersion } from "@/@types/models.ts"
 import { useStore } from "@/app/store.ts"
+import {DataMigrator} from "@/libs/data/data-migrator.ts";
 
 const store = useStore()
 
@@ -31,6 +32,13 @@ const isVampire = computed(() => {
 })
 
 const isHomebrewActive = computed(() => activatedBooks.value.some((b) => b.id >= HomebrewIdOffset && b.active))
+
+const needsDataMigration = computed(() => {
+  const c: any = character.value
+  if (!c) return false
+  if (c.justViewing) return false
+  return DataMigrator.needsMigration(c);
+});
 
 function isNotUpToDate() {
   const c: any = character.value
@@ -65,6 +73,11 @@ function save() {
 function migrateChar() {
   if (!character.value) return
   migrationResolver.migrate(character.value)
+}
+
+function migrateData() {
+  if (!character.value) return
+  DataMigrator.migrate(character.value)
 }
 
 function openLevelHistory() {
@@ -186,6 +199,9 @@ defineExpose({ showModal })
 
       <div v-if="isVampire && isNotUpToDate()" class="center">
         <button class="btn btn-primary" @click="migrateChar">Migrieren</button>
+      </div>
+      <div v-if="needsDataMigration" class="center">
+        <button class="btn btn-primary" @click="migrateData">Daten migrieren</button>
       </div>
 
       <div v-if="isVampire" class="form-group mb-0">

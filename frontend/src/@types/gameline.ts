@@ -24,6 +24,7 @@ export interface IBaseSheet {
   usedExp: number;
   levelHistory?: ILevelChange[];
   avatarOrientation: AvatarOrientation;
+  dataVersion?: string;
 }
 
 export enum AvatarOrientation {
