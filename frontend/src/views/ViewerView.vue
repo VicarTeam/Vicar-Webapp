@@ -23,6 +23,7 @@ import M20LevelModal from "@/components/viewer/modals/leveling/M20LevelModal.vue
 import CharacterStorage from "@/libs/io/character-storage"
 import EventBus from "@/libs/event-bus"
 import { VicarSync } from "@/libs/io/vicar-sync"
+import RestButton from "@/components/viewer/RestButton.vue";
 
 const store = useStore()
 const router = useRouter()
@@ -329,6 +330,7 @@ onUnmounted(() => {
             @click="addExpModal?.showModal()"
           />
         </small>
+        <RestButton />
         <button
           v-if="!editingCharacter.justViewing"
           class="btn btn-primary"
