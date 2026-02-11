@@ -18,11 +18,13 @@ const arr = computed(() => {
   return out
 })
 
+const allowedMax = computed(() => Math.max(0, Math.min(props.max, selectedVal.value + props.pool)))
+
 watch(
   () => props.pool,
   () => {
-    if (selectedVal.value > props.pool) {
-      selectedVal.value = props.pool < 0 ? 0 : props.pool
+    if (selectedVal.value > allowedMax.value) {
+      selectedVal.value = allowedMax.value
       emit("change", selectedVal.value)
     }
   }
@@ -30,22 +32,20 @@ watch(
 </script>
 
 <template>
-  <select class="form-control spend-select" v-model.number="selectedVal" @change="emit('change', selectedVal)">
+  <select
+    class="form-control spend-select"
+    v-model.number="selectedVal"
+    @change="emit('change', selectedVal)"
+  >
     <option :value="0">0</option>
-    <option v-for="v in arr" :key="v" :value="v" :disabled="v > pool">{{ v }}</option>
+
+    <option
+      v-for="v in arr"
+      :key="v"
+      :value="v"
+      :disabled="v > allowedMax"
+    >
+      {{ v }}
+    </option>
   </select>
 </template>
-
-<style scoped lang="scss">
-.spend-select {
-  margin-left: auto;
-  text-align: center;
-  width: 8rem;
-  min-height: 44px;
-}
-@media (max-width: 520px) {
-  .spend-select {
-    width: 7rem;
-  }
-}
-</style>
