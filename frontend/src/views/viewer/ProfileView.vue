@@ -18,6 +18,7 @@ import Damage from "@/components/progress/tracker/Damage.vue"
 import EventBus from "@/libs/event-bus"
 import CharacterStorage from "@/libs/io/character-storage"
 import DataManager from "@/libs/data/data-manager"
+import { skillTreeResolver } from "@/libs/resolvers/skilltree-resolver"
 import { getResonanceDisciplines } from "@/app/data/v5"
 import {
   getGenerationName,
@@ -102,8 +103,17 @@ function getBloodPotency(): IBloodPotencyData {
 function getBloodPotencyValue(): number {
   const c = editingCharacter.value
   if (!c) return 0
-  return Math.min(c.bloodPotency, 10)
+  // Effektivwert inkl. aktiver Skill-Tree-Modifikatoren.
+  const eff = skillTreeResolver.getEffectiveCharacterValue(c, "bloodPotency", c.bloodPotency).value
+  return Math.min(eff, 10)
 }
+
+/** Effektive Generation inkl. Skill-Tree-Modifikatoren (für die Anzeige). */
+const effectiveGeneration = computed(() => {
+  const c = editingCharacter.value
+  if (!c) return 0
+  return skillTreeResolver.getEffectiveCharacterValue(c, "generation", c.generation).value
+})
 
 function onAvatarUpload(e: Event) {
   const c = editingCharacter.value
@@ -281,7 +291,7 @@ const mocActive = computed(() => {
         <span v-if="isVampire && !mocActive" class="side subline">
           <i>Generation:</i>
           <input v-if="editingCharacter.fullCustomization" class="form-control inline" v-model.number="editingCharacter.generation" />
-          <span v-else>{{ editingCharacter.generation }}</span>
+          <span v-else>{{ effectiveGeneration }}</span>
           ({{ getGenerationName(editingCharacter.generationEra) }})
           <Bullet />
           <i>Jagdverhalten:</i> {{ editingCharacter.predatorType.name }}
@@ -290,7 +300,7 @@ const mocActive = computed(() => {
         <span v-if="isVampire && mocActive" class="side subline">
           <i>Generation:</i> 1 (
           <input v-if="editingCharacter.fullCustomization" class="form-control inline" v-model.number="editingCharacter.generation" />
-          <span v-else>{{ editingCharacter.generation }}</span>
+          <span v-else>{{ effectiveGeneration }}</span>
           )
           <Bullet />
           <i>Jagdverhalten:</i> {{ editingCharacter.predatorType.name }}

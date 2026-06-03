@@ -15,6 +15,9 @@ const refreshTokenSchema = new mongoose.Schema(
     userId: { type: String, required: true },
     token: { type: String, required: true },
     isRevoked: { type: Boolean, default: false },
+    // Bei Rotation: Token, der diesen ersetzt hat (für das Grace-Window gegen Tab-Races).
+    replacedByToken: { type: String },
+    revokedAt: { type: Date },
   }
 );
 
@@ -64,3 +67,17 @@ export const HomebrewDiscipline = mongoose.model<HomebrewDiscipline>("HomebrewDi
 
 export type HomebrewClan = mongoose.InferSchemaType<typeof homebrewClanSchema>;
 export const HomebrewClan = mongoose.model<HomebrewClan>("HomebrewClan", homebrewClanSchema);
+
+const skillTreeSchema = new mongoose.Schema(
+  {
+    // Eindeutiger Freischalt-Code, mit dem Spieler den Tree einlösen.
+    bonusCode: { type: String, required: true, unique: true },
+    // Ersteller des Trees.
+    userId: { type: String, required: true },
+    // Voller ISkillTree-Blob (schemalos wie Character.data).
+    data: { type: Object },
+  }
+);
+
+export type SkillTree = mongoose.InferSchemaType<typeof skillTreeSchema>;
+export const SkillTree = mongoose.model<SkillTree>("SkillTree", skillTreeSchema);

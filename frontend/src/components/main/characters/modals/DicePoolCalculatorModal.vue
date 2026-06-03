@@ -7,6 +7,7 @@ import { VicarTT } from "@/libs/io/vicar-tt"
 import type { IOption } from "@/components/Dropdown.vue"
 import {type AttributeKeys, getAttributeName, getCategoryName, getSkillName, type ICharacter} from "@/@types/models"
 import { getHumanInteractionMalus } from "@/@types/models"
+import { skillTreeResolver } from "@/libs/resolvers/skilltree-resolver"
 
 const show = ref(false)
 const character = ref<ICharacter | null>(null)
@@ -38,12 +39,8 @@ const showModal = (c: ICharacter, disc = false) => {
 const getAttrVal = (attr: AttributeKeys): number => {
   const c = character.value
   if (!c) return 0
-  for (const cat of c.categories) {
-    for (const a of cat.attributes) {
-      if (a.key === attr) return a.value
-    }
-  }
-  return 0
+  // Effektiver Wert inkl. aktiver Skill-Tree-Modifikatoren.
+  return skillTreeResolver.getEffectiveAttribute(c, attr).value
 }
 
 const pool = computed(() => {
@@ -104,10 +101,13 @@ const skillOptions = computed<IOption[]>(() => {
 
   for (const cat of c.categories) {
     opts.push({ name: getCategoryName(cat.name), value: "", isCategory: true })
-    const skillOpts: IOption[] = cat.skills.map(s => ({
-      name: `${getSkillName(s.key)} (${s.value})`,
-      value: s.value,
-    }))
+    const skillOpts: IOption[] = cat.skills.map(s => {
+      const v = skillTreeResolver.getEffectiveSkill(c, s.key).value
+      return {
+        name: `${getSkillName(s.key)} (${v})`,
+        value: v,
+      }
+    })
     opts.push(...skillOpts.sort((a, b) => String(a.name).localeCompare(String(b.name))))
   }
 

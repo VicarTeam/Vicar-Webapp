@@ -315,6 +315,11 @@ onUnmounted(() => {
         <Tab v-if="isWerewolf" value="viewer-gifts" text="Gaben & Riten" />
         <Tab v-if="isHunter" value="viewer-edges" text="Edges" />
         <Tab value="viewer-traits" text="Vorteile & Schwächen" ref="tabTraits" />
+        <Tab
+          v-if="(editingCharacter.skillTrees?.length ?? 0) > 0"
+          value="viewer-skilltrees"
+          text="Skill-Bäume"
+        />
       </Tabs>
 
       <div class="actions right">

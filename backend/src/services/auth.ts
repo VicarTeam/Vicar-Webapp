@@ -6,6 +6,10 @@ import mongoose from "mongoose";
 const SECRET = Bun.env.JWT_SECRET as string || "82FD43545DE86D765DC9286B419CF";
 const ACCESS_TOKEN_EXPIRY = 60 * 15; // 15 minutes
 const REFRESH_TOKEN_EXPIRY = 60 * 60 * 24 * 90; // 90 days
+// Kurzes Zeitfenster, in dem ein gerade rotierter (revoked) Refresh-Token noch
+// akzeptiert wird. Verhindert Logout-Races, wenn mehrere Tabs/Geräte gleichzeitig
+// mit demselben Refresh-Token refreshen.
+const REFRESH_GRACE_MS = 60 * 1000; // 60 seconds
 
 export interface Token {
   token: string;
@@ -40,8 +44,6 @@ export async function authenticateByPassword(username: string, password: string)
     }
 
     const tokens = await createTokens(user.id);
-    user.currentAccessToken = tokens.accessToken.token;
-    await user.save();
 
     const refreshToken = new RefreshToken({
       userId: user.id,
@@ -77,9 +79,6 @@ export async function authenticate(discordUser: any): Promise<TokenPair> {
   const user = await getOrRegisterUser(discordUser);
   const tokens = await createTokens(user.id);
 
-  user.currentAccessToken = tokens.accessToken.token;
-  await user.save();
-
   const refreshToken = new RefreshToken({
     userId: user.id,
     token: tokens.refreshToken.token,
@@ -96,58 +95,84 @@ export async function isAuthenticated(token: string): Promise<UserSession|undefi
       return undefined; // Not an access token
     }
 
+    // Access-Tokens werden zustandslos validiert (Signatur + Ablauf). Dadurch sind
+    // mehrere gleichzeitig gültige Tokens (Tabs/Geräte) möglich. Widerruf läuft über
+    // die kurzlebige Ablaufzeit + die Refresh-Token-Tabelle.
     const user = await User.findById(decoded.sub);
-    if (!user || user.currentAccessToken !== token) {
-      return undefined; // User not found or token does not match
+    if (!user) {
+      return undefined;
     }
 
     return user;
   } catch (err) {
-    console.error('Token verification failed:', err);
-    return undefined; // Invalid token
+    return undefined; // Invalid or expired token
   }
 }
 
-export async function refreshToken(accessToken: string, refreshToken: string): Promise<TokenPair|undefined> {
-  const decoded = jwt.verify(refreshToken, SECRET, { algorithms: ['HS256'] }) as jwt.JwtPayload;
+export async function refreshToken(refreshTokenStr: string): Promise<TokenPair|undefined> {
+  // 1. Signatur + Typ prüfen. Ein abgelaufener Refresh-Token wirft hier -> Re-Login.
+  let decoded: jwt.JwtPayload;
+  try {
+    decoded = jwt.verify(refreshTokenStr, SECRET, { algorithms: ['HS256'] }) as jwt.JwtPayload;
+  } catch {
+    return undefined;
+  }
   if (decoded.type !== 'refresh') {
-    throw new Error('Invalid refresh token type');
+    return undefined;
   }
 
-  const user = await User.findById(decoded.sub);
-  if (!user || user.currentAccessToken !== accessToken) {
-    if (user) {
-      await destroyUserSession(user.id);
+  const userId = decoded.sub as string;
+
+  // 2. Token muss als (Geräte-)Session in der DB existieren.
+  const existing = await RefreshToken.findOne({ token: refreshTokenStr, userId });
+  if (!existing) {
+    return undefined; // unbekannt / bereits aufgeräumt -> nur dieses Gerät re-loggt
+  }
+
+  // 3. Bereits rotiert? Innerhalb des Grace-Fensters den Ersatz-Token ausliefern
+  //    (verhindert Logout, wenn zwei Tabs gleichzeitig refreshen).
+  if (existing.isRevoked) {
+    if (
+      existing.replacedByToken &&
+      existing.revokedAt &&
+      Date.now() - existing.revokedAt.getTime() < REFRESH_GRACE_MS
+    ) {
+      const replacement = await RefreshToken.findOne({ token: existing.replacedByToken, isRevoked: false });
+      if (replacement) {
+        const accessToken = await createToken(userId, 'access', ACCESS_TOKEN_EXPIRY);
+        return {
+          accessToken,
+          refreshToken: { token: replacement.token, exp: Date.now() + REFRESH_TOKEN_EXPIRY * 1000 },
+        };
+      }
     }
-    return undefined;
+    return undefined; // außerhalb des Grace-Fensters wiederverwendet -> ungültig
   }
 
-  const existingRefreshToken = await RefreshToken.findOne({ userId: user.id, token: refreshToken });
-  if (!existingRefreshToken) {
-    throw new Error('Refresh token not found');
-  }
+  // 4. Gültig -> rotieren (gleitende Session: neuer 90-Tage-Refresh-Token).
+  const newTokens = await createTokens(userId);
 
-  if (existingRefreshToken.isRevoked) {
-    await destroyUserSession(user.id);
-    return undefined;
-  }
+  const newRefresh = new RefreshToken({ userId, token: newTokens.refreshToken.token });
+  await newRefresh.save();
 
-  // Create new tokens
-  const newTokens = await createTokens(user.id);
-  user.currentAccessToken = newTokens.accessToken.token;
-  await user.save();
+  existing.isRevoked = true;
+  existing.replacedByToken = newTokens.refreshToken.token;
+  existing.revokedAt = new Date();
+  await existing.save();
 
-  // Update or create the refresh token
-  existingRefreshToken.isRevoked = true; // Revoke the old refresh token
-  await existingRefreshToken.save();
-
-  const newRefreshToken = new RefreshToken({
-    userId: user.id,
-    token: newTokens.refreshToken.token,
+  // Alte, bereits abgelaufene Grace-Tokens dieses Users aufräumen.
+  await RefreshToken.deleteMany({
+    userId,
+    isRevoked: true,
+    revokedAt: { $lt: new Date(Date.now() - REFRESH_GRACE_MS) },
   });
-  await newRefreshToken.save();
 
   return newTokens;
+}
+
+/** Widerruft genau einen Refresh-Token (Logout eines einzelnen Geräts). */
+export async function revokeRefreshToken(token: string): Promise<void> {
+  await RefreshToken.updateOne({ token }, { $set: { isRevoked: true, revokedAt: new Date() } });
 }
 
 export async function destroyUserSession(userId: string): Promise<void> {

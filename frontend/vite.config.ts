@@ -17,4 +17,10 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  server: {
+    host: true,
+    // Im Docker-Container Polling nutzen, damit Datei-Änderungen vom Host
+    // zuverlässig erkannt werden (HMR). Auf dem Host-Dev bleibt alles normal.
+    watch: process.env.DOCKER_DEV ? { usePolling: true } : undefined,
+  },
 })

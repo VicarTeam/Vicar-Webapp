@@ -10,6 +10,7 @@
   ITraitPack
 } from "@/@types/data";
 import type {ISectionatedCustomLexicon} from "@/@types/custom-lexicon";
+import type {ICharacterSkillTreeState} from "@/@types/skilltree";
 import {AvatarOrientation, type IEdition5Sheet} from "@/@types/gameline";
 
 export enum LevelType {
@@ -551,6 +552,10 @@ export interface ICharacter extends IEdition5Sheet {
   cache?: { [key: string]: any };
   hasCainsMark?: boolean;
   cainsMarkLevel?: -5 | -4 | -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5;
+  /** Eingelöste Custom Skill Trees mit Freischalt-Zustand (siehe @/@types/skilltree). */
+  skillTrees?: ICharacterSkillTreeState[];
+  /** Generische Wallet eingelöster Bonus Codes (verallgemeinert das frühere KAINS_MAL-Sonderverhalten). */
+  activeBonusCodes?: string[];
 }
 
 export interface ICategory {
@@ -670,7 +675,9 @@ export const DefaultCharacter: () => ICharacter = () => ({
     ownedItems: [],
     cash: 0,
     bank: 0
-  }
+  },
+  skillTrees: [],
+  activeBonusCodes: []
 });
 
 export function getHumanInteractionMalus(char: ICharacter): number {

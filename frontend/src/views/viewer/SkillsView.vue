@@ -10,6 +10,7 @@ import NewSpecializationModal from "@/components/viewer/modals/leveling/NewSpeci
 import TipButton from "@/components/editor/TipButton.vue"
 import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vue"
 import CharacterStorage from "@/libs/io/character-storage"
+import { skillTreeResolver } from "@/libs/resolvers/skilltree-resolver"
 import { GameLine } from "@/@types/gameline"
 import {
   knowledgeAbilities,
@@ -32,6 +33,13 @@ const setDicePool = inject("set-dice-pool") as
   | undefined
 
 const requestLevel = inject("request-m20-level") as RequestLevelFn | undefined
+
+/** Effektiver Fähigkeitswert inkl. aktiver Skill-Tree-Modifikatoren. */
+function effSkill(key: string) {
+  const c = editingCharacter.value
+  if (!c) return {value: 0, locked: false, modified: false}
+  return skillTreeResolver.getEffectiveSkill(c, key)
+}
 
 function hasSpecialization(skill: ISkillData): boolean {
   return !!skill.specialization && skill.specialization.length > 0
@@ -72,15 +80,16 @@ function deleteSkillSpecs(skill: ISkillData) {
     <div v-if="!isMage" class="card category" v-for="cat in editingCharacter.categories" :key="cat.name">
       <div class="cat-head"><b>{{ getCategoryName(cat.name) }}</b></div>
 
-      <div class="skill" v-for="skill in cat.skills" :key="skill.key" :id="`hlsk-${skill.key}`">
-        <LevelButton v-if="skill.value < 5" @click="levelSkillModal?.showModal(skill)" />
+      <div class="skill" :class="{ modified: effSkill(skill.key).modified }" v-for="skill in cat.skills" :key="skill.key" :id="`hlsk-${skill.key}`">
+        <LevelButton v-if="skill.value < 5 && !effSkill(skill.key).locked" @click="levelSkillModal?.showModal(skill)" />
         <LevelButton @click="levelSpecializationModal?.showModal(skill)" icon="fa-plus" />
-        <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && skill.value > 0" @click="deleteSkill(skill)" />
+        <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && skill.value > 0 && !effSkill(skill.key).locked" @click="deleteSkill(skill)" />
         <i class="iconbtnprim fa-solid fa-trash" v-if="editingCharacter.fullCustomization && skill.specialization.length > 0" @click="deleteSkillSpecs(skill)" />
 
-        <small class="name" @click.self="setDicePool?.('skill', getSkillName(skill.key), skill.value, isHumanInteractionSkill(skill.key))">
+        <small class="name" @click.self="setDicePool?.('skill', getSkillName(skill.key), effSkill(skill.key).value, isHumanInteractionSkill(skill.key))">
           <TipButton :content="getSkillDescription(skill.key)" />
           {{ getSkillName(skill.key) }}
+          <i v-if="effSkill(skill.key).locked" class="fa-solid fa-lock lock-hint" />
           <span v-if="hasSpecialization(skill)" class="specs">
             <i>
             (
@@ -89,7 +98,7 @@ function deleteSkillSpecs(skill: ISkillData) {
                   v-for="s in skill.specialization"
                   :key="s"
                   class="spec"
-                  @click="setDicePool?.('skill', `${getSkillName(skill.key)} (${s})`, skill.value + 1, isHumanInteractionSkill(skill.key))"
+                  @click="setDicePool?.('skill', `${getSkillName(skill.key)} (${s})`, effSkill(skill.key).value + 1, isHumanInteractionSkill(skill.key))"
                 >
                   {{ s }}
                 </span>
@@ -99,7 +108,7 @@ function deleteSkillSpecs(skill: ISkillData) {
           </span>
         </small>
 
-        <Dots :amount="skill.value" :max="5" />
+        <Dots :amount="effSkill(skill.key).value" :max="5" />
       </div>
     </div>
 
@@ -171,6 +180,16 @@ function deleteSkillSpecs(skill: ISkillData) {
       flex-grow: 1;
       cursor: pointer;
       user-select: none;
+    }
+
+    .lock-hint {
+      margin-left: 0.35rem;
+      font-size: 0.7rem;
+      color: var(--text-3);
+    }
+
+    &.modified .name {
+      color: color-mix(in srgb, var(--accent) 45%, var(--text-1));
     }
   }
 

@@ -42,6 +42,24 @@ const router = createRouter({
       }
     },
     {
+      path: '/skilltrees',
+      name: 'skilltrees',
+      component: () => import('@/views/SkillTreeManagerView.vue'),
+      beforeEnter: async (to, from, next) => {
+        if (!firstRoute) firstRoute = to;
+        const result = await checkSession();
+        if (result.status === 'not_found') {
+          next('/login');
+          return;
+        }
+        if (!await DataManager.loadLogin(false)) {
+          next('/login');
+          return;
+        }
+        next();
+      }
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('@/views/LoginView.vue'),
@@ -234,6 +252,11 @@ const router = createRouter({
           path: 'edges',
           name: 'viewer-edges',
           component: () => import('@/views/viewer/EdgesView.vue')
+        },
+        {
+          path: 'skilltrees',
+          name: 'viewer-skilltrees',
+          component: () => import('@/views/viewer/SkillTreesView.vue')
         }
       ]
     }

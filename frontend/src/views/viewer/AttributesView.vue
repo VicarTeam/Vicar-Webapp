@@ -15,6 +15,7 @@ import AttributeModal from "@/components/viewer/modals/leveling/AttributeModal.v
 import TipButton from "@/components/editor/TipButton.vue"
 import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vue"
 import CharacterStorage from "@/libs/io/character-storage"
+import { skillTreeResolver } from "@/libs/resolvers/skilltree-resolver"
 import { GameLine } from "@/@types/gameline"
 import {
   type M20Attribute,
@@ -38,6 +39,13 @@ const setDicePool = inject("set-dice-pool") as
   | undefined
 
 const requestLevel = inject("request-m20-level") as RequestLevelFn | undefined
+
+/** Effektiver Attributwert inkl. aktiver Skill-Tree-Modifikatoren. */
+function effAttr(key: string) {
+  const c = editingCharacter.value
+  if (!c) return {value: 0, locked: false, modified: false}
+  return skillTreeResolver.getEffectiveAttribute(c, key)
+}
 
 function deleteAttribute(attr: IAttributeData | M20Attribute) {
   const c = editingCharacter.value as any as IMageSheet
@@ -65,14 +73,15 @@ function deleteAttribute(attr: IAttributeData | M20Attribute) {
     <div v-if="!isMage" class="card category" v-for="cat in editingCharacter.categories" :key="cat.name">
       <div class="cat-head"><b>{{ getCategoryName(cat.name) }}</b></div>
 
-      <div class="attribute" v-for="attr in cat.attributes" :key="attr.key" :id="`hlat-${attr.key}`">
-        <LevelButton v-if="attr.value < 5" @click="levelAttributeModal?.showModal(attr)" />
-        <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && attr.value > 0" @click="deleteAttribute(attr)" />
-        <small class="name" @click="setDicePool?.('attr', getAttributeName(attr.key), attr.value, isHumanInteractionAttribute(attr.key))">
+      <div class="attribute" :class="{ modified: effAttr(attr.key).modified }" v-for="attr in cat.attributes" :key="attr.key" :id="`hlat-${attr.key}`">
+        <LevelButton v-if="attr.value < 5 && !effAttr(attr.key).locked" @click="levelAttributeModal?.showModal(attr)" />
+        <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && attr.value > 0 && !effAttr(attr.key).locked" @click="deleteAttribute(attr)" />
+        <small class="name" @click="setDicePool?.('attr', getAttributeName(attr.key), effAttr(attr.key).value, isHumanInteractionAttribute(attr.key))">
           <TipButton :content="getAttributeDescription(attr.key)" />
           {{ getAttributeName(attr.key) }}
+          <i v-if="effAttr(attr.key).locked" class="fa-solid fa-lock lock-hint" />
         </small>
-        <Dots :amount="attr.value" :max="5" />
+        <Dots :amount="effAttr(attr.key).value" :max="5" />
       </div>
     </div>
 
@@ -144,6 +153,16 @@ function deleteAttribute(attr: IAttributeData | M20Attribute) {
       flex-grow: 1;
       cursor: pointer;
       user-select: none;
+    }
+
+    .lock-hint {
+      margin-left: 0.35rem;
+      font-size: 0.7rem;
+      color: var(--text-3);
+    }
+
+    &.modified .name {
+      color: color-mix(in srgb, var(--accent) 45%, var(--text-1));
     }
   }
 }

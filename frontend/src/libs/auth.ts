@@ -79,14 +79,34 @@ export async function getAccessToken(): Promise<string | null> {
   return _accessToken;
 }
 
+// Verhindert, dass parallele Requests im selben Tab gleichzeitig refreshen.
+let _refreshInFlight: Promise<RefreshResult> | null = null;
+
 export async function refreshIfNeeded(): Promise<RefreshResult> {
+  if (_refreshInFlight) return _refreshInFlight;
+
+  _refreshInFlight = performRefresh();
+  try {
+    return await _refreshInFlight;
+  } finally {
+    _refreshInFlight = null;
+  }
+}
+
+async function performRefresh(): Promise<RefreshResult> {
   const status = await checkSession();
 
   if (status.status === "not_found") return { status: "not_found" };
   if (status.status === "ok") return { status: "ok" };
 
-  // needs_refresh
-  const { accessToken, refreshToken } = status;
+  // needs_refresh – immer den frischesten Refresh-Token aus IndexedDB nehmen,
+  // falls ein anderer Tab inzwischen rotiert hat.
+  const accessToken = status.accessToken;
+  const refreshToken = (await idbGetRefreshToken()) ?? status.refreshToken;
+  if (!refreshToken) {
+    await logout();
+    return { status: "not_found" };
+  }
 
   try {
     const url = new URL("/auth/refresh", (import.meta as any).env.VITE_APP_API_URL || window.location.origin);

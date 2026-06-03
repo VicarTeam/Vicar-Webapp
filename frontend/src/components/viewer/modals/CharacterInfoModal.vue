@@ -13,6 +13,7 @@ import LevelHistoryModal from "@/components/viewer/modals/LevelHistoryModal.vue"
 import { type ICharacter, CurrentCharacterVersion } from "@/@types/models.ts"
 import { useStore } from "@/app/store.ts"
 import {DataMigrator} from "@/libs/data/data-migrator.ts";
+import SkillTreeStorage from "@/libs/io/skilltree-storage.ts"
 
 const store = useStore()
 
@@ -25,6 +26,8 @@ const activatedBooks = ref<ActivatableBook[]>([])
 const homebrewUpdating = ref(false)
 const homebrewUpdated = ref(false)
 const bonusCode = ref("")
+const bonusCodeMessage = ref("")
+const bonusCodeRedeeming = ref(false)
 
 const isVampire = computed(() => {
   const g = store.editingCharacter?.game
@@ -62,6 +65,7 @@ function showModal(c: ICharacter) {
   }
 
   bonusCode.value = ""
+  bonusCodeMessage.value = ""
   show.value = true
 }
 
@@ -143,19 +147,64 @@ async function updateHomebrewContent() {
   }
 }
 
-function enterBonusCode() {
-  if (!character.value) return
-  if (bonusCode.value.trim().length === 0) return
+async function enterBonusCode() {
+  const c = character.value
+  if (!c) return
 
-  try {
-    const code = bonusCode.value.trim().toUpperCase().split(" ").join("_")
-    if (code === "KAINS_MAL") {
-      if (!(character.value as any).hasCainsMark) {
-        show.value = false
-      }
+  const raw = bonusCode.value.trim()
+  if (raw.length === 0) return
+  if (bonusCodeRedeeming.value) return
+
+  bonusCodeMessage.value = ""
+
+  // 1. Bekannte Spezialcodes zuerst (Verhalten bleibt erhalten).
+  const normalized = raw.toUpperCase().split(" ").join("_")
+  if (normalized === "KAINS_MAL") {
+    if (!(c as any).hasCainsMark) {
+      show.value = false
     }
-  } finally {
     bonusCode.value = ""
+    return
+  }
+
+  // 2. Skill Tree per Bonus Code einlösen.
+  bonusCodeRedeeming.value = true
+  try {
+    const result = await SkillTreeStorage.redeemByCode(raw)
+
+    if (result.status === "ok") {
+      c.skillTrees = c.skillTrees ?? []
+      if (c.skillTrees.some((s) => s.treeId === result.tree.id)) {
+        bonusCodeMessage.value = `"${result.tree.name}" ist bereits freigeschaltet.`
+      } else {
+        c.skillTrees.push({
+          treeId: result.tree.id,
+          treeSnapshot: result.tree,
+          unlockedSkillIds: [],
+          customResource: 0,
+        })
+        bonusCodeMessage.value = `Skill-Baum "${result.tree.name}" freigeschaltet!`
+      }
+      bonusCode.value = ""
+      save()
+      return
+    }
+
+    // 3. Unbekannter Code -> generische Wallet (z.B. Lev-Ressource für Bäume).
+    c.activeBonusCodes = c.activeBonusCodes ?? []
+    if (!c.activeBonusCodes.includes(raw)) {
+      c.activeBonusCodes.push(raw)
+      bonusCodeMessage.value = "Code gespeichert."
+      save()
+    } else {
+      bonusCodeMessage.value = "Code bereits aktiv."
+    }
+    bonusCode.value = ""
+  } catch (e) {
+    console.error(e)
+    bonusCodeMessage.value = "Einlösen fehlgeschlagen."
+  } finally {
+    bonusCodeRedeeming.value = false
   }
 }
 
@@ -215,7 +264,8 @@ defineExpose({ showModal })
 
       <div v-if="isVampire" class="form-group mb-0">
         <b>Bonuscode:</b>
-        <input type="text" class="form-control" v-model="bonusCode" @keydown.enter="enterBonusCode" />
+        <input type="text" class="form-control" v-model="bonusCode" :disabled="bonusCodeRedeeming" @keydown.enter="enterBonusCode" />
+        <small v-if="bonusCodeMessage" class="bonus-msg">{{ bonusCodeMessage }}</small>
       </div>
 
       <div v-if="isVampire && isHomebrewActive" class="center">
@@ -251,5 +301,11 @@ defineExpose({ showModal })
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.bonus-msg {
+  display: block;
+  margin-top: 0.35rem;
+  color: color-mix(in srgb, var(--accent) 60%, #ffffff);
 }
 </style>

@@ -10,6 +10,13 @@ const username = ref("")
 const password = ref("")
 const disabled = ref(false)
 
+const isDev = !!(import.meta as any).env.DEV
+
+function loginAsDev() {
+  disabled.value = true
+  window.location.href = (import.meta as any).env.VITE_APP_API_URL + "/auth/login/dev" + getRedirectQuery()
+}
+
 function loginWithDiscord() {
   disabled.value = true
   window.location.href = (import.meta as any).env.VITE_APP_API_URL + "/auth/login" + getRedirectQuery()
@@ -50,6 +57,12 @@ watch(type, (nv) => {
   <div class="login-wrapper">
     <div class="card login-card">
       <h6 class="headline"><b>Einloggen mit:</b></h6>
+
+      <div v-if="isDev" class="form-group">
+        <button class="btn btn-primary w-100 dev-btn" :disabled="disabled" @click="loginAsDev">
+          <i class="fa-solid fa-flask" /> Dev-Login (ohne Discord)
+        </button>
+      </div>
 
       <div class="form-group">
         <div class="type-select">
@@ -129,6 +142,13 @@ watch(type, (nv) => {
     border-left: 1px solid var(--primary-color);
     border-right: 1px solid var(--primary-color);
   }
+}
+
+.dev-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .discord-btn {

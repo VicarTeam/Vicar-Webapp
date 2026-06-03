@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, provide, ref } from "vue"
+import { useRouter } from "vue-router"
 import CreateCharacterModal from "@/components/main/characters/modals/CreateCharacterModal.vue"
 import CreateDirectoryModal from "@/components/main/characters/modals/CreateDirectoryModal.vue"
 import ConfirmCharDeletionModal from "@/components/main/characters/modals/ConfirmCharDeletionModal.vue"
@@ -9,6 +10,8 @@ import CharacterStorage from "@/libs/io/character-storage"
 import FileReaderUtils from "@/libs/io/file-reader"
 import EventBus from "@/libs/event-bus"
 import type { ICharacter, ICharacterDirectory } from "@/@types/models"
+
+const router = useRouter()
 
 const refreshForce = ref(1)
 
@@ -177,6 +180,9 @@ function updateCharacterList() {
       </button>
       <button class="btn btn-primary big" @click="importFiles?.click()">
         IMPORTIEREN
+      </button>
+      <button class="btn btn-primary big" @click="router.push('/skilltrees')">
+        SKILL-BÄUME
       </button>
     </div>
 
