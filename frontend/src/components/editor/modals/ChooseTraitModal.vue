@@ -1,411 +1,409 @@
+<script setup lang="ts">
+import {computed, onMounted, ref, watch} from "vue"
+import Modal from "@/components/modal/Modal.vue"
+import DataManager from "@/libs/data/data-manager"
+import {restrictionResolver} from "@/libs/resolvers/restriction-resolver"
+import PTActionHandler from "@/libs/ptaction-handler"
+import CharacterStorage from "@/libs/io/character-storage"
+import {GameLine, LevelChangeType} from "@/@types/gameline"
+import {useStore} from "@/app/store"
+import type {ICharacter, IUsingTraitPacks} from "@/@types/models"
+import {type ITrait, type ITraitPack, TraitSpecialRules} from "@/@types/data"
+import {traits} from "@/app/data/w5"
+import {traits as m20traits} from "@/app/data/m20"
+import {traits as h5traits} from "@/app/data/h5"
+
+export type ChooseTraitData = {
+  merits: ITraitPack[]
+  backgrounds: ITraitPack[]
+}
+
+export type CostsCalculationCallback = (trait: ITrait, level: number) => number
+
+const StatusId = 11
+
+const props = defineProps<{
+  gameline?: GameLine
+}>()
+
+const store = useStore()
+const editingCharacter = computed<ICharacter | undefined>(() => store.editingCharacter as any)
+
+const gameline = computed(() => props.gameline ?? GameLine.Vampire)
+
+const selectedPack = ref<ITraitPack | null>(null)
+const selectedTrait = ref<ITrait | null>(null)
+
+const customLevel = ref(0)
+const maxCustomLevel = ref(0)
+const specialization = ref("")
+
+const show = ref(false)
+const isFlaw = ref(false)
+const pointsLeft = ref(0)
+const data = ref<ChooseTraitData | null>(null)
+
+const calculateCosts = ref<CostsCalculationCallback | null>(null)
+
+const _customPack = ref<ITraitPack | null>(null)
+const customTraitType = ref<"merits" | "backgrounds">("merits")
+const customTraitLevel = ref(1)
+const customTraitName = ref("")
+const customTraitDescription = ref("")
+const customTraitSpecialization = ref("")
+
+function maxLevel() {
+  if (editingCharacter.value?.game === GameLine.Mage) return 10
+  return 5
+}
+
+function getTraitsForEdition(): ChooseTraitData {
+  if (gameline.value === GameLine.Werewolf) {
+    return {
+      backgrounds: traits.filter((x: any) => x.type === "backgrounds"),
+      merits: traits.filter((x: any) => x.type === "merits"),
+    }
+  }
+  if (gameline.value === GameLine.Mage) {
+    return {
+      backgrounds: m20traits as any,
+      merits: [],
+    }
+  }
+  if (gameline.value === GameLine.Hunter) {
+    return {
+      backgrounds: h5traits.filter((x: any) => x.type === "backgrounds"),
+      merits: h5traits.filter((x: any) => x.type === "merits"),
+    }
+  }
+
+  return {
+    backgrounds: DataManager.selectedLanguage.books.flatMap((book: any) => book?.backgrounds ?? []),
+    merits: DataManager.selectedLanguage.books.flatMap((book: any) => book?.merits ?? []),
+  }
+}
+
+onMounted(() => {
+  data.value = getTraitsForEdition()
+  _customPack.value = {
+    id: -42,
+    type: "merits",
+    name: String((window as any).$t ? (window as any).$t("editor.traits.modals.custom") : "Custom"),
+    description: String((window as any).$t ? (window as any).$t("editor.traits.modals.custom.desc") : ""),
+    specialRules: TraitSpecialRules.None,
+    advantages: [],
+    disadvantages: [],
+  } as any
+})
+
+function showModal(flaw: boolean, left: number, cb: CostsCalculationCallback | null = null) {
+  selectedTrait.value = null
+  selectedPack.value = null
+  isFlaw.value = flaw
+  pointsLeft.value = left
+  calculateCosts.value = cb
+  customLevel.value = 0
+  specialization.value = ""
+  customTraitLevel.value = 1
+  customTraitName.value = ""
+  customTraitDescription.value = ""
+  customTraitSpecialization.value = ""
+  customTraitType.value = "merits"
+  show.value = true
+}
+
+function getTraitPackBonusSpread(pack: ITraitPack, type: "backgrounds" | "merits", flaw: boolean) {
+  const char = editingCharacter.value
+  if (!char || char.game === GameLine.Mage) return null
+  return (char as any).requiredPointSpreads.find((s: any) => s.type === type && s.isFlaw === flaw && s.packId === pack.id)
+}
+
+function getTraitPackBonus(pack: ITraitPack, type: "backgrounds" | "merits", flaw: boolean) {
+  return getTraitPackBonusSpread(pack, type, flaw)?.points ?? 0
+}
+
+function doesTraitExist(char: ICharacter, pack: ITraitPack, traitId: number, flaw: boolean) {
+  const exists = (using: IUsingTraitPacks) => {
+    const p = using.packs.find((x: any) => x.pack.id === pack.id)
+    if (!p) return false
+    const list = flaw ? p.flawTraits : p.traits
+    return !!list.find((t: any) => t.id === traitId)
+  }
+
+  if ((pack as any).type === "merits") return exists((char as any).merits)
+  if ((pack as any).type === "backgrounds") return exists((char as any).backgrounds)
+  return false
+}
+
+function filterTraits(pack: ITraitPack, list: ITrait[]) {
+  const char = editingCharacter.value
+  if (char?.game === GameLine.Vampire) {
+    if (!isFlaw.value && pack.id === StatusId && (char as any).clan?.id === 15 && !calculateCosts.value) return []
+  }
+
+  const pointsRequirement = list.filter((t) => (t as any).level <= pointsLeft.value)
+  const usedFiltered = pointsRequirement.filter((t) => !doesTraitExist(char!, pack, (t as any).id, isFlaw.value))
+  const fulfilsRestrictions = usedFiltered.filter((t) => {
+    const r = (t as any).restriction
+    if (r) return restrictionResolver.resolve(char!, r)
+    return true
+  })
+  return fulfilsRestrictions.filter((t) => {
+    const req = (t as any).requirement
+    if (req && req.type === "or") return req.values.some((r: number) => doesTraitExist(char!, pack, r, isFlaw.value))
+    return true
+  })
+}
+
+function filterTraitPacks(packs: ITraitPack[]) {
+  const char = editingCharacter.value
+  return DataManager.filterRestrictions(char, packs).filter((pack: any) => filterTraits(pack, [...pack[isFlaw.value ? "disadvantages" : "advantages"]]).length > 0)
+}
+
+function selectTrait(trait: ITrait | null) {
+  selectedTrait.value = trait
+  specialization.value = ""
+  if (trait) {
+    customLevel.value = (trait as any).level
+    maxCustomLevel.value = getMaxCustomLevel()
+  }
+}
+
+function getMaxCustomLevel() {
+  if (!selectedTrait.value) return 0
+
+  let currentMax = Infinity
+  for (let i = (selectedTrait.value as any).level; i <= maxLevel(); i++) {
+    if (i > pointsLeft.value) break
+    currentMax = i
+  }
+
+  const change = (val: number) => {
+    if (val < currentMax) currentMax = val
+  }
+
+  const rr = (selectedTrait.value as any).restrictRepeats
+  if (rr) {
+    if (rr.size) {
+      if (doesTraitExist(editingCharacter.value!, selectedPack.value!, rr.size, isFlaw.value)) change(rr.amount)
+    } else {
+      change(rr.amount)
+    }
+  }
+
+  return currentMax
+}
+
+const minCustomLevel = computed(() => (selectedTrait.value as any)?.level ?? 0)
+
+const traitsList = computed(() => {
+  if (!selectedPack.value) return []
+  return filterTraits(selectedPack.value, [...(selectedPack.value as any)[isFlaw.value ? "disadvantages" : "advantages"]]).sort((a: ITrait, b: ITrait) => {
+    if ((a as any).level !== (b as any).level) return (a as any).level - (b as any).level
+    return a.name.localeCompare(b.name)
+  })
+})
+
+const merits = computed(() => {
+  const d = data.value
+  if (!d) return []
+  return filterTraitPacks([...d.merits]).sort((a: any, b: any) => a.name.localeCompare(b.name))
+})
+
+const backgrounds = computed(() => {
+  const d = data.value
+  const char = editingCharacter.value
+  if (!d) return []
+  return filterTraitPacks([...d.backgrounds])
+    .filter((x: any) => {
+      if (char?.game === GameLine.Vampire) {
+        if (!isFlaw.value && (char as any).clan?.id === 15 && x.id === 11) return false
+      }
+      return true
+    })
+    .sort((a: any, b: any) => a.name.localeCompare(b.name))
+})
+
+const isReadyForNormalUse = computed(() => {
+  const char = editingCharacter.value
+  if (!selectedPack.value || !selectedTrait.value) return false
+  if (!calculateCosts.value) return true
+  return calculateCosts.value(selectedTrait.value, customLevel.value) <= (char?.exp ?? 0)
+})
+
+const isReadyForCustom = computed(() => {
+  const sp = selectedPack.value
+  const cp = _customPack.value
+  return !!sp && !!cp && sp.id === cp.id && customTraitName.value.length > 0 && customTraitDescription.value.length > 0 && customTraitLevel.value >= 1 && customTraitLevel.value <= maxLevel()
+})
+
+const isReady = computed(() => isReadyForNormalUse.value || isReadyForCustom.value)
+
+function addSelectedTrait() {
+  const char = editingCharacter.value
+  const sp = selectedPack.value
+  const cp = _customPack.value
+  if (!isReady.value || !sp || !char) return
+
+  const isCustom = !!cp && sp.id === cp.id
+
+  if (!isCustom) {
+    const upack = PTActionHandler.initializeTraitPack(char, sp, (sp as any).type)
+    ;(isFlaw.value ? upack.flawTraits : upack.traits).push({
+      ...(selectedTrait.value as any),
+      customLevel: customLevel.value,
+      suffix: specialization.value,
+      isLocked: false,
+      isManual: true,
+    })
+
+    if (calculateCosts.value) {
+      const c = calculateCosts.value(selectedTrait.value!, customLevel.value)
+      CharacterStorage.trackLevelChange(char, isFlaw.value ? LevelChangeType.Flaw : LevelChangeType.Trait, c, selectedTrait.value!.name + " (Level " + customLevel.value + ") hinzugefügt")
+      CharacterStorage.saveCharacter(char)
+    }
+  } else {
+    const upack = PTActionHandler.initializeTraitPack(char, cp!, customTraitType.value)
+    ;(isFlaw.value ? upack.flawTraits : upack.traits).push({
+      id: 42 * Date.now(),
+      name: customTraitName.value,
+      description: customTraitDescription.value,
+      level: customTraitLevel.value as any,
+      customLevel: customTraitLevel.value,
+      suffix: customTraitSpecialization.value,
+      isLocked: false,
+      isManual: true,
+      isRepeatable: false,
+      actions: [],
+    })
+  }
+
+  show.value = false
+}
+
+watch(
+  () => selectedPack.value,
+  () => selectTrait(null)
+)
+
+defineExpose({ showModal })
+</script>
+
 <template>
   <Modal :shown="show" v-if="editingCharacter && data" @close="show = false">
-    <div style="width: 60rem; display: flex; flex-direction: column; gap: 0.5rem">
-      <div style="width: 100%; display: flex; gap: 1rem; align-items: center;">
-        <b style="flex-grow: 1">{{$t('editor.traits.modal.title.' + (isFlaw ? 'flaw' : 'trait'))}}:</b>
-        <select class="form-control categorized" v-model="selectedPack" @change="selectTrait(null)">
+    <div class="wrap">
+      <div class="top">
+        <b class="top-title">{{ isFlaw ? 'Schwäche hinzufügen' : 'Vorteil hinzufügen' }}:</b>
 
-          <option v-if="merits.length > 0" class="category" disabled>{{$t('data.trait.merits')}}</option>
-          <option v-for="m in merits" :value="m">{{m.name}}{{getTraitPackBonus(m, "merits", isFlaw) > 0 ? '(+' + getTraitPackBonus(m, "merits", isFlaw) + ')' : ''}}</option>
+        <select class="form-control categorized" v-model="selectedPack">
+          <option v-if="merits.length > 0" class="category" disabled>Vorzüge</option>
+          <option v-for="m in merits" :key="'m' + m.id" :value="m">
+            {{ m.name }}{{ getTraitPackBonus(m, "merits", isFlaw) > 0 ? "(+" + getTraitPackBonus(m, "merits", isFlaw) + ")" : "" }}
+          </option>
 
-          <option v-if="backgrounds.length > 0" class="category" disabled>{{$t('data.trait.backgrounds')}}</option>
-          <option v-for="b in backgrounds" :value="b">{{b.name}}{{getTraitPackBonus(b, "backgrounds", isFlaw) > 0 ? '(+' + getTraitPackBonus(b, "backgrounds", isFlaw) + ')' : ''}}</option>
+          <option v-if="backgrounds.length > 0" class="category" disabled>Hintergründe</option>
+          <option v-for="b in backgrounds" :key="'b' + b.id" :value="b">
+            {{ b.name }}{{ getTraitPackBonus(b, "backgrounds", isFlaw) > 0 ? "(+" + getTraitPackBonus(b, "backgrounds", isFlaw) + ")" : "" }}
+          </option>
 
           <option disabled></option>
-          <option style="font-style: italic; text-align: center" :value="_customPack">[GM] {{$t('editor.traits.modal.custom')}}</option>
+          <option v-if="_customPack" style="font-style: italic; text-align: center" :value="_customPack">[GM] Benutzerdefiniert</option>
         </select>
       </div>
 
-      <div style="width: 100%; display: flex; gap: 2rem; flex-direction: column" v-if="selectedPack && selectedPack.id !== _customPack.id">
-        <small>{{selectedPack.description}}</small>
+      <div class="pack" v-if="selectedPack && _customPack && selectedPack.id !== _customPack.id">
+        <small>{{ selectedPack.description }}</small>
 
         <div class="trait-pack-content">
           <div class="traits">
-            <div class="trait" v-for="trait in traits" @click="selectTrait(trait)" :class="{'selected': trait === selectedTrait}">
-              <b>{{trait.name}}</b> - <small><i><b>{{$t('editor.traits.modal.trait.level')}}</b>: {{trait.level}}</i></small>
+            <div class="trait" v-for="trait in traitsList" :key="trait.id" @click="selectTrait(trait)" :class="{ selected: trait === selectedTrait }">
+              <b>{{ trait.name }}</b> - <small><i><b>Stufe</b>: {{ trait.level }}</i></small>
             </div>
           </div>
 
           <div class="border"></div>
 
-          <div class="info" :class="{'not-selected': !selectedTrait}">
-            <small v-if="!selectedTrait">{{$t('editor.traits.modal.info.notselected')}}</small>
-            <small v-else>{{selectedTrait.description}}</small>
+          <div class="info" :class="{ 'not-selected': !selectedTrait }">
+            <small v-if="!selectedTrait">Du musst links etwas auswählen!</small>
+            <small v-else>{{ selectedTrait.description }}</small>
           </div>
         </div>
       </div>
-      <div style="width: 100%; display: flex; gap: 2rem; flex-direction: column" v-else-if="selectedPack && selectedPack.id === _customPack.id">
-        <small>{{selectedPack.description}}</small>
 
-        <div style="width: 100%; display: flex; flex-direction: column">
+      <div class="pack" v-else-if="selectedPack && _customPack && selectedPack.id === _customPack.id">
+        <small>{{ selectedPack.description }}</small>
+
+        <div class="custom">
           <div class="form-group">
-            <label>{{$t('editor.traits.modal.custom.type')}}:</label>
+            <label>Typ (Vorzug oder Hintergrund):</label>
             <select class="form-control" v-model="customTraitType">
-              <option value="merits">{{$t('editor.traits.modal.custom.type.merit')}}</option>
-              <option value="backgrounds">{{$t('editor.traits.modal.custom.type.background')}}</option>
+              <option value="merits">Vorzug</option>
+              <option value="backgrounds">Hintergrund</option>
             </select>
           </div>
+
           <div class="form-group">
-            <label>{{$t('editor.traits.modal.trait.level')}}:</label>
+            <label>Stufe:</label>
             <select class="form-control" v-model="customTraitLevel">
-              <option v-for="i in maxLevel" :value="i">{{i}}</option>
+              <option v-for="i in maxLevel()" :key="i" :value="i">{{ i }}</option>
             </select>
           </div>
+
           <div class="form-group">
-            <label>{{$t('character.inventory.add.custom.name')}}:</label>
-            <input class="form-control" type="text" v-model="customTraitName"/>
+            <label>Name:</label>
+            <input class="form-control" type="text" v-model="customTraitName" />
           </div>
+
           <div class="form-group">
-            <label>{{$t('character.inventory.add.custom.description')}}:</label>
-            <textarea class="form-control" v-model="customTraitDescription" style="resize: horizontal"/>
+            <label>Beschreibung:</label>
+            <textarea class="form-control" v-model="customTraitDescription" style="resize: horizontal" />
           </div>
+
           <div class="form-group">
-            <label>{{$t('editor.traits.modal.optionals.suffix')}}:</label>
-            <input class="form-control" type="text" v-model="customTraitSpecialization"/>
+            <label>(optional) Spezialisierung festlegen:</label>
+            <input class="form-control" type="text" v-model="customTraitSpecialization" />
           </div>
         </div>
       </div>
 
       <div class="optional-trait-options" v-if="selectedTrait">
-        <div class="form-group" style="width: 50%">
-          <label>{{$t('editor.traits.modal.optionals.level')}}:</label>
-          <input class="form-control" type="number" v-model="customLevel" :min="minCustomLevel" :max="maxCustomLevel"/>
+        <div class="form-group half">
+          <label>(optional) Stufe erhöhen:</label>
+          <input class="form-control" type="number" v-model="customLevel" :min="minCustomLevel" :max="maxCustomLevel" />
         </div>
-        <div class="form-group" style="width: 50%">
-          <label>{{$t('editor.traits.modal.optionals.suffix')}}:</label>
-          <input class="form-control" type="text" v-model="specialization"/>
+        <div class="form-group half">
+          <label>(optional) Spezialisierung festlegen:</label>
+          <input class="form-control" type="text" v-model="specialization" />
         </div>
       </div>
 
-      <div style="margin-top: 1rem; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center">
-        <span v-if="selectedTrait && calculateCosts" class="mb-10">{{$t('viewer.modal.level.costs', {xp: calculateCosts(this.selectedTrait, this.customLevel)})}}</span>
-        <button class="btn btn-primary" style="width: fit-content" :disabled="!isReady" @click="addSelectedTrait">{{$t('editor.choose')}}</button>
+      <div class="bottom">
+        <span v-if="selectedTrait && calculateCosts" class="mb-10">{{ `Kosten: ${calculateCosts(selectedTrait, customLevel)} EXP` }}</span>
+        <button class="btn btn-primary" :disabled="!isReady" @click="addSelectedTrait">Auswählen</button>
       </div>
     </div>
   </Modal>
 </template>
 
-<script lang="ts">
-import {Component, Prop, Vue} from "vue-property-decorator";
-import Modal from "@/components/modal/Modal.vue";
-import {State} from "vuex-class";
-import {ICharacter, IUsingTraitPacks} from "@/types/models";
-import {ITrait, ITraitPack, TraitSpecialRules} from "@/types/data";
-import DataManager from "@/libs/data/data-manager";
-import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
-import PTActionHandler from "@/libs/ptaction-handler";
-import CharacterStorage from "@/libs/io/character-storage";
-import {GameLine, LevelChangeType} from "@/types/gameline";
-import {traits} from "@/.data/w5";
-import {traits as m20traits} from "@/.data/m20";
-import {traits as h5traits} from "@/.data/h5";
-
-export type ChooseTraitData = {
-  merits: ITraitPack[];
-  backgrounds: ITraitPack[];
-}
-
-export type CostsCalculationCallback = (trait: ITrait, level: number) => number;
-
-const StatusId: number = 11;
-
-@Component({
-  components: {Modal}
-})
-export default class ChooseTraitModal extends Vue {
-
-  @State("editingCharacter")
-  private editingCharacter!: ICharacter|undefined;
-
-  @Prop({default: () => GameLine.Vampire})
-  private gameline!: GameLine;
-
-  private selectedPack: ITraitPack|null = null;
-  private selectedTrait: ITrait|null = null;
-
-  private customLevel: number = 0;
-  private maxCustomLevel: number = 0;
-  private specialization: string = "";
-
-  private show: boolean = false;
-  private isFlaw: boolean = false;
-  private pointsLeft: number = 0;
-  private data: ChooseTraitData = null!;
-
-  private calculateCosts: CostsCalculationCallback|null = null;
-
-  private _customPack: ITraitPack = null!;
-  private customTraitType: "merits"|"backgrounds" = "merits";
-  private customTraitLevel: number = 1;
-  private customTraitName: string = "";
-  private customTraitDescription: string = "";
-  private customTraitSpecialization: string = "";
-
-  mounted() {
-    this.data = this.getTraitsForEdition();
-
-    this._customPack = {
-      id: -42,
-      type: "merits",
-      name: this.$t("editor.traits.modal.custom").toString(),
-      description: this.$t("editor.traits.modal.custom.desc").toString(),
-      specialRules: TraitSpecialRules.None,
-      advantages: [],
-      disadvantages: []
-    };
-  }
-
-  public showModal(isFlaw: boolean, pointsLeft: number, callback: CostsCalculationCallback|null = null) {
-    this.selectedTrait = null;
-    this.selectedPack = null;
-    this.isFlaw = isFlaw;
-    this.pointsLeft = pointsLeft;
-    this.calculateCosts = callback;
-    this.customLevel = 0;
-    this.specialization = "";
-    this.customTraitLevel = 1;
-    this.customTraitName = "";
-    this.customTraitDescription = "";
-    this.customTraitSpecialization = "";
-    this.customTraitType = "merits";
-    this.show = true;
-  }
-
-  private addSelectedTrait() {
-    if (!this.isReady || !this.selectedPack || !this.editingCharacter) {
-      return;
-    }
-
-    const isCustom = this.selectedPack.id === this._customPack.id;
-
-    if (!isCustom) {
-      const upack = PTActionHandler.initializeTraitPack(this.editingCharacter, this.selectedPack, this.selectedPack.type);
-      (this.isFlaw ? upack.flawTraits : upack.traits).push({
-        ...this.selectedTrait!,
-        customLevel: this.customLevel,
-        suffix: this.specialization,
-        isLocked: false,
-        isManual: true
-      });
-
-      if (this.calculateCosts) {
-        const costs = this.calculateCosts(this.selectedTrait!, this.customLevel);
-        CharacterStorage.trackLevelChange(this.editingCharacter, this.isFlaw ? LevelChangeType.Flaw : LevelChangeType.Trait, costs, this.selectedTrait!.name + " (Level " + this.customLevel + ") hinzugefügt");
-        CharacterStorage.saveCharacter(this.editingCharacter);
-      }
-    } else {
-      const upack = PTActionHandler.initializeTraitPack(this.editingCharacter, this._customPack, this.customTraitType);
-      (this.isFlaw ? upack.flawTraits : upack.traits).push({
-        id: 42 * Date.now(),
-        name: this.customTraitName,
-        description: this.customTraitDescription,
-        level: this.customTraitLevel as any,
-        customLevel: this.customTraitLevel,
-        suffix: this.customTraitSpecialization,
-        isLocked: false,
-        isManual: true,
-        isRepeatable: false,
-        actions: []
-      });
-    }
-
-    this.show = false;
-  }
-
-  private getTraitPackBonus(pack: ITraitPack, type: "backgrounds"|"merits", isFlaw: boolean) {
-    return this.getTraitPackBonusSpread(pack, type, isFlaw)?.points ?? 0;
-  }
-
-  private getTraitPackBonusSpread(pack: ITraitPack, type: "backgrounds"|"merits", isFlaw: boolean) {
-    if (!this.editingCharacter || this.editingCharacter.game === GameLine.Mage) {
-      return null;
-    }
-    return this.editingCharacter!.requiredPointSpreads.find(s => s.type === type && s.isFlaw === isFlaw && s.packId === pack.id);
-  }
-
-  private selectTrait(trait: ITrait) {
-    this.selectedTrait = trait;
-    this.specialization = "";
-    if (trait) {
-      this.customLevel = trait.level;
-      this.maxCustomLevel = this.getMaxCustomLevel();
-    }
-  }
-
-  private filterTraitPacks(packs: ITraitPack[]): ITraitPack[] {
-    return DataManager.filterRestrictions(this.editingCharacter, packs).filter(pack => {
-      return this.filterTraits(pack!, [...pack![this.isFlaw ? "disadvantages" : "advantages"]]).length > 0;
-    });
-  }
-
-  private filterTraits(pack: ITraitPack, traits: ITrait[]): ITrait[] {
-    if (this.editingCharacter?.game === GameLine.Vampire) {
-      if (!this.isFlaw && pack.id === StatusId && this.editingCharacter!.clan.id === 15 && !this.calculateCosts) {
-        return []; // Caitiffs aren't allowed to use positive status background when creating char
-      }
-    }
-
-    const pointsRequirement = traits.filter(t => t.level <= this.pointsLeft);
-    const usedFiltered = pointsRequirement.filter(t => !this.doesTraitExist(this.editingCharacter!, pack, t.id, this.isFlaw));
-    const fullfilsRestrictions = usedFiltered.filter(t => {
-      if (t.restriction) {
-        return restrictionResolver.resolve(this.editingCharacter!, t.restriction);
-      }
-      return true;
-    });
-    const fullfilsRequirements = fullfilsRestrictions.filter(t => {
-      if (t.requirement) {
-        if (t.requirement.type === "or") {
-          return t.requirement.values.some(r => this.doesTraitExist(this.editingCharacter!, pack, r, this.isFlaw));
-        }
-      }
-      return true;
-    });
-    return fullfilsRequirements;
-  }
-
-  private doesTraitExist(char: ICharacter, selectedPack: ITraitPack, traitId: number, isFlaw: boolean): boolean {
-    const exists = (using: IUsingTraitPacks) => {
-      const pack = using.packs.find(p => p.pack.id === selectedPack.id);
-      if (pack) {
-        const traits = isFlaw ? pack.flawTraits : pack.traits;
-        if (traits.find(t => t.id === traitId)) {
-          return true;
-        }
-      }
-      return false;
-    };
-
-    if (selectedPack.type === "merits") {
-      return exists(char.merits);
-    }
-
-    if (selectedPack.type === "backgrounds") {
-      return exists(char.backgrounds);
-    }
-
-    return false;
-  }
-
-  private getMaxCustomLevel(): number {
-    if (!this.selectedTrait) {
-      return 0;
-    }
-
-    let currentMax = Infinity;
-
-    for (let i = this.selectedTrait.level; i <= this.maxLevel; i++) {
-      if (i > this.pointsLeft) {
-        break;
-      }
-      currentMax = i;
-    }
-
-    const change = (val: number) => {
-      if (val < currentMax) {
-        currentMax = val;
-      }
-    };
-    if (this.selectedTrait.restrictRepeats) {
-      if (this.selectedTrait.restrictRepeats.size) {
-        if (this.doesTraitExist(this.editingCharacter!, this.selectedPack!, this.selectedTrait.restrictRepeats.size, this.isFlaw)) {
-          change(this.selectedTrait.restrictRepeats.amount);
-        }
-      } else {
-        change(this.selectedTrait.restrictRepeats.amount);
-      }
-    }
-
-    return currentMax;
-  }
-
-  private get minCustomLevel(): number {
-    return this.selectedTrait!.level;
-  }
-
-  private get traits(): ITrait[] {
-    return this.filterTraits(this.selectedPack!, [...this.selectedPack![this.isFlaw ? "disadvantages" : "advantages"]]).sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  private get merits(): ITraitPack[] {
-    return this.filterTraitPacks([...this.data.merits]).sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  private get backgrounds(): ITraitPack[] {
-    return this.filterTraitPacks([...this.data.backgrounds])
-      .filter(x => {
-        if (this.editingCharacter?.game === GameLine.Vampire) {
-          if (!this.isFlaw && this.editingCharacter && this.editingCharacter.clan.id === 15 && x.id === 11) {
-            return false; // Caitiffs aren't allowed to use positive status background when creating char
-          }
-        }
-        return true;
-      })
-      .sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  private get isReady(): boolean {
-    return this.isReadyForNormalUse || this.isReadyForCustom;
-  }
-
-  private get isReadyForNormalUse(): boolean {
-    return !!this.selectedPack && !!this.selectedTrait
-      && (!this.calculateCosts || this.calculateCosts(this.selectedTrait, this.customLevel) <= this.editingCharacter!.exp);
-  }
-
-  private get isReadyForCustom(): boolean {
-    return !!this.selectedPack && this.selectedPack.id === this._customPack.id
-      && this.customTraitName.length > 0 && this.customTraitDescription.length > 0
-      && this.customTraitLevel >= 1 && this.customTraitLevel <= this.maxLevel;
-  }
-
-  private get maxLevel() {
-    if (this.editingCharacter?.game === GameLine.Mage) {
-      return 10;
-    }
-    return 5;
-  }
-
-  private getTraitsForEdition(): ChooseTraitData {
-    if (this.gameline === GameLine.Werewolf) {
-      return {
-        backgrounds: traits.filter(x => x.type === "backgrounds"),
-        merits: traits.filter(x => x.type === "merits"),
-      };
-    }
-    if (this.gameline === GameLine.Mage) {
-      return {
-        backgrounds: m20traits,
-        merits: []
-      };
-    }
-    if (this.gameline === GameLine.Hunter) {
-      return {
-        backgrounds: h5traits.filter(x => x.type === "backgrounds"),
-        merits: h5traits.filter(x => x.type === "merits"),
-      };
-    }
-
-    return {
-      backgrounds: DataManager.selectedLanguage.books.flatMap(book => {
-        if (book && book.backgrounds) {
-          return book.backgrounds;
-        }
-        return [];
-      }),
-      merits: DataManager.selectedLanguage.books.flatMap(book => {
-        if (book && book.merits) {
-          return book.merits;
-        }
-        return [];
-      })
-    };
-  }
-}
-</script>
-
 <style scoped lang="scss">
 $border: 1px solid var(--primary-color) !important;
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.top {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.top-title {
+}
 
 .trait-pack-content {
   padding-bottom: 1rem;
@@ -427,9 +425,9 @@ $border: 1px solid var(--primary-color) !important;
       .trait {
         user-select: none;
         cursor: pointer;
-        padding: 0.2rem 0.7rem;
-        border-radius: 5px;
-        font-size: 1.2rem;
+        padding: 0.3rem 0.7rem;
+        border-radius: 6px;
+        font-size: 1.15rem;
         &.selected {
           background-color: rgba(255, 255, 255, 0.2);
         }
@@ -450,29 +448,82 @@ $border: 1px solid var(--primary-color) !important;
         font-style: italic;
         color: rgba(255, 255, 255, 0.4);
         user-select: none;
+        text-align: center;
+        padding: 0 0.5rem;
       }
     }
   }
 }
 
+.pack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.custom {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .optional-trait-options {
   width: 100%;
   border: $border;
-  padding: 1.5rem;
+  padding: 1.2rem;
   display: flex;
   gap: 1rem;
   align-items: center;
+  flex-wrap: wrap;
   .form-group {
     margin: 0;
+  }
+  .half {
+    width: min(22rem, 100%);
+    flex: 1 1 16rem;
   }
 }
 
 .form-control.categorized {
   width: fit-content;
+  max-width: 100%;
   .category {
     text-align: center;
-    font-weight: bold;
+    font-weight: 800;
     color: #fff;
+  }
+}
+
+.bottom {
+  margin-top: 0.75rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .btn {
+    min-height: 44px;
+    width: min(18rem, 100%);
+  }
+}
+
+@media (max-width: 700px) {
+  .trait-pack-content {
+    flex-direction: column;
+    & > div {
+      height: auto;
+    }
+    .border {
+      display: none;
+    }
+    .info {
+      width: 100% !important;
+      min-height: 5rem;
+    }
+    .traits {
+      max-height: 40vh;
+    }
   }
 }
 </style>

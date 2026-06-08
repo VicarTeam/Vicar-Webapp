@@ -1,171 +1,146 @@
-<script lang="ts">
-import {Component, Ref, Vue} from 'vue-property-decorator';
-import {State} from "vuex-class";
-import {IW5Gift, IWerewolfW5Sheet, W5GiftCategory} from "@/types/w5";
-import {getAvailableGiftsForCharacter} from "@/.data/w5";
-import RiteInfoModal from "@/components/viewer/modals/w5/RiteInfoModal.vue";
-import GiftInfoModal from "@/components/viewer/modals/w5/GiftInfoModal.vue";
-import TipButton from "@/components/editor/TipButton.vue";
-import GiftModal from "@/components/viewer/modals/leveling/GiftModal.vue";
-import LevelButton from "@/components/viewer/LevelButton.vue";
+<script setup lang="ts">
+import { computed, onMounted, ref } from "vue"
+import { useStore } from "@/app/store"
+import type { IW5Gift, IWerewolfW5Sheet } from "@/@types/w5"
+import { W5GiftCategory } from "@/@types/w5"
+import { getAvailableGiftsForCharacter } from "@/app/data/w5"
+import RiteInfoModal from "@/components/viewer/modals/w5/RiteInfoModal.vue"
+import GiftInfoModal from "@/components/viewer/modals/w5/GiftInfoModal.vue"
+import TipButton from "@/components/editor/TipButton.vue"
+import GiftModal from "@/components/viewer/modals/leveling/GiftModal.vue"
+import LevelButton from "@/components/viewer/LevelButton.vue"
 
-@Component({
-  components: {LevelButton, GiftModal, TipButton, GiftInfoModal, RiteInfoModal}
+const store = useStore()
+const editingCharacter = computed(() => store.editingCharacter as IWerewolfW5Sheet | undefined)
+
+const riteInfoModal = ref<InstanceType<typeof RiteInfoModal> | null>(null)
+const giftInfoModal = ref<InstanceType<typeof GiftInfoModal> | null>(null)
+const levelGiftModal = ref<InstanceType<typeof GiftModal> | null>(null)
+
+const gifts = ref<IW5Gift[]>([])
+
+onMounted(() => {
+  if (!editingCharacter.value) return
+  gifts.value = getAvailableGiftsForCharacter(editingCharacter.value)
 })
-export default class GiftsView extends Vue {
 
-  @State("editingCharacter")
-  private editingCharacter!: IWerewolfW5Sheet;
+const totalRenown = computed(() => {
+  const c = editingCharacter.value
+  if (!c) return 0
+  return c.renown.reduce((sum, r) => sum + r.value, 0)
+})
 
-  @Ref("riteInfoModal")
-  private riteInfoModal!: RiteInfoModal;
+function sortedByRenownThenName(arr: IW5Gift[]) {
+  return arr.slice().sort((a, b) => (a.totalRenown === b.totalRenown ? a.name.localeCompare(b.name) : a.totalRenown - b.totalRenown))
+}
 
-  @Ref("giftInfoModal")
-  private giftInfoModal!: GiftInfoModal;
+const nativeGifts = computed(() => {
+  const c = editingCharacter.value
+  if (!c) return []
+  return sortedByRenownThenName(c.selectedGifts.filter(x => x.category === W5GiftCategory.Native))
+})
 
-  @Ref("levelGiftModal")
-  private levelGiftModal!: GiftModal;
+const tribalGifts = computed(() => {
+  const c = editingCharacter.value
+  if (!c) return []
+  return sortedByRenownThenName(c.selectedGifts.filter(x => x.category === W5GiftCategory.Tribal))
+})
 
-  private gifts: IW5Gift[] = [];
+const auspiceGifts = computed(() => {
+  const c = editingCharacter.value
+  if (!c) return []
+  return sortedByRenownThenName(c.selectedGifts.filter(x => x.category === W5GiftCategory.Auspice))
+})
 
-  mounted() {
-    this.gifts = getAvailableGiftsForCharacter(this.editingCharacter);
-  }
+const charRites = computed(() => {
+  const c = editingCharacter.value
+  if (!c) return []
+  return c.selectedRites.slice().sort((a, b) => a.name.localeCompare(b.name))
+})
 
-  private levelNativeGifts() {
-    const gifts = this.gifts.filter(x => x.category === W5GiftCategory.Native && x.totalRenown <= this.totalRenown).sort((a, b) => {
-      if (a.totalRenown === b.totalRenown) {
-        return a.name.localeCompare(b.name);
-      } else {
-        return a.totalRenown - b.totalRenown;
-      }
-    });
-    const neededXp = (this.nativeGifts.length + 1) * 2;
-    this.levelGiftModal.showModal(W5GiftCategory.Native, neededXp, gifts);
-  }
+function levelNativeGifts() {
+  const c = editingCharacter.value
+  if (!c) return
+  const available = sortedByRenownThenName(gifts.value.filter(x => x.category === W5GiftCategory.Native && x.totalRenown <= totalRenown.value))
+  const neededXp = (nativeGifts.value.length + 1) * 2
+  levelGiftModal.value?.showModal(W5GiftCategory.Native, neededXp, available)
+}
 
-  private levelAuspiceGifts() {
-    const gifts = this.gifts.filter(x => x.category === W5GiftCategory.Auspice && x.totalRenown <= this.totalRenown).sort((a, b) => {
-      if (a.totalRenown === b.totalRenown) {
-        return a.name.localeCompare(b.name);
-      } else {
-        return a.totalRenown - b.totalRenown;
-      }
-    });
-    const neededXp = (this.auspiceGifts.length + 1) * 2;
-    this.levelGiftModal.showModal(W5GiftCategory.Auspice, neededXp, gifts);
-  }
+function levelAuspiceGifts() {
+  const c = editingCharacter.value
+  if (!c) return
+  const available = sortedByRenownThenName(gifts.value.filter(x => x.category === W5GiftCategory.Auspice && x.totalRenown <= totalRenown.value))
+  const neededXp = (auspiceGifts.value.length + 1) * 2
+  levelGiftModal.value?.showModal(W5GiftCategory.Auspice, neededXp, available)
+}
 
-  private levelTribalGifts() {
-    const gifts = this.gifts.filter(x => x.category === W5GiftCategory.Tribal && x.totalRenown <= this.totalRenown).sort((a, b) => {
-      if (a.totalRenown === b.totalRenown) {
-        return a.name.localeCompare(b.name);
-      } else {
-        return a.totalRenown - b.totalRenown;
-      }
-    });
-    const neededXp = (this.tribalGifts.length + 1) * 2;
-    this.levelGiftModal.showModal(W5GiftCategory.Tribal, neededXp, gifts);
-  }
+function levelTribalGifts() {
+  const c = editingCharacter.value
+  if (!c) return
+  const available = sortedByRenownThenName(gifts.value.filter(x => x.category === W5GiftCategory.Tribal && x.totalRenown <= totalRenown.value))
+  const neededXp = (tribalGifts.value.length + 1) * 2
+  levelGiftModal.value?.showModal(W5GiftCategory.Tribal, neededXp, available)
+}
 
-  private levelRites() {
-    const neededXp = 5;
-    this.levelGiftModal.showModal(W5GiftCategory.Rite, neededXp);
-  }
-
-  private get totalRenown() {
-    return this.editingCharacter.renown.reduce((sum, r) => sum + r.value, 0);
-  }
-
-  private get nativeGifts() {
-    return this.editingCharacter.selectedGifts.filter(x => x.category === W5GiftCategory.Native).sort((a, b) => {
-      if (a.totalRenown === b.totalRenown) {
-        return a.name.localeCompare(b.name);
-      } else {
-        return a.totalRenown - b.totalRenown;
-      }
-    });
-  }
-
-  private get tribalGifts() {
-    return this.editingCharacter.selectedGifts.filter(x => x.category === W5GiftCategory.Tribal).sort((a, b) => {
-      if (a.totalRenown === b.totalRenown) {
-        return a.name.localeCompare(b.name);
-      } else {
-        return a.totalRenown - b.totalRenown;
-      }
-    });
-  }
-
-  private get auspiceGifts() {
-    return this.editingCharacter.selectedGifts.filter(x => x.category === W5GiftCategory.Auspice).sort((a, b) => {
-      if (a.totalRenown === b.totalRenown) {
-        return a.name.localeCompare(b.name);
-      } else {
-        return a.totalRenown - b.totalRenown;
-      }
-    });
-  }
-
-  private get charRites() {
-    return this.editingCharacter.selectedRites.sort((a, b) => a.name.localeCompare(b.name));
-  }
+function levelRites() {
+  const neededXp = 5
+  levelGiftModal.value?.showModal(W5GiftCategory.Rite, neededXp)
 }
 </script>
 
 <template>
-  <div class="gifts-view">
+  <div v-if="editingCharacter" class="gifts-view">
     <div class="card">
       <h5>
-        {{$t('editor.gifts.native')}}n
-        <LevelButton @click="levelNativeGifts()"/>
+        Angeborene Gaben
+        <LevelButton @click="levelNativeGifts()" />
       </h5>
 
       <small v-for="g in nativeGifts" :key="g.id">
-        <span>{{g.name}} ({{g.totalRenown}})</span>
-        <TipButton @click="giftInfoModal.showModal(g)" :override="true"/>
+        <span>{{ g.name }} ({{ g.totalRenown }})</span>
+        <TipButton @click="giftInfoModal?.showModal(g)" :override="true" />
       </small>
     </div>
 
     <div class="card">
       <h5>
-        {{$t('editor.gifts.auspice')}}n
-        <LevelButton @click="levelAuspiceGifts()"/>
+        Auspizium-Gaben
+        <LevelButton @click="levelAuspiceGifts()" />
       </h5>
 
       <small v-for="g in auspiceGifts" :key="g.id">
-        <span>{{g.name}} ({{g.totalRenown}})</span>
-        <TipButton @click="giftInfoModal.showModal(g)" :override="true"/>
+        <span>{{ g.name }} ({{ g.totalRenown }})</span>
+        <TipButton @click="giftInfoModal?.showModal(g)" :override="true" />
       </small>
     </div>
 
     <div class="card">
       <h5>
-        {{$t('editor.gifts.tribal')}}n
-        <LevelButton @click="levelTribalGifts()"/>
+        Stammesgaben
+        <LevelButton @click="levelTribalGifts()" />
       </h5>
 
       <small v-for="g in tribalGifts" :key="g.id">
-        <span>{{g.name}} ({{g.totalRenown}})</span>
-        <TipButton @click="giftInfoModal.showModal(g)" :override="true"/>
+        <span>{{ g.name }} ({{ g.totalRenown }})</span>
+        <TipButton @click="giftInfoModal?.showModal(g)" :override="true" />
       </small>
     </div>
 
     <div class="card">
       <h5>
-        {{$t('character.rites')}}
-        <LevelButton @click="levelRites()"/>
+        Riten
+        <LevelButton @click="levelRites()" />
       </h5>
 
       <small v-for="r in charRites" :key="r.id">
-        <span>{{r.name}}</span>
-        <TipButton @click="riteInfoModal.showModal(r)" :override="true"/>
+        <span>{{ r.name }}</span>
+        <TipButton @click="riteInfoModal?.showModal(r)" :override="true" />
       </small>
     </div>
 
-    <GiftModal ref="levelGiftModal"/>
-    <RiteInfoModal ref="riteInfoModal"/>
-    <GiftInfoModal ref="giftInfoModal"/>
+    <GiftModal ref="levelGiftModal" />
+    <RiteInfoModal ref="riteInfoModal" />
+    <GiftInfoModal ref="giftInfoModal" />
   </div>
 </template>
 
@@ -178,12 +153,15 @@ export default class GiftsView extends Vue {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
+
   .card {
     width: calc(100vw / 4 - 10rem);
     height: fit-content;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+
     h5 {
       margin: 0;
       font-weight: bold;
@@ -191,6 +169,7 @@ export default class GiftsView extends Vue {
       text-align: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     }
+
     small {
       display: flex;
       justify-content: space-between;

@@ -1,41 +1,45 @@
+<script setup lang="ts">
+import { ref } from "vue"
+import Modal from "@/components/modal/Modal.vue"
+
+const show = ref(false)
+const element = ref<any>(null)
+const confirm = ref<(() => void) | null>(null)
+
+function showModal(el: any, fn: () => void) {
+  element.value = el
+  confirm.value = fn
+  show.value = true
+}
+
+function confirmDelete() {
+  if (!confirm.value) return
+  confirm.value()
+  element.value = null
+  show.value = false
+}
+
+defineExpose({ showModal })
+</script>
+
 <template>
   <Modal :shown="show" @close="show = false">
-    <div class="w-400 d-flex justify-content-center align-items-center flex-column" style="gap: 1rem" v-if="confirm && element">
-      <span>{{$t('character.advanced.customization.delete', {element})}}</span>
-      <button class="btn btn-primary" @click="confirmDelete">{{$t('character.advanced.customization.delete.confirm')}}</button>
+    <div v-if="confirm && element" class="confirm">
+      <span>{{ `Möchtest du ${element} wirklich löschen?` }}</span>
+      <button class="btn btn-primary" @click="confirmDelete">
+        Löschen
+      </button>
     </div>
   </Modal>
 </template>
 
-<script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
-import Modal from "@/components/modal/Modal.vue";
-
-@Component({
-  components: {Modal}
-})
-export default class ConfirmDeleteModal extends Vue {
-
-  private show = false;
-  private element: any;
-  private confirm: () => void = null!;
-
-  public showModal(element: any, confirm: () => void) {
-    this.element = element;
-    this.confirm = confirm;
-    this.show = true;
-  }
-
-  private confirmDelete() {
-    if (this.confirm) {
-      this.confirm();
-      this.element = null;
-      this.show = false;
-    }
-  }
-}
-</script>
-
 <style scoped lang="scss">
-
+.confirm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  text-align: center;
+}
 </style>

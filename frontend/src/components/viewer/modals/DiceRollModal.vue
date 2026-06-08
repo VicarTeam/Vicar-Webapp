@@ -1,70 +1,83 @@
-<script lang="ts">
-import {Vue, Component} from 'vue-property-decorator';
-import {ICharacter} from "@/types/models";
-import Modal from "@/components/modal/Modal.vue";
-import {VicarTT} from "@/libs/io/vicar-tt";
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import Modal from "@/components/modal/Modal.vue"
+import type { ICharacter } from "@/@types/models.ts"
+import { VicarTT } from "@/libs/io/vicar-tt.ts"
 
-@Component({
-  components: {Modal}
-})
-export default class DiceRollModal extends Vue {
+const visible = ref(false)
+const character = ref<ICharacter | null>(null)
+const dices = ref(1)
+const difficulty = ref("")
 
-  private visible: boolean = false;
-  private character: ICharacter = null!;
-  private dices: number = 1;
-  private difficulty: string = "";
-
-  public showModal(character: ICharacter) {
-    this.character = character;
-    this.dices = 1;
-    this.difficulty = "";
-    this.visible = true;
-  }
-
-  private sendDiceRoll() {
-    if (!this.canSend) {
-      return;
-    }
-
-    let difficulty: number|undefined = undefined;
-    if (this.difficulty.trim().length > 0 && !isNaN(parseInt(this.difficulty))) {
-      difficulty = parseInt(this.difficulty);
-    }
-
-    const hunger = Math.min(this.character.hunger, this.dices);
-    const simple = this.dices - hunger;
-
-    VicarTT.rollDiceFor(this.character, simple, hunger, difficulty);
-
-    this.visible = false;
-  }
-
-  private get canSend() {
-    return this.dices > 0;
-  }
+function showModal(char: ICharacter) {
+  character.value = char
+  dices.value = 1
+  difficulty.value = ""
+  visible.value = true
 }
+
+const canSend = computed(() => dices.value > 0)
+
+function sendDiceRoll() {
+  if (!canSend.value || !character.value) return
+
+  let diff: number | undefined
+  if (difficulty.value.trim().length > 0 && !isNaN(parseInt(difficulty.value))) {
+    diff = parseInt(difficulty.value)
+  }
+
+  const hunger = Math.min((character.value as any).hunger, dices.value)
+  const simple = dices.value - hunger
+
+  VicarTT.rollDiceFor(character.value, simple, hunger, diff)
+  visible.value = false
+}
+
+defineExpose({ showModal })
 </script>
 
 <template>
   <Modal :shown="visible" @close="visible = false">
-    <div class="w-250 flex-column d-flex" style="gap: 1rem; font-size: 1rem">
-      <b style="text-align: center">{{$t('character.vicartt.roll.modal.title')}}</b>
+    <div class="dice">
+      <b class="title">Benutzerdefinierten Würfelpool würfel</b>
+
       <div class="form-group mb-0">
-        <label>{{$t('character.vicartt.roll.modal.dices')}}:</label>
-        <input type="number" class="form-control" v-model.number="dices">
-      </div>
-      <div class="form-group mb-0">
-        <label>{{$t('character.vicartt.difficulty')}}:</label>
-        <input type="text" class="form-control" v-model="difficulty">
+        <label>Anzahl der Würfel:</label>
+        <input type="number" class="form-control" v-model.number="dices" />
       </div>
 
-      <div style="margin-top: 1rem; display: flex; justify-content: center; align-items: center">
-        <button :disabled="!canSend" class="btn btn-primary" @click="sendDiceRoll">{{$t('character.vicartt.roll')}}</button>
+      <div class="form-group mb-0">
+        <label>Schwierigkeit (optional):</label>
+        <input type="text" class="form-control" v-model="difficulty" />
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" :disabled="!canSend" @click="sendDiceRoll">
+          In FoundryVTT würfeln
+        </button>
       </div>
     </div>
   </Modal>
 </template>
 
 <style scoped lang="scss">
+.dice {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 1rem;
+}
 
+.title {
+  text-align: center;
+}
+
+.actions {
+  width: 100%;
+  margin-top: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

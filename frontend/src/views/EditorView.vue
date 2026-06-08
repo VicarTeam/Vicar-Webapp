@@ -1,18 +1,12 @@
+<script setup lang="ts">
+
+</script>
+
 <template>
   <div class="editor-view">
-    <router-view/>
+    <RouterView />
   </div>
 </template>
-
-<script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
-
-@Component({
-  components: {}
-})
-export default class EditorView extends Vue {
-}
-</script>
 
 <style scoped lang="scss">
 .editor-view {

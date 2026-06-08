@@ -1,136 +1,288 @@
-﻿<template>
-  <Container class="d-flex flex-grow-1" style="padding: 3rem; gap: 3rem;" :key="refreshForce">
-    <div class="d-flex flex-column" style="width: 20rem; gap: 1rem">
-      <input type="file" ref="importFiles" name="files[]" hidden @change="importCharacterFromFile($event)"/>
-      <button class="btn btn-primary" style="height: 4rem" @click="createCharacterModal.showModal()">
-        {{$t('main.characters.create')}}
-      </button>
-      <button class="btn btn-primary" style="height: 4rem" @click="createDirectoryModal.showModal()">
-        {{$t('main.characters.createdir')}}
-      </button>
-      <button class="btn btn-primary" style="height: 4rem" @click="importFiles.click()">
-        {{$t('main.characters.import')}}
-      </button>
-    </div>
+<script setup lang="ts">
+import { computed, onMounted, onUnmounted, provide, ref } from "vue"
+import { useRouter } from "vue-router"
+import CreateCharacterModal from "@/components/main/characters/modals/CreateCharacterModal.vue"
+import CreateDirectoryModal from "@/components/main/characters/modals/CreateDirectoryModal.vue"
+import ConfirmCharDeletionModal from "@/components/main/characters/modals/ConfirmCharDeletionModal.vue"
+import CharacterViewersModal from "@/components/main/characters/modals/CharacterViewersModal.vue"
+import CharacterDirectory from "@/components/main/characters/CharacterDirectory.vue"
+import CharacterStorage from "@/libs/io/character-storage"
+import FileReaderUtils from "@/libs/io/file-reader"
+import EventBus from "@/libs/event-bus"
+import type { ICharacter, ICharacterDirectory } from "@/@types/models"
 
-    <div class="d-flex flex-column flex-grow-1" style="gap: 3rem">
-      <CharacterDirectory v-for="(d, i) in getSortedCharacters()" :directory="d.directory" :characters="d.characters" :key="i"/>
-    </div>
+const router = useRouter()
 
-    <CreateCharacterModal ref="createCharacterModal"/>
-    <CreateDirectoryModal ref="createDirectoryModal" @created="updateCharacterList"/>
-    <ConfirmCharDeletionModal ref="confirmCharDeletionModal" @deleted="updateCharacterList"/>
-    <CharacterViewersModal ref="characterViewersModal"/>
-  </Container>
-</template>
+const refreshForce = ref(1)
 
-<script lang="ts">
-import {Component, Provide, Ref, Vue} from "vue-property-decorator";
-import Modal from "@/components/modal/Modal.vue";
-import CreateCharacterModal from "@/components/main/characters/modals/CreateCharacterModal.vue";
-import Avatar from "@/components/Avatar.vue";
-import {ICharacter, ICharacterDirectory} from "@/types/models";
-import CharacterStorage from "@/libs/io/character-storage";
-import ConfirmCharDeletionModal from "@/components/main/characters/modals/ConfirmCharDeletionModal.vue";
-import FileCreator from "@/libs/io/file-creator";
-import FileReaderUtils from "@/libs/io/file-reader";
-import {Mutation} from "vuex-class";
-import Bullet from "@/components/Bullet.vue";
-import IconButton from "@/components/IconButton.vue";
-import VicarShare from "@/components/main/characters/share/VicarShare.vue";
-import Character from "@/components/main/characters/Character.vue";
-import CharacterDirectory from "@/components/main/characters/CharacterDirectory.vue";
-import CreateDirectoryModal from "@/components/main/characters/modals/CreateDirectoryModal.vue";
-import {Container} from "vue-dndrop";
-import EventBus from "@/libs/event-bus";
-import CharacterViewersModal from "@/components/main/characters/modals/CharacterViewersModal.vue";
+const importFiles = ref<HTMLInputElement | null>(null)
+const createCharacterModal = ref<InstanceType<typeof CreateCharacterModal> | null>(null)
+const confirmCharDeletionModal = ref<InstanceType<typeof ConfirmCharDeletionModal> | null>(null)
+const createDirectoryModal = ref<InstanceType<typeof CreateDirectoryModal> | null>(null)
+const characterViewersModal = ref<InstanceType<typeof CharacterViewersModal> | null>(null)
 
-@Component({
-  components: {
-    CharacterViewersModal,
-    CreateDirectoryModal,
-    CharacterDirectory, Container,
-    Character, VicarShare, IconButton, Bullet, ConfirmCharDeletionModal, Avatar, CreateCharacterModal, Modal}
+const dragging = ref(false)
+const draggedChar = ref<ICharacter | null>(null)
+const dragX = ref(0)
+const dragY = ref(0)
+const pointerId = ref<number | null>(null)
+const dropTarget = ref<string | null>(null) // "__root__" oder directoryId
+const dragOffsetX = ref(0)
+const dragOffsetY = ref(0)
+
+const dropActiveMap = computed<Record<string, boolean>>(() => {
+  const m: Record<string, boolean> = {}
+  if (dropTarget.value) m[dropTarget.value] = true
+  return m
 })
-export default class Characters extends Vue {
 
-  private refreshForce = 1;
+function findDropZoneAt(x: number, y: number): string | null {
+  const el = document.elementFromPoint(x, y) as HTMLElement | null
+  if (!el) return null
+  const zone = el.closest("[data-dropzone]") as HTMLElement | null
+  return zone?.getAttribute("data-dropzone") ?? null
+}
 
-  @Ref("importFiles")
-  private importFiles!: HTMLInputElement;
+function onPointerMove(e: PointerEvent) {
+  if (!dragging.value) return
+  if (pointerId.value !== null && e.pointerId !== pointerId.value) return
 
-  @Ref("createCharacterModal")
-  private createCharacterModal!: CreateCharacterModal;
+  dragX.value = e.clientX - dragOffsetX.value
+  dragY.value = e.clientY - dragOffsetY.value
 
-  @Ref("confirmCharDeletionModal")
-  private confirmCharDeletionModal!: ConfirmCharDeletionModal;
+  dropTarget.value = findDropZoneAt(e.clientX, e.clientY)
+}
 
-  @Ref("createDirectoryModal")
-  private createDirectoryModal!: CreateDirectoryModal;
+async function endDrag(commit: boolean) {
+  if (!dragging.value) return
 
-  @Ref("characterViewersModal")
-  private characterViewersModal!: CharacterViewersModal;
+  const char = draggedChar.value
+  const target = dropTarget.value
 
-  mounted() {
-    EventBus.$on("update-character-list", this.updateCharacterList);
-  }
+  dragging.value = false
+  pointerId.value = null
 
-  destroyed() {
-    EventBus.$off("update-character-list", this.updateCharacterList);
-  }
+  if (commit && char) {
+    const oldDir = (char as any).directory as string | undefined
 
-  private async importCharacterFromFile(event: {target: {files: FileList}}) {
-    try {
-      const content = await FileReaderUtils.readFile(event.target.files);
-      const char: ICharacter = JSON.parse(content);
-      delete char.directory;
-      delete char.justViewing;
-      await CharacterStorage.addCharacter(char);
-      this.$forceUpdate();
-    } catch (e) {
-      console.error(e);
+    if (target === "__root__") {
+      delete (char as any).directory
+    } else if (target) {
+      ;(char as any).directory = target
     }
-  }
 
-  private getSortedCharacters() {
-    return CharacterStorage.getSortedCharacters();
-  }
+    await CharacterStorage.saveCharacter(char)
 
-  @Provide("edit-viewers")
-  private editViewers(char: ICharacter) {
-    this.characterViewersModal.showModal(char);
-  }
-
-  @Provide("begin-char-deletion")
-  private beginCharDeletion(char: ICharacter) {
-    this.confirmCharDeletionModal.showModal(char);
-  }
-
-  @Provide("update-character-list")
-  private updateCharacterList() {
-    this.refreshForce++;
-    if (this.refreshForce > 10) {
-      this.refreshForce = 1;
+    if (oldDir) {
+      const count = CharacterStorage.loadedCharacters.filter((c: any) => c.directory === oldDir).length
+      if (count === 0) {
+        CharacterStorage.loadedDirectories = CharacterStorage.loadedDirectories.filter((d: any) => d.id !== oldDir)
+      }
     }
+
+    updateCharacterList()
   }
 
-  @Provide("is-share-available")
-  private isShareAvailable(): boolean {
-    return false;
-  }
+  draggedChar.value = null
+  dropTarget.value = null
+}
 
-  @Provide("share-character")
-  private shareCharacter(char: ICharacter) {
+function onPointerUp(e: PointerEvent) {
+  if (!dragging.value) return
+  if (pointerId.value !== null && e.pointerId !== pointerId.value) return
+  endDrag(true)
+}
 
-  }
+function onPointerCancel(e: PointerEvent) {
+  if (!dragging.value) return
+  if (pointerId.value !== null && e.pointerId !== pointerId.value) return
+  endDrag(false)
+}
 
-  @Provide("create-character")
-  private createCharacter(dir?: ICharacterDirectory) {
-    this.createCharacterModal.showModal(dir);
+function beginDrag(char: ICharacter, e: PointerEvent) {
+  if (e.button !== undefined && e.button !== 0) return
+
+  draggedChar.value = char
+  dragging.value = true
+  pointerId.value = e.pointerId
+
+  const rect = (e.currentTarget as HTMLElement)?.getBoundingClientRect()
+  dragOffsetX.value = rect ? e.clientX - rect.left : 22
+  dragOffsetY.value = rect ? e.clientY - rect.top : 22
+
+  dragX.value = e.clientX - dragOffsetX.value
+  dragY.value = e.clientY - dragOffsetY.value
+
+  dropTarget.value = findDropZoneAt(e.clientX, e.clientY)
+
+  ;(e.currentTarget as HTMLElement)?.setPointerCapture?.(e.pointerId)
+  e.preventDefault()
+}
+
+onMounted(() => {
+  EventBus.$on("update-character-list", updateCharacterList)
+  window.addEventListener("pointermove", onPointerMove, { passive: false })
+  window.addEventListener("pointerup", onPointerUp)
+  window.addEventListener("pointercancel", onPointerCancel)
+})
+onUnmounted(() => {
+  EventBus.$off("update-character-list", updateCharacterList)
+  window.removeEventListener("pointermove", onPointerMove as any)
+  window.removeEventListener("pointerup", onPointerUp as any)
+  window.removeEventListener("pointercancel", onPointerCancel as any)
+})
+
+async function importCharacterFromFile(event: Event) {
+  try {
+    const input = event.target as HTMLInputElement
+    if (!input.files) return
+    const content = await FileReaderUtils.readFile(input.files as any)
+    const char: ICharacter = JSON.parse(content)
+    delete (char as any).directory
+    delete (char as any).justViewing
+    await CharacterStorage.addCharacter(char)
+    updateCharacterList()
+    input.value = ""
+  } catch (e) {
+    console.error(e)
   }
+}
+
+function getSortedCharacters() {
+  return CharacterStorage.getSortedCharacters()
+}
+
+provide("edit-viewers", (char: ICharacter) => characterViewersModal.value?.showModal(char))
+provide("begin-char-deletion", (char: ICharacter) => confirmCharDeletionModal.value?.showModal(char))
+provide("update-character-list", updateCharacterList)
+provide("is-share-available", () => false)
+provide("share-character", (_char: ICharacter) => {})
+provide("create-character", (dir?: ICharacterDirectory) => createCharacterModal.value?.showModal(dir))
+
+provide("begin-drag", beginDrag)
+
+function updateCharacterList() {
+  refreshForce.value++
+  if (refreshForce.value > 10) refreshForce.value = 1
 }
 </script>
 
-<style scoped lang="scss">
+<template>
+  <div class="characters" :key="refreshForce">
+    <div class="sidebar">
+      <input type="file" ref="importFiles" name="files[]" hidden @change="importCharacterFromFile" />
 
+      <button class="btn btn-primary big" @click="createCharacterModal?.showModal()">
+        NEUER CHARAKTER
+      </button>
+      <button class="btn btn-primary big" @click="createDirectoryModal?.showModal()">
+        NEUER ORDNER
+      </button>
+      <button class="btn btn-primary big" @click="importFiles?.click()">
+        IMPORTIEREN
+      </button>
+      <button class="btn btn-primary big" @click="router.push('/skilltrees')">
+        SKILL-BÄUME
+      </button>
+    </div>
+
+    <div class="lists">
+      <CharacterDirectory
+        v-for="(d, i) in getSortedCharacters()"
+        :key="i"
+        :directory="d.directory"
+        :characters="d.characters"
+        :activeDrop="dropActiveMap[d.directory ? d.directory.id : '__root__']"
+      />
+    </div>
+
+    <CreateCharacterModal ref="createCharacterModal" />
+    <CreateDirectoryModal ref="createDirectoryModal" @created="updateCharacterList" />
+    <ConfirmCharDeletionModal ref="confirmCharDeletionModal" @deleted="updateCharacterList" />
+    <CharacterViewersModal ref="characterViewersModal" />
+
+    <teleport to="body">
+      <div v-if="dragging && draggedChar" class="drag-ghost" :style="{ left: dragX + 'px', top: dragY + 'px' }">
+        <div class="ghost-card">
+          <div class="ghost-title">{{ draggedChar.name }}</div>
+          <div class="ghost-sub">{{ (draggedChar as any).concept }}</div>
+        </div>
+      </div>
+    </teleport>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.characters {
+  width: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 20rem 1fr;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.big {
+  height: 4rem;
+  min-height: 44px;
+  width: 100%;
+}
+
+.lists {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-width: 0;
+}
+
+.drag-ghost {
+  position: fixed;
+  z-index: 99999;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+}
+
+.ghost-card {
+  width: min(18rem, calc(100vw - 3rem));
+  background: rgba(37, 40, 44, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+.ghost-title {
+  font-weight: 800;
+  color: #fff;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ghost-sub {
+  margin-top: 0.25rem;
+  color: #a0a0a0;
+  font-size: 0.95rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 1000px) {
+  .characters {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .sidebar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
 </style>

@@ -1,133 +1,152 @@
-<template>
-  <div class="skills-view">
-    <div v-if="!isMage" class="card category" v-for="cat in editingCharacter.categories">
-      <div style="width: 100%; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.3)"><b>{{$t('data.category.' + cat.name)}}</b></div>
+<script setup lang="ts">
+import { computed, inject, ref } from "vue"
+import { useStore } from "@/app/store"
+import Dots from "@/components/progress/Dots.vue"
+import {getCategoryName, getSkillDescription, getSkillName, type ICharacter, type ISkillData} from "@/@types/models"
+import { isHumanInteractionSkill } from "@/@types/models"
+import LevelButton from "@/components/viewer/LevelButton.vue"
+import SkillModal from "@/components/viewer/modals/leveling/SkillModal.vue"
+import NewSpecializationModal from "@/components/viewer/modals/leveling/NewSpecializationModal.vue"
+import TipButton from "@/components/editor/TipButton.vue"
+import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vue"
+import CharacterStorage from "@/libs/io/character-storage"
+import { skillTreeResolver } from "@/libs/resolvers/skilltree-resolver"
+import { GameLine } from "@/@types/gameline"
+import {
+  knowledgeAbilities,
+  skillAbilities,
+  talentAbilities,
+  type M20Ability,
+  type RequestLevelFn, type IMageSheet, getAbilityName,
+} from "@/@types/m20"
 
-      <div class="skill" v-for="skill in cat.skills" :id="`hlsk-${skill.key}`">
-        <LevelButton v-if="skill.value < 5" @click="levelSkillModal.showModal(skill)"/>
-        <LevelButton @click="levelSpecializationModal.showModal(skill)" icon="fa-plus"/>
-        <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && skill.value > 0" @click="deleteSkill(skill)"></i>
-        <i class="iconbtnprim fa-solid fa-trash" v-if="editingCharacter.fullCustomization && skill.specialization.length > 0" @click="deleteSkillSpecs(skill)"></i>
-        <small class="name" @click.self="setDicePool('skill', $t('data.skill.' + skill.key).toString(), skill.value, isHumanInteractionSkill(skill.key))">
-          <TipButton :content="$t('data.skill.' + skill.key + '.desc')"/> {{$t('data.skill.' + skill.key)}} <span style="color: #a6a6a6" v-if="hasSpecialization(skill)">(<i><span v-for="s in skill.specialization" style="margin-left: 0.25rem; margin-right: 0.25rem" @click="setDicePool('skill', $t('data.skill.' + skill.key).toString() + ' (' + s + ')', skill.value + 1, isHumanInteractionSkill(skill.key))">{{s}}</span></i>)</span>
-        </small>
-        <Dots :amount="skill.value" :max="5"/>
-      </div>
-    </div>
+const store = useStore()
+const editingCharacter = computed(() => store.editingCharacter as ICharacter | undefined)
+const isMage = computed(() => editingCharacter.value?.game === GameLine.Mage)
 
-    <div v-if="isMage" class="card category">
-      <div style="width: 100%; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.3)"><b>{{$t('m20.ability_category.talents')}}</b></div>
+const levelSkillModal = ref<InstanceType<typeof SkillModal> | null>(null)
+const levelSpecializationModal = ref<InstanceType<typeof NewSpecializationModal> | null>(null)
+const confirmDeleteModal = ref<InstanceType<typeof ConfirmDeleteModal> | null>(null)
 
-      <div class="skill" v-for="a in talentAbilities">
-        <LevelButton v-if="editingCharacter.abilities[a] < 5" @click="requestLevel('ability', a)"/>
-        <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && editingCharacter.abilities[a] > 0" @click="deleteSkill(a)"></i>
-        <small class="name">{{$t('m20.ability.' + a)}}</small>
-        <Dots :amount="editingCharacter.abilities[a]" :max="5"/>
-      </div>
-    </div>
-    <div v-if="isMage" class="card category">
-      <div style="width: 100%; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.3)"><b>{{$t('m20.ability_category.skills')}}</b></div>
+const setDicePool = inject("set-dice-pool") as
+  | ((type: "attr" | "skill" | "disc", name: string, value: number, isHuman?: boolean) => void)
+  | undefined
 
-      <div class="skill" v-for="a in skillAbilities">
-        <LevelButton v-if="editingCharacter.abilities[a] < 5" @click="requestLevel('ability', a)"/>
-        <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && editingCharacter.abilities[a] > 0" @click="deleteSkill(a)"></i>
-        <small class="name">{{$t('m20.ability.' + a)}}</small>
-        <Dots :amount="editingCharacter.abilities[a]" :max="5"/>
-      </div>
-    </div>
-    <div v-if="isMage" class="card category">
-      <div style="width: 100%; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.3)"><b>{{$t('m20.ability_category.knowledges')}}</b></div>
+const requestLevel = inject("request-m20-level") as RequestLevelFn | undefined
 
-      <div class="skill" v-for="a in knowledgeAbilities">
-        <LevelButton v-if="editingCharacter.abilities[a] < 5" @click="requestLevel('ability', a)"/>
-        <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && editingCharacter.abilities[a] > 0" @click="deleteSkill(a)"></i>
-        <small class="name">{{$t('m20.ability.' + a)}}</small>
-        <Dots :amount="editingCharacter.abilities[a]" :max="5"/>
-      </div>
-    </div>
+/** Effektiver Fähigkeitswert inkl. aktiver Skill-Tree-Modifikatoren. */
+function effSkill(key: string) {
+  const c = editingCharacter.value
+  if (!c) return {value: 0, locked: false, modified: false}
+  return skillTreeResolver.getEffectiveSkill(c, key)
+}
 
-    <SkillModal ref="levelSkillModal"/>
-    <NewSpecializationModal ref="levelSpecializationModal"/>
-    <ConfirmDeleteModal ref="confirmDeleteModal"/>
-  </div>
-</template>
+function hasSpecialization(skill: ISkillData): boolean {
+  return !!skill.specialization && skill.specialization.length > 0
+}
 
-<script lang="ts">
-import {Component, Inject, Ref, Vue} from "vue-property-decorator";
-import Dots from "@/components/progress/Dots.vue";
-import {State} from "vuex-class";
-import {ICharacter, isHumanInteractionSkill, ISkillData, SkillKeys} from "@/types/models";
-import LevelButton from "@/components/viewer/LevelButton.vue";
-import SkillModal from "@/components/viewer/modals/leveling/SkillModal.vue";
-import NewSpecializationModal from "@/components/viewer/modals/leveling/NewSpecializationModal.vue";
-import TipButton from "@/components/editor/TipButton.vue";
-import ConfirmDeleteModal from "@/components/viewer/modals/ConfirmDeleteModal.vue";
-import CharacterStorage from "@/libs/io/character-storage";
-import EventBus from "@/libs/event-bus";
-import {GameLine} from "@/types/gameline";
-import {knowledgeAbilities, M20Ability, RequestLevelFn, skillAbilities, talentAbilities} from "@/types/m20";
+function deleteSkill(skill: ISkillData | M20Ability) {
+  const c = editingCharacter.value as any as IMageSheet
+  if (!c) return
 
-@Component({
-  components: {ConfirmDeleteModal, NewSpecializationModal, SkillModal, LevelButton, Dots, TipButton}
-})
-export default class SkillsView extends Vue {
-
-  talentAbilities = talentAbilities;
-  skillAbilities = skillAbilities;
-  knowledgeAbilities = knowledgeAbilities;
-
-  @State("editingCharacter")
-  private editingCharacter!: ICharacter;
-
-  @Ref("levelSkillModal")
-  private levelSkillModal!: SkillModal;
-
-  @Ref("levelSpecializationModal")
-  private levelSpecializationModal!: NewSpecializationModal;
-
-  @Ref("confirmDeleteModal")
-  private confirmDeleteModal!: ConfirmDeleteModal;
-
-  @Inject("set-dice-pool")
-  private setDicePool!: (type: 'attr'|'skill'|'disc', name: string, value: number, isHuman?: boolean) => void;
-
-  @Inject("request-m20-level")
-  private requestLevel!: RequestLevelFn;
-
-  isHumanInteractionSkill = isHumanInteractionSkill;
-
-  private hasSpecialization(skill: ISkillData): boolean {
-    return !!skill.specialization && skill.specialization.length > 0;
+  if (!isMage.value) {
+    const s = skill as ISkillData
+    confirmDeleteModal.value?.showModal(`${getSkillName(s.key)} ${s.value}`, () => {
+      s.value--
+      CharacterStorage.saveCharacter(c as any)
+    })
+    return
   }
 
-  private deleteSkill(skill: ISkillData|M20Ability) {
-    if (!this.isMage) {
-      skill = skill as ISkillData;
-      this.confirmDeleteModal.showModal(this.$t('data.skill.' + skill.key) + ' ' + skill.value, () => {
-        skill.value--;
-        CharacterStorage.saveCharacter(this.editingCharacter);
-      });
-    } else {
-      skill = skill as M20Ability;
-      this.confirmDeleteModal.showModal(this.$t('m20.ability.' + skill) + ' ' + this.editingCharacter.abilities[skill], () => {
-        this.editingCharacter.abilities[skill]--;
-        CharacterStorage.saveCharacter(this.editingCharacter);
-      });
-    }
-  }
+  const s = skill as M20Ability
+  confirmDeleteModal.value?.showModal(`${s} ${c.abilities[s]}`, () => {
+    c.abilities[s]--
+    CharacterStorage.saveCharacter(c as any)
+  })
+}
 
-  private deleteSkillSpecs(skill: ISkillData) {
-    this.confirmDeleteModal.showModal(skill.specialization.join(", "), () => {
-      skill.specialization = [];
-      CharacterStorage.saveCharacter(this.editingCharacter);
-    });
-  }
-
-  private get isMage() {
-    return this.editingCharacter?.game === GameLine.Mage;
-  }
+function deleteSkillSpecs(skill: ISkillData) {
+  const c = editingCharacter.value
+  if (!c) return
+  confirmDeleteModal.value?.showModal(skill.specialization.join(", "), () => {
+    skill.specialization = []
+    CharacterStorage.saveCharacter(c)
+  })
 }
 </script>
+
+<template>
+  <div v-if="editingCharacter" class="skills-view">
+    <div v-if="!isMage" class="card category" v-for="cat in editingCharacter.categories" :key="cat.name">
+      <div class="cat-head"><b>{{ getCategoryName(cat.name) }}</b></div>
+
+      <div class="skill" :class="{ modified: effSkill(skill.key).modified }" v-for="skill in cat.skills" :key="skill.key" :id="`hlsk-${skill.key}`">
+        <LevelButton v-if="skill.value < 5 && !effSkill(skill.key).locked" @click="levelSkillModal?.showModal(skill)" />
+        <LevelButton @click="levelSpecializationModal?.showModal(skill)" icon="fa-plus" />
+        <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && skill.value > 0 && !effSkill(skill.key).locked" @click="deleteSkill(skill)" />
+        <i class="iconbtnprim fa-solid fa-trash" v-if="editingCharacter.fullCustomization && skill.specialization.length > 0" @click="deleteSkillSpecs(skill)" />
+
+        <small class="name" @click.self="setDicePool?.('skill', getSkillName(skill.key), effSkill(skill.key).value, isHumanInteractionSkill(skill.key))">
+          <TipButton :content="getSkillDescription(skill.key)" />
+          {{ getSkillName(skill.key) }}
+          <i v-if="effSkill(skill.key).locked" class="fa-solid fa-lock lock-hint" />
+          <span v-if="hasSpecialization(skill)" class="specs">
+            <i>
+            (
+              <span style="display: inline-flex; gap: 0.25rem; flex-wrap: wrap;">
+                <span
+                  v-for="s in skill.specialization"
+                  :key="s"
+                  class="spec"
+                  @click="setDicePool?.('skill', `${getSkillName(skill.key)} (${s})`, effSkill(skill.key).value + 1, isHumanInteractionSkill(skill.key))"
+                >
+                  {{ s }}
+                </span>
+              </span>
+            )
+            </i>
+          </span>
+        </small>
+
+        <Dots :amount="effSkill(skill.key).value" :max="5" />
+      </div>
+    </div>
+
+    <div v-else class="card category">
+      <div class="cat-head"><b>Talente</b></div>
+      <div class="skill" v-for="a in talentAbilities" :key="a">
+        <LevelButton v-if="(editingCharacter as any as IMageSheet).abilities[a] < 5" @click="requestLevel?.('ability', a)" />
+        <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && (editingCharacter as any as IMageSheet).abilities[a] > 0" @click="deleteSkill(a)" />
+        <small class="name">{{ getAbilityName(a) }}</small>
+        <Dots :amount="(editingCharacter as any as IMageSheet).abilities[a]" :max="5" />
+      </div>
+    </div>
+
+    <div v-if="isMage" class="card category">
+      <div class="cat-head"><b>Fertigkeiten</b></div>
+      <div class="skill" v-for="a in skillAbilities" :key="a">
+        <LevelButton v-if="(editingCharacter as any as IMageSheet).abilities[a] < 5" @click="requestLevel?.('ability', a)" />
+        <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && (editingCharacter as any as IMageSheet).abilities[a] > 0" @click="deleteSkill(a)" />
+        <small class="name">{{ getAbilityName(a) }}</small>
+        <Dots :amount="(editingCharacter as any as IMageSheet).abilities[a]" :max="5" />
+      </div>
+    </div>
+
+    <div v-if="isMage" class="card category">
+      <div class="cat-head"><b>Kenntnisse</b></div>
+      <div class="skill" v-for="a in knowledgeAbilities" :key="a">
+        <LevelButton v-if="(editingCharacter as any as IMageSheet).abilities[a] < 5" @click="requestLevel?.('ability', a)" />
+        <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && (editingCharacter as any as IMageSheet).abilities[a] > 0" @click="deleteSkill(a)" />
+        <small class="name">{{ getAbilityName(a) }}</small>
+        <Dots :amount="(editingCharacter as any as IMageSheet).abilities[a]" :max="5" />
+      </div>
+    </div>
+
+    <SkillModal ref="levelSkillModal" />
+    <NewSpecializationModal ref="levelSpecializationModal" />
+    <ConfirmDeleteModal ref="confirmDeleteModal" />
+  </div>
+</template>
 
 <style scoped lang="scss">
 .skills-view {
@@ -137,23 +156,50 @@ export default class SkillsView extends Vue {
   justify-content: center;
   align-items: center;
   gap: 4rem;
+  padding: 1rem;
+  flex-wrap: wrap;
+
   .category {
     display: flex;
     flex-direction: column;
-    width: 40rem;
+    width: min(40rem, 100%);
     gap: 0.5rem;
-    .skill {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 1rem;
-      .name {
-        flex-grow: 1;
-      }
-      .value {
-        flex-shrink: 0;
-      }
+  }
+
+  .cat-head {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .skill {
+    display: flex;
+    align-items: center;
+
+    .name {
+      flex-grow: 1;
+      cursor: pointer;
+      user-select: none;
     }
+
+    .lock-hint {
+      margin-left: 0.35rem;
+      font-size: 0.7rem;
+      color: var(--text-3);
+    }
+
+    &.modified .name {
+      color: color-mix(in srgb, var(--accent) 45%, var(--text-1));
+    }
+  }
+
+  .specs {
+    color: #a6a6a6;
+    margin-left: 0.35rem;
+  }
+
+  .spec {
+    cursor: pointer;
   }
 }
 </style>

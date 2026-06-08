@@ -1,38 +1,45 @@
+<script setup lang="ts">
+import Modal from "@/components/modal/Modal.vue"
+
+const show = defineModel<boolean>("show", { default: false })
+const title = defineModel<any>("title", { default: null })
+const content = defineModel<any>("content", { default: "" })
+
+function showModal(t: any, c: any) {
+  title.value = t
+  content.value = c
+  show.value = true
+}
+
+defineExpose({ showModal })
+</script>
+
 <template>
   <Modal :shown="show" @close="show = false">
-    <div style="max-width: 40rem">
-      <p v-if="title" class="tip-title">{{title}}</p>
-      <small>{{content}}</small>
+    <div class="tip-modal">
+      <p v-if="title" class="tip-title">{{ title }}</p>
+      <small class="tip-content">{{ content }}</small>
     </div>
   </Modal>
 </template>
 
-<script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
-import Modal from "@/components/modal/Modal.vue";
-
-@Component({
-  components: {Modal}
-})
-export default class TipModal extends Vue {
-
-  private show: boolean = false;
-
-  private title: any = null;
-  private content: any = "";
-
-  public showModal(title: any, content: any) {
-    this.title = title;
-    this.content = content;
-    this.show = true;
-  }
-}
-</script>
-
 <style scoped lang="scss">
+.tip-modal {
+  max-width: min(40rem, calc(100vw - 2rem));
+  padding: 0.25rem 0.25rem 0.5rem;
+  display: grid;
+  gap: 0.6rem;
+}
 .tip-title {
-  font-weight: bold;
-  font-size: 1.6rem;
   margin: 0;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  font-size: 1.35rem;
+  font-family: Cinzel, serif;
+}
+.tip-content {
+  font-size: 1rem;
+  line-height: 1.45;
+  opacity: 0.92;
 }
 </style>

@@ -1,40 +1,35 @@
+<script setup lang="ts">
+import { ref } from "vue"
+import Modal from "@/components/modal/Modal.vue"
+import type { IBloodRitual } from "@/@types/data.ts"
+
+const show = ref(false)
+const ritual = ref<IBloodRitual | null>(null)
+
+function showModal(r: IBloodRitual) {
+  ritual.value = r
+  show.value = true
+}
+
+defineExpose({ showModal })
+</script>
+
 <template>
   <Modal :shown="show" @close="show = false">
-    <div style="max-width: 40rem" v-if="ritual" class="ability-info">
-      <small><i>{{ritual.description}}</i></small>
-      <hr>
-      <span><b>{{$t('editor.disciplines.bloodritual.ingredients')}}</b>: {{ritual.ingredients}}</span>
-      <span><b>{{$t('editor.disciplines.bloodritual.execution')}}</b>: {{ritual.execution}}</span>
-      <span><b>{{$t('editor.disciplines.bloodritual.system')}}</b>: {{ritual.system}}</span>
+    <div v-if="ritual" class="ability-info">
+      <small><i>{{ ritual.description }}</i></small>
+      <hr />
+      <span><b>Zutaten</b>: {{ ritual.ingredients }}</span>
+      <span><b>Ausführung</b>: {{ ritual.execution }}</span>
+      <span><b>System</b>: {{ ritual.system }}</span>
     </div>
   </Modal>
 </template>
 
-<script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
-import {IBloodRitual, IDiscipline, IDisciplineAbility} from "@/types/data";
-import {ILeveledDisciplineAbility} from "@/types/models";
-import DataManager from "@/libs/data/data-manager";
-import Modal from "@/components/modal/Modal.vue";
-
-@Component({
-  components: {Modal}
-})
-export default class BloodRitualInfoModal extends Vue {
-
-  private show: boolean = false;
-  private ritual: IBloodRitual|null = null;
-
-  public showModal(ritual: IBloodRitual) {
-    this.ritual = ritual;
-    this.show = true;
-  }
-}
-</script>
-
 <style scoped lang="scss">
 .ability-info {
-  max-height: 50rem;
+  width: 100%;
+  max-height: min(60vh, 50rem);
   display: flex;
   flex-direction: column;
   overflow-y: auto;

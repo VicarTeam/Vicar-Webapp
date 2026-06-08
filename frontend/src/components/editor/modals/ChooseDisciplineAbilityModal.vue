@@ -1,128 +1,151 @@
+<script setup lang="ts">
+import { computed, ref, watch } from "vue"
+import Modal from "@/components/modal/Modal.vue"
+import DataManager from "@/libs/data/data-manager"
+import { disciplineAbilityResolver } from "@/libs/resolvers/disciplineability-resolver"
+import { useStore } from "@/app/store"
+import type { ICharacter, IDisciplineSelection, ILeveledDisciplineAbility } from "@/@types/models"
+
+export type ChooseAbilityCallback = (ability: ILeveledDisciplineAbility) => void
+
+const store = useStore()
+const editingCharacter = computed<ICharacter | undefined>(() => store.editingCharacter as any)
+
+const costs = ref(-1)
+const overrideCosts = ref(-1)
+
+const shown = ref(false)
+const ability = ref<ILeveledDisciplineAbility | null>(null)
+
+const discipline = ref<IDisciplineSelection | null>(null)
+const abilities = ref<ILeveledDisciplineAbility[]>([])
+let callback: ChooseAbilityCallback | null = null
+
+function showModal(disc: IDisciplineSelection, cb: ChooseAbilityCallback, c = -1) {
+  ability.value = null
+  costs.value = c
+  discipline.value = disc
+  abilities.value = DataManager.normalToLeveledAbilities(disc.discipline)
+  callback = cb
+  shown.value = true
+}
+
+function addCurrentAbility() {
+  if (!canSelectAbility.value || !discipline.value || !ability.value || !callback) return
+  callback(ability.value)
+  shown.value = false
+}
+
+function isAbilitySelectable(a: ILeveledDisciplineAbility) {
+  const char = editingCharacter.value
+  const disc = discipline.value
+  if (!char || !disc) return false
+  return disciplineAbilityResolver.resolve(char, disc, a)
+}
+
+function getCombo(a: ILeveledDisciplineAbility) {
+  if (!a.combination) return ""
+  return (DataManager.getDiscipline(a.combination.id)?.name ?? "") + " " + a.combination.level
+}
+
+function getRequirement(a: ILeveledDisciplineAbility) {
+  if (!a.requirement) return ""
+  return abilities.value.find((x) => x.id === a.requirement)?.name ?? ""
+}
+
+function hasAbility(a: ILeveledDisciplineAbility) {
+  return discipline.value?.abilities.find((x) => x.id === a.id) !== undefined
+}
+
+const availableAbilities = computed(() => {
+  const disc = discipline.value
+  if (!disc) return []
+  return abilities.value.filter((a) => a.level <= disc.currentLevel && !hasAbility(a))
+})
+
+const canSelectAbility = computed(() => {
+  const char = editingCharacter.value
+  const disc = discipline.value
+  const a = ability.value
+  if (!char || !disc || !a) return false
+  const pay = costs.value === -1 ? true : ((overrideCosts.value !== -1 ? overrideCosts.value : costs.value) <= char.exp)
+  return disciplineAbilityResolver.resolve(char, disc, a) && pay
+})
+
+watch(
+  () => ability.value,
+  (a) => {
+    const char = editingCharacter.value
+    if (!a || !char) {
+      overrideCosts.value = -1
+      return
+    }
+    if (a.level > 5 && (char as any).cainsMarkLevel !== 5) {
+      overrideCosts.value = a.level * 10
+    } else {
+      overrideCosts.value = -1
+    }
+  }
+)
+
+defineExpose({ showModal })
+</script>
+
 <template>
   <Modal :shown="shown" v-if="editingCharacter && discipline && callback" @close="shown = false">
-    <div style="width: 50rem; display: flex; flex-direction: column; gap: 2rem">
-      <p style="margin: 0; font-weight: bold; font-size: 1.6rem">{{$t('editor.disciplines.choose.title', {disc: discipline.discipline.name, lvl: discipline.currentLevel})}}</p>
+    <div class="wrap">
+      <p class="title">
+        {{ `Kraft für ${discipline.discipline.name} ${discipline.currentLevel} auswählen` }}
+      </p>
 
       <select class="form-control" v-model="ability">
-        <option v-for="a in availableAbilities" :class="{'not-selectable': !isAbilitySelectable(a)}" :value="a">{{a.name}} - {{$t('editor.disciplines.level')}}: {{a.level}}{{isAbilitySelectable(a) ? '' : ' - ' + $t('editor.disciplines.notselectable')}}</option>
+        <option
+          v-for="a in availableAbilities"
+          :key="a.id"
+          :class="{ 'not-selectable': !isAbilitySelectable(a) }"
+          :value="a"
+        >
+          {{ a.name }} - Stufe: {{ a.level }}{{
+            isAbilitySelectable(a) ? "" : " - Voraussetzungen nicht erfüllt"
+          }}
+        </option>
       </select>
 
       <div class="info" v-if="ability">
-        <small><i>{{ability.summary}}</i></small>
-        <hr>
-        <small v-if="ability.minBloodPotency"><b>{{$t('character.advanced.disciplines.minpotency')}}</b>: {{ability.minBloodPotency}}</small>
-        <small v-if="ability.requirement"><b>{{$t('editor.disciplines.requirement')}}</b>: {{getRequirement(ability)}}</small>
-        <small v-if="ability.combination"><b>{{$t('editor.disciplines.combo')}}</b>: {{getCombo(ability)}}</small>
-        <hr v-if="ability.combination || ability.requirement">
-        <span><b>{{$t('editor.disciplines.costs')}}</b>: {{ability.costs}}</span>
-        <span v-if="ability.diceSupplies"><b>{{$t('editor.disciplines.dices')}}</b>: {{ability.diceSupplies}}</span>
-        <span><b>{{$t('editor.disciplines.system')}}</b>: <span v-html="ability.system"/></span>
-        <small v-if="ability.alternatives && ability.alternatives.length > 0"><b>{{$t('editor.disciplines.alternatives')}}</b>: {{ability.alternatives.join(", ")}}</small>
-        <span><b>{{$t('editor.disciplines.duration')}}</b>: {{ability.duration}}</span>
+        <small><i>{{ ability.summary }}</i></small>
+        <hr />
+        <small v-if="ability.minBloodPotency"><b>Minimale Blutmacht</b>: {{ ability.minBloodPotency }}</small>
+        <small v-if="ability.requirement"><b>Voraussetzung</b>: {{ getRequirement(ability) }}</small>
+        <small v-if="ability.combination"><b>Kombination</b>: {{ getCombo(ability) }}</small>
+        <hr v-if="ability.combination || ability.requirement" />
+        <span><b>Kosten</b>: {{ ability.costs }}</span>
+        <span v-if="ability.diceSupplies"><b>Würfelpool</b>: {{ ability.diceSupplies }}</span>
+        <span><b>System</b>: <span v-html="ability.system" /></span>
+        <small v-if="ability.alternatives && ability.alternatives.length > 0"><b>Alternativen</b>: {{ ability.alternatives.join(", ") }}</small>
+        <span><b>Dauer</b>: {{ ability.duration }}</span>
       </div>
 
-      <div style="width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
-        <span v-if="costs > 0" class="mb-10">{{$t('viewer.modal.level.costs', {xp: this.overrideCosts !== -1 ? this.overrideCosts : this.costs})}}</span>
-        <button class="btn btn-primary" :disabled="!canSelectAbility" @click="addCurrentAbility">{{$t('editor.choose')}}</button>
+      <div class="footer">
+        <span v-if="costs > 0" class="mb-10">{{ `Kosten: ${overrideCosts !== -1 ? overrideCosts : costs} EXP` }}</span>
+        <button class="btn btn-primary" :disabled="!canSelectAbility" @click="addCurrentAbility">Auswählen</button>
       </div>
     </div>
   </Modal>
 </template>
 
-<script lang="ts">
-import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-import Modal from "@/components/modal/Modal.vue";
-import {ICharacter, IDisciplineSelection, ILeveledDisciplineAbility} from "@/types/models";
-import {State} from "vuex-class";
-import DataManager from "@/libs/data/data-manager";
-import {disciplineAbilityResolver} from "@/libs/resolvers/disciplineability-resolver";
-
-export type ChooseAbilityCallback = (ability: ILeveledDisciplineAbility) => void;
-
-@Component({
-  components: {Modal}
-})
-export default class ChooseDisciplineAbilityModal extends Vue {
-
-  @State("editingCharacter")
-  private editingCharacter!: ICharacter|undefined;
-
-  private costs: number = -1;
-  private overrideCosts: number = -1;
-
-  private shown: boolean = false;
-  private ability: ILeveledDisciplineAbility|null = null;
-
-  private discipline: IDisciplineSelection|null = null;
-  private abilities: ILeveledDisciplineAbility[] = [];
-  private callback: ChooseAbilityCallback|null = null;
-
-  public showModal(discipline: IDisciplineSelection, callback: ChooseAbilityCallback, costs = -1) {
-    this.ability = null;
-    this.costs = costs;
-    this.discipline = discipline;
-    this.abilities = DataManager.normalToLeveledAbilities(discipline.discipline);
-    this.callback = callback;
-    this.shown = true;
-  }
-
-  private addCurrentAbility() {
-    if (this.canSelectAbility && this.discipline) {
-      this.callback!(this.ability!);
-      this.shown = false;
-    }
-  }
-
-  private isAbilitySelectable(ability: ILeveledDisciplineAbility): boolean {
-    return disciplineAbilityResolver.resolve(this.editingCharacter!, this.discipline!, ability);
-  }
-
-  private getCombo(ability: ILeveledDisciplineAbility): string {
-    if (!ability.combination) {
-      return "";
-    }
-
-    return (DataManager.getDiscipline(ability.combination.id)?.name ?? "") + " " + ability.combination.level;
-  }
-
-  private getRequirement(ability: ILeveledDisciplineAbility): string {
-    if (!ability.requirement) {
-      return "";
-    }
-    return this.abilities.find(a => a.id === ability.requirement)?.name ?? "";
-  }
-
-  private hasAbility(ability: ILeveledDisciplineAbility): boolean {
-    return this.discipline?.abilities.find(a => a.id === ability.id) !== undefined;
-  }
-
-  private get availableAbilities(): ILeveledDisciplineAbility[] {
-    return this.abilities.filter(ability => ability.level <= this.discipline!.currentLevel && !this.hasAbility(ability));
-  }
-
-  private get canSelectAbility(): boolean {
-    return !!this.ability && disciplineAbilityResolver.resolve(this.editingCharacter!, this.discipline!, this.ability)
-        && (this.costs === -1 || (this.overrideCosts !== -1 ? this.overrideCosts : this.costs) <= this.editingCharacter!.exp);
-  }
-
-  @Watch("ability")
-  private onAbilityChanged() {
-    if (this.ability) {
-      if (this.ability.level > 5 && this.editingCharacter?.cainsMarkLevel !== 5) {
-        this.overrideCosts = this.ability.level * 10; // advanced discipline
-      } else {
-        this.overrideCosts = -1;
-      }
-    } else {
-      this.overrideCosts = -1;
-    }
-  }
-}
-</script>
-
 <style scoped lang="scss">
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.title {
+  margin: 0;
+  font-weight: 800;
+  font-size: 1.6rem;
+}
 .info {
-  max-height: 50rem;
+  max-height: min(50rem, 55vh);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -132,5 +155,16 @@ export default class ChooseDisciplineAbilityModal extends Vue {
 .not-selectable {
   font-style: italic;
   color: rgba(255, 255, 255, 0.6) !important;
+}
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .btn {
+    min-height: 44px;
+    width: min(22rem, 100%);
+  }
 }
 </style>

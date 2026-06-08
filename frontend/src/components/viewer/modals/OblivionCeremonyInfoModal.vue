@@ -1,57 +1,52 @@
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import Modal from "@/components/modal/Modal.vue"
+import type { IOblivionCeremony } from "@/@types/data.ts"
+import type { IDisciplineSelection, ILeveledDisciplineAbility } from "@/@types/models.ts"
+import { useStore } from "@/app/store.ts"
+
+const store = useStore()
+
+const show = ref(false)
+const ritual = ref<IOblivionCeremony | null>(null)
+const discipline = ref<IDisciplineSelection | undefined>(undefined)
+
+function showModal(r: IOblivionCeremony) {
+  ritual.value = r
+  const char: any = store.editingCharacter
+  discipline.value = char?.disciplines?.find((x: any) => x.discipline.id === 11)
+  show.value = true
+}
+
+const neededAbility = computed<ILeveledDisciplineAbility | undefined>(() => {
+  if (!ritual.value?.requires) return undefined
+  return discipline.value?.abilities?.find((x) => x.id === ritual.value!.id)
+})
+
+defineExpose({ showModal })
+</script>
+
 <template>
   <Modal :shown="show" @close="show = false">
-    <div style="max-width: 40rem" v-if="ritual && discipline" class="ability-info">
-      <small><i>{{ritual.summary}}</i></small>
-      <hr>
-      <span v-if="getNeededAbility(ritual)"><b>{{$t('editor.disciplines.oblivionceremonies.required_power')}}</b>: {{getNeededAbility(ritual).name}}</span>
-      <span v-if="ritual.cult"><b>{{$t('editor.desciplines.oblivionceremonies.cult')}}</b>: {{ritual.cult}}</span>
-      <span><b>{{$t('editor.disciplines.costs')}}</b>: {{ritual.cost}}</span>
-      <span><b>{{$t('editor.desciplines.oblivionceremonies.roll')}}</b>: {{ritual.roll}}</span>
-      <span><b>{{$t('editor.disciplines.bloodritual.ingredients')}}</b>: {{ritual.ingredients}}</span>
-      <span><b>{{$t('editor.disciplines.bloodritual.execution')}}</b>: {{ritual.execution}}</span>
-      <span><b>{{$t('editor.disciplines.bloodritual.system')}}</b>: {{ritual.system}}</span>
-      <span v-if="ritual.duration"><b>{{$t('editor.desciplines.oblivionceremonies.duration')}}</b>: {{ritual.duration}}</span>
+    <div v-if="ritual && discipline" class="ability-info">
+      <small><i>{{ (ritual as any).summary }}</i></small>
+      <hr />
+      <span v-if="neededAbility"><b>Benötigte Disziplinsfähigkeit</b>: {{ neededAbility.name }}</span>
+      <span v-if="(ritual as any).cult"><b>Praktiziert von</b>: {{ (ritual as any).cult }}</span>
+      <span><b>Kosten</b>: {{ (ritual as any).cost }}</span>
+      <span><b>Zeremonienwurf</b>: {{ (ritual as any).roll }}</span>
+      <span><b>Zutaten</b>: {{ (ritual as any).ingredients }}</span>
+      <span><b>Ausführung</b>: {{ (ritual as any).execution }}</span>
+      <span><b>System</b>: {{ (ritual as any).system }}</span>
+      <span v-if="(ritual as any).duration"><b>Dauer</b>: {{ (ritual as any).duration }}</span>
     </div>
   </Modal>
 </template>
 
-<script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
-import {IBloodRitual, IDiscipline, IDisciplineAbility, IOblivionCeremony} from "@/types/data";
-import {ICharacter, IDisciplineSelection, ILeveledDisciplineAbility} from "@/types/models";
-import DataManager from "@/libs/data/data-manager";
-import Modal from "@/components/modal/Modal.vue";
-import {State} from "vuex-class";
-
-@Component({
-  components: {Modal}
-})
-export default class BloodRitualInfoModal extends Vue {
-
-  @State("editingCharacter")
-  private editingCharacter!: ICharacter;
-
-  private show: boolean = false;
-  private ritual: IOblivionCeremony|null = null;
-  private discipline: IDisciplineSelection|undefined = undefined;
-
-  public showModal(ritual: IOblivionCeremony) {
-    this.ritual = ritual;
-    this.discipline = this.editingCharacter.disciplines.find(x => x.discipline.id === 11);
-    this.show = true;
-  }
-
-  private getNeededAbility(): ILeveledDisciplineAbility|undefined {
-    if (!this.ritual) return undefined;
-    if (!this.ritual.requires) return undefined;
-    return this.discipline?.abilities?.find(x => x.id === this.ritual!.id);
-  }
-}
-</script>
-
 <style scoped lang="scss">
 .ability-info {
-  max-height: 50rem;
+  width: 100%;
+  max-height: min(60vh, 50rem);
   display: flex;
   flex-direction: column;
   overflow-y: auto;

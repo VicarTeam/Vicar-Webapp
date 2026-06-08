@@ -1,18 +1,17 @@
-import {Storage} from "@/libs/io/storage";
-import {ICharacter} from "@/types/models";
+import type {ICharacter} from "@/@types/models";
 import {VicarNet} from "@/libs/io/vicar-net";
 import CharacterStorage from "@/libs/io/character-storage";
 import EventBus from "@/libs/event-bus";
 
 interface SyncMap {
-  outs: {[key: string]: string};
-  ins: {[key: string]: string};
+  outs: { [key: string]: string };
+  ins: { [key: string]: string };
 }
 
 export class VicarSync {
 
-  private static readonly lastSyncedData: {[key: string]: string} = {};
-  private static readonly syncIntervals: {[key: string]: number} = {};
+  private static readonly lastSyncedData: { [key: string]: string } = {};
+  private static readonly syncIntervals: { [key: string]: number } = {};
   private static readonly syncInterval = 1000 * 5;
   private static readonly retrieveInterval = 1000 * 10;
 
@@ -25,14 +24,7 @@ export class VicarSync {
   };
 
   public static async initialize() {
-    const storage = await Storage.readStorage("vicar-sync");
-    if (storage) {
-      this.map = JSON.parse(storage);
 
-      if (Object.keys(this.map.ins).length > 0) {
-        this.startRetrieveInterval();
-      }
-    }
   }
 
   public static isCharacterSyncedOut(char: ICharacter): boolean {
@@ -123,7 +115,7 @@ export class VicarSync {
     this.currentlyLevelingCharHash = undefined;
     this.lastLevelingCharHash = levelData;
 
-    VicarNet.postCharLevelSync(this.map.outs[char.id], levelData).then().catch(e => console.error(e));
+    VicarNet.postCharLevelSync(this.map.outs[char.id]!, levelData).then().catch(e => console.error(e));
   }
 
   public static triggerCharacterLevelSync(char: ICharacter) {
@@ -136,7 +128,7 @@ export class VicarSync {
     this.currentlyLevelingCharHash = undefined;
     this.lastLevelingCharHash = levelData;
 
-    VicarNet.postCharLevelSync(this.map.outs[char.id], levelData).then().catch(e => console.error(e));
+    VicarNet.postCharLevelSync(this.map.outs[char.id]!, levelData).then().catch(e => console.error(e));
   }
 
   public static triggerCharacterSync(char: ICharacter) {
@@ -168,7 +160,7 @@ export class VicarSync {
   }
 
   private static syncCharacter(char: ICharacter) {
-    const roomId = this.map.outs[char.id];
+    const roomId = this.map.outs[char.id]!;
     const data = this.getCharData(char);
     if (this.lastSyncedData[roomId] === data) {
       return;
@@ -284,7 +276,7 @@ export class VicarSync {
     return base64.replace(/=/g, "");
   }
 
-  private static findCharSyncOutHashByInCharacter(char: ICharacter): string|undefined {
+  private static findCharSyncOutHashByInCharacter(char: ICharacter): string | undefined {
     const pair = Object.entries(this.map.ins).find(([roomId, charId]) => charId === char.id);
     if (!pair) {
       return;
@@ -294,6 +286,5 @@ export class VicarSync {
   }
 
   private static async save() {
-    await Storage.writeStorage("vicar-sync", JSON.stringify(this.map));
   }
 }

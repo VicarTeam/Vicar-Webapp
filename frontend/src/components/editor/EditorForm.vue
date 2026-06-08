@@ -1,3 +1,123 @@
+<script setup lang="ts">
+import { computed } from "vue"
+import { useRouter } from "vue-router"
+import { useStore } from "@/app/store"
+import type { ICharacter, ICharacterDirectory } from "@/@types/models"
+import { AttributeKeys } from "@/@types/models"
+import { GameLine } from "@/@types/gameline"
+import CharacterStorage from "@/libs/io/character-storage"
+import { EditorHistory } from "@/libs/editor-history"
+import FileCreator from "@/libs/io/file-creator"
+import DataManager from "@/libs/data/data-manager"
+
+const props = withDefaults(
+  defineProps<{
+    showOnly?: boolean
+    fallbackHistoryChar?: ICharacter | null
+    isCancel?: boolean
+    isFinish?: boolean
+    canGoNext: boolean
+    nextStep?: string
+    preserveStateOnBack?: boolean
+  }>(),
+  {
+    showOnly: false,
+    fallbackHistoryChar: null,
+    isCancel: false,
+    isFinish: false,
+    nextStep: "",
+    preserveStateOnBack: false,
+  }
+)
+
+const emit = defineEmits<{
+  (e: "before-next", payload: { next: () => void | Promise<void>; cancel: boolean }): void
+}>()
+
+const router = useRouter()
+const store = useStore()
+
+const editingCharacter = computed(() => store.editingCharacter as ICharacter | undefined)
+const directoryForCharCreation = computed(() => store.directoryForCharCreation as ICharacterDirectory | undefined)
+
+async function next() {
+  if (props.showOnly) return
+  if (!editingCharacter.value || !props.canGoNext) return
+
+  if (!props.isFinish) {
+    const n = () => {
+      EditorHistory.push(props.fallbackHistoryChar ? props.fallbackHistoryChar : editingCharacter.value!)
+
+      if (props.preserveStateOnBack) {
+        EditorHistory.markSkipNextRestore()
+      }
+
+      router.push({ name: props.nextStep })
+    }
+
+    const event = { next: n, cancel: false }
+    emit("before-next", event)
+    if (!event.cancel) n()
+    return
+  }
+
+  const n = async () => {
+    const char = editingCharacter.value
+    if (!char) return
+
+    if (directoryForCharCreation.value) {
+      ;(char as any).directory = directoryForCharCreation.value.id
+    }
+
+    if (char.game !== GameLine.Mage) {
+      ;(char as any).requiredPointSpreads = []
+      ;(char as any).health = DataManager.getAttributeValue(char as any, AttributeKeys.Stamina) + 3
+      ;(char as any).willpower =
+        DataManager.getAttributeValue(char as any, AttributeKeys.Composure) +
+        DataManager.getAttributeValue(char as any, AttributeKeys.Resolve)
+    }
+
+    const res = await CharacterStorage.addCharacter(char as any)
+    if (!res) {
+      FileCreator.create("unsaved-character", JSON.stringify(char))
+      return
+    }
+
+    store.isLevelMode = false
+    EditorHistory.clear()
+    store.directoryForCharCreation = undefined
+    await router.push({ name: "viewer", params: { characterId: (char as any).id } })
+  }
+
+  const event = { next: n, cancel: false }
+  emit("before-next", event)
+  if (!event.cancel) await n()
+}
+
+function back() {
+  if (!props.isCancel) {
+    if (props.preserveStateOnBack) {
+      const skip = EditorHistory.shouldSkipRestore()
+      if (!skip && EditorHistory.length > 0) {
+        store.editingCharacter = EditorHistory.pop() as any
+      }
+    } else {
+      if (EditorHistory.length > 0) {
+        store.editingCharacter = EditorHistory.pop() as any
+      }
+    }
+
+    router.back()
+    return
+  }
+
+  store.directoryForCharCreation = undefined
+  store.editingCharacter = undefined
+  EditorHistory.clear()
+  router.push({ name: "main" })
+}
+</script>
+
 <template>
   <div class="editor-form">
     <div class="pane" :class="{ 'full-height': showOnly }">
@@ -5,134 +125,18 @@
     </div>
 
     <div v-if="!showOnly" class="toolbar">
-      <button class="btn" @click="back">{{ $t('editor.toolbar.' + (!isCancel ? 'back' : 'cancel')) }}</button>
+      <button class="btn" @click="back">
+        {{ !isCancel ? "Zurück" : "Abbrechen" }}
+      </button>
+
       <div class="fill"></div>
-      <button class="btn btn-primary" @click="next" :disabled="!canGoNext">{{ $t('editor.toolbar.' + (!isFinish ? 'next' : 'finish')) }}</button>
+
+      <button class="btn btn-primary" @click="next" :disabled="!canGoNext">
+        {{ !isFinish ? "Weiter" : "Abschließen" }}
+      </button>
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import {Component, Prop, Vue} from "vue-property-decorator";
-import {Mutation, State} from "vuex-class";
-import {AttributeKeys, ICharacter, ICharacterDirectory} from "@/types/models";
-import CharacterStorage from "@/libs/io/character-storage";
-import {EditorHistory} from "@/libs/editor-history";
-import FileCreator from "@/libs/io/file-creator";
-import {hardSetTheme} from "@/libs/theme";
-import {GameLine} from "@/types/gameline";
-import DataManager from "@/libs/data/data-manager";
-
-@Component({
-  components: {}
-})
-export default class EditorForm extends Vue {
-
-  @Prop({default: false})
-  private showOnly!: boolean;
-
-  @Prop({default: null})
-  private fallbackHistoryChar!: ICharacter|null;
-
-  @Prop({default: false})
-  private isCancel!: boolean;
-
-  @Prop({default: false})
-  private isFinish!: boolean;
-
-  @Prop({required: true})
-  private canGoNext!: boolean;
-
-  @Prop({default: ""})
-  private nextStep!: string;
-
-  @State("editingCharacter")
-  private editingCharacter!: ICharacter|undefined;
-
-  @State("editorCharHistory")
-  private editorCharHistory!: ICharacter[];
-
-  @State("directoryForCharCreation")
-  private directoryForCharCreation!: ICharacterDirectory|undefined;
-
-  @Mutation("setEditingCharacter")
-  private setEditingCharacter!: (character?: ICharacter) => void;
-
-  @Mutation("setLevelMode")
-  private setLevelMode!: (mode: boolean) => void;
-
-  @Mutation("setDirectoryForCharCreation")
-  private setDirectoryForCharCreation!: (dir?: ICharacterDirectory) => void;
-
-  private next() {
-    if (this.showOnly) {
-      return;
-    }
-
-    if (!this.editingCharacter || !this.canGoNext) {
-      return;
-    }
-    if (!this.isFinish) {
-      const n = () => {
-        EditorHistory.push(!!this.fallbackHistoryChar ? this.fallbackHistoryChar : this.editingCharacter!);
-        this.$router.push({name: this.nextStep});
-      };
-      const event = {next: n, cancel: false};
-      this.$emit("before-next", event);
-      if (!event.cancel) {
-        n();
-      }
-    } else {
-      const n = async () => {
-        if (!this.editingCharacter) {
-          return;
-        }
-
-        if (this.directoryForCharCreation) {
-          this.editingCharacter.directory = this.directoryForCharCreation.id;
-        }
-
-        if (this.editingCharacter.game !== GameLine.Mage) {
-          this.editingCharacter.requiredPointSpreads = [];
-          this.editingCharacter.health = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Stamina) + 3;
-          this.editingCharacter.willpower = DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Composure)
-            + DataManager.getAttributeValue(this.editingCharacter, AttributeKeys.Resolve);
-        }
-
-        const res = await CharacterStorage.addCharacter(this.editingCharacter);
-        if (!res) {
-          FileCreator.create("unsaved-character", JSON.stringify(this.editingCharacter));
-          return;
-        }
-
-        this.setLevelMode(false);
-        EditorHistory.clear();
-        this.setDirectoryForCharCreation();
-        hardSetTheme();
-        await this.$router.push({name: 'viewer', params: {characterId: this.editingCharacter.id}});
-      };
-      const event = {next: n, cancel: false};
-      this.$emit("before-next", event);
-      if (!event.cancel) {
-        n();
-      }
-    }
-  }
-
-  private back() {
-    if (!this.isCancel) {
-      this.setEditingCharacter(EditorHistory.pop());
-      this.$router.back();
-    } else {
-      hardSetTheme();
-      this.setDirectoryForCharCreation();
-      this.setEditingCharacter();
-      EditorHistory.clear();
-      this.$router.push({name: 'main'});
-    }
-  }
-}
-</script>
 
 <style scoped lang="scss">
 .editor-form {
@@ -140,26 +144,35 @@ export default class EditorForm extends Vue {
   height: 100%;
   display: flex;
   flex-direction: column;
+  min-height: 0;
   .pane {
     width: 100%;
-    height: calc(100% - 5rem);
-    max-height: calc(100% - 5rem);
-    overflow-x: hidden;
-    overflow-y: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
     &.full-height {
-      height: 100%;
-      max-height: 100%;
+      flex: 1 1 auto;
     }
   }
   .toolbar {
-    height: 5rem;
+    position: sticky;
+    bottom: 0;
     width: 100%;
-    padding: 1rem;
+    padding: 0.8rem 1rem max(env(safe-area-inset-bottom), 0.8rem);
     display: flex;
-    justify-content: center;
     align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.55));
+    backdrop-filter: blur(0.6rem);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     .fill {
-      flex-grow: 1;
+      flex: 1 1 auto;
+    }
+    .btn {
+      min-height: 44px;
+      padding: 0.65rem 1rem;
+      white-space: nowrap;
     }
   }
 }

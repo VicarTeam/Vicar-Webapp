@@ -1,35 +1,32 @@
-<script lang="ts">
-import {Vue, Component} from 'vue-property-decorator';
-import {ICharacter} from "@/types/models";
-import Modal from "@/components/modal/Modal.vue";
-import {ILevelChange, levelChangeTypeLabel} from "@/types/gameline";
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import Modal from "@/components/modal/Modal.vue"
+import type { ICharacter } from "@/@types/models.ts"
+import type { ILevelChange } from "@/@types/gameline.ts"
+import { levelChangeTypeLabel } from "@/@types/gameline.ts"
 
-@Component({
-  methods: {levelChangeTypeLabel},
-  components: {Modal}
-})
-export default class LevelHistoryModal extends Vue {
+const char = ref<ICharacter | null>(null)
+const show = ref(false)
 
-  private char: ICharacter = null!;
-  private show: boolean = false;
-
-  public showModal(char: ICharacter) {
-    this.char = char;
-    this.show = true;
-    console.log("Level history modal opened for:", char);
-  }
-
-  private get entries(): ILevelChange[] {
-    return (this.char.levelHistory || []).reverse();
-  }
+function showModal(c: ICharacter) {
+  char.value = c
+  show.value = true
 }
+
+const entries = computed<ILevelChange[]>(() => {
+  if (!char.value) return []
+  return [...(char.value.levelHistory || [])].reverse()
+})
+
+defineExpose({ showModal })
 </script>
 
 <template>
   <Modal :shown="show" @close="show = false">
-    <div v-if="char && show" style="display: flex; flex-direction: column; gap: 1rem; width: 70rem;">
-      <b>{{char.name}}'s Level-Verlauf:</b>
-      <div style="max-height: 50vh; overflow-y: auto;">
+    <div v-if="char && show" class="history">
+      <b>{{ char.name }}'s Level-Verlauf:</b>
+
+      <div class="table-wrap">
         <table class="table">
           <thead>
           <tr>
@@ -39,17 +36,19 @@ export default class LevelHistoryModal extends Vue {
             <th scope="col">XP-Kosten</th>
           </tr>
           </thead>
+
           <tbody v-if="entries.length > 0">
           <tr v-for="(entry, index) in entries" :key="index">
-            <td>{{new Date(entry.date).toLocaleString()}}</td>
-            <td>{{levelChangeTypeLabel(entry.type)}}</td>
-            <td>{{entry.text}}</td>
-            <td>{{entry.exp.before}} &#8594; {{entry.exp.after}} (-{{entry.exp.used}})</td>
+            <td>{{ new Date(entry.date).toLocaleString() }}</td>
+            <td>{{ levelChangeTypeLabel(entry.type) }}</td>
+            <td>{{ entry.text }}</td>
+            <td>{{ entry.exp.before }} &#8594; {{ entry.exp.after }} (-{{ entry.exp.used }})</td>
           </tr>
           </tbody>
+
           <tbody v-else>
           <tr>
-            <td colspan="4" style="text-align: center;">Keine Level-Änderungen vorhanden.</td>
+            <td colspan="4" class="empty">Keine Level-Änderungen vorhanden.</td>
           </tr>
           </tbody>
         </table>
@@ -59,5 +58,21 @@ export default class LevelHistoryModal extends Vue {
 </template>
 
 <style scoped lang="scss">
+.history {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
+.table-wrap {
+  width: 100%;
+  max-height: 50vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.empty {
+  text-align: center;
+}
 </style>

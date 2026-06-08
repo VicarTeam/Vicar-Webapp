@@ -1,65 +1,77 @@
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import DataManager from "@/libs/data/data-manager"
+import TipButton from "@/components/editor/TipButton.vue"
+import type { IDiscipline, IRestriction } from "@/@types/data"
+import type { ICharacter } from "@/@types/models"
+import { usePTActionRegistration } from "@/components/editor/actions/PTActionBase"
+
+type DisciplinePointActionData = {
+  choices: { id: number; restriction?: IRestriction }[]
+}
+
+defineProps<{
+  data: DisciplinePointActionData
+}>()
+
+const selected = ref<number>(-1)
+
+function getDiscipline(id: number): IDiscipline | null {
+  return DataManager.getDiscipline(id)
+}
+
+const selectedDiscipline = computed(() => getDiscipline(selected.value))
+
+function applyOutput(char: ICharacter) {
+  const discipline = selectedDiscipline.value
+  if (!discipline) return
+
+  const charDiscipline: any = (char.disciplines as any).find((d: any) => d.discipline.id === discipline.id)
+  if (charDiscipline) {
+    charDiscipline.points += 1
+  } else {
+    ;(char.disciplines as any).push({
+      discipline,
+      abilities: [],
+      points: 1,
+      currentLevel: 1,
+    })
+  }
+}
+
+function isReady() {
+  return selected.value !== -1 && selectedDiscipline.value != null
+}
+
+usePTActionRegistration({ applyOutput, isReady })
+defineExpose({ applyOutput, isReady })
+</script>
+
 <template>
   <div class="form-group mb-0">
-    <label class="required">{{$t('editor.predator.actions.discipline_point')}}:</label>
-    <div class="d-flex" style="gap: 1rem; justify-content: center; align-items: center">
-      <select v-model="selected" class="form-control">
-        <option v-for="(c, i) in data.choices" :key="i" :value="c.id">{{getDiscipline(c.id).name}}</option>
+    <label class="required">Wähle eine Disziplin:</label>
+
+    <div class="row">
+      <select v-model.number="selected" class="form-control">
+        <option v-for="(c, i) in data.choices" :key="i" :value="c.id">{{ getDiscipline(c.id)?.name }}</option>
       </select>
-      <TipButton v-if="selectedDiscipline" :content="selectedDiscipline.summary"/>
+
+      <TipButton v-if="selectedDiscipline" :content="selectedDiscipline.summary" />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import {Component} from "vue-property-decorator";
-import PTActionBase from "@/components/editor/actions/PTActionBase";
-import {IDiscipline, IRestriction} from "@/types/data";
-import {ICharacter} from "@/types/models";
-import DataManager from "@/libs/data/data-manager";
-import TipButton from "@/components/editor/TipButton.vue";
-
-export type DisciplinePointActionData = {
-  choices: ({id: number; restriction?: IRestriction})[]
-};
-
-@Component({
-  components: {TipButton}
-})
-export default class DisciplinePointAction extends PTActionBase<DisciplinePointActionData> {
-
-  private selected: number = -1;
-
-  applyOutput(char: ICharacter) {
-    const discipline = this.selectedDiscipline;
-    if (discipline) {
-      const charDiscipline = char.disciplines.find(d => d.discipline.id === discipline.id);
-      if (charDiscipline) {
-        charDiscipline.points += 1;
-      } else {
-        char.disciplines.push({
-          discipline: discipline,
-          abilities: [],
-          points: 1,
-          currentLevel: 1
-        });
-      }
-    }
-  }
-
-  isReady(): boolean {
-    return this.selected !== -1 && this.selectedDiscipline != null;
-  }
-
-  private get selectedDiscipline(): IDiscipline|null {
-    return this.getDiscipline(this.selected);
-  }
-
-  private getDiscipline(id: number): IDiscipline|null {
-    return DataManager.getDiscipline(id);
+<style scoped lang="scss">
+.row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 520px) {
+  .row .form-control {
+    flex: 1 1 auto;
+    min-height: 44px;
   }
 }
-</script>
-
-<style scoped lang="scss">
-
 </style>

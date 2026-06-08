@@ -1,36 +1,51 @@
-<template>
-  <select class="form-control" style="margin-left: auto; text-align: center; width: 8rem" v-model="selectedVal" @change="$emit('change', selectedVal)">
-    <option :value="0">0</option>
-    <option v-for="v in arr" :value="v" :disabled="v > pool">{{v}}</option>
-  </select>
-</template>
+<script setup lang="ts">
+import { computed, ref, watch } from "vue"
 
-<script lang="ts">
-import {Component, Prop, Vue} from "vue-property-decorator";
+const props = defineProps<{
+  max: number
+  pool: number
+}>()
 
-@Component({
-  components: {}
+const emit = defineEmits<{
+  (e: "change", value: number): void
+}>()
+
+const selectedVal = ref(0)
+
+const arr = computed(() => {
+  const out: number[] = []
+  for (let i = 1; i <= props.max; i++) out.push(i)
+  return out
 })
-export default class SpendSelect extends Vue {
 
-  @Prop({required: true})
-  private max!: number;
+const allowedMax = computed(() => Math.max(0, Math.min(props.max, selectedVal.value + props.pool)))
 
-  @Prop({required: true})
-  private pool!: number;
-
-  private selectedVal: number = 0;
-
-  private get arr(): number[] {
-    const arr = [];
-    for (let i = 1; i <= this.max; i++) {
-      arr.push(i);
+watch(
+  () => props.pool,
+  () => {
+    if (selectedVal.value > allowedMax.value) {
+      selectedVal.value = allowedMax.value
+      emit("change", selectedVal.value)
     }
-    return arr;
   }
-}
+)
 </script>
 
-<style scoped lang="scss">
+<template>
+  <select
+    class="form-control spend-select"
+    v-model.number="selectedVal"
+    @change="emit('change', selectedVal)"
+  >
+    <option :value="0">0</option>
 
-</style>
+    <option
+      v-for="v in arr"
+      :key="v"
+      :value="v"
+      :disabled="v > allowedMax"
+    >
+      {{ v }}
+    </option>
+  </select>
+</template>

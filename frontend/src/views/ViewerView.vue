@@ -1,485 +1,582 @@
+<script setup lang="ts">
+import { computed, onMounted, onUnmounted, provide, ref } from "vue"
+import { useRoute, useRouter } from "vue-router"
+import { useStore } from "@/app/store"
+
+import type { ICharacter } from "@/@types/models"
+import { getHumanInteractionMalus } from "@/@types/models"
+import type {IMageSheet, M20Ability, M20Attribute, M20Sphere, RequestLevelFn} from "@/@types/m20"
+
+import Tabs from "@/components/tabs/Tabs.vue"
+import Tab from "@/components/tabs/Tab.vue"
+import IconButton from "@/components/IconButton.vue"
+import Avatar from "@/components/Avatar.vue"
+
+import AddExpModal from "@/components/viewer/modals/AddExpModal.vue"
+import CharacterInfoModal from "@/components/viewer/modals/CharacterInfoModal.vue"
+import DicePoolCalculatorModal from "@/components/main/characters/modals/DicePoolCalculatorModal.vue"
+import DiceRollModal from "@/components/viewer/modals/DiceRollModal.vue"
+import HuntCalculatorModal from "@/components/main/characters/modals/HuntCalculatorModal.vue"
+import SearchHighlightModal from "@/components/main/characters/modals/SearchHighlightModal.vue"
+import M20LevelModal from "@/components/viewer/modals/leveling/M20LevelModal.vue"
+
+import CharacterStorage from "@/libs/io/character-storage"
+import EventBus from "@/libs/event-bus"
+import { VicarSync } from "@/libs/io/vicar-sync"
+import RestButton from "@/components/viewer/RestButton.vue";
+
+const store = useStore()
+const router = useRouter()
+const route = useRoute()
+
+const editingCharacter = computed(() => store.editingCharacter as ICharacter | undefined)
+const isLevelMode = computed(() => store.isLevelMode)
+
+const isVampire = computed(() => store.isVampire)
+const isWerewolf = computed(() => store.isWerewolf)
+const isMage = computed(() => store.isMage)
+const isHunter = computed(() => store.isHunter)
+
+const selectedTab = ref<string>("viewer-profile")
+const saveText = ref<string>("")
+const altDown = ref<boolean>(false)
+
+const dicePoolLeft = ref<{ name: string; value: number } | null>(null)
+const dicePoolRight = ref<{ name: string; value: number } | null>(null)
+const dicePoolHuman = ref<boolean>(false)
+const lastDicePoolSide = ref<"left" | "right">("right")
+
+const addExpModal = ref<InstanceType<typeof AddExpModal> | null>(null)
+const characterInfoModal = ref<InstanceType<typeof CharacterInfoModal> | null>(null)
+const dicePoolCalculatorModal = ref<InstanceType<typeof DicePoolCalculatorModal> | null>(null)
+const diceRollModal = ref<InstanceType<typeof DiceRollModal> | null>(null)
+const huntCalculatorModal = ref<InstanceType<typeof HuntCalculatorModal> | null>(null)
+const searchHighlightModal = ref<InstanceType<typeof SearchHighlightModal> | null>(null)
+const m20LevelModal = ref<InstanceType<typeof M20LevelModal> | null>(null)
+
+const tabProfile = ref<InstanceType<typeof Tab> | null>(null)
+const tabInventory = ref<InstanceType<typeof Tab> | null>(null)
+const tabAttributes = ref<InstanceType<typeof Tab> | null>(null)
+const tabSkills = ref<InstanceType<typeof Tab> | null>(null)
+const tabDisciplines = ref<InstanceType<typeof Tab> | null>(null)
+const tabBloodRituals = ref<InstanceType<typeof Tab> | null>(null)
+const tabTraits = ref<InstanceType<typeof Tab> | null>(null)
+
+const tabRefs: Record<string, typeof tabProfile> = {
+  tabProfile,
+  tabInventory,
+  tabAttributes,
+  tabSkills,
+  tabDisciplines,
+  tabBloodRituals,
+  tabTraits,
+}
+
+type TabHotkey = {
+  tab: keyof typeof tabRefs
+  keys: string[]
+  condition?: (character: ICharacter) => boolean
+}
+
+const TabHotkeys: TabHotkey[] = [
+  { tab: "tabProfile", keys: ["ALT+P", "Escape", "ALT+1"] },
+  { tab: "tabInventory", keys: ["ALT+I", "ALT+2"] },
+  { tab: "tabAttributes", keys: ["ALT+A", "ALT+3"] },
+  { tab: "tabSkills", keys: ["ALT+F", "ALT+4"] },
+  { tab: "tabDisciplines", keys: ["ALT+D", "ALT+5"] },
+  {
+    tab: "tabBloodRituals",
+    keys: ["ALT+R"],
+    condition: (character: ICharacter) =>
+      character.bloodRituals.length > 0 || character.clan.id === 4 || character.clan.id === 5,
+  },
+  { tab: "tabTraits", keys: ["ALT+V", "ALT+6"] },
+]
+
+const canAccessRituals = computed(() => {
+  const c = editingCharacter.value
+  if (!c) return false
+  if (!isVampire.value) return false
+  return (
+    c.bloodRituals.length > 0 ||
+    c.clan.id === 4 ||
+    c.clan.id === 5 ||
+    c.fullCustomization ||
+    (c.oblivionCeremonies?.length ?? 0) > 0
+  )
+})
+
+function updaterViewer() {
+  store.$patch({})
+}
+
+function requestM20Leveling(
+  type: "attribute" | "ability" | "sphere" | "arete" | "willpower",
+  subject?: M20Ability | M20Attribute | M20Sphere
+) {
+  m20LevelModal.value?.showModal(type as any, subject as any)
+}
+
+function setDicePool(
+  type: "attr" | "skill" | "disc",
+  name: string,
+  value: number,
+  isHuman = false
+) {
+  if (!altDown.value) return
+
+  if (type === "disc" || type === "skill") {
+    dicePoolRight.value = { name, value }
+    lastDicePoolSide.value = "right"
+  } else {
+    if (lastDicePoolSide.value === "right") {
+      dicePoolLeft.value = { name, value }
+      lastDicePoolSide.value = "left"
+    } else {
+      dicePoolRight.value = { name, value }
+      lastDicePoolSide.value = "right"
+    }
+  }
+
+  dicePoolHuman.value = isHuman
+}
+
+provide("update-viewer", updaterViewer)
+provide("request-m20-level", requestM20Leveling as unknown as RequestLevelFn)
+provide("set-dice-pool", setDicePool)
+
+function onCharUpdated(charId: string) {
+  const c = editingCharacter.value
+  if (c && c.id === charId) updaterViewer()
+}
+
+function clickTabByRefKey(key: keyof typeof tabRefs) {
+  const inst = tabRefs[key]!.value
+  const el = (inst as any)?.$el as HTMLElement | undefined
+  el?.click?.()
+}
+
+function onKeyDown(event: KeyboardEvent) {
+  if (!isVampire.value) return
+
+  if (event.key === "Alt") altDown.value = true
+
+  if (event.altKey) {
+    const hk = TabHotkeys.find(x => x.keys.includes("ALT+" + event.key.toUpperCase()))
+    if (hk) {
+      const c = editingCharacter.value
+      if (c && (!hk.condition || hk.condition(c))) {
+        event.preventDefault()
+        clickTabByRefKey(hk.tab)
+      }
+    }
+  }
+
+  if (event.key === "Escape") {
+    event.preventDefault()
+    clickTabByRefKey("tabProfile")
+  }
+
+  const c = editingCharacter.value
+  if (event.ctrlKey && event.key === " " && c) {
+    event.preventDefault()
+    dicePoolCalculatorModal.value?.showModal(c, selectedTab.value === "viewer-disciplines")
+  }
+
+  if (event.altKey && (event.key === "j" || event.key === "h") && c) {
+    event.preventDefault()
+    huntCalculatorModal.value?.showModal(c)
+  }
+
+  if (event.altKey && event.shiftKey && event.key === "f" && c) {
+    event.preventDefault()
+    searchHighlightModal.value?.showModal(c)
+  }
+}
+
+function onKeyUp(event: KeyboardEvent) {
+  if (event.key === "Alt") altDown.value = false
+}
+
+function switchTab(name: string) {
+  if (route.name !== name) router.push({ name }).catch(() => {})
+}
+
+function switchLevelMode() {
+  const c = editingCharacter.value
+  if (!c) return
+
+  const next = !isLevelMode.value
+  store.isLevelMode = next
+
+  if (next) VicarSync.beginCharacterLevelSync(c)
+  else VicarSync.endCharacterLevelSync(c)
+}
+
+async function saveCurrentCharacter() {
+  const c = editingCharacter.value
+  if (!c) return
+
+  await CharacterStorage.saveCharacter(c)
+  saveText.value = "Gespeichert!"
+  setTimeout(() => {
+    saveText.value = "Speichern"
+  }, 1000)
+}
+
+function backToMain() {
+  const c = editingCharacter.value
+  if (c) {
+    VicarSync.endCharacterLevelSync(c)
+    saveCurrentCharacter()
+  }
+  store.editingCharacter = undefined
+  router.push({ name: "main" }).catch(() => {})
+}
+
+function getDicePoolName(dicePool: { name: string; value: number } | null): string {
+  if (!dicePool) return "nicht ausgewählt"
+  return `${dicePool.name} (${dicePool.value})`
+}
+
+const dicePoolResult = computed<{ total: number; simple: number; hunger: number } | null>(() => {
+  const c = editingCharacter.value
+  if (!c || !dicePoolLeft.value || !dicePoolRight.value) return null
+
+  let total = dicePoolLeft.value.value + dicePoolRight.value.value
+
+  if (dicePoolHuman.value) {
+    const malus = getHumanInteractionMalus(c)
+    if (malus === Number.MIN_SAFE_INTEGER) return { total: -1, simple: 0, hunger: 0 }
+    total -= malus
+    if (total <= 0) total = 1
+  }
+
+  const hunger = Math.min(c.hunger, total)
+  const simple = total - hunger
+  return { total, simple, hunger }
+})
+
+onMounted(() => {
+  if (route.name === "viewer") {
+    router.push({ name: "viewer-profile" }).catch(() => {})
+  }
+
+  selectedTab.value = (route.name as string) || "viewer-profile"
+
+  EventBus.$on("character-updated", onCharUpdated)
+  window.addEventListener("keydown", onKeyDown)
+  window.addEventListener("keyup", onKeyUp)
+
+  document.title = editingCharacter.value ? `${editingCharacter.value.name} - Vicar` : "Vicar"
+})
+
+onUnmounted(() => {
+  EventBus.$off("character-updated", onCharUpdated)
+  window.removeEventListener("keydown", onKeyDown)
+  window.removeEventListener("keyup", onKeyUp)
+  document.title = "Vicar"
+  store.resetTheme()
+})
+</script>
+
 <template>
-  <div id="viewer-wrapper" class="d-flex flex-column" v-if="editingCharacter">
-    <div class="d-flex top-bar">
-      <div class="actions">
-        <IconButton icon="fa-angles-left" @click="backToMain"/>
-        <IconButton icon="fa-info" @click="characterInfoModal.showModal(editingCharacter)"/>
-        <IconButton icon="fa-dice" v-if="editingCharacter.connectedFoundryId" @click="diceRollModal.showModal(editingCharacter)"/>
-        <Avatar :src="editingCharacter.avatar" style="width: 3rem; height: 3rem;"/>
-
-        <MarkOfCain v-if="isVampire" ref="markOfCain" @flash="onCainsMarkFlash()"/>
+  <div id="viewer-wrapper" class="viewer-wrapper" v-if="editingCharacter">
+    <div class="top-bar">
+      <div class="actions left">
+        <IconButton icon="fa-angles-left" @click="backToMain" />
+        <IconButton icon="fa-info" @click="characterInfoModal?.showModal(editingCharacter)" />
+        <IconButton
+          icon="fa-dice"
+          v-if="editingCharacter.connectedFoundryId"
+          @click="diceRollModal?.showModal(editingCharacter)"
+        />
+        <Avatar :src="editingCharacter.avatar" :orientation="editingCharacter.avatarOrientation" class="top-avatar" />
       </div>
+
       <Tabs class="center" @before-change="switchTab" v-model="selectedTab">
-        <Tab value="viewer-profile" :text="$t('viewer.tab.profile').toString()" ref="tabProfile"/>
+        <Tab value="viewer-profile" text="Profil" ref="tabProfile" />
         <Tab v-if="isMage" value="viewer-tradition" text="Allianz" />
-        <Tab value="viewer-inventory" :text="$t('viewer.tab.inventory').toString()" ref="tabInventory"/>
-        <Tab value="viewer-attributes" :text="$t('viewer.tab.attributes').toString()" ref="tabAttributes"/>
-        <Tab value="viewer-skills" :text="$t('viewer.tab.skills').toString()" ref="tabSkills"/>
-        <Tab v-if="isVampire" value="viewer-disciplines" :text="$t('viewer.tab.disciplines').toString()" ref="tabDisciplines"/>
-        <Tab v-if="canAccessRituals && isVampire" value="viewer-bloodrituals" :text="$t('viewer.tab.rituals').toString()" ref="tabBloodRituals"/>
-        <Tab v-if="isWerewolf" value="viewer-gifts" text="Gaben & Riten"/>
-        <Tab v-if="isHunter" value="viewer-edges" text="Edges"/>
-        <Tab value="viewer-traits" :text="$t('viewer.tab.traits').toString()" ref="tabTraits"/>
-<!--        <Tab value="viewer-pdf" :text="$t('viewer.tab.pdf').toString()"/>-->
+        <Tab value="viewer-inventory" text="Inventar" ref="tabInventory" />
+        <Tab value="viewer-attributes" text="Attribute" ref="tabAttributes" />
+        <Tab value="viewer-skills" text="Fähigkeiten" ref="tabSkills" />
+        <Tab
+          v-if="isVampire"
+          value="viewer-disciplines"
+          text="Disziplinen"
+          ref="tabDisciplines"
+        />
+        <Tab
+          v-if="canAccessRituals && isVampire"
+          value="viewer-bloodrituals"
+          text="Rituale"
+          ref="tabBloodRituals"
+        />
+        <Tab v-if="isWerewolf" value="viewer-gifts" text="Gaben & Riten" />
+        <Tab v-if="isHunter" value="viewer-edges" text="Edges" />
+        <Tab value="viewer-traits" text="Vorteile & Schwächen" ref="tabTraits" />
+        <Tab
+          v-if="(editingCharacter.skillTrees?.length ?? 0) > 0"
+          value="viewer-skilltrees"
+          text="Skill-Bäume"
+        />
       </Tabs>
-      <div class="actions">
-        <small v-if="isMage && editingCharacter.freebiePoints > 0" style="color: #afafaf; margin-right: 1rem">Freebie: {{editingCharacter.freebiePoints}}</small>
-        <small style="color: #afafaf; display: flex; gap: 0.5rem; justify-content: center; align-items: center">EXP: <b>{{editingCharacter.exp}}</b>
-          <IconButton v-if="!editingCharacter.justViewing" icon="fa-pen" style="width: 2rem; height: 2rem" @click="addExpModal.showModal()"/>
+
+      <div class="actions right">
+        <small v-if="isMage && (editingCharacter as any as IMageSheet).freebiePoints > 0" class="muted">
+          Freebie: {{ (editingCharacter as any as IMageSheet).freebiePoints }}
         </small>
-        <button v-if="!editingCharacter.justViewing" class="btn btn-primary ml-10" @click="switchLevelMode">{{$t('viewer.mode.' + (isLevelMode ? 'disable' : 'enable'))}}</button>
-        <button v-if="!editingCharacter.justViewing" class="btn btn-primary ml-10" @click="saveCurrentCharacter">{{saveText || this.$t('viewer.save').toString()}}</button>
+        <small class="muted exp">
+          EXP: <b>{{ editingCharacter.exp }}</b>
+          <IconButton
+            v-if="!editingCharacter.justViewing"
+            icon="fa-pen"
+            class="exp-edit"
+            @click="addExpModal?.showModal()"
+          />
+        </small>
+        <RestButton />
+        <button
+          v-if="!editingCharacter.justViewing"
+          class="btn btn-primary"
+          @click="switchLevelMode"
+        >
+          {{ isLevelMode ? "Modus: Leveln" : "Modus: Vorschau" }}
+        </button>
+        <button
+          v-if="!editingCharacter.justViewing"
+          class="btn btn-primary"
+          @click="saveCurrentCharacter"
+        >
+          {{ saveText || "Speichern" }}
+        </button>
       </div>
     </div>
-    <div style="width: 100%; height: calc(100vh - 4.2rem - 3px); overflow-x: hidden; overflow-y: auto">
-      <router-view/>
+
+    <div class="viewer-content">
+      <router-view />
     </div>
 
-    <AddExpModal ref="addExpModal"/>
-    <CharacterInfoModal ref="characterInfoModal" @updated="$forceUpdate()" @cain-mark-granted="onCainsMarkGranted()"/>
-    <DicePoolCalculatorModal ref="dicePoolCalculatorModal"/>
-    <DiceRollModal ref="diceRollModal"/>
-    <HuntCalculatorModal ref="huntCalculatorModal"/>
-    <SearchHighlightModal ref="searchHighlightModal"/>
-    <M20LevelModal ref="m20LevelModal"/>
+    <AddExpModal ref="addExpModal" />
+    <CharacterInfoModal ref="characterInfoModal" @updated="updaterViewer()" />
+    <DicePoolCalculatorModal ref="dicePoolCalculatorModal" />
+    <DiceRollModal ref="diceRollModal" />
+    <HuntCalculatorModal ref="huntCalculatorModal" />
+    <SearchHighlightModal ref="searchHighlightModal" />
+    <M20LevelModal ref="m20LevelModal" />
 
     <div v-if="dicePoolLeft || dicePoolRight" class="simple-dice-calc card">
-      <h4 class="card-title">{{$t('character.dice-pool')}}:</h4>
-      <i class="fa-solid fa-xmark" @click="dicePoolLeft = null; dicePoolRight = null; lastDicePoolSide = 'right'" style="position: absolute; top: 0.75rem; right: 0.75rem; cursor: pointer; font-size: 1.5rem"></i>
-      <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; width: 30rem">
-        <b style="flex: 1; text-align: center">{{getDicePoolName(dicePoolLeft)}}</b>
+      <h4 class="card-title">Würfelpool:</h4>
+      <i
+        @click="dicePoolLeft = null; dicePoolRight = null; lastDicePoolSide = 'right'"
+        class="fa-solid fa-xmark close"
+      ></i>
+
+      <div class="calc-names">
+        <b class="name">{{ getDicePoolName(dicePoolLeft) }}</b>
         +
-        <b style="flex: 1; text-align: center">{{getDicePoolName(dicePoolRight)}}</b>
+        <b class="name">{{ getDicePoolName(dicePoolRight) }}</b>
       </div>
-      <div style="margin-top: 0.5rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 20%); width: 100%; display: flex; justify-content: center">
-        <div class="custom-checkbox d-flex align-items-center" style="pointer-events: all">
-          <input type="checkbox" id="dicehuman" v-model="dicePoolHuman">
-          <label for="dicehuman">{{$t('character.dice-pool.human')}}</label>
+
+      <div class="calc-human">
+        <div class="custom-checkbox d-flex align-items-center">
+          <input type="checkbox" id="dicehuman" v-model="dicePoolHuman" />
+          <label for="dicehuman">Menschliche Interaktion?</label>
         </div>
       </div>
 
-      <div v-if="dicePoolLeft && dicePoolRight" style="margin-top: 0.5rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 20%); width: 100%">
-        <div style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center" v-if="dicePoolResult">
+      <div v-if="dicePoolLeft && dicePoolRight" class="calc-result">
+        <div v-if="dicePoolResult" class="result-inner">
           <span v-if="dicePoolResult.hunger > 0">
-            <b><u>{{dicePoolResult.total}}</u> </b>
-            {{$t('character.modal.pool-calcuator.result.text.hunger.1')}}
-            <b style="color: var(--primary-color)">{{dicePoolResult.hunger}}</b>
-            {{$t('character.modal.pool-calcuator.result.text.hunger.2')}}
-            <b>{{dicePoolResult.simple}}</b>
-            {{$t('character.modal.pool-calcuator.result.text.hunger.3')}}
+            <b><u>{{ dicePoolResult.total }}</u> </b>
+            Würfel davon
+            <b style="color: var(--primary-color)">{{ dicePoolResult.hunger }}</b>
+            Hungerwürfel und
+            <b>{{ dicePoolResult.simple }}</b>
+            normale Würfel
           </span>
-          <span v-else-if="dicePoolResult.total === -1">{{$t('character.dice-pool.impossible')}}</span>
-          <span v-else><b>{{dicePoolResult.total}} </b>{{$t('character.modal.pool-calcuator.result.text.no-hunger')}}</span>
+          <span v-else-if="dicePoolResult.total === -1">Unmöglich (Wasail?!)</span>
+          <span v-else><b>{{ dicePoolResult.total }} </b>Würfel</span>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import {Component, Provide, Ref, Vue} from "vue-property-decorator";
-import {Mutation, State} from "vuex-class";
-import {getHumanInteractionMalus, ICharacter, V5Resonance} from "@/types/models";
-import Tabs from "@/components/tabs/Tabs.vue";
-import IconButton from "@/components/IconButton.vue";
-import Avatar from "@/components/Avatar.vue";
-import Tab from "@/components/tabs/Tab.vue";
-import CharacterStorage from "@/libs/io/character-storage";
-import AddExpModal from "@/components/viewer/modals/AddExpModal.vue";
-import CharacterInfoModal from "@/components/viewer/modals/CharacterInfoModal.vue";
-import DicePoolCalculatorModal from "@/components/main/characters/modals/DicePoolCalculatorModal.vue";
-import EventBus from "@/libs/event-bus";
-import {VicarSync} from "@/libs/io/vicar-sync";
-import DiceRollModal from "@/components/viewer/modals/DiceRollModal.vue";
-import HuntCalculatorModal from "@/components/main/characters/modals/HuntCalculatorModal.vue";
-import SearchHighlightModal from "@/components/main/characters/modals/SearchHighlightModal.vue";
-import MarkOfCain from "@/components/viewer/MarkOfCain.vue";
-import {GameLine} from "@/types/gameline";
-import {hardSetTheme} from "@/libs/theme";
-import M20LevelModal from "@/components/viewer/modals/leveling/M20LevelModal.vue";
-import {M20Ability, M20Attribute, M20Sphere} from "@/types/m20";
-import {getResonanceDisciplines} from "@/.data/v5";
-
-const TabHotkeys = [
-  {
-    tab: "tabProfile",
-    keys: ["ALT+P", "Escape", "ALT+1"]
-  },
-  {
-    tab: "tabInventory",
-    keys: ["ALT+I", "ALT+2"]
-  },
-  {
-    tab: "tabAttributes",
-    keys: ["ALT+A", "ALT+3"]
-  },
-  {
-    tab: "tabSkills",
-    keys: ["ALT+F", "ALT+4"]
-  },
-  {
-    tab: "tabDisciplines",
-    keys: ["ALT+D", "ALT+5"]
-  },
-  {
-    tab: "tabBloodRituals",
-    keys: ["ALT+R"],
-    condition: (character: ICharacter) => character.bloodRituals.length > 0 || (character.clan.id === 4 || character.clan.id === 5)
-  },
-  {
-    tab: "tabTraits",
-    keys: ["ALT+V", "ALT+6"]
-  }
-];
-
-@Component({
-  components: {
-    M20LevelModal,
-    MarkOfCain,
-    SearchHighlightModal,
-    HuntCalculatorModal,
-    DiceRollModal, DicePoolCalculatorModal, CharacterInfoModal, AddExpModal, Tab, Avatar, IconButton, Tabs}
-})
-export default class ViewerView extends Vue {
-
-  V5Resonance = V5Resonance;
-
-  @State("editingCharacter")
-  private editingCharacter!: ICharacter|undefined;
-
-  @State("isLevelMode")
-  private isLevelMode!: boolean;
-
-  @Ref("addExpModal")
-  private addExpModal!: AddExpModal;
-
-  @Ref("characterInfoModal")
-  private characterInfoModal!: CharacterInfoModal;
-
-  @Ref("dicePoolCalculatorModal")
-  private dicePoolCalculatorModal!: DicePoolCalculatorModal;
-
-  @Ref("diceRollModal")
-  private diceRollModal!: DiceRollModal;
-
-  @Ref("huntCalculatorModal")
-  private huntCalculatorModal!: HuntCalculatorModal;
-
-  @Ref("searchHighlightModal")
-  private searchHighlightModal!: SearchHighlightModal;
-
-  @Ref("markOfCain")
-  private markOfCain!: MarkOfCain;
-
-  @Ref("m20LevelModal")
-  private m20LevelModal!: M20LevelModal;
-
-  @Mutation("setEditingCharacter")
-  private setEditingCharacter!: (character?: ICharacter) => void;
-
-  @Mutation("setLevelMode")
-  private setLevelMode!: (isLevelMode: boolean) => void;
-
-  private selectedTab: string = "viewer-profile";
-  private saveText: string = "";
-  private lastShift: number|null = null;
-  private altDown: boolean = false;
-
-  private dicePoolLeft: {name: string, value: number}|null = null;
-  private dicePoolRight: {name: string, value: number}|null = null;
-  private dicePoolHuman: boolean = false;
-  private lastDicePoolSide: 'left'|'right' = 'right';
-
-  mounted() {
-    hardSetTheme(this.editingCharacter?.game);
-
-    if (this.$router.currentRoute.name === 'viewer') {
-      this.$router.push({name: 'viewer-profile'}).catch(() => {});
-    }
-
-    this.selectedTab = (this.$router.currentRoute.name as string) || "viewer-profile";
-
-    EventBus.$on("character-updated", this.onCharUpdated);
-    window.addEventListener('keydown', this.onKeyDown);
-    window.addEventListener('keyup', this.onKeyUp);
-    
-    if (this.editingCharacter) {
-      document.title = this.editingCharacter.name + " - Vicar";
-    } else {
-      document.title = "Vicar";
-    }
-  }
-
-  destroyed() {
-    EventBus.$off("character-updated", this.onCharUpdated);
-    window.removeEventListener('keydown', this.onKeyDown);
-    window.removeEventListener('keyup', this.onKeyUp);
-    document.title = "Vicar";
-
-    hardSetTheme();
-  }
-
-  private onCharUpdated(charId: string) {
-    if (this.editingCharacter && this.editingCharacter.id === charId) {
-      this.$forceUpdate();
-    }
-  }
-
-  private onKeyDown(event: KeyboardEvent) {
-    if (!this.isVampire) {
-      return; // all other games are not fully supported yet
-    }
-
-    if (event.key === "Alt") {
-      this.altDown = true;
-    }
-
-    if (event.altKey) {
-      const tab = TabHotkeys.find(tab => tab.keys.includes("ALT+" + event.key.toUpperCase()));
-      if (tab) {
-        const character = this.editingCharacter;
-        if (character && (!tab.condition || tab.condition(character))) {
-          const el = this.$refs[tab.tab];
-          if (el) {
-            event.preventDefault();
-            (el as any).$el.click();
-          }
-        }
-      }
-    }
-
-    if (event.key === "Escape") {
-      const el = this.$refs["tabProfile"];
-      if (el) {
-        event.preventDefault();
-        (el as any).$el.click();
-      }
-    }
-
-    if (event.ctrlKey && event.key === " " && this.editingCharacter) {
-      event.preventDefault();
-      this.dicePoolCalculatorModal.showModal(this.editingCharacter, this.selectedTab === "viewer-disciplines");
-    }
-
-    if (event.altKey && (event.key === "j" || event.key === "h") && this.editingCharacter) {
-      event.preventDefault();
-      this.huntCalculatorModal.showModal(this.editingCharacter);
-    }
-
-    if (event.altKey  && event.shiftKey && event.key === "f" && this.editingCharacter) {
-      event.preventDefault();
-      this.searchHighlightModal.showModal(this.editingCharacter);
-    }
-
-    return false;
-  }
-
-  private onKeyUp(event: KeyboardEvent) {
-    if (event.key === "Alt") {
-      this.altDown = false;
-    }
-  }
-
-  private switchTab(name: string) {
-    if (this.$route.name !== name) {
-      this.$router.push({name});
-    }
-  }
-
-  private switchLevelMode() {
-    if (!this.editingCharacter) {
-      return;
-    }
-
-    const newLevelMode = !this.isLevelMode;
-    this.setLevelMode(newLevelMode);
-
-    if (newLevelMode) {
-      VicarSync.beginCharacterLevelSync(this.editingCharacter);
-    } else {
-      VicarSync.endCharacterLevelSync(this.editingCharacter);
-    }
-  }
-
-  private async saveCurrentCharacter() {
-    if (this.editingCharacter) {
-      await CharacterStorage.saveCharacter(this.editingCharacter);
-      this.saveText = this.$t('viewer.saved').toString();
-      setTimeout(() => {
-        this.saveText = this.$t('viewer.save').toString();
-      }, 1000);
-    }
-  }
-
-  private get canAccessRituals(): boolean {
-    if (!this.editingCharacter) {
-      return false;
-    }
-    if (!this.isVampire) {
-      return false;
-    }
-    return this.editingCharacter.bloodRituals.length > 0 || this.editingCharacter.clan.id === 4 || this.editingCharacter.clan.id === 5 || this.editingCharacter.fullCustomization || (this.editingCharacter.oblivionCeremonies?.length ?? 0) > 0;
-  }
-
-  private backToMain() {
-    VicarSync.endCharacterLevelSync(this.editingCharacter!);
-    this.saveCurrentCharacter();
-    this.setEditingCharacter(undefined);
-    this.$router.push({name: 'main'});
-  }
-
-  private async onCainsMarkGranted() {
-    if (!this.editingCharacter) {
-      return;
-    }
-
-    await (this.markOfCain as any).runSequence();
-
-    this.$forceUpdate();
-  }
-
-  private async onCainsMarkFlash() {
-    if (!this.editingCharacter) {
-      return;
-    }
-
-    this.editingCharacter.hasCainsMark = true;
-    this.editingCharacter.cainsMarkLevel = 0;
-
-    EventBus.$emit("moc-granted");
-
-    await this.saveCurrentCharacter();
-
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
-  }
-
-  private getDicePoolName(dicePool: {name: string, value: number}|null): string {
-    if (!dicePool) {
-      return this.$t('character.dice-pool.unset').toString();
-    }
-    return dicePool.name + " (" + dicePool.value + ")";
-  }
-
-  private get dicePoolResult(): {total: number, simple: number, hunger: number}|null {
-    if (this.dicePoolLeft === null || this.dicePoolRight === null || !this.editingCharacter) {
-      return null;
-    }
-
-    let total = this.dicePoolLeft.value + this.dicePoolRight.value;
-    if (this.dicePoolHuman) {
-      const malus = getHumanInteractionMalus(this.editingCharacter);
-      if (malus === Number.MIN_SAFE_INTEGER) {
-        return {total: -1, simple: 0, hunger: 0};
-      }
-
-      total -= malus;
-      if (total <= 0) {
-        total = 1;
-      }
-    }
-
-    const hunger = Math.min(this.editingCharacter.hunger, total);
-    const simple = total - hunger;
-
-    return {total, simple, hunger};
-  }
-
-  private get isVampire() {
-    return this.editingCharacter?.game === GameLine.Vampire || !this.editingCharacter?.game;
-  }
-
-  private get isWerewolf() {
-    return this.editingCharacter?.game === GameLine.Werewolf;
-  }
-
-  private get isMage() {
-    return this.editingCharacter?.game === GameLine.Mage;
-  }
-
-  private get isHunter() {
-    return this.editingCharacter?.game === GameLine.Hunter;
-  }
-
-  @Provide("update-viewer")
-  private updaterViewer() {
-    this.$forceUpdate();
-  }
-
-  @Provide("request-m20-level")
-  private requestM20Leveling(type: 'attribute'|'ability'|'sphere'|'arete'|'willpower', subject?: M20Ability|M20Attribute|M20Sphere) {
-    this.m20LevelModal.showModal(type, subject);
-  }
-
-  @Provide("set-dice-pool")
-  private setDicePool(type: 'attr'|'skill'|'disc', name: string, value: number, isHuman: boolean = false) {
-    if (!this.altDown) {
-      return;
-    }
-
-    if (type === 'disc' || type === 'skill') {
-      this.dicePoolRight = {name, value};
-      this.lastDicePoolSide = 'right';
-    } else {
-      if (this.lastDicePoolSide === 'right') {
-        this.dicePoolLeft = {name, value};
-        this.lastDicePoolSide = 'left';
-      } else {
-        this.dicePoolRight = {name, value};
-        this.lastDicePoolSide = 'right';
-      }
-    }
-
-    this.dicePoolHuman = isHuman;
-  }
-}
-</script>
-
 <style scoped lang="scss">
-.top-bar {
-  flex-direction: row !important;
-  flex-shrink: 0;
-  .actions {
-    gap: 0.5rem;
-    display: flex;
-    padding: 0.5rem 1rem;
-    flex-shrink: 0;
-    flex-direction: row !important;
-    border-bottom: 1px solid var(--primary-color);
-    justify-content: center;
-    align-items: center;
-  }
-  .center {
-    flex-grow: 1;
-  }
+.viewer-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
+
+.top-bar {
+  display: flex;
+  align-items: stretch;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--primary-color);
+  flex-shrink: 0;
+  padding: 0.5rem 0.75rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.actions.right {
+  gap: 0.75rem;
+}
+
+.center {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.top-avatar {
+  width: 3rem;
+  height: 3rem;
+}
+
+.muted {
+  color: #afafaf;
+}
+
+.exp {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.exp-edit {
+  width: 2rem;
+  height: 2rem;
+}
+
+.viewer-content {
+  width: 100%;
+  height: calc(100vh - 4.2rem - 3px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .simple-dice-calc {
-  position: absolute;
+  position: fixed;
   left: 50%;
   bottom: 1rem;
   transform: translateX(-50%);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 10;
-  padding: 1.5rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.75rem;
-  opacity: 0.8;
+  opacity: 0.9;
   pointer-events: none;
   font-size: 1.1rem;
-  h4 {
-    margin: 0;
-    font-size: 1.4rem;
-    text-align: center;
+  max-width: calc(100vw - 1.5rem);
+}
+
+.simple-dice-calc h4 {
+  margin: 0;
+  font-size: 1.35rem;
+  text-align: center;
+}
+
+.simple-dice-calc .close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  pointer-events: all;
+}
+
+.simple-dice-calc .close:hover {
+  color: var(--primary-color) !important;
+}
+
+.calc-names {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  width: min(30rem, 100%);
+  text-align: center;
+}
+
+.calc-names .name {
+  flex: 1;
+  text-align: center;
+  word-break: break-word;
+}
+
+.calc-human {
+  margin-top: 0.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 20%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: all;
+}
+
+.calc-result {
+  margin-top: 0.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 20%);
+  width: 100%;
+}
+
+.result-inner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .top-bar {
+    flex-wrap: wrap;
   }
-  .fa-xmark {
-    pointer-events: all;
-    &:hover {
-      color: var(--primary-color) !important;
-    }
+
+  .center {
+    order: 3;
+    width: 100%;
+  }
+
+  .actions.left {
+    order: 1;
+  }
+
+  .actions.right {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .viewer-content {
+    height: calc(100vh - 7.6rem);
+  }
+}
+
+@media (max-width: 520px) {
+  .actions.right button {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  .top-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .viewer-content {
+    height: calc(100vh - 9.2rem);
   }
 }
 </style>

@@ -1,86 +1,101 @@
-<script lang="ts">
-import {Vue, Component, Prop, Watch, Ref} from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
+
+defineOptions({ inheritAttrs: false })
 
 export interface IOption {
-  name: string;
-  value: any;
-  isCategory?: boolean;
+  name: string
+  value: any
+  isCategory?: boolean
 }
 
-@Component({})
-export default class Dropdown extends Vue {
-  @Prop({required: true})
-  private options!: IOption[];
+const props = defineProps<{
+  options: IOption[]
+  placeholder?: string
+  autofocus?: boolean
+}>()
 
-  @Prop({default: ''})
-  private placeholder!: string;
+const modelValue = defineModel<any>({ required: true })
 
-  @Prop({required: true})
-  private value!: any;
+const dropdownInput = ref<HTMLInputElement | null>(null)
+const inputValue = ref('')
+const showOptions = ref(false)
 
-  @Prop({default: false})
-  private autofocus!: boolean;
+const filteredOptions = computed(() => {
+  const q = inputValue.value.toLowerCase()
+  return props.options.filter((x) => x.isCategory || x.name.toLowerCase().startsWith(q))
+})
 
-  @Ref()
-  private dropdownInput!: HTMLInputElement;
+function closeOptions() {
+  showOptions.value = false
+}
 
-  private inputValue: string = '';
-  private showOptions: boolean = false;
+function setModelValue(option: IOption) {
+  if (option.isCategory) return
+  modelValue.value = option.value
+  inputValue.value = option.name
+  showOptions.value = false
+}
 
-  public closeOptions() {
-    this.showOptions = false;
+let closeTimer: number | undefined
+function debounceClose() {
+  window.clearTimeout(closeTimer)
+  closeTimer = window.setTimeout(() => {
+    showOptions.value = false
+  }, 200)
+}
+
+watch(
+  () => modelValue.value,
+  (v) => {
+    inputValue.value = props.options.find((o) => o.value === v)?.name || ''
+  },
+  { immediate: true }
+)
+
+onMounted(async () => {
+  inputValue.value = props.options.find((o) => o.value === modelValue.value)?.name || ''
+  showOptions.value = false
+
+  if (props.autofocus) {
+    await nextTick()
+    dropdownInput.value?.focus()
   }
+})
 
-  mounted() {
-    this.inputValue = (this.options.find((option) => option.value === this.value)?.name || '');
-    this.showOptions = false;
-
-    if (this.autofocus) {
-      this.$nextTick(() => {
-        if (this.dropdownInput) {
-          this.dropdownInput.focus();
-        }
-      });
-    }
-  }
-
-  private setModelValue(option: IOption) {
-    if (option.isCategory) {
-      return;
-    }
-
-    this.$emit('input', option.value);
-    this.inputValue = option.name;
-    this.showOptions = false;
-  }
-
-  private get filteredOptions() {
-    return this.options.filter(x => x.isCategory || x.name.toLowerCase().startsWith(this.inputValue.toLowerCase()));
-  }
-
-  @Watch('inputValue')
-  private onInputValueChange() {
-    this.$forceUpdate();
-  }
-
-  private debounceClose() {
-    setTimeout(() => {
-      this.showOptions = false;
-    }, 200);
-  }
+function onFocusIn() {
+  showOptions.value = true
 }
 </script>
 
 <template>
-  <div class="vdropdown" v-bind="$attrs">
-    <input type="text" class="form-control" v-model="inputValue" :placeholder="placeholder" style="width: 100%" @focusin="showOptions = true" @focusout="debounceClose" ref="dropdownInput"/>
-    <div class="dropdown-menu" v-if="showOptions">
-      <a v-for="(i, j) in filteredOptions" :key="j" href="#" class="dropdown-item" :style="i.isCategory ? {'pointer-events': 'none', cursor: 'not-allowed'} : {}" @click="setModelValue(i)">
-        <b v-if="i.isCategory">{{i.name}}</b>
-        <span v-else>{{i.name}}</span>
+  <div class="vdropdown dropdown" v-bind="$attrs">
+    <input
+      ref="dropdownInput"
+      type="text"
+      class="form-control"
+      v-model="inputValue"
+      :placeholder="placeholder"
+      @focusin="onFocusIn"
+      @focusout="debounceClose"
+      @keydown.esc="closeOptions"
+    />
+
+    <div class="dropdown-menu" :class="{ show: showOptions }" v-if="showOptions">
+      <a
+        v-for="(i, j) in filteredOptions"
+        :key="j"
+        href="#"
+        class="dropdown-item"
+        :class="{ 'is-category': !!i.isCategory }"
+        @click.prevent="setModelValue(i)"
+      >
+        <b v-if="i.isCategory">{{ i.name }}</b>
+        <span v-else>{{ i.name }}</span>
       </a>
+
       <div v-if="filteredOptions.length === 0" class="dropdown-item text-muted">
-        {{ $t('character.modal.pool-calcuator.search_not_found') }}
+        {{ "$t:character.modal.pool-calcuator.search_not_found$" }}
       </div>
     </div>
   </div>
@@ -90,22 +105,27 @@ export default class Dropdown extends Vue {
 .vdropdown {
   position: relative;
   user-select: text;
+  width: 100%;
+
   input {
     user-select: all;
   }
+
   .dropdown-menu {
-    position: absolute;
-    z-index: 10000;
-    visibility: unset;
-    max-height: 15rem;
     width: 100%;
+    max-height: min(15rem, 55dvh);
     overflow-y: auto;
-    font-size: 1rem;
-    pointer-events: all;
-    .dropdown-item {
-      user-select: none;
-      cursor: pointer;
-    }
+    overflow-x: hidden;
+  }
+
+  .dropdown-item {
+    user-select: none;
+  }
+
+  .dropdown-item.is-category {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.8;
   }
 }
 </style>

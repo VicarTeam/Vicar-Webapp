@@ -1,101 +1,87 @@
-<script lang="ts">
-import { Vue, Component, Ref } from 'vue-property-decorator';
-import { State } from 'vuex-class';
-import { IHunterSheet, IH5Edge, IH5Perk, IH5SelectedPerk, H5EdgeCategory } from "@/types/h5";
-import { edges as allEdges } from "@/.data/h5";
-import EdgeInfoModal from "@/components/viewer/modals/EdgeInfoModal.vue";
-import LevelButton from "@/components/viewer/LevelButton.vue";
-import NewEdgeModal from "@/components/viewer/modals/leveling/NewEdgeModal.vue";
-import ChooseEdgePerkModal from "@/components/viewer/modals/ChooseEdgePerkModal.vue";
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import { useStore } from "@/app/store"
+import type { H5EdgeCategory, IH5Edge, IH5Perk, IH5SelectedPerk, IHunterSheet } from "@/@types/h5"
+import { edges as allEdges } from "@/app/data/h5"
+import EdgeInfoModal from "@/components/viewer/modals/EdgeInfoModal.vue"
+import LevelButton from "@/components/viewer/LevelButton.vue"
+import NewEdgeModal from "@/components/viewer/modals/leveling/NewEdgeModal.vue"
+import ChooseEdgePerkModal from "@/components/viewer/modals/ChooseEdgePerkModal.vue"
 
-@Component({
-  components: {
-    EdgeInfoModal,
-    LevelButton,
-    NewEdgeModal,
-    ChooseEdgePerkModal,
-  }
+const store = useStore()
+const editingCharacter = computed(() => store.editingCharacter as IHunterSheet | undefined)
+const isLevelMode = computed(() => store.isLevelMode as boolean)
+
+const edgeInfoModal = ref<InstanceType<typeof EdgeInfoModal> | null>(null)
+const newEdgeModal = ref<InstanceType<typeof NewEdgeModal> | null>(null)
+const chooseEdgePerkModal = ref<InstanceType<typeof ChooseEdgePerkModal> | null>(null)
+
+const categoryLabelMap: Record<H5EdgeCategory, string> = {
+  Asset: "Vermögen",
+  Aptitude: "Begabung",
+  Endowment: "Weihe",
+} as any
+
+const perkIdToPerk = computed<Record<number, IH5Perk>>(() => {
+  const map: Record<number, IH5Perk> = {}
+  allEdges.forEach(e => e.perks.forEach(p => (map[p.id] = p as any)))
+  return map
 })
-export default class EdgesView extends Vue {
 
-  @State("editingCharacter")
-  private editingCharacter!: IHunterSheet;
+const perkIdToEdge = computed<Record<number, IH5Edge>>(() => {
+  const map: Record<number, IH5Edge> = {}
+  allEdges.forEach(e => e.perks.forEach(p => (map[p.id] = e as any)))
+  return map
+})
 
-  @State("isLevelMode")
-  private isLevelMode!: boolean;
+const currentEdges = computed<IH5Edge[]>(() => {
+  const c = editingCharacter.value
+  if (!c) return []
+  return (c.edges || []).slice().sort((a, b) => a.name.localeCompare(b.name))
+})
 
-  @Ref("edgeInfoModal")
-  private edgeInfoModal!: EdgeInfoModal;
+function perksForEdge(edge: IH5Edge): IH5SelectedPerk[] {
+  const c = editingCharacter.value
+  if (!c) return []
+  const perks = c.perks || []
+  return perks.filter(sp => perkIdToEdge.value[sp.perk]?.id === edge.id)
+}
 
-  @Ref("newEdgeModal")
-  private newEdgeModal!: any;
+function categoryLabel(cat: H5EdgeCategory): string {
+  return (categoryLabelMap as any)[cat] || String(cat)
+}
 
-  @Ref("chooseEdgePerkModal")
-  private chooseEdgePerkModal!: any;
+function openEdgeInfo(edge: IH5Edge) {
+  edgeInfoModal.value?.showModal(edge)
+}
 
-  private categoryLabelMap: Record<H5EdgeCategory, string> = {
-    [H5EdgeCategory.Asset]: 'Vermögen',
-    [H5EdgeCategory.Aptitude]: 'Begabung',
-    [H5EdgeCategory.Endowment]: 'Weihe',
-  };
+function levelEdge(edge: IH5Edge) {
+  const c = editingCharacter.value
+  if (!c) return
+  chooseEdgePerkModal.value?.showModal(edge, (selected: IH5SelectedPerk) => {
+    c.perks = [...(c.perks || []), selected]
+  })
+}
 
-  private get perkIdToPerk(): Record<number, IH5Perk> {
-    const map: Record<number, IH5Perk> = {};
-    allEdges.forEach(e => e.perks.forEach(p => (map[p.id] = p)));
-    return map;
-  }
-  private get perkIdToEdge(): Record<number, IH5Edge> {
-    const map: Record<number, IH5Edge> = {};
-    allEdges.forEach(e => e.perks.forEach(p => (map[p.id] = e)));
-    return map;
-  }
-
-  private get currentEdges(): IH5Edge[] {
-    return (this.editingCharacter.edges || []).slice().sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  private perksForEdge(edge: IH5Edge): IH5SelectedPerk[] {
-    const perks = this.editingCharacter.perks || [];
-    return perks.filter(sp => this.perkIdToEdge[sp.perk]?.id === edge.id);
-  }
-
-  private categoryLabel(cat: H5EdgeCategory): string {
-    return this.categoryLabelMap[cat] || String(cat);
-  }
-
-  private openEdgeInfo(edge: IH5Edge) {
-    this.edgeInfoModal.showModal(edge);
-  }
-
-  private levelEdge(edge: IH5Edge) {
-    this.chooseEdgePerkModal.showModal(edge, (selected: IH5SelectedPerk) => {
-      this.editingCharacter.perks = [...(this.editingCharacter.perks || []), selected];
-    });
-  }
-
-  private addNewEdge() {
-    this.newEdgeModal.showModal((edge: IH5Edge) => {
-      const set = new Set((this.editingCharacter.edges || []).map(e => e.id));
-      if (!set.has(edge.id)) {
-        this.editingCharacter.edges = [...(this.editingCharacter.edges || []), edge];
-      }
-    });
-  }
+function addNewEdge() {
+  const c = editingCharacter.value
+  if (!c) return
+  newEdgeModal.value?.showModal((edge: IH5Edge) => {
+    const set = new Set((c.edges || []).map(e => e.id))
+    if (!set.has(edge.id)) {
+      c.edges = [...(c.edges || []), edge]
+    }
+  })
 }
 </script>
 
 <template>
-  <div class="edges-view">
+  <div v-if="editingCharacter" class="edges-view">
     <div class="edges">
-      <div
-        class="edge card"
-        v-for="e in currentEdges"
-        :key="e.id"
-        :id="`edge-${e.id}`"
-      >
+      <div class="edge card" v-for="e in currentEdges" :key="e.id" :id="`edge-${e.id}`">
         <div class="top">
           <div class="d-flex align-items-center" style="gap: 0.5rem; flex-grow: 1">
-            <LevelButton v-if="isLevelMode" @click="levelEdge(e)"/>
+            <LevelButton v-if="isLevelMode" @click="levelEdge(e)" />
             <b @click="openEdgeInfo(e)">{{ e.name }}</b>
             <span class="badge badge-primary ml-5">{{ categoryLabel(e.category) }}</span>
           </div>
@@ -104,14 +90,11 @@ export default class EdgesView extends Vue {
 
         <div class="perks">
           <div class="perks-title"><b>Perks</b></div>
+
           <div v-if="perksForEdge(e).length">
-            <div
-              v-for="(sp, idx) in perksForEdge(e)"
-              :key="idx"
-              class="perk-row"
-            >
+            <div v-for="(sp, idx) in perksForEdge(e)" :key="idx" class="perk-row">
               <div class="perk-name">
-                {{ perkIdToPerk[sp.perk]?.name || ('#'+sp.perk) }}
+                {{ perkIdToPerk[sp.perk]?.name || ("#" + sp.perk) }}
                 <small v-if="sp.specialization" class="text-muted">({{ sp.specialization }})</small>
               </div>
               <small class="perk-desc text-muted">
@@ -119,6 +102,7 @@ export default class EdgesView extends Vue {
               </small>
             </div>
           </div>
+
           <div v-else class="text-muted"><small>Keine Perks gewählt.</small></div>
         </div>
       </div>
@@ -134,9 +118,9 @@ export default class EdgesView extends Vue {
       </div>
     </div>
 
-    <EdgeInfoModal ref="edgeInfoModal"/>
-    <ChooseEdgePerkModal ref="chooseEdgePerkModal"/>
-    <NewEdgeModal ref="newEdgeModal"/>
+    <EdgeInfoModal ref="edgeInfoModal" />
+    <ChooseEdgePerkModal ref="chooseEdgePerkModal" />
+    <NewEdgeModal ref="newEdgeModal" />
   </div>
 </template>
 
@@ -145,7 +129,8 @@ export default class EdgesView extends Vue {
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: stretch;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   gap: 2rem;
   padding: 0 2rem;
@@ -163,32 +148,32 @@ export default class EdgesView extends Vue {
   width: 30rem;
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: 0.5rem;
 
   .top {
     display: flex;
     align-items: center;
     width: 100%;
-    border-bottom: 1px solid rgba(255, 255, 255, .3);
-    padding-bottom: .25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 0.25rem;
   }
 
   .perks {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
+    gap: 0.5rem;
 
     .perks-title {
-      margin-top: .5rem;
+      margin-top: 0.5rem;
     }
 
     .perk-row {
       display: flex;
       flex-direction: column;
-      gap: .15rem;
-      padding: .4rem .5rem;
-      border-radius: .5rem;
-      background: rgba(255,255,255,0.04);
+      gap: 0.15rem;
+      padding: 0.4rem 0.5rem;
+      border-radius: 0.5rem;
+      background: rgba(255, 255, 255, 0.04);
     }
 
     .perk-name {

@@ -1,258 +1,226 @@
-<script lang="ts">
-import {Vue, Component} from 'vue-property-decorator';
-import {AttributeKeys, getHumanInteractionMalus, ICharacter} from "@/types/models";
-import Modal from "@/components/modal/Modal.vue";
-import Dropdown, {IOption} from "@/components/Dropdown.vue";
-import DataManager from "@/libs/data/data-manager";
-import {VicarTT} from "@/libs/io/vicar-tt";
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import Modal from "@/components/modal/Modal.vue"
+import Dropdown from "@/components/Dropdown.vue"
+import DataManager from "@/libs/data/data-manager"
+import { VicarTT } from "@/libs/io/vicar-tt"
+import type { IOption } from "@/components/Dropdown.vue"
+import {type AttributeKeys, getAttributeName, getCategoryName, getSkillName, type ICharacter} from "@/@types/models"
+import { getHumanInteractionMalus } from "@/@types/models"
+import { skillTreeResolver } from "@/libs/resolvers/skilltree-resolver"
 
-@Component({
-  components: {Dropdown, Modal}
-})
-export default class DicePoolCalculatorModal extends Vue {
+const show = ref(false)
+const character = ref<ICharacter | null>(null)
+const isDiscipline = ref(false)
 
-  private show: boolean = false;
-  private character: ICharacter = null!;
-  private isDiscipline: boolean = false;
+const bonus = ref("")
+const selectedAttribute = ref<AttributeKeys | null>(null)
+const selectedSkill = ref<number | null>(null)
+const difficulty = ref("")
+const human = ref(false)
 
-  private bonus: string = "";
-  private selectedAttribute: AttributeKeys|null = null;
-  private selectedSkill: number|null = null;
-  private difficulty: string = "";
-  private human: boolean = false;
+const showModal = (c: ICharacter, disc = false) => {
+  character.value = c
+  isDiscipline.value = disc
+  selectedAttribute.value = null
+  selectedSkill.value = null
+  human.value = false
+  bonus.value = ""
 
-  public showModal(character: ICharacter, isDiscipline: boolean = false) {
-    this.character = character;
-    this.isDiscipline = isDiscipline;
-    this.selectedAttribute = null;
-    this.selectedSkill = null;
-    this.human = false;
-    this.bonus = "";
-
-    if (this.character.cache) {
-      this.selectedAttribute = this.character.cache['dicePoolCalculatorAttribute'] || null;
-      this.selectedSkill = this.character.cache['dicePoolCalculatorSkill'] || null;
-      this.bonus = this.character.cache['dicePoolCalculatorBonus'] || "";
-    }
-
-    this.show = true;
+  if (c.cache) {
+    selectedAttribute.value = (c.cache["dicePoolCalculatorAttribute"] as any) || null
+    selectedSkill.value = (c.cache["dicePoolCalculatorSkill"] as any) || null
+    bonus.value = (c.cache["dicePoolCalculatorBonus"] as any) || ""
   }
 
-  private sendDiceRoll() {
-    const pool = this.pool;
-    if (!pool) {
-      return;
-    }
-
-    const attr = this.attrOptions.find(x => x.value === this.selectedAttribute);
-    const skill = this.skillOptions.find(x => x.value === this.selectedSkill);
-    const attrName = (attr ? attr.name : "").replace(/\(\d+\)/g, "").trim();
-    const skillName = (skill ? skill.name : "").replace(/\(\d+\)/g, "").trim();
-
-    let difficulty: number|undefined = undefined;
-    if (this.difficulty.trim().length > 0 && !isNaN(parseInt(this.difficulty))) {
-      difficulty = parseInt(this.difficulty);
-    }
-
-    VicarTT.rollNamedDiceFor(this.character, `${attrName} + ${skillName}`, pool.simple, pool.hunger, difficulty);
-
-    this.show = false;
-  }
-
-  private getAttrVal(attr: AttributeKeys): number {
-    for (const i of this.character.categories) {
-      for (const j of i.attributes) {
-        if (j.key === attr) {
-          return j.value;
-        }
-      }
-    }
-
-    return 0;
-  }
-
-  private get pool(): {total: number, simple: number, hunger: number}|null {
-    if (this.selectedAttribute === null || this.selectedSkill === null) {
-      return null;
-    }
-
-    const attr = this.getAttrVal(this.selectedAttribute);
-    const skill = this.selectedSkill;
-    let bonus = this.isDiscipline ? DataManager.selectedLanguage.bloodPotencyTable.find(x => x.value === this.character.bloodPotency)!.disciplineBonus : 0;
-
-    if (this.bonus.trim().length > 0 && !isNaN(parseInt(this.bonus))) {
-      bonus += parseInt(this.bonus);
-    }
-
-    let total = attr + skill + bonus;
-    if (this.human) {
-      const malus = getHumanInteractionMalus(this.character);
-      if (malus === Number.MIN_SAFE_INTEGER) {
-        return {total: -1, simple: 0, hunger: 0};
-      }
-
-      total -= malus;
-      if (total <= 0) {
-        total = 1;
-      }
-    }
-
-    const hunger = Math.min(this.character.hunger, total);
-    const simple = total - hunger;
-
-    return {total, simple, hunger};
-  }
-
-  private get attrOptions(): IOption[] {
-    const opt = (key: AttributeKeys) => {
-      return {
-        name: this.$t(`data.attribute.${key}`).toString() + ` (${this.getAttrVal(key)})`,
-        value: key
-      };
-    }
-
-    return [
-      opt(AttributeKeys.Strength),
-      opt(AttributeKeys.Dexterity),
-      opt(AttributeKeys.Stamina),
-      opt(AttributeKeys.Charisma),
-      opt(AttributeKeys.Manipulation),
-      opt(AttributeKeys.Composure),
-      opt(AttributeKeys.Intelligence),
-      opt(AttributeKeys.Wits),
-      opt(AttributeKeys.Resolve),
-    ].sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  private get skillOptions(): IOption[] {
-    const opts: IOption[] = [];
-
-    for (const c of this.character.categories) {
-      opts.push({
-        name: this.$t('data.category.' + c.name).toString(),
-        value: '',
-        isCategory: true
-      });
-
-      const skillOpts: IOption[] = [];
-      for (const i of c.skills) {
-        skillOpts.push({
-          name: this.$t('data.skill.' + i.key).toString() + ` (${i.value})`,
-          value: i.value
-        });
-      }
-      opts.push(...skillOpts.sort((a, b) => a.name.localeCompare(b.name)));
-    }
-
-    if (this.character.disciplines.length > 0) {
-      opts.push({
-        name: this.$t('editor.clan.disciplines').toString(),
-        value: '',
-        isCategory: true
-      });
-
-      const discOpts: IOption[] = [];
-      for (const i of this.character.disciplines) {
-        discOpts.push({
-          name: i.discipline.name + ` (${i.currentLevel})`,
-          value: i.currentLevel
-        });
-      }
-
-      opts.push(...discOpts.sort((a, b) => a.name.localeCompare(b.name)));
-    }
-
-    const opt = (key: AttributeKeys) => {
-      return {
-        name: this.$t(`data.attribute.${key}`).toString() + ` (${this.getAttrVal(key)})`,
-        value: this.getAttrVal(key)
-      };
-    }
-
-    opts.push({
-      name: this.$t('viewer.tab.attributes').toString(),
-      value: '',
-      isCategory: true
-    });
-
-    opts.push(opt(AttributeKeys.Strength));
-    opts.push(opt(AttributeKeys.Dexterity));
-    opts.push(opt(AttributeKeys.Stamina));
-    opts.push(opt(AttributeKeys.Charisma));
-    opts.push(opt(AttributeKeys.Manipulation));
-    opts.push(opt(AttributeKeys.Composure));
-    opts.push(opt(AttributeKeys.Intelligence));
-    opts.push(opt(AttributeKeys.Wits));
-    opts.push(opt(AttributeKeys.Resolve));
-
-    return opts;
-  }
-
-  private handleClose() {
-    this.show = false;
-    this.character.cache = this.character.cache || {};
-
-    if (this.selectedAttribute) {
-      this.character.cache['dicePoolCalculatorAttribute'] = this.selectedAttribute;
-    } else {
-      delete this.character.cache['dicePoolCalculatorAttribute'];
-    }
-
-    if (this.selectedSkill) {
-      this.character.cache['dicePoolCalculatorSkill'] = this.selectedSkill;
-    } else {
-      delete this.character.cache['dicePoolCalculatorSkill'];
-    }
-
-    if (this.bonus) {
-      this.character.cache['dicePoolCalculatorBonus'] = this.bonus;
-    } else {
-      delete this.character.cache['dicePoolCalculatorBonus'];
-    }
-  }
+  show.value = true
 }
+
+const getAttrVal = (attr: AttributeKeys): number => {
+  const c = character.value
+  if (!c) return 0
+  // Effektiver Wert inkl. aktiver Skill-Tree-Modifikatoren.
+  return skillTreeResolver.getEffectiveAttribute(c, attr).value
+}
+
+const pool = computed(() => {
+  const c = character.value
+  if (!c) return null
+  if (selectedAttribute.value === null || selectedSkill.value === null) return null
+
+  const attr = getAttrVal(selectedAttribute.value)
+  const skill = selectedSkill.value
+
+  let add = 0
+  if (isDiscipline.value) {
+    add = DataManager.selectedLanguage.bloodPotencyTable.find(x => x.value === c.bloodPotency)!.disciplineBonus
+  }
+  const b = bonus.value.trim()
+  if (b && !isNaN(parseInt(b))) add += parseInt(b)
+
+  let total = attr + skill + add
+
+  if (human.value) {
+    const malus = getHumanInteractionMalus(c)
+    if (malus === Number.MIN_SAFE_INTEGER) return { total: -1, simple: 0, hunger: 0 }
+    total -= malus
+    if (total <= 0) total = 1
+  }
+
+  const hungerDice = Math.min(c.hunger, total)
+  const simple = total - hungerDice
+  return { total, simple, hunger: hungerDice }
+})
+
+const attrOptions = computed<IOption[]>(() => {
+  const keys = [
+    "str",
+    "dex",
+    "sta",
+    "cha",
+    "man",
+    "com",
+    "int",
+    "wit",
+    "res",
+  ] as AttributeKeys[]
+
+  const opt = (key: AttributeKeys): IOption => ({
+    name: `${getAttributeName(key)} (${getAttrVal(key)})`,
+    value: key,
+  })
+
+  return keys.map(opt).sort((a, b) => String(a.name).localeCompare(String(b.name)))
+})
+
+const skillOptions = computed<IOption[]>(() => {
+  const c = character.value
+  if (!c) return []
+
+  const opts: IOption[] = []
+
+  for (const cat of c.categories) {
+    opts.push({ name: getCategoryName(cat.name), value: "", isCategory: true })
+    const skillOpts: IOption[] = cat.skills.map(s => {
+      const v = skillTreeResolver.getEffectiveSkill(c, s.key).value
+      return {
+        name: `${getSkillName(s.key)} (${v})`,
+        value: v,
+      }
+    })
+    opts.push(...skillOpts.sort((a, b) => String(a.name).localeCompare(String(b.name))))
+  }
+
+  if (c.disciplines.length > 0) {
+    opts.push({ name: "Disziplinen", value: "", isCategory: true })
+    const discOpts: IOption[] = c.disciplines.map(d => ({
+      name: `${d.discipline.name} (${d.currentLevel})`,
+      value: d.currentLevel,
+    }))
+    opts.push(...discOpts.sort((a, b) => String(a.name).localeCompare(String(b.name))))
+  }
+
+  opts.push({ name: "Attribute", value: "", isCategory: true })
+  const asSkill = (key: AttributeKeys): IOption => ({
+    name: `${getAttributeName(key)} (${getAttrVal(key)})`,
+    value: getAttrVal(key),
+  })
+  for (const k of ["str", "dex", "sta", "cha", "man", "com", "int", "wit", "res"] as AttributeKeys[]) {
+    opts.push(asSkill(k))
+  }
+
+  return opts
+})
+
+const sendDiceRoll = async () => {
+  const c = character.value
+  const p = pool.value
+  if (!c || !p) return
+
+  const attr = attrOptions.value.find(x => x.value === selectedAttribute.value)
+  const skill = skillOptions.value.find(x => x.value === selectedSkill.value)
+
+  const attrName = (attr?.name ?? "").replace(/\(\d+\)/g, "").trim()
+  const skillName = (skill?.name ?? "").replace(/\(\d+\)/g, "").trim()
+
+  let diff: number | undefined
+  const d = difficulty.value.trim()
+  if (d && !isNaN(parseInt(d))) diff = parseInt(d)
+
+  VicarTT.rollNamedDiceFor(c, `${attrName} + ${skillName}`, p.simple, p.hunger, diff)
+  show.value = false
+}
+
+const handleClose = () => {
+  const c = character.value
+  if (!c) {
+    show.value = false
+    return
+  }
+
+  show.value = false
+  c.cache = c.cache || {}
+
+  if (selectedAttribute.value) c.cache["dicePoolCalculatorAttribute"] = selectedAttribute.value
+  else delete c.cache["dicePoolCalculatorAttribute"]
+
+  if (selectedSkill.value !== null) c.cache["dicePoolCalculatorSkill"] = selectedSkill.value
+  else delete c.cache["dicePoolCalculatorSkill"]
+
+  if (bonus.value) c.cache["dicePoolCalculatorBonus"] = bonus.value
+  else delete c.cache["dicePoolCalculatorBonus"]
+}
+
+defineExpose({ showModal })
 </script>
 
 <template>
   <Modal :shown="show" @close="handleClose" v-if="character">
-    <div class="w-400 d-flex justify-content-center align-items-center flex-column" style="gap: 0.5rem">
-      <b>{{$t('character.modal.pool-calcuator', {name: this.character.name})}}:</b>
-      <div style="display: flex; flex-direction: row; gap: 1rem; justify-content: center; align-items: center">
-        <Dropdown :options="attrOptions" v-model="selectedAttribute" :placeholder="$t('character.modal.pool-calcuator.attribute')" ref="attrDropdown"/>
-        <Dropdown :options="skillOptions" v-model="selectedSkill" :placeholder="$t('character.modal.pool-calcuator.skill')"/>
-      </div>
-      <div style="width: 100%; height: 1px; background-color: var(--primary-color); margin-top: 1rem"></div>
-      <div style="display: flex; margin-top: 1rem; gap: 1rem; flex-direction: column">
-        <input class="form-control" type="text" v-model="bonus" :placeholder="$t('character.modal.pool-calcuator.bonus')" style="width: 100%"/>
+    <div class="dpcm">
+      <b class="dpcm__title">{{ `Würfelpool für "${character.name}" berechnen` }}:</b>
 
-        <div class="custom-checkbox" style="width: 100%">
-          <input type="checkbox" id="is-disc" v-model="isDiscipline">
-          <label for="is-disc">{{$t('character.modal.pool-calcuator.discipline')}}</label>
+      <div class="dpcm__row">
+        <Dropdown :options="attrOptions" v-model="selectedAttribute" placeholder="Wähle ein Attribut" />
+        <Dropdown :options="skillOptions" v-model="selectedSkill" placeholder="Wähle eine Fähigkeit/Disziplin" />
+      </div>
+
+      <div class="dpcm__divider"></div>
+
+      <div class="dpcm__col">
+        <input class="form-control" type="text" v-model="bonus" placeholder="Weitere Boni/Mali" inputmode="numeric" />
+
+        <div class="custom-checkbox">
+          <input type="checkbox" id="is-disc" v-model="isDiscipline" />
+          <label for="is-disc">Ist für Disziplin?</label>
         </div>
 
-        <div class="custom-checkbox d-flex align-items-center" style="pointer-events: all">
-          <input type="checkbox" id="dicehuman" v-model="human">
-          <label for="dicehuman">{{$t('character.dice-pool.human')}}</label>
+        <div class="custom-checkbox">
+          <input type="checkbox" id="dicehuman" v-model="human" />
+          <label for="dicehuman">Menschliche Interaktion?</label>
         </div>
       </div>
-      <div style="width: 100%; height: 1px; background-color: var(--primary-color); margin-top: 1rem"></div>
-      <div style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center" v-if="pool">
+
+      <div class="dpcm__divider"></div>
+
+      <div v-if="pool" class="dpcm__result">
         <span v-if="pool.hunger > 0">
-          <b><u>{{pool.total}}</u> </b>
-          {{$t('character.modal.pool-calcuator.result.text.hunger.1')}}
-          <b style="color: var(--primary-color)">{{pool.hunger}}</b>
-          {{$t('character.modal.pool-calcuator.result.text.hunger.2')}}
-          <b>{{pool.simple}}</b>
-          {{$t('character.modal.pool-calcuator.result.text.hunger.3')}}
+          <b><u>{{ pool.total }}</u></b>
+          Würfel davon
+          <b class="dpcm__accent">{{ pool.hunger }}</b>
+          Hungerwürfel und
+          <b>{{ pool.simple }}</b>
+          normale Würfel
         </span>
-        <span v-else-if="pool.total === -1">{{$t('character.dice-pool.impossible')}}</span>
-        <span v-else><b>{{pool.total}} </b>{{$t('character.modal.pool-calcuator.result.text.no-hunger')}}</span>
+
+        <span v-else-if="pool.total === -1">Unmöglich (Wasail?!)</span>
+
+        <span v-else><b>{{ pool.total }}</b> Würfel</span>
 
         <template v-if="character.connectedFoundryId">
-          <div style="width: 100%; height: 1px; background-color: var(--primary-color); margin-top: 1rem"></div>
-          <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin-top: 1rem">
-            <input class="form-control" type="text" v-model="difficulty" :placeholder="$t('character.vicartt.difficulty')"/>
-            <button class="btn btn-primary" @click="sendDiceRoll">{{$t('character.vicartt.roll')}}</button>
+          <div class="dpcm__divider"></div>
+          <div class="dpcm__row dpcm__row--tight">
+            <input class="form-control" type="text" v-model="difficulty" placeholder="Schwierigkeit (optional)" inputmode="numeric" />
+            <button class="btn btn-primary" @click="sendDiceRoll">In FoundryVTT würfeln</button>
           </div>
         </template>
       </div>
@@ -261,5 +229,63 @@ export default class DicePoolCalculatorModal extends Vue {
 </template>
 
 <style scoped lang="scss">
+.dpcm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
 
+.dpcm__title {
+  text-align: center;
+  font-family: var(--font-display, Cinzel), serif;
+  letter-spacing: 0.04em;
+}
+
+.dpcm__row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+
+  > * {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  @media (max-width: 520px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.dpcm__row--tight {
+  justify-content: stretch;
+  @media (max-width: 520px) {
+    flex-direction: column;
+  }
+}
+
+.dpcm__col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.dpcm__divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 0.5rem 0;
+}
+
+.dpcm__result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.dpcm__accent {
+  color: var(--primary-color);
+}
 </style>

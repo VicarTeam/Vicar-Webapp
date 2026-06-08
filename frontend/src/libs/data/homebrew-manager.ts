@@ -1,6 +1,5 @@
-import {IBook, IClan} from "@/types/models";
-import {IDiscipline, IHomebrewClan, IHomebrewDiscipline} from "@/types/data";
-import {Storage} from "@/libs/io/storage";
+import type {IBook, IClan} from "@/@types/models";
+import type {IDiscipline, IHomebrewClan, IHomebrewDiscipline} from "@/@types/data";
 
 export const HomebrewIdOffset = 3021;
 
@@ -27,7 +26,7 @@ const placeholderClan: IClan = {
 
 export class HomebrewManager {
 
-  private static readonly books: {target: IBook, disciplines: IDiscipline[]}[] = [];
+  private static readonly books: { target: IBook, disciplines: IDiscipline[] }[] = [];
   private static _installedContent: InstalledHomebrewContent = {
     cachedDisciplines: [],
     clans: [],
@@ -51,7 +50,7 @@ export class HomebrewManager {
   }
 
   public static async loadInstalledContent() {
-    const content = await Storage.readStorage("homebrew-content");
+    const content = localStorage.getItem("vicar::homebrew-content");
     if (content) {
       const parsedContent = JSON.parse(content) as InstalledHomebrewContent;
       this._installedContent = parsedContent;
@@ -216,7 +215,7 @@ export class HomebrewManager {
   }
 
   private static async saveInstalledContent() {
-    await Storage.writeStorage("homebrew-content", JSON.stringify(this._installedContent));
+    localStorage.setItem("vicar::homebrew-content", JSON.stringify(this._installedContent));
   }
 }
 

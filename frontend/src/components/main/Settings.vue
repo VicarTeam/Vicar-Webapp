@@ -1,136 +1,185 @@
-﻿<template>
-  <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center">
-    <div class="w-500 mw-full">
-      <div class="card">
-<!--        <div class="form-group">
-          <label>{{$t("main.settings.language")}}</label>
-          <select class="form-control" v-model="selectedLocale" @change="setLocale(selectedLocale)">
-            <option v-for="lang in availableLocales" :key="lang.code" :value="lang.code">{{lang.name}}</option>
-          </select>
-        </div>-->
+<script setup lang="ts">
+import { computed, onMounted, ref } from "vue"
+import CharacterStorage from "@/libs/io/character-storage"
+import { DataSync } from "@/libs/data/data-sync"
+import DataManager from "@/libs/data/data-manager"
+import { post } from "@/libs/io/rest"
+import { logout as doLogout } from "@/libs/auth"
+import { SettingsData } from "@/libs/io/settings"
 
-<!--        <div v-if="DataManager.loggedInAs" style="width: 100%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin-top: 1rem; margin-bottom: 1.5rem"></div>-->
-        <p v-if="DataManager.loggedInAs">
-          {{$t('settings.logged-in-as')}}<b>{{DataManager.loggedInAs}}</b>
+const oldPassword = ref("")
+const newPassword = ref("")
+const newPasswordRepeat = ref("")
+
+const devMode = computed<boolean>({
+  get() {
+    return SettingsData.isDevMode()
+  },
+  set(v) {
+    SettingsData.setDevMode(v)
+  },
+})
+
+const canChangePassword = computed(() => newPassword.value.length > 0 && newPassword.value === newPasswordRepeat.value)
+
+onMounted(async () => {
+  await DataManager.loadLogin()
+})
+
+async function syncData() {
+  await DataSync.sync(true)
+}
+
+async function migrateCharacters() {
+  await CharacterStorage.migrateCharacters()
+}
+
+async function changePassword() {
+  if (!canChangePassword.value) return
+
+  const success = await DataManager.changeUserPassword(newPassword.value, oldPassword.value)
+  if (!success) {
+    alert("Fehler beim Ändern des Passworts")
+    return
+  }
+
+  oldPassword.value = ""
+  newPassword.value = ""
+  newPasswordRepeat.value = ""
+}
+
+async function logout() {
+  const [status] = await post(`/auth/logout`)
+  if (status < 400) {
+    await doLogout()
+    window.location.reload()
+  }
+}
+</script>
+
+<template>
+  <div class="settings-page">
+    <div class="settings-wrap">
+      <div class="card settings-card">
+        <p v-if="DataManager.loggedInAs" class="logged">
+          Eingeloggt als: <b>{{ DataManager.loggedInAs }}</b>
         </p>
-        <button v-if="DataManager.loggedInAs" class="btn btn-primary" style="width: 100%" @click="logout">{{$t('settings.logout')}}</button>
 
-        <div v-if="DataManager.loggedInAs" style="width: 100%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin-top: 1rem; margin-bottom: 1.5rem"></div>
-        <p v-if="DataManager.loggedInAs">Passwort ändern:</p>
-        <input v-if="DataManager.loggedInAs" type="password" class="form-control" placeholder="Altes Passwort (leerlassen wenn neu)" v-model="oldPassword"/>
-        <input v-if="DataManager.loggedInAs" type="password" class="form-control" placeholder="Neues Passwort" v-model="newPassword" style="margin-top: 1rem"/>
-        <input v-if="DataManager.loggedInAs" type="password" class="form-control" placeholder="Passwort wiederholen" v-model="newPasswordRepeat" style="margin: 1rem 0 1rem 0"/>
-        <button v-if="DataManager.loggedInAs" class="btn btn-primary" style="width: 100%" :disabled="!canChangePassword" @click="changePassword">Speichern</button>
+        <button v-if="DataManager.loggedInAs" class="btn btn-primary full" @click="logout">
+          Ausloggen
+        </button>
 
-        <div style="width: 100%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin-top: 1rem; margin-bottom: 1.5rem"></div>
+        <div v-if="DataManager.loggedInAs" class="divider"></div>
 
-        <div class="form-group d-flex align-items-center justify-content-between">
-          <button class="btn btn-primary" @click="syncData">{{$t('main.settings.syncdata')}}</button>
-          <button class="btn btn-primary" @click="migrateCharacters">{{$t('main.characters.migrate')}}</button>
+        <template v-if="DataManager.loggedInAs">
+          <p class="section-title">Passwort ändern:</p>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Altes Passwort (leerlassen wenn neu)"
+            v-model="oldPassword"
+          />
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Neues Passwort"
+            v-model="newPassword"
+          />
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Passwort wiederholen"
+            v-model="newPasswordRepeat"
+          />
+          <button class="btn btn-primary full" style="margin-top: 1rem" :disabled="!canChangePassword" @click="changePassword">
+            Speichern
+          </button>
+
+          <div class="divider"></div>
+        </template>
+
+        <div class="actions">
+          <button class="btn btn-primary" @click="syncData">Daten synchronisieren</button>
+          <button class="btn btn-primary" @click="migrateCharacters">Charaktere migrieren</button>
         </div>
-        <div class="form-group d-flex align-items-center">
-          <div class="custom-switch d-flex align-items-center flex-grow-1">
-            <input type="checkbox" id="switch-1" v-model="devMode">
-            <label for="switch-1">{{$t('main.settings.devmode')}}</label>
+
+        <div class="bottom">
+          <div class="custom-switch">
+            <input type="checkbox" id="switch-1" v-model="devMode" />
+            <label for="switch-1">Entwicklermodus</label>
           </div>
-          <small style="margin-top: auto">Vicar (c) 2022-{{new Date().getFullYear()}} VicarTeam</small>
-        </div>
-        <div class="form-group mb-0" style="font-style: italic; width: 100%; text-align: right">
+          <small class="copyright">Vicar (c) 2022-{{ new Date().getFullYear() }} DasDarki</small>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import {Component, Ref, Vue} from "vue-property-decorator";
-import {AVAILABLE_LOCALES, i18n, setLocale} from "@/libs/i18n";
-import {SettingsData} from "@/libs/io/settings";
-import CharacterStorage from "@/libs/io/character-storage";
-import {DataSync} from "@/libs/data/data-sync";
-import {VicarNet} from "@/libs/io/vicar-net";
-import VicarLoginModal from "@/components/main/modals/VicarLoginModal.vue";
-import {VicarSync} from "@/libs/io/vicar-sync";
-import DataManager from "@/libs/data/data-manager";
-import {post} from "@/libs/io/rest";
-import {logout} from "@/libs/auth";
-
-@Component({
-  computed: {
-    DataManager() {
-      return DataManager
-    }
-  },
-  components: {VicarLoginModal}
-})
-export default class Settings extends Vue {
-
-  @Ref("vicarLoginModal")
-  private vicarLoginModal!: VicarLoginModal;
-
-  private availableLocales = AVAILABLE_LOCALES;
-  private setLocale = setLocale;
-  private VicarNet = VicarNet;
-
-  private selectedLocale = "";
-
-  private oldPassword = "";
-  private newPassword = "";
-  private newPasswordRepeat = "";
-
-  async mounted() {
-    await DataManager.loadLogin();
-    this.selectedLocale = i18n.locale;
-
-    this.$forceUpdate();
-  }
-
-  private async syncData() {
-    await DataSync.sync(true);
-  }
-
-  private async migrateCharacters() {
-    await CharacterStorage.migrateCharacters();
-  }
-
-  private async changePassword() {
-    if (!this.canChangePassword) {
-      return;
-    }
-
-    const success = await DataManager.changeUserPassword(this.newPassword, this.oldPassword);
-    if (!success) {
-      alert("Fehler beim Ändern des Passworts");
-      return;
-    }
-
-    this.oldPassword = "";
-    this.newPassword = "";
-    this.newPasswordRepeat = "";
-  }
-
-  private get devMode(): boolean {
-    return SettingsData.isDevMode();
-  }
-
-  private set devMode(value: boolean) {
-    SettingsData.setDevMode(value);
-  }
-
-  private get canChangePassword(): boolean {
-    return this.newPassword.length > 0 && this.newPassword === this.newPasswordRepeat;
-  }
-
-  private async logout() {
-    const [status] = await post(`/auth/logout`);
-    if (status < 400) {
-      await logout();
-      window.location.reload();
-    }
+<style scoped lang="scss">
+.settings-page {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+.settings-wrap {
+  width: min(34rem, 100%);
+}
+.settings-card {
+  padding: 1.25rem;
+}
+.logged {
+  margin: 0 0 0.75rem;
+  opacity: 0.95;
+}
+.full {
+  width: 100%;
+  min-height: 44px;
+}
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.14);
+  margin: 1rem 0 1.15rem;
+}
+.section-title {
+  margin: 0 0 0.75rem;
+  opacity: 0.9;
+}
+.form-control {
+  width: 100%;
+}
+.form-control + .form-control {
+  margin-top: 0.75rem;
+}
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  .btn {
+    min-height: 44px;
+    flex: 1 1 12rem;
   }
 }
-</script>
-
-<style scoped lang="scss">
-
+.bottom {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.custom-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+}
+.copyright {
+  opacity: 0.75;
+  text-align: right;
+}
 </style>

@@ -6,6 +6,8 @@ import {initAuthRoutes} from "./api/auth";
 import {initCharacterRoutes} from "./api/character";
 import {initDataRoutes} from "./api/data";
 import {initUserRoutes} from "./api/user";
+import {initSkillTreeRoutes} from "./api/skilltree";
+import {CDN_DIR, initCdnRoutes} from "./api/cdn";
 import {Server} from "socket.io";
 import { createServer } from "node:http";
 import {removeSocket, setSocket} from "./sockets";
@@ -48,6 +50,11 @@ app.use(cors({
 initAuthRoutes(app);
 initDataRoutes(app);
 
+// Hochgeladene Bilder öffentlich ausliefern (vor der Auth-Middleware), damit
+// <img>-Tags sie ohne Auth-Header laden können. Lange Cache-Zeit (CDN-artig),
+// da Dateinamen UUID-basiert und damit eindeutig sind.
+app.use('/cdn', express.static(CDN_DIR, {maxAge: '7d', immutable: true}));
+
 app.use(async (req, res, next) => {
   if (!req.headers.authorization) {
     return res.status(401).send('Unauthorized');
@@ -67,6 +74,8 @@ app.use(async (req, res, next) => {
 
 initCharacterRoutes(app);
 initUserRoutes(app);
+initSkillTreeRoutes(app);
+initCdnRoutes(app);
 
 httpServer.listen(6660, () => {
   console.log(`Server is running on port 6660`);

@@ -1,17 +1,16 @@
-FROM node:22-alpine as build-stage
+FROM oven/bun:latest as build-stage
 
 WORKDIR /app
 
-COPY package*.json ./
-COPY yarn.lock ./
-RUN npm i yarn
-RUN yarn
+COPY package.json ./
+COPY bun.lock ./
 COPY . .
+RUN bun install
 
 ARG VUE_APP_API_URL
 ENV VITE_APP_API_URL=${VUE_APP_API_URL}
 
-RUN npm run build
+RUN bun run build-only
 
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html

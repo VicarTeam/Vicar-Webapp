@@ -1,201 +1,168 @@
-<script lang="ts">
-import {Component, Ref, Vue} from 'vue-property-decorator';
-import EditorForm from "@/components/editor/EditorForm.vue";
-import {State} from "vuex-class";
-import {IW5Gift, IW5Rite, IWerewolfW5Sheet, W5GiftCategory} from "@/types/w5";
-import {getAvailableGiftsForCharacter, rites} from "@/.data/w5";
-import TipButton from "@/components/editor/TipButton.vue";
-import RiteInfoModal from "@/components/viewer/modals/w5/RiteInfoModal.vue";
-import GiftInfoModal from "@/components/viewer/modals/w5/GiftInfoModal.vue";
+<script setup lang="ts">
+import { computed, onMounted, ref } from "vue"
+import EditorForm from "@/components/editor/EditorForm.vue"
+import TipButton from "@/components/editor/TipButton.vue"
+import GiftInfoModal from "@/components/viewer/modals/w5/GiftInfoModal.vue"
+import RiteInfoModal from "@/components/viewer/modals/w5/RiteInfoModal.vue"
+import { getAvailableGiftsForCharacter, rites } from "@/app/data/w5"
+import type { IW5Gift, IW5Rite, IWerewolfW5Sheet } from "@/@types/w5"
+import { W5GiftCategory } from "@/@types/w5"
+import { useStore } from "@/app/store"
 
-@Component({
-  components: {GiftInfoModal, RiteInfoModal, TipButton, EditorForm}
+const store = useStore()
+const editingCharacter = computed(() => store.editingCharacter as IWerewolfW5Sheet | undefined)
+
+const giftInfoModal = ref<InstanceType<typeof GiftInfoModal> | null>(null)
+const riteInfoModal = ref<InstanceType<typeof RiteInfoModal> | null>(null)
+
+const gifts = ref<IW5Gift[]>([])
+
+const nativeGift = ref<IW5Gift | null>(null)
+const auspiceGift = ref<IW5Gift | null>(null)
+const tribeGift = ref<IW5Gift | null>(null)
+const rite = ref<IW5Rite | null>(null)
+
+onMounted(() => {
+  if (!editingCharacter.value) return
+  gifts.value = getAvailableGiftsForCharacter(editingCharacter.value)
 })
-export default class ChooseGiftsView extends Vue {
 
-  @State("editingCharacter")
-  private editingCharacter!: IWerewolfW5Sheet|undefined;
-
-  @Ref("riteInfoModal")
-  private riteInfoModal!: RiteInfoModal;
-
-  @Ref("giftInfoModal")
-  private giftInfoModal!: GiftInfoModal;
-
-  private gifts: IW5Gift[] = [];
-
-  private nativeGift: number = 0;
-  private auspiceGift: number = 0;
-  private tribeGift: number = 0;
-  private rite: number = 0;
-
-  mounted() {
-    this.gifts = getAvailableGiftsForCharacter(this.editingCharacter!);
-  }
-
-  private isGiftSelected(gift: IW5Gift) {
-    return this.nativeGift === gift.id || this.auspiceGift === gift.id || this.tribeGift === gift.id;
-  }
-
-  private openGiftInfo(gift: IW5Gift) {
-    this.giftInfoModal.showModal(gift);
-  }
-
-  private openRiteInfo(rite: IW5Rite) {
-    this.riteInfoModal.showModal(rite);
-  }
-
-  private onBeforeNext(e: any) {
-    const native = this.nativeGift as any as IW5Gift;
-    const auspice = this.auspiceGift as any as IW5Gift;
-    const tribe = this.tribeGift as any as IW5Gift;
-    const rite = this.rite as any as IW5Rite;
-    if (this.editingCharacter) {
-      if (native) {
-        this.editingCharacter.selectedGifts.push(native);
-      }
-      if (auspice) {
-        this.editingCharacter.selectedGifts.push(auspice);
-      }
-      if (tribe) {
-        this.editingCharacter.selectedGifts.push(tribe);
-      }
-      if (rite) {
-        this.editingCharacter.selectedRites.push(rite);
-      }
-    }
-  }
-
-  private get selectableNativeGifts(): IW5Gift[] {
-    if (!this.editingCharacter) {
-      return [];
-    }
-    return this.gifts.filter(g => g.category === W5GiftCategory.Native && !this.isGiftSelected(g) && this.charactersRenown >= g.totalRenown).sort((a, b) => {
-      if (a.totalRenown === b.totalRenown) {
-        return a.name.localeCompare(b.name);
-      } else {
-        return a.totalRenown - b.totalRenown;
-      }
-    });
-  }
-
-  private get selectableAuspiceGifts(): IW5Gift[] {
-    if (!this.editingCharacter) {
-      return [];
-    }
-    return this.gifts.filter(g => g.category === W5GiftCategory.Auspice && !this.isGiftSelected(g) && this.charactersRenown >= g.totalRenown).sort((a, b) => {
-      if (a.totalRenown === b.totalRenown) {
-        return a.name.localeCompare(b.name);
-      } else {
-        return a.totalRenown - b.totalRenown;
-      }
-    });
-  }
-
-  private get selectableTribeGifts(): IW5Gift[] {
-    if (!this.editingCharacter) {
-      return [];
-    }
-    return this.gifts.filter(g => g.category === W5GiftCategory.Tribal && !this.isGiftSelected(g) && this.charactersRenown >= g.totalRenown).sort((a, b) => {
-      if (a.totalRenown === b.totalRenown) {
-        return a.name.localeCompare(b.name);
-      } else {
-        return a.totalRenown - b.totalRenown;
-      }
-    });
-  }
-
-  private get selectableRites(): IW5Rite[] {
-    if (!this.editingCharacter) {
-      return [];
-    }
-    return rites.filter(r => r.id !== this.rite);
-  }
-
-  private get charactersRenown(): number {
-    if (!this.editingCharacter) {
-      return 0;
-    }
-    let renown = 0;
-    for (const r of this.editingCharacter.renown) {
-      renown += r.value;
-    }
-    return renown;
-  }
-
-  private get canGoNext() {
-    return this.nativeGift !== undefined && this.auspiceGift !== undefined && this.tribeGift !== undefined && this.rite !== undefined;
-  }
+function isGiftSelected(g: IW5Gift) {
+  return nativeGift.value?.id === g.id || auspiceGift.value?.id === g.id || tribeGift.value?.id === g.id
 }
+
+function openGiftInfo(g: IW5Gift) {
+  giftInfoModal.value?.showModal(g)
+}
+
+function openRiteInfo(r: IW5Rite) {
+  riteInfoModal.value?.showModal(r)
+}
+
+const charactersRenown = computed(() => {
+  const char = editingCharacter.value
+  if (!char) return 0
+  return (char.renown || []).reduce((acc, r) => acc + (r.value ?? 0), 0)
+})
+
+const selectableNativeGifts = computed(() => {
+  const char = editingCharacter.value
+  if (!char) return []
+  return gifts.value
+    .filter(g => g.category === W5GiftCategory.Native && !isGiftSelected(g) && charactersRenown.value >= g.totalRenown)
+    .sort((a, b) => a.totalRenown === b.totalRenown ? a.name.localeCompare(b.name) : a.totalRenown - b.totalRenown)
+})
+
+const selectableAuspiceGifts = computed(() => {
+  const char = editingCharacter.value
+  if (!char) return []
+  return gifts.value
+    .filter(g => g.category === W5GiftCategory.Auspice && !isGiftSelected(g) && charactersRenown.value >= g.totalRenown)
+    .sort((a, b) => a.totalRenown === b.totalRenown ? a.name.localeCompare(b.name) : a.totalRenown - b.totalRenown)
+})
+
+const selectableTribeGifts = computed(() => {
+  const char = editingCharacter.value
+  if (!char) return []
+  return gifts.value
+    .filter(g => g.category === W5GiftCategory.Tribal && !isGiftSelected(g) && charactersRenown.value >= g.totalRenown)
+    .sort((a, b) => a.totalRenown === b.totalRenown ? a.name.localeCompare(b.name) : a.totalRenown - b.totalRenown)
+})
+
+const selectableRites = computed(() => {
+  return rites.filter(r => r.id !== (rite.value?.id ?? -1))
+})
+
+function onBeforeNext() {
+  const char = editingCharacter.value
+  if (!char) return
+
+  if (nativeGift.value) char.selectedGifts.push({ ...nativeGift.value })
+  if (auspiceGift.value) char.selectedGifts.push({ ...auspiceGift.value })
+  if (tribeGift.value) char.selectedGifts.push({ ...tribeGift.value })
+  if (rite.value) char.selectedRites.push({ ...rite.value })
+}
+
+const canGoNext = computed(() => !!nativeGift.value && !!auspiceGift.value && !!tribeGift.value && !!rite.value)
 </script>
 
 <template>
   <EditorForm :can-go-next="canGoNext" :is-finish="true" @before-next="onBeforeNext">
-    <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
+    <div v-if="editingCharacter" class="outer">
       <div class="choose-gift-wrapper">
-        <label class="required">{{$t('character.gifts')}} <TipButton :content="$t('character.gifts.description')"/> & {{$t('character.rites')}} <TipButton :content="$t('character.rites.description')"/> :</label>
-        <i>{{$t('editor.gifts.instruction')}}</i>
+        <label class="required">
+          Gaben <TipButton content="Gaben sind übernatürliche Kräfte, die du über Geistwesen, Stamm und Auspizium erlangst." />
+          &amp;
+          Riten <TipButton content="Riten sind Zeremonien und spirituelle Praktiken, die dir besondere Effekte ermöglichen." />
+          :
+        </label>
+
+        <i>Wähle je eine Gabe (Nativ, Auspizium, Stamm) sowie einen Ritus.</i>
 
         <div class="gift-selection">
           <div class="card">
-            <h5>{{$t('editor.gifts.native')}}:</h5>
+            <h5>Nativ:</h5>
             <select class="form-control" v-model="nativeGift">
-              <option :value="0" disabled>{{$t('editor.gifts.select')}}</option>
-              <option v-for="g in selectableNativeGifts" :key="g.id" :value="g">{{g.name}} ({{g.totalRenown}})</option>
+              <option :value="null" disabled>Bitte wählen</option>
+              <option v-for="g in selectableNativeGifts" :key="g.id" :value="g">{{ g.name }} ({{ g.totalRenown }})</option>
             </select>
-            <small v-if="!!nativeGift">
-              {{nativeGift.description}}
-            </small>
-            <button v-if="!!nativeGift" class="btn btn-primary" @click="openGiftInfo(nativeGift)">{{$t('editor.gifts.read-more')}}</button>
+            <small v-if="nativeGift">{{ nativeGift.description }}</small>
+            <button v-if="nativeGift" class="btn btn-primary" @click="openGiftInfo(nativeGift)">Mehr lesen</button>
           </div>
+
           <div class="card">
-            <h5>{{$t('editor.gifts.auspice')}}:</h5>
+            <h5>Auspizium:</h5>
             <select class="form-control" v-model="auspiceGift">
-              <option :value="0" disabled>{{$t('editor.gifts.select')}}</option>
-              <option v-for="g in selectableAuspiceGifts" :key="g.id" :value="g">{{g.name}} ({{g.totalRenown}})</option>
+              <option :value="null" disabled>Bitte wählen</option>
+              <option v-for="g in selectableAuspiceGifts" :key="g.id" :value="g">{{ g.name }} ({{ g.totalRenown }})</option>
             </select>
-            <small v-if="!!auspiceGift">
-              {{auspiceGift.description}}
-            </small>
-            <button v-if="!!auspiceGift" class="btn btn-primary" @click="openGiftInfo(auspiceGift)">{{$t('editor.gifts.read-more')}}</button>
+            <small v-if="auspiceGift">{{ auspiceGift.description }}</small>
+            <button v-if="auspiceGift" class="btn btn-primary" @click="openGiftInfo(auspiceGift)">Mehr lesen</button>
           </div>
+
           <div class="card">
-            <h5>{{$t('editor.gifts.tribal')}}:</h5>
+            <h5>Stamm:</h5>
             <select class="form-control" v-model="tribeGift">
-              <option :value="0" disabled>{{$t('editor.gifts.select')}}</option>
-              <option v-for="g in selectableTribeGifts" :key="g.id" :value="g">{{g.name}} ({{g.totalRenown}})</option>
+              <option :value="null" disabled>Bitte wählen</option>
+              <option v-for="g in selectableTribeGifts" :key="g.id" :value="g">{{ g.name }} ({{ g.totalRenown }})</option>
             </select>
-            <small v-if="!!tribeGift">
-              {{tribeGift.description}}
-            </small>
-            <button v-if="!!tribeGift" class="btn btn-primary" @click="openGiftInfo(tribeGift)">{{$t('editor.gifts.read-more')}}</button>
+            <small v-if="tribeGift">{{ tribeGift.description }}</small>
+            <button v-if="tribeGift" class="btn btn-primary" @click="openGiftInfo(tribeGift)">Mehr lesen</button>
           </div>
+
           <div class="card">
-            <h5>{{$t('editor.gifts.rite')}}:</h5>
+            <h5>Ritus:</h5>
             <select class="form-control" v-model="rite">
-              <option :value="0" disabled>{{$t('editor.gifts.select')}}</option>
-              <option v-for="r in selectableRites" :key="r.id" :value="r">{{r.name}}</option>
+              <option :value="null" disabled>Bitte wählen</option>
+              <option v-for="r in selectableRites" :key="r.id" :value="r">{{ r.name }}</option>
             </select>
-            <small v-if="!!rite">
-              {{rite.description}}
-            </small>
-            <button v-if="!!rite" class="btn btn-primary" @click="openRiteInfo(rite)">{{$t('editor.gifts.read-more')}}</button>
+            <small v-if="rite">{{ rite.description }}</small>
+            <button v-if="rite" class="btn btn-primary" @click="openRiteInfo(rite)">Mehr lesen</button>
           </div>
         </div>
       </div>
 
-      <RiteInfoModal ref="riteInfoModal"/>
-      <GiftInfoModal ref="giftInfoModal"/>
+      <RiteInfoModal ref="riteInfoModal" />
+      <GiftInfoModal ref="giftInfoModal" />
     </div>
   </EditorForm>
 </template>
 
 <style scoped lang="scss">
+.outer {
+  width: 100%;
+  height: 100%;
+  padding: 5rem;
+  display: flex;
+  justify-content: center;
+}
+
 .choose-gift-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+
   .gift-selection {
     display: flex;
     flex-direction: row;
@@ -203,6 +170,7 @@ export default class ChooseGiftsView extends Vue {
     justify-content: center;
     gap: 2rem;
     margin-top: 1rem;
+
     .card {
       width: calc(100vw / 4 - 10rem);
       height: fit-content;
@@ -210,11 +178,13 @@ export default class ChooseGiftsView extends Vue {
       flex-direction: column;
       align-items: center;
       gap: 1rem;
+
       h5 {
         margin: 0;
-        font-weight: bold;
+        font-weight: 800;
         font-size: 1.2rem;
       }
+
       small {
         text-align: left;
       }

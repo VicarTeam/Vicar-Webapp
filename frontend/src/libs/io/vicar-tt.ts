@@ -1,4 +1,4 @@
-import {ICharacter} from "@/types/models";
+import type {ICharacter} from "@/@types/models";
 import {VicarNet} from "@/libs/io/vicar-net";
 
 export interface DiceRollMessage {

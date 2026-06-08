@@ -6,10 +6,16 @@ import {
   authenticateByPassword,
   destroyUserSession,
   getUserIdRegardlessOfExpired,
-  refreshToken
+  refreshToken,
+  revokeRefreshToken
 } from "../services/auth";
 
 const preAuthCache = new MemoryCache<string, string>(1, Number.MAX_SAFE_INTEGER);
+
+/** Lokaler Entwicklungsmodus – aktiviert u.a. den Fake-Login ohne Discord. */
+function isDevMode(): boolean {
+  return Bun.env.DEV_MODE === 'true' || Bun.env.NODE_ENV === 'development';
+}
 
 export function initAuthRoutes(app: express.Express) {
   app.get('/auth/login', login);
@@ -17,6 +23,30 @@ export function initAuthRoutes(app: express.Express) {
   app.post('/auth/logout', logout);
   app.post('/auth/refresh', refreshTokens);
   app.get('/auth/login/password', loginThroughPassword);
+  app.get('/auth/login/dev', loginAsDev);
+}
+
+/**
+ * Fake-Login für die lokale Entwicklung: meldet einen festen Dev-Nutzer an,
+ * ohne dass Discord-OAuth konfiguriert sein muss. Nur im Dev-Modus aktiv.
+ */
+async function loginAsDev(req: express.Request, res: express.Response) {
+  if (!isDevMode()) {
+    return res.status(404).send('Not found');
+  }
+
+  const r = req.query.r as string;
+  const session = await authenticate({ id: 'dev-local-user', username: 'dev' });
+
+  const url = new URL(Bun.env.FRONTEND_URL as string + "/logged-in");
+  url.searchParams.set('s_atk', session.accessToken.token);
+  url.searchParams.set('s_rtk', session.refreshToken.token);
+  url.searchParams.set('s_exp', session.accessToken.exp.toString());
+  if (r) {
+    url.searchParams.set('r', r);
+  }
+
+  res.redirect(url.toString());
 }
 
 async function loginThroughPassword(req: express.Request, res: express.Response) {
@@ -144,26 +174,28 @@ async function logout(req: express.Request, res: express.Response) {
     return res.status(401).send('Unauthorized');
   }
 
-  await destroyUserSession(userId);
+  // Mit Refresh-Token: nur dieses Gerät ausloggen. Ohne: alle Geräte.
+  const rtk = req.query.rtk as string;
+  if (rtk) {
+    await revokeRefreshToken(rtk);
+  } else {
+    await destroyUserSession(userId);
+  }
   res.json({ message: 'Logged out successfully' });
 }
 
 async function refreshTokens(req: express.Request, res: express.Response) {
-  let sessionId = req.headers.authorization;
-  if (!sessionId) {
-    return res.status(401).send('Unauthorized');
-  }
-  sessionId = sessionId.replace('Bearer ', '');
-
+  // Bewusst KEINE Authorization-Pflicht: Der Access-Token darf bereits abgelaufen
+  // sein (genau dann will man refreshen). Die Gültigkeit hängt am Refresh-Token.
   const rtk = req.query.rtk as string;
   if (!rtk) {
     return res.status(400).send('Refresh token is required');
   }
 
   try {
-    const tokens = await refreshToken(sessionId, rtk);
+    const tokens = await refreshToken(rtk);
     if (!tokens) {
-      return res.status(401).send('Invalid session or refresh token');
+      return res.status(401).send('Invalid or expired refresh token');
     }
 
     res.json({

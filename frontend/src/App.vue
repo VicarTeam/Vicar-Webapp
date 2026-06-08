@@ -1,44 +1,53 @@
-<template>
-  <div class="page-wrapper">
-    <div class="content-wrapper">
-      <router-view/>
-    </div>
+<script setup lang="ts">
+import { provide, ref, watchEffect, onMounted, onUnmounted } from "vue"
+import { useStore } from "@/app/store.ts"
+import TipModal from "@/components/editor/TipModal.vue"
+import QuickLexiconOverlay from "@/components/main/lexicon/QuickLexiconOverlay.vue"
 
-    <TipModal ref="tipModal"/>
-    <ConfirmModal ref="confirmModal"/>
-    <AIRulesBot />
-  </div>
-</template>
+const store = useStore()
 
-<script lang="ts">
-import {Component, Provide, Ref, Vue} from "vue-property-decorator";
-import TipModal from "@/components/editor/TipModal.vue";
-import ConfirmModal from "@/components/main/modals/ConfirmModal.vue";
-import AIRulesBot from "@/components/AIRulesBot.vue";
+const tipModal = ref<InstanceType<typeof TipModal>>()
 
-@Component({
-  components: {AIRulesBot, ConfirmModal, TipModal}
+watchEffect(() => {
+  setTheme(store.currentGameLine)
 })
-export default class App extends Vue {
 
-  @Ref("tipModal")
-  private tipModal!: TipModal;
+function setTheme(theme: string) {
+  const html = document.documentElement
+  html.classList.remove("theme--vampire", "theme--werewolf", "theme--mage", "theme--hunter")
+  html.classList.add(`theme--${theme}`)
+}
 
-  @Ref("confirmModal")
-  private confirmModal!: ConfirmModal;
+function onKeyDown(e: KeyboardEvent) {
+  const isMac = navigator.platform.toLowerCase().includes("mac")
+  const openCombo = (isMac ? e.metaKey : e.ctrlKey) && e.key.toLowerCase() === "k"
 
-  @Provide("show-tip")
-  private showTip(content: any, title?: any) {
-    this.tipModal.showModal(title, content);
+  if (openCombo) {
+    e.preventDefault()
+    store.toggleLexicon()
+    return
   }
 
-  @Provide("confirm")
-  private confirm(text: string): Promise<boolean> {
-    return new Promise<boolean>(resolve => {
-      this.confirmModal.showConfirm(text, success => {
-        resolve(success);
-      });
-    });
+  if (e.key === "Escape" && store.lexiconOpen) {
+    e.preventDefault()
+    store.closeLexicon()
   }
 }
+
+onMounted(() => window.addEventListener("keydown", onKeyDown))
+onUnmounted(() => window.removeEventListener("keydown", onKeyDown))
+
+provide("show-tip", (content: any, title?: any) => {
+  tipModal.value?.showModal(title, content)
+})
 </script>
+
+<template>
+  <RouterView />
+
+  <QuickLexiconOverlay />
+
+  <TipModal ref="tipModal" />
+</template>
+
+<style scoped lang="scss"></style>

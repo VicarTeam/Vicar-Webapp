@@ -1,66 +1,86 @@
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import Modal from "@/components/modal/Modal.vue"
+import { useStore } from "@/app/store"
+import { levelResolver } from "@/libs/resolvers/level-resolver"
+import CharacterStorage from "@/libs/io/character-storage"
+import { LevelChangeType } from "@/@types/gameline"
+import type { ICharacter, ISkillData } from "@/@types/models"
+
+const store = useStore()
+const editingCharacter = computed(() => store.editingCharacter as ICharacter | undefined)
+
+const show = ref(false)
+const specialization = ref("")
+const data = ref<ISkillData | null>(null)
+
+function showModal(d: ISkillData) {
+  specialization.value = ""
+  data.value = d
+  show.value = true
+}
+
+const neededExp = computed(() => levelResolver.resolveSpecialization())
+
+function level() {
+  const char = editingCharacter.value
+  const skill = data.value
+  const spec = specialization.value.trim()
+
+  if (!char || !skill) return
+  if (char.exp < neededExp.value) return
+  if (spec.length === 0) return
+  if (skill.specialization.includes(spec)) return
+
+  CharacterStorage.trackLevelChange(
+    char,
+    LevelChangeType.Specialization,
+    neededExp.value,
+    `${spec} (Skill: ${skill.key}) hinzugefügt`,
+  )
+
+  skill.specialization.push(spec)
+  CharacterStorage.saveCharacter(char)
+  show.value = false
+}
+
+defineExpose({ showModal })
+</script>
+
 <template>
   <Modal :shown="show" @close="show = false">
-    <div style="display: flex; flex-direction: column; gap: 1rem; width: 20rem" v-if="data">
-      <b>{{$t('viewer.modal.level.specialization')}}:</b>
-      <div style="width: 100%; text-align: center">{{$t('viewer.modal.level.costs', {xp: neededExp})}}</div>
-      <input type="text" class="form-control" v-model="specialization"/>
-      <div style="width: 100%; display: flex; justify-content: center; align-items: center">
-        <button class="btn btn-primary" :disabled="neededExp > editingCharacter.exp" @click="level">{{$t('viewer.modal.level.btn')}}</button>
+    <div v-if="data && editingCharacter" class="mini-modal">
+      <b>Spezialisierung hinzufügen:</b>
+
+      <div class="centerline">
+        {{ `Kosten: ${neededExp} EXP` }}
+      </div>
+
+      <input type="text" class="form-control" v-model="specialization" />
+
+      <div class="actions">
+        <button class="btn btn-primary" :disabled="neededExp > editingCharacter.exp" @click="level">
+          Abschließen
+        </button>
       </div>
     </div>
   </Modal>
 </template>
 
-<script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
-import Modal from "@/components/modal/Modal.vue";
-import {State} from "vuex-class";
-import {AttributeKeys, IAttributeData, ICharacter, ISkillData} from "@/types/models";
-import {levelResolver} from "@/libs/resolvers/level-resolver";
-import Bullet from "@/components/Bullet.vue";
-import CharacterStorage from "@/libs/io/character-storage";
-import {LevelChangeType} from "@/types/gameline";
-
-@Component({
-  components: {Bullet, Modal}
-})
-export default class NewSpecializationModal extends Vue {
-
-  @State("editingCharacter")
-  private editingCharacter!: ICharacter;
-
-  private show: boolean = false;
-  private specialization: string = "";
-  private data: ISkillData = null!;
-
-  public showModal(data: ISkillData) {
-    this.specialization = "";
-    this.data = data;
-    this.show = true;
-  }
-
-  private level() {
-    if (this.editingCharacter.exp < this.neededExp) {
-      return;
-    }
-
-    if (this.specialization.trim().length === 0 || this.data.specialization.includes(this.specialization)) {
-      return;
-    }
-
-    const translatedSkill = this.$t(`data.skill.${this.data.key.toLowerCase()}`);
-    CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.Specialization, this.neededExp, `${this.specialization} (${translatedSkill}) hinzugefügt`);
-    this.data.specialization.push(this.specialization);
-    CharacterStorage.saveCharacter(this.editingCharacter);
-    this.show = false;
-  }
-
-  private get neededExp(): number {
-    return levelResolver.resolveSpecialization();
-  }
-}
-</script>
-
 <style scoped lang="scss">
-
+.mini-modal {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.centerline {
+  width: 100%;
+  text-align: center;
+}
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 </style>

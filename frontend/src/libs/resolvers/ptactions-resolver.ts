@@ -1,57 +1,55 @@
-import {IFlawChoice, IPTAction, PTActionType} from "@/types/data";
-import {ICharacter} from "@/types/models";
-import {DisciplinePointActionData} from "@/components/editor/actions/DisciplinePointAction.vue";
+import {type IFlawChoice, type IPTAction, type IRestriction, PTActionType} from "@/@types/data";
+import type {ICharacter} from "@/@types/models";
 import {restrictionResolver} from "@/libs/resolvers/restriction-resolver";
 
-type ResolverCallback = (char: ICharacter, data: any) => boolean;
-const registeredResolvers: {[type: string]: ResolverCallback} = {};
-
-const ResolveType = (type: PTActionType) => {
-    return (target: Object, propertyKey: string, descriptor: PropertyDescriptor) => {
-        if (descriptor.value) {
-            registeredResolvers[type] = (char, data) => descriptor.value.call(target, char, data);
-        }
-    };
+export type DisciplinePointActionData = {
+  choices: { id: number; restriction?: IRestriction }[]
 }
 
+type ResolverCallback = (char: ICharacter, data: any) => boolean;
+const registeredResolvers: { [type: string]: ResolverCallback } = {};
+
 const AvailableActions: PTActionType[] = [
-    PTActionType.AdditionalSpecialization, PTActionType.DisciplinePoint, PTActionType.AddFlaw,
-    PTActionType.SpendBackgroundPointsBetween, PTActionType.SpendFlawPointsBetween
+  PTActionType.AdditionalSpecialization, PTActionType.DisciplinePoint, PTActionType.AddFlaw,
+  PTActionType.SpendBackgroundPointsBetween, PTActionType.SpendFlawPointsBetween
 ];
 
 class PTActionsResolver {
 
-    public resolve(actions: IPTAction[], char: ICharacter): IPTAction[] {
-        return actions.filter(action => {
-            if (!AvailableActions.includes(action.type)) {
-                return false;
-            }
+  constructor() {
+    registeredResolvers[PTActionType.AddFlaw] = this.resolveAddFlaw.bind(this);
+    registeredResolvers[PTActionType.DisciplinePoint] = this.resolveDisciplinePoint.bind(this);
+  }
 
-            if (registeredResolvers[action.type]) {
-                return registeredResolvers[action.type](char, action.data);
-            }
+  public resolve(actions: IPTAction[], char: ICharacter): IPTAction[] {
+    return actions.filter(action => {
+      if (!AvailableActions.includes(action.type)) {
+        return false;
+      }
 
-            return true;
-        });
-    }
+      if (registeredResolvers[action.type]) {
+        return registeredResolvers[action.type]!(char, action.data);
+      }
 
-    @ResolveType(PTActionType.AddFlaw)
-    private resolveAddFlaw(char: ICharacter, data: {choices: IFlawChoice[]}): boolean {
-        return data.choices.length > 1;
-    }
+      return true;
+    });
+  }
 
-    @ResolveType(PTActionType.DisciplinePoint)
-    private resolveDisciplinePoint(char: ICharacter, data: DisciplinePointActionData): boolean {
-        const choices = data.choices.filter(choice => {
-            if (choice.restriction) {
-                if (!restrictionResolver.resolve(char, choice.restriction)) {
-                    return false;
-                }
-            }
-            return true;
-        });
-        return choices.length > 1;
-    }
+  private resolveAddFlaw(char: ICharacter, data: { choices: IFlawChoice[] }): boolean {
+    return data.choices.length > 1;
+  }
+
+  private resolveDisciplinePoint(char: ICharacter, data: DisciplinePointActionData): boolean {
+    const choices = data.choices.filter(choice => {
+      if (choice.restriction) {
+        if (!restrictionResolver.resolve(char, choice.restriction)) {
+          return false;
+        }
+      }
+      return true;
+    });
+    return choices.length > 1;
+  }
 }
 
 export const ptActionResolver = new PTActionsResolver();

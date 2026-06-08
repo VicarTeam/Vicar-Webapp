@@ -1,45 +1,65 @@
-<script lang="ts">
-import {Vue, Component} from 'vue-property-decorator';
-import Modal from "@/components/modal/Modal.vue";
+<script setup lang="ts">
+import { ref } from "vue"
+import Modal from "@/components/modal/Modal.vue"
 
-@Component({
-  components: {Modal}
-})
-export default class ConfirmModal extends Vue {
+const emit = defineEmits<{
+  (e: "result", success: boolean): void
+}>()
 
-  private visible: boolean = false;
-  private text: string = "";
-  private cb: (success: boolean) => void = () => {};
+const visible = ref(false)
+const text = ref("")
+let cb: (success: boolean) => void = () => {}
 
-  public showConfirm(text: string, cb: (success: boolean) => void) {
-    this.text = text;
-    this.cb = cb;
-    this.visible = true;
-  }
-
-  private confirm() {
-    this.cb(true);
-    this.visible = false;
-  }
-
-  private cancel() {
-    this.cb(false);
-    this.visible = false;
-  }
+function showConfirm(t: string, next: (success: boolean) => void) {
+  text.value = t
+  cb = next
+  visible.value = true
 }
+
+function confirm() {
+  cb(true)
+  emit("result", true)
+  visible.value = false
+}
+
+function cancel() {
+  cb(false)
+  emit("result", false)
+  visible.value = false
+}
+
+defineExpose({ showConfirm })
 </script>
 
 <template>
   <Modal :shown="visible" @close="cancel()">
-    <div class="p-4 w-300 d-flex flex-column">
-      <p>{{text}}</p>
-      <div style="display: flex; justify-content: flex-end">
-        <button class="btn btn-primary" @click="confirm()">{{$t('main.confirmmodal.button').toString()}}</button>
+    <div class="confirm-modal">
+      <p class="text">{{ text }}</p>
+      <div class="actions">
+        <button class="btn btn-primary" @click="confirm()">
+          Bestätigen
+        </button>
       </div>
     </div>
   </Modal>
 </template>
 
 <style scoped lang="scss">
-
+.confirm-modal {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.text {
+  margin: 0;
+  line-height: 1.45;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  .btn {
+    min-height: 44px;
+  }
+}
 </style>

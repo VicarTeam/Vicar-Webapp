@@ -1,140 +1,121 @@
-<script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import { State } from 'vuex-class';
-import {
-  IMageSheet, knowledgeAbilities,
-  M20Ability, skillAbilities, talentAbilities,
-} from '@/types/m20';
-import EditorForm from '@/components/editor/EditorForm.vue';
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import EditorForm from "@/components/editor/EditorForm.vue"
+import {getAbilityName, type IMageSheet, M20Ability} from "@/@types/m20"
+import { knowledgeAbilities, skillAbilities, talentAbilities, } from "@/@types/m20"
+import { useStore } from "@/app/store"
 
 enum AbilityPriority {
   None = 0,
   Primary = 1,
   Secondary = 2,
-  Tertiary = 3
+  Tertiary = 3,
 }
 
-const priorities = [AbilityPriority.Primary, AbilityPriority.Secondary, AbilityPriority.Tertiary];
-const priorityMax = {
+const priorities = [AbilityPriority.Primary, AbilityPriority.Secondary, AbilityPriority.Tertiary]
+const priorityMax: Record<number, number> = {
   [AbilityPriority.None]: 0,
   [AbilityPriority.Primary]: 13,
   [AbilityPriority.Secondary]: 9,
-  [AbilityPriority.Tertiary]: 5
-};
+  [AbilityPriority.Tertiary]: 5,
+}
 
-const baseNumbers = [0, 1, 2, 3];
+const baseNumbers = [0, 1, 2, 3]
 
-@Component({
-  components: { EditorForm }
+const store = useStore()
+const editingCharacter = computed(() => store.editingCharacter as IMageSheet | undefined)
+
+const talentsPriority = ref<AbilityPriority>(AbilityPriority.None)
+const skillsPriority = ref<AbilityPriority>(AbilityPriority.None)
+const knowledgesPriority = ref<AbilityPriority>(AbilityPriority.None)
+
+const selectableTalentsPriorities = computed(() => priorities.filter((p) => ![skillsPriority.value, knowledgesPriority.value].includes(p)))
+const selectableSkillsPriorities = computed(() => priorities.filter((p) => ![talentsPriority.value, knowledgesPriority.value].includes(p)))
+const selectableKnowledgesPriorities = computed(() => priorities.filter((p) => ![talentsPriority.value, skillsPriority.value].includes(p)))
+
+function ensureAbilities() {
+  const c = editingCharacter.value
+  if (!c) return
+  if (!c.abilities) c.abilities = {} as any
+}
+ensureAbilities()
+
+function getAbilityValue(ab: M20Ability): number {
+  const c = editingCharacter.value
+  return (c?.abilities?.[ab] ?? 0) as number
+}
+
+function setAbilityValue(ab: M20Ability, v: any) {
+  const c = editingCharacter.value
+  if (!c) return
+  ensureAbilities()
+  const safe = Math.max(0, Math.min(3, (parseInt(v, 10) | 0)))
+  c.abilities[ab] = safe as any
+}
+
+function sumFor(list: readonly M20Ability[], enabled: boolean): number {
+  if (!enabled) return 0
+  return list.reduce((acc, ab) => acc + getAbilityValue(ab), 0)
+}
+
+function maxFor(p: AbilityPriority) {
+  return priorityMax[p] || 0
+}
+
+const usedTalents = computed(() => sumFor(talentAbilities, talentsPriority.value !== AbilityPriority.None))
+const usedSkills = computed(() => sumFor(skillAbilities, skillsPriority.value !== AbilityPriority.None))
+const usedKnowledges = computed(() => sumFor(knowledgeAbilities, knowledgesPriority.value !== AbilityPriority.None))
+
+function isOptionDisabled(kind: "talent" | "skill" | "knowledge", ab: M20Ability, candidate: number): boolean {
+  if (candidate === 0) return false
+  const current = getAbilityValue(ab)
+
+  let used = 0,
+    max = 0,
+    locked = false
+
+  if (kind === "talent") {
+    used = usedTalents.value
+    max = maxFor(talentsPriority.value)
+    locked = talentsPriority.value === AbilityPriority.None
+  } else if (kind === "skill") {
+    used = usedSkills.value
+    max = maxFor(skillsPriority.value)
+    locked = skillsPriority.value === AbilityPriority.None
+  } else {
+    used = usedKnowledges.value
+    max = maxFor(knowledgesPriority.value)
+    locked = knowledgesPriority.value === AbilityPriority.None
+  }
+
+  if (locked) return true
+  if (candidate > 3) return true
+  if (candidate === current) return false
+
+  const newTotal = used - current + candidate
+  return newTotal > max
+}
+
+const talentsLocked = computed(() => talentsPriority.value === AbilityPriority.None)
+const skillsLocked = computed(() => skillsPriority.value === AbilityPriority.None)
+const knowledgesLocked = computed(() => knowledgesPriority.value === AbilityPriority.None)
+
+const canGoNext = computed(() => {
+  if (
+    talentsPriority.value !== AbilityPriority.None &&
+    skillsPriority.value !== AbilityPriority.None &&
+    knowledgesPriority.value !== AbilityPriority.None
+  ) {
+    const okTal = usedTalents.value === maxFor(talentsPriority.value)
+    const okSki = usedSkills.value === maxFor(skillsPriority.value)
+    const okKno = usedKnowledges.value === maxFor(knowledgesPriority.value)
+    return okTal && okSki && okKno
+  }
+  return false
 })
-export default class ChooseAbilitiesView extends Vue {
-  AbilityPriority = AbilityPriority;
-  baseNumbers = baseNumbers;
-  talentAbilities = talentAbilities;
-  skillAbilities = skillAbilities;
-  knowledgeAbilities = knowledgeAbilities;
-  M20Ability = M20Ability;
 
-  @State('editingCharacter')
-  private editingCharacter!: IMageSheet;
-
-  private talentsPriority: AbilityPriority = AbilityPriority.None;
-  private skillsPriority: AbilityPriority = AbilityPriority.None;
-  private knowledgesPriority: AbilityPriority = AbilityPriority.None;
-
-  private get selectableTalentsPriorities(): AbilityPriority[] {
-    const used = [this.skillsPriority, this.knowledgesPriority];
-    return priorities.filter(x => !used.includes(x as AbilityPriority)) as AbilityPriority[];
-  }
-
-  private get selectableSkillsPriorities(): AbilityPriority[] {
-    const used = [this.talentsPriority, this.knowledgesPriority];
-    return priorities.filter(x => !used.includes(x as AbilityPriority)) as AbilityPriority[];
-  }
-
-  private get selectableKnowledgesPriorities(): AbilityPriority[] {
-    const used = [this.talentsPriority, this.skillsPriority];
-    return priorities.filter(x => !used.includes(x as AbilityPriority)) as AbilityPriority[];
-  }
-
-  private getAbilityValue(ab: M20Ability): number {
-    return (this.editingCharacter?.abilities?.[ab] ?? 0) as number;
-  }
-
-  private setAbilityValue(ab: M20Ability, v: number) {
-    const safe = Math.max(0, Math.min(3, v | 0));
-    this.$set(this.editingCharacter.abilities, ab, safe);
-  }
-
-  private sumFor(list: readonly M20Ability[], enabled: boolean): number {
-    if (!enabled) return 0;
-    return list.reduce((acc, ab) => acc + this.getAbilityValue(ab), 0);
-  }
-
-  private maxFor(p: AbilityPriority): number {
-    return priorityMax[p] || 0;
-  }
-
-  private get usedTalents(): number {
-    return this.sumFor(this.talentAbilities, this.talentsPriority !== AbilityPriority.None);
-  }
-
-  private get usedSkills(): number {
-    return this.sumFor(this.skillAbilities, this.skillsPriority !== AbilityPriority.None);
-  }
-
-  private get usedKnowledges(): number {
-    return this.sumFor(this.knowledgeAbilities, this.knowledgesPriority !== AbilityPriority.None);
-  }
-
-  private isOptionDisabled(kind: 'talent' | 'skill' | 'knowledge', ab: M20Ability, candidate: number): boolean {
-    if (candidate === 0) return false;
-    const current = this.getAbilityValue(ab);
-
-    let used = 0, max = 0, locked = false;
-    switch (kind) {
-      case 'talent':
-        used = this.usedTalents;
-        max = this.maxFor(this.talentsPriority);
-        locked = this.talentsPriority === AbilityPriority.None;
-        break;
-      case 'skill':
-        used = this.usedSkills;
-        max = this.maxFor(this.skillsPriority);
-        locked = this.skillsPriority === AbilityPriority.None;
-        break;
-      case 'knowledge':
-        used = this.usedKnowledges;
-        max = this.maxFor(this.knowledgesPriority);
-        locked = this.knowledgesPriority === AbilityPriority.None;
-        break;
-    }
-
-    if (locked) return true;
-    if (candidate > 3) return true;
-    if (candidate === current) return false;
-
-    const newTotal = used - current + candidate;
-    return newTotal > max;
-  }
-
-  private get talentsLocked(): boolean { return this.talentsPriority === AbilityPriority.None; }
-  private get skillsLocked(): boolean { return this.skillsPriority === AbilityPriority.None; }
-  private get knowledgesLocked(): boolean { return this.knowledgesPriority === AbilityPriority.None; }
-
-  private get canGoNext(): boolean {
-    if (
-      this.talentsPriority !== AbilityPriority.None &&
-      this.skillsPriority !== AbilityPriority.None &&
-      this.knowledgesPriority !== AbilityPriority.None
-    ) {
-      const okTal = this.usedTalents === this.maxFor(this.talentsPriority);
-      const okSki = this.usedSkills === this.maxFor(this.skillsPriority);
-      const okKno = this.usedKnowledges === this.maxFor(this.knowledgesPriority);
-      return okTal && okSki && okKno;
-    }
-    return false;
-  }
+function labelForPriority(p: AbilityPriority) {
+  return p === AbilityPriority.Primary ? "Primär (13)" : p === AbilityPriority.Secondary ? "Sekundär (9)" : "Tertiär (5)"
 }
 </script>
 
@@ -151,26 +132,23 @@ export default class ChooseAbilitiesView extends Vue {
           <select class="form-control" v-model="talentsPriority">
             <option :value="AbilityPriority.None">Auswählen</option>
             <option v-for="p in selectableTalentsPriorities" :key="p" :value="p">
-              {{ p === AbilityPriority.Primary ? 'Primär (13)' : (p === AbilityPriority.Secondary ? 'Sekundär (9)' : 'Tertiär (5)') }}
+              {{ labelForPriority(p) }}
             </option>
           </select>
           <div class="info"><span>{{ usedTalents }} / {{ talentsPriority === AbilityPriority.None ? 0 : (talentsPriority === AbilityPriority.Primary ? 13 : (talentsPriority === AbilityPriority.Secondary ? 9 : 5)) }}</span></div>
 
           <div class="ability-col">
             <div v-for="ab in talentAbilities" :key="ab" class="ability-row">
-              <label>{{ $t('m20.ability.' + ab) }}</label>
+              <label>{{ getAbilityName(ab) }}</label>
               <select
                 class="form-control"
                 :disabled="talentsLocked"
                 :value="editingCharacter.abilities[ab]"
-                @change="setAbilityValue(ab, $event.target.value)"
+                @change="setAbilityValue(ab, ($event.target as HTMLSelectElement).value)"
               >
-                <option
-                  v-for="n in baseNumbers"
-                  :key="n"
-                  :value="n"
-                  :disabled="isOptionDisabled('talent', ab, n)"
-                >{{ n }}</option>
+                <option v-for="n in baseNumbers" :key="n" :value="n" :disabled="isOptionDisabled('talent', ab, n)">
+                  {{ n }}
+                </option>
               </select>
             </div>
           </div>
@@ -181,26 +159,23 @@ export default class ChooseAbilitiesView extends Vue {
           <select class="form-control" v-model="skillsPriority">
             <option :value="AbilityPriority.None">Auswählen</option>
             <option v-for="p in selectableSkillsPriorities" :key="p" :value="p">
-              {{ p === AbilityPriority.Primary ? 'Primär (13)' : (p === AbilityPriority.Secondary ? 'Sekundär (9)' : 'Tertiär (5)') }}
+              {{ labelForPriority(p) }}
             </option>
           </select>
           <div class="info"><span>{{ usedSkills }} / {{ skillsPriority === AbilityPriority.None ? 0 : (skillsPriority === AbilityPriority.Primary ? 13 : (skillsPriority === AbilityPriority.Secondary ? 9 : 5)) }}</span></div>
 
           <div class="ability-col">
             <div v-for="ab in skillAbilities" :key="ab" class="ability-row">
-              <label>{{ $t('m20.ability.' + ab) }}</label>
+              <label>{{ getAbilityName(ab) }}</label>
               <select
                 class="form-control"
                 :disabled="skillsLocked"
                 :value="editingCharacter.abilities[ab]"
-                @change="setAbilityValue(ab, $event.target.value)"
+                @change="setAbilityValue(ab, ($event.target as HTMLSelectElement).value)"
               >
-                <option
-                  v-for="n in baseNumbers"
-                  :key="n"
-                  :value="n"
-                  :disabled="isOptionDisabled('skill', ab, n)"
-                >{{ n }}</option>
+                <option v-for="n in baseNumbers" :key="n" :value="n" :disabled="isOptionDisabled('skill', ab, n)">
+                  {{ n }}
+                </option>
               </select>
             </div>
           </div>
@@ -211,26 +186,23 @@ export default class ChooseAbilitiesView extends Vue {
           <select class="form-control" v-model="knowledgesPriority">
             <option :value="AbilityPriority.None">Auswählen</option>
             <option v-for="p in selectableKnowledgesPriorities" :key="p" :value="p">
-              {{ p === AbilityPriority.Primary ? 'Primär (13)' : (p === AbilityPriority.Secondary ? 'Sekundär (9)' : 'Tertiär (5)') }}
+              {{ labelForPriority(p) }}
             </option>
           </select>
           <div class="info"><span>{{ usedKnowledges }} / {{ knowledgesPriority === AbilityPriority.None ? 0 : (knowledgesPriority === AbilityPriority.Primary ? 13 : (knowledgesPriority === AbilityPriority.Secondary ? 9 : 5)) }}</span></div>
 
           <div class="ability-col">
             <div v-for="ab in knowledgeAbilities" :key="ab" class="ability-row">
-              <label>{{ $t('m20.ability.' + ab) }}</label>
+              <label>{{ getAbilityName(ab) }}</label>
               <select
                 class="form-control"
                 :disabled="knowledgesLocked"
                 :value="editingCharacter.abilities[ab]"
-                @change="setAbilityValue(ab, $event.target.value)"
+                @change="setAbilityValue(ab, ($event.target as HTMLSelectElement).value)"
               >
-                <option
-                  v-for="n in baseNumbers"
-                  :key="n"
-                  :value="n"
-                  :disabled="isOptionDisabled('knowledge', ab, n)"
-                >{{ n }}</option>
+                <option v-for="n in baseNumbers" :key="n" :value="n" :disabled="isOptionDisabled('knowledge', ab, n)">
+                  {{ n }}
+                </option>
               </select>
             </div>
           </div>
@@ -293,8 +265,12 @@ export default class ChooseAbilitiesView extends Vue {
         align-items: center;
         gap: 0.5rem;
 
-        label { margin: 0; }
-        select { width: 6rem; }
+        label {
+          margin: 0;
+        }
+        select {
+          width: 6rem;
+        }
       }
     }
   }

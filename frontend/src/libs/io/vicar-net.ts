@@ -1,7 +1,6 @@
 import {get, patch, post, put, del} from "@/libs/io/rest";
-import {IHomebrewClan, IHomebrewDiscipline} from "@/types/data";
-import {ICharacter} from "@/types/models";
-import {DiceRollMessage} from "@/libs/io/vicar-tt";
+import type {IHomebrewClan, IHomebrewDiscipline} from "@/@types/data";
+import type {DiceRollMessage} from "@/libs/io/vicar-tt";
 
 export interface VicarNetAccount {
   id: number;
@@ -405,9 +404,9 @@ export class VicarNet {
     }
   }
 
-  public static async retrieveCharSyncs(ids: string[]): Promise<{[key: string]: {c: string, l: string}}> {
+  public static async retrieveCharSyncs(ids: string[]): Promise<{ [key: string]: { c: string, l: string } }> {
     try {
-      const [_, data] = await post<{[key: string]: {c: string, l: string}}>(`/sync/characters`, {
+      const [_, data] = await post<{ [key: string]: { c: string, l: string } }>(`/sync/characters`, {
         ids
       });
       return data;

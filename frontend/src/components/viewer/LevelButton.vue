@@ -1,28 +1,23 @@
-<template>
-  <i class="fa-solid" :class="icon" v-bind="$attrs" @click="$emit('click')" v-if="isLevelMode"></i>
-</template>
+<script setup lang="ts">
+import { computed } from "vue"
+import { useStore } from "@/app/store"
 
-<script lang="ts">
-import {Component, Prop, Vue} from "vue-property-decorator";
-import {State} from "vuex-class";
-import {ICharacter, LevelType} from "@/types/models";
-import {levelResolver} from "@/libs/resolvers/level-resolver";
+const props = withDefaults(
+  defineProps<{
+    icon?: string
+  }>(),
+  { icon: "fa-angles-up" },
+)
 
-@Component({
-  components: {}
-})
-export default class LevelButton extends Vue {
+defineEmits<{ (e: "click"): void }>()
 
-  @Prop({default: 'fa-angles-up'})
-  private icon!: string;
-
-  @State("isLevelMode")
-  private isLevelMode!: boolean;
-
-  @State("editingCharacter")
-  private editingCharacter!: ICharacter;
-}
+const store = useStore()
+const isLevelMode = computed(() => store.isLevelMode)
 </script>
+
+<template>
+  <i class="fa-solid" :class="props.icon" v-bind="$attrs" v-if="isLevelMode" @click="$emit('click')"></i>
+</template>
 
 <style scoped lang="scss">
 .fa-solid {

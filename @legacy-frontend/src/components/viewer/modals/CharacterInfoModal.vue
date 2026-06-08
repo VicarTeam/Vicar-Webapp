@@ -1,0 +1,203 @@
+<template>
+  <Modal :shown="show" @close="show = false">
+    <div class="character-info" v-if="character">
+      <div v-if="isVampire" class="form-group">
+        <label><b>{{$t('main.characters.create.books')}}:</b></label>
+        <BookSelection :disabled="true" :books="activatedBooks"/>
+      </div>
+      <div class="form-group d-flex flex-column">
+        <label><b>{{$t('character.advanced.usedexp')}}:</b></label>
+        <i style="opacity: 0.7; display: flex; justify-content: space-between; align-items: center">{{character.usedExp || 0}} EXP <TipButton :override="true" @click="openLevelHistory()"/></i>
+      </div>
+      <div class="form-group d-flex flex-column" :class="{'mb-0': !isNotUpToDate()}">
+        <label><b>{{$t('character.advanced.rules')}}:</b></label>
+        <div v-if="isVampire" class="custom-checkbox d-flex align-items-center">
+          <input type="checkbox" id="disc" v-model="character.useAdavancedDisciplines" @change="save">
+          <label for="disc">{{$t('character.advanced.disciplines')}}</label>
+        </div>
+        <div v-if="isVampire" class="custom-checkbox d-flex align-items-center">
+          <input type="checkbox" id="pow" v-model="character.allowLearningOfAllPowers" @change="save">
+          <label for="pow">{{$t('character.advanced.powers')}}</label>
+        </div>
+        <div class="custom-checkbox d-flex align-items-center">
+          <input type="checkbox" id="cust" v-model="character.fullCustomization" @change="save">
+          <label for="cust">{{$t('character.advanced.customization')}}</label>
+        </div>
+      </div>
+      <div v-if="isVampire && isNotUpToDate()" class="d-flex justify-content-center align-items-center" style="margin-top: 1rem">
+        <button class="btn btn-primary" @click="migrateChar">{{$t('character.info.migrate')}}</button>
+      </div>
+      <div v-if="isVampire" class="mb-0 form-group" style="margin-top: 1rem">
+        <b>{{$t('character.bonus-code')}}:</b>
+        <input type="text" class="form-control" v-model="bonusCode" @keydown.enter="enterBonusCode">
+      </div>
+      <div v-if="isVampire && isHomebrewActive" class="d-flex justify-content-center align-items-center" style="margin-top: 1rem">
+        <button style="font-size: 1rem" :disabled="homebrewUpdating" class="btn btn-primary" @click="updateHomebrewContent">{{$t(`character.homebrew.update${(homebrewUpdated ? 'd' : '')}`)}}</button>
+      </div>
+    </div>
+
+    <LevelHistoryModal ref="levelHistoryModal"/>
+  </Modal>
+</template>
+
+<script lang="ts">
+import {Component, Ref, Vue} from "vue-property-decorator";
+import Modal from "@/components/modal/Modal.vue";
+import {CurrentCharacterVersion, ICharacter} from "@/types/models";
+import BookSelection, {ActivatableBook} from "@/components/editor/BookSelection.vue";
+import CharacterStorage from "@/libs/io/character-storage";
+import {migrationResolver} from "@/libs/resolvers/migration-resolver";
+import {HomebrewIdOffset, HomebrewManager} from "@/libs/data/homebrew-manager";
+import DataManager from "@/libs/data/data-manager";
+import {IHomebrewDiscipline} from "@/types/data";
+import {GameLine} from "@/types/gameline";
+import TipButton from "@/components/editor/TipButton.vue";
+import LevelHistoryModal from "@/components/viewer/modals/LevelHistoryModal.vue";
+
+@Component({
+  components: {LevelHistoryModal, TipButton, BookSelection, Modal}
+})
+export default class CharacterInfoModal extends Vue {
+
+  @Ref("levelHistoryModal")
+  private levelHistoryModal!: LevelHistoryModal;
+
+  private show: boolean = false;
+  private character: ICharacter = null!;
+  private activatedBooks: ActivatableBook[] = [];
+
+  private homebrewUpdating: boolean = false;
+  private homebrewUpdated: boolean = false;
+
+  private bonusCode = "";
+
+  public showModal(character: ICharacter) {
+    this.character = character;
+    this.character["fullCustomization"] = this.character["fullCustomization"] || false;
+    if (this.isVampire) {
+      this.character["useAdavancedDisciplines"] = this.character["useAdavancedDisciplines"] || false;
+      this.character["allowLearningOfAllPowers"] = this.character["allowLearningOfAllPowers"] || false;
+      this.activatedBooks = [...BookSelection.defaultBooks()].map(book => {
+        return {
+          id: book.id,
+          active: this.character.books.includes(book.id)
+        };
+      });
+    }
+    this.bonusCode = "";
+    this.show = true;
+  }
+
+  private save() {
+    CharacterStorage.saveCharacter(this.character);
+  }
+
+  private migrateChar() {
+    migrationResolver.migrate(this.character);
+    this.$forceUpdate();
+  }
+
+  private openLevelHistory() {
+    this.levelHistoryModal.showModal(this.character);
+  }
+
+  private isNotUpToDate(): boolean {
+    return !this.character["version"] || this.character["version"] < CurrentCharacterVersion;
+  }
+
+  private async updateHomebrewContent() {
+    if (this.homebrewUpdating) {
+      return;
+    }
+
+    this.homebrewUpdated = false;
+    this.homebrewUpdating = true;
+
+    let success = false;
+
+    try {
+      if (this.character.clan.id >= HomebrewIdOffset) {
+        const updatedClan = DataManager.findAvailableClan(this.character.books, this.character.clan.id);
+        if (updatedClan) {
+          this.character.clan = updatedClan;
+        }
+      }
+
+      for (const d of this.character.disciplines) {
+        if ((d.discipline as IHomebrewDiscipline)["creator"]) {
+          const updatedDiscipline = DataManager.normalDisciplinesAsArray().find(discipline => discipline.id === (d.discipline.id < HomebrewIdOffset ? d.discipline.id + HomebrewIdOffset : d.discipline.id));
+          if (updatedDiscipline) {
+            d.discipline = updatedDiscipline;
+
+            const abilities = DataManager.normalDisciplineAbilitiesAsArray(d.discipline).flat();
+            for (let i = 0; i < d.abilities.length; i++) {
+              const a = d.abilities[i];
+              const newAbility = abilities.find(ability => ability.id === a.id);
+              if (newAbility) {
+                a.name = newAbility.name;
+                a.summary = newAbility.summary;
+                a.costs = newAbility.costs;
+                a.system = newAbility.system;
+                a.alternatives = newAbility.alternatives;
+                a.duration = newAbility.duration;
+                a.combination = newAbility.combination;
+                a.diceSupplies = newAbility.diceSupplies;
+                a.requirement = newAbility.requirement;
+                a.minBloodPotency = newAbility.minBloodPotency;
+              }
+            }
+          }
+        }
+      }
+
+      this.save();
+      this.$emit('updated');
+
+      success = true;
+    } catch (e) {
+      console.error(e);
+      success = false;
+    } finally {
+      this.homebrewUpdating = false;
+    }
+
+    if (success) {
+      this.homebrewUpdated = true;
+      setTimeout(() => this.homebrewUpdated = false, 5000);
+    }
+  }
+
+  private enterBonusCode() {
+    if (this.bonusCode.trim().length === 0) {
+      return;
+    }
+
+    try {
+      const code = this.bonusCode.trim().toUpperCase().replaceAll(' ', '_');
+      if (code === "KAINS_MAL") {
+        if (!this.character.hasCainsMark) {
+          this.$emit('cain-mark-granted');
+          this.show = false;
+        }
+      }
+    } finally {
+      this.bonusCode = "";
+    }
+  }
+
+  private get isHomebrewActive() {
+    return this.activatedBooks.some(book => book.id >= HomebrewIdOffset && book.active);
+  }
+
+  private get isVampire() {
+    return this.editingCharacter?.game === GameLine.Vampire || !this.editingCharacter?.game;
+  }
+}
+</script>
+
+<style scoped lang="scss">
+.character-info {
+  display: flex;
+  flex-direction: column;
+}
+</style>

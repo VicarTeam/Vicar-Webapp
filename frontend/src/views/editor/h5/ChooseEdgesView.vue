@@ -1,173 +1,131 @@
-<script lang="ts">
-import { Vue, Component, Ref } from 'vue-property-decorator';
-import EditorForm from "@/components/editor/EditorForm.vue";
-import { State } from "vuex-class";
-import {IHunterSheet, IH5Edge, IH5Perk, IH5SelectedPerk, H5EdgeCategory} from "@/types/h5";
-import { edges } from "@/.data/h5";
-import EdgeInfoModal from "@/components/viewer/modals/EdgeInfoModal.vue";
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import EditorForm from "@/components/editor/EditorForm.vue"
+import EdgeInfoModal from "@/components/viewer/modals/EdgeInfoModal.vue"
+import type { H5EdgeCategory, IH5Edge, IH5Perk, IH5SelectedPerk, IHunterSheet } from "@/@types/h5"
+import { edges as allEdges } from "@/app/data/h5"
+import { useStore } from "@/app/store"
 
-@Component({
-  components: { EdgeInfoModal, EditorForm }
-})
-export default class ChooseEdgesView extends Vue {
+const store = useStore()
+const editingCharacter = computed(() => store.editingCharacter as IHunterSheet | undefined)
 
-  edges: IH5Edge[] = edges;
+const edges = allEdges
 
-  // aus dem Store
-  @State("editingCharacter")
-  private editingCharacter!: IHunterSheet;
+const edgeInfoModal = ref<InstanceType<typeof EdgeInfoModal> | null>(null)
+const infoMessage = ref<string | null>(null)
 
-  // Modal-Ref
-  @Ref("edgeInfoModal")
-  private edgeInfoModal!: any;
-
-  // ===== Helpers / Maps =====
-  private categoryLabelMap: Record<H5EdgeCategory, string> = {
-    [H5EdgeCategory.Asset]: 'Vermögen',
-    [H5EdgeCategory.Aptitude]: 'Begabung',
-    [H5EdgeCategory.Endowment]: 'Weihe'
-  };
-
-  private infoMessage: string | null = null;
-
-  // Fast-Lookups
-  private get perkIdToEdge(): Record<number, IH5Edge> {
-    const map: Record<number, IH5Edge> = {};
-    this.edges.forEach(e => e.perks.forEach(p => (map[p.id] = e)));
-    return map;
-  }
-  private get perkIdToPerk(): Record<number, IH5Perk> {
-    const map: Record<number, IH5Perk> = {};
-    this.edges.forEach(e => e.perks.forEach(p => (map[p.id] = p)));
-    return map;
-  }
-
-  // ===== Derived selections from character =====
-  private get selectedEdges(): IH5Edge[] {
-    return this.editingCharacter.edges || [];
-  }
-  private get selectedPerks(): IH5SelectedPerk[] {
-    return this.editingCharacter.perks || [];
-  }
-
-  // ===== Validation for navigation =====
-  private get canGoNext(): boolean {
-    const eCount = this.selectedEdges.length;
-    const pCount = this.selectedPerks.length;
-
-    // Regel 1: genau 2 Edges + 1 Perk (Perk muss zu einem der beiden Edges gehören)
-    const ruleA =
-      eCount === 2 &&
-      pCount === 1 &&
-      this.isPerkFromOneOfSelectedEdges(this.selectedPerks[0]);
-
-    // Regel 2: genau 1 Edge + 2 Perks (beide Perks müssen zu diesem Edge gehören)
-    const ruleB =
-      eCount === 1 &&
-      pCount === 2 &&
-      this.selectedPerks.every(sp => this.isPerkFromEdge(sp, this.selectedEdges[0]));
-
-    return ruleA || ruleB;
-  }
-
-  // ===== UI helpers =====
-  private categoryLabel(cat: H5EdgeCategory): string {
-    return this.categoryLabelMap[cat] || String(cat);
-  }
-  private isEdgeSelected(edge: IH5Edge): boolean {
-    return this.selectedEdges.some(e => e.id === edge.id);
-  }
-
-  // ===== Edge selection handlers =====
-  private toggleEdge(edge: IH5Edge) {
-    const isSelected = this.isEdgeSelected(edge);
-
-    if (isSelected) {
-      // Edge abwählen: dazu passende Perks entfernen
-      this.editingCharacter.edges = this.selectedEdges.filter(e => e.id !== edge.id);
-      this.editingCharacter.perks = this.selectedPerks.filter(sp => !this.isPerkFromEdge(sp, edge));
-      return;
-    }
-
-    // Edge anwählen
-    if (this.selectedEdges.length >= 2) {
-      // Max 2 Edges
-      this.notify("Du kannst maximal zwei Edges wählen.");
-      return;
-    }
-    this.editingCharacter.edges = [...this.selectedEdges, edge];
-
-    // Wenn vorher 1 Edge + 2 Perks gewählt waren, kann durch das Hinzufügen eines
-    // zweiten Edges die Validität kippen – Benutzer*in wählt dann passend einen Perk ab.
-  }
-
-  // ===== Perk selection handlers =====
-  private addPerk(perk: IH5Perk) {
-    const eCount = this.selectedEdges.length;
-    const pCount = this.selectedPerks.length;
-
-    if (eCount === 0) {
-      this.notify("Wähle zuerst mindestens ein Edge aus.");
-      return;
-    }
-
-    // Regelgrenzen prüfen
-    if (eCount === 2 && pCount >= 1) {
-      this.notify("Mit zwei Edges kannst du nur einen einzelnen Perk wählen.");
-      return;
-    }
-    if (eCount === 1 && pCount >= 2) {
-      this.notify("Mit einem Edge kannst du nur zwei Perks wählen – beide aus diesem Edge.");
-      return;
-    }
-
-    // Zugehörigkeit prüfen
-    if (eCount === 1 && !this.isPerkFromEdge({ perk: perk.id, specialization: '' }, this.selectedEdges[0])) {
-      this.notify("Perks müssen aus dem gewählten Edge stammen.");
-      return;
-    }
-    if (eCount === 2 && !this.isPerkFromOneOfSelectedEdges({ perk: perk.id, specialization: '' })) {
-      this.notify("Perk muss zu einem der gewählten Edges gehören.");
-      return;
-    }
-
-    // Doppelte Perks erlaubt => einfach pushen
-    const next: IH5SelectedPerk = { perk: perk.id, specialization: '' };
-    this.editingCharacter.perks = [...this.selectedPerks, next];
-  }
-
-  private removePerk(index: number) {
-    const next = [...this.selectedPerks];
-    next.splice(index, 1);
-    this.editingCharacter.perks = next;
-  }
-
-  private updateSpecialization(index: number, value: string) {
-    const next = [...this.selectedPerks];
-    next[index] = { ...next[index], specialization: value };
-    this.editingCharacter.perks = next;
-  }
-
-  // ===== Membership checks =====
-  private isPerkFromEdge(sp: IH5SelectedPerk, edge: IH5Edge): boolean {
-    return edge.perks.some(p => p.id === sp.perk);
-  }
-  private isPerkFromOneOfSelectedEdges(sp: IH5SelectedPerk): boolean {
-    return this.selectedEdges.some(e => this.isPerkFromEdge(sp, e));
-  }
-
-  // ===== Modal =====
-  private openEdgeInfo(edge: IH5Edge) {
-    this.edgeInfoModal.showModal(edge);
-  }
-
-  // ===== UX helper =====
-  private notify(msg: string) {
-    this.infoMessage = msg;
-    // Nachricht nach 5 Sekunden automatisch ausblenden
-    setTimeout(() => (this.infoMessage = null), 10_000);
-  }
+const categoryLabelMap: Record<any, string> = {
+  Asset: "Vermögen",
+  Aptitude: "Begabung",
+  Endowment: "Weihe",
 }
+
+function categoryLabel(cat: H5EdgeCategory) {
+  return categoryLabelMap[cat as any] || String(cat)
+}
+
+const selectedEdges = computed<IH5Edge[]>(() => editingCharacter.value?.edges || [])
+const selectedPerks = computed<IH5SelectedPerk[]>(() => editingCharacter.value?.perks || [])
+
+const perkIdToEdge = computed<Record<number, IH5Edge>>(() => {
+  const map: Record<number, IH5Edge> = {}
+  edges.forEach((e) => e.perks.forEach((p) => (map[p.id] = e)))
+  return map
+})
+
+const perkIdToPerk = computed<Record<number, IH5Perk>>(() => {
+  const map: Record<number, IH5Perk> = {}
+  edges.forEach((e) => e.perks.forEach((p) => (map[p.id] = p)))
+  return map
+})
+
+function notify(msg: string) {
+  infoMessage.value = msg
+  setTimeout(() => (infoMessage.value = null), 10_000)
+}
+
+function isEdgeSelected(edge: IH5Edge) {
+  return selectedEdges.value.some((e) => e.id === edge.id)
+}
+
+function isPerkFromEdge(sp: IH5SelectedPerk, edge: IH5Edge) {
+  return edge.perks.some((p) => p.id === sp.perk)
+}
+
+function isPerkFromOneOfSelectedEdges(sp: IH5SelectedPerk) {
+  return selectedEdges.value.some((e) => isPerkFromEdge(sp, e))
+}
+
+function toggleEdge(edge: IH5Edge) {
+  const char = editingCharacter.value
+  if (!char) return
+
+  if (isEdgeSelected(edge)) {
+    char.edges = selectedEdges.value.filter((e) => e.id !== edge.id)
+    char.perks = selectedPerks.value.filter((sp) => !isPerkFromEdge(sp, edge))
+    return
+  }
+
+  if (selectedEdges.value.length >= 2) {
+    notify("Du kannst maximal zwei Edges wählen.")
+    return
+  }
+
+  char.edges = [...selectedEdges.value, edge]
+}
+
+function addPerk(perk: IH5Perk) {
+  const char = editingCharacter.value
+  if (!char) return
+
+  const eCount = selectedEdges.value.length
+  const pCount = selectedPerks.value.length
+
+  if (eCount === 0) return notify("Wähle zuerst mindestens ein Edge aus.")
+  if (eCount === 2 && pCount >= 1) return notify("Mit zwei Edges kannst du nur einen einzelnen Perk wählen.")
+  if (eCount === 1 && pCount >= 2) return notify("Mit einem Edge kannst du nur zwei Perks wählen – beide aus diesem Edge.")
+
+  if (eCount === 1) {
+    if (!isPerkFromEdge({ perk: perk.id, specialization: "" }, selectedEdges.value[0]!)) {
+      return notify("Perks müssen aus dem gewählten Edge stammen.")
+    }
+  } else {
+    if (!isPerkFromOneOfSelectedEdges({ perk: perk.id, specialization: "" })) {
+      return notify("Perk muss zu einem der gewählten Edges gehören.")
+    }
+  }
+
+  char.perks = [...selectedPerks.value, { perk: perk.id, specialization: "" }]
+}
+
+function removePerk(index: number) {
+  const char = editingCharacter.value
+  if (!char) return
+  const next = [...selectedPerks.value]
+  next.splice(index, 1)
+  char.perks = next
+}
+
+function updateSpecialization(index: number, value: string) {
+  const char = editingCharacter.value
+  if (!char) return
+  const next = [...selectedPerks.value]
+  next[index] = { ...next[index], specialization: value } as any
+  char.perks = next
+}
+
+function openEdgeInfo(edge: IH5Edge) {
+  edgeInfoModal.value?.showModal(edge)
+}
+
+const canGoNext = computed(() => {
+  const eCount = selectedEdges.value.length
+  const pCount = selectedPerks.value.length
+
+  const ruleA = eCount === 2 && pCount === 1 && isPerkFromOneOfSelectedEdges(selectedPerks.value[0]!)
+  const ruleB = eCount === 1 && pCount === 2 && selectedPerks.value.every((sp) => isPerkFromEdge(sp, selectedEdges.value[0]!))
+  return ruleA || ruleB
+})
 </script>
 
 <template>
@@ -177,7 +135,6 @@ export default class ChooseEdgesView extends Vue {
         {{ infoMessage }}
       </div>
 
-      <!-- Auswahl: Edges -->
       <div>
         <h5 class="mb-10">Wähle Edges</h5>
         <small class="text-muted">
@@ -193,12 +150,13 @@ export default class ChooseEdgesView extends Vue {
                     <input
                       type="checkbox"
                       class="custom-control-input"
-                      :id="'edge_'+edge.id"
+                      :id="'edge_' + edge.id"
                       :checked="isEdgeSelected(edge)"
                       @change="toggleEdge(edge)"
-                    >
-                    <label class="custom-control-label" :for="'edge_'+edge.id"></label>
+                    />
+                    <label class="custom-control-label" :for="'edge_' + edge.id"></label>
                   </div>
+
                   <div>
                     <div class="d-flex align-items-center">
                       <strong class="mr-10">{{ edge.name }}</strong>
@@ -217,10 +175,10 @@ export default class ChooseEdgesView extends Vue {
                 <div class="small" v-html="edge.system"></div>
               </div>
 
-              <!-- Perk-Liste mit Add-Buttons -->
               <div class="card-footer" style="margin-top: 2rem">
                 <div class="small mb-10"><b>Verfügbare Perks</b></div>
-                <div v-if="edge.perks && edge.perks.length">
+
+                <div v-if="edge.perks?.length">
                   <div
                     v-for="perk in edge.perks"
                     :key="perk.id"
@@ -233,6 +191,7 @@ export default class ChooseEdgesView extends Vue {
                     <button class="btn btn-sm" type="button" @click="addPerk(perk)">Hinzufügen</button>
                   </div>
                 </div>
+
                 <div v-else class="text-muted"><small>Keine Perks für dieses Edge.</small></div>
               </div>
             </div>
@@ -240,39 +199,43 @@ export default class ChooseEdgesView extends Vue {
         </div>
       </div>
 
-      <!-- Auswahl: Perks (verwaltet, inkl. Spezialisierung) -->
       <div>
         <h5 class="mb-10">Gewählte Perks</h5>
+
         <div v-if="selectedPerks.length">
           <div class="card">
             <div class="table-responsive">
               <table class="table">
                 <thead>
                 <tr>
-                  <th style="min-width: 10rem;">Edge</th>
-                  <th style="min-width: 12rem;">Perk</th>
+                  <th style="min-width: 10rem">Edge</th>
+                  <th style="min-width: 12rem">Perk</th>
                   <th>Spezialisierung (optional)</th>
-                  <th class="text-right" style="width: 6rem;">Aktion</th>
+                  <th class="text-right" style="width: 6rem">Aktion</th>
                 </tr>
                 </thead>
+
                 <tbody>
                 <tr v-for="(sp, idx) in selectedPerks" :key="idx">
                   <td>
-                    {{ perkIdToEdge[sp.perk]?.name || '—' }}
-                    <small class="d-block text-muted">{{ categoryLabel(perkIdToEdge[sp.perk]?.category) }}</small>
+                    {{ perkIdToEdge[sp.perk]?.name || "—" }}
+                    <small class="d-block text-muted">
+                      {{ categoryLabel(perkIdToEdge[sp.perk]?.category!) }}
+                    </small>
                   </td>
-                  <td>
-                    {{ perkIdToPerk[sp.perk]?.name || ('#'+sp.perk) }}
-                  </td>
+
+                  <td>{{ perkIdToPerk[sp.perk]?.name || "#" + sp.perk }}</td>
+
                   <td>
                     <input
                       type="text"
                       class="form-control"
-                      :placeholder="'z. B. Kreaturentyp / Detail ...'"
+                      placeholder="z. B. Kreaturentyp / Detail ..."
                       :value="sp.specialization"
-                      @input="updateSpecialization(idx, $event.target.value)"
-                    >
+                      @input="updateSpecialization(idx, ($event.target as HTMLInputElement).value)"
+                    />
                   </td>
+
                   <td class="text-right">
                     <button class="btn btn-sm btn-danger" type="button" @click="removePerk(idx)">Entfernen</button>
                   </td>
@@ -290,13 +253,12 @@ export default class ChooseEdgesView extends Vue {
             </div>
           </div>
         </div>
+
         <div v-else class="text-muted"><small>Noch keine Perks gewählt.</small></div>
       </div>
-
     </div>
 
-    <!-- Modal -->
-    <EdgeInfoModal ref="edgeInfoModal"/>
+    <EdgeInfoModal ref="edgeInfoModal" />
   </EditorForm>
 </template>
 
@@ -305,7 +267,6 @@ export default class ChooseEdgesView extends Vue {
   gap: 1.25rem;
 }
 
-/* etwas luft in Kartenlisten */
 .card + .card {
   margin-top: 0.75rem;
 }

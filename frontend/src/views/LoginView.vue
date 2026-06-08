@@ -1,70 +1,94 @@
-<script lang="ts">
-import {Vue, Component, Watch} from 'vue-property-decorator';
-import {getRedirectQuery} from "@/router";
+<script setup lang="ts">
+import { computed, ref, watch } from "vue"
+import { getRedirectQuery } from "@/app/router"
 
-@Component({})
-export default class LoginView extends Vue {
+type LoginType = "discord" | "password"
 
-  private type: 'discord'|'password' = localStorage.getItem('authType') === 'password' ? 'password' : 'discord';
+const type = ref<LoginType>(localStorage.getItem("authType") === "password" ? "password" : "discord")
 
-  private username: string = '';
-  private password: string = '';
-  private disabled: boolean = false;
+const username = ref("")
+const password = ref("")
+const disabled = ref(false)
 
-  private loginWithDiscord() {
-    this.disabled = true;
-    window.location.href = (import.meta as any).env.VITE_APP_API_URL + '/auth/login' + getRedirectQuery();
-  }
+const isDev = !!(import.meta as any).env.DEV
 
-  private async loginWithPassword() {
-    if (!this.canLoginWithPassword) {
-      return;
-    }
-
-    this.disabled = true;
-
-    const data = encodeURIComponent(btoa(JSON.stringify({
-      username: this.username,
-      password: this.password
-    })));
-
-    let queryString = getRedirectQuery();
-    if (queryString === '') {
-      queryString += '?';
-    } else {
-      queryString += '&';
-    }
-    window.location.href = (import.meta as any).env.VITE_APP_API_URL + '/auth/login/password' + queryString + 'd=' + data;
-  }
-
-  private get canLoginWithPassword() {
-    return this.username.trim().length > 0 && this.password.trim().length > 0 && !this.disabled;
-  }
-
-  @Watch('type')
-  private onTypeChanged(nv: 'discord'|'password') {
-    localStorage.setItem('authType', nv);
-  }
+function loginAsDev() {
+  disabled.value = true
+  window.location.href = (import.meta as any).env.VITE_APP_API_URL + "/auth/login/dev" + getRedirectQuery()
 }
+
+function loginWithDiscord() {
+  disabled.value = true
+  window.location.href = (import.meta as any).env.VITE_APP_API_URL + "/auth/login" + getRedirectQuery()
+}
+
+async function loginWithPassword() {
+  if (!canLoginWithPassword.value) return
+
+  disabled.value = true
+
+  const data = encodeURIComponent(
+    btoa(
+      JSON.stringify({
+        username: username.value,
+        password: password.value,
+      })
+    )
+  )
+
+  let queryString = getRedirectQuery()
+  if (queryString === "") queryString += "?"
+  else queryString += "&"
+
+  window.location.href =
+    (import.meta as any).env.VITE_APP_API_URL + "/auth/login/password" + queryString + "d=" + data
+}
+
+const canLoginWithPassword = computed(() => {
+  return username.value.trim().length > 0 && password.value.trim().length > 0 && !disabled.value
+})
+
+watch(type, (nv) => {
+  localStorage.setItem("authType", nv)
+})
 </script>
 
 <template>
   <div class="login-wrapper">
-    <div class="card" style="width: 30rem">
-      <h6 style="margin: 0 0 0.5rem;"><b>Einloggen mit:</b></h6>
+    <div class="card login-card">
+      <h6 class="headline"><b>Einloggen mit:</b></h6>
+
+      <div v-if="isDev" class="form-group">
+        <button class="btn btn-primary w-100 dev-btn" :disabled="disabled" @click="loginAsDev">
+          <i class="fa-solid fa-flask" /> Dev-Login (ohne Discord)
+        </button>
+      </div>
+
       <div class="form-group">
-        <div class="sex-select">
-          <div :class="{'active': type === 'discord'}" @click="type = 'discord'" style="border-right: 1px solid var(--primary-color);">Discord</div>
-          <div :class="{'active': type === 'password'}" @click="type = 'password'" style="border-left: 1px solid var(--primary-color); border-right: 1px solid var(--primary-color)">Passwort</div>
+        <div class="type-select">
+          <div :class="{ active: type === 'discord' }" @click="type = 'discord'" class="left">Discord</div>
+          <div :class="{ active: type === 'password' }" @click="type = 'password'" class="right">Passwort</div>
         </div>
       </div>
+
       <div v-if="type === 'discord'" class="form-group">
-        <button class="discord-btn" @click="loginWithDiscord"><i class="fa-brands fa-discord"/> Mit Discord einloggen</button>
+        <button class="discord-btn" @click="loginWithDiscord" :disabled="disabled">
+          <i class="fa-brands fa-discord" /> Mit Discord einloggen
+        </button>
       </div>
+
       <div v-if="type === 'password'" class="form-group">
-        <input type="text" class="form-control" placeholder="Benutzername" v-model="username" style="margin-bottom: 1rem"/>
-        <input type="password" class="form-control" placeholder="Passwort" v-model="password" style="margin-bottom: 1rem" @keydown.enter="loginWithPassword"/>
-        <button class="btn btn-primary" style="width: 100%" :disabled="!canLoginWithPassword" @click="loginWithPassword">Einloggen</button>
+        <input type="text" class="form-control" placeholder="Benutzername" v-model="username" />
+        <input
+          type="password"
+          class="form-control mt-10"
+          placeholder="Passwort"
+          v-model="password"
+          @keydown.enter="loginWithPassword"
+        />
+        <button class="btn btn-primary mt-10 w-100" :disabled="!canLoginWithPassword" @click="loginWithPassword">
+          Einloggen
+        </button>
       </div>
     </div>
   </div>
@@ -77,40 +101,87 @@ export default class LoginView extends Vue {
   display: flex;
   justify-content: center;
   align-items: center;
-  .sex-select {
-    display: flex;
-    border: 2px solid var(--primary-color);
-    div {
-      cursor: pointer;
-      user-select: none;
-      text-align: center;
-      flex-grow: 1;
-      padding: 0.5rem;
-      &.active {
-        background-color: var(--primary-color);
-      }
-    }
-  }
-  .discord-btn {
-    width: 100%;
-    height: 2.5rem;
-    background-color: #5865F2;
-    border: none;
-    color: white;
-    font-weight: bold;
-    font-size: 1rem;
-    border-radius: 0.3rem;
+  padding: 1rem;
+}
+
+.login-card {
+  width: 30rem;
+  max-width: 100%;
+}
+
+.headline {
+  margin: 0 0 0.5rem;
+}
+
+.type-select {
+  display: flex;
+  border: 2px solid var(--primary-color);
+  border-radius: 0.4rem;
+  overflow: hidden;
+
+  div {
     cursor: pointer;
+    user-select: none;
+    text-align: center;
+    flex-grow: 1;
+    padding: 0.75rem 0.5rem;
+    min-height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    &:hover {
-      background-color: #4752C4;
+
+    &.active {
+      background-color: var(--primary-color);
     }
-    &:active {
-      background-color: #363E9D;
-    }
+  }
+
+  .left {
+    border-right: 1px solid var(--primary-color);
+  }
+  .right {
+    border-left: 1px solid var(--primary-color);
+    border-right: 1px solid var(--primary-color);
+  }
+}
+
+.dev-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.discord-btn {
+  width: 100%;
+  min-height: 44px;
+  background-color: #5865f2;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &:hover {
+    background-color: #4752c4;
+  }
+  &:active {
+    background-color: #363e9d;
+  }
+  &:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+}
+
+@media (max-width: 520px) {
+  .login-wrapper {
+    align-items: flex-start;
+    padding-top: 2rem;
   }
 }
 </style>

@@ -4,8 +4,9 @@ const API_URL = (import.meta as any).env.VITE_APP_API_URL as string;
 
 export class DataSync {
 
-  private static _downloadedChecksum: string | null = null;
-  private static _data: {[key: string]: string} | null = null;
+  public static dataVersion: string | null = null;
+
+  private static _data: { [key: string]: string } | null = null;
 
   public static async sync(force: boolean = false) {
     if (!await this.isNewerAvailable() && !force) {
@@ -40,27 +41,23 @@ export class DataSync {
       this._data = JSON.parse(localStorage.getItem("__data__") || "{}");
     }
 
-    return JSON.parse(this._data![fileName]);
+    return JSON.parse(this._data![fileName]!);
   }
 
   private static async isNewerAvailable() {
     const dataVersion = localStorage.getItem("data__version");
-    if (!dataVersion || !localStorage.getItem("__data__")) {
-      return true;
-    }
-
     const currentChecksum = await this.retrieveCurrentChecksum();
     return currentChecksum !== dataVersion;
   }
 
   private static async retrieveCurrentChecksum(): Promise<string> {
-    if (this._downloadedChecksum) {
-      return this._downloadedChecksum;
+    if (this.dataVersion) {
+      return this.dataVersion;
     }
 
     try {
       const response = await fetch(API_URL + "/data/checksum");
-      return await response.text();
+      return DataSync.dataVersion = await response.text();
     } catch (e) {
       console.error(e);
       return "<error>";
@@ -91,10 +88,10 @@ export class DataSync {
 
       const bytes = new Array(end - begin);
       for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
-        bytes[i] = byteCharacters[offset].charCodeAt(0);
+        bytes[i] = byteCharacters[offset]!.charCodeAt(0);
       }
       byteArrays[sliceIndex] = new Uint8Array(bytes);
     }
-    return new Blob(byteArrays, { type: contentType });
+    return new Blob(byteArrays, {type: contentType});
   }
 }

@@ -1,3 +1,81 @@
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import Modal from "@/components/modal/Modal.vue"
+import TipButton from "@/components/editor/TipButton.vue"
+import EdgeInfoModal from "@/components/viewer/modals/EdgeInfoModal.vue"
+import CharacterStorage from "@/libs/io/character-storage"
+import { LevelChangeType } from "@/@types/gameline"
+import type { H5EdgeCategory, IH5Edge, IHunterSheet } from "@/@types/h5"
+import { edges as allEdges } from "@/app/data/h5"
+import { useStore } from "@/app/store"
+
+const store = useStore()
+const editingCharacter = computed(() => store.editingCharacter as IHunterSheet | undefined)
+
+const show = ref(false)
+const selectedEdgeId = ref<number | null>(null)
+const onConfirm = ref<((edge: IH5Edge) => void) | null>(null)
+const infoMessage = ref<string | null>(null)
+
+const edgeInfoModal = ref<InstanceType<typeof EdgeInfoModal> | null>(null)
+
+function showModal(cb: (edge: IH5Edge) => void) {
+  onConfirm.value = cb
+  selectedEdgeId.value = null
+  infoMessage.value = null
+  show.value = true
+}
+
+const availableEdges = computed<IH5Edge[]>(() => {
+  const char = editingCharacter.value
+  if (!char) return []
+  const chosen = new Set((char.edges || []).map((e) => e.id))
+  return allEdges.filter((e) => !chosen.has(e.id)).sort((a, b) => a.name.localeCompare(b.name))
+})
+
+const selectedEdge = computed<IH5Edge | null>(() => {
+  if (selectedEdgeId.value == null) return null
+  return allEdges.find((e) => e.id === selectedEdgeId.value) || null
+})
+
+const neededExp = computed(() => 7)
+
+const canConfirm = computed(() => {
+  const char = editingCharacter.value
+  return !!selectedEdge.value && !!char && (char.exp ?? 0) >= neededExp.value
+})
+
+const categoryLabelMap: Record<any, string> = {
+  Asset: "Vermögen",
+  Aptitude: "Begabung",
+  Endowment: "Weihe",
+}
+
+function categoryLabel(cat: H5EdgeCategory) {
+  return categoryLabelMap[cat as any] || String(cat)
+}
+
+function showCurrentInfo() {
+  if (selectedEdge.value) edgeInfoModal.value?.showModal(selectedEdge.value)
+}
+
+function confirm() {
+  const char = editingCharacter.value
+  if (!char || !selectedEdge.value || !canConfirm.value) {
+    infoMessage.value = "Bitte ein Edge wählen und genügend EXP besitzen."
+    return
+  }
+
+  CharacterStorage.trackLevelChange(char as any, LevelChangeType.Edge, neededExp.value, `${selectedEdge.value.name} hinzugefügt`)
+  CharacterStorage.saveCharacter(char as any)
+
+  onConfirm.value?.(selectedEdge.value)
+  show.value = false
+}
+
+defineExpose({ showModal })
+</script>
+
 <template>
   <Modal :shown="show" @close="show = false">
     <div class="edge-modal">
@@ -5,7 +83,11 @@
       <small class="text-muted">Kosten: <b>{{ neededExp }}</b> EXP</small>
 
       <div>
-        <label class="form-label">Edge <TipButton v-if="selectedEdge" :override="true" @click="showCurrentInfo"/></label>
+        <label class="form-label">
+          Edge
+          <TipButton v-if="selectedEdge" :override="true" @click="showCurrentInfo" />
+        </label>
+
         <select v-model="selectedEdgeId" class="form-control">
           <option :value="null" disabled>– Bitte wählen –</option>
           <option v-for="e in availableEdges" :key="e.id" :value="e.id">
@@ -14,120 +96,43 @@
         </select>
       </div>
 
-      <div class="summary text-center">
+      <div class="summary">
         <span v-if="selectedEdge"><b>{{ selectedEdge.name }}</b></span>
         <span v-if="selectedEdge"> &nbsp;•&nbsp; </span>
-        <span>Benötigte EXP: <b>{{ neededExp }}</b> &nbsp;|&nbsp; Verfügbar: <b>{{ editingCharacter.exp }}</b></span>
+        <span v-if="editingCharacter">
+          Benötigte EXP: <b>{{ neededExp }}</b> &nbsp;|&nbsp; Verfügbar: <b>{{ editingCharacter.exp }}</b>
+        </span>
       </div>
 
-      <div class="d-flex justify-content-center">
-        <button
-          class="btn btn-primary"
-          :disabled="!canConfirm"
-          @click="confirm"
-        >
+      <div class="actions">
+        <button class="btn btn-primary" :disabled="!canConfirm" @click="confirm">
           Bestätigen (−{{ neededExp }} EXP)
         </button>
       </div>
 
       <div v-if="infoMessage" class="alert alert-secondary mt-10">{{ infoMessage }}</div>
 
-      <EdgeInfoModal ref="edgeInfoModal"/>
+      <EdgeInfoModal ref="edgeInfoModal" />
     </div>
   </Modal>
 </template>
 
-<script lang="ts">
-import {Component, Ref, Vue} from "vue-property-decorator";
-import {State} from "vuex-class";
-import Modal from "@/components/modal/Modal.vue";
-import {H5EdgeCategory, IH5Edge, IHunterSheet} from "@/types/h5";
-import {edges as allEdges} from "@/.data/h5";
-import CharacterStorage from "@/libs/io/character-storage";
-import EdgeInfoModal from "@/components/viewer/modals/EdgeInfoModal.vue";
-import TipButton from "@/components/editor/TipButton.vue";
-import {LevelChangeType} from "@/types/gameline";
-
-@Component({
-  components: {TipButton, EdgeInfoModal, Modal }
-})
-export default class NewEdgeModal extends Vue {
-  @State("editingCharacter")
-  private editingCharacter!: IHunterSheet;
-
-  @Ref("edgeInfoModal")
-  private edgeInfoModal!: EdgeInfoModal;
-
-  private show = false;
-  private selectedEdgeId: number | null = null;
-  private onConfirm: ((edge: IH5Edge) => void) | null = null;
-  private infoMessage: string | null = null;
-
-  public showModal(cb: (edge: IH5Edge) => void) {
-    this.onConfirm = cb;
-    this.selectedEdgeId = null;
-    this.infoMessage = null;
-    this.show = true;
-  }
-
-  private showCurrentInfo() {
-    if (this.selectedEdge) {
-      this.edgeInfoModal.showModal(this.selectedEdge);
-    }
-  }
-
-  private get availableEdges(): IH5Edge[] {
-    const chosen = new Set((this.editingCharacter.edges || []).map(e => e.id));
-    return allEdges
-      .filter(e => !chosen.has(e.id))
-      .sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  private get selectedEdge(): IH5Edge | null {
-    if (this.selectedEdgeId == null) return null;
-    return allEdges.find(e => e.id === this.selectedEdgeId) || null;
-  }
-
-  private get neededExp(): number {
-    return 7;
-  }
-
-  private get canConfirm(): boolean {
-    return !!this.selectedEdge && this.editingCharacter.exp >= this.neededExp;
-  }
-
-  private categoryLabelMap: Record<H5EdgeCategory, string> = {
-    [H5EdgeCategory.Asset]: "Vermögen",
-    [H5EdgeCategory.Aptitude]: "Begabung",
-    [H5EdgeCategory.Endowment]: "Weihe"
-  };
-  private categoryLabel(cat: H5EdgeCategory) {
-    return this.categoryLabelMap[cat] || String(cat);
-  }
-
-  private confirm() {
-    if (!this.canConfirm || !this.selectedEdge) {
-      this.infoMessage = "Bitte ein Edge wählen und genügend EXP besitzen.";
-      return;
-    }
-
-    CharacterStorage.trackLevelChange(this.editingCharacter, LevelChangeType.Edge, this.neededExp, `${this.selectedEdge.name} hinzugefügt`);
-    CharacterStorage.saveCharacter(this.editingCharacter as any);
-
-    this.onConfirm && this.onConfirm(this.selectedEdge);
-    this.show = false;
-  }
-}
-</script>
-
 <style scoped lang="scss">
 .edge-modal {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 30rem;
 }
+
 .summary {
   width: 100%;
+  text-align: center;
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 </style>

@@ -1,40 +1,36 @@
+<script setup lang="ts">
+import { ref } from "vue"
+import Modal from "@/components/modal/Modal.vue"
+import {getSkillDescription, getSkillSpecializations, type SkillKeys} from "@/@types/models"
+
+const show = ref(false)
+const skill = ref<SkillKeys | null>(null)
+
+function showModal(s: SkillKeys) {
+  skill.value = s
+  show.value = true
+}
+
+defineExpose({ showModal })
+</script>
+
 <template>
   <Modal :shown="show" v-if="skill" @close="show = false">
     <div class="skill-info">
-      <b>{{$t('editor.skills.modal.desc')}}:</b>
-      <span>{{$t('data.skill.' + skill + '.desc')}}</span>
+      <b>Beschreibung:</b>
+      <span>{{ getSkillDescription(skill) }}</span>
 
-      <b class="mt-10">{{$t('editor.skills.modal.specializations')}}:</b>
-      <span>{{$t('data.skill.' + skill + '.spec')}}</span>
+      <b class="mt-10">Mögliche Spezialisierungen:</b>
+      <span>{{ getSkillSpecializations(skill) }}</span>
     </div>
   </Modal>
 </template>
-
-<script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
-import Modal from "@/components/modal/Modal.vue";
-import {SkillKeys} from "@/types/models";
-
-@Component({
-  components: {Modal}
-})
-export default class SkillInfoModal extends Vue {
-
-  private show = false;
-  private skill: SkillKeys = null!;
-
-  public showModal(skill: SkillKeys) {
-    this.skill = skill;
-    this.show = true;
-  }
-}
-</script>
 
 <style scoped lang="scss">
 .skill-info {
   display: flex;
   flex-direction: column;
-  width: 40rem;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
+  gap: 0.5rem;
 }
 </style>

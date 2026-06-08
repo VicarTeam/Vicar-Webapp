@@ -1,289 +1,285 @@
-<script lang="ts">
-import {Vue, Component} from 'vue-property-decorator';
-import {State} from "vuex-class";
-import {ICharacter, IGroupItems, IItem, IItemStack} from "@/types/models";
-import CharacterStorage from "@/libs/io/character-storage";
-import IconButton from "@/components/IconButton.vue";
-import TipButton from "@/components/editor/TipButton.vue";
-import DataManager from "@/libs/data/data-manager";
-import Modal from "@/components/modal/Modal.vue";
-import {Container, Draggable} from "vue-dndrop";
-import Character from "@/components/main/characters/Character.vue";
-import Bullet from "@/components/Bullet.vue";
+<script setup lang="ts">
+import { computed, onMounted, ref } from "vue"
+import { useStore } from "@/app/store"
+import type { ICharacter, IGroupItems, IItem, IItemStack } from "@/@types/models"
+import CharacterStorage from "@/libs/io/character-storage"
+import IconButton from "@/components/IconButton.vue"
+import TipButton from "@/components/editor/TipButton.vue"
+import DataManager from "@/libs/data/data-manager"
+import Modal from "@/components/modal/Modal.vue"
+import Bullet from "@/components/Bullet.vue"
 
-@Component({
-  components: {Bullet, Character, Draggable, Container, Modal, TipButton, IconButton}
+const store = useStore()
+
+const editingCharacter = computed(() => store.editingCharacter as ICharacter | undefined)
+
+const bank = ref("")
+const cash = ref("")
+
+const addingItemToInventory = ref<"carriedItems" | "ownedItems" | null>(null)
+
+const addingItemCustomName = ref("")
+const addingItemCustomDescription = ref("")
+const addingItemCustomAmount = ref("")
+
+const addingItemPredefinedCategory = ref<IGroupItems | null>(null)
+const addingItemPredefinedItem = ref<IItem | null>(null)
+const addingItemPredefinedAmount = ref("")
+
+const editingCustomItem = ref<IItemStack | null>(null)
+
+const showTransferModal = ref(false)
+const transferDirection = ref<"bank" | "cash">("bank")
+const transferAmount = ref(1)
+
+const showAmountZeroWarning = ref(false)
+const amountZeroItemName = ref("")
+const amountZeroRemoveCallback = ref<(() => void) | null>(null)
+
+onMounted(() => {
+  const c = editingCharacter.value
+  if (!c) return
+
+  if (!c.inventory) {
+    c.inventory = { bank: 0, cash: 0, carriedItems: [], ownedItems: [] }
+    CharacterStorage.saveCharacter(c)
+  }
+
+  bank.value = String(c.inventory.bank)
+  cash.value = String(c.inventory.cash)
+
+  addingItemPredefinedCategory.value = DataManager.selectedLanguage.items?.[0] ?? null
 })
-export default class InventoryView extends Vue {
 
-  @State("editingCharacter")
-  private editingCharacter!: ICharacter;
+function beginAddingItemTo(inventory: "carriedItems" | "ownedItems") {
+  addingItemCustomName.value = ""
+  addingItemCustomDescription.value = ""
+  addingItemCustomAmount.value = ""
 
-  private DataManager = DataManager;
+  addingItemPredefinedCategory.value = DataManager.selectedLanguage.items?.[0] ?? null
+  addingItemPredefinedItem.value = null
+  addingItemPredefinedAmount.value = ""
 
-  private bank: string = "";
-  private cash: string = "";
+  addingItemToInventory.value = inventory
+  editingCustomItem.value = null
+}
 
-  private addingItemToInventory: "carriedItems"| "ownedItems" | null = null;
-  private addingItemCustomName: string = "";
-  private addingItemCustomDescription: string = "";
-  private addingItemCustomAmount: string = "";
-  private addingItemPredefinedCategory: IGroupItems | null = null;
-  private addingItemPredefinedItem: IItem | null = null;
-  private addingItemPredefinedAmount: string = "";
+function convertAmount(amountStr: string): number {
+  if (typeof amountStr === "number") return amountStr >= 1 ? amountStr : 1
+  if (!amountStr) return 1
+  if (amountStr.trim().length <= 0) return 1
+  const amount = parseInt(amountStr, 10)
+  return Number.isFinite(amount) && amount >= 1 ? amount : 1
+}
 
-  private editingCustomItem: IItemStack | null = null;
+function sortInventory(invKey: "carriedItems" | "ownedItems") {
+  const c = editingCharacter.value
+  if (!c) return
 
-  private showTransferModal: boolean = false;
-  private transferDirection: "bank" | "cash" = "bank";
-  private transferAmount: number = 1;
+  c.inventory[invKey].sort((a, b) => {
+    if (a.item.category < b.item.category) return -1
+    if (a.item.category > b.item.category) return 1
+    if (a.item.name < b.item.name) return -1
+    if (a.item.name > b.item.name) return 1
+    return 0
+  })
 
-  private showAmountZeroWarning: boolean = false;
-  private amountZeroItemName: string = "";
-  private amountZeroRemoveCallback: (() => void) | null = null;
+  CharacterStorage.saveCharacter(c, true)
+}
 
-  mounted() {
-    if (!this.editingCharacter.inventory) {
-      this.editingCharacter.inventory = {
-        bank: 0,
-        cash: 0,
-        carriedItems: [],
-        ownedItems: [],
-      };
-      CharacterStorage.saveCharacter(this.editingCharacter);
+function resolveMoneyEval(key: "bank" | "cash", allowNegative = false) {
+  const c = editingCharacter.value
+  if (!c) return
+
+  const current = key === "bank" ? bank.value : cash.value
+  let rawValue = current.replace(/[^0-9.,+-]/g, "").replace(/,/g, ".")
+
+  try {
+    const result = Number(Function(`"use strict"; return (${rawValue})`)())
+    if (!Number.isFinite(result)) throw new Error("not finite")
+
+    if (result < 0 && !allowNegative) {
+      if (key === "bank") bank.value = String(c.inventory.bank)
+      else cash.value = String(c.inventory.cash)
+      return
     }
 
-    this.bank = this.editingCharacter.inventory.bank.toString();
-    this.cash = this.editingCharacter.inventory.cash.toString();
+    if (key === "bank") bank.value = String(result)
+    else cash.value = String(result)
 
-    this.addingItemPredefinedCategory = DataManager.selectedLanguage.items[0];
-  }
-
-  private beginAddingItemTo(inventory: "carriedItems" | "ownedItems") {
-    this.addingItemCustomName = "";
-    this.addingItemCustomDescription = "";
-    this.addingItemCustomAmount = "";
-    this.addingItemPredefinedCategory = DataManager.selectedLanguage.items[0];
-    this.addingItemPredefinedItem = null;
-    this.addingItemPredefinedAmount = "";
-    this.addingItemToInventory = inventory;
-    this.editingCustomItem = null;
-  }
-
-  private resolveMoneyEval(key: 'bank' | 'cash', allowNegative: boolean = false) {
-    let rawValue = this[key];
-    rawValue = rawValue.replace(/[^0-9.,+-]/g, '');
-    rawValue = rawValue.replace(/,/g, '.');
-    try {
-      const result = eval(rawValue);
-      if (result < 0 && !allowNegative) {
-        this[key] = this.editingCharacter.inventory[key].toString();
-        console.log("result is negative");
-        return;
-      }
-
-      this[key] = result.toString();
-      this.editingCharacter.inventory[key] = result;
-      CharacterStorage.saveCharacter(this.editingCharacter, true);
-    } catch (e) {
-      this[key] = this.editingCharacter.inventory[key].toString();
-      console.log("error while evaluating", e);
-    }
-  }
-
-  private addPredefinedItem() {
-    if (!this.addingItemToInventory) {
-      return;
-    }
-    if (!this.canAddPredefined) {
-      return;
-    }
-
-    const item = this.addingItemPredefinedItem!;
-    const amount = this.convertAmount(this.addingItemPredefinedAmount);
-    this.editingCharacter.inventory[this.addingItemToInventory].push({
-      item,
-      amount
-    });
-    this.sortInventory(this.addingItemToInventory);
-    CharacterStorage.saveCharacter(this.editingCharacter, true);
-
-    this.addingItemPredefinedCategory = DataManager.selectedLanguage.items[0];
-    this.addingItemPredefinedItem = null;
-    this.addingItemPredefinedAmount = "";
-  }
-
-  private addCustomItem() {
-    if (!this.addingItemToInventory) {
-      return;
-    }
-    if (!this.canAddCustom) {
-      return;
-    }
-
-    const amount = this.convertAmount(this.addingItemCustomAmount);
-
-    if (!this.editingCustomItem) {
-      this.editingCharacter.inventory[this.addingItemToInventory].push({
-        item: {
-          isCustom: true,
-          name: this.addingItemCustomName,
-          description: this.addingItemCustomDescription,
-          category: this.$t('character.inventory.custom').toString()
-        },
-        amount
-      });
-    } else {
-      this.editingCustomItem.item.name = this.addingItemCustomName;
-      this.editingCustomItem.item.description = this.addingItemCustomDescription;
-      this.editingCustomItem.amount = amount;
-    }
-
-    this.sortInventory(this.addingItemToInventory);
-    CharacterStorage.saveCharacter(this.editingCharacter, true);
-
-    this.addingItemCustomName = "";
-    this.addingItemCustomDescription = "";
-    this.addingItemCustomAmount = "";
-
-    if (this.editingCustomItem) {
-      this.editingCustomItem = null;
-      this.addingItemToInventory = null;
-    }
-  }
-
-  private editCustomItem(item: IItemStack) {
-    this.editingCustomItem = item;
-    this.addingItemCustomName = item.item.name;
-    this.addingItemCustomDescription = item.item.description;
-    this.addingItemCustomAmount = item.amount.toString();
-    this.addingItemToInventory = this.editingCharacter.inventory.carriedItems.includes(item) ? "carriedItems" : "ownedItems";
-  }
-
-  private transferTo(from: "bank" | "cash") {
-    this.transferDirection = from;
-    this.transferAmount = 1;
-    this.showTransferModal = true;
-  }
-
-  private resolveTransfer() {
-    if (!this.canTransfer) {
-      return;
-    }
-
-    this.editingCharacter.inventory[this.transferDirection] -= this.transferAmount;
-    this.editingCharacter.inventory[this.transferDirection === "bank" ? "cash" : "bank"] += this.transferAmount;
-    this.bank = this.editingCharacter.inventory.bank.toString();
-    this.cash = this.editingCharacter.inventory.cash.toString();
-    this.$forceUpdate();
-    CharacterStorage.saveCharacter(this.editingCharacter, true);
-    this.showTransferModal = false;
-  }
-
-  private convertAmount(amountStr: string): number {
-    if (amountStr.trim().length <= 0) {
-      return 1;
-    }
-
-    const amount = parseInt(amountStr);
-    if (isNaN(amount)) {
-      return 1;
-    }
-
-    return amount;
-  }
-
-  private transferItem(item: IItemStack, idx: number, current: "ownedItems"|"carriedItems") {
-    this.editingCharacter.inventory[current].splice(idx, 1);
-    this.editingCharacter.inventory[current === "ownedItems" ? "carriedItems" : "ownedItems"].push(item);
-    this.sortInventory("ownedItems");
-    this.sortInventory("carriedItems");
-    this.$forceUpdate();
-    CharacterStorage.saveCharacter(this.editingCharacter, true);
-  }
-
-  private cloneItem(item: IItemStack, current: "ownedItems"|"carriedItems") {
-    this.editingCharacter.inventory[current].push({
-      item: {...item.item},
-      amount: item.amount
-    });
-    this.$forceUpdate();
-    CharacterStorage.saveCharacter(this.editingCharacter, true);
-  }
-
-  private handleItemAmountChange(item: IItemStack, idx: number, current: "ownedItems"|"carriedItems") {
-    if (item.amount >= 1) {
-      CharacterStorage.saveCharacter(this.editingCharacter, true);
-      return;
-    }
-
-    this.amountZeroRemoveCallback = () => {
-      this.editingCharacter.inventory[current].splice(idx, 1);
-      this.$forceUpdate();
-      CharacterStorage.saveCharacter(this.editingCharacter, true);
-
-      this.amountZeroRemoveCallback = null;
-      this.showAmountZeroWarning = false;
-    };
-    this.amountZeroItemName = item.item.name;
-    this.showAmountZeroWarning = true;
-  }
-
-  private sortInventory(invKey: "carriedItems" | "ownedItems") {
-    this.editingCharacter.inventory[invKey].sort((a, b) => {
-      if (a.item.category < b.item.category) {
-        return -1;
-      }
-      if (a.item.category > b.item.category) {
-        return 1;
-      }
-      if (a.item.name < b.item.name) {
-        return -1;
-      }
-      if (a.item.name > b.item.name) {
-        return 1;
-      }
-      return 0;
-    });
-    this.$forceUpdate();
-    CharacterStorage.saveCharacter(this.editingCharacter, true);
-  }
-
-  private get canAddPredefined() {
-    return this.addingItemPredefinedCategory && this.addingItemPredefinedItem;
-  }
-
-  private get canAddCustom() {
-    return this.addingItemCustomName.trim().length > 0 && this.addingItemCustomDescription.trim().length > 0;
-  }
-
-  private get canTransfer() {
-    return this.transferAmount > 0 && this.editingCharacter.inventory[this.transferDirection] >= this.transferAmount;
+    c.inventory[key] = result
+    CharacterStorage.saveCharacter(c, true)
+  } catch {
+    if (key === "bank") bank.value = String(c.inventory.bank)
+    else cash.value = String(c.inventory.cash)
   }
 }
+
+const canAddPredefined = computed(() => !!addingItemPredefinedCategory.value && !!addingItemPredefinedItem.value)
+
+const canAddCustom = computed(() => {
+  return addingItemCustomName.value.trim().length > 0 && addingItemCustomDescription.value.trim().length > 0
+})
+
+function addPredefinedItem() {
+  const c = editingCharacter.value
+  if (!c) return
+  if (!addingItemToInventory.value) return
+  if (!canAddPredefined.value) return
+
+  const item = addingItemPredefinedItem.value!
+  const amount = convertAmount(addingItemPredefinedAmount.value)
+
+  c.inventory[addingItemToInventory.value].push({ item, amount })
+  sortInventory(addingItemToInventory.value)
+  CharacterStorage.saveCharacter(c, true)
+
+  addingItemPredefinedCategory.value = DataManager.selectedLanguage.items?.[0] ?? null
+  addingItemPredefinedItem.value = null
+  addingItemPredefinedAmount.value = ""
+}
+
+function addCustomItem() {
+  const c = editingCharacter.value
+  if (!c) return
+  if (!addingItemToInventory.value) return
+  if (!canAddCustom.value) return
+
+  const amount = convertAmount(addingItemCustomAmount.value)
+
+  if (!editingCustomItem.value) {
+    c.inventory[addingItemToInventory.value].push({
+      item: {
+        isCustom: true,
+        name: addingItemCustomName.value,
+        description: addingItemCustomDescription.value,
+        category: "Eigene Einträge",
+      } as any,
+      amount,
+    })
+  } else {
+    editingCustomItem.value.item.name = addingItemCustomName.value
+    editingCustomItem.value.item.description = addingItemCustomDescription.value
+    editingCustomItem.value.amount = amount
+  }
+
+  sortInventory(addingItemToInventory.value)
+  CharacterStorage.saveCharacter(c, true)
+
+  addingItemCustomName.value = ""
+  addingItemCustomDescription.value = ""
+  addingItemCustomAmount.value = ""
+
+  if (editingCustomItem.value) {
+    editingCustomItem.value = null
+    addingItemToInventory.value = null
+  }
+}
+
+function editCustomItem(item: IItemStack) {
+  const c = editingCharacter.value
+  if (!c) return
+
+  editingCustomItem.value = item
+  addingItemCustomName.value = item.item.name
+  addingItemCustomDescription.value = item.item.description
+  addingItemCustomAmount.value = String(item.amount)
+
+  addingItemToInventory.value = c.inventory.carriedItems.includes(item) ? "carriedItems" : "ownedItems"
+}
+
+function transferTo(from: "bank" | "cash") {
+  transferDirection.value = from
+  transferAmount.value = 1
+  showTransferModal.value = true
+}
+
+const canTransfer = computed(() => {
+  const c = editingCharacter.value
+  if (!c) return false
+  return transferAmount.value > 0 && c.inventory[transferDirection.value] >= transferAmount.value
+})
+
+function resolveTransfer() {
+  const c = editingCharacter.value
+  if (!c) return
+  if (!canTransfer.value) return
+
+  c.inventory[transferDirection.value] -= transferAmount.value
+  c.inventory[transferDirection.value === "bank" ? "cash" : "bank"] += transferAmount.value
+
+  bank.value = String(c.inventory.bank)
+  cash.value = String(c.inventory.cash)
+
+  CharacterStorage.saveCharacter(c, true)
+  showTransferModal.value = false
+}
+
+function transferItem(item: IItemStack, idx: number, current: "ownedItems" | "carriedItems") {
+  const c = editingCharacter.value
+  if (!c) return
+
+  c.inventory[current].splice(idx, 1)
+  c.inventory[current === "ownedItems" ? "carriedItems" : "ownedItems"].push(item)
+
+  sortInventory("ownedItems")
+  sortInventory("carriedItems")
+  CharacterStorage.saveCharacter(c, true)
+}
+
+function cloneItem(item: IItemStack, current: "ownedItems" | "carriedItems") {
+  const c = editingCharacter.value
+  if (!c) return
+
+  c.inventory[current].push({ item: { ...item.item }, amount: item.amount })
+  CharacterStorage.saveCharacter(c, true)
+}
+
+function handleItemAmountChange(item: IItemStack, idx: number, current: "ownedItems" | "carriedItems") {
+  const c = editingCharacter.value
+  if (!c) return
+
+  if (item.amount >= 1) {
+    CharacterStorage.saveCharacter(c, true)
+    return
+  }
+
+  amountZeroRemoveCallback.value = () => {
+    c.inventory[current].splice(idx, 1)
+    CharacterStorage.saveCharacter(c, true)
+    amountZeroRemoveCallback.value = null
+    showAmountZeroWarning.value = false
+  }
+
+  amountZeroItemName.value = item.item.name
+  showAmountZeroWarning.value = true
+}
+
+const itemsData = computed(() => DataManager.selectedLanguage.items ?? [])
 </script>
 
 <template>
-  <div class="inventory-view">
+  <div v-if="editingCharacter" class="inventory-view">
     <div class="money-management">
       <div class="money-holder">
         <div class="inventory-fit">
-          <b>{{$t('character.inventory.carried')}}</b>
-          <IconButton style="width: 2rem; height: 2rem" icon="fa-plus" @click="beginAddingItemTo('carriedItems')"/>
+          <b>Mitgeführt</b>
+          <IconButton style="width: 2rem; height: 2rem" icon="fa-plus" @click="beginAddingItemTo('carriedItems')" />
         </div>
 
-        <span>{{$t('character.inventory.cash')}}</span>
-        <input class="form-control" type="text" v-model="cash" :min="0" @keydown.enter="resolveMoneyEval('cash')" @focusout="resolveMoneyEval('cash')"/>
-        <IconButton style="width: 3rem; height: 3rem; margin-left: 1rem" icon="fa-arrow-left" @click="transferTo('bank')"/>
+        <span>Bargeld</span>
+        <input class="form-control" type="text" v-model="cash" @keydown.enter="resolveMoneyEval('cash')" @focusout="resolveMoneyEval('cash')" />
+        <IconButton style="width: 3rem; height: 3rem; margin-left: 1rem" icon="fa-arrow-left" @click="transferTo('bank')" />
       </div>
+
       <div class="money-holder">
-        <IconButton style="width: 3rem; height: 3rem; margin-right: 1rem" icon="fa-arrow-right" @click="transferTo('cash')"/>
-        <input class="form-control" type="text" v-model="bank" :min="0" @keydown.enter="resolveMoneyEval('bank', true)" @focusout="resolveMoneyEval('bank', true)"/>
-        <span>{{$t('character.inventory.bank')}}</span>
+        <IconButton style="width: 3rem; height: 3rem; margin-right: 1rem" icon="fa-arrow-right" @click="transferTo('cash')" />
+        <input class="form-control" type="text" v-model="bank" @keydown.enter="resolveMoneyEval('bank', true)" @focusout="resolveMoneyEval('bank', true)" />
+        <span>Bank</span>
 
         <div class="inventory-fit">
-          <b>{{$t('character.inventory.owned')}}</b>
-          <IconButton style="width: 2rem; height: 2rem" icon="fa-plus" @click="beginAddingItemTo('ownedItems')"/>
+          <b>Besitz</b>
+          <IconButton style="width: 2rem; height: 2rem" icon="fa-plus" @click="beginAddingItemTo('ownedItems')" />
         </div>
       </div>
     </div>
@@ -291,36 +287,38 @@ export default class InventoryView extends Vue {
     <div class="inventories">
       <div class="inventory">
         <div v-for="(i, j) in editingCharacter.inventory.carriedItems" :key="j" class="item">
-          <span class="item-name">{{i.item.name}}</span>
-          <bullet/>
-          <small class="item-cat"><b>{{$t('character.inventory.category')}}: </b>{{i.item.category}}</small>
-          <bullet/>
-          <TipButton :content="i.item.description"/>
+          <span class="item-name">{{ i.item.name }}</span>
+          <Bullet />
+          <small class="item-cat"><b>Kategorie: </b>{{ i.item.category }}</small>
+          <Bullet />
+          <TipButton :content="i.item.description" />
 
           <div class="item-actions">
-            <input class="form-control item-amount-edit" type="number" :placeholder="$t('character.inventory.amount')" :step="1" :min="0" v-model.number="i.amount" @input="handleItemAmountChange(i, j, 'carriedItems')"/>
-            <IconButton v-if="i.item.isCustom" icon="fa-edit" style="width: 2rem; height: 2rem; font-size: 1rem" @click="editCustomItem(i)"/>
-            <IconButton v-else icon="fa-copy" style="width: 2rem; height: 2rem; font-size: 1rem; opacity: 0"/>
-            <IconButton icon="fa-copy" style="width: 2rem; height: 2rem; font-size: 1rem" @click="cloneItem(i, 'carriedItems')"/>
-            <IconButton icon="fa-arrow-right" style="width: 2rem; height: 2rem; font-size: 1rem" @click="transferItem(i, j, 'carriedItems')"/>
+            <input class="form-control item-amount-edit" type="number" placeholder="Anzahl" :step="1" :min="0" v-model.number="i.amount" @input="handleItemAmountChange(i, j, 'carriedItems')" />
+            <IconButton v-if="i.item.isCustom" icon="fa-edit" style="width: 2rem; height: 2rem; font-size: 1rem" @click="editCustomItem(i)" />
+            <IconButton v-else icon="fa-copy" style="width: 2rem; height: 2rem; font-size: 1rem; opacity: 0" />
+            <IconButton icon="fa-copy" style="width: 2rem; height: 2rem; font-size: 1rem" @click="cloneItem(i, 'carriedItems')" />
+            <IconButton icon="fa-arrow-right" style="width: 2rem; height: 2rem; font-size: 1rem" @click="transferItem(i, j, 'carriedItems')" />
           </div>
         </div>
       </div>
-      <div class="inventory-border"></div>
+
+      <div class="inventory-border" />
+
       <div class="inventory">
         <div v-for="(i, j) in editingCharacter.inventory.ownedItems" :key="j" class="item">
-          <span class="item-name">{{i.item.name}}</span>
-          <bullet/>
-          <small class="item-cat"><b>{{$t('character.inventory.category')}}: </b>{{i.item.category}}</small>
-          <bullet/>
-          <TipButton :content="i.item.description"/>
+          <span class="item-name">{{ i.item.name }}</span>
+          <Bullet />
+          <small class="item-cat"><b>Kategorie: </b>{{ i.item.category }}</small>
+          <Bullet />
+          <TipButton :content="i.item.description" />
 
           <div class="item-actions">
-            <input class="form-control item-amount-edit" type="number" :placeholder="$t('character.inventory.amount')" :step="1" :min="0" v-model.number="i.amount" @input="handleItemAmountChange(i, j, 'ownedItems')"/>
-            <IconButton v-if="i.item.isCustom" icon="fa-edit" style="width: 2rem; height: 2rem; font-size: 1rem" @click="editCustomItem(i)"/>
-            <IconButton v-else icon="fa-copy" style="width: 2rem; height: 2rem; font-size: 1rem; opacity: 0"/>
-            <IconButton icon="fa-copy" style="width: 2rem; height: 2rem; font-size: 1rem" @click="cloneItem(i, 'ownedItems')"/>
-            <IconButton icon="fa-arrow-left" style="width: 2rem; height: 2rem; font-size: 1rem" @click="transferItem(i, j, 'ownedItems')"/>
+            <input class="form-control item-amount-edit" type="number" placeholder="Anzahl" :step="1" :min="0" v-model.number="i.amount" @input="handleItemAmountChange(i, j, 'ownedItems')" />
+            <IconButton v-if="i.item.isCustom" icon="fa-edit" style="width: 2rem; height: 2rem; font-size: 1rem" @click="editCustomItem(i)" />
+            <IconButton v-else icon="fa-copy" style="width: 2rem; height: 2rem; font-size: 1rem; opacity: 0" />
+            <IconButton icon="fa-copy" style="width: 2rem; height: 2rem; font-size: 1rem" @click="cloneItem(i, 'ownedItems')" />
+            <IconButton icon="fa-arrow-left" style="width: 2rem; height: 2rem; font-size: 1rem" @click="transferItem(i, j, 'ownedItems')" />
           </div>
         </div>
       </div>
@@ -328,38 +326,46 @@ export default class InventoryView extends Vue {
 
     <div class="add-item-wrapper" v-show="addingItemToInventory">
       <div class="add-item-box">
-        <b style="color: var(--primary-color); font-size: 1.5rem; width: 100%; text-align: center; position: relative">
-          {{$t(`character.inventory.${(!editingCustomItem ? 'add' : 'edit')}`, {name: addingItemToInventory === 'ownedItems' ? $t('character.inventory.owned') : $t('character.inventory.carried')})}}
-          <IconButton style="position: absolute; right: 0; top: 0; width: 2rem; height: 2rem; font-size: 1rem" icon="fa-x" @click="addingItemToInventory = null"/>
+        <b class="add-headline">
+          {{ !editingCustomItem ? "Item hinzufügen" : "Item bearbeiten" }}
+          <span style="opacity: 0.85"> ({{ addingItemToInventory === "ownedItems" ? "Besitz" : "Mitgeführt" }})</span>
+          <IconButton class="add-close" icon="fa-x" @click="addingItemToInventory = null" />
         </b>
+
         <div class="add-forms">
           <div v-if="!editingCustomItem" class="add-form">
-            <div style="display: flex; flex-direction: column; justify-content: space-around; flex-grow: 1">
+            <div class="add-stack">
               <select class="form-control" v-model="addingItemPredefinedCategory">
-                <option v-for="(g, idx) in DataManager.selectedLanguage.items" :key="idx" :value="g">
-                  {{g.category}}
+                <option v-for="(g, idx) in itemsData" :key="idx" :value="g">
+                  {{ g.category }}
                 </option>
               </select>
+
               <select class="form-control" v-model="addingItemPredefinedItem" v-if="addingItemPredefinedCategory">
-                <option :value="null" disabled style="opacity: 0.5; font-style: italic">{{$t('character.inventory.add.select')}}</option>
+                <option :value="null" disabled style="opacity: 0.5; font-style: italic">– Bitte wählen –</option>
                 <option v-for="(i, idx) in addingItemPredefinedCategory.items" :key="idx" :value="i">
-                  {{i.name}}
+                  {{ i.name }}
                 </option>
               </select>
-              <input class="form-control" type="number" :placeholder="$t('character.inventory.transfer.amount')" :min="1" :step="1" v-model="addingItemPredefinedAmount"/>
+
+              <input class="form-control" type="number" placeholder="Anzahl" :min="1" :step="1" v-model="addingItemPredefinedAmount" />
             </div>
 
-            <button class="btn btn-primary" :disabled="!canAddPredefined" @click="addPredefinedItem">{{$t('character.inventory.add.predefined')}}</button>
+            <button class="btn btn-primary" :disabled="!canAddPredefined" @click="addPredefinedItem">Hinzufügen</button>
           </div>
-          <div v-if="!editingCustomItem" class="addborder"></div>
+
+          <div v-if="!editingCustomItem" class="addborder" />
+
           <div class="add-form">
-            <div style="display: flex; flex-direction: column; justify-content: space-around; flex-grow: 1">
-              <input class="form-control" type="text" :placeholder="$t('character.inventory.add.custom.name')" v-model="addingItemCustomName"/>
-              <input class="form-control" type="text" :placeholder="$t('character.inventory.add.custom.description')" v-model="addingItemCustomDescription"/>
-              <input class="form-control" type="number" :placeholder="$t('character.inventory.amount')" :min="1" :step="1" v-model="addingItemCustomAmount"/>
+            <div class="add-stack">
+              <input class="form-control" type="text" placeholder="Name" v-model="addingItemCustomName" />
+              <input class="form-control" type="text" placeholder="Beschreibung" v-model="addingItemCustomDescription" />
+              <input class="form-control" type="number" placeholder="Anzahl" :min="1" :step="1" v-model="addingItemCustomAmount" />
             </div>
 
-            <button class="btn btn-primary" :disabled="!canAddCustom" @click="addCustomItem">{{$t(`character.inventory.${!editingCustomItem ? 'add.custom' : 'edit.save'}`)}}</button>
+            <button class="btn btn-primary" :disabled="!canAddCustom" @click="addCustomItem">
+              {{ !editingCustomItem ? "Eigenes Item hinzufügen" : "Speichern" }}
+            </button>
           </div>
         </div>
       </div>
@@ -367,18 +373,21 @@ export default class InventoryView extends Vue {
 
     <Modal :shown="showTransferModal" @close="showTransferModal = false">
       <div style="display: flex; flex-direction: column; gap: 1rem; width: 20rem">
-        <b>{{$t(`character.inventory.transfer.${(transferDirection === 'bank' ? 'tocash' : 'tobank')}`)}}:</b>
-        <input class="form-control" type="number" :placeholder="$t('character.inventory.amount')" :min="1" v-model.number="transferAmount"/>
-        <small v-if="!canTransfer" style="color: red; opacity: 0.8"><i>{{$t('character.inventory.transfer.error', {name: $t(`character.inventory.${transferDirection}`)})}}</i></small>
-        <button class="btn btn-primary" :disabled="!canTransfer" @click="resolveTransfer">{{$t('character.inventory.transfer.confirm')}}</button>
+        <b>{{ transferDirection === "bank" ? "Von Bank zu Bargeld" : "Von Bargeld zu Bank" }}:</b>
+        <input class="form-control" type="number" placeholder="Anzahl" :min="1" v-model.number="transferAmount" />
+        <small v-if="!canTransfer" style="color: red; opacity: 0.8"><i>Nicht genug Guthaben.</i></small>
+        <button class="btn btn-primary" :disabled="!canTransfer" @click="resolveTransfer">Bestätigen</button>
       </div>
     </Modal>
+
     <Modal :shown="showAmountZeroWarning" @close="showAmountZeroWarning = false">
-      <div style="display: flex; flex-direction: column; gap: 2rem; width: 40rem">
-        <span style="font-size: 1rem">{{$t('character.inventory.amount.change.zero', {name: amountZeroItemName})}}</span>
+      <div style="display: flex; flex-direction: column; gap: 2rem; width: min(40rem, 90vw)">
+        <span style="font-size: 1rem">
+          Die Anzahl von <b>{{ amountZeroItemName }}</b> ist 0 oder kleiner. Entfernen?
+        </span>
         <div style="display: flex; gap: 1rem; width: 100%; justify-content: flex-end">
-          <button class="btn btn-dark" @click="showAmountZeroWarning = false">{{$t('character.inventory.amount.change.zero.keep')}}</button>
-          <button class="btn btn-primary" @click="amountZeroRemoveCallback()">{{$t('character.inventory.amount.change.zero.delete')}}</button>
+          <button class="btn btn-dark" @click="showAmountZeroWarning = false">Behalten</button>
+          <button class="btn btn-primary" @click="amountZeroRemoveCallback?.()">Entfernen</button>
         </div>
       </div>
     </Modal>
@@ -391,56 +400,54 @@ export default class InventoryView extends Vue {
   height: 100%;
   display: flex;
   flex-direction: column;
+
   .money-management {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
     gap: 1rem;
     width: 100%;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 1rem 0;
     border-bottom: 1px solid var(--primary-color);
+
     .money-holder {
       width: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: row;
       gap: 1rem;
+
       input {
         width: 10rem;
         text-align: center;
       }
+
       .inventory-fit {
         flex-grow: 1;
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: row;
         gap: 0.5rem;
       }
     }
   }
+
   .inventories {
     flex-grow: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex-direction: row;
+    align-items: stretch;
     gap: 1rem;
     width: 100%;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 1rem 0;
+
     .inventory-border {
       width: 1px;
-      height: 100%;
       background-color: var(--primary-color);
     }
+
     .inventory {
       width: 100%;
-      min-height: 100%;
-      height: 100%;
       flex-grow: 1;
       display: flex;
       overflow-x: hidden;
@@ -448,22 +455,22 @@ export default class InventoryView extends Vue {
       padding: 1rem;
       flex-direction: column;
       gap: 0.5rem;
+
       .item {
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding: 0 1rem;
         display: flex;
-        justify-content: flex-start;
         align-items: center;
-        flex-direction: row;
         font-size: 1.2rem;
         user-select: none;
         gap: 0.5rem;
+
         .item-actions {
           flex-grow: 1;
           display: flex;
           justify-content: flex-end;
           align-items: center;
           gap: 1rem;
+
           .item-amount-edit {
             width: 6.5rem;
             text-align: center;
@@ -472,14 +479,16 @@ export default class InventoryView extends Vue {
       }
     }
   }
+
   .add-item-wrapper {
     width: 100%;
     height: 20rem;
     display: flex;
     justify-content: center;
     align-items: center;
+
     .add-item-box {
-      width: 50%;
+      width: min(50%, 70rem);
       height: 100%;
       padding: 0.5rem;
       border-top-left-radius: 1rem;
@@ -490,38 +499,111 @@ export default class InventoryView extends Vue {
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
-      .add-forms {
-        width: 100%;
-        flex-grow: 1;
+    }
+
+    .add-headline {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      width: 100%;
+      text-align: center;
+      position: relative;
+    }
+
+    .add-close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 2rem;
+      height: 2rem;
+      font-size: 1rem;
+    }
+
+    .add-forms {
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+
+      .addborder {
+        width: 1px;
+        height: 100%;
+        background-color: var(--primary-color);
+      }
+
+      .add-form {
+        width: 50%;
+        height: 100%;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: row;
-        gap: 0.5rem;
-        .addborder {
-          width: 1px;
-          height: 100%;
-          background-color: var(--primary-color);
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1rem;
+
+        button {
+          font-size: 1.1rem;
         }
+
+        input,
+        select {
+          font-size: 1.1rem;
+        }
+      }
+
+      .add-stack {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        flex-grow: 1;
+        gap: 0.5rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .inventory-view {
+    .money-management {
+      flex-direction: column;
+
+      .money-holder {
+        width: 100%;
+        flex-wrap: wrap;
+
+        input {
+          width: min(12rem, 100%);
+        }
+      }
+    }
+
+    .inventories {
+      flex-direction: column;
+
+      .inventory-border {
+        width: 100%;
+        height: 1px;
+      }
+    }
+
+    .add-item-wrapper {
+      height: auto;
+
+      .add-item-box {
+        width: 100%;
+        border-radius: 1rem;
+        border-bottom: 1px solid var(--primary-color);
+      }
+
+      .add-forms {
+        flex-direction: column;
+
+        .addborder {
+          width: 100%;
+          height: 1px;
+        }
+
         .add-form {
-          width: 50%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          gap: 1rem;
-          .addtitle {
-            font-size: 1.1rem;
-            color: #fff;
-            text-align: center;
-            border-bottom: 1px solid var(--primary-color);
-          }
-          button {
-            font-size: 1.1rem;
-          }
-          input, select {
-            font-size: 1.1rem;
-          }
+          width: 100%;
         }
       }
     }

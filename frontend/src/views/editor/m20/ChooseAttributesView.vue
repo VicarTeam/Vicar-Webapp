@@ -1,260 +1,187 @@
-<script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import { State } from 'vuex-class';
-import {
-  IMageSheet,
-  M20Attribute,
-  M20AttributeCategory,
-  mentalAttributes,
-  physicalAttributes,
-  socialAttributes
-} from "@/types/m20";
-import EditorForm from "@/components/editor/EditorForm.vue";
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import EditorForm from "@/components/editor/EditorForm.vue"
+import {getAttributeName, type IMageSheet} from "@/@types/m20"
+import { mentalAttributes, physicalAttributes, socialAttributes, M20Attribute } from "@/@types/m20"
+import { useStore } from "@/app/store"
 
 enum AttributePriority {
   None = 0,
   Primary = 1,
   Secondary = 2,
-  Tertiary = 3
+  Tertiary = 3,
 }
 
-const priorities = [AttributePriority.Primary, AttributePriority.Secondary, AttributePriority.Tertiary];
-const priorityMax = {
+const priorities = [AttributePriority.Primary, AttributePriority.Secondary, AttributePriority.Tertiary]
+const priorityMax: Record<number, number> = {
   [AttributePriority.None]: 0,
   [AttributePriority.Primary]: 7,
   [AttributePriority.Secondary]: 5,
-  [AttributePriority.Tertiary]: 3
-};
-const baseNumbers = [0, 1, 2, 3, 4];
+  [AttributePriority.Tertiary]: 3,
+}
+const baseNumbers = [0, 1, 2, 3, 4]
 
-@Component({
-  components: { EditorForm }
-})
-export default class ChooseAttributesView extends Vue {
+const store = useStore()
+const editingCharacter = computed(() => store.editingCharacter as IMageSheet | undefined)
 
-  AttributePriority = AttributePriority;
-  M20Attribute = M20Attribute;
-  M20AttributeCategory = M20AttributeCategory;
-  physicalAttributes = physicalAttributes;
-  socialAttributes = socialAttributes;
-  mentalAttributes = mentalAttributes;
-  baseNumbers = baseNumbers;
+const physicalPriority = ref<AttributePriority>(AttributePriority.None)
+const socialPriority = ref<AttributePriority>(AttributePriority.None)
+const mentalPriority = ref<AttributePriority>(AttributePriority.None)
 
-  @State("editingCharacter")
-  private editingCharacter!: IMageSheet;
-
-  private physicalPriority: AttributePriority = AttributePriority.None;
-  private socialPriority: AttributePriority = AttributePriority.None;
-  private mentalPriority: AttributePriority = AttributePriority.None;
-
-  private onBeforeNext() {
-    for (const attr of physicalAttributes) {
-      this.editingCharacter.attributes[attr]++;
-    }
-  }
-
-  private get selectablePhysicalPriorities(): AttributePriority[] {
-    const used = [this.socialPriority, this.mentalPriority];
-    return priorities.filter(x => !used.includes(x as AttributePriority)) as AttributePriority[];
-  }
-  private get selectableSocialPriorities(): AttributePriority[] {
-    const used = [this.physicalPriority, this.mentalPriority];
-    return priorities.filter(x => !used.includes(x as AttributePriority)) as AttributePriority[];
-  }
-  private get selectableMentalPriorities(): AttributePriority[] {
-    const used = [this.physicalPriority, this.socialPriority];
-    return priorities.filter(x => !used.includes(x as AttributePriority)) as AttributePriority[];
-  }
-
-  private getAttrValue(attr: M20Attribute): number {
-    return (this.editingCharacter?.attributes?.[attr] ?? 0) as number;
-  }
-
-  private sumFor(attrs: readonly M20Attribute[], enabled: boolean): number {
-    if (!enabled) return 0;
-    let amount = 0;
-    for (const attr of attrs) {
-      amount += this.getAttrValue(attr);
-    }
-    return amount;
-  }
-
-  private maxFor(priority: AttributePriority): number {
-    return priorityMax[priority] || 0;
-  }
-
-  private get usedPhysicalAmount(): number {
-    return this.sumFor(this.physicalAttributes, this.physicalPriority !== AttributePriority.None);
-  }
-  private get usedSocialAmount(): number {
-    return this.sumFor(this.socialAttributes, this.socialPriority !== AttributePriority.None);
-  }
-  private get usedMentalAmount(): number {
-    return this.sumFor(this.mentalAttributes, this.mentalPriority !== AttributePriority.None);
-  }
-
-  private isOptionDisabled(kind: 'physical' | 'social' | 'mental', attr: M20Attribute, candidate: number): boolean {
-    if (candidate === 0) return false; // 0 immer aktiv
-    const current = this.getAttrValue(attr);
-
-    let used = 0;
-    let max = 0;
-    switch (kind) {
-      case 'physical':
-        used = this.usedPhysicalAmount;
-        max = this.maxFor(this.physicalPriority);
-        if (this.physicalPriority === AttributePriority.None) return true;
-        break;
-      case 'social':
-        used = this.usedSocialAmount;
-        max = this.maxFor(this.socialPriority);
-        if (this.socialPriority === AttributePriority.None) return true;
-        break;
-      case 'mental':
-        used = this.usedMentalAmount;
-        max = this.maxFor(this.mentalPriority);
-        if (this.mentalPriority === AttributePriority.None) return true;
-        break;
-    }
-
-    if (candidate === current) return false;
-
-    const newTotal = used - current + candidate;
-    return newTotal > max;
-  }
-
-  private get physicalLocked(): boolean {
-    return this.physicalPriority === AttributePriority.None;
-  }
-  private get socialLocked(): boolean {
-    return this.socialPriority === AttributePriority.None;
-  }
-  private get mentalLocked(): boolean {
-    return this.mentalPriority === AttributePriority.None;
-  }
-
-  private get canGoNext(): boolean {
-    if (
-      this.physicalPriority !== AttributePriority.None &&
-      this.socialPriority !== AttributePriority.None &&
-      this.mentalPriority !== AttributePriority.None
-    ) {
-      const physicalOk = this.usedPhysicalAmount === this.maxFor(this.physicalPriority);
-      const socialOk = this.usedSocialAmount === this.maxFor(this.socialPriority);
-      const mentalOk = this.usedMentalAmount === this.maxFor(this.mentalPriority);
-      return physicalOk && socialOk && mentalOk;
-    }
-    return false;
+function onBeforeNext() {
+  const c = editingCharacter.value
+  if (!c) return
+  for (const attr of physicalAttributes) {
+    c.attributes[attr]++
   }
 }
+
+const selectablePhysicalPriorities = computed(() => priorities.filter((p) => ![socialPriority.value, mentalPriority.value].includes(p)))
+const selectableSocialPriorities = computed(() => priorities.filter((p) => ![physicalPriority.value, mentalPriority.value].includes(p)))
+const selectableMentalPriorities = computed(() => priorities.filter((p) => ![physicalPriority.value, socialPriority.value].includes(p)))
+
+function getAttrValue(attr: M20Attribute): number {
+  return (editingCharacter.value?.attributes?.[attr] ?? 0) as number
+}
+
+function sumFor(attrs: readonly M20Attribute[], enabled: boolean): number {
+  if (!enabled) return 0
+  return attrs.reduce((acc, a) => acc + getAttrValue(a), 0)
+}
+
+function maxFor(priority: AttributePriority) {
+  return priorityMax[priority] || 0
+}
+
+const usedPhysicalAmount = computed(() => sumFor(physicalAttributes, physicalPriority.value !== AttributePriority.None))
+const usedSocialAmount = computed(() => sumFor(socialAttributes, socialPriority.value !== AttributePriority.None))
+const usedMentalAmount = computed(() => sumFor(mentalAttributes, mentalPriority.value !== AttributePriority.None))
+
+function isOptionDisabled(kind: "physical" | "social" | "mental", attr: M20Attribute, candidate: number): boolean {
+  if (candidate === 0) return false
+  const current = getAttrValue(attr)
+
+  let used = 0
+  let max = 0
+  let locked = false
+
+  if (kind === "physical") {
+    used = usedPhysicalAmount.value
+    max = maxFor(physicalPriority.value)
+    locked = physicalPriority.value === AttributePriority.None
+  } else if (kind === "social") {
+    used = usedSocialAmount.value
+    max = maxFor(socialPriority.value)
+    locked = socialPriority.value === AttributePriority.None
+  } else {
+    used = usedMentalAmount.value
+    max = maxFor(mentalPriority.value)
+    locked = mentalPriority.value === AttributePriority.None
+  }
+
+  if (locked) return true
+  if (candidate === current) return false
+
+  const newTotal = used - current + candidate
+  return newTotal > max
+}
+
+const physicalLocked = computed(() => physicalPriority.value === AttributePriority.None)
+const socialLocked = computed(() => socialPriority.value === AttributePriority.None)
+const mentalLocked = computed(() => mentalPriority.value === AttributePriority.None)
+
+const canGoNext = computed(() => {
+  if (
+    physicalPriority.value !== AttributePriority.None &&
+    socialPriority.value !== AttributePriority.None &&
+    mentalPriority.value !== AttributePriority.None
+  ) {
+    const physicalOk = usedPhysicalAmount.value === maxFor(physicalPriority.value)
+    const socialOk = usedSocialAmount.value === maxFor(socialPriority.value)
+    const mentalOk = usedMentalAmount.value === maxFor(mentalPriority.value)
+    return physicalOk && socialOk && mentalOk
+  }
+  return false
+})
 </script>
 
 <template>
   <EditorForm :can-go-next="canGoNext" next-step="editor-m20-abilities" @before-next="onBeforeNext">
     <div v-if="editingCharacter" class="attributes-view">
       <div class="card" style="width: 50rem">
-        <small>{{$t('m20.editor.choose_attribute')}}</small>
+        <small>Setze eine Attributenkategorie auf "primär" (7 Punkte), eine auf "sekundär" (5 Punkte) und eine auf "tertiär" (3 Punkte) und verteile die Punkte auf die Attribute.</small>
       </div>
 
       <div class="panels">
-        <!-- Physical -->
         <div class="card">
-          <h6>{{$t('m20.attribute_category.physical')}}</h6>
+          <h6>Körperlich</h6>
           <select class="form-control" v-model="physicalPriority">
             <option :value="AttributePriority.None">Auswählen</option>
             <option v-for="p in selectablePhysicalPriorities" :key="p" :value="p">
-              {{ p === AttributePriority.Primary ? 'Primär' : (p === AttributePriority.Secondary ? 'Sekundär' : 'Tertiär') }}
+              {{ p === AttributePriority.Primary ? "Primär" : (p === AttributePriority.Secondary ? "Sekundär" : "Tertiär") }}
             </option>
           </select>
 
           <div class="info">
-            <span>{{ usedPhysicalAmount }} / {{ (physicalPriority && (physicalPriority !== AttributePriority.None)) ? ('' + (physicalPriority && (physicalPriority !== AttributePriority.None) ? (physicalPriority === AttributePriority.Primary ? 7 : (physicalPriority === AttributePriority.Secondary ? 5 : 3)) : 0)) : 0 }}</span>
+            <span>{{ usedPhysicalAmount }} / {{ physicalPriority === AttributePriority.None ? 0 : (physicalPriority === AttributePriority.Primary ? 7 : (physicalPriority === AttributePriority.Secondary ? 5 : 3)) }}</span>
           </div>
 
           <div class="attribute-col">
             <div v-for="attr in physicalAttributes" :key="attr" class="attribute">
-              <label>{{ $t('m20.attribute.' + attr) }}:</label>
-              <select
-                class="form-control"
-                v-model.number="editingCharacter.attributes[attr]"
-                :disabled="physicalLocked"
-              >
-                <option
-                  v-for="n in baseNumbers"
-                  :key="n"
-                  :value="n"
-                  :disabled="isOptionDisabled('physical', attr, n)"
-                >{{ n }}</option>
+              <label>{{ getAttributeName(attr) }}:</label>
+              <select class="form-control" v-model.number="editingCharacter.attributes[attr]" :disabled="physicalLocked">
+                <option v-for="n in baseNumbers" :key="n" :value="n" :disabled="isOptionDisabled('physical', attr, n)">{{ n }}</option>
               </select>
             </div>
           </div>
         </div>
 
         <div class="card">
-          <h6>{{$t('m20.attribute_category.social')}}</h6>
+          <h6>Sozial</h6>
           <select class="form-control" v-model="socialPriority">
             <option :value="AttributePriority.None">Auswählen</option>
             <option v-for="p in selectableSocialPriorities" :key="p" :value="p">
-              {{ p === AttributePriority.Primary ? 'Primär' : (p === AttributePriority.Secondary ? 'Sekundär' : 'Tertiär') }}
+              {{ p === AttributePriority.Primary ? "Primär" : (p === AttributePriority.Secondary ? "Sekundär" : "Tertiär") }}
             </option>
           </select>
 
           <div class="info">
-            <span>{{ usedSocialAmount }} / {{ (socialPriority && (socialPriority !== AttributePriority.None)) ? ('' + (socialPriority === AttributePriority.Primary ? 7 : (socialPriority === AttributePriority.Secondary ? 5 : 3))) : 0 }}</span>
+            <span>{{ usedSocialAmount }} / {{ socialPriority === AttributePriority.None ? 0 : (socialPriority === AttributePriority.Primary ? 7 : (socialPriority === AttributePriority.Secondary ? 5 : 3)) }}</span>
           </div>
 
           <div class="attribute-col">
             <div v-for="attr in socialAttributes" :key="attr" class="attribute">
-              <label>{{ $t('m20.attribute.' + attr) }}:</label>
-              <select
-                class="form-control"
-                v-model.number="editingCharacter.attributes[attr]"
-                :disabled="socialLocked"
-              >
-                <option
-                  v-for="n in baseNumbers"
-                  :key="n"
-                  :value="n"
-                  :disabled="isOptionDisabled('social', attr, n)"
-                >{{ n }}</option>
+              <label>{{ getAttributeName(attr) }}:</label>
+              <select class="form-control" v-model.number="editingCharacter.attributes[attr]" :disabled="socialLocked">
+                <option v-for="n in baseNumbers" :key="n" :value="n" :disabled="isOptionDisabled('social', attr, n)">{{ n }}</option>
               </select>
             </div>
           </div>
         </div>
 
         <div class="card">
-          <h6>{{$t('m20.attribute_category.mental')}}</h6>
+          <h6>Geistig</h6>
           <select class="form-control" v-model="mentalPriority">
             <option :value="AttributePriority.None">Auswählen</option>
             <option v-for="p in selectableMentalPriorities" :key="p" :value="p">
-              {{ p === AttributePriority.Primary ? 'Primär' : (p === AttributePriority.Secondary ? 'Sekundär' : 'Tertiär') }}
+              {{ p === AttributePriority.Primary ? "Primär" : (p === AttributePriority.Secondary ? "Sekundär" : "Tertiär") }}
             </option>
           </select>
 
           <div class="info">
-            <span>{{ usedMentalAmount }} / {{ (mentalPriority && (mentalPriority !== AttributePriority.None)) ? ('' + (mentalPriority === AttributePriority.Primary ? 7 : (mentalPriority === AttributePriority.Secondary ? 5 : 3))) : 0 }}</span>
+            <span>{{ usedMentalAmount }} / {{ mentalPriority === AttributePriority.None ? 0 : (mentalPriority === AttributePriority.Primary ? 7 : (mentalPriority === AttributePriority.Secondary ? 5 : 3)) }}</span>
           </div>
 
           <div class="attribute-col">
             <div v-for="attr in mentalAttributes" :key="attr" class="attribute">
-              <label>{{ $t('m20.attribute.' + attr) }}:</label>
-              <select
-                class="form-control"
-                v-model.number="editingCharacter.attributes[attr]"
-                :disabled="mentalLocked"
-              >
-                <option
-                  v-for="n in baseNumbers"
-                  :key="n"
-                  :value="n"
-                  :disabled="isOptionDisabled('mental', attr, n)"
-                >{{ n }}</option>
+              <label>{{ getAttributeName(attr) }}:</label>
+              <select class="form-control" v-model.number="editingCharacter.attributes[attr]" :disabled="mentalLocked">
+                <option v-for="n in baseNumbers" :key="n" :value="n" :disabled="isOptionDisabled('mental', attr, n)">{{ n }}</option>
               </select>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </EditorForm>
 </template>

@@ -1,72 +1,94 @@
-<script lang="ts">
-import {Component, Inject, Vue} from 'vue-property-decorator';
-import EditorForm from "@/components/editor/EditorForm.vue";
-import {State} from "vuex-class";
-import {IWerewolfW5Sheet} from "@/types/w5";
-import {tribes} from "@/.data/w5";
-import ClanSymbol from "@/components/symbols/ClanSymbol.vue";
-import TipButton from "@/components/editor/TipButton.vue";
-import Bullet from "@/components/Bullet.vue";
-import AuspiceSymbol from "@/components/symbols/AuspiceSymbol.vue";
-import TribeSymbol from "@/components/symbols/TribeSymbol.vue";
-import PatronSpiritSymbol from "@/components/symbols/PatronSpiritSymbol.vue";
+<script setup lang="ts">
+import { computed } from "vue"
+import EditorForm from "@/components/editor/EditorForm.vue"
+import TipButton from "@/components/editor/TipButton.vue"
+import TribeSymbol from "@/components/symbols/TribeSymbol.vue"
+import PatronSpiritSymbol from "@/components/symbols/PatronSpiritSymbol.vue"
+import { tribes } from "@/app/data/w5"
+import type { IWerewolfW5Sheet } from "@/@types/w5"
+import { useStore } from "@/app/store"
 
-@Component({
-  components: {PatronSpiritSymbol, TribeSymbol, AuspiceSymbol: AuspiceSymbol, Bullet, TipButton, ClanSymbol, EditorForm}
-})
-export default class ChooseTribeView extends Vue {
+const store = useStore()
 
-  tribes = tribes;
+const editingCharacter = computed(() => store.editingCharacter as IWerewolfW5Sheet | undefined)
+const canGoNext = computed(() => !!editingCharacter.value?.tribe)
 
-  @State("editingCharacter")
-  private editingCharacter!: IWerewolfW5Sheet|undefined;
+const tipTribe = "Der Stamm prägt Kultur, Instinkte, Verbündete und Feinde – und legt ein bevorzugtes Ansehen fest."
+const tipFavor = "Der Vorteil deines Stamms beschreibt typische Stärken oder Privilegien."
+const tipPatron = "Der Schutzgeist ist ein spiritueller Verbündeter deines Stamms."
+const tipRenown = "Ansehen beschreibt deinen Ruf und deine spirituelle Anerkennung."
+const tipBan = "Der Bann ist ein kulturelles/spirituelles Tabu, das der Stamm ernst nimmt."
 
-  private get canGoNext() {
-    return this.editingCharacter && this.editingCharacter.tribe;
-  }
+const RENOWN_NAME: Record<string, string> = {
+  glory: "Ruhm",
+  honor: "Ehre",
+  wisdom: "Weisheit",
+  none: "—",
+}
 
-  @Inject("show-tip")
-  private showTip!: (content: any, title?: any) => void;
+function getRenownName(k: any) {
+  return RENOWN_NAME[String(k)] ?? "—"
 }
 </script>
 
 <template>
   <EditorForm :can-go-next="canGoNext" next-step="editor-renown">
-    <div class="d-flex justify-content-center" style="width: 100%; height: 100%; padding: 5rem" v-if="editingCharacter">
+    <div v-if="editingCharacter" class="outer">
       <div class="choose-clan-wrapper">
         <div class="clan-selection">
-          <label class="required">{{$t('character.tribe')}}: <TipButton :content="$t('character.tribe.description')"/></label>
+          <label class="required">
+            Stamm:
+            <TipButton :content="tipTribe" />
+          </label>
 
-          <div style="display: flex; gap: 2rem" v-if="editingCharacter.tribe">
-            <div class="card clan-info" style="margin: 0; width: 55rem">
-              <TribeSymbol :tribe="editingCharacter.tribe"/>
+          <div v-if="editingCharacter.tribe" class="info-row">
+            <div class="card clan-info">
+              <TribeSymbol :tribe="editingCharacter.tribe" />
               <div class="text">
-                <b>{{editingCharacter.tribe.name}}</b>
-                <div class="desc">{{editingCharacter.tribe.description}}</div>
+                <b>{{ editingCharacter.tribe.name }}</b>
+                <div class="desc">{{ editingCharacter.tribe.description }}</div>
 
-                <h6 style="font-weight: bolder; margin: 1rem 0 0;">{{$t('character.tribe.favor')}}: <TipButton :content="$t('character.tribe.favor.description')"/></h6>
-                <div class="desc small">{{editingCharacter.tribe.favor}}</div>
+                <h6 class="hline">
+                  Vorteil:
+                  <TipButton :content="tipFavor" />
+                </h6>
+                <div class="desc small">{{ editingCharacter.tribe.favor }}</div>
               </div>
             </div>
-            <div class="card clan-info" style="margin: 0; width: 55rem">
-              <PatronSpiritSymbol :tribe="editingCharacter.tribe"/>
+
+            <div class="card clan-info">
+              <PatronSpiritSymbol :tribe="editingCharacter.tribe" />
               <div class="text">
-                <b>{{$t('character.patron')}}: {{editingCharacter.tribe.patron.name}} <TipButton :content="$t('character.patron.description')"/></b>
-                <div class="desc">{{editingCharacter.tribe.patron.description}}</div>
+                <b>
+                  Schutzgeist: {{ editingCharacter.tribe.patron.name }}
+                  <TipButton :content="tipPatron" />
+                </b>
+                <div class="desc">{{ editingCharacter.tribe.patron.description }}</div>
 
-                <h6 style="font-weight: bolder; margin: 1rem 0 0;">{{$t('character.renown')}}: <TipButton :content="$t('character.renown.description')"/></h6>
-                <div class="desc">{{$t(`character.renown.${editingCharacter.tribe.renown}`)}}</div>
+                <h6 class="hline">
+                  Ansehen:
+                  <TipButton :content="tipRenown" />
+                </h6>
+                <div class="desc">{{ getRenownName(editingCharacter.tribe.renown) }}</div>
 
-                <h6 style="font-weight: bolder; margin: 1rem 0 0;">{{$t('character.tribe.ban')}}: <TipButton :content="$t('character.tribe.ban.description')"/></h6>
-                <div class="desc small">{{editingCharacter.tribe.ban}}</div>
+                <h6 class="hline">
+                  Bann:
+                  <TipButton :content="tipBan" />
+                </h6>
+                <div class="desc small">{{ editingCharacter.tribe.ban }}</div>
               </div>
             </div>
           </div>
 
           <div class="clans">
-            <div class="clan" v-for="tribe in tribes" :key="tribe.id" @click="editingCharacter.tribe = tribe">
-              <TribeSymbol :tribe="tribe"/>
-              <small>{{tribe.name}}</small>
+            <div
+              v-for="tribe in tribes"
+              :key="tribe.id"
+              class="clan"
+              @click="editingCharacter.tribe = tribe"
+            >
+              <TribeSymbol :tribe="tribe" />
+              <small>{{ tribe.name }}</small>
             </div>
           </div>
         </div>
@@ -76,6 +98,15 @@ export default class ChooseTribeView extends Vue {
 </template>
 
 <style scoped lang="scss">
+.outer {
+  width: 100%;
+  height: 100%;
+  padding: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .choose-clan-wrapper {
   display: flex;
   flex-direction: column;
@@ -88,7 +119,14 @@ export default class ChooseTribeView extends Vue {
     align-items: center;
     justify-content: center;
 
+    .info-row {
+      display: flex;
+      gap: 2rem;
+    }
+
     .clan-info {
+      margin: 0;
+      width: 55rem;
       padding: 1rem;
       gap: 1rem;
       display: flex;
@@ -98,30 +136,20 @@ export default class ChooseTribeView extends Vue {
         flex-direction: column;
         align-items: center;
         flex-grow: 1;
-        small {
-          color: #b2b2b2;
+
+        .hline {
+          font-weight: 800;
+          margin: 1rem 0 0;
         }
+
         .desc {
           font-size: 1.1rem;
           max-height: 15rem;
           overflow-x: hidden;
           overflow-y: auto;
+
           &.small {
             font-size: 0.9rem;
-          }
-        }
-        .disciplines {
-          width: 100%;
-          display: flex;
-          flex-direction: row;
-          gap: 1rem;
-          margin-top: 1rem;
-          justify-content: center;
-          align-items: center;
-          .discipline {
-            font-size: 1.1rem;
-            width: calc(33% - 0.4rem);
-            text-align: center;
           }
         }
       }
@@ -146,6 +174,7 @@ export default class ChooseTribeView extends Vue {
         justify-content: center;
         cursor: pointer;
         user-select: none;
+
         img {
           height: 6rem;
           -webkit-user-drag: none;

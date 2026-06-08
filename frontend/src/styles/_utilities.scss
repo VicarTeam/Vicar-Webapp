@@ -1,0 +1,81 @@
+.vicar-highlight {
+  background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.10), transparent 55%),
+      linear-gradient(180deg, color-mix(in srgb, var(--accent) 20%, var(--bg-2)), var(--bg-1)) !important;
+  color: var(--text-1) !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, rgba(255, 255, 255, 0.10)) !important;
+  box-shadow: var(--shadow-hairline), 0 14px 40px color-mix(in srgb, var(--accent) 18%, rgba(0, 0, 0, 0.55)) !important;
+}
+
+@keyframes screenShake {
+  0%   { transform: translate(0, 0); }
+  10%  { transform: translate(3px, -2px); }
+  20%  { transform: translate(-5px, 4px); }
+  30%  { transform: translate(7px, -5px); }
+  40%  { transform: translate(-9px, 6px); }
+  50%  { transform: translate(12px, -8px); }
+  60%  { transform: translate(-14px, 10px); }
+  70%  { transform: translate(16px, -12px); }
+  80%  { transform: translate(-18px, 14px); }
+  90%  { transform: translate(20px, -16px); }
+  100% { transform: translate(0, 0); }
+}
+
+.vicar-screen-shake {
+  animation: screenShake 500ms cubic-bezier(.55, .05, .67, .19) both !important;
+}
+
+.vicar-renegade-border {
+  border-color: #fff093 !important;
+}
+
+.vicar-renegade-bg {
+  background-color: #fff093 !important;
+
+  &.glow {
+    box-shadow: 0 0 10px #fff093 !important;
+  }
+}
+
+.vicar-renegade-fg {
+  color: #fff093 !important;
+}
+
+.vicar-resonance-glow {
+  &--choleric    { animation: resonanceGlowRiseCholeric 5s forwards; }
+  &--melancholic { animation: resonanceGlowRiseMelancholic 5s forwards; }
+  &--phlegmatic  { animation: resonanceGlowRisePhlegmatic 5s forwards; }
+  &--sanguine    { animation: resonanceGlowRiseSanguine 5s forwards; }
+  &--animalblood { animation: resonanceGlowRiseAnimalblood 5s forwards; }
+}
+
+@keyframes resonanceGlowRiseCholeric {
+  0% { box-shadow: 0 0 5px #ff4d4d inset; }
+  80% { box-shadow: 0 0 3rem #ff4d4d inset; }
+  100% { box-shadow: 0 0 0 #ff4d4d inset; }
+}
+
+@keyframes resonanceGlowRiseMelancholic {
+  0% { box-shadow: 0 0 5px #4d79ff inset; }
+  80% { box-shadow: 0 0 3rem #4d79ff inset; }
+  100% { box-shadow: 0 0 0 #4d79ff inset; }
+}
+
+@keyframes resonanceGlowRisePhlegmatic {
+  0% { box-shadow: 0 0 5px #66ffff inset; }
+  80% { box-shadow: 0 0 3rem #66ffff inset; }
+  100% { box-shadow: 0 0 0 #66ffff inset; }
+}
+
+@keyframes resonanceGlowRiseSanguine {
+  0% { box-shadow: 0 0 5px #ff66cc inset; }
+  80% { box-shadow: 0 0 3rem #ff66cc inset; }
+  100% { box-shadow: 0 0 0 #ff66cc inset; }
+}
+
+@keyframes resonanceGlowRiseAnimalblood {
+  0% { box-shadow: 0 0 5px #4dff88 inset; }
+  80% { box-shadow: 0 0 3rem #4dff88 inset; }
+  100% { box-shadow: 0 0 0 #4dff88 inset; }
+}

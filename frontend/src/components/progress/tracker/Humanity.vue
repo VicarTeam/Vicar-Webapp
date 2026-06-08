@@ -1,105 +1,164 @@
-<template>
-  <div v-if="editingCharacter" class="squares" :class="{redpath: onRedPath, blackblocked: blockedDueToBlackPath}">
-    <span v-for="i in dots" class="square" :class="{'filled': isFilled(i), 'through': isStain(i), 'ml-10': i === 6}" @click="onClick(i, $event)"></span>
-  </div>
-</template>
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useStore } from '@/app/store'
+import CharacterStorage from '@/libs/io/character-storage'
+import type { ICharacter } from '@/@types/models'
 
-<script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
-import {State} from "vuex-class";
-import {ICharacter} from "@/types/models";
-import CharacterStorage from "@/libs/io/character-storage";
+defineOptions({ inheritAttrs: false })
 
-@Component({
-  components: {}
-})
-export default class Humanity extends Vue {
+const store = useStore()
+const editingCharacter = computed(() => store.editingCharacter as ICharacter | undefined)
 
-  @State("editingCharacter")
-  private editingCharacter!: ICharacter;
+const dots = computed(() => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
-  private isFilled(nr: number) {
-    return nr <= this.editingCharacter.humanity;
+const onRedPath = computed(() => (editingCharacter.value as any)?.cainsMarkLevel === -5)
+const blockedDueToBlackPath = computed(() => (editingCharacter.value as any)?.cainsMarkLevel === 5)
+
+function isFilled(nr: number) {
+  return nr <= ((editingCharacter.value as any)?.humanity ?? 0)
+}
+
+function getStains() {
+  return ((editingCharacter.value as any)?.stains ?? 0) as number
+}
+
+function isStain(nr: number) {
+  const hum = ((editingCharacter.value as any)?.humanity ?? 0) as number
+  return nr > hum && 10 - getStains() < nr
+}
+
+function onClick(nr: number, e: MouseEvent) {
+  const ch = editingCharacter.value as any
+  if (!ch) return
+  if (blockedDueToBlackPath.value) return
+
+  if (e.shiftKey) {
+    const stain = 10 - (nr - 1)
+    ch.stains = stain === ch.stains ? 0 : stain
+  } else {
+    ch.humanity = nr === ch.humanity ? 0 : nr
   }
 
-  private isStain(nr: number) {
-    return nr > this.editingCharacter.humanity && 10 - this.getStains() < nr;
-  }
-
-  private getStains() {
-    return this.editingCharacter.stains || 0;
-  }
-
-  private get dots(): number[] {
-    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  }
-
-  private get onRedPath() {
-    return this.editingCharacter?.cainsMarkLevel === -5;
-  }
-
-  private get blockedDueToBlackPath() {
-    return this.editingCharacter?.cainsMarkLevel === 5;
-  }
-
-  private onClick(nr: number, e: MouseEvent) {
-    if (this.blockedDueToBlackPath) return;
-
-    if (e.shiftKey) {
-      const stain = 10 - (nr - 1);
-      this.editingCharacter.stains = stain === this.editingCharacter.stains ? 0 : stain;
-      this.$forceUpdate();
-    } else {
-      this.editingCharacter.humanity = nr === this.editingCharacter.humanity ? 0 : nr;
-    }
-
-    CharacterStorage.saveCharacter(this.editingCharacter, true);
-  }
+  CharacterStorage.saveCharacter(ch, true)
 }
 </script>
 
+<template>
+  <div v-if="editingCharacter" class="humanity" :class="{ redpath: onRedPath, blackblocked: blockedDueToBlackPath }" v-bind="$attrs">
+    <span
+      v-for="i in dots"
+      :key="i"
+      class="square"
+      :class="{ filled: isFilled(i), through: isStain(i), 'ml-10': i === 6 }"
+      @click="onClick(i, $event)"
+    ></span>
+  </div>
+</template>
+
 <style scoped lang="scss">
-.squares {
+.humanity {
   display: flex;
   gap: 0.5rem;
   align-items: center;
   user-select: none;
+  flex-wrap: wrap;
+  touch-action: manipulation;
+
   .square {
     width: 1rem;
     height: 1rem;
+    min-width: 18px;
+    min-height: 18px;
     cursor: pointer;
-    border: 1px solid var(--primary-color);
+    border-radius: 6px;
+    border: 1px solid color-mix(in srgb, var(--accent) 55%, rgba(255, 255, 255, 0.10));
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 55%),
+      linear-gradient(180deg, var(--bg-3), var(--bg-2));
+    box-shadow: var(--shadow-hairline), 0 10px 22px rgba(0, 0, 0, 0.35);
+    transition: transform var(--dur-2) var(--ease-2), filter var(--dur-2) var(--ease-2), border-color var(--dur-2) var(--ease-2);
+
     &.filled {
-      background-color: var(--primary-color);
+      background: var(--accent);
+      border-color: color-mix(in srgb, var(--accent) 55%, rgba(255, 255, 255, 0.12));
+      box-shadow: var(--shadow-hairline), 0 14px 34px color-mix(in srgb, var(--accent) 14%, rgba(0, 0, 0, 0.55));
     }
+
     &.through {
-      background: linear-gradient(to bottom left, transparent calc(50% - 2px), var(--primary-color) calc(50% - 1px), var(--primary-color) calc(50% + 1px), transparent calc(50% + 2px)) no-repeat 0px 0px / 100px 100px;
+      background:
+        linear-gradient(
+            to bottom left,
+            transparent calc(50% - 2px),
+            color-mix(in srgb, var(--accent) 88%, #ffffff) calc(50% - 1px),
+            color-mix(in srgb, var(--accent) 88%, #ffffff) calc(50% + 1px),
+            transparent calc(50% + 2px)
+        )
+        no-repeat 0 0 / 100px 100px;
       transform: rotate(90deg);
     }
+
+    &:active {
+      transform: translateY(1px) scale(0.98);
+      filter: brightness(0.98);
+    }
   }
+
   &.redpath .square {
     border-color: #fff093;
+
     &.filled {
-      background-color: #fff093;
-      box-shadow: 0 0 10px #fff093;
+      background:
+        radial-gradient(240px 140px at 20% 10%, rgba(255, 240, 147, 0.30), transparent 60%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.10), transparent 55%),
+        linear-gradient(180deg, rgba(255, 240, 147, 0.35), rgba(255, 240, 147, 0.18));
+      box-shadow: 0 0 10px rgba(255, 240, 147, 0.55);
     }
+
     &.through {
-      background: linear-gradient(to bottom left, transparent calc(50% - 2px), #fff093 calc(50% - 1px), #fff093 calc(50% + 1px), transparent calc(50% + 2px)) no-repeat 0px 0px / 100px 100px;
+      background:
+        linear-gradient(
+            to bottom left,
+            transparent calc(50% - 2px),
+            #fff093 calc(50% - 1px),
+            #fff093 calc(50% + 1px),
+            transparent calc(50% + 2px)
+        )
+        no-repeat 0 0 / 100px 100px;
       transform: rotate(90deg);
     }
   }
+
   &.blackblocked {
     cursor: not-allowed;
+    opacity: 0.7;
+
     .square {
-      border-color: black;
       cursor: not-allowed;
+      border-color: rgba(0, 0, 0, 0.9);
+
       &.filled {
-        background-color: black;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent 55%),
+          linear-gradient(180deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.78));
       }
+
       &.through {
-        background: linear-gradient(to bottom left, transparent calc(50% - 2px), black calc(50% - 1px), black calc(50% + 1px), transparent calc(50% + 2px)) no-repeat 0px 0px / 100px 100px;
+        background:
+          linear-gradient(to bottom left, transparent calc(50% - 2px), rgba(0, 0, 0, 0.95) calc(50% - 1px), rgba(0, 0, 0, 0.95) calc(50% + 1px), transparent calc(50% + 2px))
+          no-repeat 0 0 / 100px 100px;
         transform: rotate(90deg);
       }
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .humanity {
+    gap: 0.4rem;
+
+    .square {
+      min-width: 16px;
+      min-height: 16px;
     }
   }
 }

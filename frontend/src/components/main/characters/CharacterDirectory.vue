@@ -1,175 +1,120 @@
+<script setup lang="ts">
+import { computed, inject } from "vue"
+import type { ICharacter, ICharacterDirectory } from "@/@types/models"
+import Character from "@/components/main/characters/Character.vue"
+import IconButton from "@/components/IconButton.vue"
+import CharacterStorage from "@/libs/io/character-storage"
+
+const props = defineProps<{
+  directory: ICharacterDirectory | null
+  characters: ICharacter[]
+  activeDrop?: boolean
+}>()
+
+const startCharCreation = inject<(dir?: ICharacterDirectory) => void>("create-character")!
+const updateCharacterList = inject<() => void>("update-character-list")!
+
+const dirId = computed(() => (props.directory ? props.directory.id : "__root__"))
+
+function toggleOpen() {
+  if (!props.directory) return
+  props.directory.open = !props.directory.open
+  if (props.directory.id === "@shared-chars") {
+    localStorage.setItem("vicar::shared-chars-open", props.directory.open ? "1" : "0")
+  }
+  updateCharacterList()
+}
+
+function createCharacter() {
+  if (!props.directory) return
+  startCharCreation(props.directory)
+}
+
+function removeDirectory() {
+  if (!props.directory) return
+  CharacterStorage.loadedDirectories = CharacterStorage.loadedDirectories.filter((d) => d.id !== props.directory!.id)
+  setTimeout(() => updateCharacterList(), 100)
+}
+</script>
+
 <template>
-  <div class="char-dir">
+  <div class="char-dir" :data-dropzone="dirId">
     <div class="head" v-if="directory">
-      {{directory.name}}
+      {{ directory.name }}
+
       <div class="actions left">
-        <IconButton icon="fa-plus" @click="createCharacter"/>
-        <IconButton v-if="characters.length <= 0" icon="fa-minus" @click="removeDirectory"/>
+        <IconButton icon="fa-plus" @click="createCharacter" />
+        <IconButton v-if="characters.length <= 0" icon="fa-minus" @click="removeDirectory" />
       </div>
-      <div class="actions">
-        <IconButton :icon="directory.open ? 'fa-chevron-up' : 'fa-chevron-down'" @click="toggleOpen"/>
+
+      <div class="actions right">
+        <IconButton :icon="directory.open ? 'fa-chevron-up' : 'fa-chevron-down'" @click="toggleOpen" />
       </div>
     </div>
 
-    <Container
-        class="list" v-if="!this.directory || directory.open"
-        behavior="drop-zone"
-        group-name="characters"
-        :get-child-payload="getDraggablePayload"
-        :should-animate-drop="() => false"
-        @drag-start="onDragStart"
-        @drag-end="onDragStop"
-        @mouseup.native.left="onDrop"
-    >
-      <Draggable v-for="(c, i) in characters" :key="i">
-        <Character :character="c"/>
-      </Draggable>
-    </Container>
+    <div class="list" v-if="!directory || directory.open" :class="{ 'drop-active': activeDrop }">
+      <Character v-for="c in characters" :key="c.id" :character="c" />
+    </div>
   </div>
 </template>
-
-<script lang="ts">
-import {Component, Inject, Prop, Ref, Vue} from "vue-property-decorator";
-import {ICharacter, ICharacterDirectory} from "@/types/models";
-import Character from "@/components/main/characters/Character.vue";
-import IconButton from "@/components/IconButton.vue";
-import {Container, Draggable} from "vue-dndrop";
-import {Mutation, State} from "vuex-class";
-import CharacterStorage from "@/libs/io/character-storage";
-
-@Component({
-  components: {IconButton, Character, Container, Draggable}
-})
-export default class CharacterDirectory extends Vue {
-
-  @Prop({required: true})
-  private directory!: ICharacterDirectory|null;
-
-  @Prop({required: true})
-  private characters!: ICharacter[];
-
-  @State("draggingCharacter")
-  private draggingCharacter!: ICharacter|undefined;
-
-  @Mutation("setDraggingCharacter")
-  private setDraggingCharacter!: (character?: ICharacter) => void;
-
-  private toggleOpen() {
-    if (this.directory) {
-      this.directory.open = !this.directory.open;
-
-      this.$forceUpdate();
-
-      if (this.directory.id === "@shared-chars") {
-        localStorage.setItem("vicar::shared-chars-open", this.directory.open ? "1" : "0");
-      }
-    }
-  }
-
-  private createCharacter() {
-    if (!this.directory) {
-      return;
-    }
-
-    this.startCharCreation(this.directory);
-  }
-
-  private onDrop() {
-    if (!this.draggingCharacter) {
-      return;
-    }
-
-    const oldDir = this.draggingCharacter.directory;
-
-    if (this.directory) {
-      this.draggingCharacter.directory = this.directory.id;
-    } else {
-      delete this.draggingCharacter.directory;
-    }
-
-    CharacterStorage.saveCharacter(this.draggingCharacter);
-    this.setDraggingCharacter(undefined);
-
-    if (oldDir) {
-      const count = CharacterStorage.loadedCharacters.filter(c => c.directory === oldDir).length;
-      if (count === 0) {
-        CharacterStorage.loadedDirectories = CharacterStorage.loadedDirectories.filter(d => d.id !== oldDir);
-      }
-    }
-
-    setTimeout(() => {
-      this.updateCharacterList();
-    }, 100);
-  }
-
-  private removeDirectory() {
-    if (!this.directory) {
-      return;
-    }
-
-    CharacterStorage.loadedDirectories = CharacterStorage.loadedDirectories.filter(d => d.id !== this.directory!.id);
-    setTimeout(() => {
-      this.updateCharacterList();
-    }, 100);
-  }
-
-  private onDragStart(dragResult: any) {
-    this.setDraggingCharacter(dragResult.payload);
-  }
-
-  private onDragStop() {
-    this.setDraggingCharacter();
-  }
-
-  private getDraggablePayload(idx: number) {
-    return this.characters[idx];
-  }
-
-  @Inject("update-character-list")
-  private updateCharacterList!: () => void;
-
-  @Inject("create-character")
-  private startCharCreation!: (dir?: ICharacterDirectory) => void;
-}
-</script>
 
 <style scoped lang="scss">
 .char-dir {
   width: 100%;
   display: flex;
   flex-direction: column;
-  .head {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    color: #fff;
-    font-weight: bolder;
-    text-transform: uppercase;
-    border-bottom: 2px solid var(--primary-color);
-    .actions {
-      height: 100%;
-      position: absolute;
-      top: 0;
-      display: flex;
-      gap: 0.5rem;
-      &:not(.left) {
-        right: 0;
-      }
-      &.left {
-        left: 0;
-      }
-    }
+}
+
+.head {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  padding: 0.6rem 0.5rem;
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.actions {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  &.left {
+    left: 0;
   }
+  &.right {
+    right: 0;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  transition: background-color 120ms ease, outline-color 120ms ease;
+  outline: 2px dashed rgba(255, 255, 255, 0.08);
+  outline-offset: 4px;
+}
+
+.drop-active {
+  background-color: rgba(255, 255, 255, 0.04);
+  outline-color: rgba(255, 255, 255, 0.22);
+}
+
+@media (max-width: 800px) {
   .list {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 1rem;
-    padding: 1rem;
+    padding: 0.75rem;
   }
 }
 </style>

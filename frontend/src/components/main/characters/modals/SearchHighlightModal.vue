@@ -1,199 +1,173 @@
-<script lang="ts">
-import {Vue, Component} from 'vue-property-decorator';
-import Modal from "@/components/modal/Modal.vue";
-import {AttributeKeys, ICharacter} from "@/types/models";
-import Dropdown, {IOption} from "@/components/Dropdown.vue";
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import { useRouter, useRoute } from "vue-router"
+import Modal from "@/components/modal/Modal.vue"
+import Dropdown from "@/components/Dropdown.vue"
+import type { IOption } from "@/components/Dropdown.vue"
+import {type AttributeKeys, getAttributeName, getCategoryName, getSkillName, type ICharacter} from "@/@types/models"
 
-const HIGHLIGHT_SKILL = "hlsk-";
-const HIGHLIGHT_ATTRIBUTE = "hlat-";
-const HIGHLIGHT_STAT = "hlst-";
-const HIGHLIGHT_DISCIPLINE = "hldc-";
+const HIGHLIGHT_SKILL = "hlsk-"
+const HIGHLIGHT_ATTRIBUTE = "hlat-"
+const HIGHLIGHT_STAT = "hlst-"
+const HIGHLIGHT_DISCIPLINE = "hldc-"
 
-@Component({
-  components: {Dropdown, Modal}
-})
-export default class SearchHighlightModal extends Vue {
+const router = useRouter()
+const route = useRoute()
 
-  private show: boolean = false;
-  private character: ICharacter = null!;
-  private highlight: string|null = null;
+const show = ref(false)
+const character = ref<ICharacter | null>(null)
+const highlight = ref<string | null>(null)
 
-  public showModal(character: ICharacter) {
-    this.character = character;
-    this.highlight = null;
-    this.show = true;
-  }
-
-  private get options(): IOption[] {
-    const opts: IOption[] = [];
-
-    for (const c of this.character.categories) {
-      opts.push({
-        name: this.$t('data.category.' + c.name).toString(),
-        value: '',
-        isCategory: true
-      });
-
-      const skillOpts: IOption[] = [];
-      for (const i of c.skills) {
-        skillOpts.push({
-          name: this.$t('data.skill.' + i.key).toString() + ` (${i.value})`,
-          value: HIGHLIGHT_SKILL + i.key
-        });
-      }
-      opts.push(...skillOpts.sort((a, b) => a.name.localeCompare(b.name)));
-    }
-
-    if (this.character.disciplines.length > 0) {
-      opts.push({
-        name: this.$t('editor.clan.disciplines').toString(),
-        value: '',
-        isCategory: true
-      });
-
-      const discOpts: IOption[] = [];
-      for (const i of this.character.disciplines) {
-        discOpts.push({
-          name: i.discipline.name + ` (${i.currentLevel})`,
-          value: HIGHLIGHT_DISCIPLINE + i.discipline.id
-        });
-      }
-
-      opts.push(...discOpts.sort((a, b) => a.name.localeCompare(b.name)));
-    }
-
-    const opt = (key: AttributeKeys) => {
-      return {
-        name: this.$t(`data.attribute.${key}`).toString() + ` (${this.getAttrVal(key)})`,
-        value: HIGHLIGHT_ATTRIBUTE + key
-      };
-    }
-
-    opts.push({
-      name: this.$t('viewer.tab.attributes').toString(),
-      value: '',
-      isCategory: true
-    });
-
-    opts.push(opt(AttributeKeys.Strength));
-    opts.push(opt(AttributeKeys.Dexterity));
-    opts.push(opt(AttributeKeys.Stamina));
-    opts.push(opt(AttributeKeys.Charisma));
-    opts.push(opt(AttributeKeys.Manipulation));
-    opts.push(opt(AttributeKeys.Composure));
-    opts.push(opt(AttributeKeys.Intelligence));
-    opts.push(opt(AttributeKeys.Wits));
-    opts.push(opt(AttributeKeys.Resolve));
-
-    opts.push({
-      name: this.$t('character.modal.search-highlight.stats').toString(),
-      value: '',
-      isCategory: true
-    });
-    opts.push({
-      name: this.$t('character.health').toString(),
-      value: 'hlst-health',
-    });
-    opts.push({
-      name: this.$t('character.willpower').toString(),
-      value: 'hlst-willpower',
-    });
-    opts.push({
-      name: this.$t('character.bloodpotency').toString(),
-      value: 'hlst-blood',
-    });
-    opts.push({
-      name: this.$t('character.humanity').toString(),
-      value: 'hlst-humanity',
-    });
-    opts.push({
-      name: this.$t('character.hunger').toString(),
-      value: 'hlst-hunger',
-    });
-
-    return opts;
-  }
-
-  private getAttrVal(attr: AttributeKeys): number {
-    for (const i of this.character.categories) {
-      for (const j of i.attributes) {
-        if (j.key === attr) {
-          return j.value;
-        }
-      }
-    }
-
-    return 0;
-  }
-
-  private reset() {
-    this.show = false;
-    this.highlight = null;
-    setTimeout(() => {
-      this.show = true;
-    }, 10);
-  }
-
-  private async jump() {
-    if (!this.highlight) {
-      return;
-    }
-
-    const route = this.$router.currentRoute.name;
-    if (this.highlight.startsWith(HIGHLIGHT_DISCIPLINE) && route !== "viewer-disciplines") {
-      await this.$router.push({name: "viewer-disciplines"});
-    } else if (this.highlight.startsWith(HIGHLIGHT_SKILL) && route !== "viewer-skills") {
-      await this.$router.push({name: "viewer-skills"});
-    } else if (this.highlight.startsWith(HIGHLIGHT_ATTRIBUTE) && route !== "viewer-attributes") {
-      await this.$router.push({name: "viewer-attributes"});
-    } else if (this.highlight.startsWith(HIGHLIGHT_STAT) && route !== "viewer-profile") {
-      await this.$router.push({name: "viewer-profile"});
-    }
-
-    const id = this.highlight;
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      if (!el) {
-        return;
-      }
-
-      let count = 0;
-      const interval = setInterval(() => {
-        if (count >= 5) {
-          clearInterval(interval);
-          el.classList.remove('vicar-highlight');
-          return;
-        }
-        if (el) {
-          el.classList.toggle('vicar-highlight');
-        }
-        count++;
-      }, 500);
-    }, 10);
-
-    this.show = false;
-  }
+const showModal = (c: ICharacter) => {
+  character.value = c
+  highlight.value = null
+  show.value = true
 }
+
+const getAttrVal = (attr: AttributeKeys): number => {
+  const c = character.value
+  if (!c) return 0
+  for (const cat of c.categories) {
+    for (const a of cat.attributes) {
+      if (a.key === attr) return a.value
+    }
+  }
+  return 0
+}
+
+const options = computed<IOption[]>(() => {
+  const c = character.value
+  if (!c) return []
+  const opts: IOption[] = []
+
+  for (const cat of c.categories) {
+    opts.push({ name: getCategoryName(cat.name), value: "", isCategory: true })
+    const skillOpts: IOption[] = cat.skills.map(s => ({
+      name: `${getSkillName(s.key)} (${s.value})`,
+      value: HIGHLIGHT_SKILL + s.key,
+    }))
+    opts.push(...skillOpts.sort((a, b) => String(a.name).localeCompare(String(b.name))))
+  }
+
+  if (c.disciplines.length > 0) {
+    opts.push({ name: "Clandisziplinen", value: "", isCategory: true })
+    const discOpts: IOption[] = c.disciplines.map(d => ({
+      name: `${d.discipline.name} (${d.currentLevel})`,
+      value: HIGHLIGHT_DISCIPLINE + d.discipline.id,
+    }))
+    opts.push(...discOpts.sort((a, b) => String(a.name).localeCompare(String(b.name))))
+  }
+
+  opts.push({ name: "Attribute", value: "", isCategory: true })
+
+  const attrs = ["str", "dex", "sta", "cha", "man", "com", "int", "wit", "res"] as AttributeKeys[]
+  for (const k of attrs) {
+    opts.push({
+      name: `${getAttributeName(k)} (${getAttrVal(k)})`,
+      value: HIGHLIGHT_ATTRIBUTE + k,
+    })
+  }
+
+  opts.push({ name: "Stats", value: "", isCategory: true })
+  opts.push({ name: "Gesundheit", value: "hlst-health" })
+  opts.push({ name: "Willenskraft", value: "hlst-willpower" })
+  opts.push({ name: "Blutmacht", value: "hlst-blood" })
+  opts.push({ name: "Menschlichkeit", value: "hlst-humanity" })
+  opts.push({ name: "Hunger", value: "hlst-hunger" })
+
+  return opts
+})
+
+const reset = () => {
+  show.value = false
+  highlight.value = null
+  setTimeout(() => (show.value = true), 10)
+}
+
+const jump = async () => {
+  if (!highlight.value) return
+
+  const name = route.name?.toString() ?? ""
+  const id = highlight.value
+
+  if (id.startsWith(HIGHLIGHT_DISCIPLINE) && name !== "viewer-disciplines") {
+    await router.push({ name: "viewer-disciplines" })
+  } else if (id.startsWith(HIGHLIGHT_SKILL) && name !== "viewer-skills") {
+    await router.push({ name: "viewer-skills" })
+  } else if (id.startsWith(HIGHLIGHT_ATTRIBUTE) && name !== "viewer-attributes") {
+    await router.push({ name: "viewer-attributes" })
+  } else if (id.startsWith(HIGHLIGHT_STAT) && name !== "viewer-profile") {
+    await router.push({ name: "viewer-profile" })
+  }
+
+  setTimeout(() => {
+    const el = document.getElementById(id)
+    if (!el) return
+
+    let count = 0
+    const interval = setInterval(() => {
+      if (count >= 5) {
+        clearInterval(interval)
+        el.classList.remove("vicar-highlight")
+        return
+      }
+      el.classList.toggle("vicar-highlight")
+      count++
+    }, 500)
+  }, 10)
+
+  show.value = false
+}
+
+defineExpose({ showModal })
 </script>
 
 <template>
   <Modal :shown="show" @close="show = false" v-if="character">
-    <div class="w-400 d-flex justify-content-center align-items-center flex-column" style="gap: 0.5rem">
-      <b>{{$t('character.modal.search-highlight')}}:</b>
-      <Dropdown v-if="show" :options="options" v-model="highlight" :placeholder="$t('character.modal.search-highlight.search')" :autofocus="true"/>
+    <div class="shm">
+      <b class="shm__title">Charakter durchsuchen:</b>
 
-      <div style="display: flex; flex-direction: row; gap: 1rem; justify-content: center; align-items: center; margin-top: 1.5rem">
-        <button class="btn" @click="reset">
-          {{$t('character.modal.search-highlight.reset')}}
-        </button>
-        <button class="btn btn-primary" @click="jump">
-          {{$t('character.modal.search-highlight.jump')}}
-        </button>
+      <Dropdown
+        v-if="show"
+        :options="options"
+        v-model="highlight"
+        placeholder="Suchen..."
+        :autofocus="true"
+      />
+
+      <div class="shm__actions">
+        <button class="btn" @click="reset">Zurücksetzen</button>
+        <button class="btn btn-primary" @click="jump">Hinspringen</button>
       </div>
     </div>
   </Modal>
 </template>
 
 <style scoped lang="scss">
+.shm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
 
+.shm__title {
+  text-align: center;
+  font-family: var(--font-display, Cinzel), serif;
+  letter-spacing: 0.04em;
+}
+
+.shm__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1rem;
+
+  @media (max-width: 520px) {
+    flex-direction: column;
+    align-items: stretch;
+    button {
+      width: 100%;
+    }
+  }
+}
 </style>

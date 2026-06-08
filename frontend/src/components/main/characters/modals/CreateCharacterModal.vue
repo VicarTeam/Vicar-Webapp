@@ -1,263 +1,338 @@
+<script setup lang="ts">
+import { computed, ref, watch } from "vue"
+import { useRouter } from "vue-router"
+import Modal from "@/components/modal/Modal.vue"
+import BookSelection from "@/components/editor/BookSelection.vue"
+import { EditorHistory } from "@/libs/editor-history"
+import { useStore } from "@/app/store"
+import type { ICharacter, ICharacterDirectory } from "@/@types/models"
+import { DefaultCharacter, Generation, Sex } from "@/@types/models"
+import { GameLine } from "@/@types/gameline"
+import { NewW5Sheet } from "@/@types/w5"
+import { NewMageSheet } from "@/@types/m20"
+import { NewH5Sheet } from "@/@types/h5"
+
+const router = useRouter()
+const store = useStore()
+
+const show = ref(false)
+const name = ref("")
+const gameline = ref<GameLine>(GameLine.Vampire)
+const sex = ref<Sex>(Sex.Divers)
+const generation = ref(13)
+const generationEra = ref<Generation>(Generation.Children)
+const dir = ref<ICharacterDirectory | undefined>(undefined)
+
+const bookSelection = ref<InstanceType<typeof BookSelection> | null>(null)
+
+const showModal = (d?: ICharacterDirectory) => {
+  dir.value = d
+  name.value = ""
+  gameline.value = GameLine.Vampire
+  sex.value = Sex.Divers
+  generationEra.value = Generation.Children
+  generation.value = 13
+  show.value = true
+}
+
+const onEraChange = () => {
+  switch (generationEra.value) {
+    case Generation.Children:
+      generation.value = 13
+      break
+    case Generation.Newborn:
+      generation.value = 12
+      break
+    case Generation.Ancillae:
+      generation.value = 11
+      break
+    case Generation.Older:
+      generation.value = 9
+      break
+    case Generation.Elder:
+      generation.value = 5
+      break
+  }
+}
+
+const eraMin = computed(() => {
+  switch (generationEra.value) {
+    case Generation.Children:
+      return 12
+    case Generation.Newborn:
+      return 12
+    case Generation.Ancillae:
+      return 10
+    default:
+      return 0
+  }
+})
+
+const eraMax = computed(() => {
+  switch (generationEra.value) {
+    case Generation.Children:
+      return 16
+    case Generation.Newborn:
+      return 13
+    case Generation.Ancillae:
+      return 11
+    case Generation.Elder:
+      return 10
+    default:
+      return Number.POSITIVE_INFINITY
+  }
+})
+
+const newChar = (): any => {
+  if (gameline.value === GameLine.Vampire) return DefaultCharacter()
+  if (gameline.value === GameLine.Werewolf) return NewW5Sheet()
+  if (gameline.value === GameLine.Mage) return NewMageSheet()
+  if (gameline.value === GameLine.Hunter) return NewH5Sheet()
+  return undefined
+}
+
+const applyEra = (char: ICharacter) => {
+  switch (char.generationEra) {
+    case Generation.Children:
+      char.bloodPotency = char.generation >= 14 ? 0 : 1
+      break
+    case Generation.Newborn:
+      char.bloodPotency = 1
+      char.exp = 15
+      break
+    case Generation.Ancillae:
+      char.bloodPotency = 2
+      char.exp = 35
+      char.humanity--
+      break
+    case Generation.Older:
+      char.exp = 1000
+      break
+    case Generation.Elder:
+      char.exp = 666666
+      char.bloodPotency = 10
+      char.isElder = true
+      for (const cat of char.categories) {
+        for (const a of cat.attributes) a.value = 5
+        for (const s of cat.skills) s.value = 5
+      }
+      break
+  }
+}
+
+const startCreateCharacter = () => {
+  const n = name.value.trim()
+  if (!n) return
+
+  const char = newChar()
+  if (!char) return
+
+  char.name = n
+  char.sex = sex.value
+
+  store.directoryForCharCreation = dir.value
+
+  if (gameline.value === GameLine.Vampire) {
+    char.generation = generation.value
+    char.generationEra = generationEra.value
+    char.books = bookSelection.value?.activeBooks() ?? []
+    applyEra(char)
+  }
+
+  EditorHistory.push(char)
+  store.editingCharacter = char
+
+  if (gameline.value === GameLine.Vampire) router.push({ name: "editor-clan" })
+  else if (gameline.value === GameLine.Werewolf) router.push({ name: "editor-auspice" })
+  else if (gameline.value === GameLine.Mage) router.push({ name: "editor-identity" })
+  else if (gameline.value === GameLine.Hunter) router.push({ name: "editor-creed" })
+
+  show.value = false
+}
+
+const GAME_TIPS: Record<GameLine, Record<number, string>> = {
+  [GameLine.Vampire]: {
+    1: "Wie hieß dein Charakter zu Lebzeiten?",
+    2: "Was hast du getan?",
+    3: "Wo und wann hast du die Umarmung empfangen?",
+    4: "Wie heißt du jetzt?",
+    5: "Wo bist du jetzt?",
+  },
+  [GameLine.Werewolf]: {
+    1: "Wann und wo hast du dich das erste Mal verwandelt?",
+    2: "Wen hast du dabei verletzt oder beschützt?",
+    3: "Was bedeutet dir dein Rudel oder deine Familie?",
+    4: "Bist du schon in Rage verfallen? Wenn ja, warum?",
+    5: "Welcher Ort fühlt sich für dich wie „Zuhause“ an?",
+  },
+  [GameLine.Mage]: {
+    1: "Wann hast du das erste Mal gespürt, dass die Welt mehr ist, als sie scheint?",
+    2: "Wo warst du, als du erwacht bist?",
+    3: "Wer hat dir zuerst geglaubt – und wer hat dich ausgelacht?",
+    4: "Wovor hättest du Angst, wenn andere deine Kräfte entdecken würden?",
+    5: "Welche Vision oder welches Ziel treibt dich an?",
+  },
+  [GameLine.Hunter]: {
+    1: "Wann hast du das erste Mal etwas gesehen, das du nicht erklären konntest?",
+    2: "Was hat dich davon überzeugt, dass Monster wirklich existieren?",
+    3: "Wen konntest du mit deiner Wahrheit überzeugen – und wer hat sich von dir abgewandt?",
+    4: "Was treibt dich an, dich gegen die Dunkelheit zu stellen?",
+    5: "Was würdest du opfern, um die Menschheit zu schützen?",
+  },
+}
+
+const getCreateTip = (gameLine: GameLine, questionNr: number): string => {
+  return GAME_TIPS[gameLine]?.[questionNr] ?? ""
+}
+
+watch(gameline, gl => store.overrideGameLine = gl)
+watch(show, val => {
+  if (!val) {
+    store.overrideGameLine = undefined
+    store.resetTheme()
+  }
+})
+
+defineExpose({ showModal })
+</script>
+
 <template>
-  <Modal :shown="show" @close="show = false">
-    <div class="w-300">
-      <div class="form-group">
-        <b><i class="fa-solid fa-circle-question"></i> {{$t('main.characters.create.tip.title')}}</b><br/>
-        <small>{{$t('main.characters.create.tip.subtitle')}}</small><br/>
-        <ul style="font-size: 1.2rem">
-          <li style="margin-bottom: 0 !important;" v-for="i in [1, 2, 3, 4, 5]">{{$t(`main.characters.create.tip.${gameline}.question${i}`)}}</li>
+  <Modal :shown="show" with-close @close="show = false">
+    <div class="ccm">
+      <div class="ccm__tip">
+        <b><i class="fa-solid fa-circle-question"></i> Bevor du startest!</b>
+        <div class="ccm__sub">Mach dir ein paar Gedanken und versuche folgende Fragen zu beantworten:</div>
+        <ul class="ccm__qs">
+          <li v-for="i in [1, 2, 3, 4, 5]" :key="i">
+            {{getCreateTip(gameline, i)}}
+          </li>
         </ul>
-        <hr>
+        <div class="ccm__divider"></div>
       </div>
-      <div class="form-group">
+
+      <div class="ccm__segment">
         <div class="sex-select">
-          <div :class="{'active': gameline === GameLine.Vampire}" @click="gameline = GameLine.Vampire" style="border-right: 1px solid var(--primary-color);">{{$t('character.creation-start.v5')}}</div>
-          <div :class="{'active': gameline === GameLine.Werewolf}" @click="gameline = GameLine.Werewolf" style="border-left: 1px solid var(--primary-color); border-right: 1px solid var(--primary-color)">{{$t('character.creation-start.w5')}}</div>
-          <div :class="{'active': gameline === GameLine.Mage}" @click="gameline = GameLine.Mage" style="border-left: 1px solid var(--primary-color);">{{$t('character.creation-start.m20')}}</div>
-          <div :class="{'active': gameline === GameLine.Hunter}" @click="gameline = GameLine.Hunter" style="border-left: 1px solid var(--primary-color);">{{$t('character.creation-start.h5')}}</div>
+          <div :class="{ active: gameline === GameLine.Vampire }" @click="gameline = GameLine.Vampire">V5</div>
+          <div :class="{ active: gameline === GameLine.Werewolf }" @click="gameline = GameLine.Werewolf">W5</div>
+          <div :class="{ active: gameline === GameLine.Mage }" @click="gameline = GameLine.Mage">M20</div>
+          <div :class="{ active: gameline === GameLine.Hunter }" @click="gameline = GameLine.Hunter">H5</div>
         </div>
       </div>
-      <hr/>
-      <div class="form-group">
-        <label class="required">{{$t('main.characters.create.name')}}:</label>
-        <input type="text" class="form-control" :placeholder="$t('main.characters.create.name')" required="required" v-model="name">
+
+      <div class="ccm__divider"></div>
+
+      <div class="ccm__segment">
+        <label class="required">Name des Charakters:</label>
+        <input class="form-control" type="text" placeholder="Name des Charakters" v-model="name" />
       </div>
-      <div v-if="gameline === GameLine.Vampire" class="form-group">
-        <label class="required">{{$t('main.characters.create.generation')}}:</label>
-        <div class="d-flex" style="gap: 1rem">
+
+      <div v-if="gameline === GameLine.Vampire" class="ccm__segment">
+        <label class="required">Generation:</label>
+        <div class="ccm__row">
           <select v-model="generationEra" @change="onEraChange" class="form-control">
-            <option :value="Generation.Children">{{$t('character.generation.' + Generation.Children)}}</option>
-            <option :value="Generation.Newborn">{{$t('character.generation.' + Generation.Newborn)}}</option>
-            <option :value="Generation.Ancillae">{{$t('character.generation.' + Generation.Ancillae)}}</option>
-            <option :value="Generation.Older">{{$t('character.generation.' + Generation.Older)}}</option>
-            <option :value="Generation.Elder">{{$t('character.generation.' + Generation.Elder)}}</option>
+            <option :value="Generation.Children">Kinder</option>
+            <option :value="Generation.Newborn">Neugeborene</option>
+            <option :value="Generation.Ancillae">Ancillae</option>
+            <option :value="Generation.Older">älter/benutzerdefiniert</option>
+            <option :value="Generation.Elder">Methusa/Antediluvian</option>
           </select>
-          <input type="number" :min="eraMin" :max="eraMax" class="form-control" :placeholder="$t('main.characters.create.generation')" required="required" v-model="generation">
+          <input class="form-control" type="number" :min="eraMin" :max="eraMax" v-model.number="generation" inputmode="numeric" />
         </div>
       </div>
-      <div class="form-group">
-        <label class="required">{{$t('main.characters.create.sex')}}:</label>
+
+      <div class="ccm__segment">
+        <label class="required">Geschlecht:</label>
         <div class="sex-select">
-          <div :class="{'active': sex === Sex.Male}" @click="sex = Sex.Male" style="border-right: 1px solid var(--primary-color);">{{$t('character.sex.m')}}</div>
-          <div :class="{'active': sex === Sex.Divers}" @click="sex = Sex.Divers" style="border-left: 1px solid var(--primary-color); border-right: 1px solid var(--primary-color)">{{$t('character.sex.d')}}</div>
-          <div :class="{'active': sex === Sex.Female}" @click="sex = Sex.Female" style="border-left: 1px solid var(--primary-color);">{{$t('character.sex.f')}}</div>
+          <div :class="{ active: sex === Sex.Male }" @click="sex = Sex.Male">männlich</div>
+          <div :class="{ active: sex === Sex.Divers }" @click="sex = Sex.Divers">divers</div>
+          <div :class="{ active: sex === Sex.Female }" @click="sex = Sex.Female">weiblich</div>
         </div>
       </div>
-      <div v-if="gameline === GameLine.Vampire" class="form-group">
-        <label>{{$t('main.characters.create.books')}}:</label>
-        <BookSelection ref="bookSelection"/>
+
+      <div v-if="gameline === GameLine.Vampire" class="ccm__segment">
+        <label>Verwendete Bücher:</label>
+        <BookSelection ref="bookSelection" />
       </div>
-      <div style="text-align: center">
-        <button class="btn btn-primary" @click="startCreateCharacter">{{$t('main.characters.create.start')}}</button>
-      </div>
+
+      <button class="btn btn-primary ccm__cta" @click="startCreateCharacter">
+        Erstellung starten
+      </button>
     </div>
   </Modal>
 </template>
 
-<script lang="ts">
-import {Component, Ref, Vue, Watch} from "vue-property-decorator";
-import Modal from "@/components/modal/Modal.vue";
-import {DefaultCharacter, Generation, ICharacter, ICharacterDirectory, Sex} from "@/types/models";
-import {Mutation} from "vuex-class";
-import BookSelection from "@/components/editor/BookSelection.vue";
-import {GameLine} from "@/types/gameline";
-import {hardSetTheme} from "@/libs/theme";
-import {EditorHistory} from "@/libs/editor-history";
-import {NewW5Sheet} from "@/types/w5";
-import {NewMageSheet} from "@/types/m20";
-import {NewH5Sheet} from "@/types/h5";
+<style scoped lang="scss">
+.ccm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
-@Component({
-  components: {BookSelection, Modal}
-})
-export default class CreateCharacterModal extends Vue {
+.ccm__tip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
-  private Sex = Sex;
-  private Generation = Generation;
-  private GameLine = GameLine;
+.ccm__sub {
+  opacity: 0.9;
+}
 
-  @Ref("bookSelection")
-  private bookSelection!: BookSelection;
+.ccm__qs {
+  margin: 0.25rem 0 0;
+  padding-left: 1.25rem;
+  font-size: 1.05rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
 
-  @Mutation("setEditingCharacter")
-  private setEditingCharacter!: (character?: ICharacter) => void;
+.ccm__divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 0.75rem 0;
+}
 
-  @Mutation("setDirectoryForCharCreation")
-  private setDirectoryForCharCreation!: (dir?: ICharacterDirectory) => void;
+.ccm__segment {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
-  private show = false;
-  private name: string = "";
-  private gameline: GameLine = GameLine.Vampire;
-  private sex: Sex = Sex.Divers;
-  private generation: number = 13;
-  private generationEra: Generation = Generation.Children;
-  private dir: ICharacterDirectory|undefined = undefined;
-
-  public showModal(dir?: ICharacterDirectory) {
-    this.dir = dir;
-    this.gameline = GameLine.Vampire;
-    this.show = true;
-  }
-
-  private startCreateCharacter() {
-    if (this.name.trim().length <= 0) {
-      return;
-    }
-
-    const char = this.newChar();
-    char.name = this.name;
-    char.sex = this.sex;
-
-    this.setDirectoryForCharCreation(this.dir);
-
-    if (this.gameline === GameLine.Vampire) {
-      char.generation = this.generation;
-      char.generationEra = this.generationEra;
-      char.books = this.bookSelection.activeBooks;
-      this.applyEra(char);
-    }
-
-    EditorHistory.push(char);
-    this.setEditingCharacter(char);
-
-    if (this.gameline === GameLine.Vampire) {
-      this.$router.push({name: 'editor-clan'});
-    } else if (this.gameline === GameLine.Werewolf) {
-      this.$router.push({name: 'editor-auspice'});
-    } else if (this.gameline === GameLine.Mage) {
-      this.$router.push({name: 'editor-identity'});
-    } else if (this.gameline === GameLine.Hunter) {
-      this.$router.push({name: 'editor-creed'});
-    }
-
-    this.show = false;
-  }
-
-  private applyEra(char: ICharacter) {
-    switch (char.generationEra) {
-      case Generation.Children:
-        if (char.generation >= 14) {
-          char.bloodPotency = 0;
-        } else {
-          char.bloodPotency = 1;
-        }
-        break;
-      case Generation.Newborn:
-        char.bloodPotency = 1;
-        char.exp = 15;
-        break;
-      case Generation.Ancillae:
-        char.bloodPotency = 2;
-        char.exp = 35;
-        char.humanity--;
-        break;
-      case Generation.Older:
-        char.exp = 1000;
-        break;
-      case Generation.Elder:
-        char.exp = 666666;
-        char.bloodPotency = 10;
-        char.isElder = true;
-
-        for (const cat of char.categories) {
-          for (const attr of cat.attributes) {
-            attr.value = 5;
-          }
-
-          for (const skill of cat.skills) {
-            skill.value = 5;
-          }
-        }
-    }
-  }
-
-  private onEraChange() {
-    switch (this.generationEra) {
-      case Generation.Children:
-        this.generation = 13;
-        break;
-      case Generation.Newborn:
-        this.generation = 12;
-        break;
-      case Generation.Ancillae:
-        this.generation = 11;
-        break;
-      case Generation.Older:
-        this.generation = 9;
-        break;
-      case Generation.Elder:
-        this.generation = 5;
-        break;
-    }
-  }
-
-  private get eraMin(): number {
-    switch (this.generationEra) {
-      case Generation.Children:
-        return 12;
-      case Generation.Newborn:
-        return 12;
-      case Generation.Ancillae:
-        return 10;
-      default:
-        return 0;
-    }
-  }
-
-  private get eraMax(): number {
-    switch (this.generationEra) {
-      case Generation.Children:
-        return 16;
-      case Generation.Newborn:
-        return 13;
-      case Generation.Ancillae:
-        return 11;
-      case Generation.Elder:
-        return 10;
-      default:
-        return Infinity;
-    }
-  }
-
-  private newChar(): any {
-    if (this.gameline === GameLine.Vampire) {
-      return DefaultCharacter();
-    } else if (this.gameline === GameLine.Werewolf) {
-      return NewW5Sheet();
-    } else if (this.gameline === GameLine.Mage) {
-      return NewMageSheet();
-    } else if (this.gameline === GameLine.Hunter) {
-      return NewH5Sheet();
-    }
-    return undefined;
-  }
-
-  @Watch("gameline")
-  private onGamelineChange() {
-    hardSetTheme(this.gameline);
-  }
-
-  @Watch("show")
-  private onShowChange(val: boolean) {
-    if (!val) {
-      hardSetTheme();
-    }
+.ccm__row {
+  display: flex;
+  gap: 0.75rem;
+  @media (max-width: 520px) {
+    flex-direction: column;
   }
 }
-</script>
 
-<style scoped lang="scss">
+.ccm__cta {
+  width: 100%;
+}
+
 .sex-select {
   display: flex;
   border: 2px solid var(--primary-color);
+  border-radius: 1rem;
+  overflow: hidden;
+
   div {
     cursor: pointer;
     user-select: none;
     text-align: center;
-    flex-grow: 1;
-    padding: 0.5rem;
+    flex: 1 1 0;
+    padding: 0.65rem 0.5rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+
+    &:last-child {
+      border-right: 0;
+    }
+
     &.active {
-      background-color: var(--primary-color);
+      background: var(--primary-color);
+      color: var(--text-color-on-primary-color-bg, #fff);
     }
   }
 }

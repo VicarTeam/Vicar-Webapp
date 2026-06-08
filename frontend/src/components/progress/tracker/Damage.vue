@@ -1,169 +1,216 @@
+<script setup lang="ts">
+import { computed, onMounted } from 'vue'
+import { useStore } from '@/app/store'
+import CharacterStorage from '@/libs/io/character-storage'
+import type { DamageType, ICharacter } from '@/@types/models'
+import { DefaultDamageArray } from '@/@types/models'
+
+defineOptions({ inheritAttrs: false })
+
+const props = defineProps<{
+  propKey: 'health' | 'willpower'
+}>()
+
+const store = useStore()
+const editingCharacter = computed(() => store.editingCharacter as ICharacter | undefined)
+
+const typesKey = computed(() => (props.propKey === 'health' ? 'healthDamage' : 'willpowerDamage'))
+
+const fortitudeLevel = computed(() => {
+  if (!editingCharacter.value || !store.isVampire) return 0
+  for (const d of (editingCharacter.value as any).disciplines ?? []) {
+    if (d?.discipline?.id === 7) return Math.min(d.currentLevel ?? 0, 5)
+  }
+  return 0
+})
+
+const hasResilience = computed(() => {
+  if (!editingCharacter.value || !store.isVampire) return false
+  for (const d of (editingCharacter.value as any).disciplines ?? []) {
+    if (d?.discipline?.id === 7) return (d.abilities ?? []).some((a: any) => a?.id === 1)
+  }
+  return false
+})
+
+function getTypes(): DamageType[] {
+  const ch = editingCharacter.value as any
+  if (!ch) return [] as DamageType[]
+  if (!ch[typesKey.value]) {
+    ch[typesKey.value] = DefaultDamageArray()
+    CharacterStorage.saveCharacter(ch)
+  }
+  return ch[typesKey.value] as DamageType[]
+}
+
+const dots = computed(() => {
+  const base = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  if (props.propKey === 'health' && hasResilience.value) return [...base, 11, 12, 13, 14, 15]
+  return base
+})
+
+function isDisabled(nr: number) {
+  const ch = editingCharacter.value as any
+  if (!ch) return true
+  if (props.propKey === 'health' && hasResilience.value) return nr > (ch.health ?? 0) + fortitudeLevel.value
+  return nr > (ch[props.propKey] ?? 0)
+}
+
+function getNext(type: DamageType): DamageType {
+  if (type === (0 as any) || type === ('None' as any)) return 'Superficial' as any
+  if (type === ('Superficial' as any)) return 'Heavy' as any
+  if (type === ('Heavy' as any)) return 'Full' as any
+  return 'None' as any
+}
+
+function onClick(nr: number) {
+  const ch = editingCharacter.value as any
+  if (!ch) return
+  if (isDisabled(nr)) return
+
+  const types = getTypes()
+  types[nr - 1] = getNext(types[nr - 1]!)
+  CharacterStorage.saveCharacter(ch, true, true)
+}
+
+onMounted(() => {
+  const ch = editingCharacter.value as any
+  if (!ch) return
+  if (!hasResilience.value) return
+  if (!ch.healthDamage || ch.healthDamage.length <= 10) {
+    ch.healthDamage ||= DefaultDamageArray()
+    ch.healthDamage.push(...['None', 'None', 'None', 'None', 'None'] as any)
+    CharacterStorage.saveCharacter(ch)
+  }
+})
+
+function getClasses(nr: number) {
+  const types = getTypes()
+  const t = types[nr - 1]
+  return {
+    mll: nr === 6,
+    disabled: isDisabled(nr),
+    full: t === ('Full' as any),
+    superficial: t === ('Superficial' as any),
+    heavy: t === ('Heavy' as any)
+  }
+}
+</script>
+
 <template>
-  <div class="squares" :class="dots.length > 10 ? 'wrap' : ''" v-if="editingCharacter">
-    <span v-for="i in dots" class="square" :class="getClasses(i)" @click="onClick(i)">
+  <div v-if="editingCharacter" class="damage" :class="{ wrap: dots.length > 10 }" v-bind="$attrs">
+    <span v-for="i in dots" :key="i" class="square" :class="getClasses(i)" @click="onClick(i)">
       <span class="for-cross"></span>
     </span>
   </div>
 </template>
 
-<script lang="ts">
-import {Component, Prop, Vue} from "vue-property-decorator";
-import {State} from "vuex-class";
-import {DamageType, DefaultDamageArray, ICharacter} from "@/types/models";
-import CharacterStorage from "@/libs/io/character-storage";
-import {GameLine} from "@/types/gameline";
-
-@Component({
-  components: {}
-})
-export default class Damage extends Vue {
-
-  @Prop({required: true})
-  private propKey!: "health"|"willpower";
-
-  @State("editingCharacter")
-  private editingCharacter!: ICharacter;
-
-  private mounted() {
-    if (this.hasResilience() && (!this.editingCharacter.healthDamage || this.editingCharacter.healthDamage.length <= 10)) {
-      this.editingCharacter.healthDamage ||= DefaultDamageArray();
-      this.editingCharacter.healthDamage.push(...[DamageType.None, DamageType.None, DamageType.None, DamageType.None, DamageType.None]);
-      CharacterStorage.saveCharacter(this.editingCharacter);
-    }
-  }
-
-  private getClasses(nr: number): any {
-    const classes: {[key: string]: boolean} = {};
-    classes["mll"] = nr === 6;
-    classes["disabled"] = this.isDisabled(nr);
-    classes[this.getTypes()[nr - 1]] = true;
-    return classes;
-  }
-
-  private isDisabled(nr: number) {
-    if (this.propKey === "health" && this.hasResilience()) {
-      const health = this.editingCharacter.health;
-      const fortitudeLevel = this.fortitudeLevel;
-      return nr > health + fortitudeLevel;
-    }
-
-    return nr > this.editingCharacter[this.propKey];
-  }
-
-  private getTypes(): DamageType[] {
-    if (!this.editingCharacter[this.typesKey]) {
-      this.editingCharacter[this.typesKey] = DefaultDamageArray();
-      CharacterStorage.saveCharacter(this.editingCharacter);
-    }
-
-    return this.editingCharacter[this.typesKey]!;
-  }
-
-  private get dots(): number[] {
-    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ...(this.propKey === "health" && this.hasResilience() ? [11, 12, 13, 14, 15] : [])];
-  }
-
-  private get isVampire() {
-    return this.editingCharacter?.game === GameLine.Vampire || !this.editingCharacter?.game;
-  }
-
-  private get typesKey(): "healthDamage"|"willpowerDamage" {
-    return this.propKey === "health" ? "healthDamage" : "willpowerDamage";
-  }
-
-  private onClick(nr: number) {
-    const types = this.getTypes();
-    types[nr - 1] = this.getNext(types[nr - 1]);
-    this.$forceUpdate();
-
-    CharacterStorage.saveCharacter(this.editingCharacter, true);
-  }
-
-  private getNext(type: DamageType): DamageType {
-    if (type === DamageType.None) {
-      return DamageType.Superficial;
-    } else if (type === DamageType.Superficial) {
-      return DamageType.Heavy;
-    } else if (type === DamageType.Heavy) {
-      return DamageType.Full;
-    }
-    return DamageType.None;
-  }
-
-  private hasResilience(): boolean {
-    if (!this.isVampire) {
-      return false;
-    }
-
-    for (const discipline of this.editingCharacter.disciplines) {
-      if (discipline.discipline.id === 7) { // Fortitude
-        return discipline.abilities.some(a => a.id === 1); // Resilience
-      }
-    }
-
-    return false;
-  }
-
-  private get fortitudeLevel(): number {
-    if (!this.isVampire) {
-      return 0;
-    }
-
-    for (const discipline of this.editingCharacter.disciplines) {
-      if (discipline.discipline.id === 7) { // Fortitude
-        return Math.min(discipline.currentLevel, 5);
-      }
-    }
-
-    return 0;
-  }
-}
-</script>
-
 <style scoped lang="scss">
-.squares {
+.damage {
   display: flex;
   gap: 0.4rem;
   align-items: center;
   user-select: none;
+  flex-wrap: nowrap;
+  touch-action: manipulation;
+
   &.wrap {
     flex-wrap: wrap;
   }
+
   .square {
     position: relative;
     width: 1rem;
     height: 1rem;
+    min-width: 18px;
+    min-height: 18px;
     cursor: pointer;
-    border: 1px solid var(--primary-color);
+    border-radius: 6px;
+    border: 1px solid color-mix(in srgb, var(--accent) 55%, rgba(255, 255, 255, 0.10));
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 55%),
+      linear-gradient(180deg, var(--bg-3), var(--bg-2));
+    box-shadow: var(--shadow-hairline), 0 10px 22px rgba(0, 0, 0, 0.35);
+    transition: transform var(--dur-2) var(--ease-2), filter var(--dur-2) var(--ease-2), opacity var(--dur-2) var(--ease-2);
+
     &.mll {
       margin-left: 1rem;
     }
+
     &.disabled {
-      opacity: 0.5;
+      opacity: 0.45;
+      cursor: not-allowed;
     }
+
+    &:not(.disabled):active {
+      transform: translateY(1px) scale(0.98);
+      filter: brightness(0.98);
+    }
+
     &.full {
-      background-color: var(--primary-color);
+      background: var(--accent);
+      border-color: color-mix(in srgb, var(--accent) 55%, rgba(255, 255, 255, 0.12));
+      box-shadow: var(--shadow-hairline), 0 14px 34px color-mix(in srgb, var(--accent) 14%, rgba(0, 0, 0, 0.55));
     }
+
     &.superficial {
-      background: linear-gradient(to bottom left, transparent calc(50% - 2px), var(--primary-color) calc(50% - 1px), var(--primary-color) calc(50% + 1px), transparent calc(50% + 2px)) no-repeat 0px 0px / 100px 100px;
+      background:
+        linear-gradient(
+            to bottom left,
+            transparent calc(50% - 2px),
+            color-mix(in srgb, var(--accent) 88%, #ffffff) calc(50% - 1px),
+            color-mix(in srgb, var(--accent) 88%, #ffffff) calc(50% + 1px),
+            transparent calc(50% + 2px)
+        )
+        no-repeat 0 0 / 100px 100px;
       transform: rotate(90deg);
     }
+
     &.heavy {
-      background: linear-gradient(to bottom left, transparent calc(50% - 2px), var(--primary-color) calc(50% - 1px), var(--primary-color) calc(50% + 1px), transparent calc(50% + 2px)) no-repeat 0px 0px / 100px 100px;
+      background:
+        linear-gradient(
+            to bottom left,
+            transparent calc(50% - 2px),
+            color-mix(in srgb, var(--accent) 88%, #ffffff) calc(50% - 1px),
+            color-mix(in srgb, var(--accent) 88%, #ffffff) calc(50% + 1px),
+            transparent calc(50% + 2px)
+        )
+        no-repeat 0 0 / 100px 100px;
       transform: rotate(90deg);
+
       .for-cross {
         display: block;
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        inset: 0;
         transform: rotate(-90deg);
-        background: linear-gradient(to bottom left, transparent calc(50% - 2px), var(--primary-color) calc(50% - 1px), var(--primary-color) calc(50% + 1px), transparent calc(50% + 2px)) no-repeat 0px 0px / 100px 100px;
+        background:
+          linear-gradient(
+              to bottom left,
+              transparent calc(50% - 2px),
+              color-mix(in srgb, var(--accent) 88%, #ffffff) calc(50% - 1px),
+              color-mix(in srgb, var(--accent) 88%, #ffffff) calc(50% + 1px),
+              transparent calc(50% + 2px)
+          )
+          no-repeat 0 0 / 100px 100px;
       }
     }
+
     .for-cross {
       display: none;
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .damage {
+    gap: 0.35rem;
+
+    .square {
+      min-width: 16px;
+      min-height: 16px;
+    }
+
+    .square.mll {
+      margin-left: 0.7rem;
     }
   }
 }
