@@ -71,7 +71,7 @@ async function endDrag(commit: boolean) {
       ;(char as any).directory = target
     }
 
-    await CharacterStorage.saveCharacter(char)
+    await CharacterStorage.saveDirectory(char, (char as any).directory)
 
     if (oldDir) {
       const count = CharacterStorage.loadedCharacters.filter((c: any) => c.directory === oldDir).length

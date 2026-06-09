@@ -20,10 +20,13 @@ const realOrientation = computed(() => {
 
 const realSrc = computed(() => {
   if (!props.src || props.src.trim().length === 0) return '/img/placeholder.jpg'
-  return props.src
+  // Wandelt einen gespeicherten Asset-Pfad (z. B. /cdn/<file>) in eine ladbare
+  // URL um; absolute/Data-/Blob-URLs werden unverändert durchgereicht.
+  return resolveAssetUrl(props.src)
 })
 
 import { computed } from 'vue'
+import { resolveAssetUrl } from '@/libs/io/cdn'
 </script>
 
 <template>

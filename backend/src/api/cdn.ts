@@ -13,7 +13,7 @@ export const CDN_DIR = Bun.env.CDN_DIR || "./cdn-data";
 // Verzeichnis sicherstellen.
 mkdirSync(CDN_DIR, {recursive: true});
 
-const MIME_EXT: Record<string, string> = {
+export const MIME_EXT: Record<string, string> = {
   "image/png": "png",
   "image/jpeg": "jpg",
   "image/jpg": "jpg",
@@ -22,7 +22,7 @@ const MIME_EXT: Record<string, string> = {
   "image/svg+xml": "svg",
 };
 
-const MAX_BYTES = 5 * 1024 * 1024; // 5 MB
+export const MAX_BYTES = 5 * 1024 * 1024; // 5 MB
 
 export function initCdnRoutes(app: Express) {
   app.post('/cdn/upload', uploadImage);
@@ -56,9 +56,9 @@ async function uploadImage(req: Request, res: Response) {
   const filename = `${crypto.randomUUID()}.${ext}`;
   await Bun.write(`${CDN_DIR}/${filename}`, buffer);
 
-  // Absolute URL inkl. Domain zurückgeben, damit das Bild auch dann lädt, wenn
-  // Frontend- und Backend-Origin sich unterscheiden.
-  const base = (Bun.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`).replace(/\/+$/, '');
-
-  res.json({url: `${base}/cdn/${filename}`});
+  // Relativen Pfad zurückgeben (domain-unabhängig/portabel). Das Frontend setzt
+  // über resolveAssetUrl() die jeweilige API-Base davor. Altdaten mit absoluten
+  // CDN-URLs (z. B. Skill-Tree-Icons) funktionieren weiter, da resolveAssetUrl
+  // http(s)-URLs unverändert durchreicht.
+  res.json({url: `/cdn/${filename}`});
 }

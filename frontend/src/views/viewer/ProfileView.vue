@@ -17,6 +17,7 @@ import Humanity from "@/components/progress/tracker/Humanity.vue"
 import Damage from "@/components/progress/tracker/Damage.vue"
 import EventBus from "@/libs/event-bus"
 import CharacterStorage from "@/libs/io/character-storage"
+import { uploadImage } from "@/libs/io/cdn"
 import DataManager from "@/libs/data/data-manager"
 import { skillTreeResolver } from "@/libs/resolvers/skilltree-resolver"
 import { getResonanceDisciplines } from "@/app/data/v5"
@@ -115,19 +116,26 @@ const effectiveGeneration = computed(() => {
   return skillTreeResolver.getEffectiveCharacterValue(c, "generation", c.generation).value
 })
 
-function onAvatarUpload(e: Event) {
+async function onAvatarUpload(e: Event) {
   const c = editingCharacter.value
   if (!c) return
 
-  const file = (e.target as HTMLInputElement)?.files?.[0]
+  const input = e.target as HTMLInputElement
+  const file = input?.files?.[0]
   if (!file) return
 
-  const reader = new FileReader()
-  reader.onload = ev => {
-    c.avatar = (ev.target as FileReader).result as string
-    updateViewer?.()
+  // Bild ins CDN (Dateisystem) hochladen statt base64 in den Charakter-Blob zu
+  // schreiben; gespeichert wird nur der relative /cdn/<file>-Pfad.
+  const url = await uploadImage(file)
+  if (input) input.value = ""
+  if (!url) {
+    console.error("Avatar-Upload fehlgeschlagen")
+    return
   }
-  reader.readAsDataURL(file)
+
+  c.avatar = url
+  saveChar()
+  updateViewer?.()
 }
 
 function changeAvatar(e: MouseEvent) {

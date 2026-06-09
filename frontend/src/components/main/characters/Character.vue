@@ -50,15 +50,21 @@ onUnmounted(() => {
   window.removeEventListener("keyup", onKeyup)
 })
 
-function cloneCharacter(character: ICharacter) {
-  const newChar = { ...(character as any) } as any
+async function cloneCharacter(character: ICharacter) {
+  // Karte hält nur ein Summary -> vollen Blob laden, sonst wäre der Klon unvollständig.
+  const full = await CharacterStorage.getFullCharacter(character.id)
+  if (!full) return
+  const newChar = { ...(full as any) } as any
   newChar.name += " - " + String((window as any).$t ? (window as any).$t("character.copy") : "Kopie")
-  CharacterStorage.addCharacter(newChar)
+  await CharacterStorage.addCharacter(newChar)
   updateCharacterList()
 }
 
-function exportCharacter(char: ICharacter) {
-  FileCreator.create(char.name + ".json", JSON.stringify(char))
+async function exportCharacter(char: ICharacter) {
+  // Vollständigen Blob exportieren, nicht nur das Listen-Summary.
+  const full = await CharacterStorage.getFullCharacter(char.id)
+  const data = full ?? char
+  FileCreator.create(data.name + ".json", JSON.stringify(data))
 }
 
 function viewCharacter(character: ICharacter, newTab = false) {
