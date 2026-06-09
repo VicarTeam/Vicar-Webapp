@@ -29,6 +29,25 @@ async function mainGuard(to: RouteLocationNormalizedGeneric, _from: RouteLocatio
   }
 }
 
+/** Wie mainGuard, verlangt zusätzlich die Admin-Flag (sonst zurück auf /). */
+async function adminGuard(to: RouteLocationNormalizedGeneric, _from: RouteLocationNormalizedGeneric, next: NavigationGuardNext) {
+  const result = await checkSession();
+  if (!firstRoute) firstRoute = to;
+  if (result.status === 'not_found') {
+    next('/login');
+    return;
+  }
+  if (!await DataManager.loadLogin(false)) {
+    next('/login');
+    return;
+  }
+  if (!DataManager.isAdmin) {
+    next('/');
+    return;
+  }
+  next();
+}
+
 function _q(to: RouteLocationNormalizedGeneric): string {
   return `?r=${encodeURIComponent(btoa(to.fullPath))}`;
 }
@@ -54,6 +73,12 @@ const router = createRouter({
       name: 'lexikon',
       component: () => import('@/views/MainView.vue'),
       beforeEnter: mainGuard
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('@/views/admin/AdminView.vue'),
+      beforeEnter: adminGuard
     },
     {
       path: '/skilltrees',

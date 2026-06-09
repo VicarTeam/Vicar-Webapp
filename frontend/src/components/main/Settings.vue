@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue"
+import { useRouter } from "vue-router"
 import CharacterStorage from "@/libs/io/character-storage"
 import { DataSync } from "@/libs/data/data-sync"
 import DataManager from "@/libs/data/data-manager"
 import { post } from "@/libs/io/rest"
 import { logout as doLogout } from "@/libs/auth"
 import { SettingsData } from "@/libs/io/settings"
+
+const router = useRouter()
 
 const oldPassword = ref("")
 const newPassword = ref("")
@@ -64,6 +67,10 @@ async function logout() {
         <p v-if="DataManager.loggedInAs" class="logged">
           Eingeloggt als: <b>{{ DataManager.loggedInAs }}</b>
         </p>
+
+        <button v-if="DataManager.isAdmin" class="btn btn-primary full" @click="router.push('/admin')">
+          ⛨ Admin-Panel
+        </button>
 
         <button v-if="DataManager.loggedInAs" class="btn btn-primary full" @click="logout">
           Ausloggen

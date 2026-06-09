@@ -34,6 +34,7 @@ import router from "@/app/router.ts";
 export default class DataManager {
 
   public static loggedInAs: string | null = null;
+  public static isAdmin = false;
   private static initialized = false;
   private static trackingDisabled?: boolean = undefined;
 
@@ -56,7 +57,7 @@ export default class DataManager {
       return true;
     }
 
-    const [status, res] = await get<{ username: string }>(`/users/@me`);
+    const [status, res] = await get<{ username: string; isAdmin?: boolean }>(`/users/@me`);
     if (status >= 400) {
       if (status === 401) {
         if (routing) {
@@ -67,6 +68,7 @@ export default class DataManager {
     }
 
     this.loggedInAs = res.username;
+    this.isAdmin = !!res.isAdmin;
     return true;
   }
 

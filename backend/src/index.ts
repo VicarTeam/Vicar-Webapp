@@ -8,6 +8,7 @@ import {initDataRoutes} from "./api/data";
 import {initUserRoutes} from "./api/user";
 import {initSkillTreeRoutes} from "./api/skilltree";
 import {CDN_DIR, initCdnRoutes} from "./api/cdn";
+import {initAdminRoutes} from "./api/admin";
 import {Server} from "socket.io";
 import { createServer } from "node:http";
 import {removeSocket, setSocket} from "./sockets";
@@ -76,6 +77,7 @@ initCharacterRoutes(app);
 initUserRoutes(app);
 initSkillTreeRoutes(app);
 initCdnRoutes(app);
+initAdminRoutes(app);
 
 httpServer.listen(6660, () => {
   console.log(`Server is running on port 6660`);
