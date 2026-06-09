@@ -213,28 +213,40 @@ function onDragHandleDown(e: PointerEvent) {
 
 <style scoped lang="scss">
 .character-entry {
+  // Akzentfarbe pro Gameline (Default = globales Theme).
+  --card-accent: var(--accent);
+  position: relative;
   border-radius: var(--card-border-radius);
-  background:
-    radial-gradient(900px 420px at 12% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
-    linear-gradient(180deg, color-mix(in srgb, #ffffff 6%, transparent), transparent 55%),
-    linear-gradient(180deg, var(--bg-2), var(--bg-1));
-  border: 1px solid color-mix(in srgb, var(--accent) 20%, rgba(255, 255, 255, 0.08));
+  background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+  border: 1px solid color-mix(in srgb, var(--card-accent) 26%, rgba(255, 255, 255, 0.08));
+  box-shadow: var(--shadow-hairline), var(--shadow-raise);
+  overflow: hidden;
   user-select: none;
   padding: 1rem 1rem;
   display: grid;
   grid-template-columns: auto auto 1fr auto;
   gap: 1rem;
   align-items: center;
+  transition: border-color var(--dur-2) var(--ease-1), box-shadow var(--dur-2) var(--ease-1);
 
-  &.w5 {
-    border-color: #0e2e8c !important;
+  // Klare, kräftige Akzentkante oben statt Smoke-Overlay.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--card-accent), color-mix(in srgb, var(--card-accent) 35%, transparent));
+    pointer-events: none;
   }
-  &.m20 {
-    border-color: #6f2dbd !important;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--card-accent) 45%, rgba(255, 255, 255, 0.10));
+    box-shadow: var(--shadow-hairline), var(--shadow-ambient);
   }
-  &.h5 {
-    border-color: #3b5d2a !important;
-  }
+
+  &.w5 { --card-accent: #0e2e8c; }
+  &.m20 { --card-accent: #6f2dbd; }
+  &.h5 { --card-accent: #3b5d2a; }
 }
 
 .drag-handle {
