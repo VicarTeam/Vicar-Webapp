@@ -2,6 +2,7 @@
 import { computed, inject, onMounted, onUnmounted, ref } from "vue"
 import { useStore } from "@/app/store"
 import Avatar from "@/components/Avatar.vue"
+import MarkdownEditor from "@/components/text/MarkdownEditor.vue"
 import Bullet from "@/components/Bullet.vue"
 import IconButton from "@/components/IconButton.vue"
 import Squares from "@/components/progress/Squares.vue"
@@ -411,11 +412,11 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
 
         <div v-if="isMage" class="form-group">
           <label>Fokus:</label>
-          <textarea class="form-control" v-model="(editingCharacter as any as IMageSheet).focus" @input="saveChar()" />
+          <MarkdownEditor :model-value="(editingCharacter as any as IMageSheet).focus" @update:model-value="v => { (editingCharacter as any as IMageSheet).focus = v; saveChar() }" />
         </div>
         <div v-else class="form-group">
           <label>Grundsätze der Chronik: <TipButton content="Die Grundsätze der Chronik beschreibt eine Reihe von Regeln, die die Spieler mit ihrem Spielleiter für die bespielende Chronik festgesetzt werden. Jeder Spieler sollte sich an diese Grundsätze halten, auch wenn der Glaube des Charakters nicht komplett damit übereinstimmt. Eine Verletzung würde jedoch nur moralische Sanktionen oder die Degeneration des Charakters mit sich führen. Für weitere Informationen siehe Grundregelwerk V5 S. 172." /></label>
-          <textarea class="form-control" v-model="editingCharacter.chroniclePrinciples" @input="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.chroniclePrinciples" @change="saveChar()" />
         </div>
       </div>
 
@@ -427,12 +428,12 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
 
         <div v-if="isMage" class="form-group">
           <label>Wunder: <TipButton content="Ein Wunder ist ein Hintergrund, der für verschiedene magische Gegenstände steht. Jeder Gegenstandstyp hat einen anderen Namen, den die Erwachten Technokraten benutzen. Artefakte (und Erfindungen) können nur von Magiern benutzt werden und nutzen die Arete-Werte ihres Benutzers. Sie können normalerweise nur ein paar Sachen machen. Einige Artefakte haben stattdessen einen einzigen dauerhaften Effekt und können von Schläfern benutzt werden. Zauber (und Gadgets) sind verbrauchbare magische Gegenstände. Sie werden in Bündeln und nicht als Einzelstücke hergestellt. Schläfer können Zauber benutzen, wenn dies mit ihrem Paradigma vereinbar ist. Fetische werden mit Spirit statt mit Prime hergestellt und erfordern Verhandlungen mit Geistern, um sie herzustellen. Die Garou und andere sich verändernde Rassen sehen die Fetische der Erwachten mit Argwohn, besonders wenn der Magier den Geist in den Fetisch gezwungen hat, anstatt sich seine Zusammenarbeit durch Chiminage zu verdienen. Periapts (und Matrizen), auch Soulgems genannt, enthalten die Quintessenz einer bestimmten Resonanz. Talismane (und Geräte) sind magische Gegenstände, die sogar Schläfer benutzen können, da sie ihre eigene Arete-Bewertung haben; sie können in der Regel mehrere Dinge tun, und viele haben Periapts daran befestigt. Ihre Herstellung erfordert jedoch Willenskraft. Grimoires (und Principiae) können Arete ohne Suche erhöhen und erfordern den Einsatz von 1 permanentem Punkt Willenskraft, aber Kopien können ohne Einsatz von Willenskraft angefertigt werden. Primers sind spezielle Grimoires/Principiae, die Arete 1 lehren – das heißt, sie können das Erwachen bewirken. Für ihre Herstellung sind zwei permanente Willenskraftpunkte erforderlich. Tomes sind ebenfalls spezielle Grimoires, die seltene und mächtige Roten beschreiben und es ermöglichen, deren Schwierigkeitsgrad zu verringern. Amulette (und Gizmos) sind Gegenstände mit „schlafender” Magie, die unter bestimmten Umständen aktiviert wird. Sie werden mit Zeit und/oder Entropie hergestellt. Reliquien sind lebende Wunder. Dieser Untertyp ergänzt einige andere: Reliquien-Talisman, Reliquien-Periapt (auch Seelenblume genannt) usw." /></label>
-          <textarea class="form-control" v-model="(editingCharacter as any as IMageSheet).wonders" @input="saveChar()" />
+          <MarkdownEditor :model-value="(editingCharacter as any as IMageSheet).wonders" @update:model-value="v => { (editingCharacter as any as IMageSheet).wonders = v; saveChar() }" />
         </div>
         <div v-else class="form-group">
           <label>Anker & Überzeugungen: <TipButton content="Wähle ein bis drei Überzeugungen und genau so viele Anker. Überzeugungen sind die Richtlinien die dein Charakter von sich aus befolgen muss und auch will, selbst bis über den Tod (oder eher Untot). Eine Überzeugung kann z.B. sein 'Du sollst nicht töten' oder 'Die Wahrheit ist heilig; du sollst nicht lügen'. Das Verstoßen gegen eine Überzeugung kann Makel mit sich bringen, oder Makel die im Rahmen einer Überzeugung erteilt werden, durch die Überzeugung abgemildert werden.
             Anker sind Personen, die zu Lebzeiten die Wichtigkeit des Lebens gestützt haben. Anker müssen lebende Menschen sein und sollte ein Anker verletzt werden oder gar sterben, kann das zum Verlust von Menschlickeit führen. Ein Anker kann z.B. der Liebespartner oder ein Kind sein." /></label>
-          <textarea class="form-control" v-model="editingCharacter.anchorsAndBeliefs" @input="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.anchorsAndBeliefs" @change="saveChar()" />
         </div>
       </div>
 
@@ -486,7 +487,7 @@ Regeln: Du speicherst Quintessenz entsprechend deines Avatar-Werts und kannst si
 
         <div class="form-group">
           <label>Geschichte:</label>
-          <textarea class="form-control" v-model="editingCharacter.backstory" @input="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.backstory" @change="saveChar()" />
         </div>
       </div>
 
@@ -539,7 +540,7 @@ Regeln: Dein Arete-Wert bestimmt, wie viele Würfel du für Zaubereffekte nutzt 
 
         <div class="form-group">
           <label>Notizen:</label>
-          <textarea class="form-control" v-model="editingCharacter.notes" @input="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.notes" @change="saveChar()" />
         </div>
       </div>
     </div>
