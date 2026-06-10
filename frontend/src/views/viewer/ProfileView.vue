@@ -59,6 +59,7 @@ const werewolfForms = [
 
 const requestLevel = inject("request-m20-level") as RequestLevelFn | undefined
 const updateViewer = inject("update-viewer") as (() => void) | undefined
+const toggleDicePoolFlag = inject("toggle-dice-pool-flag") as ((flag: string) => void) | undefined
 const showTip = inject("show-tip") as ((content: any, title?: any) => void) | undefined
 
 const avatarUploader = ref<HTMLInputElement | null>(null)
@@ -346,7 +347,7 @@ const mocActive = computed(() => {
                 class="mr-xxs"
                 @click="requestLevel?.('willpower')"
               />
-              Willenskraft:
+              <span class="dice-toggle" @click="toggleDicePoolFlag?.('willpower')" title="Alt+Klick: freie Willenskraft im Würfelpool an/aus">Willenskraft:</span>
             </b>
             <Damage prop-key="willpower" />
           </div>
@@ -380,7 +381,7 @@ const mocActive = computed(() => {
 
           <div v-if="isVampire" class="stat" id="hlst-humanity">
             <b>
-              Menschlichkeit:
+              <span class="dice-toggle" @click="toggleDicePoolFlag?.('humanity')" title="Alt+Klick: Menschlichkeit-Bonus im Würfelpool an/aus">Menschlichkeit:</span>
               <TipButton v-if="editingCharacter.humanity <= 5" :content="`Malus auf menschliche Interaktionen durch geringere Menschlichkeit: ${humanityMalus} Würfel Abzug`" :danger="true" />
             </b>
             <Humanity />
@@ -560,7 +561,7 @@ Regeln: Dein Arete-Wert bestimmt, wie viele Würfel du für Zaubereffekte nutzt 
     <div class="details">
       <Row v-if="isVampire" class="row-full" wrap>
         <Col class="col-third">
-          <Row><b>Blutschub</b>: <TipButton content="Jeder Vampir kann sein Blut anrufen, um seine Attribute vorübergehend zu verstärken, sei es körperlich, gesellschaftlich oder geistig. Wenn der Charakter einen Blutschub auslösen möchte, kann der Spieler eine bestimmte Anzahl von Würfeln zu einem Würfelvorrat eines Attributs hinzufügen. Die Anzahl der Würfel, die ein Blutschub gewährt, hängt von der Blutmacht des Charakters ab; Charaktere können Blutschub nur einmal pro Probe verwenden. Ein Blutschub erfordert einen Wallungs-Check. Blutschub gilt nur für einen einzigen Würfelwurf. (Durch einen Blutschub hinzugewonnene Würfel, bleiben auch für eine Wiederholung durch Willenskraft erhalten.) Charaktere können keinen Blutschub für Proben auf Willenskraft oder Menschlichkeit, für Proben, die sich über mehrere Szenen erstrecken oder Ein-Wurf-Kämpfe (S. 296) verwenden, ebenso wenig, wenn die Erzählerin sie nicht erlaubt. Automatische Erfolge (S. 120) oder „Nimm die Hälfte“ gelten nicht für Proben, die durch einen Blutschub gesteigert werden." /></Row>
+          <Row><b class="dice-toggle" @click="toggleDicePoolFlag?.('bloodSurge')" title="Alt+Klick: Blutschub im Würfelpool an/aus">Blutschub</b>: <TipButton content="Jeder Vampir kann sein Blut anrufen, um seine Attribute vorübergehend zu verstärken, sei es körperlich, gesellschaftlich oder geistig. Wenn der Charakter einen Blutschub auslösen möchte, kann der Spieler eine bestimmte Anzahl von Würfeln zu einem Würfelvorrat eines Attributs hinzufügen. Die Anzahl der Würfel, die ein Blutschub gewährt, hängt von der Blutmacht des Charakters ab; Charaktere können Blutschub nur einmal pro Probe verwenden. Ein Blutschub erfordert einen Wallungs-Check. Blutschub gilt nur für einen einzigen Würfelwurf. (Durch einen Blutschub hinzugewonnene Würfel, bleiben auch für eine Wiederholung durch Willenskraft erhalten.) Charaktere können keinen Blutschub für Proben auf Willenskraft oder Menschlichkeit, für Proben, die sich über mehrere Szenen erstrecken oder Ein-Wurf-Kämpfe (S. 296) verwenden, ebenso wenig, wenn die Erzählerin sie nicht erlaubt. Automatische Erfolge (S. 120) oder „Nimm die Hälfte“ gelten nicht für Proben, die durch einen Blutschub gesteigert werden." /></Row>
           <Row><small>{{ getBloodPotency().bleedingSpurt }} Würfel</small></Row>
         </Col>
         <Col class="col-third">

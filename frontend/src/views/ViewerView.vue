@@ -4,7 +4,7 @@ import { useRoute, useRouter } from "vue-router"
 import { useStore } from "@/app/store"
 
 import type { ICharacter } from "@/@types/models"
-import { getHumanInteractionMalus } from "@/@types/models"
+import { DamageType, getHumanInteractionMalus, V5ResonanceTemperament } from "@/@types/models"
 import type {IMageSheet, M20Ability, M20Attribute, M20Sphere, RequestLevelFn} from "@/@types/m20"
 
 import Tabs from "@/components/tabs/Tabs.vue"
@@ -24,6 +24,9 @@ import CharacterStorage from "@/libs/io/character-storage"
 import EventBus from "@/libs/event-bus"
 import { VicarSync } from "@/libs/io/vicar-sync"
 import RestButton from "@/components/viewer/RestButton.vue";
+import DataManager from "@/libs/data/data-manager"
+import { skillTreeResolver } from "@/libs/resolvers/skilltree-resolver"
+import { getResonanceDisciplines } from "@/app/data/v5"
 
 const store = useStore()
 const router = useRouter()
@@ -41,10 +44,17 @@ const selectedTab = ref<string>("viewer-profile")
 const saveText = ref<string>("")
 const altDown = ref<boolean>(false)
 
-const dicePoolLeft = ref<{ name: string; value: number } | null>(null)
-const dicePoolRight = ref<{ name: string; value: number } | null>(null)
-const dicePoolHuman = ref<boolean>(false)
-const lastDicePoolSide = ref<"left" | "right">("right")
+type PoolEntry = { name: string; value: number; type: "attr" | "skill" | "disc" }
+const dicePoolLeft = ref<PoolEntry | null>(null)
+const dicePoolRight = ref<PoolEntry | null>(null)
+const dicePoolExtra = ref<PoolEntry | null>(null)        // 3. Slot: Disziplin als Extra-Bonus (Alt+Shift)
+const cursorSlot = ref<"left" | "right">("left")         // füllt den nächsten Nicht-Shift-Klick
+const shiftDown = ref<boolean>(false)
+const dicePoolHuman = ref<boolean>(false)                // Malus (Menschliche Interaktion)
+const dicePoolBloodSurge = ref<boolean>(false)           // Blutschub
+const dicePoolWillpower = ref<boolean>(false)            // freie Willenskraft-Felder
+const dicePoolHumanity = ref<boolean>(false)             // floor(humanity / 3)
+const dicePoolManual = ref<string>("")                   // manueller ±-Eintrag
 
 const addExpModal = ref<InstanceType<typeof AddExpModal> | null>(null)
 const characterInfoModal = ref<InstanceType<typeof CharacterInfoModal> | null>(null)
@@ -125,25 +135,46 @@ function setDicePool(
 ) {
   if (!altDown.value) return
 
-  if (type === "disc" || type === "skill") {
-    dicePoolRight.value = { name, value }
-    lastDicePoolSide.value = "right"
+  if (type === "disc" && shiftDown.value) {
+    // Alt+Shift auf eine Disziplin -> Extra-Bonus (3. Slot), Cursor bleibt.
+    dicePoolExtra.value = { name, value, type }
   } else {
-    if (lastDicePoolSide.value === "right") {
-      dicePoolLeft.value = { name, value }
-      lastDicePoolSide.value = "left"
-    } else {
-      dicePoolRight.value = { name, value }
-      lastDicePoolSide.value = "right"
-    }
+    // Alles andere geht an den rotierenden Cursor -> beliebige Kombinationen.
+    const slot = cursorSlot.value
+    if (slot === "left") dicePoolLeft.value = { name, value, type }
+    else dicePoolRight.value = { name, value, type }
+    cursorSlot.value = slot === "left" ? "right" : "left"
   }
 
-  dicePoolHuman.value = isHuman
+  // Soziale Werte schalten den Menschlich-Interaktion-Malus ein (nie automatisch aus).
+  if (isHuman) dicePoolHuman.value = true
+}
+
+// Bonus-Flags per Alt-Klick togglebar (z.B. „Blutschub" in ProfileView), alternativ zur Checkbox.
+function toggleDicePoolFlag(flag: "bloodSurge" | "willpower" | "humanity" | "human") {
+  if (!altDown.value) return
+  if (flag === "bloodSurge") dicePoolBloodSurge.value = !dicePoolBloodSurge.value
+  else if (flag === "willpower") dicePoolWillpower.value = !dicePoolWillpower.value
+  else if (flag === "humanity") dicePoolHumanity.value = !dicePoolHumanity.value
+  else if (flag === "human") dicePoolHuman.value = !dicePoolHuman.value
+}
+
+function clearDicePool() {
+  dicePoolLeft.value = null
+  dicePoolRight.value = null
+  dicePoolExtra.value = null
+  cursorSlot.value = "left"
+  dicePoolHuman.value = false
+  dicePoolBloodSurge.value = false
+  dicePoolWillpower.value = false
+  dicePoolHumanity.value = false
+  dicePoolManual.value = ""
 }
 
 provide("update-viewer", updaterViewer)
 provide("request-m20-level", requestM20Leveling as unknown as RequestLevelFn)
 provide("set-dice-pool", setDicePool)
+provide("toggle-dice-pool-flag", toggleDicePoolFlag)
 
 function onCharUpdated(charId: string) {
   const c = editingCharacter.value
@@ -160,6 +191,20 @@ function onKeyDown(event: KeyboardEvent) {
   if (!isVampire.value) return
 
   if (event.key === "Alt") altDown.value = true
+  if (event.key === "Shift") shiftDown.value = true
+
+  // Alt+Pfeil links/rechts verschiebt den Würfelpool-Cursor (nächster Ziel-Slot).
+  if (event.altKey && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
+    event.preventDefault()
+    cursorSlot.value = event.key === "ArrowLeft" ? "left" : "right"
+  }
+
+  // Alt+Pfeil hoch/runter ändert den manuellen Bonus/Malus (+1/-1).
+  if (event.altKey && (event.key === "ArrowUp" || event.key === "ArrowDown")) {
+    event.preventDefault()
+    const cur = parseInt(dicePoolManual.value) || 0
+    dicePoolManual.value = String(cur + (event.key === "ArrowUp" ? 1 : -1))
+  }
 
   if (event.altKey) {
     const hk = TabHotkeys.find(x => x.keys.includes("ALT+" + event.key.toUpperCase()))
@@ -196,6 +241,7 @@ function onKeyDown(event: KeyboardEvent) {
 
 function onKeyUp(event: KeyboardEvent) {
   if (event.key === "Alt") altDown.value = false
+  if (event.key === "Shift") shiftDown.value = false
 }
 
 function switchTab(name: string) {
@@ -239,22 +285,70 @@ function getDicePoolName(dicePool: { name: string; value: number } | null): stri
   return `${dicePool.name} (${dicePool.value})`
 }
 
-const dicePoolResult = computed<{ total: number; simple: number; hunger: number } | null>(() => {
+// Verfügbare V5-Boni (Werte für Labels + Berechnung).
+const dicePoolBonuses = computed(() => {
   const c = editingCharacter.value
-  if (!c || !dicePoolLeft.value || !dicePoolRight.value) return null
+  if (!c) return { bloodSurge: 0, willpower: 0, humanity: 0, resonance: 0 }
 
-  let total = dicePoolLeft.value.value + dicePoolRight.value.value
+  // Blutschub = bleedingSpurt der (effektiven) Blutmacht.
+  const effBP = Math.min(skillTreeResolver.getEffectiveCharacterValue(c, "bloodPotency", c.bloodPotency).value, 10)
+  const bpRow = DataManager.selectedLanguage.bloodPotencyTable.find(x => x.value === effBP)
+  const bloodSurge = bpRow?.bleedingSpurt ?? 0
+
+  // Freie Willenskraft-Felder = Maximum minus markierte.
+  const usedWp = (c.willpowerDamage || []).filter(d => d !== DamageType.None).length
+  const willpower = Math.max(0, (c.willpower || 0) - usedWp)
+
+  const humanity = Math.floor((c.humanity || 0) / 3)
+
+  // Resonanz-Bonus (+1) automatisch: Temperament intensiv/akut + favorisierte Disziplin im Pool.
+  let resonance = 0
+  const temp = c.resonanceTemperament
+  if (temp === V5ResonanceTemperament.Intense || temp === V5ResonanceTemperament.Acute) {
+    const favored = getResonanceDisciplines(c.resonance as any)
+    const discs = [dicePoolLeft.value, dicePoolRight.value, dicePoolExtra.value].filter(
+      (e): e is PoolEntry => !!e && e.type === "disc",
+    )
+    if (discs.some(e => favored.includes(e.name))) resonance = 1
+  }
+
+  return { bloodSurge, willpower, humanity, resonance }
+})
+
+const dicePoolResult = computed<
+  { total: number; simple: number; hunger: number; parts: { label: string; value: number }[] } | null
+>(() => {
+  const c = editingCharacter.value
+  if (!c) return null
+  // Schon ab dem ersten Wert rechnen (fehlende Slots zählen als 0).
+  if (!dicePoolLeft.value && !dicePoolRight.value && !dicePoolExtra.value) return null
+
+  const parts: { label: string; value: number }[] = []
+  if (dicePoolLeft.value) parts.push({ label: dicePoolLeft.value.name, value: dicePoolLeft.value.value })
+  if (dicePoolRight.value) parts.push({ label: dicePoolRight.value.name, value: dicePoolRight.value.value })
+  if (dicePoolExtra.value) parts.push({ label: dicePoolExtra.value.name, value: dicePoolExtra.value.value })
+
+  const b = dicePoolBonuses.value
+  if (dicePoolBloodSurge.value && b.bloodSurge) parts.push({ label: "Blutschub", value: b.bloodSurge })
+  if (dicePoolWillpower.value && b.willpower) parts.push({ label: "Willenskraft", value: b.willpower })
+  if (dicePoolHumanity.value && b.humanity) parts.push({ label: "Menschlichkeit", value: b.humanity })
+  if (b.resonance) parts.push({ label: "Resonanz", value: b.resonance })
+
+  const manual = parseInt(dicePoolManual.value)
+  if (!isNaN(manual) && manual !== 0) parts.push({ label: manual > 0 ? "Bonus" : "Malus", value: manual })
 
   if (dicePoolHuman.value) {
     const malus = getHumanInteractionMalus(c)
-    if (malus === Number.MIN_SAFE_INTEGER) return { total: -1, simple: 0, hunger: 0 }
-    total -= malus
-    if (total <= 0) total = 1
+    if (malus === Number.MIN_SAFE_INTEGER) return { total: -1, simple: 0, hunger: 0, parts }
+    if (malus) parts.push({ label: "Menschl. Interaktion", value: -malus })
   }
+
+  let total = parts.reduce((s, p) => s + p.value, 0)
+  if (dicePoolHuman.value && total <= 0) total = 1
 
   const hunger = Math.min(c.hunger, total)
   const simple = total - hunger
-  return { total, simple, hunger }
+  return { total, simple, hunger, parts }
 })
 
 onMounted(() => {
@@ -365,29 +459,35 @@ onUnmounted(() => {
     <SearchHighlightModal ref="searchHighlightModal" />
     <M20LevelModal ref="m20LevelModal" />
 
-    <div v-if="dicePoolLeft || dicePoolRight" class="simple-dice-calc card">
+    <div v-if="dicePoolLeft || dicePoolRight || dicePoolExtra" class="simple-dice-calc card">
       <h4 class="card-title">Würfelpool:</h4>
-      <i
-        @click="dicePoolLeft = null; dicePoolRight = null; lastDicePoolSide = 'right'"
-        class="fa-solid fa-xmark close"
-      ></i>
+      <i @click="clearDicePool" class="fa-solid fa-xmark close" title="Leeren"></i>
 
       <div class="calc-names">
-        <b class="name">{{ getDicePoolName(dicePoolLeft) }}</b>
+        <b class="name slot" :class="{ 'cursor-target': cursorSlot === 'left' }">{{ getDicePoolName(dicePoolLeft) }}</b>
         +
-        <b class="name">{{ getDicePoolName(dicePoolRight) }}</b>
+        <b class="name slot" :class="{ 'cursor-target': cursorSlot === 'right' }">{{ getDicePoolName(dicePoolRight) }}</b>
+        <template v-if="dicePoolExtra">
+          <span>+</span>
+          <b class="name extra">
+            {{ getDicePoolName(dicePoolExtra) }}
+            <i class="fa-solid fa-xmark extra-close" @click="dicePoolExtra = null" title="Extra entfernen"></i>
+          </b>
+        </template>
       </div>
 
-      <div class="calc-human">
-        <div class="custom-checkbox d-flex align-items-center">
-          <input type="checkbox" id="dicehuman" v-model="dicePoolHuman" />
-          <label for="dicehuman">Menschliche Interaktion?</label>
-        </div>
+      <div class="calc-toggles">
+        <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolHuman" /> Menschl. Interaktion</label>
+        <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolBloodSurge" /> Blutschub (+{{ dicePoolBonuses.bloodSurge }})</label>
+        <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolWillpower" /> Willenskraft (+{{ dicePoolBonuses.willpower }})</label>
+        <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolHumanity" /> Menschlichkeit (+{{ dicePoolBonuses.humanity }})</label>
+        <span class="manual">± <input type="number" v-model="dicePoolManual" placeholder="0" /></span>
       </div>
 
-      <div v-if="dicePoolLeft && dicePoolRight" class="calc-result">
-        <div v-if="dicePoolResult" class="result-inner">
-          <span v-if="dicePoolResult.hunger > 0">
+      <div v-if="dicePoolResult" class="calc-result">
+        <div class="result-inner">
+          <span v-if="dicePoolResult.total === -1">Unmöglich (Wassail?!)</span>
+          <span v-else-if="dicePoolResult.hunger > 0">
             <b><u>{{ dicePoolResult.total }}</u> </b>
             Würfel davon
             <b style="color: var(--primary-color)">{{ dicePoolResult.hunger }}</b>
@@ -395,8 +495,12 @@ onUnmounted(() => {
             <b>{{ dicePoolResult.simple }}</b>
             normale Würfel
           </span>
-          <span v-else-if="dicePoolResult.total === -1">Unmöglich (Wasail?!)</span>
           <span v-else><b>{{ dicePoolResult.total }} </b>Würfel</span>
+        </div>
+        <div v-if="dicePoolResult.total !== -1" class="result-breakdown">
+          <span v-for="(p, i) in dicePoolResult.parts" :key="i">
+            {{ p.label }} <b>{{ p.value >= 0 ? "+" : "−" }}{{ Math.abs(p.value) }}</b>
+          </span>
         </div>
       </div>
     </div>
@@ -511,19 +615,64 @@ onUnmounted(() => {
 }
 
 .calc-names .name {
-  flex: 1;
   text-align: center;
   word-break: break-word;
 }
 
-.calc-human {
+.calc-names .name.slot {
+  flex: 1;
+  padding: 0.15rem 0.4rem;
+  border-radius: 8px;
+  transition: box-shadow 150ms ease;
+}
+
+/* Zeigt, welchen Slot der nächste Alt-Klick füllt. */
+.calc-names .name.cursor-target {
+  box-shadow: inset 0 0 0 2px var(--primary-color);
+}
+
+.calc-names .name.extra {
+  flex: 0 0 auto;
+  color: var(--primary-color);
+}
+
+.extra-close {
+  cursor: pointer;
+  pointer-events: all;
+  margin-left: 0.3rem;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+.extra-close:hover { opacity: 1; }
+
+.calc-toggles {
   margin-top: 0.25rem;
   padding-top: 0.75rem;
   border-top: 1px solid rgba(255, 255, 255, 20%);
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
   justify-content: center;
+  align-items: center;
   pointer-events: all;
+  font-size: 0.95rem;
+}
+.calc-toggles .custom-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+}
+.calc-toggles .manual {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.calc-toggles .manual input {
+  width: 3.5rem;
+  min-height: 0;
+  padding: 0.2rem 0.4rem;
 }
 
 .calc-result {
@@ -538,6 +687,16 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   text-align: center;
+}
+
+.result-breakdown {
+  margin-top: 0.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.6rem;
+  justify-content: center;
+  font-size: 0.85rem;
+  opacity: 0.75;
 }
 
 @media (max-width: 900px) {
