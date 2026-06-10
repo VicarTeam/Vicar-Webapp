@@ -1,16 +1,8 @@
 import {Express, Request, Response} from "express";
 import {mkdirSync} from "node:fs";
 
-/**
- * Minimaler CDN-artiger Bilddienst: hochgeladene Bilder werden auf der Platte
- * gespeichert und unter /cdn/<id>.<ext> statisch ausgeliefert (siehe index.ts).
- * So liegen Icons/Hintergründe NICHT als base64 im Charakter-/Tree-Dokument,
- * sondern werden per URL referenziert und vom Browser gecacht.
- */
-
 export const CDN_DIR = Bun.env.CDN_DIR || "./cdn-data";
 
-// Verzeichnis sicherstellen.
 mkdirSync(CDN_DIR, {recursive: true});
 
 export const MIME_EXT: Record<string, string> = {
@@ -56,9 +48,5 @@ async function uploadImage(req: Request, res: Response) {
   const filename = `${crypto.randomUUID()}.${ext}`;
   await Bun.write(`${CDN_DIR}/${filename}`, buffer);
 
-  // Relativen Pfad zurückgeben (domain-unabhängig/portabel). Das Frontend setzt
-  // über resolveAssetUrl() die jeweilige API-Base davor. Altdaten mit absoluten
-  // CDN-URLs (z. B. Skill-Tree-Icons) funktionieren weiter, da resolveAssetUrl
-  // http(s)-URLs unverändert durchreicht.
   res.json({url: `/cdn/${filename}`});
 }

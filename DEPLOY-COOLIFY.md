@@ -21,28 +21,18 @@ In Coolify eine **Docker-Compose-Ressource** aus diesem Repo mit `docker-compose
 | `DISCORD_CLIENT_ID` | … | Discord-OAuth |
 | `DISCORD_CLIENT_SECRET` | … | Discord-OAuth |
 
-## 3. Domains pro Service (Coolify-UI)
+## 3. Domain (Coolify-UI) — NUR das Frontend
 - **frontend** → `https://vicar.cloud`
-- **backend** → `https://vicar.cloud/api`
+- **backend** → **KEINE** öffentliche Domain (bleibt intern auf dem Compose-Netzwerk).
 
-Coolify erzeugt daraus die Traefik-Router (inkl. TLS/Let's Encrypt) und – je nach Version – ein StripPrefix für `/api`.
-Beides ist okay (Dual-Mount).
+Das Frontend-nginx proxyt `/api` intern an den `backend`-Service (siehe `frontend/nginx-default.conf`,
+`location /api/`). Dadurch gibt es nur **eine** Route in Coolify und das Traefik-Pfad-Routing/Stripping ist irrelevant
+— genau das verhindert den Fehler „/api zeigt das Frontend". (Das Backend mountet zusätzlich unter `/` UND `/api`, also
+egal wie der Pfad ankommt.)
 
-**Alternative (rohe Traefik-Labels)**, falls du das Routing selbst in der Compose machen willst – beim jeweiligen
-Service unter `labels:` ergänzen:
-```yaml
-# frontend:
-- traefik.enable=true
-- "traefik.http.routers.vicar-web.rule=Host(`vicar.cloud`)"
-- traefik.http.routers.vicar-web.priority=1
-- traefik.http.services.vicar-web.loadbalancer.server.port=80
-# backend:
-- traefik.enable=true
-- "traefik.http.routers.vicar-api.rule=Host(`vicar.cloud`) && PathPrefix(`/api`)"
-- traefik.http.routers.vicar-api.priority=100
-- traefik.http.services.vicar-api.loadbalancer.server.port=6660
-```
-(Kein StripPrefix nötig – Dual-Mount.)
+> Falls du dem **backend**-Service doch eine Domain (`vicar.cloud/api`) gibst, könnte Traefik /api direkt ans Backend
+> leiten — auch okay — aber der zuverlässige, versionsunabhängige Weg ist: **nur Frontend = Domain**, Rest macht nginx.
+> Der Service muss in der Compose `backend` heißen (so wird er per DNS im Netzwerk gefunden).
 
 ## 4. Discord-OAuth anpassen
 In der Discord-Developer-App die Redirect-URI auf **`https://vicar.cloud/api/auth/callback`** umstellen.
