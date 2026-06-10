@@ -1,5 +1,6 @@
 import { io, type Socket } from "socket.io-client"
 import { ref } from "vue"
+import { checkSession, getAccessToken, refreshIfNeeded } from "@/libs/auth"
 
 /**
  * Gemeinsamer Realtime-Socket: Character-Updates (Legacy) + FoundryVTT-Bridge.
@@ -20,13 +21,24 @@ function apiOrigin(): string {
   return base.startsWith("http") ? base : window.location.origin
 }
 
+/** Aktuellen (ggf. aufgefrischten) Access-Token holen – wie rest.ts buildHeaders. */
+async function currentToken(): Promise<string | null> {
+  const s = await checkSession()
+  if (s.status === "needs_refresh") await refreshIfNeeded().catch(() => void 0)
+  return getAccessToken()
+}
+
 export function initRealtime() {
   if (socket) return
-  if (!localStorage.getItem("vicar:session")) return
 
   socket = io(apiOrigin(), { path: "/api/socket.io" })
 
-  socket.on("connect", () => socket?.emit("authenticate", localStorage.getItem("vicar:session")))
+  // Beim (Re-)Connect mit dem echten Access-Token authentifizieren (in IndexedDB/LS,
+  // NICHT unter dem localStorage-Key "vicar:session" – das war der bisherige Bug).
+  socket.on("connect", async () => {
+    const tok = await currentToken()
+    if (tok) socket?.emit("authenticate", tok)
+  })
 
   socket.on("character_updated", (character: any) => {
     for (const h of charUpdateHandlers) h(character)

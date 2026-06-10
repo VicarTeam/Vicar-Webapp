@@ -255,6 +255,22 @@ function onKeyUp(event: KeyboardEvent) {
   if (event.key === "Shift") shiftDown.value = false
 }
 
+// Alt+Scroll (rauf/runter) = Bonus/Malus ±1; Alt+Shift+Scroll = Schwierigkeit ±1.
+// Nur wenn der Pool aktiv ist, sonst wird Alt+Scroll nicht gekapert.
+function onWheel(event: WheelEvent) {
+  if (!isVampire.value || !event.altKey) return
+  if (!dicePoolLeft.value && !dicePoolRight.value && !dicePoolExtra.value) return
+  event.preventDefault()
+  const dir = event.deltaY < 0 ? 1 : -1
+  if (event.shiftKey) {
+    const cur = parseInt(dicePoolDifficulty.value) || 1
+    dicePoolDifficulty.value = String(Math.max(1, cur + dir))
+  } else {
+    const cur = parseInt(dicePoolManual.value) || 0
+    dicePoolManual.value = String(cur + dir)
+  }
+}
+
 function switchTab(name: string) {
   if (route.name !== name) router.push({ name }).catch(() => {})
 }
@@ -392,6 +408,7 @@ onMounted(() => {
   EventBus.$on("character-updated", onCharUpdated)
   window.addEventListener("keydown", onKeyDown)
   window.addEventListener("keyup", onKeyUp)
+  window.addEventListener("wheel", onWheel, { passive: false })
 
   document.title = editingCharacter.value ? `${editingCharacter.value.name} - Vicar` : "Vicar"
 })
@@ -400,6 +417,7 @@ onUnmounted(() => {
   EventBus.$off("character-updated", onCharUpdated)
   window.removeEventListener("keydown", onKeyDown)
   window.removeEventListener("keyup", onKeyUp)
+  window.removeEventListener("wheel", onWheel)
   document.title = "Vicar"
   store.resetTheme()
 })
