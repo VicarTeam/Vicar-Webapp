@@ -217,6 +217,20 @@ function onKeyDown(event: KeyboardEvent) {
     dicePoolManual.value = String(cur + (event.key === "ArrowUp" ? 1 : -1))
   }
 
+  // Alt+Enter: Würfelpool in FVTT würfeln (nur wenn verbunden).
+  if (event.altKey && event.key === "Enter" && fvttOnline.value) {
+    event.preventDefault()
+    rollDicePoolInFvtt()
+    return
+  }
+
+  // Alt+Escape: Würfelpool leeren/schließen.
+  if (event.altKey && event.key === "Escape") {
+    event.preventDefault()
+    clearDicePool()
+    return
+  }
+
   if (event.altKey) {
     const hk = TabHotkeys.find(x => x.keys.includes("ALT+" + event.key.toUpperCase()))
     if (hk) {
@@ -758,8 +772,9 @@ onUnmounted(() => {
 
 .fvtt-roll-btn {
   pointer-events: all;
-  margin-top: 0.6rem;
-  display: inline-flex;
+  display: flex;
+  width: fit-content;
+  margin: 0.6rem auto 0;
   gap: 0.4rem;
   align-items: center;
 }
