@@ -1,13 +1,3 @@
-# Single-Origin-Deployment für Coolify
-#
-#   Frontend  ->  https://${APP_DOMAIN}/
-#   Backend   ->  https://${APP_DOMAIN}/api      (Backend mountet ALLE Routen doppelt: / UND /api,
-#                                                 funktioniert also egal ob Coolify den /api-Prefix strippt)
-#
-# In Coolify als "Docker Compose"-Ressource anlegen und die Env-Variablen unten setzen.
-# Domains pro Service in der Coolify-UI: frontend = https://${APP_DOMAIN} , backend = https://${APP_DOMAIN}/api
-# (Details + Alternative mit rohen Traefik-Labels: siehe DEPLOY-COOLIFY.md.)
-
 services:
   mongo:
     image: mongo:7
