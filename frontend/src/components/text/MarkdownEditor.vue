@@ -81,8 +81,10 @@ onBeforeUnmount(() => editor.value?.destroy())
   width: 100%;
   display: flex;
   flex-direction: column;
-  // Höhe per Resize-Griff anpassbar (vertikal größer ziehen wie eine Textarea).
-  min-height: 6.5rem;
+  // Feste, kompakte Default-Höhe (Inhalt scrollt darüber hinaus intern) – wächst
+  // also NICHT unbegrenzt mit dem Text. Per Resize-Griff vertikal vergrößerbar.
+  height: 10rem;
+  min-height: 6rem;
   max-height: 85vh;
   resize: vertical;
   overflow: auto;

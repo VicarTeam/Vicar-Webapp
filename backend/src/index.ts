@@ -54,7 +54,14 @@ initDataRoutes(app);
 // Hochgeladene Bilder öffentlich ausliefern (vor der Auth-Middleware), damit
 // <img>-Tags sie ohne Auth-Header laden können. Lange Cache-Zeit (CDN-artig),
 // da Dateinamen UUID-basiert und damit eindeutig sind.
-app.use('/cdn', express.static(CDN_DIR, {maxAge: '7d', immutable: true}));
+app.use('/cdn', express.static(CDN_DIR, {
+  maxAge: '7d',
+  immutable: true,
+  // Cross-Origin-Einbettung erlauben: Frontend-Origin (z.B. vicar.cloud) != API-Origin
+  // (api.vicar.cloud). Sonst blockt helmets Standard `Cross-Origin-Resource-Policy:
+  // same-origin` die <img>-Loads -> net::ERR_FAILED (Avatare/CDN-Bilder laden nicht).
+  setHeaders: (res) => res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin'),
+}));
 
 app.use(async (req, res, next) => {
   if (!req.headers.authorization) {

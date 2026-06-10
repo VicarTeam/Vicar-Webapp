@@ -47,6 +47,16 @@ const isWerewolf = computed(() => store.isWerewolf)
 const isMage = computed(() => store.isMage)
 const isHunter = computed(() => store.isHunter)
 
+// Referenz: die fünf Garou-Formen (W5) mit Kosten/Modifikatoren – Anzeige auf der
+// Profilseite (aus dem alten Frontend übernommen).
+const werewolfForms = [
+  { name: "Homid", lines: ["Kosten: frei", "Immun gegen Silber"] },
+  { name: "Glabro", lines: ["Kosten: 1 Rage-Test", "Körperliche Tests: Bonus von 2 Würfeln", "Soziale Tests: Malus von 2 Würfeln", "Regenerierung: 1 pro Rage-Test"] },
+  { name: "Crinos", lines: ["Kosten: 2 Rage-Test", "Pro Runde 1 Willenskraft ausgeben oder in Raserei verfallen", "+4 Leben", "Körperliche Tests: Bonus von 4 Würfeln", "Soziale & Heimlichkeit Tests: Fehlschlag", "Regenerierung: 2 pro Rage-Test", "Biss: +1 schwerer Schaden", "Verursacht Delirium"] },
+  { name: "Hispo", lines: ["Kosten: 1 Rage-Test", "Körperliche Tests: Bonus von 2 Würfeln", "Soziale Tests: nur mit Wölfen und Garou", "Regenerierung: 1 pro Rage-Test", "Biss: +1 schwerer Schaden"] },
+  { name: "Lupus", lines: ["Kosten: frei", "Immun gegen Silber", "Soziale Tests: nur mit Wölfen und Garou"] },
+]
+
 const requestLevel = inject("request-m20-level") as RequestLevelFn | undefined
 const updateViewer = inject("update-viewer") as (() => void) | undefined
 const showTip = inject("show-tip") as ((content: any, title?: any) => void) | undefined
@@ -691,6 +701,23 @@ Regeln: Dein Arete-Wert bestimmt, wie viele Würfel du für Zaubereffekte nutzt 
           </div>
         </Col>
       </Row>
+
+      <Row v-if="isWerewolf" class="row-full mt" wrap>
+        <Col class="col-full center">
+          <div class="headline">
+            <Bullet /><Bullet /><Bullet />
+            <b>Formen des Garou</b>
+            <Bullet /><Bullet /><Bullet />
+          </div>
+        </Col>
+      </Row>
+
+      <Row v-if="isWerewolf" class="row-full mt" wrap>
+        <Col v-for="f in werewolfForms" :key="f.name" class="col-form">
+          <Row><b>{{ f.name }}</b></Row>
+          <Row v-for="(line, i) in f.lines" :key="i"><small>{{ line }}</small></Row>
+        </Col>
+      </Row>
     </div>
 
     <BloodPotencyModal ref="levelBloodPotencyModal" />
@@ -922,9 +949,20 @@ Regeln: Dein Arete-Wert bestimmt, wie viele Würfel du für Zaubereffekte nutzt 
   min-width: 18rem;
 }
 
+.col-form {
+  flex: 1 1 0;
+  align-items: center;
+  min-width: 11rem;
+  text-align: center;
+  gap: 0.25rem;
+
+  small { color: var(--text-2); }
+}
+
 @media (max-width: 900px) {
   .col-third,
-  .col-spheres {
+  .col-spheres,
+  .col-form {
     flex: 1 1 100%;
     min-width: 0;
   }
