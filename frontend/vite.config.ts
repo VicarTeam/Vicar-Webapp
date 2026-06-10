@@ -41,8 +41,9 @@ export default defineConfig({
         runtimeCaching: [
           {
             // Hochgeladene Bilder (Avatare/Skill-Tree) vom Backend-CDN. Dateinamen
-            // sind UUID-basiert/immutable -> CacheFirst.
-            urlPattern: ({ url }) => url.pathname.startsWith('/cdn/'),
+            // sind UUID-basiert/immutable -> CacheFirst. `includes` deckt sowohl
+            // same-origin `/api/cdn/...` als auch ein evtl. blankes `/cdn/...` ab.
+            urlPattern: ({ url }) => url.pathname.includes('/cdn/'),
             handler: 'CacheFirst',
             options: {
               cacheName: 'vicar-cdn-images',

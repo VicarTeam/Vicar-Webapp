@@ -109,7 +109,10 @@ async function performRefresh(): Promise<RefreshResult> {
   }
 
   try {
-    const url = new URL("/auth/refresh", (import.meta as any).env.VITE_APP_API_URL || window.location.origin);
+    // Base als Pfad-Präfix behandeln (z.B. "/api" oder "https://host/api"), sonst
+    // würde new URL("/auth/refresh", base) den /api-Pfad verwerfen.
+    const apiBase = (import.meta as any).env.VITE_APP_API_URL || window.location.origin;
+    const url = new URL(`${apiBase}/auth/refresh`, window.location.origin);
     url.searchParams.set("rtk", refreshToken);
 
     const resp = await fetch(url.toString(), {
