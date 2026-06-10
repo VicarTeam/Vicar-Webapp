@@ -42,7 +42,11 @@ io.on('connection', socket => {
 });
 
 app.use(express.json({limit: '100mb'}));
-app.use(helmet.default());
+app.use(helmet.default({
+  crossOriginResourcePolicy: {
+    policy: 'cross-origin'
+  }
+}));
 
 app.use(cors({
   origin: '*',
