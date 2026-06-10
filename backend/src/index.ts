@@ -13,6 +13,7 @@ import {Server} from "socket.io";
 import { createServer } from "node:http";
 import {removeSocket, setSocket} from "./sockets";
 import {isAuthenticated} from "./services/auth";
+import {User} from "./schema";
 
 mongoose.connect(Bun.env.MONGO_URI as string).then(() => {
   console.log('Connected to MongoDB')
@@ -74,12 +75,32 @@ app.use('/', buildApi());
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
+  // Hinter dem nginx /api-Proxy erreichbar (single-origin: vicar.cloud/api/socket.io).
+  path: '/api/socket.io',
   cors: {
     origin: '*'
   }
 });
 
 io.on('connection', socket => {
+  // FoundryVTT (VicarTT-Modul): Auth über den FVTT-Token im Handshake.
+  const fvttToken = socket.handshake.auth?.fvttToken as string | undefined;
+  if (fvttToken) {
+    User.findOne({fvttToken}).then(user => {
+      if (!user) {
+        return socket.disconnect();
+      }
+      socket.join('fvtt:' + user.id);
+      socket.emit('fvtt-authenticated');
+      // Heartbeat von FVTT -> an die Web-Clients desselben Users weiterleiten.
+      socket.on('fvtt-heartbeat', () => {
+        io.to('web:' + user.id).emit('fvtt-heartbeat');
+      });
+    }).catch(() => socket.disconnect());
+    return;
+  }
+
+  // Web-Frontend: Auth über JWT (wie bisher).
   socket.on('authenticate', async sessionId => {
     const user = await isAuthenticated(sessionId);
     if (!user) {
@@ -87,6 +108,12 @@ io.on('connection', socket => {
     }
 
     setSocket(user.id, socket);
+    socket.join('web:' + user.id);
+
+    // Würfelpool-Wurf vom Web -> an die FVTT-Clients desselben Users weiterleiten.
+    socket.on('fvtt-roll', data => {
+      io.to('fvtt:' + user.id).emit('fvtt-roll', data);
+    });
 
     socket.on('disconnect', () => {
       removeSocket(user.id);

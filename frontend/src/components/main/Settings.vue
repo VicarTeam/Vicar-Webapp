@@ -4,7 +4,7 @@ import { useRouter } from "vue-router"
 import CharacterStorage from "@/libs/io/character-storage"
 import { DataSync } from "@/libs/data/data-sync"
 import DataManager from "@/libs/data/data-manager"
-import { post } from "@/libs/io/rest"
+import { get, post } from "@/libs/io/rest"
 import { logout as doLogout } from "@/libs/auth"
 import { SettingsData } from "@/libs/io/settings"
 
@@ -13,6 +13,9 @@ const router = useRouter()
 const oldPassword = ref("")
 const newPassword = ref("")
 const newPasswordRepeat = ref("")
+
+const fvttToken = ref<string | null>(null)
+const fvttBackendUrl = window.location.origin
 
 const devMode = computed<boolean>({
   get() {
@@ -27,7 +30,22 @@ const canChangePassword = computed(() => newPassword.value.length > 0 && newPass
 
 onMounted(async () => {
   await DataManager.loadLogin()
+  await loadFvttToken()
 })
+
+async function loadFvttToken() {
+  const [status, data] = await get<{ token: string | null }>(`/users/@me/fvtt-token`)
+  if (status === 200) fvttToken.value = data.token
+}
+
+async function createFvttToken() {
+  const [status, data] = await post<{ token: string }>(`/users/@me/fvtt-token`)
+  if (status === 200) fvttToken.value = data.token
+}
+
+function copyText(text: string) {
+  navigator.clipboard?.writeText(text)
+}
 
 async function syncData() {
   await DataSync.sync(true)
@@ -105,6 +123,24 @@ async function logout() {
           <div class="divider"></div>
         </template>
 
+        <template v-if="DataManager.loggedInAs">
+          <p class="section-title">FoundryVTT (VicarTT):</p>
+          <small class="fvtt-hint">Backend-URL fürs Modul: <b>{{ fvttBackendUrl }}</b></small>
+          <div v-if="fvttToken" class="fvtt-token-row">
+            <input class="form-control" :value="fvttToken" readonly @focus="(e: any) => e.target.select()" />
+            <button class="btn btn-primary" title="Kopieren" @click="copyText(fvttToken!)">
+              <i class="fa-solid fa-copy"></i>
+            </button>
+          </div>
+          <small v-else class="fvtt-hint">Noch kein Token erstellt.</small>
+          <button class="btn btn-primary full" style="margin-top: 0.75rem" @click="createFvttToken">
+            {{ fvttToken ? "Token neu erstellen" : "Token erstellen" }}
+          </button>
+          <small class="fvtt-hint">Token im FoundryVTT-Modul „VicarTT" eintragen. Neu erstellen macht den alten ungültig.</small>
+
+          <div class="divider"></div>
+        </template>
+
         <div class="actions">
           <button class="btn btn-primary" @click="syncData">Daten synchronisieren</button>
           <button class="btn btn-primary" @click="migrateCharacters">Charaktere migrieren</button>
@@ -153,6 +189,22 @@ async function logout() {
 .section-title {
   margin: 0 0 0.75rem;
   opacity: 0.9;
+}
+.fvtt-hint {
+  display: block;
+  color: var(--text-3);
+  font-size: 0.85rem;
+  margin: 0.35rem 0;
+  word-break: break-all;
+}
+.fvtt-token-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.fvtt-token-row .form-control {
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
 }
 .form-control {
   width: 100%;

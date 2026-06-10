@@ -3,7 +3,7 @@ import {v4 as uuidv4} from 'uuid';
 import {del, get, patch, post, put} from "@/libs/io/rest";
 import {useStore} from "@/app/store";
 import router from "@/app/router.ts";
-import {io} from "socket.io-client";
+import {initRealtime, onCharacterUpdated} from "@/libs/io/realtime";
 import {checkSession} from "@/libs/auth";
 import {type IBaseSheet, LevelChangeType} from "@/@types/gameline";
 import DataManager from "@/libs/data/data-manager";
@@ -284,15 +284,8 @@ export default class CharacterStorage {
   }
 
   private static initializeUpdatingSocket() {
-    if (!localStorage.getItem('vicar:session')) {
-      return;
-    }
-
-    const socket = io((import.meta as any).env.VITE_APP_API_URL as string);
-    socket.on('character_updated', (character: ICharacter) => {
-      this.updateCharacter(character);
-    });
-    socket.emit('authenticate', localStorage.getItem('vicar:session'));
+    initRealtime();
+    onCharacterUpdated((character: ICharacter) => this.updateCharacter(character));
   }
 
   private static updateCharacter(char: ICharacter) {

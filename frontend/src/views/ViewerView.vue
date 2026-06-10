@@ -27,6 +27,8 @@ import RestButton from "@/components/viewer/RestButton.vue";
 import DataManager from "@/libs/data/data-manager"
 import { skillTreeResolver } from "@/libs/resolvers/skilltree-resolver"
 import { getResonanceDisciplines } from "@/app/data/v5"
+import { fvttOnline, rollInFvtt } from "@/libs/io/realtime"
+import { resolveAssetUrl } from "@/libs/io/cdn"
 
 const store = useStore()
 const router = useRouter()
@@ -55,6 +57,7 @@ const dicePoolBloodSurge = ref<boolean>(false)           // Blutschub
 const dicePoolWillpower = ref<boolean>(false)            // freie Willenskraft-Felder
 const dicePoolHumanity = ref<boolean>(false)             // floor(humanity / 3)
 const dicePoolManual = ref<string>("")                   // manueller ±-Eintrag
+const dicePoolDifficulty = ref<string>("1")              // Schwierigkeit (nur für FVTT, ändert das Total nicht)
 
 const addExpModal = ref<InstanceType<typeof AddExpModal> | null>(null)
 const characterInfoModal = ref<InstanceType<typeof CharacterInfoModal> | null>(null)
@@ -197,6 +200,14 @@ function onKeyDown(event: KeyboardEvent) {
   if (event.altKey && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
     event.preventDefault()
     cursorSlot.value = event.key === "ArrowLeft" ? "left" : "right"
+  }
+
+  // Alt+Shift+Pfeil hoch/runter ändert die Schwierigkeit (+1/-1, min 1).
+  if (event.altKey && event.shiftKey && (event.key === "ArrowUp" || event.key === "ArrowDown")) {
+    event.preventDefault()
+    const cur = parseInt(dicePoolDifficulty.value) || 1
+    dicePoolDifficulty.value = String(Math.max(1, cur + (event.key === "ArrowUp" ? 1 : -1)))
+    return
   }
 
   // Alt+Pfeil hoch/runter ändert den manuellen Bonus/Malus (+1/-1).
@@ -351,6 +362,26 @@ const dicePoolResult = computed<
   return { total, simple, hunger, parts }
 })
 
+// Würfelpool an FoundryVTT (VicarTT) schicken. Payload entspricht VampiricDiceRoller.roll.
+function rollDicePoolInFvtt() {
+  const c = editingCharacter.value
+  const r = dicePoolResult.value
+  if (!c || !r || r.total === -1) return
+
+  let avatar = resolveAssetUrl(c.avatar)
+  if (avatar && !/^https?:/.test(avatar)) avatar = new URL(avatar, window.location.origin).href
+
+  rollInFvtt({
+    username: DataManager.loggedInAs || "",
+    vampire: { name: c.name, avatar: avatar || "" },
+    roll: {
+      normalDices: r.simple,
+      hungerDices: r.hunger,
+      difficulty: Math.max(1, parseInt(dicePoolDifficulty.value) || 1),
+    },
+  })
+}
+
 onMounted(() => {
   if (route.name === "viewer") {
     router.push({ name: "viewer-profile" }).catch(() => {})
@@ -482,6 +513,7 @@ onUnmounted(() => {
         <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolWillpower" /> Willenskraft (+{{ dicePoolBonuses.willpower }})</label>
         <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolHumanity" /> Menschlichkeit (+{{ dicePoolBonuses.humanity }})</label>
         <span class="manual">± <input type="number" v-model="dicePoolManual" placeholder="0" /></span>
+        <span class="manual">Schw. <input type="number" min="1" v-model="dicePoolDifficulty" /></span>
       </div>
 
       <div v-if="dicePoolResult" class="calc-result">
@@ -502,6 +534,13 @@ onUnmounted(() => {
             {{ p.label }} <b>{{ p.value >= 0 ? "+" : "−" }}{{ Math.abs(p.value) }}</b>
           </span>
         </div>
+        <button
+          v-if="fvttOnline && dicePoolResult.total !== -1"
+          class="btn btn-primary fvtt-roll-btn"
+          @click="rollDicePoolInFvtt"
+        >
+          <i class="fa-solid fa-dice-d20"></i> In FVTT würfeln
+        </button>
       </div>
     </div>
   </div>
@@ -697,6 +736,14 @@ onUnmounted(() => {
   justify-content: center;
   font-size: 0.85rem;
   opacity: 0.75;
+}
+
+.fvtt-roll-btn {
+  pointer-events: all;
+  margin-top: 0.6rem;
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
 }
 
 @media (max-width: 900px) {

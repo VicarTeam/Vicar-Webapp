@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema(
     installedHomebrew: { type: Object },
     currentAccessToken: { type: String, default: "" },
     isAdmin: { type: Boolean, default: false },
+    // Langlebiger Token für die FoundryVTT-Anbindung (VicarTT-Modul). Rotierbar.
+    fvttToken: { type: String },
   }
 );
 const refreshTokenSchema = new mongoose.Schema(

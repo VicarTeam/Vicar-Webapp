@@ -5,6 +5,32 @@ import {setUserPassword} from "../services/auth";
 export function initUserRoutes(app: Express) {
   app.get('/users/@me', getMe);
   app.patch('/users/@me/password', changePassword);
+  app.get('/users/@me/fvtt-token', getFvttToken);
+  app.post('/users/@me/fvtt-token', createFvttToken);
+  app.delete('/users/@me/fvtt-token', deleteFvttToken);
+}
+
+async function getFvttToken(req: Request, res: Response) {
+  const user = await User.findById(res.locals.userId!);
+  if (!user) return res.status(404).send('Not found');
+  res.json({token: user.fvttToken || null});
+}
+
+async function createFvttToken(req: Request, res: Response) {
+  const user = await User.findById(res.locals.userId!);
+  if (!user) return res.status(404).send('Not found');
+  // 128-bit Zufallstoken (Neu-Erstellen rotiert / invalidiert den alten).
+  user.fvttToken = (crypto.randomUUID() + crypto.randomUUID()).replace(/-/g, '');
+  await user.save();
+  res.json({token: user.fvttToken});
+}
+
+async function deleteFvttToken(req: Request, res: Response) {
+  const user = await User.findById(res.locals.userId!);
+  if (!user) return res.status(404).send('Not found');
+  user.fvttToken = undefined;
+  await user.save();
+  res.json({message: 'OK'});
 }
 
 async function getMe(req: Request, res: Response) {
