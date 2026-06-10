@@ -1,0 +1,51 @@
+# Single-Origin-Deployment für Coolify
+#
+#   Frontend  ->  https://${APP_DOMAIN}/
+#   Backend   ->  https://${APP_DOMAIN}/api      (Backend mountet ALLE Routen doppelt: / UND /api,
+#                                                 funktioniert also egal ob Coolify den /api-Prefix strippt)
+#
+# In Coolify als "Docker Compose"-Ressource anlegen und die Env-Variablen unten setzen.
+# Domains pro Service in der Coolify-UI: frontend = https://${APP_DOMAIN} , backend = https://${APP_DOMAIN}/api
+# (Details + Alternative mit rohen Traefik-Labels: siehe DEPLOY-COOLIFY.md.)
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/vicar"
+      JWT_SECRET: "${JWT_SECRET}"
+      DEV_MODE: "false"
+      # Single-Origin: App-Origin bleibt gleich, API liegt unter /api.
+      FRONTEND_URL: "${APP_URL}"
+      BACKEND_URL: "${APP_URL}/api"
+      DISCORD_CLIENT_ID: "${DISCORD_CLIENT_ID}"
+      DISCORD_CLIENT_SECRET: "${DISCORD_CLIENT_SECRET}"
+      DISCORD_REDIRECT_URI: "${APP_URL}/api/auth/callback"
+      # Hochgeladene Bilder (Avatare/Skill-Tree) – persistentes Volume.
+      CDN_DIR: "/app/cdn-data"
+    volumes:
+      - cdn_data:/app/cdn-data
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Relative API-Base -> alle Requests/Bilder laufen same-origin über /api.
+        VUE_APP_API_URL: "/api"
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
+  cdn_data:

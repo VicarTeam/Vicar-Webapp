@@ -8,6 +8,7 @@ import {initDataRoutes} from "./api/data";
 import {initUserRoutes} from "./api/user";
 import {initSkillTreeRoutes} from "./api/skilltree";
 import {CDN_DIR, initCdnRoutes} from "./api/cdn";
+import {initAdminRoutes} from "./api/admin";
 import {Server} from "socket.io";
 import { createServer } from "node:http";
 import {removeSocket, setSocket} from "./sockets";
@@ -17,7 +18,60 @@ mongoose.connect(Bun.env.MONGO_URI as string).then(() => {
   console.log('Connected to MongoDB')
 });
 
+function buildApi(): express.Express {
+  const api = express();
+
+  api.use(express.json({limit: '100mb'}));
+  api.use(helmet.default({
+    crossOriginResourcePolicy: {
+      policy: 'cross-origin'
+    }
+  }));
+
+  api.use(cors({
+    origin: '*',
+  }));
+
+  initAuthRoutes(api);
+  initDataRoutes(api);
+
+  api.use('/cdn', express.static(CDN_DIR, {
+    maxAge: '7d',
+    immutable: true,
+    setHeaders: (res) => res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin'),
+  }));
+
+  api.use(async (req, res, next) => {
+    if (!req.headers.authorization) {
+      return res.status(401).send('Unauthorized');
+    }
+
+    const sessionId = req.headers.authorization.replace('Bearer ', '');
+    const user = await isAuthenticated(sessionId);
+    if (!user) {
+      return res.status(401).send('Unauthorized');
+    }
+
+    res.locals.user = user;
+    res.locals.userId = user.id;
+
+    next();
+  });
+
+  initCharacterRoutes(api);
+  initUserRoutes(api);
+  initSkillTreeRoutes(api);
+  initCdnRoutes(api);
+  initAdminRoutes(api);
+
+  return api;
+}
+
 const app = express();
+
+app.use('/api', buildApi());
+app.use('/', buildApi());
+
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
@@ -39,43 +93,6 @@ io.on('connection', socket => {
     });
   });
 });
-
-app.use(express.json({limit: '100mb'}));
-app.use(helmet.default());
-
-app.use(cors({
-  origin: '*',
-}));
-
-initAuthRoutes(app);
-initDataRoutes(app);
-
-// Hochgeladene Bilder öffentlich ausliefern (vor der Auth-Middleware), damit
-// <img>-Tags sie ohne Auth-Header laden können. Lange Cache-Zeit (CDN-artig),
-// da Dateinamen UUID-basiert und damit eindeutig sind.
-app.use('/cdn', express.static(CDN_DIR, {maxAge: '7d', immutable: true}));
-
-app.use(async (req, res, next) => {
-  if (!req.headers.authorization) {
-    return res.status(401).send('Unauthorized');
-  }
-
-  const sessionId = req.headers.authorization.replace('Bearer ', '');
-  const user = await isAuthenticated(sessionId);
-  if (!user) {
-    return res.status(401).send('Unauthorized');
-  }
-
-  res.locals.user = user;
-  res.locals.userId = user.id;
-
-  next();
-});
-
-initCharacterRoutes(app);
-initUserRoutes(app);
-initSkillTreeRoutes(app);
-initCdnRoutes(app);
 
 httpServer.listen(6660, () => {
   console.log(`Server is running on port 6660`);

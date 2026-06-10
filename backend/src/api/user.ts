@@ -17,6 +17,7 @@ async function getMe(req: Request, res: Response) {
   res.json({
     id: user.id,
     username: user.username,
+    isAdmin: !!user.isAdmin,
   });
 }
 

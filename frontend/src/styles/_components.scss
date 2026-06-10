@@ -14,58 +14,29 @@
 .lm-card,
 .dm-card {
   border-radius: var(--card-border-radius);
-  background:
-      radial-gradient(900px 420px at 12% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
-      linear-gradient(180deg, color-mix(in srgb, #ffffff 6%, transparent), transparent 55%),
-      linear-gradient(180deg, var(--bg-2), var(--bg-1));
-  border: 1px solid color-mix(in srgb, var(--accent) 20%, rgba(255, 255, 255, 0.08));
+  background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, rgba(255, 255, 255, 0.08));
   box-shadow: var(--shadow-hairline), var(--shadow-raise);
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
-  transform: translateZ(0);
-  transition: transform var(--dur-3) var(--ease-2), box-shadow var(--dur-3) var(--ease-2), border-color var(--dur-3) var(--ease-2);
+  transition: box-shadow var(--dur-2) var(--ease-1), border-color var(--dur-2) var(--ease-1);
   padding: var(--space-4);
 
+  // Klare, kräftige Akzentkante oben (gameline-farbig) statt diffusem Smoke-Overlay.
   &::before {
     content: "";
-    position: sticky;
-    inset: -1px;
-    border-radius: inherit;
-    background:
-        linear-gradient(
-                130deg,
-                color-mix(in srgb, var(--accent) 55%, transparent),
-                rgba(255, 255, 255, 0.08),
-                color-mix(in srgb, var(--accent) 35%, transparent)
-        );
-    opacity: 0.55;
-    mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
-    -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
-    padding: 1px;
-    pointer-events: none;
-  }
-
-  &::after {
-    content: "";
     position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(420px 220px at 18% 12%, rgba(255, 255, 255, 0.08), transparent 60%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 45%);
-    opacity: 0.55;
+    inset: 0 0 auto 0;
+    height: 3px;
+    border-radius: var(--card-border-radius) var(--card-border-radius) 0 0;
+    background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 35%, transparent));
     pointer-events: none;
-    transition: opacity var(--dur-3) var(--ease-2);
   }
 
   &:hover {
-    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent) 42%, rgba(255, 255, 255, 0.10));
     box-shadow: var(--shadow-hairline), var(--shadow-ambient);
-    border-color: color-mix(in srgb, var(--accent) 30%, rgba(255, 255, 255, 0.10));
-
-    &::after {
-      opacity: 0.75;
-    }
   }
 }
 
@@ -92,11 +63,9 @@
   font-family: var(--font-sans);
   min-height: var(--tap-min);
   padding: 0.6rem 0.95rem;
-  border-radius: 14px;
+  border-radius: var(--radius-2);
   border: 1px solid rgba(255, 255, 255, 0.10);
-  background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 55%),
-      linear-gradient(180deg, var(--bg-3), var(--bg-2));
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
   color: var(--text-1);
   display: inline-flex;
   gap: 0.55rem;
@@ -104,17 +73,16 @@
   justify-content: center;
   cursor: pointer;
   user-select: none;
-  box-shadow: var(--shadow-hairline), 0 10px 26px rgba(0, 0, 0, 0.40);
-  transition: transform var(--dur-2) var(--ease-2), box-shadow var(--dur-2) var(--ease-2), border-color var(--dur-2) var(--ease-2), filter var(--dur-2) var(--ease-2);
+  box-shadow: var(--shadow-hairline), 0 8px 20px rgba(0, 0, 0, 0.35);
+  transition: box-shadow var(--dur-2) var(--ease-1), border-color var(--dur-2) var(--ease-1), filter var(--dur-2) var(--ease-1);
 
   &:hover:not(:disabled):not(.disabled) {
-    border-color: rgba(255, 255, 255, 0.16);
-    filter: brightness(1.04);
+    border-color: rgba(255, 255, 255, 0.18);
+    filter: brightness(1.06);
   }
 
   &:active:not(:disabled):not(.disabled) {
-    transform: translateY(1px) scale(0.99);
-    filter: brightness(0.98);
+    filter: brightness(0.95);
   }
 
   &:disabled,
@@ -125,16 +93,21 @@
 }
 
 .btn-primary {
-  border-color: color-mix(in srgb, var(--accent) 35%, rgba(255, 255, 255, 0.10));
-  background:
-      radial-gradient(420px 220px at 18% 10%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 60%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.10), transparent 55%),
-      linear-gradient(180deg, color-mix(in srgb, var(--accent) 18%, var(--bg-3)), var(--bg-2));
-  box-shadow: var(--shadow-hairline), 0 18px 44px color-mix(in srgb, var(--accent) 22%, rgba(0, 0, 0, 0.55));
+  border-color: color-mix(in srgb, var(--accent) 60%, rgba(255, 255, 255, 0.12));
+  color: var(--accent-contrast);
+  // Kräftiger, klarer Akzentverlauf (hell -> Akzent -> dunkel).
+  background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--accent) 82%, #ffffff),
+      var(--accent) 52%,
+      color-mix(in srgb, var(--accent) 78%, #000000)
+  );
+  box-shadow: var(--shadow-hairline), 0 12px 30px color-mix(in srgb, var(--accent) 30%, rgba(0, 0, 0, 0.55));
 
   &:hover:not(:disabled):not(.disabled) {
-    border-color: color-mix(in srgb, var(--accent) 55%, rgba(255, 255, 255, 0.12));
-    box-shadow: var(--shadow-hairline), 0 22px 60px color-mix(in srgb, var(--accent) 28%, rgba(0, 0, 0, 0.60));
+    border-color: color-mix(in srgb, var(--accent) 75%, #ffffff);
+    filter: brightness(1.08) saturate(1.05);
+    box-shadow: var(--shadow-hairline), 0 16px 38px color-mix(in srgb, var(--accent) 38%, rgba(0, 0, 0, 0.55));
   }
 }
 
@@ -155,16 +128,13 @@ textarea,
 select {
   width: 100%;
   min-height: var(--tap-min);
-  border-radius: 14px;
+  border-radius: var(--radius-2);
   border: 1px solid rgba(255, 255, 255, 0.10);
-  background:
-      radial-gradient(420px 220px at 18% 10%, rgba(255, 255, 255, 0.06), transparent 60%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent 55%),
-      linear-gradient(180deg, var(--bg-2), var(--bg-1));
+  background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
   color: var(--text-1);
   padding: 0.6rem 0.85rem;
-  box-shadow: var(--shadow-hairline), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  transition: border-color var(--dur-2) var(--ease-2), box-shadow var(--dur-2) var(--ease-2), filter var(--dur-2) var(--ease-2);
+  box-shadow: var(--shadow-hairline), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: border-color var(--dur-2) var(--ease-1), box-shadow var(--dur-2) var(--ease-1);
 
   &::placeholder {
     color: var(--text-3);
@@ -172,12 +142,11 @@ select {
 
   &:focus {
     outline: none;
-    border-color: color-mix(in srgb, var(--accent) 55%, rgba(255, 255, 255, 0.12));
+    border-color: color-mix(in srgb, var(--accent) 60%, rgba(255, 255, 255, 0.12));
     box-shadow:
         var(--shadow-hairline),
-        0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    filter: brightness(1.03);
+        0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
   option {
@@ -196,29 +165,23 @@ input[type="checkbox"] {
   display: inline-grid;
   place-content: center;
 
-  border-radius: 4px;
+  border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.10);
 
-  background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 55%),
-      linear-gradient(180deg, var(--bg-3), var(--bg-2));
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
 
-  box-shadow: var(--shadow-hairline), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-hairline), inset 0 1px 0 rgba(255, 255, 255, 0.04);
   cursor: pointer;
 
   transition:
-      border-color var(--dur-2) var(--ease-2),
-      box-shadow var(--dur-2) var(--ease-2),
-      filter var(--dur-2) var(--ease-2),
-      background-color var(--dur-2) var(--ease-2);
+      border-color var(--dur-2) var(--ease-1),
+      box-shadow var(--dur-2) var(--ease-1),
+      filter var(--dur-2) var(--ease-1),
+      background-color var(--dur-2) var(--ease-1);
 
   &:hover {
-    filter: brightness(1.04);
-    border-color: rgba(255, 255, 255, 0.16);
-  }
-
-  &:active {
-    filter: brightness(0.98);
+    filter: brightness(1.06);
+    border-color: rgba(255, 255, 255, 0.18);
   }
 
   &:focus-visible {
@@ -226,29 +189,27 @@ input[type="checkbox"] {
     box-shadow:
         0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent),
         var(--shadow-hairline),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
   &:checked {
-    background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.10), transparent 55%),
-        linear-gradient(
-                180deg,
-                color-mix(in srgb, var(--accent) 28%, var(--bg-3)),
-                color-mix(in srgb, var(--accent) 18%, var(--bg-2))
-        );
-    border-color: color-mix(in srgb, var(--accent) 55%, rgba(255, 255, 255, 0.14));
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--accent) 70%, #ffffff),
+        var(--accent)
+    );
+    border-color: color-mix(in srgb, var(--accent) 65%, rgba(255, 255, 255, 0.14));
   }
 
   &::after {
     content: "";
     width: 9px;
     height: 5px;
-    border-left: 2px solid rgba(255, 255, 255, 0.92);
-    border-bottom: 2px solid rgba(255, 255, 255, 0.92);
+    border-left: 2px solid rgba(255, 255, 255, 0.95);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.95);
     transform: rotate(-45deg) translateY(-0.5px);
     opacity: 0;
-    transition: opacity var(--dur-2) var(--ease-2);
+    transition: opacity var(--dur-2) var(--ease-1);
   }
 
   &:checked::after {
@@ -271,7 +232,7 @@ input[type="checkbox"] {
 }
 
 .iconbtn {
-  border-radius: 12px;
+  border-radius: var(--radius-2);
   padding: 0.5rem;
   display: flex;
   font-size: 1.2rem;
@@ -280,12 +241,10 @@ input[type="checkbox"] {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 55%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 55%);
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: var(--shadow-hairline), 0 10px 26px rgba(0, 0, 0, 0.35);
-  transition: transform var(--dur-2) var(--ease-2), border-color var(--dur-2) var(--ease-2), filter var(--dur-2) var(--ease-2), box-shadow var(--dur-2) var(--ease-2);
+  box-shadow: var(--shadow-hairline), 0 8px 20px rgba(0, 0, 0, 0.30);
+  transition: border-color var(--dur-2) var(--ease-1), filter var(--dur-2) var(--ease-1), box-shadow var(--dur-2) var(--ease-1);
 
   &.loading {
     animation: rotate 1s linear infinite;
@@ -298,19 +257,17 @@ input[type="checkbox"] {
   }
 
   &:not(.loading):hover {
-    border-color: rgba(255, 255, 255, 0.14);
-    filter: brightness(1.04);
-    transform: translateY(-1px);
+    border-color: color-mix(in srgb, var(--accent) 35%, rgba(255, 255, 255, 0.14));
+    filter: brightness(1.06);
   }
 
   &:not(.loading):active {
-    transform: translateY(1px) scale(0.99);
-    filter: brightness(0.98);
+    filter: brightness(0.95);
   }
 
   &.active {
-    border-color: color-mix(in srgb, var(--accent) 40%, rgba(255, 255, 255, 0.12));
-    box-shadow: var(--shadow-hairline), 0 16px 40px color-mix(in srgb, var(--accent) 18%, rgba(0, 0, 0, 0.55));
+    border-color: color-mix(in srgb, var(--accent) 55%, rgba(255, 255, 255, 0.12));
+    box-shadow: var(--shadow-hairline), 0 12px 28px color-mix(in srgb, var(--accent) 22%, rgba(0, 0, 0, 0.55));
   }
 }
 
@@ -331,12 +288,9 @@ input[type="checkbox"] {
   z-index: 50;
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
-  background:
-      radial-gradient(700px 240px at 18% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 55%),
-      linear-gradient(180deg, color-mix(in srgb, #000000 22%, transparent), color-mix(in srgb, #000000 42%, transparent));
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 18%, rgba(255, 255, 255, 0.08));
-  box-shadow: 0 14px 60px rgba(0, 0, 0, 0.55);
+  background: linear-gradient(180deg, color-mix(in srgb, #000000 30%, transparent), color-mix(in srgb, #000000 48%, transparent));
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 32%, rgba(255, 255, 255, 0.06));
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
 }
 
 .navbar .container,
@@ -380,37 +334,33 @@ input[type="checkbox"] {
 .nav-link {
   min-height: var(--tap-min);
   padding: 0.55rem 0.85rem;
-  border-radius: 14px;
+  border-radius: var(--radius-2);
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
   color: var(--text-2);
   border: 1px solid transparent;
   background: transparent;
-  transition: transform var(--dur-2) var(--ease-2), border-color var(--dur-2) var(--ease-2),
-  background var(--dur-2) var(--ease-2), color var(--dur-2) var(--ease-2), filter var(--dur-2) var(--ease-2);
+  transition: border-color var(--dur-2) var(--ease-1),
+  background var(--dur-2) var(--ease-1), color var(--dur-2) var(--ease-1);
 
   &:hover {
     color: var(--text-1);
     background: color-mix(in srgb, #ffffff 6%, transparent);
     border-color: rgba(255, 255, 255, 0.10);
-    filter: brightness(1.04);
     text-decoration: none;
   }
 
-  &:active {
-    transform: translateY(1px) scale(0.99);
-    filter: brightness(0.98);
-  }
-
   &.active {
-    color: var(--text-1);
-    background:
-        radial-gradient(260px 140px at 20% 10%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.09), transparent 55%),
-        linear-gradient(180deg, color-mix(in srgb, var(--accent) 14%, var(--bg-2)), var(--bg-1));
-    border-color: color-mix(in srgb, var(--accent) 35%, rgba(255, 255, 255, 0.10));
-    box-shadow: 0 14px 44px color-mix(in srgb, var(--accent) 16%, rgba(0, 0, 0, 0.55));
+    color: var(--accent-contrast);
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--accent) 70%, #ffffff),
+        var(--accent) 55%,
+        color-mix(in srgb, var(--accent) 78%, #000000)
+    );
+    border-color: color-mix(in srgb, var(--accent) 60%, rgba(255, 255, 255, 0.12));
+    box-shadow: 0 10px 26px color-mix(in srgb, var(--accent) 26%, rgba(0, 0, 0, 0.45));
   }
 }
 
@@ -421,23 +371,16 @@ input[type="checkbox"] {
   justify-content: center;
   min-width: var(--tap-min);
   min-height: var(--tap-min);
-  border-radius: 14px;
+  border-radius: var(--radius-2);
   border: 1px solid rgba(255, 255, 255, 0.10);
-  background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 55%),
-      linear-gradient(180deg, var(--bg-3), var(--bg-2));
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
   color: var(--text-1);
-  box-shadow: var(--shadow-hairline), 0 10px 26px rgba(0, 0, 0, 0.40);
-  transition: transform var(--dur-2) var(--ease-2), filter var(--dur-2) var(--ease-2), border-color var(--dur-2) var(--ease-2);
+  box-shadow: var(--shadow-hairline), 0 8px 20px rgba(0, 0, 0, 0.35);
+  transition: filter var(--dur-2) var(--ease-1), border-color var(--dur-2) var(--ease-1);
 
   &:hover {
-    filter: brightness(1.04);
-    border-color: rgba(255, 255, 255, 0.16);
-  }
-
-  &:active {
-    transform: translateY(1px) scale(0.99);
-    filter: brightness(0.98);
+    filter: brightness(1.06);
+    border-color: rgba(255, 255, 255, 0.18);
   }
 }
 
@@ -481,12 +424,9 @@ input[type="checkbox"] {
 .modal .modal-content,
 .modal-dialog .modal-content {
   width: min(720px, 100%);
-  border-radius: calc(var(--card-border-radius) + 0.2rem);
-  background:
-      radial-gradient(900px 420px at 12% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.10), transparent 55%),
-      linear-gradient(180deg, var(--bg-3), var(--bg-1));
-  border: 1px solid color-mix(in srgb, var(--accent) 26%, rgba(255, 255, 255, 0.10));
+  border-radius: var(--card-border-radius);
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-1));
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, rgba(255, 255, 255, 0.10));
   box-shadow: var(--shadow-hairline), 0 26px 90px rgba(0, 0, 0, 0.70);
   overflow: clip;
   pointer-events: auto;
@@ -496,23 +436,15 @@ input[type="checkbox"] {
   position: relative;
 }
 
+// Kräftige Akzentkante oben am Modal.
 .modal .modal-content::before,
 .modal-dialog .modal-content::before {
   content: "";
   position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background:
-      linear-gradient(
-              130deg,
-              color-mix(in srgb, var(--accent) 55%, transparent),
-              rgba(255, 255, 255, 0.08),
-              color-mix(in srgb, var(--accent) 35%, transparent)
-      );
-  opacity: 0.6;
-  mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
-  -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
-  padding: 1px;
+  inset: 0 0 auto 0;
+  height: 3px;
+  border-radius: var(--card-border-radius) var(--card-border-radius) 0 0;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 35%, transparent));
   pointer-events: none;
 }
 
@@ -527,7 +459,6 @@ input[type="checkbox"] {
 
 .modal-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 70%);
 }
 
 .modal-title {
@@ -544,7 +475,6 @@ input[type="checkbox"] {
 
 .modal-footer {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.06), transparent 70%);
 }
 
 @media (max-width: 520px) {
@@ -587,27 +517,20 @@ input[type="checkbox"] {
 .dropdown-toggle {
   min-height: var(--tap-min);
   padding: 0.6rem 0.9rem;
-  border-radius: 14px;
+  border-radius: var(--radius-2);
   border: 1px solid rgba(255, 255, 255, 0.10);
-  background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 55%),
-      linear-gradient(180deg, var(--bg-3), var(--bg-2));
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
   color: var(--text-1);
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
   cursor: pointer;
-  box-shadow: var(--shadow-hairline), 0 10px 26px rgba(0, 0, 0, 0.40);
-  transition: transform var(--dur-2) var(--ease-2), filter var(--dur-2) var(--ease-2), border-color var(--dur-2) var(--ease-2);
+  box-shadow: var(--shadow-hairline), 0 8px 20px rgba(0, 0, 0, 0.35);
+  transition: filter var(--dur-2) var(--ease-1), border-color var(--dur-2) var(--ease-1);
 
   &:hover {
-    filter: brightness(1.04);
-    border-color: rgba(255, 255, 255, 0.16);
-  }
-
-  &:active {
-    transform: translateY(1px) scale(0.99);
-    filter: brightness(0.98);
+    filter: brightness(1.06);
+    border-color: rgba(255, 255, 255, 0.18);
   }
 }
 
@@ -617,12 +540,9 @@ input[type="checkbox"] {
   left: 0;
   min-width: 220px;
   padding: 0.45rem;
-  border-radius: 16px;
-  background:
-      radial-gradient(520px 240px at 15% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.10), transparent 55%),
-      linear-gradient(180deg, var(--bg-3), var(--bg-1));
-  border: 1px solid color-mix(in srgb, var(--accent) 20%, rgba(255, 255, 255, 0.10));
+  border-radius: var(--radius-3);
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-1));
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, rgba(255, 255, 255, 0.10));
   box-shadow: var(--shadow-hairline), 0 22px 70px rgba(0, 0, 0, 0.70);
   overflow: clip;
   transform-origin: top left;
@@ -631,25 +551,6 @@ input[type="checkbox"] {
   pointer-events: none;
   transition: opacity var(--dur-2) var(--ease-2), transform var(--dur-2) var(--ease-2);
   z-index: 80;
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    background:
-        linear-gradient(
-                130deg,
-                color-mix(in srgb, var(--accent) 55%, transparent),
-                rgba(255, 255, 255, 0.08),
-                color-mix(in srgb, var(--accent) 35%, transparent)
-        );
-    opacity: 0.55;
-    mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
-    -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
-    padding: 1px;
-    pointer-events: none;
-  }
 }
 
 .dropdown.show .dropdown-menu,
@@ -662,7 +563,7 @@ input[type="checkbox"] {
 
 .dropdown-item {
   width: 100%;
-  border-radius: 12px;
+  border-radius: var(--radius-1);
   padding: 0.65rem 0.75rem;
   color: var(--text-2);
   display: flex;
@@ -672,7 +573,7 @@ input[type="checkbox"] {
   user-select: none;
   border: 1px solid transparent;
   background: transparent;
-  transition: background var(--dur-2) var(--ease-2), color var(--dur-2) var(--ease-2), border-color var(--dur-2) var(--ease-2), transform var(--dur-2) var(--ease-2);
+  transition: background var(--dur-2) var(--ease-1), color var(--dur-2) var(--ease-1), border-color var(--dur-2) var(--ease-1);
 
   &:hover {
     color: var(--text-1);
@@ -680,17 +581,10 @@ input[type="checkbox"] {
     border-color: rgba(255, 255, 255, 0.10);
   }
 
-  &:active {
-    transform: translateY(1px) scale(0.99);
-  }
-
   &.active {
-    color: var(--text-1);
-    background:
-        radial-gradient(260px 140px at 20% 10%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.09), transparent 55%),
-        linear-gradient(180deg, color-mix(in srgb, var(--accent) 14%, var(--bg-2)), var(--bg-1));
-    border-color: color-mix(in srgb, var(--accent) 35%, rgba(255, 255, 255, 0.10));
+    color: var(--accent-contrast);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 70%, #ffffff), var(--accent));
+    border-color: color-mix(in srgb, var(--accent) 55%, rgba(255, 255, 255, 0.12));
   }
 }
 
@@ -705,55 +599,37 @@ input[type="checkbox"] {
   font-size: 0.78rem;
   line-height: 1.1;
   letter-spacing: 0.25px;
-  color: var(--text-1);
-  background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.10), transparent 55%),
-      linear-gradient(180deg, color-mix(in srgb, var(--accent) 18%, var(--bg-2)), var(--bg-1));
-  border: 1px solid color-mix(in srgb, var(--accent) 32%, rgba(255, 255, 255, 0.10));
-  box-shadow: var(--shadow-hairline), 0 12px 30px color-mix(in srgb, var(--accent) 12%, rgba(0, 0, 0, 0.65));
-  transform: translateZ(0);
+  color: var(--accent-contrast);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 78%, #ffffff), var(--accent));
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, rgba(255, 255, 255, 0.12));
+  box-shadow: var(--shadow-hairline), 0 8px 20px color-mix(in srgb, var(--accent) 18%, rgba(0, 0, 0, 0.55));
 }
 
 .badge-secondary {
-  background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 55%),
-      linear-gradient(180deg, var(--bg-3), var(--bg-1));
+  color: var(--text-1);
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-1));
   border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: var(--shadow-hairline), 0 12px 30px rgba(0, 0, 0, 0.55);
+  box-shadow: var(--shadow-hairline), 0 8px 20px rgba(0, 0, 0, 0.45);
 }
 
 .alert {
-  border-radius: 16px;
+  border-radius: var(--radius-3);
   padding: 0.9rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background:
-      radial-gradient(520px 240px at 15% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.10), transparent 55%),
-      linear-gradient(180deg, var(--bg-3), var(--bg-1));
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, rgba(255, 255, 255, 0.10));
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-1));
   color: var(--text-2);
-  box-shadow: var(--shadow-hairline), 0 18px 60px rgba(0, 0, 0, 0.65);
+  box-shadow: var(--shadow-hairline), 0 14px 44px rgba(0, 0, 0, 0.55);
   position: relative;
   overflow: clip;
-  transform: translateZ(0);
   animation: vicarPopIn var(--dur-3) var(--ease-2);
 }
 
 .alert::before {
   content: "";
   position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background:
-      linear-gradient(
-              130deg,
-              color-mix(in srgb, var(--accent) 55%, transparent),
-              rgba(255, 255, 255, 0.08),
-              color-mix(in srgb, var(--accent) 35%, transparent)
-      );
-  opacity: 0.55;
-  mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
-  -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
-  padding: 1px;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 35%, transparent));
   pointer-events: none;
 }
 
@@ -804,14 +680,11 @@ table.table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  border-radius: 16px;
+  border-radius: var(--radius-3);
   overflow: clip;
-  background:
-      radial-gradient(700px 280px at 18% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 55%),
-      linear-gradient(180deg, var(--bg-3), var(--bg-1));
-  border: 1px solid color-mix(in srgb, var(--accent) 18%, rgba(255, 255, 255, 0.10));
-  box-shadow: var(--shadow-hairline), 0 18px 70px rgba(0, 0, 0, 0.65);
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-1));
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, rgba(255, 255, 255, 0.10));
+  box-shadow: var(--shadow-hairline), 0 14px 50px rgba(0, 0, 0, 0.55);
 }
 
 .table thead th {
@@ -820,10 +693,8 @@ table.table {
   letter-spacing: 0.25px;
   color: var(--text-1);
   padding: 0.9rem 0.95rem;
-  background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.10), transparent 65%),
-      linear-gradient(180deg, color-mix(in srgb, var(--accent) 12%, var(--bg-3)), var(--bg-2));
-  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 16%, var(--bg-3)), var(--bg-2));
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 22%, rgba(255, 255, 255, 0.08));
 }
 
 .table tbody td {
@@ -833,7 +704,7 @@ table.table {
 }
 
 .table tbody tr {
-  transition: background var(--dur-2) var(--ease-2), transform var(--dur-2) var(--ease-2);
+  transition: background var(--dur-2) var(--ease-1);
 }
 
 .table tbody tr:hover {
@@ -849,9 +720,7 @@ table.table {
 }
 
 .table-hover tbody tr:hover {
-  background:
-      radial-gradient(320px 160px at 18% 50%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
-      color-mix(in srgb, #ffffff 5%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, color-mix(in srgb, #ffffff 4%, transparent));
 }
 
 .table-responsive,
@@ -861,7 +730,7 @@ table.table {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  border-radius: 16px;
+  border-radius: var(--radius-3);
 }
 
 .table-responsive .table,

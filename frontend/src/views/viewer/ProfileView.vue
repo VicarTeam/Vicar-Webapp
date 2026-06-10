@@ -2,6 +2,7 @@
 import { computed, inject, onMounted, onUnmounted, ref } from "vue"
 import { useStore } from "@/app/store"
 import Avatar from "@/components/Avatar.vue"
+import MarkdownEditor from "@/components/text/MarkdownEditor.vue"
 import Bullet from "@/components/Bullet.vue"
 import IconButton from "@/components/IconButton.vue"
 import Squares from "@/components/progress/Squares.vue"
@@ -17,6 +18,7 @@ import Humanity from "@/components/progress/tracker/Humanity.vue"
 import Damage from "@/components/progress/tracker/Damage.vue"
 import EventBus from "@/libs/event-bus"
 import CharacterStorage from "@/libs/io/character-storage"
+import { uploadImage } from "@/libs/io/cdn"
 import DataManager from "@/libs/data/data-manager"
 import { skillTreeResolver } from "@/libs/resolvers/skilltree-resolver"
 import { getResonanceDisciplines } from "@/app/data/v5"
@@ -44,6 +46,16 @@ const isVampire = computed(() => store.isVampire)
 const isWerewolf = computed(() => store.isWerewolf)
 const isMage = computed(() => store.isMage)
 const isHunter = computed(() => store.isHunter)
+
+// Referenz: die fünf Garou-Formen (W5) mit Kosten/Modifikatoren – Anzeige auf der
+// Profilseite (aus dem alten Frontend übernommen).
+const werewolfForms = [
+  { name: "Homid", lines: ["Kosten: frei", "Immun gegen Silber"] },
+  { name: "Glabro", lines: ["Kosten: 1 Rage-Test", "Körperliche Tests: Bonus von 2 Würfeln", "Soziale Tests: Malus von 2 Würfeln", "Regenerierung: 1 pro Rage-Test"] },
+  { name: "Crinos", lines: ["Kosten: 2 Rage-Test", "Pro Runde 1 Willenskraft ausgeben oder in Raserei verfallen", "+4 Leben", "Körperliche Tests: Bonus von 4 Würfeln", "Soziale & Heimlichkeit Tests: Fehlschlag", "Regenerierung: 2 pro Rage-Test", "Biss: +1 schwerer Schaden", "Verursacht Delirium"] },
+  { name: "Hispo", lines: ["Kosten: 1 Rage-Test", "Körperliche Tests: Bonus von 2 Würfeln", "Soziale Tests: nur mit Wölfen und Garou", "Regenerierung: 1 pro Rage-Test", "Biss: +1 schwerer Schaden"] },
+  { name: "Lupus", lines: ["Kosten: frei", "Immun gegen Silber", "Soziale Tests: nur mit Wölfen und Garou"] },
+]
 
 const requestLevel = inject("request-m20-level") as RequestLevelFn | undefined
 const updateViewer = inject("update-viewer") as (() => void) | undefined
@@ -115,19 +127,26 @@ const effectiveGeneration = computed(() => {
   return skillTreeResolver.getEffectiveCharacterValue(c, "generation", c.generation).value
 })
 
-function onAvatarUpload(e: Event) {
+async function onAvatarUpload(e: Event) {
   const c = editingCharacter.value
   if (!c) return
 
-  const file = (e.target as HTMLInputElement)?.files?.[0]
+  const input = e.target as HTMLInputElement
+  const file = input?.files?.[0]
   if (!file) return
 
-  const reader = new FileReader()
-  reader.onload = ev => {
-    c.avatar = (ev.target as FileReader).result as string
-    updateViewer?.()
+  // Bild ins CDN (Dateisystem) hochladen statt base64 in den Charakter-Blob zu
+  // schreiben; gespeichert wird nur der relative /cdn/<file>-Pfad.
+  const url = await uploadImage(file)
+  if (input) input.value = ""
+  if (!url) {
+    console.error("Avatar-Upload fehlgeschlagen")
+    return
   }
-  reader.readAsDataURL(file)
+
+  c.avatar = url
+  saveChar()
+  updateViewer?.()
 }
 
 function changeAvatar(e: MouseEvent) {
@@ -403,11 +422,11 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
 
         <div v-if="isMage" class="form-group">
           <label>Fokus:</label>
-          <textarea class="form-control" v-model="(editingCharacter as any as IMageSheet).focus" @input="saveChar()" />
+          <MarkdownEditor :model-value="(editingCharacter as any as IMageSheet).focus" @update:model-value="v => { (editingCharacter as any as IMageSheet).focus = v; saveChar() }" />
         </div>
         <div v-else class="form-group">
           <label>Grundsätze der Chronik: <TipButton content="Die Grundsätze der Chronik beschreibt eine Reihe von Regeln, die die Spieler mit ihrem Spielleiter für die bespielende Chronik festgesetzt werden. Jeder Spieler sollte sich an diese Grundsätze halten, auch wenn der Glaube des Charakters nicht komplett damit übereinstimmt. Eine Verletzung würde jedoch nur moralische Sanktionen oder die Degeneration des Charakters mit sich führen. Für weitere Informationen siehe Grundregelwerk V5 S. 172." /></label>
-          <textarea class="form-control" v-model="editingCharacter.chroniclePrinciples" @input="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.chroniclePrinciples" @change="saveChar()" />
         </div>
       </div>
 
@@ -419,12 +438,12 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
 
         <div v-if="isMage" class="form-group">
           <label>Wunder: <TipButton content="Ein Wunder ist ein Hintergrund, der für verschiedene magische Gegenstände steht. Jeder Gegenstandstyp hat einen anderen Namen, den die Erwachten Technokraten benutzen. Artefakte (und Erfindungen) können nur von Magiern benutzt werden und nutzen die Arete-Werte ihres Benutzers. Sie können normalerweise nur ein paar Sachen machen. Einige Artefakte haben stattdessen einen einzigen dauerhaften Effekt und können von Schläfern benutzt werden. Zauber (und Gadgets) sind verbrauchbare magische Gegenstände. Sie werden in Bündeln und nicht als Einzelstücke hergestellt. Schläfer können Zauber benutzen, wenn dies mit ihrem Paradigma vereinbar ist. Fetische werden mit Spirit statt mit Prime hergestellt und erfordern Verhandlungen mit Geistern, um sie herzustellen. Die Garou und andere sich verändernde Rassen sehen die Fetische der Erwachten mit Argwohn, besonders wenn der Magier den Geist in den Fetisch gezwungen hat, anstatt sich seine Zusammenarbeit durch Chiminage zu verdienen. Periapts (und Matrizen), auch Soulgems genannt, enthalten die Quintessenz einer bestimmten Resonanz. Talismane (und Geräte) sind magische Gegenstände, die sogar Schläfer benutzen können, da sie ihre eigene Arete-Bewertung haben; sie können in der Regel mehrere Dinge tun, und viele haben Periapts daran befestigt. Ihre Herstellung erfordert jedoch Willenskraft. Grimoires (und Principiae) können Arete ohne Suche erhöhen und erfordern den Einsatz von 1 permanentem Punkt Willenskraft, aber Kopien können ohne Einsatz von Willenskraft angefertigt werden. Primers sind spezielle Grimoires/Principiae, die Arete 1 lehren – das heißt, sie können das Erwachen bewirken. Für ihre Herstellung sind zwei permanente Willenskraftpunkte erforderlich. Tomes sind ebenfalls spezielle Grimoires, die seltene und mächtige Roten beschreiben und es ermöglichen, deren Schwierigkeitsgrad zu verringern. Amulette (und Gizmos) sind Gegenstände mit „schlafender” Magie, die unter bestimmten Umständen aktiviert wird. Sie werden mit Zeit und/oder Entropie hergestellt. Reliquien sind lebende Wunder. Dieser Untertyp ergänzt einige andere: Reliquien-Talisman, Reliquien-Periapt (auch Seelenblume genannt) usw." /></label>
-          <textarea class="form-control" v-model="(editingCharacter as any as IMageSheet).wonders" @input="saveChar()" />
+          <MarkdownEditor :model-value="(editingCharacter as any as IMageSheet).wonders" @update:model-value="v => { (editingCharacter as any as IMageSheet).wonders = v; saveChar() }" />
         </div>
         <div v-else class="form-group">
           <label>Anker & Überzeugungen: <TipButton content="Wähle ein bis drei Überzeugungen und genau so viele Anker. Überzeugungen sind die Richtlinien die dein Charakter von sich aus befolgen muss und auch will, selbst bis über den Tod (oder eher Untot). Eine Überzeugung kann z.B. sein 'Du sollst nicht töten' oder 'Die Wahrheit ist heilig; du sollst nicht lügen'. Das Verstoßen gegen eine Überzeugung kann Makel mit sich bringen, oder Makel die im Rahmen einer Überzeugung erteilt werden, durch die Überzeugung abgemildert werden.
             Anker sind Personen, die zu Lebzeiten die Wichtigkeit des Lebens gestützt haben. Anker müssen lebende Menschen sein und sollte ein Anker verletzt werden oder gar sterben, kann das zum Verlust von Menschlickeit führen. Ein Anker kann z.B. der Liebespartner oder ein Kind sein." /></label>
-          <textarea class="form-control" v-model="editingCharacter.anchorsAndBeliefs" @input="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.anchorsAndBeliefs" @change="saveChar()" />
         </div>
       </div>
 
@@ -478,7 +497,7 @@ Regeln: Du speicherst Quintessenz entsprechend deines Avatar-Werts und kannst si
 
         <div class="form-group">
           <label>Geschichte:</label>
-          <textarea class="form-control" v-model="editingCharacter.backstory" @input="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.backstory" @change="saveChar()" />
         </div>
       </div>
 
@@ -531,7 +550,7 @@ Regeln: Dein Arete-Wert bestimmt, wie viele Würfel du für Zaubereffekte nutzt 
 
         <div class="form-group">
           <label>Notizen:</label>
-          <textarea class="form-control" v-model="editingCharacter.notes" @input="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.notes" @change="saveChar()" />
         </div>
       </div>
     </div>
@@ -680,6 +699,23 @@ Regeln: Dein Arete-Wert bestimmt, wie viele Würfel du für Zaubereffekte nutzt 
             </span>
             <Squares :max="5" :amount="(editingCharacter as any as IMageSheet).spheres[Sphere.Prime]" />
           </div>
+        </Col>
+      </Row>
+
+      <Row v-if="isWerewolf" class="row-full mt" wrap>
+        <Col class="col-full center">
+          <div class="headline">
+            <Bullet /><Bullet /><Bullet />
+            <b>Formen des Garou</b>
+            <Bullet /><Bullet /><Bullet />
+          </div>
+        </Col>
+      </Row>
+
+      <Row v-if="isWerewolf" class="row-full mt" wrap>
+        <Col v-for="f in werewolfForms" :key="f.name" class="col-form">
+          <Row><b>{{ f.name }}</b></Row>
+          <Row v-for="(line, i) in f.lines" :key="i"><small>{{ line }}</small></Row>
         </Col>
       </Row>
     </div>
@@ -913,9 +949,20 @@ Regeln: Dein Arete-Wert bestimmt, wie viele Würfel du für Zaubereffekte nutzt 
   min-width: 18rem;
 }
 
+.col-form {
+  flex: 1 1 0;
+  align-items: center;
+  min-width: 11rem;
+  text-align: center;
+  gap: 0.25rem;
+
+  small { color: var(--text-2); }
+}
+
 @media (max-width: 900px) {
   .col-third,
-  .col-spheres {
+  .col-spheres,
+  .col-form {
     flex: 1 1 100%;
     min-width: 0;
   }

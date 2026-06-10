@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema(
     shortCode: { type: String },
     installedHomebrew: { type: Object },
     currentAccessToken: { type: String, default: "" },
+    isAdmin: { type: Boolean, default: false },
   }
 );
 const refreshTokenSchema = new mongoose.Schema(

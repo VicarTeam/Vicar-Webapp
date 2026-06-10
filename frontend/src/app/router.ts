@@ -1,9 +1,52 @@
-import {createRouter, createWebHistory, type RouteLocationNormalizedGeneric} from 'vue-router'
+import {createRouter, createWebHistory, type NavigationGuardNext, type RouteLocationNormalizedGeneric} from 'vue-router'
 import {checkSession, setSession} from "@/libs/auth.ts";
 import DataManager from "@/libs/data/data-manager.ts";
 import CharacterStorage from "@/libs/io/character-storage.ts";
 
 let firstRoute: RouteLocationNormalizedGeneric | null = null;
+
+/**
+ * Auth-/Daten-Guard der Hauptansicht (MainView). Wird von '/' und '/lexikon'
+ * geteilt, damit das Lexikon einen eigenen, direkt aufrufbaren Link hat.
+ */
+async function mainGuard(to: RouteLocationNormalizedGeneric, _from: RouteLocationNormalizedGeneric, next: NavigationGuardNext) {
+  const stk = to.query.stk as string;
+  if (stk) {
+    localStorage.setItem('vicar:session', stk);
+  }
+
+  const result = await checkSession();
+
+  if (!firstRoute) firstRoute = to;
+  if (result.status === 'not_found') {
+    next('/login');
+  } else {
+    if (!await DataManager.loadLogin(false)) {
+      next('/login');
+      return;
+    }
+    next();
+  }
+}
+
+/** Wie mainGuard, verlangt zusätzlich die Admin-Flag (sonst zurück auf /). */
+async function adminGuard(to: RouteLocationNormalizedGeneric, _from: RouteLocationNormalizedGeneric, next: NavigationGuardNext) {
+  const result = await checkSession();
+  if (!firstRoute) firstRoute = to;
+  if (result.status === 'not_found') {
+    next('/login');
+    return;
+  }
+  if (!await DataManager.loadLogin(false)) {
+    next('/login');
+    return;
+  }
+  if (!DataManager.isAdmin) {
+    next('/');
+    return;
+  }
+  next();
+}
 
 function _q(to: RouteLocationNormalizedGeneric): string {
   return `?r=${encodeURIComponent(btoa(to.fullPath))}`;
@@ -21,25 +64,21 @@ const router = createRouter({
       path: '/',
       name: 'main',
       component: () => import('@/views/MainView.vue'),
-      beforeEnter: async (to, from, next) => {
-        const stk = to.query.stk as string;
-        if (stk) {
-          localStorage.setItem('vicar:session', stk);
-        }
-
-        const result = await checkSession();
-
-        if (!firstRoute) firstRoute = to;
-        if (result.status === 'not_found') {
-          next('/login');
-        } else {
-          if (!await DataManager.loadLogin(false)) {
-            next('/login');
-            return;
-          }
-          next();
-        }
-      }
+      beforeEnter: mainGuard
+    },
+    {
+      // Eigener, teilbarer Link für das Lexikon (zeigt MainView mit Lexikon-Tab).
+      path: '/lexikon',
+      alias: '/lexicon',
+      name: 'lexikon',
+      component: () => import('@/views/MainView.vue'),
+      beforeEnter: mainGuard
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('@/views/admin/AdminView.vue'),
+      beforeEnter: adminGuard
     },
     {
       path: '/skilltrees',

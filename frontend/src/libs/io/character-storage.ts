@@ -1,6 +1,6 @@
 import type {ICharacter, ICharacterDirectory} from "@/@types/models";
 import {v4 as uuidv4} from 'uuid';
-import {del, get, post, put} from "@/libs/io/rest";
+import {del, get, patch, post, put} from "@/libs/io/rest";
 import {useStore} from "@/app/store";
 import router from "@/app/router.ts";
 import {io} from "socket.io-client";
@@ -15,6 +15,8 @@ export default class CharacterStorage {
   public static loadedCharacters: ICharacter[] = [];
   public static loadedDirectories: ICharacterDirectory[] = [];
   private static initialized: boolean = false;
+  /** IDs der Charaktere, deren vollständiger Blob (nicht nur das Listen-Summary) geladen ist. */
+  private static fullyLoaded: Set<string> = new Set();
 
   public static async preloadCharacter(id: string): Promise<true | 'not_found' | 'not_authed'> {
     const result = await checkSession();
@@ -26,14 +28,53 @@ export default class CharacterStorage {
       await this.initialize();
     }
 
-    const existing = this.loadedCharacters.find(character => character.id === id);
-    if (!existing) {
+    // Die Liste enthält nur leichte Summaries -> hier den vollen Blob nachladen.
+    const full = await this.loadFullCharacter(id);
+    if (full === 'not_authed') {
+      return 'not_authed';
+    }
+    if (!full) {
       return 'not_found';
     }
 
     const store = useStore();
-    store.editingCharacter = existing;
+    store.editingCharacter = full;
     return true;
+  }
+
+  /**
+   * Lädt den vollständigen Charakter-Blob bei Bedarf vom Server und merged ihn in
+   * den vorhandenen (Summary-)Listeneintrag, sodass bestehende Referenzen (Karte)
+   * erhalten bleiben. Bereits voll geladene Charaktere werden direkt zurückgegeben.
+   */
+  private static async loadFullCharacter(id: string): Promise<ICharacter | undefined | 'not_authed'> {
+    if (this.fullyLoaded.has(id)) {
+      return this.loadedCharacters.find(character => character.id === id);
+    }
+
+    const [status, full] = await get<ICharacter>(`/characters/${id}`);
+    if (status === 401) {
+      return 'not_authed';
+    }
+    if (status >= 400) {
+      return undefined;
+    }
+
+    let existing = this.loadedCharacters.find(character => character.id === id);
+    if (existing) {
+      Object.assign(existing, full);
+    } else {
+      existing = full;
+      this.loadedCharacters.push(existing);
+    }
+    this.fullyLoaded.add(id);
+    return existing;
+  }
+
+  /** Stellt sicher, dass der vollständige Blob geladen ist, und gibt ihn zurück (z. B. für Klonen/Export). */
+  public static async getFullCharacter(id: string): Promise<ICharacter | undefined> {
+    const full = await this.loadFullCharacter(id);
+    return full === 'not_authed' ? undefined : full;
   }
 
   public static async initialize() {
@@ -80,6 +121,15 @@ export default class CharacterStorage {
       return;
     }
 
+    // Schutz gegen Datenverlust: ein nur teilgeladenes Summary niemals als vollen
+    // Blob zurückspeichern (würde u. a. das eingebettete Regelwerk in der DB
+    // überschreiben). Voll geladen wird über den Viewer (preloadCharacter) oder
+    // beim Neuanlegen/Import (addCharacter).
+    if (!this.fullyLoaded.has(character.id)) {
+      console.warn("saveCharacter abgebrochen: Charakter nicht vollständig geladen", character.id);
+      return;
+    }
+
     if (instant) {
       const [status, _] = await put(`/characters/${character.id}`, character);
       if (status >= 400) {
@@ -100,6 +150,21 @@ export default class CharacterStorage {
     }, 1000);
   }
 
+  /**
+   * Persistiert nur die Ordner-Zuordnung (Drag-&-Drop in der Liste). Nutzt einen
+   * gezielten PATCH statt eines vollen PUT, da in der Liste evtl. nur ein Summary
+   * geladen ist und ein volles PUT den Blob überschreiben würde.
+   */
+  public static async saveDirectory(character: ICharacter, directory: string | undefined) {
+    if (character.justViewing) {
+      return;
+    }
+    const [status] = await patch(`/characters/${character.id}/directory`, {directory: directory ?? null});
+    if (status >= 400) {
+      console.error("Failed to update character directory");
+    }
+  }
+
   public static async addCharacter(character: ICharacter): Promise<string | undefined> {
     const [status, res] = await post<{ id: string }>(`/characters`, character);
     if (status >= 400) {
@@ -107,6 +172,8 @@ export default class CharacterStorage {
     }
 
     character.id = res.id;
+    // Neu angelegte/importierte Charaktere liegen lokal vollständig vor.
+    this.fullyLoaded.add(character.id);
     this.loadedCharacters.push(character);
 
     if (character.directory && !this.loadedDirectories.find(directory => directory.id === character.directory)) {
