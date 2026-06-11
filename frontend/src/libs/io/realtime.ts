@@ -1,6 +1,16 @@
 import { io, type Socket } from "socket.io-client"
 import { ref } from "vue"
 import { checkSession, getAccessToken, refreshIfNeeded } from "@/libs/auth"
+import { playFx, type FxKind } from "@/libs/fx/fx"
+
+function outcomeToFx(outcome: string): FxKind | null {
+  switch (outcome) {
+    case "MESSY_CRITICAL": return "messyCrit"
+    case "BESTIAL_FAILURE": return "bestialFail"
+    case "CRITICAL_SUCCESS": return "critSuccess"
+    default: return null
+  }
+}
 
 /**
  * Gemeinsamer Realtime-Socket: Character-Updates (Legacy) + FoundryVTT-Bridge.
@@ -50,6 +60,20 @@ export function initRealtime() {
     // Bleiben Heartbeats aus, gilt FVTT als offline.
     hbTimeout = setTimeout(() => { fvttOnline.value = false }, 8000)
   })
+
+  // GM-Trigger (z.B. Raserei) -> Effekt beim Spieler.
+  socket.on("fx", ({ kind }: { kind: FxKind }) => playFx(kind))
+
+  // Wurf-Ergebnis aus FVTT -> Outcome-Effekt (Messy/Bestial/Critical).
+  socket.on("fvtt-roll-result", ({ outcome }: { outcome: string }) => {
+    const k = outcomeToFx(outcome)
+    if (k) playFx(k)
+  })
+}
+
+/** GM löst einen Effekt beim Spieler des Charakters aus (Server prüft Owner/Viewer/Admin). */
+export function triggerFx(characterId: string, kind: string) {
+  socket?.emit("fx-trigger", { characterId, kind })
 }
 
 export function onCharacterUpdated(cb: (character: any) => void) {

@@ -26,6 +26,16 @@ const devMode = computed<boolean>({
   },
 })
 
+const fxEnabled = computed<boolean>({
+  get() { return SettingsData.isFxEnabled() },
+  set(v) { SettingsData.setFxEnabled(v) },
+})
+
+const soundEnabled = computed<boolean>({
+  get() { return SettingsData.isSoundEnabled() },
+  set(v) { SettingsData.setSoundEnabled(v) },
+})
+
 const canChangePassword = computed(() => newPassword.value.length > 0 && newPassword.value === newPasswordRepeat.value)
 
 onMounted(async () => {
@@ -147,6 +157,14 @@ async function logout() {
         </div>
 
         <div class="bottom">
+          <div class="custom-switch">
+            <input type="checkbox" id="switch-fx" v-model="fxEnabled" />
+            <label for="switch-fx">Effekte</label>
+          </div>
+          <div class="custom-switch">
+            <input type="checkbox" id="switch-sound" v-model="soundEnabled" />
+            <label for="switch-sound">Sound</label>
+          </div>
           <div class="custom-switch">
             <input type="checkbox" id="switch-1" v-model="devMode" />
             <label for="switch-1">Entwicklermodus</label>

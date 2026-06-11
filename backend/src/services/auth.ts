@@ -30,7 +30,7 @@ export async function authenticateByPassword(username: string, password: string)
       user = new User();
       user.username = username;
       user.password = await bcrypt.hash(password, await bcrypt.genSalt(10));
-      user.discordId = '';
+      user.discordId = 'local:' + crypto.randomUUID();
       await user.save();
     } else if (!user.password || user.password.trim().length === 0) {
       user.password = await bcrypt.hash(password, await bcrypt.genSalt(10));

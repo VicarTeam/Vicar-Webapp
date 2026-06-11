@@ -19,6 +19,7 @@ import Damage from "@/components/progress/tracker/Damage.vue"
 import EventBus from "@/libs/event-bus"
 import CharacterStorage from "@/libs/io/character-storage"
 import { uploadImage } from "@/libs/io/cdn"
+import { playFx } from "@/libs/fx/fx"
 import DataManager from "@/libs/data/data-manager"
 import { skillTreeResolver } from "@/libs/resolvers/skilltree-resolver"
 import { getResonanceDisciplines } from "@/app/data/v5"
@@ -95,10 +96,7 @@ function onResonanceSave() {
   if (!c || !isVampire.value || !c.resonance) return
 
   const resonanceKey = getResonanceByIndex(c.resonance as unknown as number);
-  document.body.classList.add(`vicar-resonance-glow--${resonanceKey}`)
-  setTimeout(() => {
-    document.body.classList.remove(`vicar-resonance-glow--${resonanceKey}`)
-  }, 5000)
+  playFx("resonance", { key: resonanceKey })
 
   saveChar()
 }

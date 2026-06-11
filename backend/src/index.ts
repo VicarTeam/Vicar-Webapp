@@ -13,7 +13,7 @@ import {Server} from "socket.io";
 import { createServer } from "node:http";
 import {removeSocket, setSocket} from "./sockets";
 import {isAuthenticated} from "./services/auth";
-import {User} from "./schema";
+import {Character, User} from "./schema";
 
 mongoose.connect(Bun.env.MONGO_URI as string).then(() => {
   console.log('Connected to MongoDB')
@@ -96,6 +96,10 @@ io.on('connection', socket => {
       socket.on('fvtt-heartbeat', () => {
         io.to('web:' + user.id).emit('fvtt-heartbeat');
       });
+      // Wurf-Ergebnis von FVTT -> an die Web-Clients (für Effekte).
+      socket.on('fvtt-roll-result', (result) => {
+        io.to('web:' + user.id).emit('fvtt-roll-result', result);
+      });
     }).catch(() => socket.disconnect());
     return;
   }
@@ -113,6 +117,21 @@ io.on('connection', socket => {
     // Würfelpool-Wurf vom Web -> an die FVTT-Clients desselben Users weiterleiten.
     socket.on('fvtt-roll', data => {
       io.to('fvtt:' + user.id).emit('fvtt-roll', data);
+    });
+
+    // GM-Effekt-Trigger: nur erlaubt, wenn der Anfragende Owner/Viewer (oder Admin)
+    // des Ziel-Charakters ist. Effekt geht an die Web-Clients des Charakter-Owners.
+    socket.on('fx-trigger', async ({characterId, kind}: {characterId: string; kind: string}) => {
+      const ALLOWED = ['frenzy', 'hungerSpike', 'messyCrit', 'bestialFail', 'critSuccess'];
+      if (!ALLOWED.includes(kind)) return;
+      try {
+        let char = await Character.findOne({_id: characterId, $or: [{userId: user.id}, {viewers: user.id}]});
+        if (!char && user.isAdmin) char = await Character.findById(characterId);
+        if (!char) return;
+        io.to('web:' + char.userId).emit('fx', {kind});
+      } catch {
+        // ungültige id o.ä. -> ignorieren
+      }
     });
 
     socket.on('disconnect', () => {

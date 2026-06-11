@@ -27,7 +27,7 @@ import RestButton from "@/components/viewer/RestButton.vue";
 import DataManager from "@/libs/data/data-manager"
 import { skillTreeResolver } from "@/libs/resolvers/skilltree-resolver"
 import { getResonanceDisciplines } from "@/app/data/v5"
-import { fvttOnline, rollInFvtt } from "@/libs/io/realtime"
+import { fvttOnline, rollInFvtt, triggerFx } from "@/libs/io/realtime"
 import { resolveAssetUrl } from "@/libs/io/cdn"
 
 const store = useStore()
@@ -507,6 +507,16 @@ onUnmounted(() => {
         >
           {{ saveText || "Speichern" }}
         </button>
+
+        <!-- Erzähler-Tools: sichtbar für Viewer (GM) eines geteilten Charakters. -->
+        <template v-if="editingCharacter.justViewing && isVampire">
+          <button class="btn btn-dark gm-fx" @click="triggerFx(editingCharacter.id, 'frenzy')" title="Raserei beim Spieler auslösen">
+            <i class="fa-solid fa-fire"></i> Raserei
+          </button>
+          <button class="btn btn-dark gm-fx" @click="triggerFx(editingCharacter.id, 'hungerSpike')" title="Hungerschub beim Spieler auslösen">
+            <i class="fa-solid fa-droplet"></i> Hunger
+          </button>
+        </template>
       </div>
     </div>
 

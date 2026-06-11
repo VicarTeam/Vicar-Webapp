@@ -3,6 +3,7 @@ import { provide, ref, watchEffect, onMounted, onUnmounted } from "vue"
 import { useStore } from "@/app/store.ts"
 import TipModal from "@/components/editor/TipModal.vue"
 import QuickLexiconOverlay from "@/components/main/lexicon/QuickLexiconOverlay.vue"
+import VampireFx from "@/components/fx/VampireFx.vue"
 
 const store = useStore()
 
@@ -46,6 +47,8 @@ provide("show-tip", (content: any, title?: any) => {
   <RouterView />
 
   <QuickLexiconOverlay />
+
+  <VampireFx />
 
   <TipModal ref="tipModal" />
 </template>
