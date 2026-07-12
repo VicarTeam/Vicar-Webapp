@@ -139,6 +139,44 @@ class SkillTreeConstraintResolver {
   }
 
   /**
+   * Prüft, ob die reinen Freischalt-Voraussetzungen eines Skills (Eltern-
+   * Abhängigkeiten + `RequiresSkill`-Einschränkungen) durch die gegebene Menge
+   * freigeschalteter IDs erfüllt sind. Ressourcen und Ausschlüsse werden bewusst
+   * ignoriert – dient dem Kaskaden-Rückbau im vollen Editiermodus (welche bereits
+   * freigeschalteten Skills verlieren ihre Grundlage, wenn ein Skill entfernt wird?).
+   */
+  public dependenciesMet(state: ICharacterSkillTreeState, node: ISkillNode, unlockedIds: Set<string>): boolean {
+    const nodeIds = new Set((state.treeSnapshot?.nodes ?? []).map(n => n.id));
+
+    const parentDeps = (node.dependencies ?? [])
+      .filter(d => d.kind === DependencyKind.Parent && nodeIds.has(d.fromSkillId));
+    if (parentDeps.length > 0) {
+      const gate = node.parentGate ?? ParentGate.And;
+      const unlockedCount = parentDeps.filter(d => unlockedIds.has(d.fromSkillId)).length;
+
+      if (gate === ParentGate.Or) {
+        if (unlockedCount < 1) return false;
+      } else if (gate === ParentGate.Xor) {
+        if (unlockedCount !== 1) return false;
+      } else if (unlockedCount !== parentDeps.length) {
+        return false;
+      }
+    }
+
+    for (const c of node.constraints ?? []) {
+      if (c.type === SkillConstraintType.RequiresSkill) {
+        const reqId = c.data?.skillId;
+        // Nur Voraussetzungen berücksichtigen, die auf einen existierenden Skill zeigen.
+        if (reqId && nodeIds.has(reqId) && !unlockedIds.has(reqId)) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  /**
    * Ob ein Skill durch eine bereits getroffene Wahl ausgeschlossen ist
    * (gegenseitiger Ausschluss oder bereits vergebene exklusive Gruppe).
    * Für visuelles Verblassen gedacht.

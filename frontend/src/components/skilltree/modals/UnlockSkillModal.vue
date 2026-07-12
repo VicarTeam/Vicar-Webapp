@@ -12,9 +12,11 @@ import {formatModifier} from "@/libs/skilltree-format"
 import {resolveAssetUrl} from "@/libs/io/cdn"
 import CharacterStorage from "@/libs/io/character-storage"
 import SkillTreeStorage from "@/libs/io/skilltree-storage"
+import {collectRevertCascade, revertSkills, type RevertCascade} from "@/libs/skilltree-edit"
 
 const emit = defineEmits<{
   (e: "unlocked", nodeId: string): void
+  (e: "reverted", nodeId: string): void
 }>()
 
 const show = ref(false)
@@ -22,9 +24,14 @@ const char = ref<ICharacter | null>(null)
 const state = ref<ICharacterSkillTreeState | null>(null)
 const node = ref<ISkillNode | null>(null)
 
+/** Rückbau-Bestätigung (nur im vollen Editiermodus). */
+const pendingCascade = ref<RevertCascade | null>(null)
+
 const isUnlocked = computed(() =>
   !!state.value && !!node.value && state.value.unlockedSkillIds.includes(node.value.id),
 )
+
+const canFullyEdit = computed(() => !!char.value?.fullCustomization)
 
 const check = computed(() => {
   if (!char.value || !state.value || !node.value) return {ok: false, reasons: []}
@@ -39,7 +46,45 @@ function showModal(c: ICharacter, s: ICharacterSkillTreeState, n: ISkillNode) {
   char.value = c
   state.value = s
   node.value = n
+  pendingCascade.value = null
   show.value = true
+}
+
+/** Startet den Rückbau: berechnet betroffene Kinder, führt bei keinem Zusatz direkt aus. */
+function requestRevert() {
+  const s = state.value
+  const n = node.value
+  if (!s || !n || !canFullyEdit.value) return
+
+  const cascade = collectRevertCascade(s, n.id)
+  if (cascade.cascaded.length > 0) {
+    // Abhängige Kinder betroffen -> erst Warnung bestätigen lassen.
+    pendingCascade.value = cascade
+  } else {
+    applyRevert(cascade)
+  }
+}
+
+function applyRevert(cascade: RevertCascade) {
+  const c = char.value
+  const s = state.value
+  const n = node.value
+  if (!c || !s || !n) return
+
+  revertSkills(c, s, cascade)
+  CharacterStorage.saveCharacter(c)
+
+  pendingCascade.value = null
+  emit("reverted", n.id)
+  show.value = false
+}
+
+function confirmRevert() {
+  if (pendingCascade.value) applyRevert(pendingCascade.value)
+}
+
+function cancelRevert() {
+  pendingCascade.value = null
 }
 
 async function embedSubTree(c: ICharacter, code: string) {
@@ -116,9 +161,35 @@ defineExpose({showModal})
         <i class="fa-solid fa-diagram-project"></i> Schaltet einen weiteren Skill-Baum frei.
       </div>
 
-      <div v-if="isUnlocked" class="status ok">
-        <i class="fa-solid fa-circle-check"></i> Bereits freigeschaltet
-      </div>
+      <template v-if="isUnlocked">
+        <div class="status ok">
+          <i class="fa-solid fa-circle-check"></i> Bereits freigeschaltet
+        </div>
+
+        <!-- Voller Editiermodus: Freischaltung rückgängig machen. -->
+        <template v-if="canFullyEdit">
+          <div v-if="pendingCascade" class="cascade-warn">
+            <p class="warn-head">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              Dieser Skill ist Voraussetzung für andere freigeschaltete Skills. Beim
+              Zurücksetzen werden auch diese entfernt:
+            </p>
+            <ul class="cascade-list">
+              <li v-for="c in pendingCascade.cascaded" :key="c.id">{{ c.name || "Skill" }}</li>
+            </ul>
+            <div class="cascade-actions">
+              <button class="btn btn-dark" @click="cancelRevert">Abbrechen</button>
+              <button class="btn btn-danger" @click="confirmRevert">
+                Alle {{ pendingCascade.removeIds.length }} entfernen
+              </button>
+            </div>
+          </div>
+
+          <button v-else class="btn btn-danger revert-btn" @click="requestRevert">
+            <i class="fa-solid fa-rotate-left"></i> Freischaltung rückgängig
+          </button>
+        </template>
+      </template>
 
       <template v-else>
         <ul v-if="check.reasons.length > 0" class="reasons">
@@ -219,5 +290,52 @@ defineExpose({showModal})
 
 .unlock-btn {
   align-self: flex-start;
+}
+
+.revert-btn {
+  align-self: flex-start;
+}
+
+.btn-danger {
+  border-color: color-mix(in srgb, #ff5a5a 55%, rgba(255, 255, 255, 0.12));
+  background: linear-gradient(180deg, color-mix(in srgb, #ff6b6b 55%, var(--bg-3)), color-mix(in srgb, #b3261e 65%, var(--bg-2)));
+  color: #fff;
+}
+
+.cascade-warn {
+  border: 1px solid color-mix(in srgb, #ff8a8a 45%, rgba(255, 255, 255, 0.08));
+  background: color-mix(in srgb, #ff5a5a 8%, var(--bg-2));
+  border-radius: var(--radius-2);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  .warn-head {
+    margin: 0;
+    color: color-mix(in srgb, #ffb0b0 80%, var(--text-1));
+    font-size: 0.9rem;
+    display: flex;
+    gap: var(--space-2);
+
+    i {
+      margin-top: 0.15rem;
+    }
+  }
+
+  .cascade-list {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    color: var(--text-1);
+  }
+
+  .cascade-actions {
+    display: flex;
+    gap: var(--space-2);
+    justify-content: flex-end;
+  }
 }
 </style>

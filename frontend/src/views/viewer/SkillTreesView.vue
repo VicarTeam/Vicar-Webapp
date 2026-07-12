@@ -8,6 +8,7 @@ import UnlockSkillModal from "@/components/skilltree/modals/UnlockSkillModal.vue
 import {skillTreeResolver} from "@/libs/resolvers/skilltree-resolver"
 import {skillTreeConstraintResolver} from "@/libs/resolvers/skilltree-constraint-resolver"
 import {formatModifier} from "@/libs/skilltree-format"
+import {syncCharacterTree} from "@/libs/skilltree-edit"
 import CharacterStorage from "@/libs/io/character-storage"
 
 const store = useStore()
@@ -20,6 +21,10 @@ const selectedState = computed<ICharacterSkillTreeState | undefined>(() => state
 const unlockModal = ref<InstanceType<typeof UnlockSkillModal> | null>(null)
 const pulsedNodeId = ref<string | null>(null)
 let pulseTimer: number | undefined
+
+const syncing = ref(false)
+const syncMessage = ref("")
+let syncMsgTimer: number | undefined
 
 const activeModifiers = computed(() =>
   editingCharacter.value ? skillTreeResolver.getActiveModifiers(editingCharacter.value) : [],
@@ -52,6 +57,49 @@ function onUnlocked(nodeId: string) {
 function saveCustomResource() {
   if (editingCharacter.value) CharacterStorage.saveCharacter(editingCharacter.value)
 }
+
+function flashSyncMessage(text: string) {
+  syncMessage.value = text
+  window.clearTimeout(syncMsgTimer)
+  syncMsgTimer = window.setTimeout(() => (syncMessage.value = ""), 6000)
+}
+
+async function syncSelectedTree() {
+  const c = editingCharacter.value
+  const s = selectedState.value
+  if (!c || !s || syncing.value) return
+
+  syncing.value = true
+  try {
+    const result = await syncCharacterTree(c, s)
+    switch (result.status) {
+      case "up_to_date":
+        flashSyncMessage("Bereits auf dem neuesten Stand.")
+        break
+      case "not_found":
+        flashSyncMessage("Baum nicht gefunden – wurde er vom Ersteller gelöscht?")
+        break
+      case "error":
+        flashSyncMessage("Synchronisieren fehlgeschlagen.")
+        break
+      case "ok": {
+        CharacterStorage.saveCharacter(c)
+        if (result.removedSkills.length > 0) {
+          const names = result.removedSkills.map(n => n.name || "Skill").join(", ")
+          flashSyncMessage(`Aktualisiert auf v${result.toVersion}. Entfernt (nicht mehr vorhanden): ${names}.`)
+        } else {
+          flashSyncMessage(`Aktualisiert auf v${result.toVersion}.`)
+        }
+        break
+      }
+    }
+  } catch (e) {
+    console.error(e)
+    flashSyncMessage("Synchronisieren fehlgeschlagen.")
+  } finally {
+    syncing.value = false
+  }
+}
 </script>
 
 <template>
@@ -79,9 +127,23 @@ function saveCustomResource() {
       <div v-if="selectedState" class="layout">
         <div class="canvas-wrap card">
           <div class="tree-head">
-            <div>
+            <div class="tree-title">
               <b class="tree-name">{{ selectedState.treeSnapshot.name }}</b>
               <p class="tree-desc">{{ selectedState.treeSnapshot.description }}</p>
+              <div class="tree-meta">
+                <span class="tree-version">v{{ selectedState.treeSnapshot.version ?? 1 }}</span>
+                <button
+                  type="button"
+                  class="sync-btn"
+                  :disabled="syncing"
+                  title="Mit der aktuellen Version des Erstellers abgleichen"
+                  @click="syncSelectedTree"
+                >
+                  <i class="fa-solid" :class="syncing ? 'fa-spinner fa-spin' : 'fa-rotate'"></i>
+                  {{ syncing ? "Synchronisiere…" : "Skillbaum synchronisieren" }}
+                </button>
+                <span v-if="syncMessage" class="sync-msg">{{ syncMessage }}</span>
+              </div>
             </div>
             <div class="resource">
               <span class="res-label">{{ resourceLabel }}</span>
@@ -193,6 +255,10 @@ function saveCustomResource() {
   padding: var(--space-4);
   border-bottom: 1px solid color-mix(in srgb, var(--accent) 14%, rgba(255, 255, 255, 0.06));
 
+  .tree-title {
+    min-width: 0;
+  }
+
   .tree-name {
     font-family: var(--font-display);
     font-size: 1.1rem;
@@ -202,6 +268,52 @@ function saveCustomResource() {
     margin: var(--space-1) 0 0;
     color: var(--text-3);
     font-size: 0.85rem;
+  }
+
+  .tree-meta {
+    margin-top: var(--space-2);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tree-version {
+    font-size: 0.7rem;
+    color: var(--text-3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    padding: 0.05rem 0.5rem;
+  }
+
+  .sync-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0.25rem 0.65rem;
+    font-size: 0.78rem;
+    border-radius: var(--radius-2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-2);
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all var(--dur-2) var(--ease-2);
+
+    &:hover:not(:disabled) {
+      border-color: var(--accent-border);
+      color: var(--text-1);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+  }
+
+  .sync-msg {
+    font-size: 0.76rem;
+    color: color-mix(in srgb, var(--accent) 55%, var(--text-1));
+    flex-basis: 100%;
   }
 
   .resource {
