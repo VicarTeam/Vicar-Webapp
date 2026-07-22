@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
+import { computed, ref, watch } from "vue"
 import Modal from "@/components/modal/Modal.vue"
 import TipButton from "@/components/editor/TipButton.vue"
 import type { ICharacter } from "@/@types/models"
@@ -26,11 +26,19 @@ const show = ref(false)
 const character = ref<ICharacter | null>(null)
 const reduceTo = ref(0)
 const showDetails = ref(false)
+const simulatedHunger = ref<number | null>(null)
+
+const effectiveHunger = computed(() => {
+  const c = character.value
+  if (!c) return 0
+  return simulatedHunger.value ?? c.hunger
+})
 
 const showModal = (c: ICharacter) => {
   character.value = c
   showDetails.value = false
   reduceTo.value = 0
+  simulatedHunger.value = null
 
   if (c.cache) reduceTo.value = (c.cache["huntCalculatorReduceTo"] as any) || 0
   if (reduceTo.value > c.hunger) reduceTo.value = c.hunger
@@ -38,11 +46,15 @@ const showModal = (c: ICharacter) => {
   show.value = true
 }
 
+watch(simulatedHunger, () => {
+  if (reduceTo.value >= effectiveHunger.value) reduceTo.value = 0
+})
+
 const reduceToOptions = computed<IOption[]>(() => {
   const c = character.value
   if (!c) return []
   const options: IOption[] = []
-  for (let i = 0; i < c.hunger; i++) {
+  for (let i = 0; i < effectiveHunger.value; i++) {
     options.push({ value: i, name: `Auf \"${i}\" reduzieren`})
   }
   return options
@@ -101,7 +113,7 @@ const drinkOptions = computed<IDrinkOptionOut[]>(() => {
   if (!c) return []
 
   const to = reduceTo.value
-  const v = c.hunger - to
+  const v = effectiveHunger.value - to
   const bp = c.bloodPotency
 
   const out: IDrinkOptionOut[] = []
@@ -190,6 +202,49 @@ const drinkDetails = computed<string[]>(() => {
   return Array.from(set)
 })
 
+interface IVampireFeedingRow {
+  id: number
+  donor: string
+  rate: string
+  needed: number
+}
+
+const vampireFeedingRows = computed<IVampireFeedingRow[]>(() => {
+  const c = character.value
+  if (!c) return []
+
+  const bp = c.bloodPotency
+  const v = effectiveHunger.value - reduceTo.value
+  const rows: IVampireFeedingRow[] = []
+
+  if (bp + 2 <= 10) {
+    rows.push({
+      id: 0,
+      donor: `Blutmacht ${bp + 2} oder höher`,
+      rate: "2 gestillte Hunger pro 1 zugefügtem Hunger",
+      needed: Math.ceil(v / 2),
+    })
+  }
+
+  rows.push({
+    id: 1,
+    donor: `Blutmacht ${Math.max(0, bp - 1)} bis ${Math.min(10, bp + 1)}`,
+    rate: "1 gestillter Hunger pro 1 zugefügtem Hunger",
+    needed: v,
+  })
+
+  if (bp >= 3) {
+    rows.push({
+      id: 2,
+      donor: `Blutmacht ${bp - 2} oder niedriger`,
+      rate: "1 gestillter Hunger pro 2 zugefügten Hunger",
+      needed: v * 2,
+    })
+  }
+
+  return rows
+})
+
 const restrictionText = computed(() => {
   const c = character.value
   if (!c) return ""
@@ -206,7 +261,7 @@ const handleClose = () => {
   show.value = false
   c.cache = c.cache || {}
 
-  if (reduceTo.value > 0) c.cache["huntCalculatorReduceTo"] = reduceTo.value
+  if (reduceTo.value > 0 && reduceTo.value <= c.hunger) c.cache["huntCalculatorReduceTo"] = reduceTo.value
   else delete c.cache["huntCalculatorReduceTo"]
 }
 
@@ -240,9 +295,21 @@ defineExpose({ showModal })
       <b class="hcm__title">{{ `Jagd für "${character.name}" berechnen` }}:</b>
 
       <div class="hcm__top">
-        <span>Aktueller Hunger: <b>{{ character.hunger }}</b></span>
+        <span>
+          Aktueller Hunger: <b>{{ character.hunger }}</b>
+          <template v-if="simulatedHunger !== null"> (simuliert: <b>{{ simulatedHunger }}</b>)</template>
+        </span>
 
-        <select v-if="character.hunger > 0" v-model.number="reduceTo" class="form-control">
+        <select v-if="character.hunger === 0" v-model="simulatedHunger" class="form-control">
+          <option :value="null">Keinen Hunger simulieren</option>
+          <option v-for="i in 5" :key="i" :value="i">Hunger {{ i }} simulieren</option>
+        </select>
+
+        <span v-if="simulatedHunger !== null" class="hcm__simHint">
+          Rein fiktive Ansicht — der echte Hunger bleibt unverändert.
+        </span>
+
+        <select v-if="effectiveHunger > 0" v-model.number="reduceTo" class="form-control">
           <option v-for="option in reduceToOptions" :key="option.value" :value="option.value">
             {{ option.name }}
           </option>
@@ -263,7 +330,7 @@ defineExpose({ showModal })
 
       <div class="hcm__divider"></div>
 
-      <div v-if="character.hunger > 0" class="hcm__tableWrap">
+      <div v-if="effectiveHunger > 0" class="hcm__tableWrap">
         <table class="table">
           <thead>
           <tr>
@@ -282,6 +349,35 @@ defineExpose({ showModal })
             <td>{{ o.time }}</td>
             <td>{{ o.max }}</td>
             <td>{{ o.needed }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="hcm__divider"></div>
+
+      <b class="hcm__sectionTitle">
+        Von Vampiren trinken
+        <TipButton
+          content="Entscheidend ist die Blutmacht des Spenders im Vergleich zur eigenen. Zugefügter Hunger meint den Hunger, den der Spender durch das Trinken erleidet."
+          class="hcm__tip"
+        />
+      </b>
+
+      <div class="hcm__tableWrap">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Spender</th>
+            <th>Verhältnis</th>
+            <th v-if="effectiveHunger > 0">Zugefügter Hunger</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="row in vampireFeedingRows" :key="row.id">
+            <td>{{ row.donor }}</td>
+            <td>{{ row.rate }}</td>
+            <td v-if="effectiveHunger > 0">{{ row.needed }}</td>
           </tr>
           </tbody>
         </table>
@@ -345,6 +441,21 @@ defineExpose({ showModal })
 
 .hcm__tip {
   margin-left: 0.25rem;
+}
+
+.hcm__simHint {
+  font-size: 0.85em;
+  font-style: italic;
+  opacity: 0.75;
+  text-align: center;
+}
+
+.hcm__sectionTitle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
 }
 
 .hcm__tableWrap {

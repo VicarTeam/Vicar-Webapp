@@ -93,7 +93,9 @@ export default class DataManager {
         description: clan.description,
         curse: clan.curse,
         actions: clan.actions || [],
-        disciplines: disciplines.filter(value => clan.disciplines.includes(value.id))
+        disciplines: disciplines.filter(value => clan.disciplines.includes(value.id)),
+        difficulty: clan.difficulty,
+        tips: clan.tips
       };
     });
 

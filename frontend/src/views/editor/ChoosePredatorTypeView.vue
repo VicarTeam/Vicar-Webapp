@@ -8,6 +8,7 @@ import { ptActionResolver } from "@/libs/resolvers/ptactions-resolver"
 import AdditionalSpecializationAction from "@/components/editor/actions/AdditionalSpecializationAction.vue"
 import DisciplinePointAction from "@/components/editor/actions/DisciplinePointAction.vue"
 import AddFlawAction from "@/components/editor/actions/AddFlawAction.vue"
+import DifficultyHint from "@/components/editor/DifficultyHint.vue"
 import SpendBackgroundPointsBetweenAction from "@/components/editor/actions/SpendBackgroundPointsBetweenAction.vue"
 import SpendFlawPointsBetweenAction from "@/components/editor/actions/SpendFlawPointsBetweenAction.vue"
 import type { ICharacter } from "@/@types/models"
@@ -108,6 +109,13 @@ const isElder = computed(() => (store.editingCharacter as ICharacter | undefined
 
         <i v-if="(store.editingCharacter as ICharacter).predatorType" class="desc">{{ (store.editingCharacter as ICharacter).predatorType.description }}</i>
 
+        <DifficultyHint
+          v-if="(store.editingCharacter as ICharacter).predatorType"
+          class="hint"
+          :difficulty="(store.editingCharacter as ICharacter).predatorType.difficulty"
+          :tips="(store.editingCharacter as ICharacter).predatorType.tips"
+        />
+
         <b v-if="(store.editingCharacter as ICharacter).predatorType">und das erhälst du:</b>
         <ul v-if="(store.editingCharacter as ICharacter).predatorType" class="list">
           <li v-for="(a, i) in (store.editingCharacter as ICharacter).predatorType.actions" :key="i">{{ a.description }}</li>
@@ -166,6 +174,10 @@ const isElder = computed(() => (store.editingCharacter as ICharacter | undefined
   width: min(60rem, 100%);
   text-align: center;
   opacity: 0.92;
+}
+
+.hint {
+  width: min(60rem, 100%);
 }
 
 .list {

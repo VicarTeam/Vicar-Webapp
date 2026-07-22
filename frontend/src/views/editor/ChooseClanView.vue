@@ -4,6 +4,7 @@ import EditorForm from "@/components/editor/EditorForm.vue"
 import TipButton from "@/components/editor/TipButton.vue"
 import Bullet from "@/components/Bullet.vue"
 import ClanSymbol from "@/components/symbols/ClanSymbol.vue"
+import DifficultyHint from "@/components/editor/DifficultyHint.vue"
 import DataManager from "@/libs/data/data-manager"
 import PTActionHandler from "@/libs/ptaction-handler"
 import type { IClan, ICharacter } from "@/@types/models"
@@ -79,6 +80,11 @@ const clans = computed<IClan[]>(() => {
             </small>
 
             <div class="desc">{{ (store.editingCharacter as ICharacter).clan.description }}</div>
+
+            <DifficultyHint
+              :difficulty="(store.editingCharacter as ICharacter).clan.difficulty"
+              :tips="(store.editingCharacter as ICharacter).clan.tips"
+            />
 
             <h6 class="sub">Disziplinen:</h6>
 

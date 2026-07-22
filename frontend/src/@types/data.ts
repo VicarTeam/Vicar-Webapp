@@ -57,6 +57,8 @@ export interface IClan {
   disciplines: number[];
   actions?: IPTAction[];
   symbol?: string;
+  difficulty?: number;
+  tips?: string[];
 }
 
 export interface IRestrictionHolder {
@@ -95,6 +97,8 @@ export interface IPredatorType extends IRestrictionHolder {
   name: string;
   description: string;
   actions: IPTAction[];
+  difficulty?: number;
+  tips?: string[];
 }
 
 export interface IPTAction extends IRestrictionHolder {
@@ -177,6 +181,7 @@ export interface ITrait extends IRestrictionHolder {
   actions: ITraitAction[];
   requirement?: ITraitRequirement;
   restrictRepeats?: ITraitRepeatRestriction;
+  tips?: string[];
 }
 
 export const DefaultTrait: ITrait = {

@@ -403,6 +403,8 @@ export interface IClan {
   readonly disciplines: IDiscipline[];
   readonly actions: IPTAction[];
   symbol?: string;
+  readonly difficulty?: number;
+  readonly tips?: string[];
 }
 
 export interface IUsingTraitPack {

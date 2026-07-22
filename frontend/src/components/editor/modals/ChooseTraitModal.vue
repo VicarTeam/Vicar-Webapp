@@ -326,6 +326,13 @@ defineExpose({ showModal })
           <div class="info" :class="{ 'not-selected': !selectedTrait }">
             <small v-if="!selectedTrait">Du musst links etwas auswählen!</small>
             <small v-else>{{ selectedTrait.description }}</small>
+
+            <div v-if="selectedTrait && (selectedTrait as any).tips?.length" class="trait-tips">
+              <small><b>Tipps:</b></small>
+              <ul>
+                <li v-for="(tip, i) in (selectedTrait as any).tips" :key="i">{{ tip }}</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -392,6 +399,21 @@ $border: 1px solid var(--primary-color) !important;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+}
+
+.trait-tips {
+  margin-top: 0.6rem;
+  text-align: left;
+
+  ul {
+    margin: 0.25rem 0 0;
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    opacity: 0.92;
+  }
 }
 
 .top {
