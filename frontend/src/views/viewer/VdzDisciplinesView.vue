@@ -10,6 +10,7 @@ import type { IVdzSheet, VdzRequestLevelFn } from "@/@types/vdz"
 
 const store = useStore()
 const editingCharacter = computed(() => store.editingCharacter as IVdzSheet | undefined)
+const isLevelMode = computed(() => store.isLevelMode)
 
 const requestLevel = inject("request-vdz-level") as VdzRequestLevelFn | undefined
 const setDicePool = inject("set-dice-pool") as
@@ -18,6 +19,7 @@ const setDicePool = inject("set-dice-pool") as
 
 const newDisciplineName = ref("")
 const showPaths = ref<Record<string, boolean>>({})
+const expandedPath = ref<Record<string, boolean>>({})
 
 const clanName = computed(() => editingCharacter.value?.clan?.name)
 const clanDisciplines = computed(() => editingCharacter.value?.clan?.disciplines ?? [])
@@ -62,8 +64,17 @@ function allLevels(name: string) {
   return entry.levels
 }
 
+function pathShortName(fullName: string): string {
+  const idx = fullName.indexOf(": ")
+  return idx >= 0 ? fullName.slice(idx + 2) : fullName
+}
+
 function togglePaths(name: string) {
   showPaths.value = { ...showPaths.value, [name]: !showPaths.value[name] }
+}
+
+function togglePathDetail(name: string) {
+  expandedPath.value = { ...expandedPath.value, [name]: !expandedPath.value[name] }
 }
 
 function learnDiscipline(name: string) {
@@ -76,80 +87,88 @@ function learnDiscipline(name: string) {
 
 <template>
   <div v-if="editingCharacter" class="vdz-disciplines-view">
-    <div class="card">
-      <b class="title">
-        Disziplinen
-        <TipButton :content="VDZ_HELP.disciplinesGeneral" />
-      </b>
-      <small class="intro">Du beherrschst automatisch alle Kräfte bis zu deiner jeweiligen Disziplin-Stufe — du musst keine einzeln auswählen.</small>
+    <div class="wrap">
+      <div class="head">
+        <b class="title">
+          Disziplinen
+          <TipButton :content="VDZ_HELP.disciplinesGeneral" />
+        </b>
+        <small class="intro">Du beherrschst automatisch alle Kräfte bis zu deiner jeweiligen Disziplin-Stufe — du musst keine einzeln auswählen.</small>
+      </div>
 
       <div v-if="editingCharacter.disciplines.length === 0" class="empty">
         <small>Keine Disziplinen gelernt.</small>
       </div>
 
-      <div v-for="d in editingCharacter.disciplines" :key="d.name" class="disc">
-        <div class="disc-row">
-          <LevelButton v-if="d.level < 5" @click="requestLevel?.('discipline', d.name)" />
-          <small class="name" @click="setDicePool?.('disc', d.name, d.level)">
-            {{ d.name }}
-            <span v-if="isClanDiscipline(d.name)" class="badge" title="Clan-Disziplin">Clan</span>
-            <TipButton v-if="resolved(d.name).entries[0]?.summary" :content="resolved(d.name).entries[0]!.summary" />
-          </small>
-          <Dots :amount="d.level" :max="5" />
-        </div>
+      <div class="disc-grid">
+        <div v-for="d in editingCharacter.disciplines" :key="d.name" class="disc-card">
+          <div class="disc-row">
+            <LevelButton v-if="d.level < 5" @click="requestLevel?.('discipline', d.name)" />
+            <span class="name" @click="setDicePool?.('disc', d.name, d.level)">
+              {{ d.name }}
+              <span v-if="isClanDiscipline(d.name)" class="badge" title="Clan-Disziplin">Clan</span>
+              <TipButton v-if="resolved(d.name).entries[0]?.summary" :content="resolved(d.name).entries[0]!.summary" />
+            </span>
+            <Dots :amount="d.level" :max="5" />
+          </div>
 
-        <!-- Lineare Disziplin: alle Kräfte sichtbar; beherrschte normal, höhere ausgegraut. -->
-        <template v-if="resolved(d.name).kind === 'linear'">
-          <div class="powers">
-            <div
-              v-for="lvl in allLevels(d.name)"
-              :key="lvl.level"
-              class="power-level"
-              :class="{ locked: lvl.level > d.level }"
-            >
-              <b class="lvl">
-                Stufe {{ lvl.level }}
-                <span v-if="lvl.level <= d.level" class="known-tag">beherrscht</span>
-                <i v-else class="fa-solid fa-lock" title="Noch nicht gelernt" />
-              </b>
-              <div v-for="p in lvl.powers" :key="p.name" class="power">
-                <b>{{ p.name }}</b>
-                <small>{{ p.description }}</small>
+          <!-- Lineare Disziplin: alle Kräfte sichtbar; beherrschte normal, höhere ausgegraut. -->
+          <template v-if="resolved(d.name).kind === 'linear'">
+            <div class="powers">
+              <div
+                v-for="lvl in allLevels(d.name)"
+                :key="lvl.level"
+                class="power-level"
+                :class="{ locked: lvl.level > d.level }"
+              >
+                <b class="lvl">
+                  Stufe {{ lvl.level }}
+                  <span v-if="lvl.level <= d.level" class="known-tag">beherrscht</span>
+                  <i v-else class="fa-solid fa-lock" title="Noch nicht gelernt" />
+                </b>
+                <div v-for="p in lvl.powers" :key="p.name" class="power">
+                  <b>{{ p.name }}</b>
+                  <small>{{ p.description }}</small>
+                </div>
               </div>
             </div>
-          </div>
-        </template>
+          </template>
 
-        <!-- Blutmagie: Pfade & Rituale als Nachschlagewerk -->
-        <template v-else-if="resolved(d.name).kind === 'pathbased'">
-          <div class="powers">
-            <small class="bloodmagic-note"><i class="fa-solid fa-circle-info" /> {{ VDZ_HELP.disciplineBloodMagic }}</small>
+          <!-- Blutmagie: Pfade & Rituale, jeder Eintrag einzeln aufklappbar. -->
+          <template v-else-if="resolved(d.name).kind === 'pathbased'">
+            <div class="powers">
+              <small class="bloodmagic-note"><i class="fa-solid fa-circle-info" /> {{ VDZ_HELP.disciplineBloodMagic }}</small>
 
-            <button class="btn link-btn" @click="togglePaths(d.name)">
-              <i class="fas fa-chevron-down" :class="showPaths[d.name] ? 'fa-rotate-180' : ''" />
-              {{ showPaths[d.name] ? "Pfade & Rituale verbergen" : "Pfade & Rituale anzeigen" }}
-            </button>
+              <button class="btn link-btn" @click="togglePaths(d.name)">
+                <i class="fas fa-chevron-down" :class="showPaths[d.name] ? 'fa-rotate-180' : ''" />
+                {{ showPaths[d.name] ? "Pfade & Rituale verbergen" : "Pfade & Rituale anzeigen" }}
+              </button>
 
-            <div v-if="showPaths[d.name]" class="paths">
-              <div v-for="entry in resolved(d.name).entries" :key="entry.name" class="path-entry">
-                <b class="path-name">{{ entry.name }}</b>
-                <small v-if="entry.summary" class="path-summary">{{ entry.summary }}</small>
-                <div v-for="lvl in entry.levels" :key="lvl.level" class="power-level">
-                  <b class="lvl">Stufe {{ lvl.level }}</b>
-                  <div v-for="p in lvl.powers" :key="p.name" class="power">
-                    <b>{{ p.name }}</b>
-                    <small>{{ p.description }}</small>
+              <div v-if="showPaths[d.name]" class="paths">
+                <div v-for="entry in resolved(d.name).entries" :key="entry.name" class="path-entry">
+                  <button class="path-head" @click="togglePathDetail(entry.name)">
+                    <i class="fas fa-chevron-right" :class="expandedPath[entry.name] ? 'fa-rotate-90' : ''" />
+                    <b>{{ pathShortName(entry.name) }}</b>
+                  </button>
+
+                  <div v-if="expandedPath[entry.name]" class="path-body">
+                    <small v-if="entry.summary" class="path-summary">{{ entry.summary }}</small>
+                    <div v-for="lvl in entry.levels" :key="lvl.level" class="power-level">
+                      <b class="lvl">Stufe {{ lvl.level }}</b>
+                      <div v-for="p in lvl.powers" :key="p.name" class="power">
+                        <b>{{ p.name }}</b>
+                        <small>{{ p.description }}</small>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </template>
+          </template>
+        </div>
       </div>
 
-      <template v-if="!editingCharacter.justViewing">
-        <div class="divider"></div>
-
+      <div v-if="isLevelMode" class="learn card">
         <b class="subtitle">
           Neue Disziplin lernen
           <TipButton content="Clan-Disziplinen sind günstiger zu steigern (neuer Wert × 5 EP) als clanfremde (neuer Wert × 7 EP). Eine neue Disziplin kostet pauschal 10 EP bzw. 7 Freie Punkte. Clanfremde Disziplinen erfordern im Spiel einen Lehrmeister und dessen Vitæ — sprich das mit deiner Erzählerin ab." />
@@ -170,7 +189,7 @@ function learnDiscipline(name: string) {
             Lernen
           </button>
         </div>
-      </template>
+      </div>
     </div>
   </div>
 </template>
@@ -185,11 +204,17 @@ function learnDiscipline(name: string) {
   padding: 1.5rem;
 }
 
-.card {
+.wrap {
+  width: min(1100px, 100%);
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  width: min(42rem, 100%);
+  gap: 1rem;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .title {
@@ -198,31 +223,41 @@ function learnDiscipline(name: string) {
 
 .intro {
   opacity: 0.8;
-  margin-bottom: 0.25rem;
 }
 
-.disc {
+.disc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 25rem), 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.disc-card {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-2, 10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
+  box-shadow: var(--shadow-hairline);
 }
 
 .disc-row {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.6rem;
 
   .name {
     flex-grow: 1;
     cursor: pointer;
     user-select: none;
+    font-weight: bold;
   }
 
   .badge {
     margin-left: 0.4rem;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     padding: 0.1rem 0.4rem;
     border-radius: 0.5rem;
     background: var(--primary-color);
@@ -231,25 +266,24 @@ function learnDiscipline(name: string) {
 }
 
 .powers {
-  margin: 0.15rem 0 0.25rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
-  border-left: 2px solid rgba(255, 255, 255, 0.12);
-  padding-left: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 0.5rem;
 }
 
 .power-level {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.25rem;
 
   &.locked {
-    opacity: 0.55;
+    opacity: 0.5;
   }
 
   .lvl {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -257,7 +291,7 @@ function learnDiscipline(name: string) {
   }
 
   .known-tag {
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     padding: 0.05rem 0.35rem;
@@ -290,17 +324,42 @@ function learnDiscipline(name: string) {
 .paths {
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
+  gap: 0.35rem;
 }
 
 .path-entry {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 0.35rem;
+}
 
-  .path-name {
+.path-head {
+  width: 100%;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0.15rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  text-align: left;
+
+  i {
+    transition: transform var(--dur-2, 0.15s) var(--ease-2, ease);
+    opacity: 0.7;
+    font-size: 0.75rem;
+  }
+
+  b {
     color: color-mix(in srgb, var(--accent) 55%, var(--text-1));
   }
+}
+
+.path-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.3rem 0 0.4rem 1.1rem;
 
   .path-summary {
     opacity: 0.85;
@@ -324,15 +383,18 @@ function learnDiscipline(name: string) {
   }
 }
 
-.divider {
-  width: 100%;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.1);
-  margin: 0.5rem 0;
+.learn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-2, 10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
 }
 
 .subtitle {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;

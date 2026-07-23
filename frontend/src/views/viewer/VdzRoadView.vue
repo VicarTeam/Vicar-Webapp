@@ -9,6 +9,7 @@ import type { IVdzSheet, VdzRequestLevelFn } from "@/@types/vdz"
 
 const store = useStore()
 const editingCharacter = computed(() => store.editingCharacter as IVdzSheet | undefined)
+const isLevelMode = computed(() => store.isLevelMode)
 
 const requestLevel = inject("request-vdz-level") as VdzRequestLevelFn | undefined
 
@@ -113,7 +114,7 @@ function addBackground(name: string) {
         </small>
       </div>
 
-      <template v-if="missingBackgrounds.length > 0 && !editingCharacter.justViewing">
+      <template v-if="missingBackgrounds.length > 0 && isLevelMode">
         <div class="divider"></div>
         <b class="subtitle">Neuen Hintergrund erwerben (Freie Punkte):</b>
         <div class="missing">

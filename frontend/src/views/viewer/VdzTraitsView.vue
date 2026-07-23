@@ -9,6 +9,7 @@ import { getVdzTraitCategoryName, type IVdzSheet, type IVdzTraitDef } from "@/@t
 
 const store = useStore()
 const editingCharacter = computed(() => store.editingCharacter as IVdzSheet | undefined)
+const isLevelMode = computed(() => store.isLevelMode)
 
 const confirmDeleteModal = ref<InstanceType<typeof ConfirmDeleteModal> | null>(null)
 
@@ -85,10 +86,10 @@ function traitDef(name: string): IVdzTraitDef | undefined {
           <span v-if="traitDef(t.name)" class="cat">({{ getVdzTraitCategoryName(traitDef(t.name)!.category) }})</span>
         </small>
         <b class="lvl">{{ t.level }} P.</b>
-        <button v-if="!editingCharacter.justViewing" class="btn remove" @click="removeTrait(t.name)"><i class="fa-solid fa-xmark" /></button>
+        <button v-if="isLevelMode" class="btn remove" @click="removeTrait(t.name)"><i class="fa-solid fa-xmark" /></button>
       </div>
 
-      <template v-if="!editingCharacter.justViewing">
+      <template v-if="isLevelMode">
         <div class="divider"></div>
 
         <b class="subtitle">
@@ -116,10 +117,8 @@ function traitDef(name: string): IVdzTraitDef | undefined {
       </template>
     </div>
 
-    <div class="card">
+    <div v-if="flaws.length > 0" class="card">
       <b class="title">Schwächen</b>
-
-      <div v-if="flaws.length === 0" class="empty"><small>Keine Schwächen.</small></div>
 
       <div v-for="t in flaws" :key="t.name" class="trait-row flaw">
         <small class="name">
@@ -128,7 +127,7 @@ function traitDef(name: string): IVdzTraitDef | undefined {
           <span v-if="traitDef(t.name)" class="cat">({{ getVdzTraitCategoryName(traitDef(t.name)!.category) }})</span>
         </small>
         <b class="lvl">+{{ t.level }} P.</b>
-        <button v-if="!editingCharacter.justViewing" class="btn remove" @click="removeTrait(t.name)"><i class="fa-solid fa-xmark" /></button>
+        <button v-if="isLevelMode" class="btn remove" @click="removeTrait(t.name)"><i class="fa-solid fa-xmark" /></button>
       </div>
 
       <small class="hint">Neue Schwächen im laufenden Spiel vergibt die Erzählerin (z.B. durch Verletzungen oder Flüche).</small>
