@@ -1,0 +1,217 @@
+[
+  {
+    "id": 1,
+    "name": "Abweichler",
+    "description": "Der Abweichler ist ein von der Gesellschaft ob seiner nicht der Mehrheitsmeinung entsprechenden Vorlieben und Überzeugungen geächteter Sonderling, der fühlt, dass die Welt gegen ihn ist. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie sich ohne Repressalien über gesellschaftliche Konventionen hinwegsetzen."
+  },
+  {
+    "id": 2,
+    "name": "Architekt",
+    "description": "Der Architekt hält an einer Bestimmung fest, die größer ist als er selbst, und ist glücklich, wenn er etwas von bleibendem Wert für andere schafft. Er bemüht sich, die Personen in seinem Umfeld mit dem zu versorgen, was sie brauchen. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie etwas von Bedeutung oder bleibendem Wert aufbauen."
+  },
+  {
+    "id": 3,
+    "name": "Auge des Sturms",
+    "description": "Trotz seiner ruhigen Fassade scheint dem Auge des Sturms das Chaos auf dem Fuß zu folgen. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn sich ein Aufruhr, eine Revolte oder auch weniger gewaltsame, aber chaotische Phänomene um Sie herum abspielen."
+  },
+  {
+    "id": 4,
+    "name": "Autokrat",
+    "description": "Der Autokrat strebt nach Macht und Kontrolle um ihrer selbst willen. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie Kontrolle über eine Gruppe oder Organisation ausüben."
+  },
+  {
+    "id": 5,
+    "name": "Bonvivant",
+    "description": "Das Leben ist banal, oberflächlich und bedeutungslos, und das weiß der Bonvivant. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie sich wahrlich amüsieren. Nach Bemessen des Erzählers kann Ihnen eine besonders fabelhafte Lustbarkeit mehrere Willenskraftpunkte einbringen."
+  },
+  {
+    "id": 6,
+    "name": "Büßer",
+    "description": "Der Büßer tut Sühne für die gravierenden Sünden, die er allein dadurch, wer er ist, begangen hat, und fühlt sich angehalten, „Wiedergutmachung“ dafür zu leisten, dass er sich der Welt aufgebürdet hat. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie das Gefühl haben, dass Sie für eine bestimmte Sünde Absolution erlangt haben."
+  },
+  {
+    "id": 7,
+    "name": "Chamäleon",
+    "description": "Das Chamäleon ist unabhängig und aufmerksam. Es studiert Verhalten und Manierismen, um als ein anderer durchzugehen. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie jemand anderen täuschen, sodass er Sie für jemand anderen hält, und es Ihnen nutzt."
+  },
+  {
+    "id": 8,
+    "name": "Dilettant",
+    "description": "Der Dilettant ist an allem interessiert, doch fokussiert er sich auf nichts davon. Er huscht von Idee zu Idee, ohne etwas zu Ende zu bringen. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie sich für etwas Neues begeistern und etwas Altes gänzlich aufgeben."
+  },
+  {
+    "id": 9,
+    "name": "Einzelgänger",
+    "description": "Der Einzelgänger zieht seine eigene Gesellschaft der anderer vor, und diese Einstellung beruht oft auf Gegenseitigkeit. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie etwas allein vollbringen, das dem Klüngel als Ganzes dennoch in irgendeiner Weise nützt."
+  },
+  {
+    "id": 10,
+    "name": "Fanatiker",
+    "description": "Der Fanatiker hat ein Ziel, das sein ganzes Sein bestimmt. Er mag sich sogar schuldig fühlen, wenn er ein Unterfangen verfolgt, das von diesem höheren Ziel abweicht. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie etwas erreichen, das direkt mit Ihrer Sache zu tun hat."
+  },
+  {
+    "id": 11,
+    "name": "Gigolo",
+    "description": "Der Gigolo ist eine extravagante Seele, die stets nach Aufmerksamkeit strebt, und sei es nur, um die Bewunderung anderer zu verdienen. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie eine andere Person beeindrucken."
+  },
+  {
+    "id": 12,
+    "name": "Griesgram",
+    "description": "Der Griesgram ist bitter und zynisch, findet Fehler in allem und jedem und sieht im Leben oder Unleben wenig Anlass zum Lachen. Er ist fatalistisch, pessimistisch und empfindet nur sehr wenig Wertschätzung für andere. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn jemand eine negative Handlung durchführt, die Sie laut vorhergesagt haben."
+  },
+  {
+    "id": 13,
+    "name": "Gruselkabinett",
+    "description": "Das Gruselkabinett weidet sich daran, Personen in seinem Umfeld zu schockieren und anzuwidern. Es ist eine Fassade, um andere zu kontrollieren, doch manche fallen darauf herein und glauben, Sie seien der Teufel in Person. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn jemand vor Ihnen zurückschreckt oder ängstlich auf Sie reagiert."
+  },
+  {
+    "id": 14,
+    "name": "Guru",
+    "description": "Die Erleuchtung des Gurus zieht andere zu ihm hin. Seine Gegenwart motiviert andere, sich spirituellen oder ideologischen Betätigungen hinzugeben. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Ihre Anleitung eine andere Person zu einer Tat der Erleuchtung antreibt, die sie normalerweise nicht unternommen hätte."
+  },
+  {
+    "id": 15,
+    "name": "Helfer",
+    "description": "Der Helfer findet Trost darin, anderen Trost zu spenden, und Leute kommen oft mit ihren Problemen zu ihm. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie erfolgreich jemanden beschützen oder fördern."
+  },
+  {
+    "id": 16,
+    "name": "Idealist",
+    "description": "Der Idealist glaubt an ein höheres Ziel oder eine höhere Moral und versucht, seine Überzeugungen mit den Anforderungen der vampirischen Existenz in Einklang zu bringen, wobei er darin oft entgegen seiner eigenen Interessen handelt. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn eine Tat Ihre Ziele vorantreibt und Ihre Ideale der Verwirklichung näher bringt."
+  },
+  {
+    "id": 17,
+    "name": "Kind",
+    "description": "Das Kind ist unfertig in Persönlichkeit und Temperament. Es kann sich um sich selbst kümmern, wenn es muss, aber hätte es lieber, dass jemand anderes auf seine Bedürfnisse eingeht. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie jemanden dazu bringen, Ihnen ohne Eigennutz zu helfen."
+  },
+  {
+    "id": 18,
+    "name": "Konformist",
+    "description": "Der Konformist ist ein willensschwacher Mensch, der sich von anderen führen lässt und sich sicherer fühlt, wenn andere die Entscheidungen treffen. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn die Gruppe oder der von Ihnen unterstützte Anführer durch Ihre Unterstützung ein Ziel erreicht."
+  },
+  {
+    "id": 19,
+    "name": "Märtyrer",
+    "description": "Der Märtyrer leidet für seine Sache und erträgt seine Prüfungen aus dem Glauben heraus, dass das, was er erduldet, letztlich die Welt verbessern wird. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie für Ihre Ideale oder den direkten Vorteil eines anderen Schaden oder den Verlust einer messbaren Ressource erleiden."
+  },
+  {
+    "id": 20,
+    "name": "Masochist",
+    "description": "Der Masochist existiert, um seine Grenzen auszutesten, und findet Befriedigung in Erniedrigung, Leid, Entzug und physischem Schmerz. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Ihr eigenes Leiden zu einem fassbaren Gewinn für Sie führt oder Sie Schmerz auf eine einzigartige Weise erfahren."
+  },
+  {
+    "id": 21,
+    "name": "Monster",
+    "description": "Das Monster weiß, dass es eine Kreatur der Finsternis ist, und benimmt sich entsprechend. Das Böse und der Schmerz sind Werkzeuge; es tut niemals Böses um seiner selbst willen, sondern als Mittel zum Zweck, um zu verstehen, was aus ihm geworden ist. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie eine Gräueltat verüben – Erzähler sollten abwägen, wann sie diesen Archetyp belohnen."
+  },
+  {
+    "id": 22,
+    "name": "Narr",
+    "description": "Der Narr sieht die Welt als einen Schleier der Torheit und Täuschung und lässt anderen durch die subtilen Methoden des Humors Erleuchtung zuteilwerden. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie andere in großer Trauer aufmuntern oder einen Tyrannen ins Wanken bringen, indem Sie ihn zum Gespött machen."
+  },
+  {
+    "id": 23,
+    "name": "Pädagoge",
+    "description": "Der Pädagoge weiß alles besser und stellt sicher, dass man seine Botschaft hört – wenn nötig auch ausführlich. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie sehen oder erfahren, dass jemand von den Weisheiten profitiert hat, die Sie mit der betreffenden Person geteilt haben."
+  },
+  {
+    "id": 24,
+    "name": "Perfektionist",
+    "description": "Der Perfektionist verlangt von sich wie von anderen immer hundert Prozent. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn ein anderer Charakter als Ergebnis Ihres strahlenden Vorbilds Erfolg hat."
+  },
+  {
+    "id": 25,
+    "name": "Philosoph",
+    "description": "Der Philosoph betrachtet jede Situation kritisch auf logische Schlüsse und Muster hin. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn eine logische, systematische Herangehensweise an ein Problem Ihnen hilft, es zu lösen, oder durch Logik gewonnene Informationen in einer Situation von Nutzen sind."
+  },
+  {
+    "id": 26,
+    "name": "Rätsel",
+    "description": "Die Taten des Rätsels sind absonderlich, verwirrend und unerklärlich. Seine wechselhaften Handlungen legen nahe, dass es exzentrisch, wenn nicht gar komplett wahnsinnig ist. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn jemand von Dingen, die Sie tun, verblüfft ist, diese sich aber später als ertragreiches Unterfangen herausstellen."
+  },
+  {
+    "id": 27,
+    "name": "Raubein",
+    "description": "Das Raubein glaubt, dass Macht vor Recht geht. Es respektiert nur Stärke und Gewalt. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie durch körperliche oder gesellschaftliche Rücksichtslosigkeit oder Einschüchterung Ihr Ziel erreichen."
+  },
+  {
+    "id": 28,
+    "name": "Rebell",
+    "description": "Der Rebell ist ein Querulant, niemals zufrieden mit dem Status quo oder dem System, so wie es ist. Er tut alles in seiner Macht Stehende, um Autorität zu untergraben. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Ihre Taten sich negativ auf das auswirken, wogegen Sie opponieren."
+  },
+  {
+    "id": 29,
+    "name": "Richter",
+    "description": "Der Richter strebt danach, das System zu verbessern, und sieht Gerechtigkeit als effizientestes Modell, um Dinge zu regeln. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie ein Problem korrekt lösen, indem Sie die vorliegenden Beweise berücksichtigen, oder wenn eines Ihrer Argumente im Streit befindliche Parteien eint."
+  },
+  {
+    "id": 30,
+    "name": "Sadist",
+    "description": "Der Sadist existiert nur, um anderen Schmerz und Leid zuzufügen. Töten ist zu einfach – er strebt nach den langsamsten, schmerzvollsten Mitteln, um andere bis an ihre äußersten Grenzen zu bringen. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie einem anderen allein um Ihres eigenen Vergnügens willen Schmerz zufügen."
+  },
+  {
+    "id": 31,
+    "name": "Schmarotzer",
+    "description": "Der Schmarotzer findet den schnellen Weg zu Anerkennung und Reichtum durch Betrug und Manipulation. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie jemanden durch eine List dazu bringen, etwas zu tun, oder ihn überzeugen, Ihnen wider seine eigenen Interessen zu helfen."
+  },
+  {
+    "id": 32,
+    "name": "Schurke",
+    "description": "Der Schurke kümmert sich nur um eines: sich selbst. Es muss sich nicht zwangsläufig um einen Schläger oder ein Raubein handeln, er zieht einfach nur seine eigenen Interessen denen anderer vor. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie einen Gewinn durch eigensüchtige Taten erzielen."
+  },
+  {
+    "id": 33,
+    "name": "Sensationsjunkie",
+    "description": "Der Sensationsjunkie lebt für den Rausch der Gefahr und sucht gezielt riskante und potentiell tödliche Situationen. Er ist nicht aktiv selbstmörderisch oder selbstzerstörerisch, sondern sucht das Risiko. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie bei einer gefährlichen Aufgabe Erfolg haben, die Sie bewusst unternommen haben."
+  },
+  {
+    "id": 34,
+    "name": "Soldat",
+    "description": "Der Soldat ist kein vor Loyalität blinder Mitläufer: Obgleich er für Befehle lebt, folgt er ihnen nicht, ohne Fragen zu stellen. Unabhängiger als der Konformist, doch zu sehr der Idee der Befehlsgewalt verbunden, um ein Einzelgänger zu sein, wendet er seine eigenen Techniken auf die Ziele anderer an, und seine Ambitionen liegen innerhalb der etablierten Hierarchie. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie Ihre Befehle ausführen."
+  },
+  {
+    "id": 35,
+    "name": "Söldner",
+    "description": "Der Söldner glaubt, alles könne eine Ware sein. Optik und Beeinflussung sind alles, wenn es um den Verkauf geht, und kein Vorteil bleibt ungenutzt. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie einen erfolgreichen Verkauf jedweder Ware oder Dienstleistung abschließen."
+  },
+  {
+    "id": 36,
+    "name": "Tier",
+    "description": "Für das Tier zählen nur Taten. Es hält die Zivilisation für eine Falle für die Schwachen; was zählt, sind persönliche Leistungen. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie einen zivilisierten Wettstreit durch persönliche Taten für sich entscheiden."
+  },
+  {
+    "id": 37,
+    "name": "Traditionalist",
+    "description": "Der Traditionalist zieht es vor, seine Ziele mit althergebrachten Methoden zu erreichen. Der Status quo ist akzeptabel, ja sogar der Veränderung vorzuziehen. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn der bewährte Weg sich als der beste entpuppt oder wenn Sie an einer zuvor formulierten Position festhalten und es sich als weise Entscheidung herausstellt."
+  },
+  {
+    "id": 38,
+    "name": "Tyrann",
+    "description": "Der Tyrann strebt danach, über eine Gruppe zu bestimmen oder sie anzuleiten und aus dem Zwist Ordnung zu schaffen. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie eine Gruppe in der Erfüllung einer schwierigen Aufgabe beeinflussen oder ihr beistehen."
+  },
+  {
+    "id": 39,
+    "name": "Überlebenskünstler",
+    "description": "Egal was passiert, der Überlebenskünstler kommt immer mit dem Unleben davon. Seine strikte Weigerung, Niederlagen einzugestehen, macht oft den Unterschied zwischen Erfolg und Scheitern. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie eine bedrohliche Situation durch schiere Zähigkeit überleben oder Ihr Rat andere dazu bringt, allen Widrigkeiten zum Trotz durchzuhalten."
+  },
+  {
+    "id": 40,
+    "name": "Verteidiger",
+    "description": "Der Verteidiger strengt sich an, seine Anliegen gegen seine Feinde zu verteidigen, egal, ob es sich um irgendeine fragile Neuerung oder Hoffnung auf künftigen Fortschritt handelt. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie Ihre Sache erfolgreich verteidigen."
+  },
+  {
+    "id": 41,
+    "name": "Visionär",
+    "description": "Der Visionär stellt akzeptierte gesellschaftliche Schranken auf den Prüfstand und denkt das Unerhörte. Er ist selten mit dem zufrieden, was die Gesellschaft zu bieten hat, und erachtet es als seine persönliche Verantwortung, Fortschritt und Veränderung einzuläuten. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie fähig sind, andere davon zu überzeugen, an Ihrer Vision der Zukunft zu glauben."
+  },
+  {
+    "id": 42,
+    "name": "Wettkämpfer",
+    "description": "Der Wettkämpfer betrachtet jede Aufgabe und gesellschaftliche Interaktion als eine neue Herausforderung, der es zu begegnen, und als Wettbewerb, den es zu gewinnen gilt. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie in einer dramatischen Situation Erfolg haben; besonders schwierige Erfolge können nach Bemessen des Erzählers mehrere Punkte Willenskraft zurückbringen."
+  },
+  {
+    "id": 43,
+    "name": "Zelebrant",
+    "description": "Der Zelebrant hat Freude an seiner Sache und gibt sich seiner Passion so leidenschaftlich hin wie nur möglich. Er verfolgt sie aus Enthusiasmus, nicht aus Pflichtgefühl. Sie gewinnen jedes Mal einen Punkt Willenskraft zurück, wenn Sie Ihre Sache verfolgen oder einen anderen Charakter zur selben Leidenschaft konvertieren."
+  }
+]

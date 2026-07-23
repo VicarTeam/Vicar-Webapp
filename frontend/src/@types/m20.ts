@@ -1,4 +1,4 @@
-import {GameLine, type IBaseSheet} from "@/@types/gameline";
+import {AvatarOrientation, GameLine, type IBaseSheet} from "@/@types/gameline";
 import {DamageType, type IUsingTraitPacks, Sex} from "@/@types/models";
 
 export type RequestLevelFn = (type: 'attribute'|'ability'|'sphere'|'arete'|'willpower', subject?: M20Ability|M20Attribute|M20Sphere) => void;
@@ -335,6 +335,7 @@ export function NewMageSheet(): IMageSheet {
   return {
     freebiePoints: 15,
     avatar: "",
+    avatarOrientation: AvatarOrientation.Center,
     chronicle: "",
     backstory: "",
     willpower: 5,

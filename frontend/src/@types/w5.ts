@@ -1,4 +1,4 @@
-import {GameLine, type IEdition5Sheet} from "@/@types/gameline";
+import {AvatarOrientation, GameLine, type IEdition5Sheet} from "@/@types/gameline";
 import {CategoryKeys, DefaultDamageArray, type ICategory, Sex, SortedSkillsAndAttribute} from "@/@types/models";
 import type {ITrait} from "@/@types/data";
 
@@ -174,6 +174,7 @@ export interface IWerewolfW5Sheet extends IEdition5Sheet {
 export function NewW5Sheet(): IWerewolfW5Sheet {
   return {
     anchorsAndBeliefs: "",
+    avatarOrientation: AvatarOrientation.Center,
     auspice: undefined!,
     backstory: "",
     chroniclePrinciples: "",

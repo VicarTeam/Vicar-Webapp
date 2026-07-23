@@ -15,7 +15,7 @@ watchEffect(() => {
 
 function setTheme(theme: string) {
   const html = document.documentElement
-  html.classList.remove("theme--vampire", "theme--werewolf", "theme--mage", "theme--hunter")
+  html.classList.remove("theme--v5", "theme--w5", "theme--m20", "theme--h5", "theme--vdz")
   html.classList.add(`theme--${theme}`)
 }
 

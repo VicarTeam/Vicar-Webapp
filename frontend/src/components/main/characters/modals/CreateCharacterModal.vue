@@ -11,6 +11,7 @@ import { GameLine } from "@/@types/gameline"
 import { NewW5Sheet } from "@/@types/w5"
 import { NewMageSheet } from "@/@types/m20"
 import { NewH5Sheet } from "@/@types/h5"
+import { NewVdzSheet, getVdzBloodPool } from "@/@types/vdz"
 
 const router = useRouter()
 const store = useStore()
@@ -88,6 +89,7 @@ const newChar = (): any => {
   if (gameline.value === GameLine.Werewolf) return NewW5Sheet()
   if (gameline.value === GameLine.Mage) return NewMageSheet()
   if (gameline.value === GameLine.Hunter) return NewH5Sheet()
+  if (gameline.value === GameLine.DarkAges) return NewVdzSheet()
   return undefined
 }
 
@@ -139,6 +141,11 @@ const startCreateCharacter = () => {
     applyEra(char)
   }
 
+  if (gameline.value === GameLine.DarkAges) {
+    char.generation = Math.min(13, Math.max(4, generation.value))
+    char.bloodPool = getVdzBloodPool(char.generation)[0]
+  }
+
   EditorHistory.push(char)
   store.editingCharacter = char
 
@@ -146,9 +153,18 @@ const startCreateCharacter = () => {
   else if (gameline.value === GameLine.Werewolf) router.push({ name: "editor-auspice" })
   else if (gameline.value === GameLine.Mage) router.push({ name: "editor-identity" })
   else if (gameline.value === GameLine.Hunter) router.push({ name: "editor-creed" })
+  else if (gameline.value === GameLine.DarkAges) router.push({ name: "editor-vdz-clan" })
 
   show.value = false
 }
+
+const vdzGenerationOptions = computed(() => {
+  const gens = [13, 12, 11, 10, 9, 8, 7, 6, 5, 4]
+  return gens.map(g => {
+    const [max, perTurn] = getVdzBloodPool(g)
+    return { gen: g, label: `${g}. Generation — Blutvorrat ${max}, max. ${perTurn} Blut/Runde` }
+  })
+})
 
 const GAME_TIPS: Record<GameLine, Record<number, string>> = {
   [GameLine.Vampire]: {
@@ -178,6 +194,13 @@ const GAME_TIPS: Record<GameLine, Record<number, string>> = {
     3: "Wen konntest du mit deiner Wahrheit überzeugen – und wer hat sich von dir abgewandt?",
     4: "Was treibt dich an, dich gegen die Dunkelheit zu stellen?",
     5: "Was würdest du opfern, um die Menschheit zu schützen?",
+  },
+  [GameLine.DarkAges]: {
+    1: "Wer warst du im Jahr 1242 – Bauer, Ritter, Mönch, Kaufmann?",
+    2: "Wer hat dir den Kuss geschenkt, und warum gerade dir?",
+    3: "Woran glaubst du noch – Gott, Ehre, Blut oder gar nichts?",
+    4: "Welchem Weg folgst du, um nicht der Bestie zu verfallen?",
+    5: "Was bindet dich noch an die Welt der Sterblichen?",
   },
 }
 
@@ -216,6 +239,7 @@ defineExpose({ showModal })
           <div :class="{ active: gameline === GameLine.Werewolf }" @click="gameline = GameLine.Werewolf">W5</div>
           <div :class="{ active: gameline === GameLine.Mage }" @click="gameline = GameLine.Mage">M20</div>
           <div :class="{ active: gameline === GameLine.Hunter }" @click="gameline = GameLine.Hunter">H5</div>
+          <div :class="{ active: gameline === GameLine.DarkAges }" @click="gameline = GameLine.DarkAges">VDZ</div>
         </div>
       </div>
 
@@ -224,6 +248,14 @@ defineExpose({ showModal })
       <div class="ccm__segment">
         <label class="required">Name des Charakters:</label>
         <input class="form-control" type="text" placeholder="Name des Charakters" v-model="name" />
+      </div>
+
+      <div v-if="gameline === GameLine.DarkAges" class="ccm__segment">
+        <label class="required">Generation:</label>
+        <select class="form-control" v-model.number="generation">
+          <option v-for="o in vdzGenerationOptions" :key="o.gen" :value="o.gen">{{ o.label }}</option>
+        </select>
+        <small class="ccm__hint">Je niedriger die Generation, desto mächtiger das Blut — aber desto näher an den Ahnen und ihrer Aufmerksamkeit.</small>
       </div>
 
       <div v-if="gameline === GameLine.Vampire" class="ccm__segment">
@@ -276,6 +308,11 @@ defineExpose({ showModal })
 
 .ccm__sub {
   opacity: 0.9;
+}
+
+.ccm__hint {
+  opacity: 0.7;
+  font-style: italic;
 }
 
 .ccm__qs {

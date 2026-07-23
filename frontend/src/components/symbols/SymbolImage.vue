@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { getImageUrl } from '@/libs/assets'
 
 defineOptions({ inheritAttrs: false })
@@ -22,6 +22,16 @@ const props = defineProps<{
 }>()
 
 const errored = ref(false)
+
+// Fehlerzustand zurücksetzen, sobald sich die Quelle ändert – sonst bleibt ein
+// einmal fehlgeschlagenes Bild (z.B. Blutlinie ohne Symbol) auch nach dem
+// Wechsel zu einem gültigen Bild ausgeblendet.
+watch(
+  () => [props.variant, props.file],
+  () => {
+    errored.value = false
+  }
+)
 
 const src = computed(() => {
   if (errored.value) return props.fallback ?? ''

@@ -6,6 +6,7 @@ export enum GameLine {
   Werewolf = 'w5',
   Mage = 'm20',
   Hunter = 'h5',
+  DarkAges = 'vdz',
 }
 
 export interface IBaseSheet {
@@ -64,6 +65,13 @@ export enum LevelChangeType {
   M20_Sphere = 'm20_sphere',
   M20_Arete = 'm20_arete',
   M20_Willpower = 'm20_willpower',
+  VDZ_Attribute = 'vdz_attribute',
+  VDZ_Ability = 'vdz_ability',
+  VDZ_Discipline = 'vdz_discipline',
+  VDZ_Virtue = 'vdz_virtue',
+  VDZ_Road = 'vdz_road',
+  VDZ_Willpower = 'vdz_willpower',
+  VDZ_Background = 'vdz_background',
   Unknown = 'unknown',
 }
 
@@ -114,6 +122,20 @@ export function levelChangeTypeLabel(type: LevelChangeType): string {
       return "Willenskraft";
     case LevelChangeType.M20_Arete:
       return "Arete";
+    case LevelChangeType.VDZ_Attribute:
+      return "Attribut";
+    case LevelChangeType.VDZ_Ability:
+      return "Fähigkeit";
+    case LevelChangeType.VDZ_Discipline:
+      return "Disziplin";
+    case LevelChangeType.VDZ_Virtue:
+      return "Tugend";
+    case LevelChangeType.VDZ_Road:
+      return "Weg";
+    case LevelChangeType.VDZ_Willpower:
+      return "Willenskraft";
+    case LevelChangeType.VDZ_Background:
+      return "Hintergrund";
     default:
       return "Unbekannt";
   }

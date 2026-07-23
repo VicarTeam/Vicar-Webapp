@@ -122,6 +122,7 @@ function onDragHandleDown(e: PointerEvent) {
       w5: character.game === GameLine.Werewolf,
       m20: character.game === GameLine.Mage,
       h5: character.game === GameLine.Hunter,
+      vdz: character.game === GameLine.DarkAges,
     }"
   >
     <div class="drag-handle" @pointerdown="onDragHandleDown" title="Drag">
@@ -145,7 +146,7 @@ function onDragHandleDown(e: PointerEvent) {
         <span v-else-if="(character as any).creed"><i> Credo:</i> {{ (character as any).creed.name }}</span>
 
         <bullet />
-        <span v-if="(character as any).clan">{{ (character as any).clan.slogan }}</span>
+        <span v-if="(character as any).clan">{{ (character as any).clan.slogan ?? (character as any).clan.nickname }}</span>
         <span v-else-if="(character as any).auspice">{{ (character as any).auspice.name }}</span>
 
         <bullet v-if="localIsVampire" />
@@ -247,6 +248,30 @@ function onDragHandleDown(e: PointerEvent) {
   &.w5 { --card-accent: #0e2e8c; }
   &.m20 { --card-accent: #6f2dbd; }
   &.h5 { --card-accent: #3b5d2a; }
+
+  // VDZ (Dark Ages): gealterte, mittelalterliche Optik – dunkler Graurot-Verlauf
+  // und eine feine Körnungs-Textur (keine warmen Gold-/Bronzetöne).
+  &.vdz {
+    --card-accent: #3d2a2c;
+    background:
+      radial-gradient(130% 120% at 50% -10%, rgba(61, 42, 44, 0.30), transparent 55%),
+      linear-gradient(180deg, #141011, #0d0a0a);
+    box-shadow:
+      var(--shadow-hairline),
+      var(--shadow-raise),
+      inset 0 0 22px rgba(0, 0, 0, 0.5);
+
+    // Feine Aged-Körnung über die ganze Karte (rein CSS/SVG, kein externes Asset).
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.22;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+  }
 }
 
 .drag-handle {

@@ -19,6 +19,7 @@ import DiceRollModal from "@/components/viewer/modals/DiceRollModal.vue"
 import HuntCalculatorModal from "@/components/main/characters/modals/HuntCalculatorModal.vue"
 import SearchHighlightModal from "@/components/main/characters/modals/SearchHighlightModal.vue"
 import M20LevelModal from "@/components/viewer/modals/leveling/M20LevelModal.vue"
+import VdzLevelModal from "@/components/viewer/modals/leveling/VdzLevelModal.vue"
 
 import CharacterStorage from "@/libs/io/character-storage"
 import EventBus from "@/libs/event-bus"
@@ -41,6 +42,7 @@ const isVampire = computed(() => store.isVampire)
 const isWerewolf = computed(() => store.isWerewolf)
 const isMage = computed(() => store.isMage)
 const isHunter = computed(() => store.isHunter)
+const isDarkAges = computed(() => store.isDarkAges)
 
 const selectedTab = ref<string>("viewer-profile")
 const saveText = ref<string>("")
@@ -66,6 +68,7 @@ const diceRollModal = ref<InstanceType<typeof DiceRollModal> | null>(null)
 const huntCalculatorModal = ref<InstanceType<typeof HuntCalculatorModal> | null>(null)
 const searchHighlightModal = ref<InstanceType<typeof SearchHighlightModal> | null>(null)
 const m20LevelModal = ref<InstanceType<typeof M20LevelModal> | null>(null)
+const vdzLevelModal = ref<InstanceType<typeof VdzLevelModal> | null>(null)
 
 const tabProfile = ref<InstanceType<typeof Tab> | null>(null)
 const tabInventory = ref<InstanceType<typeof Tab> | null>(null)
@@ -130,6 +133,10 @@ function requestM20Leveling(
   m20LevelModal.value?.showModal(type as any, subject as any)
 }
 
+function requestVdzLeveling(type: string, subject?: unknown) {
+  vdzLevelModal.value?.showModal(type as any, subject as any)
+}
+
 function setDicePool(
   type: "attr" | "skill" | "disc",
   name: string,
@@ -176,6 +183,7 @@ function clearDicePool() {
 
 provide("update-viewer", updaterViewer)
 provide("request-m20-level", requestM20Leveling as unknown as RequestLevelFn)
+provide("request-vdz-level", requestVdzLeveling)
 provide("set-dice-pool", setDicePool)
 provide("toggle-dice-pool-flag", toggleDicePoolFlag)
 
@@ -191,7 +199,7 @@ function clickTabByRefKey(key: keyof typeof tabRefs) {
 }
 
 function onKeyDown(event: KeyboardEvent) {
-  if (!isVampire.value) return
+  if (!isVampire.value && !isDarkAges.value) return
 
   if (event.key === "Alt") altDown.value = true
   if (event.key === "Shift") shiftDown.value = true
@@ -231,7 +239,7 @@ function onKeyDown(event: KeyboardEvent) {
     return
   }
 
-  if (event.altKey) {
+  if (event.altKey && isVampire.value) {
     const hk = TabHotkeys.find(x => x.keys.includes("ALT+" + event.key.toUpperCase()))
     if (hk) {
       const c = editingCharacter.value
@@ -248,17 +256,19 @@ function onKeyDown(event: KeyboardEvent) {
   }
 
   const c = editingCharacter.value
-  if (event.ctrlKey && event.key === " " && c) {
+  if (!isVampire.value || !c) return
+
+  if (event.ctrlKey && event.key === " ") {
     event.preventDefault()
     dicePoolCalculatorModal.value?.showModal(c, selectedTab.value === "viewer-disciplines")
   }
 
-  if (event.altKey && (event.key === "j" || event.key === "h") && c) {
+  if (event.altKey && (event.key === "j" || event.key === "h")) {
     event.preventDefault()
     huntCalculatorModal.value?.showModal(c)
   }
 
-  if (event.altKey && event.shiftKey && event.key === "f" && c) {
+  if (event.altKey && event.shiftKey && event.key === "f") {
     event.preventDefault()
     searchHighlightModal.value?.showModal(c)
   }
@@ -272,7 +282,7 @@ function onKeyUp(event: KeyboardEvent) {
 // Alt+Scroll (rauf/runter) = Bonus/Malus ±1; Alt+Shift+Scroll = Schwierigkeit ±1.
 // Nur wenn der Pool aktiv ist, sonst wird Alt+Scroll nicht gekapert.
 function onWheel(event: WheelEvent) {
-  if (!isVampire.value || !event.altKey) return
+  if ((!isVampire.value && !isDarkAges.value) || !event.altKey) return
   if (!dicePoolLeft.value && !dicePoolRight.value && !dicePoolExtra.value) return
   event.preventDefault()
   const dir = event.deltaY < 0 ? 1 : -1
@@ -329,7 +339,7 @@ function getDicePoolName(dicePool: { name: string; value: number } | null): stri
 // Verfügbare V5-Boni (Werte für Labels + Berechnung).
 const dicePoolBonuses = computed(() => {
   const c = editingCharacter.value
-  if (!c) return { bloodSurge: 0, willpower: 0, humanity: 0, resonance: 0 }
+  if (!c || !isVampire.value) return { bloodSurge: 0, willpower: 0, humanity: 0, resonance: 0 }
 
   // Blutschub = bleedingSpurt der (effektiven) Blutmacht.
   const effBP = Math.min(skillTreeResolver.getEffectiveCharacterValue(c, "bloodPotency", c.bloodPotency).value, 10)
@@ -378,7 +388,7 @@ const dicePoolResult = computed<
   const manual = parseInt(dicePoolManual.value)
   if (!isNaN(manual) && manual !== 0) parts.push({ label: manual > 0 ? "Bonus" : "Malus", value: manual })
 
-  if (dicePoolHuman.value) {
+  if (dicePoolHuman.value && isVampire.value) {
     const malus = getHumanInteractionMalus(c)
     if (malus === Number.MIN_SAFE_INTEGER) return { total: -1, simple: 0, hunger: 0, parts }
     if (malus) parts.push({ label: "Menschl. Interaktion", value: -malus })
@@ -387,7 +397,7 @@ const dicePoolResult = computed<
   let total = parts.reduce((s, p) => s + p.value, 0)
   if (dicePoolHuman.value && total <= 0) total = 1
 
-  const hunger = Math.min(c.hunger, total)
+  const hunger = isVampire.value ? Math.min(c.hunger, total) : 0
   const simple = total - hunger
   return { total, simple, hunger, parts }
 })
@@ -418,6 +428,9 @@ onMounted(() => {
   }
 
   selectedTab.value = (route.name as string) || "viewer-profile"
+
+  // V20-Standardschwierigkeit
+  if (isDarkAges.value) dicePoolDifficulty.value = "6"
 
   EventBus.$on("character-updated", onCharUpdated)
   window.addEventListener("keydown", onKeyDown)
@@ -454,6 +467,7 @@ onUnmounted(() => {
       <Tabs class="center" @before-change="switchTab" v-model="selectedTab">
         <Tab value="viewer-profile" text="Profil" ref="tabProfile" />
         <Tab v-if="isMage" value="viewer-tradition" text="Allianz" />
+        <Tab v-if="isDarkAges" value="viewer-vdz-road" text="Weg & Hintergründe" />
         <Tab value="viewer-inventory" text="Inventar" ref="tabInventory" />
         <Tab value="viewer-attributes" text="Attribute" ref="tabAttributes" />
         <Tab value="viewer-skills" text="Fähigkeiten" ref="tabSkills" />
@@ -469,9 +483,11 @@ onUnmounted(() => {
           text="Rituale"
           ref="tabBloodRituals"
         />
+        <Tab v-if="isDarkAges" value="viewer-vdz-disciplines" text="Disziplinen" />
         <Tab v-if="isWerewolf" value="viewer-gifts" text="Gaben & Riten" />
         <Tab v-if="isHunter" value="viewer-edges" text="Edges" />
-        <Tab value="viewer-traits" text="Vorteile & Schwächen" ref="tabTraits" />
+        <Tab v-if="isDarkAges" value="viewer-vdz-traits" text="Vorzüge & Schwächen" />
+        <Tab v-if="!isDarkAges" value="viewer-traits" text="Vorteile & Schwächen" ref="tabTraits" />
         <Tab
           v-if="(editingCharacter.skillTrees?.length ?? 0) > 0"
           value="viewer-skilltrees"
@@ -480,8 +496,8 @@ onUnmounted(() => {
       </Tabs>
 
       <div class="actions right">
-        <small v-if="isMage && (editingCharacter as any as IMageSheet).freebiePoints > 0" class="muted">
-          Freebie: {{ (editingCharacter as any as IMageSheet).freebiePoints }}
+        <small v-if="(isMage || isDarkAges) && ((editingCharacter as any).freebiePoints ?? 0) > 0" class="muted">
+          {{ isDarkAges ? "Freie Punkte" : "Freebie" }}: {{ (editingCharacter as any).freebiePoints }}
         </small>
         <small class="muted exp">
           EXP: <b>{{ editingCharacter.exp }}</b>
@@ -531,6 +547,7 @@ onUnmounted(() => {
     <HuntCalculatorModal ref="huntCalculatorModal" />
     <SearchHighlightModal ref="searchHighlightModal" />
     <M20LevelModal ref="m20LevelModal" />
+    <VdzLevelModal ref="vdzLevelModal" />
 
     <div v-if="dicePoolLeft || dicePoolRight || dicePoolExtra" class="simple-dice-calc card">
       <h4 class="card-title">Würfelpool:</h4>
@@ -550,10 +567,12 @@ onUnmounted(() => {
       </div>
 
       <div class="calc-toggles">
-        <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolHuman" /> Menschl. Interaktion</label>
-        <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolBloodSurge" /> Blutschub (+{{ dicePoolBonuses.bloodSurge }})</label>
-        <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolWillpower" /> Willenskraft (+{{ dicePoolBonuses.willpower }})</label>
-        <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolHumanity" /> Menschlichkeit (+{{ dicePoolBonuses.humanity }})</label>
+        <template v-if="isVampire">
+          <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolHuman" /> Menschl. Interaktion</label>
+          <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolBloodSurge" /> Blutschub (+{{ dicePoolBonuses.bloodSurge }})</label>
+          <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolWillpower" /> Willenskraft (+{{ dicePoolBonuses.willpower }})</label>
+          <label class="custom-checkbox"><input type="checkbox" v-model="dicePoolHumanity" /> Menschlichkeit (+{{ dicePoolBonuses.humanity }})</label>
+        </template>
         <span class="manual">± <input type="number" v-model="dicePoolManual" placeholder="0" /></span>
         <span class="manual">Schw. <input type="number" min="1" v-model="dicePoolDifficulty" /></span>
       </div>
@@ -569,7 +588,10 @@ onUnmounted(() => {
             <b>{{ dicePoolResult.simple }}</b>
             normale Würfel
           </span>
-          <span v-else><b>{{ dicePoolResult.total }} </b>Würfel</span>
+          <span v-else>
+            <b>{{ dicePoolResult.total }} </b>Würfel
+            <template v-if="isDarkAges"> gegen Schwierigkeit <b>{{ dicePoolDifficulty || 6 }}</b></template>
+          </span>
         </div>
         <div v-if="dicePoolResult.total !== -1" class="result-breakdown">
           <span v-for="(p, i) in dicePoolResult.parts" :key="i">

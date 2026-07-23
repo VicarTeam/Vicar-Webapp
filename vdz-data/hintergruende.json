@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "name": "Deckidentität",
+    "description": "Sie haben eine komplette Deckidentität einschließlich der nötigen Dokumente. Im Mittelalter bedeutet das Hauptbücher, Einträge in Kirchenbücher und vielleicht eine Geburtsurkunde. Jede Gegend hat ihre eigene Bürokratie.",
+    "levels": {
+      "1": "Sie sind neu im Spiel der Identitäten. Manchmal begehen Sie Fehler und vergessen Ihre andere Rolle.",
+      "2": "Sie sind fest in Ihrer Deckidentität verwurzelt und können hinreichend überzeugend die Rolle eines Arztes, Priesters, Adligen, Diplomaten oder eines anderen privilegierten Standes spielen.",
+      "3": "Ihre Deckidentität hat einen guten Ruf, und man kennt ihren Namen in dem Gebiet, das Sie infiltriert haben.",
+      "4": "Ihre Deckidentität genießt in dem von Ihnen infiltrierten Gebiet Respekt und Vertrauen.",
+      "5": "Sie genießen im infiltrierten Gebiet Respekt und mögen sogar etwas Einfluss gewonnen haben. Sie haben das Vertrauen vieler mächtiger Individuen in Ihrem Gebiet (oder man kennt Sie zumindest)."
+    }
+  },
+  {
+    "id": 2,
+    "name": "Domäne",
+    "description": "Die Domäne stellt ein reales Territorium dar, das Ihr Charakter zum Zweck der Jagd kontrolliert; der Prinz oder andere kainitische Autoritäten erkennen Ihren Anspruch an. Sie können Punkte statt in Größe in Sicherheit investieren: Jeder solche Punkt erhöht die Schwierigkeit, in die Domäne einzudringen, um 1 und verringert die Schwierigkeit, Eindringlinge zu identifizieren und aufzuspüren, um 1. Jede Stufe in Domäne reduziert die Schwierigkeit von Jagd-Würfen um 1 für die, denen die Jagd erlaubt ist, und trägt zum Start-Blutvorrat bei; für Domäne kann die Gruppe Hintergrund-Punkte zusammenlegen.",
+    "levels": {
+      "1": "Ein einzelnes kleines Gebäude, etwa ein Wohnhaus oder eine Schänke – genug für eine einfache Zuflucht.",
+      "2": "Eine Kirche, ein Anwesen oder ein anderes größeres Gebäude – ein Ort mit leicht zugänglichem (aber kontrollierbarem) Zugang zur Außenwelt.",
+      "3": "Ein Straßenzug – ein Ort oder ein Gebiet, die mögliche Verstecke und einen kontrollierten Zugang bieten.",
+      "4": "Katakomben, ein Netzwerk von Tunneln, eine Häusergruppe auf einem Hügel mit Blick über die Stadt – ein Ort mit inhärent Schutz bietenden Elementen wie etwa Zugang nur über eine Brücke oder aufmerksamem Wachpersonal.",
+      "5": "Ein ganzes Stadtviertel, ein Ghetto oder ein ganzes Dorf."
+    }
+  },
+  {
+    "id": 3,
+    "name": "Einfluss",
+    "description": "Sie haben durch Wohlstand, Abstammung, Prestige, Politik, Erpressung oder übernatürliche Beeinflussung Einfluss in der sterblichen Gemeinschaft. Einfluss steht für die Summe Ihrer Macht über öffentliche Meinung oder Politik in Ihrer Gemeinschaft, besonders in der Strafverfolgung und Bürokratie. Für Einfluss kann die Gruppe Hintergrund-Punkte zusammenlegen.",
+    "levels": {
+      "1": "Moderat einflussreich. Ein Faktor in der Lokalpolitik.",
+      "2": "Gute Verbindungen. Eine treibende Kraft in der Politik der Umgebung.",
+      "3": "Einflussreiche Position. Ein Faktor in der Regionalpolitik.",
+      "4": "Weitreichende persönliche Macht. Eine treibende Kraft in der großen Politik.",
+      "5": "Gewaltiger Einfluss. Ein Faktor in der Politik der bekannten Welt."
+    }
+  },
+  {
+    "id": 4,
+    "name": "Gefolgsleute",
+    "description": "Gefolgsleute sind Diener und Assistenten oder treue ständige Gefährten. Die Diener vieler Vampire sind Ghule, geghulte Tiere oder Leute, die sie wiederholt beherrscht oder komplett versklavt haben. Gefolgsleute sind nie ohne Fehler oder blind gehorsam – wenn Sie sie schlecht behandeln, ohne strikte Kontrolle auszuüben, mögen sie sich gegen Sie wenden; mit Erlaubnis des Erzählers kann man Punkte kombinieren, um einen einzelnen, kompetenteren Gefolgsmann zu erschaffen, und die Gruppe kann Hintergrund-Punkte zusammenlegen.",
+    "levels": {
+      "1": "Ein Gefolgsmann",
+      "2": "Zwei Gefolgsleute",
+      "3": "Drei Gefolgsleute",
+      "4": "Vier Gefolgsleute",
+      "5": "Fünf Gefolgsleute"
+    }
+  },
+  {
+    "id": 5,
+    "name": "Generation",
+    "description": "Dieser Hintergrund steht für Ihre Generation: die Reinheit Ihres Blutes und Ihre Nähe zum Ersten Vampir. Ein hoher Wert mag einen mächtigen Erzeuger oder einen entschieden gefährlichen Hang zur Diablerie bedeuten. Wenn Sie keinen Punkt in diese Eigenschaft investieren, beginnen Sie das Spiel als Vampir der 12. Generation.",
+    "levels": {
+      "1": "11. Generation: Blutvorrat 12, kann 1 Blutpunkt pro Runde ausgeben.",
+      "2": "10. Generation: Blutvorrat 13, kann 1 Blutpunkt pro Runde ausgeben.",
+      "3": "9. Generation: Blutvorrat 14, kann 2 Blutpunkte pro Runde ausgeben.",
+      "4": "8. Generation: Blutvorrat 15, kann 3 Blutpunkte pro Runde ausgeben.",
+      "5": "7. Generation: Blutvorrat 20, kann 4 Blutpunkte pro Runde ausgeben."
+    }
+  },
+  {
+    "id": 6,
+    "name": "Herde",
+    "description": "Sie haben eine Gruppe Sterblicher, von der Sie ohne Angst trinken können. Zusätzlich zu der Nahrung, die sie liefert, mag Ihre Herde für kleinere Aufgaben nützlich sein, doch anders als Gefolgsleute und Verbündete ist sie für gewöhnlich weder besonders kontrollierbar noch geschickt. Ihr Herde-Wert wird zu Ihren Jagd-Würfen addiert; für Herde kann die Gruppe Hintergrund-Punkte zusammenlegen.",
+    "levels": {
+      "1": "3 Gefäße",
+      "2": "7 Gefäße",
+      "3": "15 Gefäße",
+      "4": "30 Gefäße",
+      "5": "60 Gefäße"
+    }
+  },
+  {
+    "id": 7,
+    "name": "Kontakte",
+    "description": "Kontakte sind Leute, die Sie dazu manipulieren oder zwingen können, Ihnen Informationen zu verschaffen. Würfeln Sie auf Kontakte (Schwierigkeit 7), und Sie erreichen einen geringeren Kontakt pro Erfolg; Sie müssen die Kontakte jedoch immer noch davon überzeugen, Ihnen Informationen zu geben. Wichtigere Kontaktpersonen können in ihren Fachgebieten akkurate Informationen geben, und Sie sollten sie vor Spielbeginn detailliert beschreiben.",
+    "levels": {
+      "1": "1 wichtiger Kontakt",
+      "2": "2 wichtige Kontakte",
+      "3": "3 wichtige Kontakte",
+      "4": "4 wichtige Kontakte",
+      "5": "5 wichtige Kontakte"
+    }
+  },
+  {
+    "id": 8,
+    "name": "Mentor",
+    "description": "Diese Eigenschaft beschreibt ein Kainskind oder eine Gruppe von Kainskindern, die nach Ihnen sehen. Ein Mentor hält sich normalerweise abseits, gibt nützliche Informationen oder Ratschläge, aber selten unmittelbare Hilfe. Wenn er eingreifen muss, um Sie aus einer gefährlichen Lage herauszuholen, werden Sie wahrscheinlich einen Punkt oder mehr in diesem Hintergrund verlieren oder als unwürdiger Protegé aufgegeben.",
+    "levels": {
+      "1": "Mentor ist ein Ancilla von geringem Einfluss.",
+      "2": "Mentor ist angesehen: ein Ahn oder hochdekorierter Veteran.",
+      "3": "Mentor ist sehr einflussreich, etwa ein Berater eines Prinzen.",
+      "4": "Mentor hat ein großes Maß an Macht über die Stadt, etwa ein Vogt oder Seneschall.",
+      "5": "Mentor ist außerordentlich mächtig, vielleicht sogar ein Prinz."
+    }
+  },
+  {
+    "id": 9,
+    "name": "Ressourcen",
+    "description": "Ressourcen sind das Vermögen Ihres Charakters: Gold, Immobilien, Grundbesitz, Geschäftsinventar oder sogar Steuern und Abgaben. Ein Charakter ohne Ressourcen mag genug Kleidung und Vorräte haben, um über die Runden zu kommen, oder mittel- und obdachlos sein. Sie erhalten jeden Monat eine grundlegende Geldsumme basierend auf Ihrem Wert – beschreiben Sie genau, wo dieses Geld herkommt; für Ressourcen kann die Gruppe Hintergrund-Punkte zusammenlegen.",
+    "levels": {
+      "1": "Hinlänglich. Sie können sich eine typische Arbeiterwohnung leisten, auch wenn Großeinkäufe selten möglich sind.",
+      "2": "Moderat. Sie können sich als gut situiertes Mitglied der Händlerklasse gerieren, gelegentlich Geschenke machen oder sich etwas gönnen und wenn nötig einen Diener haben oder spezifische Helfer anheuern. Ein Teil Ihrer Ressourcen ist in Münzen, Gold oder leicht transportierbarem Besitz verfügbar, der Ihnen bis zu sechs Monate einen Lebensstandard auf der Ein-Punkt-Stufe erlaubt, wo immer Sie sind.",
+      "3": "Komfortabel. Sie sind ein prominentes, etabliertes Mitglied Ihrer Gemeinschaft mit Grundbesitz und einer eigenen Heimstatt; mehr Kapital und Grundbesitz als frei verfügbares Geld. Sie können eine Existenz auf dem Ein-Punkt-Niveau ohne Schwierigkeit beliebig lange aufrechterhalten, wo immer Sie sind.",
+      "4": "Wohlhabend. Sie haben selten Gold in der Hand, da die meisten Besitztümer Immobilien und Ähnliches sind, und verfügen über mehr Reichtum als viele ortsansässige Standesgenossen. Sie können bis zu einem Jahr lang an jedem Ort einen Lebensstandard auf dem 3-Punkte-Level und beliebig lang einen auf dem 2-Punkte-Level aufrechterhalten.",
+      "5": "Extrem wohlhabend. Sie haben ungeheure, weit verteilte Besitztümer, die möglicherweise an das Schicksal von Nationen geknüpft sind, jeweils mit sehr viel Personal und Verbindungen auf allen Ebenen der Gesellschaft der jeweiligen Region. Sie reisen mit einem Komfort von mindestens drei Punkten, mit etwas Mühe auch mehr."
+    }
+  },
+  {
+    "id": 10,
+    "name": "Ruhm",
+    "description": "Sie genießen als Künstler, Gelehrter, Krieger oder sogar Krimineller weitreichende Anerkennung in der Gesellschaft der Sterblichen. Das gewährt Privilegien, kann aber auch unerwünschte Aufmerksamkeit erregen – man läuft Gefahr, im unpassenden Augenblick wiedererkannt zu werden, doch Feinde können Sie nicht einfach unauffällig verschwinden lassen. Ihr Ruhm erleichtert die Jagd in bevölkerten Gegenden: Reduzieren Sie die Schwierigkeit von Jagd-Würfen um 1 pro Punkt in Ruhm; der Erzähler kann auch die Schwierigkeit bestimmter gesellschaftlicher Würfe reduzieren.",
+    "levels": {
+      "1": "Sie sind einer ausgewählten Subkultur bekannt – ortsansässigen Künstlern, Gelehrten oder dem Adel.",
+      "2": "Leute, denen Sie zufällig begegnen, erkennen Ihr Gesicht. Sie sind eine kleinere Berühmtheit wie etwa ein unbedeutender Krimineller oder ein lokal bekannter Musiker.",
+      "3": "Sie haben einen bedeutenden Ruf. Vielleicht sind Sie ein erfolgreicher Diplomat oder ein Künstler, der regelmäßig vor dem Adel auftritt.",
+      "4": "Eine echte Berühmtheit. Der kleine Mann auf der Straße kennt Ihren Namen.",
+      "5": "Sie sind in aller Munde. Leute benennen ihre Kinder nach Ihnen."
+    }
+  },
+  {
+    "id": 11,
+    "name": "Status",
+    "description": "Ihr Stand innerhalb der Gemeinschaft der Kainskinder. Er mag sich vom Status Ihres Erzeugers und Ihrer Blutlinie ableiten, dem Ruf Ihres Klüngels oder Ihren eigenen Taten. Hoher Status kann Sie zur Zielscheibe für jene machen, die Ihrer Fraktion entgegenstehen; Status kommt manchmal bei Würfen zusammen mit sozialen Fähigkeiten vor und spiegelt dann Ihr Prestige wider. Als die Niedersten der Niederen dürfen Caitiff während der Charaktererschaffung Status nicht erwerben.",
+    "levels": {
+      "1": "Bekannt: Ein anerkannter Neugeborener",
+      "2": "Respektiert: Ein Ancilla",
+      "3": "Einflussreich: Ein Ahn",
+      "4": "Mächtig: Ein weithin respektierter Ahn",
+      "5": "Würdenträger: Ein Prinz oder ein anderer kainitischer Führer"
+    }
+  },
+  {
+    "id": 12,
+    "name": "Verbündete",
+    "description": "Verbündete sind Sterbliche, die Ihnen helfen und Sie unterstützen – Familienangehörige, Freunde oder gar eine Organisation, mit der Sie auf gutem Fuß stehen. Sie sind nicht stets verfügbar, da sie auch eigene Sorgen haben, könnten aber indirekten Zugriff auf ihre eigenen Hintergründe wie Kontakte, Einfluss oder Ressourcen bereitstellen. Nichts ist umsonst: Wenn Sie Gefallen einfordern, mögen Ihre Freunde im Gegenzug um Gefallen bitten; für Verbündete kann die Gruppe Hintergrund-Punkte zusammenlegen.",
+    "levels": {
+      "1": "1 Verbündeter von moderatem Einfluss und moderater Macht",
+      "2": "2 Verbündete, beide von moderater Macht",
+      "3": "3 Verbündete, von denen einer recht einflussreich ist",
+      "4": "4 Verbündete, von denen einer sehr einflussreich ist",
+      "5": "5 Verbündete, von denen einer extrem einflussreich ist"
+    }
+  }
+]

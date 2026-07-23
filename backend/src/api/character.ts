@@ -18,6 +18,7 @@ const SUMMARY_PROJECTION = {
   "data.concept": 1,
   "data.clan.name": 1,
   "data.clan.slogan": 1,
+  "data.clan.nickname": 1,
   "data.tribe.name": 1,
   "data.auspice.name": 1,
   "data.tradition.name": 1,

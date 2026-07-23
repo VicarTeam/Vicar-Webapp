@@ -1,0 +1,502 @@
+[
+  {
+    "id": 1,
+    "name": "Der Weg des Tiers",
+    "latinName": "Via Bestiae",
+    "followerName": "Apostaten",
+    "description": "Die Apostaten lehnen die grundlegende gesellschaftliche Vereinbarung ab: Kultur und Gemeinschaft haben kein intrinsisches Recht, als Gruppe ein Urteil über den Einzelnen zu fällen. Jedes Monster macht seine eigenen Regeln und existiert allein nach ihnen; jeder Versuch, Apostaten zu maßregeln oder ihnen eine fremde Autorität aufzuzwingen, ist ein Mordversuch an ihren Seelen. Das Tier ist keine Erscheinungsform des Bösen, sondern existiert, um das Überdauern zu sichern. Die Zivilisation macht weich und schwach – man lebt neben ihr her, aber nie in ihr. Die Jagd gilt allen Apostaten als geheiligter Akt und wird in irgendeiner rituellen Form praktiziert, die sie von allen anderen Aktivitäten unterscheidet.",
+    "ethics": [
+      "Du hast den Tod überdauert. Das aufrichtigste Ziel, das du haben kannst, ist die Selbsterhaltung.",
+      "Das Tier existiert, um dein Überdauern zu sichern. Es ist keine Erscheinungsform des Bösen.",
+      "Du hast für alles gekämpft, was du hast. Alles, was du dir erkämpft hast, steht dir rechtmäßig zu.",
+      "Niemand befiehlt dir. Du kannst dir die Erfahrungen der anderen anhören, aber niemand bestimmt, wie du existierst – außer dir selbst.",
+      "Die Zivilisation ist eine warme Decke, die weich und schwach macht. Lebe neben ihr her, aber nie in ihr."
+    ],
+    "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Instinkt" },
+    "aura": {
+      "name": "Bedrohung",
+      "description": "Das Tier ist willkommen im Körper der Apostaten, und das zeigt sich nicht nur in einem stechenden Blick, mit dem sie ihre Umwelt mustern, sondern auch im flimmernden Spiegelbild ihrer Seele. Das Tier ist in vielerlei Hinsicht der Kern ihres Geistes, und sein gefährlicher, lustvoller Drang, um jeden Preis zu überleben, gibt ihrer Aura wilde Schatten und Blut ein."
+    },
+    "hierarchyOfSins": [
+      { "rating": 10, "sin": "Das eigene Leben riskieren" },
+      { "rating": 9, "sin": "Einen Anführer akzeptieren" },
+      { "rating": 8, "sin": "Aus Freude töten" },
+      { "rating": 7, "sin": "Ein geordnetes anstelle eines wilden Lebens führen" },
+      { "rating": 6, "sin": "Freude an der Grausamkeit" },
+      { "rating": 5, "sin": "Etwas umsonst tun" },
+      { "rating": 4, "sin": "Nicht töten, wenn es ums Überleben geht" },
+      { "rating": 3, "sin": "Etwas nicht beschützen, was dir gehört" },
+      { "rating": 2, "sin": "Nichts besitzen, was du dein Eigen nennen kannst" },
+      { "rating": 1, "sin": "Das Trinken verweigern, wenn man durstig ist" }
+    ],
+    "paths": [
+      {
+        "name": "Pfad des Jägers",
+        "description": "Schleift den Überlebenstrieb des Weges zu einem einzelnen, rasiermesserscharfen Gedanken: Jagd ist Leben. Alle Gedanken der Jägerin kreisen um die Planung und Vollendung der nächsten Jagd; alles, was nicht der Jagd oder ihrer Vorbereitung dient, ist Ablenkung.",
+        "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Instinkt" },
+        "hierarchyOfSins": [
+          { "rating": 8, "sin": "Potenzielle Bedrohungen der Jagd ignorieren" },
+          { "rating": 7, "sin": "Planlos handeln" },
+          { "rating": 2, "sin": "Ohne rituelle Vorbereitung auf die Jagd gehen" }
+        ]
+      },
+      {
+        "name": "Pfad der Reisen",
+        "description": "Sieht die Unsterblichkeit als enormes Abenteuer: Statt in Sicherheit an einem Ort zu überdauern, folgt der Wanderer seinem Entdeckertrieb bedingungslos und lässt eine Stadt, Region oder Kultur nach der anderen hinter sich, um die Grenzen seiner Belastungsfähigkeit auszutesten. Abweichend vom Hauptweg nutzt dieser Pfad Selbstbeherrschung statt Instinkt.",
+        "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Selbstbeherrschung" },
+        "hierarchyOfSins": [
+          { "rating": 3, "sin": "Dem Entdeckertrieb nicht folgen" },
+          { "rating": 2, "sin": "Wurzeln schlagen und Bindungen zu Menschen entwickeln" }
+        ]
+      },
+      {
+        "name": "Pfad der Befreiung",
+        "description": "Betrachtet die Zivilisation nicht nur als Lüge, sondern als Falle: Menschen wie Kainskinder sollen frei sein, wie sie es einst in Nod waren. Um die Welt in einen Urzustand der Sinnhaftigkeit zurückzuführen, sind Gewalt, Zerstörung und die Befreiung aller Herzen und Geister notwendig – Städte, Prinzen und jede Tyrannei müssen fallen, notfalls Stein für Stein.",
+        "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Instinkt" },
+        "hierarchyOfSins": [
+          { "rating": 8, "sin": "Jemandem die brutale Wahrheit verschweigen" },
+          { "rating": 6, "sin": "Sich in einer Stadt wohlfühlen, statt ihre Zerstörung anzustreben" },
+          { "rating": 1, "sin": "Tyrannei begünstigen" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Der Weg des Himmels",
+    "latinName": "Via Coeli",
+    "followerName": "Gläubige",
+    "description": "Die Gläubigen glauben an eine höhere Macht, deren Herrschaft alles umfasst, und sehen das Kainsmal als Teil eines göttlichen Plans. Nur durch Unterwerfung unter den göttlichen Willen und das Befolgen göttlicher Gebote können sie das Tier in Gefangenschaft halten. Die meisten folgen den Glaubensvorstellungen, die sie zu Lebzeiten hatten, weswegen der Weg nach außen chaotisch und fragmentiert erscheint. Es gibt keinen Hauptweg: Alle Gläubigen müssen einen Pfad wählen, der ihrer religiösen Tradition entspricht und spezifischere Wert- und Moralvorstellungen vorgibt.",
+    "ethics": [
+      "Es gibt eine höhere Macht, und ihre Herrschaft umfasst alles.",
+      "Die vampirische Existenz ist Teil eines göttlichen Plans.",
+      "Der göttliche Wille ist dem individuellen vorzuziehen.",
+      "Das Böse abzulehnen und göttliche Gebote zu befolgen ist der einzige Weg, das Tier in Ketten zu halten.",
+      "Alle Gläubigen müssen ihren eigenen Pfad wählen, der spezifischere Wert- und Moralvorstellungen vorgibt, denen sie folgen."
+    ],
+    "virtues": { "conscienceOrConviction": "Gewissen", "selfControlOrInstinct": "Selbstbeherrschung" },
+    "aura": {
+      "name": "Frömmigkeit",
+      "description": "Die Gläubigen erhalten Boni in Situationen, wo es gesellschaftlich von Vorteil ist, als fromm zu gelten."
+    },
+    "hierarchyOfSins": [],
+    "paths": [
+      {
+        "name": "Der Pfad Christi (Christentum)",
+        "description": "Die christliche Tradition des Weges: Ihre Anhänger sehen sich als Hiob-Charaktere, die eine kosmische Gesinnungsprüfung erleiden müssen. Besonders wichtig sind ihnen Keuschheit und die Verbreitung der guten Nachricht Jesu Christi.",
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "Verderbnis und Sünde nicht benennen" },
+          { "rating": 9, "sin": "Hochmut, Habgier, Lust oder anderen sündigen Impulsen folgen" },
+          { "rating": 8, "sin": "Falsch Zeugnis reden" },
+          { "rating": 7, "sin": "Einer frommen Person Schaden zufügen" },
+          { "rating": 6, "sin": "Unerlaubt von Unschuldigen trinken" },
+          { "rating": 5, "sin": "Blasphemie oder Ketzerei in Wort und Tat" },
+          { "rating": 4, "sin": "Unschuldige töten" },
+          { "rating": 3, "sin": "Götzen anbeten" },
+          { "rating": 2, "sin": "Dämonen oder anderes übernatürliches Gezücht unterstützen" },
+          { "rating": 1, "sin": "Das Evangelium Christi nicht verkünden" }
+        ]
+      },
+      {
+        "name": "Derech Chaim – Der Pfad des Lebens (Judentum)",
+        "description": "Die jüdische Tradition des Weges: Der Kuss gilt als Einladung, sich dem Studium zu widmen und die Natur des Göttlichen aus neuer Perspektive zu durchdringen. Im Zentrum stehen der Schutz der jüdischen Gemeinschaft, die Unterwerfung unter Gott entsprechend der Richtlinien der Rabbiner und die Wahrung ritueller Reinheit.",
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "Die rituelle Reinheit nicht wahren" },
+          { "rating": 9, "sin": "Unnötiger Kontakt mit Nichtjuden" },
+          { "rating": 8, "sin": "Keinen Rabbi finden, der Beschlüsse trifft, oder solche Beschlüsse nicht befolgen" },
+          { "rating": 7, "sin": "Die Gebote und Bräuche der jüdischen Gemeinde vor Ort nicht befolgen" },
+          { "rating": 6, "sin": "Keinen Kontakt mit der jüdischen Gemeinde vor Ort halten" },
+          { "rating": 5, "sin": "Unkoscheres Blut trinken" },
+          { "rating": 4, "sin": "Götzendienst" },
+          { "rating": 3, "sin": "Sexuelle Gewalt" },
+          { "rating": 2, "sin": "Mord" },
+          { "rating": 1, "sin": "Die jüdische Gemeinschaft in Gefahr bringen" }
+        ]
+      },
+      {
+        "name": "Der Pfad des Propheten (Islam)",
+        "description": "Die islamische Tradition des Weges: Der Kuss stellt eine Berufung dar, die Diener Shaitans zu vernichten. Der Pfad bemüht sich um den Schutz der Armen und Schwachen und konzentriert sich auf persönliche Demut und Frömmigkeit.",
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "Die Väter und Vorväter nicht ehren" },
+          { "rating": 9, "sin": "Die Schutzlosen nicht verteidigen" },
+          { "rating": 8, "sin": "Andere übervorteilen" },
+          { "rating": 7, "sin": "Ein Versprechen brechen" },
+          { "rating": 6, "sin": "Prunksucht oder Arroganz" },
+          { "rating": 5, "sin": "Von einem Ungläubigen trinken" },
+          { "rating": 4, "sin": "Unrechtes Töten" },
+          { "rating": 3, "sin": "Einen anderen Gott als Allah (und Mohammed seinen Propheten) haben" },
+          { "rating": 2, "sin": "Die Einheit des Islams gefährden" },
+          { "rating": 1, "sin": "Sich nicht dem Willen Allahs unterwerfen, wie ihn sein Prophet offenbarte" }
+        ]
+      },
+      {
+        "name": "Pfad des Achtfachen Rades",
+        "description": "Bezieht seinen Namen aus dem heidnischen Glauben der Druiden: Die Anhänger ehren die Götter und Geister der Natur, indem sie der Natur dienen und das Gleichgewicht in allen Dingen wahren. Zentrales Ritualelement ist ein zyklischer astronomischer Kalender, auf dessen Grundlage Jahreskreisfeste gefeiert werden; neben druidischen gibt es auch schamanisch-heidnische Anhänger.",
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "Keine Zeit allein in der Stille der Natur verbringen" },
+          { "rating": 9, "sin": "Ein Geheimnis preisgeben" },
+          { "rating": 8, "sin": "Sich nicht um die Kranken und Schwachen kümmern" },
+          { "rating": 7, "sin": "Stolz der Gerechtigkeit überordnen" },
+          { "rating": 6, "sin": "Die Geister der Natur nicht ehren" },
+          { "rating": 5, "sin": "Die Götter nicht ehren" },
+          { "rating": 4, "sin": "Ein Versprechen brechen" },
+          { "rating": 3, "sin": "Bewusst eine Tat begehen, die das Gleichgewicht der Natur stört" },
+          { "rating": 2, "sin": "Unehrenhaftigkeit" },
+          { "rating": 1, "sin": "Sich der Suche nach Selbsterkenntnis verweigern" }
+        ]
+      },
+      {
+        "name": "Pfad der wachsamen Götter",
+        "description": "Ein heute fast ausgestorbener Pfad, dessen Anhänger hauptsächlich Jünger der alten griechischen und römischen Götter sind. Sie dienen den Göttern, indem sie regelmäßig Opfer bringen, das ehren und schützen, was die Götter für heilig erklärt haben, und strengen Ehrenkodizes folgen.",
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "Nicht regelmäßig opfern" },
+          { "rating": 9, "sin": "Lügen" },
+          { "rating": 8, "sin": "Die Götter oder Geister durch den Einsatz von Gewalt beleidigen" },
+          { "rating": 7, "sin": "Unehrenhaftigkeit" },
+          { "rating": 6, "sin": "Opfergaben stehlen" },
+          { "rating": 5, "sin": "Priester unehrerbietig behandeln" },
+          { "rating": 4, "sin": "Ein heiliges Tier töten" },
+          { "rating": 3, "sin": "Einen heiligen Ort schänden" },
+          { "rating": 2, "sin": "Ein Abbild der Götter beschädigen" },
+          { "rating": 1, "sin": "Einen Gott oder die Götter verabscheuen" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Der Weg der Menschlichkeit",
+    "latinName": "Via Humanitatis",
+    "followerName": "Verlorene",
+    "description": "Die Verlorenen glauben, es sei nur natürlich, wenn Kainiten diejenigen bleiben, die sie schon vor ihrem Tod waren – der Versuch, sich vollkommen neu zu erfinden, ist entweder eine Lüge oder eine gefährliche Torheit. Für sie gibt es kein schlimmeres Ende, als dem Tier zu verfallen, denn das ist der wahre Seelentod. Die Moralvorstellungen zu Lebzeiten sind universell: Jede Person versteht, dass Töten falsch ist und dass man Teile seiner Seele opfert, wenn man andere missbraucht. Alle Kainiten beginnen ohne äußere Einflüsse auf diesem Weg; nur tiefgreifende Umerziehung oder schwerer Missbrauch führt eine Vampirin auf einen anderen. Mensch zu sein bedeutet, den Weg der Menschlichkeit zu gehen – alles andere bedeutet, sich selbst zu verlieren.",
+    "ethics": [
+      "Mensch zu bleiben ist die Voraussetzung, dem Tod der Seele zu entgehen.",
+      "Die Menschlichkeit ist eine universelle Erfahrung, die alle Kainiten begreifen können.",
+      "Die persönlichen Grenzen eines anderen zu verletzen, zerstört langsam die Seele.",
+      "Wir alle waren einst Menschen, und das verleiht uns Wert, unabhängig von den Umständen unserer Geburt oder unserer Erziehung.",
+      "Das Denken und das Mitgefühl trennen uns vom Tier."
+    ],
+    "virtues": { "conscienceOrConviction": "Gewissen", "selfControlOrInstinct": "Selbstbeherrschung" },
+    "aura": {
+      "name": "Schimmernde, helle Flecken",
+      "description": "Die Entschlossenheit der Büßerin, im Angesicht ihrer Verdammnis menschlich zu bleiben, bedeutet, dass sich ihr Geist in einem ständigen Konflikt befindet. Die bleiche Seele des Vampirs schimmert und leuchtet hell auf wie eine flackernde, sterbende Kerze, während ihre Menschlichkeit versucht, sich am Tod vorbeizukämpfen."
+    },
+    "hierarchyOfSins": [
+      { "rating": 10, "sin": "Selbstsüchtige Gedanken" },
+      { "rating": 9, "sin": "Geringfügige selbstsüchtige Taten" },
+      { "rating": 8, "sin": "Anderen verletzen" },
+      { "rating": 7, "sin": "Diebstahl" },
+      { "rating": 6, "sin": "Versehentlicher Übergriff gegen eine andere Person" },
+      { "rating": 5, "sin": "Mutwillige Zerstörung" },
+      { "rating": 4, "sin": "Spontaner Übergriff im Affekt" },
+      { "rating": 3, "sin": "Vorsätzlicher, geplanter Übergriff auf eine andere Person" },
+      { "rating": 2, "sin": "Beiläufiger Übergriff auf eine andere Person" },
+      { "rating": 1, "sin": "Die widerwärtigsten, monströsesten Taten" }
+    ],
+    "paths": [
+      {
+        "name": "Pfad des Odems",
+        "description": "Mensch zu sein bedeutet, wie ein Mensch zu handeln – für einen Kainiten sogar, besser als ein Mensch zu sein. Statt sich in kontemplative Abgeschiedenheit zurückzuziehen, müssen die Jünger unter Menschen handeln, sein und sehen und die Last der Menschheit mit ihrer furchtbaren Stärke tragen: Sünde ist unverzeihlich, aber noch unverzeihlicher ist es, nicht zu handeln, obwohl man die Kraft dafür besitzt.",
+        "virtues": { "conscienceOrConviction": "Gewissen", "selfControlOrInstinct": "Selbstbeherrschung" },
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "Denken und handeln wie ein Vampir" },
+          { "rating": 7, "sin": "Menschen bewusst leiden lassen" },
+          { "rating": 1, "sin": "Eine Nacht ohne menschlichen Kontakt verbringen" }
+        ]
+      },
+      {
+        "name": "Pfad der Gemeinschaft",
+        "description": "Auf dich allein gestellt bist du ein Monster – nur umgeben von Menschen bleibt man menschlich. Der Kainit sieht die Herde als seine natürliche Verantwortung und einen heiligen Bund: Er pflegt und verbessert ihre Existenz, denn die Besserstellung der Herde ist auch seine eigene. So werden Anhänger dieses Pfades oft zu geheimen Hütern ganzer Gemeinschaften.",
+        "virtues": { "conscienceOrConviction": "Gewissen", "selfControlOrInstinct": "Selbstbeherrschung" },
+        "hierarchyOfSins": [
+          { "rating": 7, "sin": "Unabsichtliche Zerstörung von Gemeingut" },
+          { "rating": 4, "sin": "Diebstahl" },
+          { "rating": 1, "sin": "Völkermord oder jede andere Tat, die dem Wachstum und dem Gedeihen einer Gemeinschaft ein Ende bereitet" }
+        ]
+      },
+      {
+        "name": "Pfad der Erleuchtung",
+        "description": "Seine wenigen, weit verstreuten Anhänger verwerfen den Gedanken, Vampire seien verdammt: Ein Vampir trägt Heiligkeit und inneres Licht in sich, das das Gleichgewicht mit dem Tier herstellen kann. Da keine Lehre alle Antworten besitzt, ist das Bereisen vieler Orte und der Kontakt mit vielen Menschen Voraussetzung für ein ganzheitliches Bild echter Heiligkeit – der Weg selbst ist das Ziel. In den meisten Städten gilt die Lehre als Häresie.",
+        "virtues": { "conscienceOrConviction": "Gewissen", "selfControlOrInstinct": "Selbstbeherrschung" },
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "An einem Ort verweilen, der dich deinem Ziel nicht näher bringt" },
+          { "rating": 7, "sin": "Jede Tat, die einen Kainiten davon abhält, dem Weg zu folgen, den er beschreitet" },
+          { "rating": 1, "sin": "Die wahre Finsternis in sich zulassen, das Licht auslöschen. Das Böse annehmen." }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Der Weg der Könige",
+    "latinName": "Via Regum",
+    "followerName": "Würdenträger",
+    "description": "Die Würdenträger führen ihren Ursprung auf Kains Eid zurück, lieber in der Finsternis zu herrschen, als sich in falscher Demut vor dem Licht zu verbeugen. Sie halten sich für die Könige und Herrscher der Sterblichen, aber auch ihrer selbst und aller in ihrer Umgebung; die Beherrschung der Sterblichen ist für sie nicht bloß Fähigkeit, sondern ihr Recht als Kainiten. Die erste Lektion ist die Kontrolle über das eigene Tier, denn wer nicht Herr seiner selbst wird, kann nicht über andere herrschen. Die wahre Krone der Herrschaft liegt nicht in materiellem Reichtum, sondern darin, Herz und Verstand der Untergebenen zu besitzen. Deshalb folgen die Würdenträger einem strikten Ehren- und Verhaltenskodex, ordnen sich Höhergestellten unter und streben zugleich selbst nach einer höheren Stellung.",
+    "ethics": [
+      "Um über andere zu herrschen, muss man erst sein eigener Meister werden – bezähme das Tier in deinem Inneren.",
+      "Dein Wort ist deine Ehre und dein Leben. Halte immer deine Versprechen.",
+      "Es gibt nur zwei Positionen auf der Welt: Herr und Diener.",
+      "Macht fällt dir nicht in den Schoß. Du musst sie ergreifen und festhalten."
+    ],
+    "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Selbstbeherrschung" },
+    "aura": {
+      "name": "Herrschaft",
+      "description": "Würdenträger sind beherrscht, stolz und fest von ihrem Herrschaftsrecht überzeugt. Andere spüren ihre gebieterische Aura wie eine Schlinge um ihren Hals."
+    },
+    "hierarchyOfSins": [
+      { "rating": 10, "sin": "Seine Pflicht vernachlässigen" },
+      { "rating": 9, "sin": "Gleichgestellte respektlos behandeln" },
+      { "rating": 8, "sin": "Persönliche Wünsche der Pflicht vorziehen" },
+      { "rating": 7, "sin": "Untergebene wie einen Gleichgestellten behandeln" },
+      { "rating": 6, "sin": "Töten ohne Zweck" },
+      { "rating": 5, "sin": "Schwäche vor Untergebenen zeigen" },
+      { "rating": 4, "sin": "Eine Kränkung der eigenen Ehre unbeantwortet lassen" },
+      { "rating": 3, "sin": "Seinen Lehnsherrn respektlos behandeln" },
+      { "rating": 2, "sin": "Einen Schwur oder ein Versprechen brechen" },
+      { "rating": 1, "sin": "Dem Tier nachgeben, wie etwa in Raserei verfallen" }
+    ],
+    "paths": [
+      {
+        "name": "Pfad der Ritterlichkeit",
+        "description": "Die Paladine stellen ihren persönlichen Eid und die Pflicht über alles andere, einschließlich der eigenen Ziele. Dieser neuere Pfad legt mehr Wert auf Pflichterfüllung, Diensteifer und Charakterstärke als auf persönliche Macht: Paladine empfinden es als ihre Verantwortung, Schwächere zu schützen und zu fördern, und verteidigen ihre Herde wenn nötig mit brutaler Waffengewalt. Abweichend vom Hauptweg nutzt der Pfad Gewissen statt Überzeugung.",
+        "virtues": { "conscienceOrConviction": "Gewissen", "selfControlOrInstinct": "Selbstbeherrschung" },
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "Seine Pflicht vernachlässigen" },
+          { "rating": 9, "sin": "Ruchlose Taten (Betrug, Mord etc.)" },
+          { "rating": 8, "sin": "Andere respektlos behandeln" },
+          { "rating": 7, "sin": "Sich unrechtmäßig verhalten" },
+          { "rating": 6, "sin": "Jemand anderem nicht zu Hilfe eilen" },
+          { "rating": 5, "sin": "Seinen Lehnsherrn respektlos behandeln" },
+          { "rating": 4, "sin": "Persönliche Wünsche der Pflicht vorziehen" },
+          { "rating": 3, "sin": "Eine Kränkung der eigenen Ehre unbeantwortet lassen" },
+          { "rating": 2, "sin": "Ein Versprechen nicht halten" },
+          { "rating": 1, "sin": "Einen Eid brechen" }
+        ]
+      },
+      {
+        "name": "Pfad des Devaraja",
+        "description": "Beruht auf Religionen Südostindiens und Malaysias, die den König selbst als Gottheit ansehen. Die Göttlichen glauben nicht, von sich aus zur göttlichen Herrschaft befähigt zu sein – sie müssen sich dieses Recht verdienen und die Gottheit in den Augen ihres Volkes erreichen. Ihr höchstes Ziel ist es, Gott-König und Herrscher ihres Landes zu werden, der seine Anbeter mit Großzügigkeit beherrscht und für sie Wunder vollbringt.",
+        "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Selbstbeherrschung" },
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "Das Göttliche nicht anerkennen" },
+          { "rating": 9, "sin": "Seine Pflicht vernachlässigen" },
+          { "rating": 8, "sin": "Jemanden respektlos behandeln" },
+          { "rating": 7, "sin": "Einen Niedrigerstehenden wie einen Gleichgestellten behandeln" },
+          { "rating": 6, "sin": "Persönliche Wünsche der Pflicht vorziehen" },
+          { "rating": 5, "sin": "Macht nicht ergreifen, wenn sich die Gelegenheit dazu bietet" },
+          { "rating": 4, "sin": "Eine Kränkung der eigenen Ehre unbeantwortet lassen" },
+          { "rating": 3, "sin": "Töten ohne Zweck" },
+          { "rating": 2, "sin": "Einen Eid oder ein Versprechen brechen" },
+          { "rating": 1, "sin": "Dem Tier nachgeben, wie etwa in Raserei verfallen" }
+        ]
+      },
+      {
+        "name": "Pfad der Daena",
+        "description": "Ein seltener, zoroastrisch geprägter Ableger des Weges der Könige: Die Behdin glauben, dass rechtschaffenes Handeln und das Befolgen des Gesetzes große Macht mit sich bringen. Gesetze geben der zivilisierten Gesellschaft Struktur, weshalb die Behdin das Gesetz um jeden Preis verteidigen – ihr Endziel ist jedoch, selbst das Gesetz zu werden und es zum Wohl der Gesellschaft zu formen.",
+        "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Selbstbeherrschung" },
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "Seine Pflicht vernachlässigen" },
+          { "rating": 9, "sin": "Das Gesetz brechen" },
+          { "rating": 8, "sin": "Andere respektlos behandeln" },
+          { "rating": 7, "sin": "Sich ungesetzlich verhalten" },
+          { "rating": 6, "sin": "Töten ohne Zweck" },
+          { "rating": 5, "sin": "Einem anderen nicht zur Hilfe eilen" },
+          { "rating": 4, "sin": "Seinen Lehnsherrn respektlos behandeln" },
+          { "rating": 3, "sin": "Das Gesetz nicht verteidigen" },
+          { "rating": 2, "sin": "Einen Eid oder ein Versprechen brechen" },
+          { "rating": 1, "sin": "Dem Tier nachgeben, wie etwa in Raserei verfallen" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Der Weg der Lilith",
+    "latinName": "Derech Lilit",
+    "followerName": "Hexen, Bahari, Lilinen, Ki-sikil-lil-la-ke",
+    "description": "Die Bahari verehren Lilith, die Dunkle Mutter, und viele von ihnen lehnen den Kainsmythos und die zentrale Stellung Kains als Allvater aller Vampire ab. Sie lehren, die Kinder Liliths seien die wilde Urkraft der Schöpfung: Schöpfung bereitet Schmerzen, und jeder Schmerz, den sie überleben, ist eine gelernte Lektion. Das Leben erteilt Lektionen durch Leid, weshalb die Bahari zugleich Lehrerinnen, Liebende und Folterknechte sein sollen. Auf den Weg gelangt man durch Blut oder durch Leid; statt fester Organisation bilden sich Kulte, die Mythen und Lektionen teilen, sich gegenseitig verletzen und lieben, auseinanderbrechen und sich neu formieren.",
+    "ethics": [
+      "Schöpfung ist Leben, der Akt der Schöpfung ist göttlich. Wie unsere Mutter musst du Schaffenswerke voller Verwegenheit vollbringen.",
+      "Verführe die Engel.",
+      "Schöpfung ist Schmerz. Je größer die Schöpfung, desto größer der Schmerz. Dieses Leid ist wertvoll.",
+      "Das Leben erteilt Lektionen durch Leid. Sei eine Lehrerin.",
+      "Schöpfung ist immer ein Akt der Liebe und der Leidenschaft. Sei eine Liebende.",
+      "Statt von dir zu lernen, werden einige danach trachten, dich zu vernichten und das, was du geschaffen hast, an sich zu reißen. Sei ein Folterknecht.",
+      "Versammle die Bedürftigen, die, die genug gelitten haben, um zu verstehen. Heiße sie mit Liebe und Weisheit willkommen.",
+      "Pflanze einen Garten an. Pflanze Samen und gib ihnen dein Blut und deine Milch."
+    ],
+    "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Instinkt" },
+    "aura": {
+      "name": "Blutend und zerschlitzt",
+      "description": "Die Aura einer Bahari ist wie die jedes anderen Vampirs, doch erscheinen Teile davon wie herausgeschnitten. Wenn man sich genauer auf die Schnitte konzentriert, scheint es, als würde man Symbole in diesen ständig wechselnden Einschnitten sehen können, aber ohne eines je richtig zu erkennen. Zusätzlich scheint die Aura zu bluten oder zu tropfen, was die Einschnitte mehr wie Wunden wirken lässt. Der Auramodifikator beeinflusst schöpferische Handlungen."
+    },
+    "hierarchyOfSins": [
+      { "rating": 10, "sin": "Sofort trinken, wenn der Hunger einsetzt" },
+      { "rating": 9, "sin": "Einem System beitreten, das Weisheitslose geschaffen haben" },
+      { "rating": 8, "sin": "Eines der Gesichter Liliths ignorieren" },
+      { "rating": 7, "sin": "Das Leiden anderer kleinreden oder ablehnen" },
+      { "rating": 6, "sin": "Grausamkeit um der Grausamkeit willen" },
+      { "rating": 5, "sin": "Großes Wissen stehlen und es als eigene Leistung beanspruchen" },
+      { "rating": 4, "sin": "Ein denkendes Wesen vernichten" },
+      { "rating": 3, "sin": "Nicht nach den Lehren Liliths streben" },
+      { "rating": 2, "sin": "Sich zwischen jemanden und eine wertvolle Lektion stellen" },
+      { "rating": 1, "sin": "Schmerz meiden" }
+    ],
+    "paths": [
+      {
+        "name": "Pfad der Dornen",
+        "description": "Für die Dornen ist Lilith vor allem ein philosophisches Konzept, dessen Dogma auf intellektueller Ebene Sinn ergibt: Körperlicher Schmerz lässt sich praktisch erforschen und quantifizieren, denn im Fleisch liegt Weisheit. Der alchemistisch geprägte Pfad gehört zu den besser organisierten Kulten der Bahari und hält ein- bis zweimal im Jahr geheime Treffen (Sabbate) ab, bei denen die Mitglieder ihre körperlichen und intellektuellen Grenzen mit Schmerz, Feuer oder gar Sonnenlicht ausloten.",
+        "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Instinkt" },
+        "hierarchyOfSins": [
+          { "rating": 9, "sin": "Einer Gemeinschaft von Narren beitreten" },
+          { "rating": 5, "sin": "Einen Schüler (ob offiziell oder inoffiziell) beim ersten Aufeinandertreffen akzeptieren" },
+          { "rating": 2, "sin": "Den Wissenszuwachs anderer fördern und den eigenen vernachlässigen" }
+        ]
+      },
+      {
+        "name": "Pfad der Schleier",
+        "description": "Verehrt Lilith als rebellische Mutter der Monster, die von Kain verraten wurde. Seine Jünger lehnen Kain und alles, wofür er steht, sowie den jüdisch-christlichen Einfluss im Buch Nod ab und wollen das gesamte auf diesen Lügen aufgebaute System zerstören – Lilith ist ihnen Symbol der Empörung und der Freiheit.",
+        "hierarchyOfSins": [
+          { "rating": 9, "sin": "Ein Gesetz Gottes oder Kains akzeptieren und sich daran halten" },
+          { "rating": 8, "sin": "Die Werke der Nodisten-Lügner nicht zerstören" },
+          { "rating": 4, "sin": "Den Docht einer Kerze auslöschen, die sich danach sehnt, heller zu brennen" }
+        ]
+      },
+      {
+        "name": "Pfad der Zeugung",
+        "description": "Fasziniert vom Mythos, in dem Lilith aus der Saat der Engel eine Flut aus Monstern und Dämonen erschuf, suchen diese Bahari nach der Ahnenreihe Liliths und wollen Monster schaffen, wie ihre Mutter es tat. Die Monsterzeugung ist dabei eine höchst individualistische Ausdrucksform – von Satanismus über gezielte Kreuzung vielversprechender Ahnenreihen bis zu gestohlener Nekromanten- und Hexenmeistermagie.",
+        "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Instinkt" },
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "Annäherungsversuche von Dämonen ablehnen, die Saat in ihren Händen tragen" },
+          { "rating": 7, "sin": "Etwas im Stich lassen, weil es hässlich oder grauenvoll ist" },
+          { "rating": 5, "sin": "Ein Geheimnis der Zeugung und Schöpfung nicht den Narren entreißen, die den göttlichen Zweck darin nicht sehen" },
+          { "rating": 1, "sin": "Annäherungsversuche von Engeln ablehnen, die Saat in ihren Händen tragen" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Der Weg der Metamorphose",
+    "latinName": "Via Mutationis",
+    "followerName": "Metamorphen, Suchende",
+    "description": "Säuglinge werden zu Kindern, Kinder zu Menschen und Menschen zu Vampiren – aber wozu werden Vampire? Diese Frage liegt im Herzen des Weges, dem vor allem Tzimisce folgen, deren Disziplin des Fleischformens sie einzigartig für den Gedanken der vampirischen Evolution qualifiziert. Es ist eine einsame Reise zur Göttlichkeit: Leben und Tod sind bereits überwunden, die wahre Transzendenz ist nur noch einen Schritt entfernt. Die Suchenden streben nach Wissen, wollen es aber allein und nach eigenen Regeln entdecken, ohne die Schwächen und eingeschränkte Sichtweise eines Mentors. Leidenschaften und Moral sind Fesseln, und der gemeinsame Charakterzug aller Suchenden ist der Drang, sich über Fesseln und Restriktionen hinwegzusetzen.",
+    "ethics": [
+      "Wissen alleine und für sich selbst zu entdecken, ist die reinste Form des Verstehens und der Schlüssel zur Metamorphose.",
+      "Versuche, Leben und Tod zu verstehen, denn das ist der Zyklus, der die Pforten zur Transzendenz verschlossen hält.",
+      "Gib dem Tier, was es will oder versage ihm seine Wünsche. Das spielt keine Rolle. Es gilt, es – wie alles – zu verstehen.",
+      "Experimentiere ohne Unterlass, besonders an deinem eigenen Körper, und decke jedes Geheimnis auf, das vor dir liegt.",
+      "Ziehe dich nicht aus der Welt zurück, denn du willst sie verstehen. Lass aber nicht zu, dass du dich in ihrem Gewirr verlierst."
+    ],
+    "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Instinkt" },
+    "aura": {
+      "name": "Unmenschlichkeit",
+      "description": "Suchende sind fühlbar fremdartig, da sie hart daran gearbeitet haben, ihre Menschlichkeit abzulegen. Die Auramodifikatoren gelten jedes Mal, wenn Furcht, Panik und Unbehagen einer anderen Person Einfluss auf einen Wurf haben könnten."
+    },
+    "hierarchyOfSins": [
+      { "rating": 10, "sin": "Eine Raserei nicht ausleben" },
+      { "rating": 9, "sin": "Einem anderen ungefragt Wissen anbieten" },
+      { "rating": 8, "sin": "Zulassen, dass du von Lust oder Gefühlen abgelenkt wirst" },
+      { "rating": 7, "sin": "Einen anderen um Wissen ersuchen" },
+      { "rating": 6, "sin": "Dir selbst Nahrung verweigern" },
+      { "rating": 5, "sin": "Konventioneller Moral nachgeben, wenn Wissen erlangt werden könnte" },
+      { "rating": 4, "sin": "Andere über deine Suche nach Wissen stellen" },
+      { "rating": 3, "sin": "Aus Mitgefühl, Unbehagen oder persönlichem Risiko versäumen, zu forschen" },
+      { "rating": 2, "sin": "Einander lieben" },
+      { "rating": 1, "sin": "Es versäumen, den eigenen Körper zu verändern" }
+    ],
+    "paths": [
+      {
+        "name": "Pfad des Fleisches",
+        "description": "Seine Anhänger streben nach der perfekten, körperlichen Ausdrucksform, wobei diese „Perfektion“ als ein Abbild ihres bereits perfekten inneren Selbst definiert ist."
+      },
+      {
+        "name": "Pfad des Geistes",
+        "description": "Seine Anhänger halten das Fleisch für nahezu unwichtig: Es ist lediglich ein Werkzeug, das ihnen dabei helfen soll, ihre Seelen zu perfektionieren."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Der Weg der Sünde",
+    "latinName": "Via Peccati",
+    "followerName": "Sünder",
+    "description": "Für die Sünder gibt es keine höhere Autorität – wie kann man sich gegen Gott versündigen, wenn man seine Autorität nicht anerkennt? Der Weg beruft sich auf den Geist der Rebellion, der in Kains Ablehnung der Vergebung und Annahme seines Fluchs seinen Anfang nahm, und entstand im dekadenten Rom aus griechischen und zoroastrischen Weisheitslehren: Die innere Freiheit der Seele kann von keiner Macht aufgehoben werden, und ihre Schlüssel liegen nicht in der Ablehnung der vielfältigen Freuden der Seele, sondern in ihrem Genuss. Die Sünder kontrollieren das Tier, indem sie es gewähren lassen, es nähren und seine Triebe als Teil ihrer selbst akzeptieren. Skrupellos streben sie nach der Meisterschaft ihrer selbst: Sie allein bestimmen, wer und was sie sind, ohne äußere Beschränkungen oder Moralvorstellungen. Der Weg bleibt im Kern selbstzentriert, immer selbstbezogen, nie selbstlos – was beliebt ist, ist auch erlaubt.",
+    "ethics": [
+      "Du bist schon verdammt, nichts ist dir verboten.",
+      "Das Tier gehört dir, aber du gehörst nicht ihm.",
+      "Handle, ohne zu zögern. Weder die Gesetze Gottes noch die der Menschen binden dich.",
+      "In deinem Herz wohnen Hunger und Freiheit. Sei mutig und nimm beides an."
+    ],
+    "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Instinkt" },
+    "aura": {
+      "name": "Versuchung",
+      "description": "Die Sünder sind frei, und ihr Weg ist voller Möglichkeiten. Sie sind außerordentlich gut darin, die Wünsche anderer zu erkennen. Der Auramodifikator gilt bei Würfen zum Überreden, Verführen und Verleiten."
+    },
+    "hierarchyOfSins": [
+      { "rating": 10, "sin": "Eine Autorität außer deiner eigenen anerkennen" },
+      { "rating": 9, "sin": "Einen neuen Genuss nicht wahrnehmen" },
+      { "rating": 8, "sin": "Die Raserei nicht bis zum Ende auskosten" },
+      { "rating": 7, "sin": "Langzeit-Genuss zugunsten von kurzfristiger Sättigung aufgeben" },
+      { "rating": 6, "sin": "Die Bedürfnisse anderer über den eigenen Genuss stellen" },
+      { "rating": 5, "sin": "Einen Eid leisten" },
+      { "rating": 4, "sin": "Sich nicht gegen diejenigen wehren, die einen festsetzen wollen" },
+      { "rating": 3, "sin": "Nicht trinken und/oder töten, obwohl es notwendig ist" },
+      { "rating": 2, "sin": "Die Grundsätze oder Tugenden eines anderen Weges fördern" },
+      { "rating": 1, "sin": "Nicht im eigenen Interesse zu handeln" }
+    ],
+    "paths": [
+      {
+        "name": "Pfad der Lust",
+        "description": "Geht auf die ursprüngliche Via Desiderationis zurück, wie Tanitbaal-Sahar sie in Rom kodifizierte, und spitzt den Weg der Sünde auf reinen Hedonismus zu. Die Lüstlinge glauben, man verwehre dem Tier seine Existenz, wenn man den Genuss hinauszögert: Sie wollen das Tier mit Sinneseindrücken überfluten und sich einer endlosen Flut der Blutsättigung hingeben, damit es sie in Ruhe lässt.",
+        "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Instinkt" },
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "Sich seiner Taten schämen" },
+          { "rating": 9, "sin": "Begierden nicht nachgeben" },
+          { "rating": 8, "sin": "Die Raserei nicht bis zum Ende auskosten" },
+          { "rating": 7, "sin": "Zurschaustellung von Sittsamkeit" },
+          { "rating": 6, "sin": "Die Bedürfnisse anderer über den eigenen Genuss stellen" },
+          { "rating": 5, "sin": "Einen Eid leisten" },
+          { "rating": 4, "sin": "Die Gesellschaft von Personen, die einem keinen Genuss bereiten" },
+          { "rating": 3, "sin": "Nicht trinken und töten, obwohl es notwendig ist" },
+          { "rating": 2, "sin": "Tugenden und Tugendwächter unterstützen" },
+          { "rating": 1, "sin": "Nicht im eigenen Interesse zu handeln" }
+        ]
+      },
+      {
+        "name": "Pfad des Teufels",
+        "description": "Entstand vor kurzem in al-Andalus als Reaktion auf die Vorstellung der Unterwerfung unter eine Gottheit. Den Widersachern ist das Konzept von Unterwerfung und Sklaverei ein Gräuel: Niemand hat das Recht, über andere zu richten, und sie vernichten Institutionen, die andere mit Leib und Seele versklaven wollen. Abweichend vom Hauptweg nutzt der Pfad Selbstbeherrschung statt Instinkt.",
+        "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Selbstbeherrschung" },
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "Die Gesetze Gottes und der Menschen akzeptieren" },
+          { "rating": 9, "sin": "Einen neuen Genuss nicht wahrnehmen" },
+          { "rating": 8, "sin": "Die Raserei nicht bis zum Ende auskosten" },
+          { "rating": 7, "sin": "Einer verlorenen, hilfsbedürftigen Seele nicht helfen" },
+          { "rating": 6, "sin": "Einen Genuss ablehnen, der niemandem schadet" },
+          { "rating": 5, "sin": "Einen Eid leisten" },
+          { "rating": 4, "sin": "Sich nicht gegen die wehren, die einen einschränken wollen" },
+          { "rating": 3, "sin": "Nicht trinken und töten, obwohl es notwendig ist" },
+          { "rating": 2, "sin": "Materiellen Reichtum wichtigeren, höheren Anliegen vorziehen" },
+          { "rating": 1, "sin": "Falsche Tugenden und Wächter der falschen Tugend unterstützen" }
+        ]
+      },
+      {
+        "name": "Pfad der Schreie",
+        "description": "Ein uralter Pfad, dessen Vorläufer, die Via Hyron (der Weg des Schwarms), schon lange vor dem Weg der Sünde existierte. Seine Anhänger – in den heutigen Nächten die meisten Baali und Infernalisten – haben sich gegen den Kerngedanken der Autonomie gewandt: Statt über sich selbst zu herrschen, haben sie sich entschlossen, der Hölle zu dienen, und finden Freude in der Unterwerfung unter ihre dunklen Meister.",
+        "virtues": { "conscienceOrConviction": "Überzeugung", "selfControlOrInstinct": "Instinkt" },
+        "hierarchyOfSins": [
+          { "rating": 10, "sin": "Andere Gesetze als die der Hölle anerkennen" },
+          { "rating": 9, "sin": "Seinen Begierden nicht nachgehen" },
+          { "rating": 8, "sin": "Die Raserei nicht bis zum Ende auskosten" },
+          { "rating": 7, "sin": "Nicht trinken und töten, obwohl es notwendig ist" },
+          { "rating": 6, "sin": "Vermeiden, anderen Wunden zuzufügen, egal aus welchem Grund" },
+          { "rating": 5, "sin": "Jede Form von Gnade oder Mitleid" },
+          { "rating": 4, "sin": "Eine Gelegenheit auslassen, im Namen der Hölle zu handeln" },
+          { "rating": 3, "sin": "Jede Form altruistischen Verhaltens" },
+          { "rating": 2, "sin": "Gegen die Diener der Hölle vorgehen" },
+          { "rating": 1, "sin": "Tugenden und Wächter falscher Tugenden unterstützen" }
+        ]
+      }
+    ]
+  }
+]

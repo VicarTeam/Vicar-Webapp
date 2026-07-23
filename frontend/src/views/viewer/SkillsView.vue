@@ -19,10 +19,20 @@ import {
   type M20Ability,
   type RequestLevelFn, type IMageSheet, getAbilityName,
 } from "@/@types/m20"
+import {
+  getVdzAbilityName,
+  type IVdzSheet,
+  type VdzRequestLevelFn,
+  vdzKnowledgeAbilities,
+  vdzSkillAbilities,
+  vdzTalentAbilities,
+} from "@/@types/vdz"
 
 const store = useStore()
 const editingCharacter = computed(() => store.editingCharacter as ICharacter | undefined)
 const isMage = computed(() => editingCharacter.value?.game === GameLine.Mage)
+const isDarkAges = computed(() => editingCharacter.value?.game === GameLine.DarkAges)
+const requestVdzLevel = inject("request-vdz-level") as VdzRequestLevelFn | undefined
 
 const levelSkillModal = ref<InstanceType<typeof SkillModal> | null>(null)
 const levelSpecializationModal = ref<InstanceType<typeof NewSpecializationModal> | null>(null)
@@ -77,7 +87,7 @@ function deleteSkillSpecs(skill: ISkillData) {
 
 <template>
   <div v-if="editingCharacter" class="skills-view">
-    <div v-if="!isMage" class="card category" v-for="cat in editingCharacter.categories" :key="cat.name">
+    <div v-if="!isMage && !isDarkAges" class="card category" v-for="cat in editingCharacter.categories" :key="cat.name">
       <div class="cat-head"><b>{{ getCategoryName(cat.name) }}</b></div>
 
       <div class="skill" :class="{ modified: effSkill(skill.key).modified }" v-for="skill in cat.skills" :key="skill.key" :id="`hlsk-${skill.key}`">
@@ -112,7 +122,26 @@ function deleteSkillSpecs(skill: ISkillData) {
       </div>
     </div>
 
-    <div v-else class="card category">
+    <template v-if="isDarkAges">
+      <div
+        class="card category"
+        v-for="group in [
+          { name: 'Talente', abilities: vdzTalentAbilities },
+          { name: 'Fertigkeiten', abilities: vdzSkillAbilities },
+          { name: 'Kenntnisse', abilities: vdzKnowledgeAbilities },
+        ]"
+        :key="group.name"
+      >
+        <div class="cat-head"><b>{{ group.name }}</b></div>
+        <div class="skill" v-for="a in group.abilities" :key="a">
+          <LevelButton v-if="(editingCharacter as any as IVdzSheet).abilities[a] < 5" @click="requestVdzLevel?.('ability', a)" />
+          <small class="name" @click="setDicePool?.('skill', getVdzAbilityName(a), (editingCharacter as any as IVdzSheet).abilities[a])">{{ getVdzAbilityName(a) }}</small>
+          <Dots :amount="(editingCharacter as any as IVdzSheet).abilities[a]" :max="5" />
+        </div>
+      </div>
+    </template>
+
+    <div v-if="isMage" class="card category">
       <div class="cat-head"><b>Talente</b></div>
       <div class="skill" v-for="a in talentAbilities" :key="a">
         <LevelButton v-if="(editingCharacter as any as IMageSheet).abilities[a] < 5" @click="requestLevel?.('ability', a)" />

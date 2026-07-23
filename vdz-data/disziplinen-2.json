@@ -1,0 +1,1108 @@
+[
+  {
+    "name": "Quietus (Cruscitus)",
+    "summary": "Quietus, die Clanskraft der Assamiten, umfasst zwei separate Disziplinen. Quietus Cruscitus ist Haqims Gabe an die Kriegerassamiten und dreht sich um den Einsatz von Blutvergiftung zum Töten – die 'Wissenschaft des Mordens durch Blut'. Wer bereits eine Form von Quietus beherrscht, kann die andere für neuer Wert x 4 EP mit einem entsprechenden Lehrer erlernen.",
+    "levels": [
+      {
+        "level": 1,
+        "powers": [
+          {
+            "name": "Blutessenz",
+            "description": "Der Vampir destilliert das 'Herzblut' eines fast leergetrunkenen Opfers (Sterbliche bis auf 1 Blutpunkt, Kainiten vollständig): Er markiert dessen Brust mit 1 Blutpunkt eigener Vitæ und legt einen erweiterten Willenskraftwurf ab (Schwierigkeit 9), der pro Erfolg 1 Stufe nicht absorbierbaren, schwer heilbaren Schadens verursacht. Sind alle Gesundheitsstufen erschöpft, kalzifiziert das Herz zum 'Debitum', das die spirituelle Essenz des Opfers unbegrenzt konserviert. Durchdringen vampirische Fänge das Debitum, erhält der Trinker bei einem kainitischen Opfer alle Vorzüge und Fallstricke einer Diablerie – ohne den Bluteid zu riskieren. Das Debitum zerfällt bei Feuer, Sonnenlicht oder Entleerung zu Asche."
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "powers": [
+          {
+            "name": "Berührung des Skorpions",
+            "description": "Der Vampir wandelt seine Vitæ in Gift um: mindestens 1 Blutpunkt ausgeben und einen Willenskraftwurf schaffen (Schwierigkeit 6). Das Gift kann im Blutvorrat vorgehalten, gespuckt, auf Waffen geschmiert (1 Blutpunkt und 1 Runde pro 30 Liter Rauminhalt, Waffen bleiben 1 Erfolg pro Angriff wirksam) oder in Essen gemischt werden. Gelangt es in die Blutbahn, verliert das Opfer am Ende der nächsten Runde Widerstandsfähigkeit in Höhe der Erfolge des Anwenders abzüglich eines Widerstandsfähigkeitswurfs (+ Seelenstärke). Bei Widerstandsfähigkeit 0 sterben Lebewesen, Vampire verfallen in Starre. Vampire und Ghule können defensiv 1 Blutpunkt ausgeben, um das Gift vor Wirkungseintritt zu tilgen; ohne Blutheilung ist der Schaden permanent."
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "powers": [
+          {
+            "name": "Dagons Ruf",
+            "description": "Nach Übertragung von mindestens einem Klecks eigenen Blutes (durch Trinken oder blutige Waffe) und mindestens 1 Stunde Wartezeit lässt der Vampir die Blutgefäße des Ziels bersten. Der Spieler gibt 1 Punkt Willenskraft aus und würfelt Wahrnehmung + Aufmerksamkeit (Schwierigkeit 6-10 je nach Distanz/verstrichener Zeit). Dann folgt ein vergleichender Willenskraftwurf gegen das Opfer (Schwierigkeit jeweils die Willenskraft des Gegners); das Ziel erleidet nicht absorbierbaren tödlichen Schaden in Höhe der Nettoerfolge. Jede weitere Runde kann der Spieler erneut Willenskraft ausgeben und weiterwürfeln, bis er unterliegt. Ein Patzer verursacht tödlichen Schaden beim Anwender in Höhe der Fehlschläge."
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "powers": [
+          {
+            "name": "Baals Liebkosung",
+            "description": "Verfeinerung der Berührung des Skorpions: Das Blut wird zu einem ätzenden Gift, das lebendes und untotes Fleisch verbrennt und nur Hautkontakt erfordert. Berührung verursacht 1 Stufe schwer heilbaren Schadens pro Aktivierungserfolg (nicht absorbierbar bei Einnahme), fortgesetzter Kontakt schadet jede Runde erneut. Vergiftete Waffen richten schwer heilbaren Schaden an (+1 Schadenswürfel pro Erfolg, der Bonus verbraucht sich um 1 pro Runde, danach ist die Waffe zerstört). Der Vampir kann vergiftetes Blut bis zu 1 m pro Punkt Körperkraft und Stärke spucken oder hervorwürgen (Geschick + Sportlichkeit, Schwierigkeit 6; mehrere Ziele wie Pfeilhagel); getroffene Haut erleidet Schaden wie durch eine Wurfwaffe mit Schadenswert gleich den Erfolgen. Berührung des Skorpions bleibt weiterhin einsetzbar."
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "powers": [
+          {
+            "name": "Beschleunigung des sterblichen Blutes",
+            "description": "Der Vampir erlangt außergewöhnliche Kontrolle über die Verarbeitung sterblicher Vitæ. Nachdem er seinen Durst an sterblichem Blut gestillt hat, würfelt der Spieler Widerstandsfähigkeit + Okkultismus (Schwierigkeit 6); jeder Erfolg wandelt einen Blutpunkt in zwei um."
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Kuss des Todes",
+            "description": "Das Blut wird zu einem zähen, zersetzenden Saft, der sich durch Fleisch, Knochen, Metall und Glas frisst; er funktioniert wie Baals Liebkosung/Berührung des Skorpions mit Ausnahmen: Schwierigkeit des Willenskraftwurfs 7, jeder umgewandelte Blutpunkt kostet 2 Blutpunkte. Der Saft zerstört Holz und Leder in 1 Runde, Metall in 2, Stein in 3 (robuste Materialien +1 Runde, mystische +3) und haftet für Runden gleich den Erfolgen, wobei der Schaden pro Runde um 1 sinkt (anfangs schwer heilbarer Schaden gleich den Erfolgen). Der ausgehärtete Rückstand wirkt zermahlen wie Berührung des Skorpions (einatembar oder in Flüssigkeit mischbar). Der Saft kann nicht im Blutvorrat vorgehalten oder verspritzt, aber bis zur halben Distanz gespuckt werden. Dient als Alternative zu, nicht als Ersatz für die niedrigeren Giftkräfte."
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "powers": [
+          {
+            "name": "Entrückende Berührung",
+            "description": "Dauerhaft wirksam: Der Vampir absorbiert Blut durch bloßen Hautkontakt mit Blut oder einer unbedeckten Körperstelle des Gefäßes, per Osmose durch jeden Körperteil. Ungeachtet der Generation maximal 2 Blutpunkte pro Runde. Alle Standardrisiken des Bluttrinkens (Blutsband, Vergiftung usw.) bleiben bestehen; Vampire widerstehen dem Berührungskuss gegen Schwierigkeit 6, Sterbliche wie Vampire gegen Schwierigkeit 8."
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "powers": [
+          {
+            "name": "Blut der Vernichtung",
+            "description": "Kann als Automatismus und defensive Handlung eingesetzt werden: Der Spieler würfelt Willenskraft (Schwierigkeit 7) und gibt 1 Blutpunkt aus, um alle Vitæ im Körper in die kombinierten Gifte von Kuss des Todes, Baals Liebkosung und Berührung des Skorpions zu verwandeln; der Blutvorrat halbiert sich (aufrunden). Das Blut hat alle drei Effekte gleichzeitig: Widerstandsfähigkeitsverlust, schwer heilbarer Schaden, Zerstörung von Gegenständen sowie Anhaften mit pro Runde um 1 sinkendem Schaden. Wer mit einer Stich- oder Schnittwaffe die Haut durchdringt, verliert seine Waffe; natürliche Waffen verursachen beim Angreifer automatisch 2 Stufen schwer heilbaren Schadens. Nahkämpfer, die tödlichen oder schwer heilbaren Schaden anrichten, werden bespritzt. Hält 1 Szene an."
+          }
+        ]
+      },
+      {
+        "level": 9,
+        "powers": [
+          {
+            "name": "Schwächung des Blutes der Uralten",
+            "description": "Die höchste Cruscitus-Kraft erhöht die Generation eines anderen Vampirs. Das Ziel muss irgendwann Blut des Charakters in die Blutbahn bekommen haben (Trinken, Ghul des Charakters oder blutige Waffe). Vergleichender Willenskraftwurf: Schwierigkeit des Spielers ist Widerstandsfähigkeit + Seelenstärke des Opfers, die des Opfers die Willenskraft des Charakters. Die effektive Generation des Ziels steigt um 1 pro Nettoerfolg (13. Generation erhält die entsprechenden Schwächen; höhere nach Erzählerermessen mit Anämie u.a.). Betroffene verlieren Zugriff auf alle Vorteile ihrer einstigen Generation (Blutvorrat, Blutausgabe pro Runde, hochstufige Disziplinen). Nach 10 minus Widerstandsfähigkeit und Seelenstärke Nächten gewinnt das Opfer 1 Generation pro Nacht zurück."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Quietus (Hematus)",
+    "summary": "Quietus, die Clanskraft der Assamiten, umfasst zwei separate Disziplinen. Quietus Hematus ist die Disziplin der Wesire und bedient sich subtiler Wege, Vitæ zur Unterstützung mystischer Erforschung und des Regierungswesens zu manipulieren – die 'Darbietung von Blut'. Wer bereits eine Form von Quietus beherrscht, kann die andere für neuer Wert x 4 EP mit einem entsprechenden Lehrer erlernen.",
+    "levels": [
+      {
+        "level": 1,
+        "powers": [
+          {
+            "name": "Bluthärtung",
+            "description": "Der Kainit verleiht einem mit seinem Blut getränkten Gegenstand vampirische Lebenskraft, um ihn zu konservieren. Der Spieler wendet 1 Blutpunkt und 1 Runde pro 30 Liter Rauminhalt auf (Minimum 1) und würfelt Intelligenz + Handwerk (Schwierigkeit 6). Der Gegenstand erhält die Anfälligkeit eines Vampirs gegen Feuer und Sonnenlicht, aber auch temporäre zusätzliche Absorptionswürfel gleich der grundlegenden Widerstandsfähigkeit + Seelenstärke des Charakters, und wird je nach Erfolgen (1 Tag bis unbegrenzt bei 6+) immun gegen Verwitterung und Elemente. Die Absorptionswürfel verbrauchen sich beim Einsatz; ist der Vorrat erschöpft, endet die Kraft."
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "powers": [
+          {
+            "name": "Wahrheit des Blutes",
+            "description": "Der Kainit braucht 1 Blutpunkt des Ziels in einem offenen Gefäß, in das er für die Dauer der Befragung einen Finger taucht; die Kraft hält 1 Szene oder bis der Kontakt abbricht. Zu Beginn gibt der Spieler 1 Punkt Willenskraft aus, dann würfelt er pro zu prüfender Aussage Wahrnehmung + Ausflüchte (Schwierigkeit gleich der Willenskraft des Ziels). Die Erfolge sind kumulativ gestaffelt: von intuitivem Wissen, ob das Ziel selbst an seine Aussage glaubt (1), über tatsächliche Richtigkeit (2), emotionale Beweggründe (3), die ganze dem Ziel bewusste Wahrheit (4), rätselhafte Visionen zu Informationen jenseits des Ziels (5) bis hin zu Wissen, das dem Ziel selbst durch übernatürlichen Einfluss verloren ging (6+)."
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "powers": [
+          {
+            "name": "In Blut gereinigt",
+            "description": "Der Vampir reinigt die Seele eines Ziels von außen auferlegten übernatürlichen Makeln. Er gibt 1 Punkt Willenskraft aus, tauft die Stirn des Ziels mit 1 Blutpunkt und beide konzentrieren sich mindestens 1 Stunde pro Makel. Das Ziel gibt Blutpunkte gleich der Stufe der aufzuhebenden Kraft aus und würfelt Willenskraft (Schwierigkeit Stufe der Kraft +4; über 10 nicht läuterbar, inhärente Kräfte ohne Stufe Schwierigkeit 7). Erfolg entfernt gegenwärtige Einflüsse durch Beherrschung, Irrsinn, Präsenz oder Ähnliches, schützt aber nicht vor zukünftigen Anwendungen. Natürliche Überzeugung, echte Emotionen, Clans-Auflagen und Blutsbande bleiben unberührt; auf sich selbst nicht anwendbar."
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "powers": [
+          {
+            "name": "Wellen des Herzens",
+            "description": "Der Vampir trinkt 1 Blutpunkt einer Zielperson, konzentriert sich 1 Minute auf eine Emotion, gibt 1 Blutpunkt aus und würfelt Charisma + Empathie (Schwierigkeit 7; 5, wenn er die Emotion selbst empfindet; 9 bei starker Gegenemotion). Das Blut des Ziels trägt die eingeprägte Emotion für Tage gleich den Erfolgen (nur eine Emotion gleichzeitig; Anwender und Ziel sind gegen die eigene Prägung immun). Wer die Vitæ des Ziels schluckt, würfelt pro Blutpunkt Selbstbeherrschung/Instinkt (Schwierigkeit Hematus des Vampirs +3, max. 9): 1 Blutpunkt bewirkt eine einstündige Stimmungsschwankung, 3+ beherrschen den Trinker fast einen ganzen Abend, 5+ können katastrophale Folgen haben. Anwendung auf ein anderes Kainskind bewegt beide 1 Schritt Richtung Blutsband."
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "powers": [
+          {
+            "name": "Blutschweiß",
+            "description": "Der Kainit muss Kontakt mit mindestens einem Tropfen frischer Vitæ des Ziels haben, das sich im Sichtfeld befindet, und konzentriert sich 3 Runden. Der Spieler gibt 1 Punkt Willenskraft aus und würfelt Manipulation + Einschüchtern gegen die gegenwärtige Willenskraft des Ziels. Das Opfer schwitzt 1 Blutpunkt pro Erfolg aus; dieses Blut ist tot und bietet keine Nahrung (kann aber bei hungrigen Kainiten Raserei auslösen). Zusätzlich wird das Ziel je nach Weg von Schuld und Reue (Gewissen) oder Prahldrang (Überzeugung) überwältigt – von leichten Gewissensbissen (1 Erfolg) bis zu aufgeregtem Frohlocken über die eigenen Verbrechen (5+)."
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Erwachen des Blutes",
+            "description": "Der Vampir liest die Erinnerungen im Blut derer, von denen er getrunken hat. Er konsumiert 1 Blutpunkt und würfelt Wahrnehmung + Empathie (Schwierigkeit 7). Die kumulativen Erfolge bestimmen die Klarheit: von vagen Eindrücken der letzten Stunden (1) über relevante Details und emotional prägende Erinnerungen (3-4) bis zu allem, was das Ziel im letzten Jahrzehnt (5) oder im Laufe seiner Existenz (6+) gewusst oder gefühlt hat. Während der Visionen steigt die Schwierigkeit wahrnehmungsbasierter Würfe um 2. Ein Patzer flutet den Vampir mit zufälligen Erinnerungen und macht ihn handlungsunfähig, bis er 1 Blutpunkt pro Fehlschlag ausgibt."
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "powers": [
+          {
+            "name": "Eindämmung des Flusses des Herzens",
+            "description": "Erster Effekt (reflexiv als defensive Handlung): Der Spieler kondensiert bis zu 5 Blutpunkte (max. Generationslimit pro Runde) mit einem Willenskraftwurf (Schwierigkeit Blutpunkte +5) zu einer festen Masse, die den Blutfluss zu einer gewählten Körperzone stilllegt und jeden Vitæ-Verlust durch Wunden oder Aussaugen verhindert; das komprimierte Blut ist nicht nutzbar, kann aber jederzeit freigegeben werden. Zweiter Effekt: Bei Hautkontakt (oder Sichtlinie nach Vitæ-Austausch) gibt der Spieler 1 Punkt Willenskraft aus und würfelt Manipulation + Medizin (Schwierigkeit Widerstandsfähigkeit des Ziels +3, max. 9); er erhält für Runden gleich den Erfolgen vollständige Kontrolle über den Blutaufwand des Ziels (sperren oder Blut-Effekte aktivieren). Gegen Sterbliche kann dies Herzstillstand oder Schlaganfall verursachen."
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "powers": [
+          {
+            "name": "Lieder ferner Vitae",
+            "description": "Verbindet Blutschweiß mit Erwachen des Blutes, um im Opfer die residualen Eindrücke aller seiner eigenen Opfer heraufzubeschwören. Kontakt mit einem Tropfen frischer Vitæ des Ziels (im Sichtfeld) und 1 Runde Konzentration; 4 Blutpunkte ausgeben und Geistesschärfe + Einschüchtern gegen die gegenwärtige Willenskraft des Ziels würfeln. Bei Erfolg durchlebt das Ziel die Perspektiven und die Angst all jener, von denen es je getrunken hat, ist betäubt und handlungsunfähig, würgt 2 Blutpunkte hervor, +2 Runden pro Erfolg; geht ihm das Blut aus, folgen Starre, halbierte permanente Willenskraft und die Geistesstörung Blutiger Aberglaube. Danach je ein Wurf auf Mut und Selbstbeherrschung/Instinkt (Schwierigkeit 8): Scheitern bedeutet Rötschreck vor dem eigenen Antlitz bzw. Blutiger Aberglaube; zudem +3 auf alle Schwierigkeiten des Ziels für die Szene. Pro durch Diablerie gewonnener Generation des Opfers erhält der Charakter 1 automatischen Erfolg."
+          }
+        ]
+      },
+      {
+        "level": 9,
+        "powers": [
+          {
+            "name": "Sühnen der Sünden des Vaters",
+            "description": "Verhängt eine Strafe über die gesamte Brut eines Vampirs. In der Runde nach einer erfolgreichen geringeren Hematus-Kraft gegen einen Vampir gibt der Spieler 1 permanenten Punkt Willenskraft aus, würfelt Manipulation + Okkultismus und gibt Blutpunkte gleich der Schwierigkeit aus (Minimum 4, +1 pro betroffener Nachkommensgeneration, Maximum 10). Bei Erfolg trifft dieselbe Kraft mit denselben Würfelergebnissen jeden Abkömmling im festgelegten Generationsband; jeder widersteht mit seinen eigenen Eigenschaften. Der Spieler kann bis zu doppelte Geistesschärfe an Nachkommen ausnehmen, sofern er ihre Gesichter kennt oder ihr Blut geschmeckt hat."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Schattenspiele",
+    "summary": "Schattenspiele, die Disziplin des Clans der Schatten (Lasombra), erlaubt es, Schatten zu kontrollieren und zu manipulieren; Meister verleihen ihnen Form, Substanz und einen Anschein von Leben. Ob ihre Quelle eine urtümliche Entität der Dunkelheit (Ahriman), ein Schattenreich oder schlicht die kainitische Natur ist, bleibt unter den Lasombra umstritten. Der Anblick der Kraft ruft Schrecken in Tieren und Sterblichen hervor, und selbst Kainiten empfinden sie als Affront gegen die Naturgesetze.",
+    "levels": [
+      {
+        "level": 1,
+        "powers": [
+          {
+            "name": "Schattenspiel",
+            "description": "Der Vampir kann vorhandene Schatten manipulieren, bewegen und animieren, jedoch keine erschaffen. Für 1 Blutpunkt erhält er für den Rest der Szene +1 Würfel auf Einschüchtern- und Heimlichkeitsvorräte; solange die Kraft aktiv ist, kann er Schatten auch von ihrer Quelle trennen und so alle durch Dunkelheit verursachten Abzüge um seinen Wert in Schattenspiele verringern. Sterbliche müssen beim Anblick einen Mutwurf (Schwierigkeit 7) bestehen, sonst sinken ihre gesellschaftlichen Würfelvorräte um 1."
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "powers": [
+          {
+            "name": "Nocturne",
+            "description": "Der Vampir beschwört eine Wolke übernatürlicher Finsternis, die aktiv aufrechterhalten werden muss. Wurf auf Manipulation + Okkultismus (Schwierigkeit 7): Es entsteht eine Wolke von 3 m Durchmesser innerhalb von 50 m (+3 m pro weiterem Erfolg); außerhalb des Sichtfelds Schwierigkeit 9 und 1 Blutpunkt. In der Wolke sinken alle Wahrnehmungsvorräte um 5 Würfel (übernatürlich geschärfte Sinne nur -2) und alle Schwierigkeiten steigen um 2. Als Durchbruch des Abgrunds saugt die Wolke Leben aus: Charaktere darin haben 2 Würfel weniger auf Widerstandsfähigkeitsvorräte; Sterbliche ersticken bei Widerstandsfähigkeit 0."
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "powers": [
+          {
+            "name": "Arme des Ahriman",
+            "description": "Der Lasombra formt Finsternis zu Tentakeln. Wurf auf Manipulation + Okkultismus (Schwierigkeit 7); jeder Erfolg erschafft einen fast 2 m langen Tentakel mit Körperkraft und Geschick gleich dem Wert in Schattenspiele, der aus einem Schatten innerhalb von 7 m entspringt. Für je 1 Blutpunkt lassen sich Körperkraft/Geschick um 1 oder die Länge um 2 m steigern. Jeder Tentakel hat 4 Gesundheitsstufen, erleidet keine Wundabzüge, absorbiert mit Widerstandsfähigkeit + Seelenstärke des Erschaffers (keinen schwer heilbaren Schaden) und greift mit Geschick an (Körperkraft +1 Schlagschaden). Jeder Tentakel erhält eine unabhängige Handlung und agiert nach Anweisung des Erschaffers."
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "powers": [
+          {
+            "name": "Nachtschatten",
+            "description": "Der Kainit formt lebensechte Bilder und Illusionen aus Finsternis, die anhalten, solange er sich konzentriert; helles Licht lässt sie schnell unglaubhaft wirken. Wurf auf Geistesschärfe + Okkultismus (Schwierigkeit 7): pro Erfolg ein Bild bis Menschengröße, Erfolge können für eine sehr große Illusion zusammengelegt werden. Betrachter durchschauen die Illusion nur mit Wahrnehmung + Aufmerksamkeit gegen 9. Alternativ kann der Erschaffer ein Gebiet von bis zu 10 m Durchmesser pro Erfolg mit Visionen des Abgrunds füllen: Charaktere ohne Schattenspiele erleiden -2 auf alle Würfelvorräte und -3 auf Initiative."
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "powers": [
+          {
+            "name": "Finsterer Avatar",
+            "description": "Für 3 Blutpunkte wird der Kainit selbst zu einem Wesen aus Schatten, das in völliger Dunkelheit sieht, durch dünnste Spalten gleitet und körperlichen Schaden weder verursachen noch erleiden kann. Er kann Arme des Ahriman mit sich selbst als Ursprung beschwören (zusätzliche Blutkosten) oder ein Opfer in Schatten hüllen und dessen Würfelvorräte um seinen Wert in Schattenspiele senken; Sterbliche ersticken wie bei Nocturne bei Widerstandsfähigkeit 0. In Schattengestalt erleidet er doppelten Schaden durch Feuer und Sonnenlicht, und die Schwierigkeit von Rötschreck-Würfen steigt um 1."
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Die innere Finsternis",
+            "description": "Der Spieler würfelt Willenskraft (Schwierigkeit 6) und gibt 1 Blutpunkt aus; eine nachtschwarze Wolke entsteigt dem Vampir und hüllt das gewählte Ziel ein. Wer weniger Punkte Mut hat als der Vampir Erfolge, flieht, kauert sich zusammen oder muss als Kainskind gegen Rötschreck würfeln. Berührte verlieren 2 Blutpunkte pro Runde (nur ein Opfer pro Runde, Ziel frei wählbar), sofern ihnen nicht pro Kontaktrunde ein Widerstandsfähigkeitswurf (Schwierigkeit 6) gelingt. Bei einem Angriff auf den Vampir kehrt die Finsternis sofort zurück; der Rückruf gewährt ihm die entzogenen Blutpunkte, was dem Trinken gleichkommt und Blutsbande erzeugen kann."
+          },
+          {
+            "name": "Schattenschritt",
+            "description": "Der Vampir verschmilzt mit der Finsternis und tritt durch den Abgrund aus einem anderen nahen dunklen Bereich hervor; er kann auch in einen Schatten fassen und etwas aus einem zweiten ergreifen. Ein- und Ausgangspunkt müssen personengroß sein. Wurf auf Intelligenz + Heimlichkeit (Wechsel) bzw. Intelligenz + Handgemenge (Ergreifen), Schwierigkeit 7. Zusätzlich ist ein Mutwurf gegen 5 nötig (7 für unfreiwillig Mitgezogene); Scheitern verursacht sofortigen Rötschreck beim Austritt, ein Patzer lässt den Charakter im Abgrund gefangen zurück, aus dem er sich mit Intelligenz + Heimlichkeit befreien muss (Endpunkt bestimmt der Erzähler)."
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "powers": [
+          {
+            "name": "Schattenzwilling",
+            "description": "Der Kainit animiert und 'befreit' den Schatten eines beseelten Wesens (auch den eigenen); das Ziel wirft solange keinen Schatten. Der Spieler gibt 1 Blutpunkt aus und würfelt Willenskraft (Schwierigkeit 8); der Schatten kommt für 1 Stunde pro Erfolg frei (Sonnenaufgang beendet die Kraft). Der Zwilling hat halbe Attribute und Fähigkeiten seines Ursprungskörpers und halben Schattenspiele-Wert des Animierenden (jeweils abrunden), kann sich bis 15 m von der Quelle entfernen, angreifen und angegriffen werden, erleidet und verursacht aber nur halben Schaden – Flammen und übernatürliche Angriffe wirken voll. Stirbt der Zwilling, verliert der Besitzer die Hälfte seiner Willenskraftpunkte und muss gegen Rötschreck würfeln (Schwierigkeit 9). Zeugen ohne Schattenspiele müssen einen Mutwurf ablegen."
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "powers": [
+          {
+            "name": "Oubliette",
+            "description": "Der Vampir hüllt ein Opfer in Dunkelheit und lässt es halb in den Abgrund hängen: hilflos, ohne Luft und Licht, nur ein tiefer Schatten bleibt zurück. Die Erschaffung kostet 1 Blutpunkt; um jemanden darin einzuschließen, würfelt der Vampir Geistesschärfe + Einschüchtern gegen Geschick + Okkultismus des Ziels (Schwierigkeit je 7). Sterbliche ersticken innerhalb von Widerstandsfähigkeit Minuten (der Kopf oder etwas Luft kann ausgespart werden); Vampire hängen machtlos in der Finsternis und können weder Disziplinen nutzen noch handeln. Sonnenlicht oder der Wille des Erschaffers beenden die Oubliette; nur eine Oubliette mit je einem Opfer ist gleichzeitig möglich."
+          }
+        ]
+      },
+      {
+        "level": 9,
+        "powers": [
+          {
+            "name": "Ahrimans Domäne",
+            "description": "Der Vampir öffnet die Welt zum Abgrund und erzeugt eine allumfassende, kugelförmige Finsternis. Der Spieler gibt 2 Punkte Willenskraft aus und konzentriert sich 3 Runden, während die Schwärze das Gebiet füllt; am Ende würfelt er Manipulation + Okkultismus gegen 6. Jeder im Gebiet erleidet Schadensstufen (nicht -würfel) in Höhe der Erfolge, schwer heilbar bei Vampiren. Danach bricht die Domäne zusammen und nimmt die Leichen der Gestorbenen sowie Sterbliche mit, die auf eine Gesundheitsstufe gefallen sind. Für jedes lebend fortgerissene Wesen gewinnt der Vampir 1 Punkt Willenskraft zurück."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Schimären",
+    "summary": "Die Ravnos sind Meister der Illusionen: Schimären erlaubt es, die Wirklichkeit der eigenen Fantasie nach zu formen und realistische Illusionen und Phantasmen zu erschaffen, um Sinne und Verstand der Opfer zu überlisten. Sterbliche wie Vampire fallen darauf herein, sofern sie keine hinreichende Stufe von Auspex besitzen. Opfer können Illusionen durchschauen, wenn sie deren Falschheit 'beweisen', und unglaubwürdige Illusionen gewähren einen Wurf auf Wahrnehmung + Aufmerksamkeit (Schwierigkeit 6).",
+    "levels": [
+      {
+        "level": 1,
+        "powers": [
+          {
+            "name": "Trugbild",
+            "description": "Erzeugt eine einfache statische Illusion, die einen einzelnen Sinn verwirrt (Geräusch, Geruch, Anblick, taktiles Gefühl); taktile Illusionen können niemanden verletzen. Der Spieler gibt 1 Punkt Willenskraft aus, die Erschaffung ist eine Handlung. Der Vampir kann Illusionen in etwa 7 m³ pro Punkt Schimären erschaffen und muss das Zielgebiet mit seinen Sinnen wahrnehmen können. Die Illusion bleibt, bis der Vampir sie beendet oder die Umgebung verlässt."
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "powers": [
+          {
+            "name": "Schimäre",
+            "description": "Erlaubt statische Illusionen, die jeden Sinn oder alle zugleich betreffen (z.B. ein hart wirkendes Schwert, das dennoch glatt durch jemanden hindurchgeht). Der Spieler gibt je 1 Punkt Willenskraft und 1 Blutpunkt aus. Bei der Erschaffung ist festzulegen, ob die Illusion komplett stationär ist oder an eine Person, einen Ort oder ein Tier gebunden bleibt. Es gelten dieselben Regeln für Ausdehnung und Dauer wie bei Trugbild."
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "powers": [
+          {
+            "name": "Phantasma",
+            "description": "Verleiht einer mit Trugbild oder Schimäre erschaffenen Illusion Bewegung: 1 Blutpunkt ausgeben. Solange sich der Vampir konzentriert, kann er die Illusion beliebig bewegen und sogar sprechen lassen; für andere komplexe Handlungen nebenher muss ihm ein Willenskraftwurf gelingen, sonst löst sich die Illusion auf. Ohne Konzentration kann die Illusion mit einfachen, repetitiven Bewegungen fortfahren (in einem Satz beschreibbar), ist dann aber nicht mehr steuerbar."
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "powers": [
+          {
+            "name": "Dauerhaftigkeit",
+            "description": "Wird mit Trugbild oder Schimäre verwendet und dehnt die Dauer der Illusion unbegrenzt aus, selbst in Abwesenheit des Vampirs. Der Spieler gibt 1 Blutpunkt aus, um die Illusion permanent zu machen, bis sie aufgehoben wird; dies schließt mittels Phantasma 'programmierte' Illusionen ein."
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "powers": [
+          {
+            "name": "Fürchterliche Realität",
+            "description": "Eine tiefgreifende Illusion, die nur eine Person betrifft, an die diese aber so vollständig glaubt, dass sie Schaden erleidet (illusionäre Wände halten auf, illusionäres Feuer verbrennt); alle anderen sehen die Illusion ebenfalls. Kostet 2 Punkte Willenskraft, hält eine Szene. Für Verletzungen würfelt der Spieler Manipulation + Ausflüchte gegen Wahrnehmung + Selbstbeherrschung/Instinkt des Opfers; jeder Erfolg verursacht 1 Stufe absorbierbaren tödlichen Schadens (weniger oder Schlagschaden ist vorab festlegbar, Sekundäreffekte wie Rasereiwürfe möglich). Das Opfer entkommt, wenn es mit mindestens 2 Erfolgen auf Charisma + Empathie gegen Manipulation + Ausflüchte des Erschaffers überzeugt wird; erfolgt dies binnen 24 Stunden, heilt aller Schaden. Die Kraft kann nicht töten – 'getötete' Opfer werden bewusstlos oder verfallen in Starre."
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Fatuus-Meisterschaft",
+            "description": "Negiert die Willenskraft- und Blutkosten der ersten drei Schimären-Stufen; der Ravnos kann sie unbegrenzt oft einsetzen und mit minimaler Konzentration aufrechterhalten. Er kann die Bewegungen einer Anzahl von Illusionen gleich seiner Intelligenz ohne intensive Konzentration dirigieren und Illusionen aufrechterhalten, solange er innerhalb von Willenskraft x 1,5 Kilometern bleibt. Auf Ereignisse reagieren lassen kann er sie nur, wenn er diese wahrnehmen kann."
+          },
+          {
+            "name": "Geteilter Albtraum",
+            "description": "Erlaubt, die physischen Wirkungen der Fürchterlichen Realität auf eine ganze Menschenmenge auszudehnen. Der Spieler gibt 2 Punkte Willenskraft und 1 Blutpunkt pro Ziel aus, würfelt einmal Manipulation + Ausflüchte und vergleicht das Ergebnis individuell mit Wahrnehmung + Selbstbeherrschung/Instinkt jedes Ziels."
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "powers": [
+          {
+            "name": "Klinge der Dämonen",
+            "description": "Erschafft eine illusionäre Klinge, die real erscheint und schreckliche Wunden zufügt. Kosten: 1 Punkt Willenskraft plus 1 Blutpunkt pro Schadenswürfel (zusätzlich zur Körperkraft des Trägers); die Klinge erscheint sofort, ist noch in derselben Runde nutzbar, hält 1 Szene und richtet schwer heilbaren Schaden an. Nach der Erschaffung sind die Schadenswürfel nicht mehr steigerbar, und die Klinge kann höchstens 1 Würfel mehr Schaden anrichten als eine normale Klinge ihrer Art. Wird sie aus der Hand geschlagen, muss der Vampir 1 Blutpunkt ausgeben, sonst löst sie sich auf; bereits verursachter Schaden bleibt bestehen."
+          },
+          {
+            "name": "Fern-Fatuus",
+            "description": "Erlaubt, Illusionen in jedes Gebiet zu projizieren, das der Vampir sehen oder visualisieren kann – auch nach Beschreibung, Gemälde oder Zeichnung. Der Spieler würfelt Wahrnehmung + Ausflüchte; die Schwierigkeit hängt von der Vertrautheit ab (6 bei vertrautem Ort oder gleichzeitiger übernatürlicher Betrachtung, 7 nach mindestens drei Besuchen, 8 nach einem Besuch oder fremder Erinnerung, 9 bei bloßer Beschreibung/Bild). Bei Erfolg kann er jede andere Schimärenkraft an diesem Ort anwenden."
+          },
+          {
+            "name": "Störung der Realität",
+            "description": "Lässt gewöhnliche Objekte oder Personen irreal erscheinen und Zweifel an ihrer Realität wecken – Betrachter schreiben das Gesehene als Halluzination ab. Wurf auf Manipulation + Ausflüchte (Schwierigkeit 7); die Erfolge bestimmen Anzahl und Art der Ziele (1 unbelebter Gegenstand bis zu einer ganzen Menschenmenge bei 5). Die Illusion hält eine Szene an. Auspex enttarnt die betroffenen Objekte als Illusion, sofern der Auspex-Wert hoch genug ist, die Schimären zu durchdringen."
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "powers": [
+          {
+            "name": "Visionen der Ashura",
+            "description": "Plagt ein Opfer mit konstanten, alle Sinne betreffenden Illusionen alltäglicher Ereignisse, die sich stets als Trug erweisen, sobald es reagiert – bis es an allem zweifelt. Der Spieler gibt 1 Punkt Willenskraft aus und würfelt Manipulation + Ausflüchte (Schwierigkeit gleich der gegenwärtigen Willenskraft des Opfers, +1 bei Geistesstörungen). Der Effekt hält 1 Nacht pro Erfolg; am Ende jeder Nacht verliert das Opfer 1 Punkt Willenskraft, bei 0 erhält es stattdessen eine Geistesstörung. Opfer mit Auspex können versuchen, einzelne Ereignisse zu durchschauen."
+          },
+          {
+            "name": "Sinneswandel",
+            "description": "Der Ravnos arrangiert die Sinne eines Opfers um und erzeugt eine allumfassende Synästhesie (Töne als Farbblitze usw.); gegen Menschenmengen werden Sinneseindrücke zufällig zwischen Personen vertauscht. Gegen ein Einzelziel: 1 Punkt Willenskraft und Manipulation + Ausflüchte (Schwierigkeit gleich aktueller Willenskraft des Opfers); gegen eine Menge Schwierigkeit 7, wirkt auf jeden im Sichtfeld. Pro Erfolg verliert das Ziel 1 Punkt Wahrnehmung; bei 0 ist es handlungsunfähig. Dauer gegen Einzelziele von 1 Woche (1 Erfolg) bis permanent (5 Erfolge), gegen Mengen bis Sonnenaufgang."
+          }
+        ]
+      },
+      {
+        "level": 9,
+        "powers": [
+          {
+            "name": "Phantasiegespinst",
+            "description": "Der Ravnos passt reale Gegenstände oder Lebewesen an oder erschafft sie. Kosten: 5 Blutpunkte und 1 Punkt Willenskraft, Wurf auf Manipulation + Ausflüchte (Schwierigkeit 6 für anorganische Objekte, sonst Willenskraft des Ziels); Reichweite mehrere Kilometer, mit Fern-Fatuus kombinierbar, bis zu Willenskraft des Kainiten an bewussten Zielen pro Einsatz. Die Dauer ist immer eine Szene; Erfolge bestimmen die Drastik – vom Entschärfen eines Gegenstands (1) über Verwandlung (2), Entstofflichung (3), drastische Veränderungen (4), unlogische Umgebungen (5) bis zur permanenten Auslöschung unbelebten Materials (6). Gegen denkende Opfer richtet die Auslöschung 2 Stufen schwer heilbaren Schadens pro Erfolg an; Überlebende verlieren pro Erfolg 1 Punkt Körperkraft und Widerstandsfähigkeit bis zum Ende der Szene."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Seelenstärke",
+    "summary": "Kainiten mit Seelenstärke werden zu veritablen Naturgewalten, die nur Feuer und Sonnenlicht aufzuhalten vermögen. Der Wert in Seelenstärke addiert sich zu allen auf Widerstandsfähigkeit beruhenden Würfelvorräten einschließlich der Absorption von tödlichem und Schlagschaden; einmal pro Runde kann der Vampir 1 Blutpunkt ausgeben, um automatisch seine Seelenstärke an Schaden zu absorbieren – auch schwer heilbaren, nicht jedoch Schaden durch Feuer oder Sonnenlicht. Ab 6+ Punkten kann ein Ahn entweder numerisch weiter steigern oder spezifische, einzigartige Kräfte wählen.",
+    "levels": [
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Des Ritters Verderben",
+            "description": "Das Fleisch des Anwenders gleicht gehämmertem Eisen. Für 2 Blutpunkte für die Szene aktiviert: Reduziert der Absorptionswurf den Schaden eines Waffentreffers auf 0, wird die Waffe zerstört. Bei waffenlosen Angriffen erleidet der Angreifer pro Absorptionserfolg 1 Punkt Schlagschaden."
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "powers": [
+          {
+            "name": "Die Segnung der Lebenskraft",
+            "description": "Von Salubri-Kriegern entwickelt: Der Vampir malt ein kleines Blutzeichen auf die Stirn des Ziels und verleiht ihm seine übernatürliche Widerstandskraft. Kosten: 1 Blutpunkt pro verliehenem Punkt Seelenstärke (bis zur Obergrenze der eigenen Punkte) plus 1 Punkt Willenskraft; Wurf auf Widerstandsfähigkeit + Überleben gegen 8. Die Dauer reicht von 1 Runde (1 Erfolg) über 1 Nacht (3) bis unbegrenzt (7). Kann Seelenstärke über das Eigenschaftslimit des Ziels hinaus verleihen, ersetzt jedoch vorhandene Seelenstärke und addiert sich nicht dazu."
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "powers": [
+          {
+            "name": "Gepanzertes Fleisch",
+            "description": "Stärkere Version von Des Ritters Verderben: Die Haut wird hart wie Stahl. Für 2 Blutpunkte für die Szene aktiviert erleidet der Charakter außerhalb von Kampfsituationen keinen Schaden durch gewöhnliche Temperaturextreme, Klingen oder Stöße und kann weich gewordenes Metall mit bloßen Händen schmieden. Waffenlose Angriffe richten Körperkraft + Seelenstärke Schlagschaden an, und er kann jeden Angriff (Schlag-, tödlichen oder schwer heilbaren Schaden) mit bloßen Händen blocken."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Serpentis",
+    "summary": "Serpentis gilt als Sets persönliches Vermächtnis an seine Kinder und wird von den Setiten eifersüchtig gehütet. Die Disziplin bietet nicht bloß eine Affinität zu Schlangen, sondern erlaubt es, Eigenschaften des legendären Typhon und der Echidna anzunehmen. Serpentis-Verwandlungen halten, wenn nicht anders angegeben, für die Szene an und können miteinander kombiniert werden.",
+    "levels": [
+      {
+        "level": 1,
+        "powers": [
+          {
+            "name": "Verzaubernder Blick",
+            "description": "Der Vampir nimmt verlockende, subtil übernatürliche Züge an (goldene Schlangenaugen, perlmuttglänzende Haut). Kein Wurf erforderlich: Solange die Kraft aktiv ist, sinkt die Schwierigkeit aller gesellschaftlichen Handlungen um 1. Sein lähmender Blick wirkt auf einen einzelnen Charakter, der ihm Aufmerksamkeit schenkt; Übernatürliche können mit 1 Punkt Willenskraft und einem Willenskraftwurf (Schwierigkeit Charisma + Ausflüchte des Vampirs) widerstehen. Ein Betroffener unterbricht den Blickkontakt automatisch bei klarer Gefahr."
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "powers": [
+          {
+            "name": "Typhonischer Schlund",
+            "description": "Für 1 Blutpunkt (Automatismus) nehmen Kiefer, Fänge, Zunge und Kehle eine monströse, dehnbare Gestalt an (Veränderungen einzeln wählbar). Die peitschende, bis 1 m lange Zunge greift mit Schwierigkeit 7 an, richtet schwer heilbaren Schaden (Körperkraft) an, dient als Zusatzangriff bei mehrfachen Handlungen und erlaubt über ihren Saugrüssel, von verwundeten Gegnern zu trinken wie durch einen Biss; solange sie herausgestreckt ist, entfallen Dunkelheitsabzüge. Die Kiefer erlauben Bissangriffe außerhalb des Ringkampfs; erfolgreiche Bisse verursachen +1 Würfel Schaden und initiieren automatisch einen Ringkampf. Die vergrößerte Kehle konsumiert 5 statt 3 Blutpunkte pro Runde."
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "powers": [
+          {
+            "name": "Natternhaut",
+            "description": "Für 1 Blutpunkt (Automatismus) wird das Fleisch ledrig, schuppig und formbar. Absorptionsschwierigkeiten sinken auf 5, und der Vampir kann schwer heilbaren Schaden (außer durch Feuer/Sonnenlicht) mit Widerstandsfähigkeit absorbieren. Er kann durch jede Öffnung schlüpfen, durch die sein Kopf passt, und als Automatismus jedem Ringkampf entkommen. Gibt er bei der Aktivierung 1 Punkt Willenskraft aus, bleibt die Veränderung bei flüchtiger Untersuchung unauffällig; zeigt er sie offen, sinkt die Schwierigkeit bei Einschüchtern um 2."
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "powers": [
+          {
+            "name": "Typhonischer Avatar",
+            "description": "Für 1 Blutpunkt verwandelt sich der Setit in eine typhonische Bestie – einen großen, stachelschwänzigen Schakal oder eine Mensch-Schlangen-Hybridform mit Greifschwanz statt Beinen (bei Erwerb eine Gestalt wählen, die andere später für halbe EP-Kosten). Die Verwandlung dauert 3 Runden; je 1 zusätzlicher Blutpunkt beschleunigt um 1 Runde, 4 machen sie zum Automatismus. Beide Gestalten erhalten +2 Körperkraft, Geschick und Widerstandsfähigkeit; die Tiergestalt hat doppelte Geschwindigkeit, +2 Würfel Bissschaden und -2 Schwierigkeit auf Gleichgewicht, der Hybridschwanz dient als Zusatzangriff mit +5 statt +2 Körperkraft. Beide Gestalten sind erkennbar übernatürlich: Sterbliche mit weniger permanenter Willenskraft als der Serpentis-Wert müssen fliehen oder sich unterwerfen (1 Punkt Willenskraft erlaubt 1 Runde Handeln), andere würfeln Willenskraft gegen den Serpentis-Wert."
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "powers": [
+          {
+            "name": "Mutter der Monster",
+            "description": "Der Setit gebiert kleine typhonische Bestien mit kindlicher Intelligenz aus seinem Fleisch, die seine Befehle rückhaltlos befolgen. Pro Monster streicht der Spieler 1 Gesundheitsstufe (nicht regenerierbar, solange die Bestie getrennt ist); der erste Blutpunkt erschafft das Monster (Geburt 1 Runde), weitere dienen ihm als Blutvorrat zum Heilen oder Aktivieren von Serpentis 1-4. Die Bestie hat u.a. Körperkraft/Geschick/Widerstandsfähigkeit 3, +3 Absorptionswürfel Rüstung, Biss (Körperkraft +1 tödlich) und Klauen (Körperkraft tödlich) sowie Geschwindigkeit, Seelenstärke und Stärke des Vampirs. Der Vampir kann ein Monster (auch dessen Leiche) als Automatismus wieder aufnehmen und erhält Gesundheitsstufe und Restblutvorrat zurück."
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Gift der Echidna",
+            "description": "Für 1 Blutpunkt höhlen sich die Fänge binnen einer Runde aus und entwickeln Giftdrüsen; das Gift wird bei jedem Biss injiziert. Betroffene erleiden die Serpentis des Setiten als tödlichen Schaden zusätzlich zum Bissschaden. Menschen, die den Schaden überleben, sind gelähmt (-5 auf alle Handlungen) und müssen 5 Minuten lang alle 30 Sekunden einen Widerstandsfähigkeitswurf bestehen oder sterben."
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "powers": [
+          {
+            "name": "Gestalt des Sturms",
+            "description": "Der Vampir löst sich in eine Wolke tobender Winde, Regen und Blitze auf (Verwandlung 1 volle Runde, 2 Blutpunkte pro Runde in Sturmgestalt). Der Sturm misst 3 m pro Punkt Serpentis, bewegt sich mit halber Geschwindigkeit und ist immun gegen körperlichen Schaden; alle Wahrnehmungsschwierigkeiten steigen um 3. Jede Runde wird die Serpentis des Vampirs als Schlagschaden gegen jeden im Sturm gewürfelt. Für 1 Blutpunkt kann er einen Blitzschlag beschwören (Wahrnehmung + Okkultismus, schwer heilbarer Schaden in Höhe der Serpentis; nur ausweichen oder absorbieren möglich). Für 1 Punkt Willenskraft bei Aktivierung kann der Vampir materiell im Sturmzentrum bleiben, immun gegen dessen Effekte, und weiter körperlich handeln."
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "powers": [
+          {
+            "name": "Zerberus' Zorn",
+            "description": "Für 2 Blutpunkte wachsen dem Setiten zwei zusätzliche Köpfe aus Brust, Schultern oder Rücken. Jeder Kopf erhält eine zusätzliche volle Handlung pro Runde, beschränkt auf Handlungen, die ein Kopf ausführen kann (Bisse, Beherrschungskräfte); ein aktivierter Typhonischer Schlund wirkt auch auf sie. Zusätzlich nimmt der Vampir Zerberus' Affinität zur Unterwelt an: Er kann Geister sehen, und seine Zusatzköpfe können mit ihnen interagieren, als wären sie materiell."
+          }
+        ]
+      },
+      {
+        "level": 9,
+        "powers": [
+          {
+            "name": "Göttlichkeit",
+            "description": "Verleiht den Mantel eines Gottes (meist ein Tierkopf nach Art der ägyptischen Götter; Manifestation individuell und bei Erwerb festzulegen, weitere Formen als zusätzliche Stufe-9-Kraft erwerbbar). Kosten: 3 Blutpunkte und 1 Runde. Die Punkte in Serpentis werden auf die Attribute verteilt (höchstens die Hälfte auf ein einzelnes Attribut), was über die Generationsbeschränkungen hinausgehen kann. Weitere Spieleffekte legt der Spieler mit dem Erzähler fest, etwa Immunität gegen körperliche Angriffe oder ein sonnengleiches Gleißen, das Rötschreck auslöst und 3 Punkte schwer heilbaren Schadens anrichtet."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Spiritus",
+    "summary": "Die erste Ahrimane lernte von der Göttin Freyja, mit Tieren zu sprechen; mit ihrem Tod verwandelte sich diese Gabe und erlaubt seither, mit den Geistern von Tieren und Gegenständen zu sprechen. Die Disziplin ruft Tiergeister an, verleibt sich ihre Aspekte ein und kann den Anwender selbst in ein wildes, geisterhaftes Wesen verwandeln.",
+    "levels": [
+      {
+        "level": 1,
+        "powers": [
+          {
+            "name": "Hilfe der Geister",
+            "description": "Alles hat einen Geist, und die Vampirin weckt ihn, um die Leistung eines Gegenstands zu steigern. Sie berührt den Gegenstand, gibt 1 Blutpunkt aus und würfelt Manipulation + Okkultismus (Schwierigkeit 6). Beim Einsatz des Gegenstands erhält sie Bonuswürfel in Höhe der Erfolge, die auf einen Wurf konzentriert oder aufgeteilt werden können. Unverbrauchte Boni verfallen am Ende der Szene; mehrfache Anwendungen sind nicht kumulativ, aber Reaktivierung oder Anwendung auf mehrere Gegenstände ist gegen erneute Blutkosten möglich."
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "powers": [
+          {
+            "name": "Tiergeister beschwören",
+            "description": "Die Vampirin ruft den Geist eines im Gebiet heimischen Tiers an, der körperliche Gestalt annimmt und ihr dient, aber nur tut, was in seiner Natur liegt; er ist etwas klüger als ein normales Tier und folgt einfachen telepathischen Befehlen. Kosten: 1 Blutpunkt, Wurf auf Charisma + Tierkunde (Schwierigkeit 7). Die Erfolge bestimmen die Dauer der materiellen Form (1 Runde bis 1 Woche bei 5 Erfolgen). Der Geist hat die Gesundheitsstufen seines stofflichen Pendants und wird bei Außer Gefecht wieder körperlos."
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "powers": [
+          {
+            "name": "Aspekt des Tiers",
+            "description": "Die Vampirin beschwört einen Teil eines im Gebiet ansässigen Tiergeistes in sich und erlangt dessen Stärke oder Spezialkräfte. Kosten: 1 Blutpunkt, Wurf auf Manipulation + Okkultismus (Schwierigkeit 7); hält 1 Runde pro Erfolg. Beispiele: Bibers Biss (fast jede Substanz durchbeißen), Chamäleons Farben (-2 Schwierigkeit auf Verstecken), Augen des Falken bzw. Nase des Hundes (-2 auf Sicht- bzw. Geruchswürfe), Wildheit der Katze (Mutwürfe -2), Sprünge des Froschs (dreifache Sprungweite), Gift der Schlange (2 Stufen Schaden pro Runde bei lebenden Opfern), Zirpen der Grille (ohrenbetäubendes Geräusch, +4 Schwierigkeit auf Gehörwürfe des Ziels), Eichhörnchens Gleichgewicht, Stärke des Bären (+2 Stärke), Schnelligkeit des Hirsches (doppelte Laufgeschwindigkeit)."
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "powers": [
+          {
+            "name": "Tierhafter Hunger",
+            "description": "Die Vampirin fängt einen der allgegenwärtigen Geister und verzehrt ihn, um ihre Reserven aufzufrischen. Wurf auf Manipulation + Einschüchtern (Schwierigkeit 8); jeder Erfolg gewährt 1 Punkt Willenskraft zurück. Jeder Einsatz zerstört einen weiteren Geist."
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "powers": [
+          {
+            "name": "Das wilde Tier",
+            "description": "Die Vampirin wird katzenhaft, schlank und stark: geschlitzte Pupillen, kriechender Gang, bösartige Klauen; Tiere reagieren mit Furcht, Sterbliche sehen ein Monster. Kein Wurf, aber 2 Blutpunkte: Körperkraft +3, Geschick und Widerstandsfähigkeit +2, Erscheinungsbild fällt auf 0, Manipulation -3 (nicht unter 0). Die Fänge richten +1 Würfel Schaden an, die Klauen schwer heilbaren Schaden; sie sieht im Dunkeln, und Schwierigkeiten für Geruchs-, Gehör- und Sichtwürfe sinken um 2. Die Gestalt ist jede Nacht für Stunden gleich dem Willenskraftwert aufrechtzuerhalten."
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Die Geisterbestie",
+            "description": "Die Ahrimane verschmilzt vollständig mit einem Tiergeist ihrer Wahl zu einem neuen Wesen. Kein Wurf, aber je 1 Punkt Blut und Willenskraft. Intelligenz sinkt um 2, Geistesschärfe um 1, doch sie ist nicht länger von Sonnenlicht betroffen und bleibt für 2 Punkte Willenskraft täglich ohne Wurf wach. Sie kann wählen, ob sie körperlich oder körperlos ist, kann die Geisterreiche bereisen und Geschwindigkeit, Seelenstärke, Stärke, Spiritus und Tierhaftigkeit einsetzen. Die Dauer ist unbegrenzt; die Rückverwandlung kostet erneut je 1 Punkt Blut und Willenskraft – wer das nicht zahlen kann, steckt fest."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Stärke",
+    "summary": "Kainskinder mit Stärke verfügen über übermenschliche Kraft: Sie stemmen ein Vielfaches ihres Gewichts und zerschmettern Stein mit der Faust. Jeder Punkt Stärke addiert 1 Würfel zu allen auf Körperkraft basierenden Würfelvorräten; als Automatismus kann für 1 Blutpunkt jeder dieser Würfel für die Runde in einen automatischen Erfolg verwandelt werden (im Nahkampf automatische Erfolge auf dem Schadenswurf). Ab Stufe 6 kann der Meister wahlweise die Fähigkeit numerisch erhöhen oder spezielle Gaben hinzufügen.",
+    "levels": [
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Zertrümmern",
+            "description": "Für 2 Blutpunkte für die Szene aktiviert: Mit einem erfolgreichen Angriff auf einen unbelebten Gegenstand zerstört der Charakter diesen automatisch. Waffen oder Rüstungen aktiver Kombattanten erfordern einen gezielten Angriff; entscheidet er sich, Ausrüstung zu zerstören, erleidet das Opfer keinen Schaden durch den Angriff."
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "powers": [
+          {
+            "name": "Brutalität",
+            "description": "Die Hände des Kainiten dringen durch Fleisch wie durch festen Sand: Waffenlose Angriffe richten tödlichen Schaden an. Ihnen kann man nur ausweichen – blocken oder parieren ist unmöglich, da die Schläge Waffen und Schilde mühelos beiseitestoßen. Erfordert keine Aktivierung und gilt als stets aktiv, sofern man sich nicht dagegen entscheidet."
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "powers": [
+          {
+            "name": "Nachbeben",
+            "description": "Der Vampir verzögert die körperliche Wirkung seines Angriffs. Er führt einen normalen Angriff aus, gibt 3 Blutpunkte aus und addiert seine Stärke nicht zum Schadensvorrat. Richtet der Angriff nach Absorption mindestens 1 Punkt Schaden an, wird die Stärke im Körper des Opfers 'gespeichert': Zu einem festgelegten Zeitpunkt innerhalb der nächsten 24 Stunden erleidet das Opfer tödlichen Schaden in Höhe der Stärke des Charakters. Nur ein Nachbeben kann gleichzeitig aktiv sein."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Temporis",
+    "summary": "Temporis, die Disziplin der Wahren Brujah, ist die Kunst der Manipulation der Zeit; ihre tieferen Mysterien liegen darin, die unheilige Stasis zu kanalisieren, die einen Vampir vor dem Zahn der Zeit bewahrt. Die Wahren Brujah sehen Geschwindigkeit als bloße Kopie eines verweichlichten Amateurs, tatsächlich weisen beide Disziplinen eine Affinität zueinander auf.",
+    "levels": [
+      {
+        "level": 1,
+        "powers": [
+          {
+            "name": "Zeitgefühl",
+            "description": "Verleiht ein unfehlbares Zeitgespür (dupliziert den Vorzug Zeitgefühl, aber fehlerlos jenseits jeder konventionellen Zeitmessung). Der Vampir weiß intuitiv, wenn die Zeit übernatürlich gestört wird (Wahrnehmung + Aufmerksamkeit gegen 6, vom Erzähler nach Entfernung und Intensität angepasst); in einer veränderten Zeitlinie bleibt ihm bewusst, dass sich etwas verändert hat. Die Schwierigkeit übernatürlicher Effekte, diese Wahrnehmung zu täuschen, steigt um 1 pro Punkt Temporis."
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "powers": [
+          {
+            "name": "Versunken in Gedanken",
+            "description": "Primärer Effekt (reflexiv als defensive Handlung): 1 Punkt Willenskraft und Geistesschärfe + Aufmerksamkeit (Schwierigkeit 6); der Geist tritt in eine ewige Gegenwart und kann beliebig lange nachdenken, jedoch ohne physische Handlungen, Blickwinkeländerung oder Kräfte mit physischen Kosten. Die erste Handlung danach erhält -1 Schwierigkeit pro Erfolg (Minimum 3); Unvermeidliches bleibt unvermeidlich. Sekundärer Effekt: 1 Blutpunkt und Manipulation + Okkultismus (Schwierigkeit gleich der Willenskraft eines Opfers im Sichtfeld) versetzen das Ziel für 1 Minute pro Erfolg in leere Trance, die durch Schaden oder plötzliche heftige Reize endet. Ein Patzer lässt den Vampir selbst in Trance fallen."
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "powers": [
+          {
+            "name": "Bleierne Schwere",
+            "description": "Verlangsamt mit einer Geste den Zeitfluss eines Ziels; reflexiv als defensive Aktion einsetzbar. Kosten: 1 Blutpunkt, Wurf auf Intelligenz + Okkultismus (Schwierigkeit nach Geschwindigkeit des Ziels, z.B. 4 für einen Eselskarren, 9 für einen Geschwindigkeits-Pfeil; jeder Temporis-Punkt über dieser Stufe senkt sie um 1, Minimum 4; Ziele größer als ein Berittener sind unbeeinflussbar). Jeder Erfolg halbiert Geschwindigkeit und Schadensvorräte des Ziels; verlangsamte Charaktere addieren die Erfolge auf die Schwierigkeit aller Handlungen mit Geschick, Geistesschärfe oder Körperkraft. Betroffene mit Geschwindigkeit können pro Runde Erfolge für je 1 Blutpunkt negieren. Hält 1 Runde pro 2 Erfolge (aufrunden), wirkt nur einmal erfolgreich auf dasselbe Ziel; Patzer werden als nicht absorbierbarer Schlagschaden gegen den Vampir gewürfelt."
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "powers": [
+          {
+            "name": "Geduld der Nornen",
+            "description": "Erweitert Bleierne Schwere: Der Vampir kann entweder mehrere Ziele gleichzeitig verlangsamen (je 1 Blut- und 1 Willenskraftpunkt; bis zu Geistesschärfe Ziele in einer Handlung, ein Wurf für alle) oder ein einzelnes Ziel komplett an Ort und Stelle festfrieren (2 Blutpunkte, Generationslimit wird ignoriert; erfolgreicher Wurf auf Intelligenz + Okkultismus wie bei Bleierner Schwere). Berührt das eingefrorene Ziel etwas mit mehr kinetischer Energie als ein Regentropfen, kehrt es in die Zeit zurück. Geschwindigkeit kann Erfolge vor, aber nicht mehr nach Wirkungseintritt negieren. Unbelebte Objekte lassen sich unbegrenzt einfrieren."
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "powers": [
+          {
+            "name": "Clothos Geschenk",
+            "description": "Der Vampir beschleunigt die Zeit in sich selbst: 3 Blutpunkte (Generationslimits ignorierend) und Intelligenz + Okkultismus (Schwierigkeit 7). Mit 1 Erfolg wirkt die Kraft wie Geschwindigkeit (Temporis-Wert statt Geschwindigkeit) und bleibt für Runden gleich den Erfolgen aktiv. Anders als Geschwindigkeit erlaubt sie jegliche Handlung, auch mehrfache Disziplinaktivierungen pro Runde (inklusive solcher mit voller Konzentration wie Beherrschung oder Thaumaturgie); Disziplinen, die zusätzliche Handlungen verleihen, funktionieren jedoch gar nicht. Jede Disziplinaktivierung verursacht 2 Würfel nicht absorbierbaren tödlichen Schadens gegen den Kainiten (Schwierigkeit gleich seinem Temporis-Wert)."
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Lachesis Kuss",
+            "description": "Eingeschränkte Meisterschaft über das physische Alter: Der Vampir berührt das Ziel, konzentriert sich 1 Runde, gibt 2 Blutpunkte aus und würfelt Manipulation + Okkultismus (Schwierigkeit 4 + Widerstandsfähigkeit des Ziels bzw. Objektwert +4). Er erhöht oder verringert das Alter um bis zu 1 Woche (1 Erfolg), 1 Jahr (3), 1 Jahrhundert (5) bzw. 1 Jahrhundert pro Erfolg über 5; jeder angewandte Erfolg wird als nicht absorbierbarer tödlicher Schaden gegen ihn neu gewürfelt (Schwierigkeit gleich Temporis). Vampire verlieren 1 Blutpunkt pro Tag beschleunigter Alterung (Gefahr von Raserei und Starre), Lebewesen verhungern und verlieren ab dem 3. Tag 1 Widerstandsfähigkeit pro Tag bis zum Tod. Die Geschichte lässt sich nicht revidieren: Verjüngung führt höchstens zum Zustand der Erschaffung bzw. Geburt zurück, geistige und mystische Eigenschaften bleiben unverändert."
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "powers": [
+          {
+            "name": "Betrug an den Parzen",
+            "description": "Die Antithese zu Clothos Geschenk: Der Vampir tritt aus den Schranken der Zeit, die Welt erstarrt scheinbar in Stasis. Reflexiv als defensive Handlung möglich (dann nur 1 Runde Dauer). Kosten: 1 Punkt Willenskraft und 3 Blutpunkte, Wurf auf Geistesschärfe + Okkultismus (Schwierigkeit 7); bis zu Geistesschärfe zusätzliche Passagiere. Die Kraft hält Runden gleich den Erfolgen; Vampir und Passagiere können beliebig handeln, aber keine Disziplinen aktivieren, und angehaltene Ziele haben keine defensiven Handlungen. Aller verursachte Schaden wird erst angerechnet, wenn die Zeit weiterläuft (außer Sonnenlicht/eingefrorene Flammen, die sofort wirken). Danach würfelt der Spieler 1 Würfel pro Passagier und Runde außerhalb der Zeit (Schwierigkeit Temporis-Wert); der Kainit erleidet 1 Stufe nicht absorbierbaren schwer heilbaren Schadens pro Erfolg. Ein Patzer beim Aktivierungswurf verursacht 1 Stufe schwer heilbaren Schadens beim Kainiten."
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "powers": [
+          {
+            "name": "Clios Kuss",
+            "description": "Projiziert den Vampir in die Vergangenheit, aus der er etwas oder jemanden zurückholen kann. Kosten: 5 Blutpunkte, Wurf auf Widerstandsfähigkeit + Okkultismus (Schwierigkeit 8); Erfolge bestimmen die Reichweite (1 Woche bis 1 Jahrhundert bei 5, +1 Jahrhundert pro weiterem Erfolg). Die Kraft wirkt in einem ballsaalgroßen sphärischen Radius und macht alle vernunftbegabten Wesen darin zu unsichtbaren, körperlosen Beobachtern; nur der Aktivierende kann wahlweise sichtbar mit der Vergangenheit interagieren. Einen Gegenstand oder eine Person mitzunehmen kostet 1 permanenten Willenskraftpunkt und beendet die Szene; nichts, was nach dem Zielzeitpunkt noch eine bedeutende Rolle spielt oder in der Gegenwart noch existiert, kann mitgenommen werden. Die Zeit korrigiert sich selbst – Versuche, die Geschichte zu ändern, führen deren ursprünglichen Ausgang nur herbei."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Tierhaftigkeit",
+    "summary": "Das kainitische Tier ist eine urtümliche, animalische Kraft, die zu seinesgleichen spricht: Der Vampir mit Tierhaftigkeit kommuniziert empathisch mit Tieren, zwingt ihnen seinen Willen auf und bringt sie dazu, seine Befehle zu befolgen. Ihn umgibt eine Aura der Dominanz, die Tiere anzieht und einschüchtert, während Kainiten ohne diese Disziplin Tiere abzustoßen scheinen.",
+    "levels": [
+      {
+        "level": 1,
+        "powers": [
+          {
+            "name": "Wildes Flüstern",
+            "description": "Der Vampir knüpft per Blickkontakt eine empathische Verbindung zu einem Tier, versteht dessen Grundgedanken und kann für den Rest der Szene mit ihm sprechen (kein Wurf nötig). Befehle erfordern Manipulation + Tierkunde; die Schwierigkeit hängt von der Tierart ab (Fleischfresser 5, andere Säugetiere/Greifvögel 6, andere Vögel/Reptilien 7; Modifikatoren u.a. +1 ohne Blickkontakt, -1 mit Tierlauten, -2 in Tiergestalt, +1/+2 für gefährliche/tödliche Befehle). Tiere handeln nicht selbstmörderisch oder gegen ihre biologische Natur. 1 Erfolg sichert Kooperation für die Szene, 3 eine regelmäßige Aufgabe für etwa eine Woche, 5 unbegrenzte Loyalität."
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "powers": [
+          {
+            "name": "Ruf der Wildnis",
+            "description": "Der Vampir imitiert einen Tierlaut und ruft damit alle Tiere einer benannten Art (spezifisch oder allgemein) in Hörweite herbei; sie kommen positiv gestimmt, greifen aber nicht an und gehorchen ohne Wildes Flüstern nicht von sich aus. Wurf auf Charisma + Überleben (Schwierigkeit 6): 1 Erfolg – ein Tier antwortet, 3 – die Hälfte der Tiere in Hörweite, 5 – alle."
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "powers": [
+          {
+            "name": "Lied der Ruhe",
+            "description": "Wäscht alle starken Emotionen ab und macht das Ziel teilnahmslos – wirkt auf das Tier anderer Kainiten oder den Kampfeswillen Sterblicher. Erweiterte Handlung: Manipulation + Einschüchtern (Furcht) oder + Empathie (Einlullen), Schwierigkeit 7, benötigte Erfolge gleich der Willenskraft des Opfers; ein Fehlschlag löscht alle Erfolge, ein Patzer macht das Opfer für die Szene immun. Betroffene Sterbliche sind handzahm, ergreifen keine Initiative und verteidigen sich nur in Lebensgefahr (1 Punkt Willenskraft erlaubt Selbstverteidigung); Erholung durch tägliche Willenskraftwürfe (Schwierigkeit 6) bis Erfolge gleich der eigenen Willenskraft. Vampire würfeln pro Szene; ein rasender Vampir erhält einen zusätzlichen Widerstandswurf, und Betroffene können nicht zur Raserei provoziert werden."
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "powers": [
+          {
+            "name": "Geteilter Geist",
+            "description": "Per Blickkontakt unterdrückt die Vampirin die höheren Gehirnfunktionen eines Tiers und übernimmt dessen Körper; ihr eigener verfällt in einen starreähnlichen Zustand. Wurf auf Manipulation + Tierkunde (Schwierigkeit 8); die Erfolge bestimmen, welche Disziplinen in Tiergestalt nutzbar sind (2: Auspex/Wahrnehmung, 3: Präsenz/emotionale Manipulation, 4: Irrsinn/Beherrschung, 5: Schimären/Nekromantie/Thaumaturgie). Die Kraft endet nicht von selbst; die Vampirin kann jederzeit aus jeder Distanz zurückkehren und so eingeschränkt tagsüber handeln (Wachbleiben-Würfe nötig; Einschlafen beendet die Kraft, beim Tod des Tiers folgt Starre). Danach zeigt sie für Nächte gleich den Erfolgen tierische Ticks (mit 1 Punkt Willenskraft abschüttelbar)."
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "powers": [
+          {
+            "name": "Entfesselung des Tiers",
+            "description": "Der Vampir überträgt per Blickkontakt sein eigenes Tier auf ein sterbliches oder kainitisches Opfer und treibt es in eine starke Raserei. Wurf auf Manipulation + Selbstbeherrschung/Instinkt gegen 8: Scheitern lässt den Vampir selbst in Raserei verfallen, 1 Erfolg lässt das Tier auf eine zufällige Person überspringen, ab 2 Erfolgen gelingt der Transfer (bei genau 2 ist der Vampir eine Runde betäubt, sofern er nicht 1 Willenskraftpunkt ausgibt). Kainitische Opfer erhalten +2 Schwierigkeit gegen Raserei, Sterbliche werden rasereianfällig wie Kainiten. Solange das Tier getrennt ist, kann der Vampir weder Willenskraft nutzen noch wiedererlangen und nicht in Raserei verfallen; entfernt sich das Opfer, ist das Tier verloren und muss zurückgelockt oder der Wirt getötet werden."
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Tierische Labsal",
+            "description": "Der Ahn entwickelt eine Affinität zu Tierblut: Einmal erlernt, stets wirksam, kein Wurf. Jeder Blutpunkt eines Tiers zählt effektiv doppelt. Die Begierde nach menschlichem oder vampirischem Blut bleibt: Jedes dritte Mal, wenn der Vampir von einem Tier trinkt, steigt die Schwierigkeit aller Selbstbeherrschung/Instinkt-Würfe kumulativ um 1, bis er von einem Menschen oder Vampir trinkt."
+          },
+          {
+            "name": "Geteilte Seele",
+            "description": "Der Kainit teilt seinen Geist mit einem berührten Tier; beide erleben das Bewusstsein des anderen zur Gänze. Wurf auf Wahrnehmung + Tierkunde gegen 6; Aufrechterhaltung kostet 1 Willenskraftpunkt pro Runde. Einfache Eindrücke brauchen 1 Runde, komplexe Erinnerungen 3, ein volles permanentes Band 10 Runden abzüglich der Erfolge. Beim Schließen des Bandes muss der Charakter der Raserei widerstehen (bei Raserei zudem -1 Wegpunkt); danach teilen beide ihre Erinnerungen, und der Vampir kann von überall durch die Sinne des Tiers wahrnehmen. Tierhaftigkeitskräfte gegen das Tier haben -2 Schwierigkeit; stirbt das Tier, verfällt der Vampir in Raserei. Nach Erzählerermessen kann das Tier als Behelfsmentor für den Weg des Tiers dienen."
+          },
+          {
+            "name": "Sprache der Tiere",
+            "description": "Erweitert Wildes Flüstern: Der Vampir kann ohne Blickkontakt zu allen Tieren einer gewählten Gruppe zugleich sprechen (kein Wurf erforderlich). Es kann jeweils nur eine Tierfamilie angesprochen werden (z.B. Hunde und Wölfe, aber nicht gleichzeitig Katzen oder Bären); die thematisch sinnvollen Gruppierungen legt der Erzähler fest."
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "powers": [
+          {
+            "name": "Tiersplitter",
+            "description": "Der Vampir spaltet sein Tier in kleinere Teile und infiziert mehrere Charaktere gleichzeitig mit Entfesselung des Tiers, ohne Blickkontakt. Wurf auf Charisma + Selbstbeherrschung/Instinkt gegen 5 + Anzahl der Ziele (Erfolgstabelle wie Entfesselung des Tiers, alle Ziele gleichermaßen betroffen); Raserei kann wahlweise unterdrückt werden. Kainitische Opfer erleiden +2 Schwierigkeit gegen Raserei, Menschen werden rasereianfällig; zudem sinkt die Schwierigkeit aller Disziplinkräfte gegen infizierte Charaktere um 1. Maximal Hintergrundpunkte in Generation Opfer gleichzeitig; erst bei voller Auslastung erleidet der Vampir den Verlust des eigenen Tiers."
+          },
+          {
+            "name": "Klauen des Teufels",
+            "description": "Die Kontrolle über das Tier ist fast vollkommen: Der Vampir führt Raserei wie eine Waffe. Für 1 reflexiv ausgegebenen Willenskraftpunkt verfällt er ohne Wurf in Raserei. Um sie zu beenden, gibt er 1 Willenskraftpunkt aus und würfelt Instinkt/Selbstbeherrschung; die Schwierigkeit entspricht einer Provokation im aktuellen Moment, mindestens 4."
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "powers": [
+          {
+            "name": "Stacheln des Tiers",
+            "description": "Das Tier des Ahnen schlägt gegen Angreifer zurück. Aktivierung: 1 Blutpunkt und Manipulation + Selbstbeherrschung/Instinkt (Schwierigkeit 8); hält für die Szene oder bis zur Übertragung. Trifft ein Gegner den Vampir im Handgemenge oder Nahkampf, wirkt der Effekt wie Entfesselung des Tiers mit den bei der Aktivierung gewürfelten Erfolgen. Erleidet der Vampir nach der Absorption tödlichen Schaden, bespritzt sein Blut den Angreifer, dessen Schwierigkeit gegen Raserei um 2 steigt. Normalerweise nur einmal pro Aktivierung wirksam; mit Tiersplitter können mehrere Gegner pro Szene infiziert werden."
+          }
+        ]
+      },
+      {
+        "level": 9,
+        "powers": [
+          {
+            "name": "Tierplage",
+            "description": "Der Methusalem beschwört Plagen biblischen Ausmaßes: Das Tier selbst stößt einen kilometerweit hörbaren Schrei aus und ruft jedes Tier herbei. Wurf auf Charisma + Tierkunde (Schwierigkeit 8); jeder Erfolg dehnt den Radius um 1,5 km aus. Alle Tiere im Gebiet eilen herbei und lassen sich nur grob zu einfachen Handlungen leiten (angreifen, verschonen). Jede Runde wächst ein Angriffs-Würfelvorrat um 2 (für Runden gleich den Erfolgen); der Schwarm greift jede Runde jeden nicht ausgenommenen Charakter in der Umgebung an (Schadensvorrat 3 + Erfolge, Schlagschaden). Das Chaos erhöht die Schwierigkeit von Wahrnehmungswürfen im Schwarm um 2; nur Feuer hält einen Schwarm eventuell auf Distanz."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Valeren (Heiler)",
+    "summary": "Valeren, die Disziplin der Salubri, ist in drei Pfade eingeteilt: Heiler, Krieger und Wächter; jede Kaste favorisiert ihren Pfad als Clandisziplin, der entgegengesetzte Pfad kostet gegenwärtiger Wert x 6 EP. Das Erlernen lässt ein drittes Auge auf der Stirn entstehen, das sich mit dem dritten Punkt voll entwickelt und bei jeder Anwendung von Valeren zum Vorschein kommt (verbergen per Widerstandsfähigkeit + Heimlichkeit, Schwierigkeit 5; Bedecken gibt -1 Würfel). Der Heiler-Pfad wendet die regenerativen und seelenheilenden Kräfte des Blutes auf andere an.",
+    "levels": [
+      {
+        "level": 1,
+        "powers": [
+          {
+            "name": "Lebensgespür",
+            "description": "Mit einem Blick liest die Salubri die physischen und spirituellen Vitalzeichen eines Ziels. Wurf auf Wahrnehmung + Empathie oder Medizin gegen 7, Erfolge kumulativ bei fortgesetzter Analyse: 2 Erfolge offenbaren die erlittenen Gesundheitsstufen, 3+ die Blutmenge eines lebenden Ziels, 4 den Weg- oder Pfadwert (nicht aber den Weg selbst). Alternativ erlauben Erfolge Fragen an den Erzähler über den allgemeinen Gesundheitszustand des Ziels."
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "powers": [
+          {
+            "name": "Geschenk des Schlafs",
+            "description": "Lindert Schmerz oder versetzt ein Ziel in tiefen Schlaf. Gegen ein freiwilliges Ziel genügen eine Berührung und ein Willenskraftwurf (Schwierigkeit 6): Das Ziel ignoriert alle Wundabzüge für 1 Runde pro Erfolg (auch auf sich selbst anwendbar). Um ein Lebewesen (auch unfreiwillig) einzuschläfern, ist ein Willenskraftwurf gegen den Widerstand des Ziels nötig (Schwierigkeit 8); es schläft 8 Stunden und gewinnt beim Erwachen 1 temporären Willenskraftpunkt. Ein Waffentreffer weckt das Opfer; Vampire und andere Untote sind immun."
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "powers": [
+          {
+            "name": "Berührung des Heilers",
+            "description": "Überträgt den vampirischen Regenerationsprozess per Handauflegen auf jede lebende oder untote Kreatur: Deren Wunden werden durch Blutpunkte der Salubri geheilt, als heilte sie sich selbst. Schwer heilbare Wunden kosten 3 Blutpunkte pro Gesundheitsstufe. Auch jede über den Blutweg übertragbare ansteckende Krankheit kann für 2 Blutpunkte pro Infektion geheilt werden, sofern sie identifiziert wurde; erneute Ansteckung wird nicht verhindert."
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "powers": [
+          {
+            "name": "Wacht des Hirten",
+            "description": "Das weiß strahlende dritte Auge bildet einen Schutzkreis von 3 m Radius um die Salubri (2 Willenskraftpunkte; Errichten ist eine Standardhandlung, Aufrechterhalten ein Automatismus). Wer sich bei Erschaffung im Kreis befindet, kann ihn verlassen und wieder betreten; ansonsten bewegt sich die Barriere mit der Salubri. Eindringlinge müssen in einem erweiterten Willenskraftwurf (Schwierigkeit 8) gegen die Salubri 3 Nettoerfolge erzielen; erzielt die Salubri zuerst 3 Nettoerfolge, wird der Widersacher dauerhaft abgewiesen. Geschosse durchdringen die Barriere, doch alle im Inneren erhalten 2 zusätzliche Absorptionswürfel dagegen."
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "powers": [
+          {
+            "name": "Entlastung der tierhaften Seele",
+            "description": "Ein goldener Strahl zieht die Seele des Ziels in das dritte Auge, damit die Heilerin den Schaden von Unleben und Tier reparieren kann (Seelen mit Wegwert 0 sind unheilbar). Kosten: 2 Punkte Willenskraft, Wurf auf Widerstandsfähigkeit + Empathie (Schwierigkeit 10 minus Wegwert des Ziels); Patzer verursacht eine temporäre Geistesstörung. Der seelenlose Körper lebt, gehorcht der Salubri und verliert 2 Würfel auf alle Vorräte. Gibt die Salubri binnen einer Stunde 5 Willenskraftpunkte aus, kann sie mit Manipulation + Empathie (Schwierigkeit 8) Tugenden erhöhen oder senken bzw. den Wegwert direkt erhöhen – pro Nacht maximal Punkte gleich ihrer Empathie; je 1 weiterer Willenskraftpunkt heilt eine Geistesstörung (Malkavianer nur für eine Nacht). Nur eine Seele kann gleichzeitig gehalten werden; sie darf wöchentlich einen Fluchtversuch wagen."
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Urteil des Vaters",
+            "description": "Das silbern leuchtende dritte Auge tötet einen Teil der Vitæ eines kainitischen Ziels ab. Der Heiler gibt 1 Willenskraftpunkt aus und würfelt Manipulation + Medizin oder Empathie (Schwierigkeit 7) gegen den Willenskraftwiderstand eines Ziels im Sichtfeld (Schwierigkeit 9). Pro Erfolg wird 1 Blutpunkt im Vorrat des Ziels unbrauchbar – weder für Heilung, Disziplinen, Ghulen noch sonst etwas. Das Ziel kann je 1 Willenskraftpunkt pro Blutpunkt ausgeben, um seine Vitæ zu 'entklumpen'; ausscheiden lässt sich das tote Blut nicht."
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "powers": [
+          {
+            "name": "Glückseliger Blick",
+            "description": "Verstärkt Geschenk des Schlafs und Berührung des Heilers: Beide Kräfte erfordern keine Berührung mehr, sondern lediglich Sichtlinie zum Ziel. Zusätzlich kann Geschenk des Schlafs nun Wundabzüge für seine Dauer umkehren und stattdessen als Bonuswürfel bereitstellen, da das Ziel von Ekstase und Erwartung durchflutet wird."
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "powers": [
+          {
+            "name": "Rayzeels Lied",
+            "description": "Mit situationsangemessener Musik fokussiert die Salubri die Seelen aller Beteiligten. Wurf auf Charisma + Auftritt (Schwierigkeit 7) und 1 Willenskraftpunkt pro 3 betroffene Zuhörer. Vor Heilung, Schlacht oder angespannten Verhandlungen gespielt, senkt jeder Erfolg die Schwierigkeit aller situationsrelevanten Würfe der Zuhörer für die Szene um 1 (Minimum 4). Scheitern erhöht die Schwierigkeiten um 1, ein Patzer um 2 und verursacht zusätzlich 1 Stufe tödlichen Schadens durch innere Krämpfe; Patzer eines musikalischen Begleiters entfernen Erfolge der Salubri."
+          }
+        ]
+      },
+      {
+        "level": 9,
+        "powers": [
+          {
+            "name": "Himmelstor",
+            "description": "Macht den Tod ungeschehen: wirkt auf Tote, die weniger als eine Woche tot sind, nicht an Altersschwäche starben und deren Seele nicht verschlungen oder vernichtet wurde; der Kuss kann nicht umgekehrt werden, nur der relativ intakte Kopf ist notwendig. Der Ahn gibt 2 Willenskraftpunkte und 5 Blutpunkte aus und würfelt Willenskraft (Schwierigkeit 8). Bei Erfolg wird die Seele wiederhergestellt, der Körper heilt zu perfekter Gesundheit, und die Zielperson ersteht wieder auf. Sie behält auf ewig Spuren des Salubri-Blutes, was sie zum Wiedergänger macht, und erinnert sich an ihre Zeit als Todesalb, doch ihr spirituelles Trauma vergeht."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Valeren (Krieger)",
+    "summary": "Valeren, die Disziplin der Salubri, ist in drei Pfade eingeteilt: Heiler, Krieger und Wächter; jede Kaste favorisiert ihren Pfad als Clandisziplin, der entgegengesetzte Pfad kostet gegenwärtiger Wert x 6 EP. Das Erlernen lässt ein drittes Auge auf der Stirn entstehen, das sich mit dem dritten Punkt voll entwickelt und bei jeder Anwendung von Valeren zum Vorschein kommt (verbergen per Widerstandsfähigkeit + Heimlichkeit, Schwierigkeit 5; Bedecken gibt -1 Würfel). Der Krieger-Pfad geht auf Samiels Zorn zurück und wendet die Gaben des Blutes im Kampf an.",
+    "levels": [
+      {
+        "level": 1,
+        "powers": [
+          {
+            "name": "Todesgespür",
+            "description": "Funktioniert wie Lebensgespür (Wahrnehmung + Empathie oder Medizin gegen 7, kumulative Erfolge), erkennt jedoch weder erlittene Wunden noch das Blut Sterblicher. Stattdessen analysieren Krieger den Absorptionswert des Ziels (2 Erfolge) und die aktuelle Vitæ-Menge im Blutvorrat eines Vampirs oder Ghuls (3 Erfolge); Fragen können physisches Können, Kampfdisziplinen oder Einstellungen zum Töten betreffen. Wer Lebens- und Todesgespür beherrscht, erhält 2 zusätzliche Würfel und kann beide mit einem einzigen Wurf aktivieren."
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "powers": [
+          {
+            "name": "Morpheus' Hieb",
+            "description": "Funktioniert wie Geschenk des Schlafs, wird aber genutzt, um Feinde außer Gefecht zu setzen; auch Krieger können damit ihre Wundabzüge abmildern. Wer sowohl Geschenk des Schlafs als auch Morpheus' Hieb beherrscht, erhält 2 zusätzliche Würfel für den Willenskraftwurf gegen Widerstand, um das Ziel zu befrieden. Die Kraft kann im Kampf als Teil eines Handgemengeangriffs angewendet werden."
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "powers": [
+          {
+            "name": "Flammende Berührung",
+            "description": "Der Griff des Kriegers fügt sengenden Schmerz wie von glühendem Eisen zu, ohne echten Schaden anzurichten. Der Vampir muss das Ziel packen (Geschick + Handgemenge) und mindestens 1 Blutpunkt ausgeben; jeder ausgegebene Blutpunkt reduziert die Würfelvorräte des Ziels um 2, solange der Griff hält und für die nächste Runde danach. Jede Aktivierung verursacht 1 Stufe Schlagschaden durch die physische Belastung. Der Schmerz löst bei Vampiren Rötschreck aus (wie 'verbrannt werden')."
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "powers": [
+          {
+            "name": "Rüstung aus Kains Zorn",
+            "description": "Das rot lodernde dritte Auge hüllt den Körper in ein Netz aus strahlendem Licht, das Verwundungen trotzt. Die Spielerin gibt 1 Blutpunkt aus und würfelt Widerstandsfähigkeit + Nahkampf (Schwierigkeit 7): pro Erfolg 1 Punkt Rüstung (Maximum 5), kumulativ zu getragener Rüstung. Zusätzlich gibt es pro 2 Erfolge 1 zusätzlichen Würfel gegen Rötschreck. Hält für die Szene an."
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "powers": [
+          {
+            "name": "Ende der Wacht",
+            "description": "Nur anwendbar auf im Sterben liegende Sterbliche (durch tödlichen Schaden außer Gefecht) oder ohne Zwang auf jene, die sich wahrhaft den Tod wünschen. Der Salubri gibt 1 Willenskraftpunkt aus, legt die Hand aufs Herz und tötet friedlich und schmerzlos (bei einem tödlichen Nahkampfangriff als Automatismus per Geschick + Handgemenge aktivierbar). Dann würfelt er Wahrnehmung + Empathie (Schwierigkeit 7); bei Erfolg absorbiert er die Seele. Pro Erfolg kann er entweder einen signifikanten Fakt aus der Erinnerung des Toten abrufen (je ein Wurf auf Intelligenz + Empathie, Schwierigkeit 5; für dringliche Informationen Schwierigkeit 7) oder 1 Willenskraftpunkt zurückgewinnen (speicherbar über das Maximum, bis höchstens 10). Nur eine Seele gleichzeitig; das Blut des Leichnams schmeckt noch Nächte später vollmundig, der Leichnam kann aber nicht den Kuss empfangen."
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Samiels Rache",
+            "description": "Für 3 Blutpunkte wehrt sich die Salubri mit übermenschlicher Geschwindigkeit gegen jeden Gegner, der ihr einen Treffer verpasst hat (auch ohne Schaden). Jeder ihrer Angriffe auf Nahkampfreichweite trifft, als hätte sie mit ihrem gesamten Vorrat aus Geschick + Nahkampf oder Handgemenge (einschließlich Geschwindigkeitswürfeln) Erfolg gehabt, mit 2 zusätzlichen Würfeln für den Schadensvorrat; Rüstung bietet nur halben Schutz. Nur einmal pro Runde und nur mit bloßen Gliedmaßen oder Nahkampfwaffen einsetzbar."
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "powers": [
+          {
+            "name": "Traumgefecht",
+            "description": "Per Blickkontakt mit dem dritten Auge zieht die Kriegerin den Geist des Ziels in einen geteilten Traum (Willenskraftwurf gegen Widerstand, Schwierigkeit 7); niemand verlässt die Traumwelt, bis die Salubri besiegt ist oder sie beendet, und der ganze Kampf dauert für die Außenwelt nur eine Runde. In der Traumwelt kämpft der Wille, nicht der Körper: Manipulation ersetzt Körperkraft, Charisma Geschick, die höchste Tugend Widerstandsfähigkeit und Absorption, Willenskraft die Gesundheitsstufen; physische Disziplinen existieren nicht. Wer auf Willenskraft 0 fällt, ist außer Gefecht (Sterbliche Koma, Vampire eine Nacht Starre plus spirituelle Geistesstörung); Geister und Dämonen können dann in der Traumwelt diableriert und vernichtet werden. Das Ziel trägt keinen körperlichen, aber potenziell verheerenden psychischen Schaden davon."
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "powers": [
+          {
+            "name": "Feurige Agonie",
+            "description": "Verstärkt Flammende Berührung: Die Wirkung verfliegt nicht mehr nach einer Runde, sondern setzt sich unter dem roten Licht des dritten Auges fort. Der Krieger muss sein Ziel weiterhin berühren, um die Kraft auszulösen, kann sie danach aber auf Entfernung aktiviert halten, als hielte er das Opfer noch im Griff. Zusätzlich reduziert jeder Blutpunkt nun auch den Vorrat des Ziels, um Rötschreck zu widerstehen, um 1."
+          }
+        ]
+      },
+      {
+        "level": 9,
+        "powers": [
+          {
+            "name": "Lieder der Blutigen",
+            "description": "Einmal pro Kapitel ohne Wurf oder Kosten aktivierbar; jede weitere Aktivierung kostet 3 Willenskraft- und 5 Blutpunkte sowie ein Gebet (Charisma + Auftritt, Schwierigkeit 7). Bei Erfolg verfällt die Kriegerin für den Rest der Szene in eine Kampftrance: Ihre körperlichen Attribute steigen auf das Generationsmaximum, eine lodernde Aura macht Heimlichkeit unmöglich und erhöht die Schwierigkeit aller Angriffe gegen sie um 2. In der Trance ist sie immun gegen Beherrschung, Präsenz und andere mentale Disziplinen (außer Rayzeels Lied). Die Trance endet, wenn alle Feinde tot sind oder sie den Endgültigen Tod findet."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Valeren (Wächter)",
+    "summary": "Valeren, die Disziplin der Salubri, ist in drei Pfade eingeteilt: Heiler, Krieger und Wächter; jede Kaste favorisiert ihren Pfad als Clandisziplin, der entgegengesetzte Pfad kostet gegenwärtiger Wert x 6 EP. Das Erlernen lässt ein drittes Auge auf der Stirn entstehen, das sich mit dem dritten Punkt voll entwickelt und bei jeder Anwendung von Valeren zum Vorschein kommt (verbergen per Widerstandsfähigkeit + Heimlichkeit, Schwierigkeit 5; Bedecken gibt -1 Würfel). Die Wächter befassen sich mit Wissen, Vermittlung und dem Schutz auf Reisen – ihre Kräfte lenken Aufmerksamkeit, besänftigen Gemüter und gebieten über Geister und Seelen.",
+    "levels": [
+      {
+        "level": 1,
+        "powers": [
+          {
+            "name": "Zyklusgespür",
+            "description": "Das werdende dritte Auge sieht den gesamten Kreislauf des Lebens: Die Salubri erkennt instinktiv, wenn sie sich in der Gegenwart eines für ihre Zukunft bedeutsamen Charakters oder Ereignisses befindet, und wird automatisch über potenzielle feindliche Begegnungen der unmittelbaren Zukunft informiert. Gibt sie 1 Willenskraftpunkt aus und würfelt Wahrnehmung + Enigmas oder Empathie (Schwierigkeit 7), erhascht sie Omen und Visionen: Jeder Erfolg erlaubt eine Frage an den Erzähler über das Ziel (öffentliche Identität, Feindseligkeit, psychologische Schwächen)."
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "powers": [
+          {
+            "name": "Friedvolle Berührung",
+            "description": "Der Wächter gibt je 1 Blut- und Willenskraftpunkt aus und berührt einen feindlich gesinnten Gegner: Für 3 Runden erhöht sich dessen Schwierigkeit, den Salubri zu treffen, um 2 (Maximum 9). Ist das Ziel ein Vampir, sinkt zugleich die Schwierigkeit seiner Würfe gegen Rötschreck oder Raserei um 2. Auf sich selbst nicht anwendbar; wer Geschenk des Schlafs oder Morpheus' Hieb beherrscht, verlängert die Dauer um je 2 Runden (Maximum 7)."
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "powers": [
+          {
+            "name": "Liebkosung des Parias",
+            "description": "Die Wächterin lädt ihr Blut mit der kombinierten Abneigung all ihrer Feinde auf und überträgt diese Feindseligkeit mit einer blutigen Berührung. Sie gibt 1 Blutpunkt aus, berührt das Opfer (ggf. Heimlichkeitswurf) und würfelt Manipulation + Empathie (Schwierigkeit 7); jeder Erfolg verlängert die Wirkung um einen Abend. Die Schwierigkeit der gesellschaftlichen Würfe des Ziels steigt um 1, es findet sich in einem Miasma aus Verärgerung und Misstrauen wieder – selbst positive Handlungen erregen Neid und negative Aufmerksamkeit."
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "powers": [
+          {
+            "name": "Friedensstifter",
+            "description": "Für 2 Willenskraftpunkte beschwört der Wächter in einem Raum (höchstens ballsaalgroß) eine Aura des Friedens herauf, die so viele Runden anhält wie sein Wegwert oder bis er das Gebiet verlässt. Die Aura macht den Kopf frei von Wut und Zorn: Betroffene diskutieren lieber, als zum Schwert zu greifen; selbst jähzornige Charaktere würfeln normal gegen Raserei. Wer unter der Wirkung jemanden beleidigen oder angreifen will, muss Willenskraft würfeln (Schwierigkeit gleich dem Weg des Salubri) oder innehalten – auch mitten im Kampf, jede Runde. Die Aura muss in gutem Glauben beschworen werden und taugt nicht für Hinterhalte; sie gilt auch für die Salubri selbst."
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "powers": [
+          {
+            "name": "Atem der Seele",
+            "description": "Die Salubri nährt sich vom Lebensodem: Sie muss dem Opfer in Sprechreichweite gegenüberstehen und würfelt Intelligenz + Okkultismus (Schwierigkeit 6; 4 bei einem Kuss, 9 quer durch einen Ballsaal). Erfolg erlaubt, pro Runde 1 'Blutpunkt' aus dem Atem des Opfers zu trinken (maximale Dauer gleich den Erfolgen, aufteilbar auf mehrere Opfer in Reichweite); das Opfer verliert 1 Gesundheitsstufe pro entzogenem Punkt und erlebt nur einen Moment verstörender Schwäche. Atem macht nicht satt: Die Kraft ist nur für Nächte gleich dem Wegwert nutzbar, bevor körperlich Blut getrunken werden muss. Übernatürliche Ziele verlieren pro Erfolg zusätzlich 1 Punkt ihres Kraftvorrats (Kainiten-Blut wird unbrauchbar, Wölflinge verlieren Gnosis), was der Salubri je 1 Punkt Willenskraft einbringt."
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Sicheres Geleit",
+            "description": "Stets aktiv (unterdrückbar): Der Wächterin wird ungeachtet von Kultur oder lokalen Glaubenssätzen Gastfreundschaft zuteil, Menschenmengen teilen sich für sie. Die Kraft hindert zudem passiv jeden daran, sie zu verfolgen: Alle Versuche, sie mit böser Absicht zu jagen oder ihrer Spur zu folgen, erleiden -2 auf alle relevanten Würfelvorräte. Bemerkt ein Verfolger sie durch Zufall, kommt es zu einem Willenskraftwurf gegen Widerstand (Schwierigkeit 6); obsiegt die Salubri, verliert der Verfolger für die Szene das Interesse."
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "powers": [
+          {
+            "name": "Abneigung",
+            "description": "Verstärkt Liebkosung des Parias: Es genügt nun eine Sichtlinie zum zukünftigen Ausgestoßenen. Die Schwierigkeiten der gesellschaftlichen Würfe des Ziels erhöhen sich um 2 (Maximum 9), und jeder gesellschaftliche Patzer des Ziels wird sofort als beleidigendes oder bedrohliches Gebaren ausgelegt, das alle Zuhörer provoziert – bis hin zu einem Angriff oder vollständiger Ächtung."
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "powers": [
+          {
+            "name": "Reinigung",
+            "description": "Die Salubri gibt 1 Willenskraftpunkt aus und tritt mit einem Geist oder Dämon in einen Willenswettstreit: vergleichender Willenskraftwurf (Schwierigkeit 8), bis einer 3 Erfolge mehr angesammelt hat. Gewinnt die Salubri, kann sie den Geist austreiben und befrieden. Für 1 weiteren Willenskraftpunkt kann sie ihn in eine Person, ein Tier oder einen Ort schleudern oder in sich selbst aufnehmen; in allen Fällen gebietet sie über den Geist, der sich verhält, als wäre er durch ein komplettes Blutsband an sie gebunden."
+          }
+        ]
+      },
+      {
+        "level": 9,
+        "powers": [
+          {
+            "name": "Seelentausch",
+            "description": "Der Wächter-Methusalem hält zwei Personen in seinem Sichtfeld, gibt 1 Willenskraftpunkt aus und würfelt Manipulation + Okkultismus (Schwierigkeit 8). Bei Erfolg tauschen die beiden Ziele sofort ihre Seelen: Wege (samt Wegwert), Tugenden und Wesen wechseln, das essenzielle Wesen der Charaktere verändert sich rapide, auch wenn das Verhalten zunächst dasselbe bleibt. Zwei Heiler mit Entlastung der tierhaften Seele können den Tausch rückgängig machen."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Verdunkelung",
+    "summary": "Verdunkelung erlaubt einem Kainiten, ungesehen in der Dunkelheit zu lauern und die Wahrnehmung seiner Opfer zu täuschen. Die meisten Sterblichen können die Täuschung nicht durchdringen; Kinder, Pferde, Hunde, manche Katzen und wenige religiöse Visionäre sind nach Erzählerermessen nicht betroffen (das Opfer muss sich in Reichweite von 5 m pro Punkt Geistesschärfe + Heimlichkeit befinden), und Auspex kann die Verdunkelung durchdringen. Die meisten Kräfte halten nach Aktivierung eine Szene lang ohne besondere Konzentration an.",
+    "levels": [
+      {
+        "level": 1,
+        "powers": [
+          {
+            "name": "Todesstille",
+            "description": "Der Kainit erzeugt ohne Wurf eine Zone absoluter Stille um sich mit maximal 7 m Radius: Im Inneren entsteht kein Geräusch, doch Geräusche von außen sind hörbar. Gibt der Charakter 2 Blutpunkte aus und konzentriert sich 5 Runden in einem Raum oder abgetrennten Gebiet, verbleibt die Stille dort, bis er sie beendet. Es kann immer nur eine Zone der Stille bestehen."
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "powers": [
+          {
+            "name": "Unsichtbare Gegenwart",
+            "description": "Die Kainitin bewegt sich ohne Wurf ungesehen: Sterbliche wie Kainskinder wenden den Blick ab und treten unbewusst zur Seite, solange niemand bewusst nach ihr sucht und sie sich nicht bemerkbar macht. Erregt sie versehentlich Aufmerksamkeit, ist ein Wurf auf Geistesschärfe + Heimlichkeit nötig (Schwierigkeit 5-9 nach Lärm/Chaos); willentliche Verstöße bei aufrechterhaltener Verdunkelung haben hohe Schwierigkeiten und können mehrere Erfolge erfordern. Sekundär lässt sich ein kleiner Gegenstand im eigenen Besitz verbergen oder mit Manipulation + Ausflüchte (Schwierigkeit 5-9 je nach Beobachtung) ein leicht beweglicher Gegenstand ergreifen und verschwinden lassen."
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "powers": [
+          {
+            "name": "Maske der tausend Gesichter",
+            "description": "Der Kainit zwingt seine Opfer, ein anderes Gesicht zu sehen – erfunden oder das einer bestimmten Person (deren Antlitz er sich gut angesehen haben muss). Wurf auf Manipulation + Auftritt (Schwierigkeit 7): 1 Erfolg erlaubt leichte Veränderungen der Züge (Nosferatu wirken als hässliche Menschen), 2 eine komplette Maske ohne Ähnlichkeit inklusive wahrgenommenem Geschlecht, 3 beliebiges Aussehen, 4 auch passende Stimme und Manierismen, 5 tiefgreifende Verwandlung in anderes Geschlecht, Alter oder Größe. Für ein deutlich anziehenderes Gesicht kostet jeder Punkt Differenz im Erscheinungsbild 1 Blutpunkt; schauspielerisches Talent liefert die Maske nicht mit."
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "powers": [
+          {
+            "name": "Verschwinden vor dem geistigen Auge",
+            "description": "Die Vampirin verschwindet vor den Augen ihrer Opfer: Wurf auf Intelligenz + Heimlichkeit gegen Geistesschärfe + Aufmerksamkeit des Opfers (bei mehreren Opfern der höchste Vorrat). Mit 1-3 Erfolgen verschwimmt sie geisterhaft, ab 4 entschwindet sie den Sinnen; übertrifft sie das Opfer, vergisst dieses, dass sie überhaupt da war. Mit einem geisterhaften Vampir zu interagieren erfordert Wahrnehmung + Aufmerksamkeit gegen 8 (Scheitern: -2 Würfel auf alle Interaktionen). Zeugen des Verschwindens müssen Geistesschärfe + Mut würfeln (Menschen Schwierigkeit 9, Kainiten 5); bei Scheitern sind sie zwei Runden handlungsunfähig, außer zur Flucht."
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "powers": [
+          {
+            "name": "Schutzmantel für die Versammelten",
+            "description": "Der Vampir dehnt seine Täuschung auf Gefährten aus: Pro Punkt Heimlichkeit kann er 1 zusätzliche Person unter den Schutzmantel nehmen; große Objekte wie Pferde oder Häuser kosten je 1 zusätzlichen Punkt. Der Mantel dehnt eine beliebige bereits beherrschte Verdunkelungskraft auf alle darunter aus. Jeder muss sich an die Einschränkungen der Kraft halten und fällt bei Verstößen einzeln heraus; enthüllt sich der Erschaffer selbst oder bricht er die Anforderungen, kollabiert der gesamte Schutzmantel."
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "powers": [
+          {
+            "name": "Teufelsmaske",
+            "description": "Die Vampirin verbirgt auch ihre Seele vor übersinnlicher Wahrnehmung: Ihre Aura wird stumpf und unscheinbar und nimmt die generische Erscheinung der Durchschnittsauren um sie herum an. Zudem maskiert die Kraft das Tier zur Gänze – ohne Wurf scheitern alle vampirischen oder sonstigen Fähigkeiten, die das Tier zum Ziel haben (etwa Lied der Ruhe), da es verschwunden zu sein scheint. Die Vampirin wirkt in jeder Hinsicht wie ein gewöhnlicher Mensch."
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "powers": [
+          {
+            "name": "Festung der Stille",
+            "description": "Für 1 Blutpunkt kehrt diese Kraft die Effekte von Todesstille um und schneidet einen Charakter von äußeren Ablenkungen und innerem Hintergrundlärm ab: Wahrnehmungswürfe des Meditierenden erhalten +2 Schwierigkeit, doch er stellt alle 15 Minuten 1 verlorenen Willenskraftpunkt wieder her, und nach der Meditation sinkt die Schwierigkeit aller geistigen und Willenskraftwürfe für den Rest des Abends um 1. Offensiv: 1 Blutpunkt und Widerstandsfähigkeit + Okkultismus (Schwierigkeit gleich der Willenskraft des Gegners); übersteigt die Erfolgszahl dessen permanente Willenskraft, erlangt das Ziel eine Geistesstörung (permanent bei 3+ Erfolgen, sonst für die Nacht). Für die Szene verliert das Ziel Würfel für Geschick und geistige Attribute in Höhe der Erfolge, zurückkaufbar mit Willenskraft im Verhältnis 1:1."
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "powers": [
+          {
+            "name": "Schnitter des Herzens",
+            "description": "Erforscht mystisch das Unterbewusstsein des Ziels und formt aus dessen tiefsten emotionalen Erinnerungen die Erscheinung einer Person, zu der das Opfer eine starke gefühlsmäßige Bindung hat – der Anwender muss diese Person weder kennen noch je gesehen haben. Aktivierung wie Maske der tausend Gesichter (Schwierigkeit gleich Geistesschärfe + Aufmerksamkeit des Ziels, maximal 9). Für die Szene gewährt jeder Erfolg +2 Würfel auf alle passenden gesellschaftlichen Würfe gegen das Ziel und erhöht die Schwierigkeit der gesellschaftlichen Würfe des Ziels gegen den Charakter um 2. Auch lange Tote sind möglich; das Ziel erinnert sich dann an die Begegnung als Traum, Vision oder Heimsuchung."
+          }
+        ]
+      },
+      {
+        "level": 9,
+        "powers": [
+          {
+            "name": "Verhüllung der Schöpfung Gottes",
+            "description": "Entfernt alle Erinnerungen an die Existenz der Vampirin aus der Realität. Der Charakter begibt sich an einen Ort vollkommener Isolation (etwa einen Sarg), würfelt Geistesschärfe + Ausflüchte (Schwierigkeit 9) und gibt 1 Punkt Willenskraft aus. 1 Erfolg entfernt direkt mit dem Vampir assoziierte Erinnerungen (fragmentierte Lücken bleiben), 2+ ersetzen ihn in fremden Erinnerungen durch andere Personen, 3+ tilgen schriftliche und sonstige direkte Berichte (nur Legenden und Gerüchte bleiben), 4+ streichen jegliche Spur aus der Existenz – Dokumente und Erinnerungen schreiben sich um, um Lücken zu vertuschen. Nur die Spuren, die der Vampir willentlich zur Schau stellt, bleiben intakt; der Vampir selbst wird nicht vernichtet, nur die Beweise seiner Existenz."
+          }
+        ]
+      }
+    ]
+  }
+]

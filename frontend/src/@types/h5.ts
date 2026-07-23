@@ -1,4 +1,4 @@
-import {GameLine, type IEdition5Sheet} from "@/@types/gameline";
+import {AvatarOrientation, GameLine, type IEdition5Sheet} from "@/@types/gameline";
 import {CategoryKeys, type ICategory, Sex, SortedSkillsAndAttribute} from "@/@types/models";
 
 export interface IH5Creed {
@@ -66,6 +66,7 @@ export function NewH5Sheet(): IHunterSheet {
   return {
     anchorsAndBeliefs: "",
     avatar: "",
+    avatarOrientation: AvatarOrientation.Center,
     backgrounds: {
       packs: []
     },

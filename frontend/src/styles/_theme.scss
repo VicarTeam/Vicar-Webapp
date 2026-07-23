@@ -34,3 +34,12 @@ html.theme--h5 {
   --image-to-accent-filter: invert(28%) sepia(18%) saturate(1190%) hue-rotate(63deg) brightness(92%) contrast(85%);
   --image-to-primary-color-filter: invert(28%) sepia(18%) saturate(1190%) hue-rotate(63deg) brightness(92%) contrast(85%);
 }
+
+// VDZ (Dark Ages): entsättigtes dunkles Graurot – klar abgesetzt vom V5-Rot
+html.theme--vdz {
+  --accent: #3d2a2c;
+  --primary-color: #3d2a2c;
+  --accent-contrast: #f0e6dc;
+  --image-to-accent-filter: invert(14%) sepia(16%) saturate(1100%) hue-rotate(315deg) brightness(48%) contrast(92%);
+  --image-to-primary-color-filter: invert(14%) sepia(16%) saturate(1100%) hue-rotate(315deg) brightness(48%) contrast(92%);
+}

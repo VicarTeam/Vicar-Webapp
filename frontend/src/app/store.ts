@@ -14,7 +14,7 @@ export const useStore = defineStore('vicar-main', {
   actions: {
     resetTheme() {
       const html = document.documentElement;
-      html.classList.remove("theme--v5", "theme--w5", "theme--m20", "theme--h5");
+      html.classList.remove("theme--v5", "theme--w5", "theme--m20", "theme--h5", "theme--vdz");
       html.classList.add(`theme--v5`);
     },
     openLexicon() {
@@ -39,6 +39,9 @@ export const useStore = defineStore('vicar-main', {
     },
     isHunter(state): boolean {
       return state.editingCharacter?.game === GameLine.Hunter;
+    },
+    isDarkAges(state): boolean {
+      return state.editingCharacter?.game === GameLine.DarkAges;
     },
     currentGameLine(state): GameLine {
       if (state.overrideGameLine) {

@@ -1,0 +1,758 @@
+[
+  {
+    "id": 1,
+    "name": "Beidhändigkeit",
+    "category": "koerperlich",
+    "type": "merit",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Sie sind mit beiden Händen gleich geschickt. Handlungen müssen weiterhin wie normal aufgeteilt werden, aber Sie erleiden keine Abzüge, wenn Sie Handlungen mit Ihrer nicht-dominanten Hand durchführen."
+  },
+  {
+    "id": 2,
+    "name": "Essen",
+    "category": "koerperlich",
+    "type": "merit",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Sie können sterbliche Nahrung verzehren und genießen, was Ihre Tarnung als Sterblicher stützt; der Erzähler kann dafür Schwierigkeiten senken oder Abzüge verringern. Sie können das Essen jedoch nicht verdauen oder Nährstoffe daraus gewinnen und müssen es schlussendlich wieder herauswürgen."
+  },
+  {
+    "id": 3,
+    "name": "Rosiger Teint",
+    "category": "koerperlich",
+    "type": "merit",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Ihre Haut fühlt sich lauwarm an und wirkt gesund durchblutet, sodass man nur bei sehr genauem Hinsehen erkennt, dass Sie kein Sterblicher sind. Der Erzähler kann Schwierigkeiten senken oder Abzüge verringern, um andere von Ihrer Sterblichkeit zu überzeugen. Kappadozianer und Nosferatu können diesen Vorzug nicht wählen."
+  },
+  {
+    "id": 4,
+    "name": "Spurlos",
+    "category": "koerperlich",
+    "type": "merit",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "In der Wildnis hinterlassen Sie weder Spuren noch Geruch. Normale Versuche, Sie aufzuspüren (etwa durch Überleben oder mit Hunden), scheitern automatisch; die Schwierigkeit übernatürlicher Aufspürversuche (z. B. mit Auspex) erhöht sich um 2."
+  },
+  {
+    "id": 5,
+    "name": "Wirksame Verdauung",
+    "category": "koerperlich",
+    "type": "merit",
+    "minLevel": 3,
+    "maxLevel": 3,
+    "description": "Sie können Blut mehr als die normale Menge an Nährstoffen entziehen und erhalten 1 zusätzlichen Blutpunkt für je 2, die Sie zu sich nehmen."
+  },
+  {
+    "id": 6,
+    "name": "Robust",
+    "category": "koerperlich",
+    "type": "merit",
+    "minLevel": 4,
+    "maxLevel": 4,
+    "description": "Ihr Körper ist gegen Schmerz und Schaden abgehärtet. Sie erhalten 1 zusätzliche Gesundheitsstufe Blaue Flecken, und der Erzähler kann Ihnen einen angemessenen Bonus zugestehen, wenn Ihre natürliche Zähigkeit ins Spiel kommt."
+  },
+  {
+    "id": 7,
+    "name": "Seltsamer Gang",
+    "category": "koerperlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Sich schnell zu bewegen fällt Ihnen schwer: Sie bewegen sich nur mit der Hälfte Ihrer normalen Bewegungsweite. Erzählercharaktere können Sie an Ihrem Gang erkennen."
+  },
+  {
+    "id": 8,
+    "name": "Zackiger Biss",
+    "category": "koerperlich",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Sie können die Bisswunde beim Trinken nicht sauber versiegeln und hinterlassen zerfetzte, blutende Male. Ihr Ziel muss einen Widerstandsfähigkeitswurf ablegen (Schwierigkeit: verursachter Schaden +5), um einer Infektion zu widerstehen. Die auffälligen Wunden erschweren es zudem, Ihre Identität als Monster zu verbergen."
+  },
+  {
+    "id": 9,
+    "name": "Unrein",
+    "category": "koerperlich",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 3,
+    "description": "Ihre Haut ist so geschädigt, dass die meisten Beobachter Sie für einen Aussätzigen oder Seuchenträger halten; man verwehrt Ihnen den Einlass in größere Städte und wirft Sie aus den meisten Schänken. Bei 3 Punkten übertragen Sie tatsächlich Lepra oder eine andere ansteckende, sichtbare Krankheit. Nosferatu erhalten für diese Schwäche nur 1 Punkt, müssen aber die vollen Auswirkungen (3 Punkte) ertragen."
+  },
+  {
+    "id": 10,
+    "name": "Dauerhafte Wunde",
+    "category": "koerperlich",
+    "type": "flaw",
+    "minLevel": 3,
+    "maxLevel": 3,
+    "description": "Eine Wunde aus Ihrem sterblichen Leben weigert sich zu heilen und ist auf ewig offen. Wenn Sie nachts aufwachen, beginnen Sie immer auf der Gesundheitsstufe Verwundet. Keine Quelle der Heilung wirkt dauerhaft, aber Sie können jede Nacht Blutpunkte ausgeben, um den Schaden zu heilen."
+  },
+  {
+    "id": 11,
+    "name": "Langsame Heilung",
+    "category": "koerperlich",
+    "type": "flaw",
+    "minLevel": 3,
+    "maxLevel": 3,
+    "description": "Ihr untotes Fleisch regeneriert nur widerwillig: Das Heilen von 1 Stufe schwer heilbaren Schadens kostet zusätzlich zu den normalen Kosten 2 Blutpunkte, 1 Stufe normalen Schaden und 5 Tage."
+  },
+  {
+    "id": 12,
+    "name": "Monstrosität",
+    "category": "koerperlich",
+    "type": "flaw",
+    "minLevel": 3,
+    "maxLevel": 3,
+    "description": "Das Tier hat sich beim Kuss in Ihren Zügen manifestiert: Sie sind eine schreckliche, missgestaltete Kreatur. Gewöhnliche Menschen fliehen bei Ihrem Erscheinen, selbst Kainiten weichen vor Abscheu zurück. Ihr Erscheinungsbild ist dauerhaft und unsteigerbar 0. Nosferatu können diese Schwäche nicht nehmen."
+  },
+  {
+    "id": 13,
+    "name": "Sucht",
+    "category": "koerperlich",
+    "type": "flaw",
+    "minLevel": 3,
+    "maxLevel": 3,
+    "description": "Ein Laster aus Ihrem sterblichen Leben besteht fort: Sie müssen Ihre Sucht befriedigen, wann immer Sie trinken, etwa indem Sie Opfer wählen, deren Blut mit Ihrem Laster versetzt ist (Alkohol, Opiate, Halluzinogene, auch vergnügungssüchtige oder sexuelle Begegnungen). Blut, das nicht mit Ihrem Laster befleckt ist, bietet nur den halben Nährwert."
+  },
+  {
+    "id": 14,
+    "name": "Eingeschränkter Sinn",
+    "category": "koerperlich",
+    "type": "flaw",
+    "minLevel": 4,
+    "maxLevel": 4,
+    "description": "Einer Ihrer Sinne ist eingeschränkt (etwa Schwerhörigkeit oder Blindheit). Würfe, die den eingeschränkten Sinn betreffen, haben Schwierigkeit +3; auch andere Würfe können erschwert werden oder angemessene Abzüge erhalten. Nach Ermessen des Erzählers kann man die Schwäche mehrfach nehmen; zusätzliche Sinne sind dann je eine 1-Punkt-Schwäche."
+  },
+  {
+    "id": 15,
+    "name": "Kind",
+    "category": "koerperlich",
+    "type": "flaw",
+    "minLevel": 4,
+    "maxLevel": 4,
+    "description": "Sie erhielten den Kuss als Kind, und Ihr Körper bleibt für immer vorpubertär. Stärke und Widerstandsfähigkeit können nicht höher als 2 sein, und die Schwierigkeit von Würfen, um sterbliche Erwachsene anzuführen oder zu befehligen, steigt um 2."
+  },
+  {
+    "id": 16,
+    "name": "Stummheit",
+    "category": "koerperlich",
+    "type": "flaw",
+    "minLevel": 4,
+    "maxLevel": 4,
+    "description": "Sie können (oder wollen) nicht sprechen und kommunizieren über Körpersprache und Gesten. Alle Würfe, mit nicht vertrauten Menschen zu kommunizieren, sind um 3 erschwert. Der Vorzug Bildung oder Gebärdensprache als Ausprägung des Vorzugs Sprachen können das Problem abmildern."
+  },
+  {
+    "id": 17,
+    "name": "Leichenfleisch",
+    "category": "koerperlich",
+    "type": "flaw",
+    "minLevel": 5,
+    "maxLevel": 5,
+    "description": "Sie regenerieren Gesundheitsstufen zwar normal, doch Ihr Fleisch behält jede Verletzung sichtbar: Haut bleibt zerrissen, Blutergüsse bleiben dunkel, gebrochene Knochen stehen schief ab. Es ist unmöglich, als Mensch durchzugehen, und der Erzähler kann die Schwierigkeit gesellschaftlicher Würfe erhöhen. Manche Kainiten mit dieser Schwäche verfallen mit der Zeit bis auf das Skelett."
+  },
+  {
+    "id": 18,
+    "name": "Bildung",
+    "category": "geistig",
+    "type": "merit",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Sie sind ein Gelehrter und können Ihre Muttersprache flüssig lesen und schreiben, dazu Latein und jede über den Vorzug Sprachen erworbene Sprache. In einigen Chroniken kann Bildung gratis sein; in diesen Fällen wird Analphabetismus zur 1-Punkt-Schwäche."
+  },
+  {
+    "id": 19,
+    "name": "Gesunder Menschenverstand",
+    "category": "geistig",
+    "type": "merit",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Sie haben einen klugen Kopf und eine natürliche Abneigung gegen alberne Wagnisse. In angespannten Situationen dürfen Sie den Erzähler nach Hinweisen auf die vernünftigste Vorgehensweise fragen, und er kann Sie vor unüberlegten Handlungen warnen."
+  },
+  {
+    "id": 20,
+    "name": "Zeitgefühl",
+    "category": "geistig",
+    "type": "merit",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Sie wissen von Natur aus, welche Tageszeit es ist, und können die Stunde des Sonnenauf- und Sonnenuntergangs auf wenige Minuten genau erraten. Mit einem Moment Konzentration schätzen Sie auch die Position der Sterne ohne Sternenkarte."
+  },
+  {
+    "id": 21,
+    "name": "Fotografisches Gedächtnis",
+    "category": "geistig",
+    "type": "merit",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Mit einem Moment des Nachdenkens erinnern Sie sich detailliert an alles, was Sie beobachtet oder erlebt haben. In einer anstrengenden oder gefährlichen Situation kann dieses Erinnern einen Wurf auf Wahrnehmung + Aufmerksamkeit erfordern."
+  },
+  {
+    "id": 22,
+    "name": "Leichter Schlaf",
+    "category": "geistig",
+    "type": "merit",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Wenn Sie sich ausruhen, erhalten Sie 1 Punkt Aufmerksamkeit zusätzlich zu Ihren normalen Werten und erwachen bei allen ungewollten Störungen in Ihrer Umgebung. Sie haben automatisch Erfolg bei jedem Wurf, um weltliche Versuche zu bemerken, Sie im Schlaf zu überraschen."
+  },
+  {
+    "id": 23,
+    "name": "Sprachen",
+    "category": "geistig",
+    "type": "merit",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Sie beherrschen eine weitere Sprache umfassend, beinahe wie ein Muttersprachler. Pro Punkt Intelligenz können Sie 1 weitere Sprache lernen; auch Geheimcodes, Jargons, Fachsprachen und Gebärdensprache sind möglich. Jede zusätzliche Sprache erhöht die Kosten des Vorzugs um 1 Punkt."
+  },
+  {
+    "id": 24,
+    "name": "Albträume",
+    "category": "geistig",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Grauenerregende Albträume plagen Ihren Schlaf. Beim Erwachen legen Sie einen Willenskraftwurf ab; scheitern Sie, verringert der Schrecken Ihren Würfelvorrat für alle Handlungen um 1, bis Sie das nächste Mal schlafen."
+  },
+  {
+    "id": 25,
+    "name": "Beuteausschluss",
+    "category": "geistig",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Sie weigern sich, von einer bestimmten Art von Person zu trinken. Wählen Sie unglücklicherweise doch eine solche Person als Opfer, verfallen Sie sofort in Raserei und müssen einen Entartungswurf machen. Ventrue dürfen diese Schwäche nur für eine Untergruppe ihres Beuteschemas wählen."
+  },
+  {
+    "id": 26,
+    "name": "Tiefer Schlaf",
+    "category": "geistig",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Der Schlaf übermannt Sie vollständig. Die Schwierigkeit von Würfen, um während des Tages zu erwachen, erhöht sich um 2."
+  },
+  {
+    "id": 27,
+    "name": "Amnesie",
+    "category": "geistig",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Ein Teil Ihres Gedächtnisses ist gelöscht; Sie erinnern sich an kaum etwas bis nichts aus Ihrer Vergangenheit. Umfang und Inhalt des Gedächtnisverlusts vereinbaren Sie mit dem Erzähler, der die Leerstellen für interessante Verwicklungen in der Kampagne nutzen kann."
+  },
+  {
+    "id": 28,
+    "name": "Fleischfresser",
+    "category": "geistig",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Sie halten an dem Irrglauben fest, das gut durchblutete Fleisch Ihrer Opfer (wie Herz oder Leber) verzehren zu müssen, was Ihre Herde dezimiert und die sterbliche Bevölkerung grausame Tode mit Ihnen in Verbindung bringen lässt. Um Blut bei sich zu behalten, das Sie ohne eine tödliche Menge Fleisch zu sich genommen haben, müssen Sie einen Willenskraftwurf (Schwierigkeit 8) schaffen, sonst erbrechen Sie es wieder."
+  },
+  {
+    "id": 29,
+    "name": "Rache",
+    "category": "geistig",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Sie sind besessen davon, eine offene Rechnung aus Ihrer Zeit als Sterblicher oder nach dem Kuss zu begleichen. Wann immer Sie der Quelle Ihres Zorns begegnen, sind Sie gezwungen, sie zu verfolgen; Sie können jedoch 1 Willenskraftpunkt ausgeben, um dieses Verlangen zu unterdrücken."
+  },
+  {
+    "id": 30,
+    "name": "Skrupel",
+    "category": "geistig",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 4,
+    "description": "Die Notwendigkeit des Trinkens steht im Gegensatz zu Ihrem moralischen Kompass. Bei 2 Punkten weigern Sie sich, von Menschen zu trinken, und jagen stattdessen das Blut von Tieren; bei 4 Punkten lehnen Sie das Trinken gänzlich ab, außer es ist vollkommen unerlässlich."
+  },
+  {
+    "id": 31,
+    "name": "Angesehener Erzeuger",
+    "category": "gesellschaftlich",
+    "type": "merit",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Ihr Erzeuger hat unglaublichen Einfluss in Ihrem Clan, und andere behandeln Sie mit mehr Respekt, wenn sie erfahren, wer er ist. Handeln Sie in seinem Namen oder Auftrag, verringert sich die Schwierigkeit gesellschaftlicher Würfe mit anderen Kainiten um 1; allerdings erwartet man als Kind einer Berühmtheit auch mehr von Ihnen."
+  },
+  {
+    "id": 32,
+    "name": "Gesellschaft von Heiligen und Helden",
+    "category": "gesellschaftlich",
+    "type": "merit",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Erlauchte religiöse Führer, politische Figuren und legendäre Helden kennen Sie gut und halten viel von Ihnen. Sie dürfen den Namen Ihres berühmten Bekannten erwähnen und die Schwierigkeit entsprechender gesellschaftlicher Würfe um 1 reduzieren; engere Beziehungen bildet der Hintergrund Verbündete ab."
+  },
+  {
+    "id": 33,
+    "name": "Lingua Franca",
+    "category": "gesellschaftlich",
+    "type": "merit",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Sie sprechen ein aus verschiedenen Sprachen bestehendes Kauderwelsch, das die meisten Leute verstehen. Für philosophische Debatten reicht es nicht, aber an den meisten Orten wissen Sie sich in Gesprächen zu helfen und können in bedrohlichen Lagen ausreichend kommunizieren."
+  },
+  {
+    "id": 34,
+    "name": "Dankesschuld",
+    "category": "gesellschaftlich",
+    "type": "merit",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "description": "Ein Ahn steht – wenn auch widerwillig – in Ihrer Schuld. Bei 1 Punkt schuldet er Ihnen einen Gefallen, bei 3 Punkten sein Unleben; Art und Ursprung der Schuld arbeiten Sie mit dem Erzähler aus."
+  },
+  {
+    "id": 35,
+    "name": "Schirmherr",
+    "category": "gesellschaftlich",
+    "type": "merit",
+    "minLevel": 1,
+    "maxLevel": 5,
+    "description": "Eine Person von Wohlstand und Macht unterstützt Ihre Unterfangen mit materiellen Gütern, solange Sie ihr Wohlwollen nicht missbrauchen. Die Punktzahl bestimmt Macht und Nähe des Schirmherrn: von einem entfernten Gönner mit vereinzelten Geldmitteln (1) über einen Fürsten, eine Königin oder einen Vampir von Rang mit regelmäßiger Unterstützung (3) bis zu einem beinahe sicher übernatürlichen Schirmherrn mit weitreichenden Ressourcen (5). Im Gegenzug erbittet der Schirmherr immer wieder – umso häufiger, je mehr Punkte investiert wurden – etwas von Ihnen, und Nein zu sagen ist im Allgemeinen keine gute Idee."
+  },
+  {
+    "id": 36,
+    "name": "Ablehnender Erzeuger",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Ihr Erzeuger verabscheut Sie: Sie können keine Gefälligkeiten von ihm erwarten, und er taktiert vielleicht sogar, um Sie politisch oder buchstäblich ausschalten zu lassen. Aktivere negative Beziehungen spiegelt die Schwäche Feind wider."
+  },
+  {
+    "id": 37,
+    "name": "Berüchtigter Erzeuger",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Ihr Erzeuger ist eine Person von schlechtem Ruf – despektierlich, willkürlich, widerspenstig und/oder hartherzig – und Sie gelten als schuldig durch Abstammung. Er versucht vielleicht auch, Ihnen seine Misserfolge unterzuschieben, wenn es für ihn vorteilhaft ist."
+  },
+  {
+    "id": 38,
+    "name": "Dunkles Geheimnis",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Etwas aus Ihrer Vergangenheit verfolgt Sie und könnte bei Bekanntwerden Ihr Ansehen in Clan und Klüngel zerstören. Zeigt die Wahrheit ihr hässliches Gesicht, müssen Sie sie unterdrücken oder die Konsequenzen tragen."
+  },
+  {
+    "id": 39,
+    "name": "Fremder",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Sie sind nicht aus der Gegend: Bräuche, Essen und Sprache sind Ihnen fremd, und Sie ringen mit der Sprache der Einheimischen. Die Schwierigkeit entsprechender gesellschaftlicher Würfe ist um 1 erhöht; der Vorzug Lingua Franca kann Ihnen helfen, sich durchzuschlagen."
+  },
+  {
+    "id": 40,
+    "name": "Grabgeruch",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Der Geruch von frischer, nasser Erde und Verwesung klebt an Ihnen; Ihre Haut riecht nach Chrisam, Ihr Atem nach Bestattungsweihrauch. Dies beunruhigt Sterbliche und erhöht die Schwierigkeit gesellschaftlicher Würfe mit ihnen um 1 (kumulativ mit der Clansschwäche der Kappadozianer). Wo Beunruhigung nützt (etwa beim Einschüchtern), kann der Erzähler die Schwierigkeit dafür um 1 senken."
+  },
+  {
+    "id": 41,
+    "name": "Verwechslung",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Jemand in Ihrem Clan oder Ihrer sterblichen Gemeinde sieht aus wie Sie – ein Krimineller, Eidbrecher oder Schwindler –, und die Schuld für seine Missetaten bleibt oft an Ihnen haften. Ihr Doppelgänger ist meist nur eine kleine Unannehmlichkeit, überlässt es aber regelmäßig Ihnen, den Behörden zu erklären, wo Sie waren und wer Sie wirklich sind."
+  },
+  {
+    "id": 42,
+    "name": "Vulgär",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Sie sind bekanntermaßen bäurisch, grob und unangenehm, und niemand kann Ihnen gesellschaftliches Navigieren beibringen. Die Schwierigkeit für Würfe zu Umgangsformen, Benehmen oder delikaten gesellschaftlichen Vorgehensweisen erhöht sich um 1, und Sie können sich in Bedrängnis bringen, indem Sie versehentlich die falschen Leute beleidigen."
+  },
+  {
+    "id": 43,
+    "name": "Feind",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 5,
+    "description": "Ein Feind oder eine ganze Gruppe von Feinden ist darauf aus, Ihnen zu schaden; die Punktzahl bestimmt seine Macht. Bei 1 Punkt behindert oder belästigt Sie ein gekränkter Standesgenosse ohne Anschläge auf Ihr Unleben. Bei 3 Punkten steht der Feind über Ihnen, vereitelt regelmäßig Ihre Pläne, bedroht Verbündete und erwägt womöglich Ihren Endgültigen Tod. Bei 5 Punkten ist der Feind ein Ahn oder eine ganze Organisation wie Herrscherhaus oder Kirche, und weder Sie noch Ihre Bekannten sind irgendwo sicher."
+  },
+  {
+    "id": 44,
+    "name": "Rivalität",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 5,
+    "description": "Jemand hasst Sie so sehr, dass er Sie nicht in Ruhe lassen kann – er will Sie aber nicht vernichten, sondern Ihr Unleben so anstrengend und qualvoll wie möglich machen. Die Skalierung entspricht der Schwäche Feind; auf niedrigen Stufen kann der Rivale sogar ein Freund sein, der im schlechtestmöglichen Moment auftaucht, um Sie bloßzustellen, auf hohen Stufen plant er unablässig, Ihnen das Unleben zur Hölle zu machen."
+  },
+  {
+    "id": 45,
+    "name": "Apostat",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Sie haben Ihren früheren Weg öffentlich und auf beleidigende Weise in Verruf gebracht. Das hat Ihnen den Zorn seiner Anhänger eingebracht und die Mitglieder Ihres neuen Weges misstrauisch gemacht: Sie müssen doppelt so hart arbeiten, um sich Respekt zu verdienen, und sollten sich vor Racheakten hüten."
+  },
+  {
+    "id": 46,
+    "name": "Territorial",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Sie beanspruchen ein Gebiet und eine Gruppe von Sterblichen und verteidigen sie bis zur Unvernunft. Erwischen Sie einen anderen Vampir beim Jagen auf Ihrem Gebiet, machen Sie sofort eine Probe auf Raserei; selbst ohne Raserei reicht der Gedanke, um Sie gewalttätig werden zu lassen. Ohne die notwendigen Hintergründe bedeutet Ihr Territorium niemandem außer Ihnen etwas."
+  },
+  {
+    "id": 47,
+    "name": "Bekennender Ketzer",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 4,
+    "maxLevel": 4,
+    "description": "Sie sprechen offen über Ansichten, die eine große religiöse Macht wie die Kirche als ketzerisch ansieht. Sie sehen sich ständig falschen Anschuldigungen, Schikanen und dem Vorenthalten von Gastfreundschaft gegenüber; nach Ermessen des Erzählers kann dies passende gesellschaftliche Würfe um bis zu 3 erschweren."
+  },
+  {
+    "id": 48,
+    "name": "Eidbrecher",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 4,
+    "maxLevel": 4,
+    "description": "Sie haben einen geschworenen Treueeid, ein Loyalitätsversprechen oder einen bindenden Vertrag gebrochen und sind als Eidbrecher gebrandmarkt. Es ist beinahe unmöglich, das Vertrauen anderer zu gewinnen: Der Erzähler kann Würfe, jemanden von Ihrer Vertrauenswürdigkeit zu überzeugen, um bis zu 3 erschweren, und selbst Ihr Klüngel hegt Vorurteile gegen Sie."
+  },
+  {
+    "id": 49,
+    "name": "Gejagt",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 4,
+    "maxLevel": 4,
+    "description": "Eine Hexenjägerin hat Sie ins Visier genommen und ist bereit, Sie auszulöschen. Sie finden Ihre sicheren Zufluchten ausgehoben, Ihre gesellschaftlichen Netzwerke kompromittiert und Ihre Verbündeten gefährdet; der Erzähler sollte sich bei dieser 4-Punkte-Schwäche nicht zurückhalten."
+  },
+  {
+    "id": 50,
+    "name": "Vogelfrei",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 4,
+    "maxLevel": 4,
+    "description": "Das Blutgericht hat einen Preis auf Ihren Kopf ausgesetzt: Sie sind zur Vernichtung freigegeben, und Standesgenossen verschiedener Fähigkeitsstufen greifen Sie zu unvorhersehbaren Zeiten und Orten an. Der schwärende Verfolgungswahn lässt Sie nicht los, und nach Ermessen des Erzählers können Sie durch die Ablenkung zudem 1 geistigen Würfel verlieren."
+  },
+  {
+    "id": 51,
+    "name": "Namenlos",
+    "category": "gesellschaftlich",
+    "type": "flaw",
+    "minLevel": 5,
+    "maxLevel": 5,
+    "description": "Alle Aufzeichnungen über Ihre Existenz wurden vernichtet; für den Rest der Welt hat es Sie nie gegeben, und nicht einmal Ihre vampirische Nachkommenschaft kann sich auf Ihren Namen berufen. Sie können keine gesellschaftlichen Vorzüge wählen, die Vorteile aufgrund von Ansehen geben, und nach Ermessen des Erzählers auch keine Hintergründe, die eine gesellschaftliche Präsenz verlangen."
+  },
+  {
+    "id": 52,
+    "name": "Harmlos für Tiere",
+    "category": "uebernatuerlich",
+    "type": "merit",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Ihre Anwesenheit stört Tiere nicht; sie behandeln Sie wie einen normalen Sterblichen. Kreaturen mit einer Verbindung zum Okkulten (Krähen, Eulen, schwarze Katzen) können weiterhin auf Sie reagieren, aber nicht auf eine schlechte Art."
+  },
+  {
+    "id": 53,
+    "name": "Abtrünniger des Clans",
+    "category": "uebernatuerlich",
+    "type": "merit",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Nach dem Baali-Ritus der Apostasie gehören Sie einer Brut an: Ersetzen Sie eine beliebige In-Clan-Disziplin durch Daimonion und erhalten Sie zusätzlich zur üblichen Clansschwäche auch die der Baali. Sie gehen weiterhin relativ leicht als Mitglied Ihres ehemaligen Clans durch, und jeder, dem Sie den Kuss geben, gehört Ihrem ursprünglichen Clan an. Bereits gelernte Stufen der getauschten Disziplin bleiben erhalten, weitere Stufen darin kosten den clan-fremden Preis."
+  },
+  {
+    "id": 54,
+    "name": "Dunkelsicht",
+    "category": "uebernatuerlich",
+    "type": "merit",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Sie sehen selbst bei vollständiger Abwesenheit von Licht vollkommen und erleiden keine Abzüge für Dunkelheit. Zusätzlich sehen Sie Geister, als wären sie materiell, solange Sie im Dunkeln sind; Licht heller als Kerzenschein schaltet diesen Vorzug aus."
+  },
+  {
+    "id": 55,
+    "name": "Medium",
+    "category": "uebernatuerlich",
+    "type": "merit",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Geister, Seelen und Schatten sprechen mit Ihnen. Nach einem Moment der Meditation können Sie die Geister, die Sie besuchen, um Hilfe bitten (meist Informationen); sie verlangen aber immer einen Gefallen, dessen Schweregrad der gestellten Aufgabe entsprechen sollte."
+  },
+  {
+    "id": 56,
+    "name": "Pythische Fähigkeit",
+    "category": "uebernatuerlich",
+    "type": "merit",
+    "minLevel": 3,
+    "maxLevel": 3,
+    "description": "Zeichen, Omen und Vorzeichen offenbaren sich Ihnen, und Sie erkennen ein Omen sofort als das, was es ist. Der Erzähler beschreibt die vagen Eindrücke, die Sie nach Belieben interpretieren; das Omen weiter zu studieren, um relevantere Informationen zu erhalten, erfordert Zeit zum Nachdenken und einen Wurf auf Wahrnehmung oder Intelligenz + Enigmas."
+  },
+  {
+    "id": 57,
+    "name": "Geisterhafter Mentor",
+    "category": "uebernatuerlich",
+    "type": "merit",
+    "minLevel": 3,
+    "maxLevel": 3,
+    "description": "Ein Geist – etwa die Seele eines verstorbenen Angehörigen, Lehrers oder Freundes, oder etwas Unheimlicheres – leitet und schützt Sie. Er bietet Führung und Unterstützung wie ein sterblicher oder kainitischer Mentor, nur weniger durch gesellschaftliche Konventionen und Körperlichkeit eingeschränkt. Möglicherweise muss er mit einem bestimmten Ritus oder einer Beschwörungsformel gerufen werden; mit Erlaubnis des Erzählers kann der Vorzug auch die Mentorenschaft einer anderen übernatürlichen Kreatur darstellen."
+  },
+  {
+    "id": 58,
+    "name": "Ungebunden",
+    "category": "uebernatuerlich",
+    "type": "merit",
+    "minLevel": 3,
+    "maxLevel": 3,
+    "description": "Ihr Blut lässt sich nicht zwingen: Sie können nicht durch den Blutschwur gebunden werden. Gegen andere Quellen geistiger Beeinflussung sind Sie dadurch nicht immun. Tremere dürfen diesen Vorzug nicht wählen."
+  },
+  {
+    "id": 59,
+    "name": "Wahre Liebe",
+    "category": "uebernatuerlich",
+    "type": "merit",
+    "minLevel": 4,
+    "maxLevel": 4,
+    "description": "Eine tiefe, bedingungslose Liebe wie aus Legenden und Balladen bindet Sie an eine andere Person und umgekehrt. Einmal pro Geschichte haben Sie bei einem beliebigen Wurf automatisch Erfolg – unabhängig davon, wie viele Erfolge nötig wären –, sofern er für die geliebte Person getan wird. Ist der oder die Geliebte ein Erzählercharakter, kann er oder sie dasselbe tun; ist es ein anderer Spielercharakter, muss dieser den Vorzug ebenfalls wählen, denn Wahre Liebe ist nicht einseitig."
+  },
+  {
+    "id": 60,
+    "name": "Neun Leben",
+    "category": "uebernatuerlich",
+    "type": "merit",
+    "minLevel": 6,
+    "maxLevel": 6,
+    "description": "Durch ein böses Geschick ist es extrem schwierig, Sie dauerhaft zu töten. Würde ein Wurf zu Ihrem Tod führen, wiederholen Sie ihn sofort; ist die Wiederholung erfolgreich, überleben Sie den tödlichen Zwischenfall, allerdings mit einem Leben weniger. Sie können derartige fast tödliche Würfe bis zu neun Mal wiederholen; sind die zweiten Chancen aufgebraucht, ereilt Sie der Endgültige Tod wie jeden anderen auch."
+  },
+  {
+    "id": 61,
+    "name": "Glück",
+    "category": "uebernatuerlich",
+    "type": "merit",
+    "minLevel": 1,
+    "maxLevel": 5,
+    "description": "Das Schicksal lächelt Ihnen zu; die Punktzahl spiegelt wider, wie sehr Sie vom Glück gesegnet sind. Für jeden investierten Punkt erhalten Sie 1 zusätzlichen Wurf am Tag: Sie können jeden Wurf wiederholen (außer Würfen, um dem Abkommen von Ihrem Weg zu widerstehen), müssen aber das zweite Ergebnis nehmen."
+  },
+  {
+    "id": 62,
+    "name": "Abgestoßen durch Knoblauch",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Getreu den Volksmärchen ist der Duft von Knoblauch ein Schutz gegen Sie. Sie können den Geruch nicht ertragen und müssen einen Willenskraftwurf ablegen, wenn Sie ihm ausgesetzt sind; bei Scheitern fliehen Sie aus der Szene. Die Schwierigkeit des Wurfs kann mit der Intensität des Geruchs steigen."
+  },
+  {
+    "id": 63,
+    "name": "Frostige Berührung",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Ein Nimbus der Kälte umgibt Sie: Bei der kleinsten Berührung welken Pflanzen, und stehendes Wasser gefriert, wenn Sie sich lange genug in seiner Nähe aufhalten. Das macht es sehr einfach, Sie zu finden, und erhöht Ihre Schwierigkeit, versteckt oder verborgen zu bleiben, um 1."
+  },
+  {
+    "id": 64,
+    "name": "Initiat des Weges",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Ihr Dasein auf dem Weg zur Erleuchtung hat erst begonnen: Sie begreifen die Lehren Ihres Weges, haben sie aber noch keiner Probe unterzogen. Die Schwierigkeit, Raserei und Rötschreck zu widerstehen, steigt um 1, und Ihnen fehlt die an Ihren Weg gebundene Aura. Dafür fällt es Ihnen leichter, den Weg zu wechseln, wenn Sie es wünschen."
+  },
+  {
+    "id": 65,
+    "name": "Kein Spiegelbild",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "description": "Wie die Vampire aus der Legende haben Sie kein Spiegelbild. Zufällige Beobachter müssen nur einen Wurf auf Wahrnehmung + Aufmerksamkeit gegen die vorgegebene Schwierigkeit schaffen, um diese Eigentümlichkeit zu bemerken, was im Umgang mit Sterblichen zu interessanten Komplikationen führen kann."
+  },
+  {
+    "id": 66,
+    "name": "Pech",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 5,
+    "description": "Sie ziehen Unglück magisch an; die Punktzahl bestimmt das Ausmaß (von kleinen Alltagswidrigkeiten bei 1 bis hin zu Katastrophen bei fast allem, was Sie anfangen, bei 5). So oft pro Tag, wie Sie Punkte in dieser Schwäche haben, kann der Erzähler Sie zwingen, einen erfolgreichen Wurf erneut zu würfeln und das zweite Ergebnis zu nehmen. Glück und Pech schließen sich nicht gegenseitig aus, dürfen aber nicht denselben Wurf modifizieren."
+  },
+  {
+    "id": 67,
+    "name": "Verflucht",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 5,
+    "description": "Sie sind Träger eines übernatürlichen Fluchs, dessen Wesen Sie mit dem Erzähler ausarbeiten; die Punktzahl bestimmt die Schwere – von 'jeder Verrat kommt heraus' (1) über 'Werkzeuge verformen sich und zerbrechen in Ihren Händen' (3) bis 'alle Ihre Vorhaben und großen Pläne sind zum Scheitern verdammt' (5). Sie können den Fluch nur brechen, indem Sie sich mit dem aussöhnen, der oder das ihn verhängt hat."
+  },
+  {
+    "id": 68,
+    "name": "Von Dämonen gejagt",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 1,
+    "maxLevel": 5,
+    "description": "Ein Dämon hat Gefallen an Ihnen gefunden: Er erscheint zu seltsamen und ungelegenen Zeiten, verlockt Sie mit Wohlstand und Macht, bittet mal um Gefälligkeiten und bietet sie mal an. Bei 1 Punkt ist er wenig mehr als ein Wichtel, der um geringe Gefallen bittet oder kleine Gegenstände stiehlt; bei 3 Punkten ist er Ihnen körperlich oder magisch ebenbürtig und bezieht auch Ihre engen Freunde ein; bei 5 Punkten ist er mächtig genug, Ihren Klüngel zu bedrohen, oder bereit, Freunde, Familie und Bekannte zu quälen."
+  },
+  {
+    "id": 69,
+    "name": "13. Generation",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Sie haben von einem Mitglied der 12. Generation den Kuss empfangen – Sie dürfte es eigentlich nicht geben, was die Mächtigen beunruhigt. Die Schwierigkeit aller Würfe, um Ihre Disziplinen zu aktivieren, ist um 1 erhöht; nach Ermessen des Erzählers drohen weitere Erschwernisse gegenüber ängstlichen oder argwöhnischen Personen. Die Schwächen Unfruchtbar oder Schwaches Blut bieten sich als Ergänzung an."
+  },
+  {
+    "id": 70,
+    "name": "Abstoßend für Tiere",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Anders als bei der normalen Störung durch Kainiten flüchten Tiere in Ihrer Nähe vor Entsetzen oder werden aggressiv und gewalttätig. Reiten ist nahezu unmöglich, da Sie die Kreaturen nicht mit einem normalen Tierkundewurf beruhigen können; nur die Disziplin Tierhaftigkeit hilft, oder Sie geben dem Tier von Ihrem Blut zu trinken, was es in einen Ghul verwandelt."
+  },
+  {
+    "id": 71,
+    "name": "Unfruchtbar",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Durch einen Fluch, eine Schwäche oder einen Fehler in Ihrem Vampirismus sind Sie unfähig, Nachkommen zu erschaffen. Möglicherweise sind Sie sich dessen nicht bewusst, bis es zu spät ist und ein Opfer blutend in Ihren Armen liegt."
+  },
+  {
+    "id": 72,
+    "name": "Unheimliche Präsenz",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Ein durchdringender Pesthauch der Beklemmung umgibt Sie; Sterbliche sind sich Ihres untoten Zustands unwillkürlich bewusst und fühlen sich in Ihrer Gegenwart angespannt und unwohl. Diese Aura der Angst erhöht die Schwierigkeit gesellschaftlicher Würfe mit Sterblichen – mit Ausnahme von Einschüchtern-Würfen – um 2."
+  },
+  {
+    "id": 73,
+    "name": "Dauerhaftes drittes Auge",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 4,
+    "description": "Nur für Salubri und Tremere: Anders als bei anderen Abkömmlingen des Blutes Saulots lässt sich Ihr drittes Auge nicht verbergen. Bei 2 Punkten wird es regeltechnisch wie ein normales drittes Auge behandelt, zieht aber seltsame Blicke und ungewollte Aufmerksamkeit auf sich; bei 4 Punkten ist es dauerhaft offen und kann nur mit einem erfolgreichen Willenskraftwurf für eine Szene geschlossen werden."
+  },
+  {
+    "id": 74,
+    "name": "Belebter Schatten",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 3,
+    "maxLevel": 3,
+    "description": "Ihr Schatten ist ein lebendes, heimtückisches Wesen mit eigenem Willen: Er schlägt nach Freund und Feind gleichermaßen, zerrt an Dingen und knurrt Passanten an. Abgesehen von diesem furchteinflößenden Problem verlieren Sie bei allen gesellschaftlichen Würfen mit Lasombra, die von Ihrem Problem wissen, 2 Würfel."
+  },
+  {
+    "id": 75,
+    "name": "In Schatten gehüllt",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 3,
+    "maxLevel": 3,
+    "description": "Dicke, schwere Dunkelheit umgibt Sie ständig und macht es unmöglich, als etwas anderes als übernatürlich durchzugehen. Zusätzlich erhöht sich die Schwierigkeit gesellschaftlicher Würfe mit anderen Vampiren (besonders den Lasombra) um 1."
+  },
+  {
+    "id": 76,
+    "name": "Spuk",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 3,
+    "maxLevel": 3,
+    "description": "Ein rachsüchtiger Geist sucht Sie heim – etwa der Geist eines Opfers oder eines verstorbenen Feindes. Meist macht er Ihnen das Leben schwer, indem er Ihre Freunde verängstigt, Möbel bewegt und Lärm macht, wenn Sie schlafen wollen; kann er Sie angreifen, ist er Ihnen körperlich und magisch ebenbürtig. Der Erzähler kann Charakteren mit der Disziplin Nekromantie verbieten, diese Schwäche zu nehmen."
+  },
+  {
+    "id": 77,
+    "name": "Griff der Verdammten",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 4,
+    "maxLevel": 4,
+    "description": "Sterbliche lassen Ihr Trinken nicht still über sich ergehen, sondern wehren sich und schreien die ganze Zeit. Regeltechnisch müssen Sie das Ziel packen, wenn Sie von ihm trinken wollen, und es ist schwierig, das Ringen mit einem laut schreienden Opfer vor anderen Sterblichen zu verbergen. Nach Ermessen des Erzählers kann dies für Anhänger gewisser Wege zusätzlich belastend sein."
+  },
+  {
+    "id": 78,
+    "name": "Kann kein fließendes Wasser überqueren",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 4,
+    "maxLevel": 4,
+    "description": "Ein tief verwurzelter Aberglaube hindert Sie daran, fließendes Wasser zu überqueren, das mehr als 60 cm tief ist; dazu müssen Sie einen Mutwurf schaffen. Scheitern Sie, bleiben Sie wie angewurzelt stehen, ein Patzer lässt Sie in Rötschreck verfallen. Gelingt die Überquerung, erleiden Sie 1 Gesundheitsstufe nicht absorbierbaren Schlagschadens; beim Schwimmen oder Waten ist der Schaden stattdessen schwer heilbar."
+  },
+  {
+    "id": 79,
+    "name": "Dunkles Schicksal",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 5,
+    "maxLevel": 5,
+    "description": "Sie sind zu einem furchtbaren Ende oder, schlimmer noch, zu ewigem Leid verdammt. Das sagenhaft schreckliche Verhängnis arbeiten Sie mit dem Erzähler aus (oder lassen sich unangenehm überraschen). Sie können Ihrem Schicksal nicht entkommen; die einzige Möglichkeit, die Schwäche loszuwerden, ist, das Verhängnis eintreten zu lassen."
+  },
+  {
+    "id": 80,
+    "name": "Lichtempfindlich",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 5,
+    "maxLevel": 5,
+    "description": "Sie sind besonders anfällig für Licht: Sie nehmen doppelten Schaden durch Sonnenlicht, und selbst Mondlicht verursacht Ihnen tödlichen Schaden. Jünger des Seth und Lasombra können diese Schwäche nehmen, um die spezielle Anfälligkeit ihres Clans gegen Sonnenlicht weiter zu verstärken und den bereits erhöhten Schaden stattdessen zu verdoppeln."
+  },
+  {
+    "id": 81,
+    "name": "Schwaches Blut",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 5,
+    "maxLevel": 5,
+    "description": "Ihre übernatürlichen Fähigkeiten sind verringert: Keine Disziplin, von der Sie Kenntnis haben, kann höher als 4 sein, und es kostet Sie doppelt so viele Blutpunkte, Vampirkräfte zu kontrollieren. Sie müssen einem Menschen sechs Schlucke Ihres schwächlichen Blutes zu trinken geben, um ihn zu Ihrem Sklaven zu machen, und Sie können weder Ghule erschaffen noch Kinder zeugen. Der Effekt schließt die Nachteile der Schwäche Unfruchtbar ein; beide schließen sich daher gegenseitig aus."
+  },
+  {
+    "id": 82,
+    "name": "Sendbote der Hölle",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 5,
+    "maxLevel": 5,
+    "description": "Wo Sie vorübergehen, erheben sich Schatten und Flammen lodern auf und erlöschen. In der Nähe normalen Feuers machen Sie einen automatischen Wurf auf Schattenspiele gegen die Absorptionsschwierigkeit jeder Flamme; ein Erfolg löscht das Feuer auf der Stelle und taucht das Gebiet in Dunkelheit. Diese Schwäche beinhaltet die Auswirkungen von Frostige Berührung und Unheimliche Präsenz und schließt sich mit ihnen gegenseitig aus; im Gegenzug verringert sich die Schwierigkeit aller Einschüchtern-Würfe um 2 (bis zu einem Minimum von 4). Sie benötigen mindestens 1 Punkt Schattenspiele, um diese Schwäche zu erwerben."
+  },
+  {
+    "id": 83,
+    "name": "Schwache Aura",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Die Aura Ihres Weges haftet nur schwach an Ihnen und manifestiert sich nur bei Handlungen des Glaubens oder wenn Ihr Eifer am stärksten ist. Dies gilt als Vorzug, wenn Ihr Wegwert höchstens 4 beträgt, und als Schwäche ab Wegwert 5. Die Verwendung Ihrer Aura wird nach Wegwert modifiziert: 10-9 Schwierigkeit +1, 8-3 kein Modifikator, 2-1 Schwierigkeit -1."
+  },
+  {
+    "id": 84,
+    "name": "Starke Aura",
+    "category": "uebernatuerlich",
+    "type": "flaw",
+    "minLevel": 2,
+    "maxLevel": 2,
+    "description": "Ihre Aura ist stark, verschafft anderen einen klaren Eindruck von Ihnen und macht in jedem Raum auf Sie aufmerksam – ein zweischneidiges Schwert, da Sie erst in diese Kraft hineinwachsen müssen. Dies gilt als Vorzug bei Wegwert 5 oder höher und als Schwäche bei 4 oder weniger. Die Verwendung Ihrer Aura wird nach Wegwert modifiziert: 10 Schwierigkeit -3, 9-8 -2, 7-6 -1, 5 kein Modifikator, 4-3 +1, 2 +2, 1 +3."
+  }
+]

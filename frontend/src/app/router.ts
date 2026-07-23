@@ -210,6 +210,36 @@ const router = createRouter({
           component: () => import('@/views/editor/m20/ChooseFinishingTouchesView.vue')
         },
         {
+          path: 'vdz-clan',
+          name: 'editor-vdz-clan',
+          component: () => import('@/views/editor/vdz/ChooseClanVdzView.vue')
+        },
+        {
+          path: 'vdz-road',
+          name: 'editor-vdz-road',
+          component: () => import('@/views/editor/vdz/ChooseRoadVdzView.vue')
+        },
+        {
+          path: 'vdz-attributes',
+          name: 'editor-vdz-attributes',
+          component: () => import('@/views/editor/vdz/ChooseAttributesVdzView.vue')
+        },
+        {
+          path: 'vdz-abilities',
+          name: 'editor-vdz-abilities',
+          component: () => import('@/views/editor/vdz/ChooseAbilitiesVdzView.vue')
+        },
+        {
+          path: 'vdz-advantages',
+          name: 'editor-vdz-advantages',
+          component: () => import('@/views/editor/vdz/ChooseAdvantagesVdzView.vue')
+        },
+        {
+          path: 'vdz-finishing',
+          name: 'editor-vdz-finishing',
+          component: () => import('@/views/editor/vdz/ChooseFinishingVdzView.vue')
+        },
+        {
           path: 'creed',
           name: 'editor-creed',
           component: () => import('@/views/editor/h5/ChooseCreedView.vue')
@@ -291,6 +321,21 @@ const router = createRouter({
           path: 'edges',
           name: 'viewer-edges',
           component: () => import('@/views/viewer/EdgesView.vue')
+        },
+        {
+          path: 'vdz-road',
+          name: 'viewer-vdz-road',
+          component: () => import('@/views/viewer/VdzRoadView.vue')
+        },
+        {
+          path: 'vdz-disciplines',
+          name: 'viewer-vdz-disciplines',
+          component: () => import('@/views/viewer/VdzDisciplinesView.vue')
+        },
+        {
+          path: 'vdz-traits',
+          name: 'viewer-vdz-traits',
+          component: () => import('@/views/viewer/VdzTraitsView.vue')
         },
         {
           path: 'skilltrees',

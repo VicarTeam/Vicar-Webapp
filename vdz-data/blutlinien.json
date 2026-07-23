@@ -1,0 +1,167 @@
+[
+  {
+    "id": 1,
+    "name": "Ahrimane",
+    "nickname": "Walküren, Schwestern (untereinander)",
+    "description": "Die Ahrimanen führen ihre Blutlinie auf Ádísa zurück, eine Walküre und Tochter Freyjas, die sich nach ihrer Rache am persischen König Ahriman dessen Namen erkämpfte und seither unrecht behandelte Frauen um sich sammelt. Die Blutlinie besteht ausschließlich aus Frauen, die überwiegend an den Küsten Skandinaviens, Schottlands, Irlands sowie Englands und der Normandie umherstreifen. Ahrimanen führen ein nomadisches Leben, fühlen sich in Städten unwohl und beugen weder vor einem König noch vor einem Gott je das Knie, was ihnen unter den Prinzen Europas keine Freunde macht. Sie sind in allem, was sie tun, leidenschaftlich, und geben den Kuss bevorzugt an starke, unabhängige Kriegerinnen weiter. Trotz ihres nomadischen Lebens sind sie erstaunlich gut organisiert und nutzen eine geheime Runenschrift, um einander Nachrichten zu hinterlassen.",
+    "disciplines": ["Spiritus", "Stärke", "Tierhaftigkeit"],
+    "weakness": "Das Blut einer Ahrimane wehrt sich gegen jede Form der Bindung. Sie kann weder ein Blutsband knüpfen noch Ghule erschaffen."
+  },
+  {
+    "id": 2,
+    "name": "Anda",
+    "nickname": "Tartaren",
+    "description": "Die Anda sind die Vampire der mongolischen Steppe, deren Erster Dobrul der Tapfere war, von dem einige behaupten, er sei ein Kind Ennoias, der Vorsintflutlichen des Clans Gangrel, gewesen. Gangrel und Anda erkennen einander als entfernte Vettern an, doch die wahre Loyalität der Anda liegt nicht bei den Kainiten, sondern bei ihren sterblichen Brüdern und Schwestern. Sie sehen sich als Auserwählte der Erdmutter Etügen, die das mongolische Volk des Nachts beschützen, während die Tumen bei Tage voranreiten. Die Mongolen akzeptieren und respektieren die Anda, fühlen sich in ihrer Nähe aber unbehaglich. Wie die mongolische Gesellschaft ist auch das Unleben der Anda auf einem Verdienstsystem aufgebaut, in dem sich Führungspersonen den Titel des Noyan verdienen müssen.",
+    "disciplines": ["Gestaltwandel", "Seelenstärke", "Tierhaftigkeit"],
+    "weakness": "Die Anda leiden an einer Art Einsamkeit, die dadurch entsteht, dass sie vom Großteil ihres Volkes abgeschnitten sind und das wärmende Antlitz Tengris nicht mehr erleben dürfen. Eine Stunde nach Sonnenuntergang und in der letzten Stunde vor Sonnenaufgang sind ihre Würfelvorräte durch ihre Wegpunkte beschränkt, als wären sie tagsüber aktiv.",
+    "characterCreationHint": "Anda haben sehr ähnliche Verhaltensweisen: Ihr individuelles Verhalten ist schnörkellos direkt. Dementsprechend legen sie vor allem Wert auf körperliche Attribute und Fähigkeiten wie Bogenschießen und Reiten."
+  },
+  {
+    "id": 3,
+    "name": "Baali",
+    "nickname": "Teufel",
+    "description": "Legenden besagen, die Baali seien die erste Blutlinie gewesen, die sich von den Clans losgelöst habe – eine verdorbene Sippschaft von Infernalisten, die die kainitische Gesellschaft seit der Zeit der Zweiten Stadt plagt. Ihre Wurzeln gehen auf einen namenlosen Stamm zurück, der Gräueltaten als Offenbarung betrachtete, bis eine schreckliche Gestalt ihn niedermetzelte und drei Überlebende aus der Opfergrube krochen. Die Baali bestehen aus vielen widerstreitenden Fraktionen: Einige wollen die Dämonen besänftigen und schlummern lassen, andere wollen die Gefallenen wecken, um das Ende der Welt einzuleiten. Sie verstecken sich innerhalb der kainitischen Gesellschaft und unterwandern langsam Städte an der Levante und im Königreich Jerusalem. Nahezu alle anderen Vampire verabscheuen die Teufel, und Prinzen rufen schon beim bloßen Gerücht eines Baali-Zirkels die Blutjagd aus.",
+    "disciplines": ["Daimonion", "Präsenz", "Verdunkelung"],
+    "weakness": "Die Qual, die dem kainitischen Blut innewohnt, schreckt vor religiösen Symbolen zurück, und die Baali sind dagegen besonders anfällig. Wenn man einem der Teufel ein religiöses Symbol entgegenhält, erhält man 1 Punkt Wahren Glauben – es sei denn, das Symbol war ein halbes Jahrhundert nicht im Gebrauch und lag unbenutzt in einer Ecke.",
+    "characterCreationHint": "Gesellschaftliche Attribute sind primär, geistige hingegen sekundär – die Baali sind in erster Linie sozial orientierte Wesen, denen Heimlichkeit eingeschärft wird. Auf Kenntnisse wie Akademisches Wissen und Okkultismus legen sie viel Wert, ein besonders wichtiges Talent ist Ausflüchte. Die meisten Baali folgen dem Pfad der Schreie des Weges der Sünde, einige auch dem Weg der Könige."
+  },
+  {
+    "id": 4,
+    "name": "Bonsam",
+    "nickname": "Unsichtbare, Schleicher",
+    "description": "Der erste Bonsam war ein junger Jäger aus dem Land der Akan-Völker, der in einer Höhle eine uralte Dunkelheit fand, die sich in seinen Körper ergoss und ihn als Untoten wieder auferstehen ließ. Die Blutlinie hat sich im Herzen des afrikanischen Kontinents im Dschungel entlang des Äquators niedergelassen und dringt in den letzten Jahren zunehmend in die Küstenregionen und nach Norden vor. Bonsam sind Einzelgänger mit stark ausgeprägtem Revierverhalten und der Inbegriff des stillen Jägers: Wer ihr Gebiet nicht sofort verlässt, ist schneller tot, als er schauen kann. Sie geben den Kuss bevorzugt an geschickte, erfahrene Jäger weiter und lassen ihre frisch gezeugten Kinder direkt allein, da die ersten Nächte als Charakterprüfung gelten. Untereinander verständigen sie sich über eine gemeinsame Sprache aus fledermausartigen Schreien und Pfiffen und rotten sich nur zeitweilig zu beängstigend effektiven Rudeln zusammen.",
+    "disciplines": ["Abombwe", "Stärke", "Verdunkelung"],
+    "weakness": "Die Dunkelheit, die dem Bonsam innewohnt und einem Zustand vor Beginn der Zeit entspringt, versetzt Sterbliche in einen namenlosen, urtümlichen Schrecken. Sterbliche, die den Bonsam in seiner wahren Gestalt sehen und deren Mutwurf (Schwierigkeit 7) misslingt, fliehen entweder panisch oder greifen zur Waffe, um das Monster zu töten. Diese Angst kann man jedoch überwinden: Ein Sterblicher, dessen Mutwurf gelungen ist, muss nicht noch einmal würfeln, wenn er denselben Bonsam noch einmal trifft."
+  },
+  {
+    "id": 5,
+    "name": "Danava",
+    "nickname": "Kinder Danus",
+    "description": "Seit Urzeiten ist Indien die Heimat der Danava, die als Priesterkönige über die Nächte des Landes herrschen. Ihr genauer Ursprung ist trüb: Einige Ahnen behaupten, ihre Ahnenreihe reiche bis zur urtümlichen Göttin Danu zurück, andere halten sich für fleischgewordene Dämonen (Asuras), wieder andere für Devas – diese Fraktionen stehen sich unversöhnlich gegenüber. Sie sind die Hüter des Sadhana, einer spirituellen Disziplin, die mit jedem Rang größere, zermürbende Entbehrungen erfordert und über Yoga-Positionen, Mudras und Ritualhandlungen unterschiedliche Aspekte ihrer Thaumaturgie nutzbar macht, die wesentlich älter ist als die Hexerei der Tremere. Die Danava verehren das hinduistische Götterpantheon mit absoluter Hingebung und halten sich streng an das Kastensystem ihres Ursprungslandes, dessen Strukturen für sie göttlich vorgegeben sind.",
+    "disciplines": ["Beherrschung", "Seelenstärke", "Thaumaturgie"],
+    "weakness": "Ähnlich wie ihre Vettern im Westen sind die Danava wählerisch, was ihre Beute angeht. Tiere wie Kühe oder Schweine sind extrem tabu, und Danava können sich grundsätzlich nicht von Tieren nähren. Die Mitglieder der Blutlinie bieten ihre Beute häufig zuerst rituell ihren Göttern an; ohne eine mindestens 30 Sekunden andauernde Ritualhandlung halbiert sich der Nährwert des Blutes.",
+    "characterCreationHint": "Danava zeichnen sich durch herrschaftliches Auftreten aus und verlassen sich auf ihr gesellschaftliches Geschick und das umfangreiche Wissen der Veden. Verbündete, Gefolgsleute und Ressourcen sind passende Hintergründe; der Weg der Könige und der des Himmels sind valide Optionen."
+  },
+  {
+    "id": 6,
+    "name": "Gargylen",
+    "nickname": "Groteske",
+    "description": "1211 schufen die Tremere die ersten Gargylen als Kanonenfutter im Krieg gegen die Tzimisce – magisch erschaffen aus den Körpern gefangener Tzimisce, Gangrel und Nosferatu, ohne eigenes Bewusstsein und Erinnerung an ihr altes Leben. Auf dem Schlachtfeld waren sie die perfekten Stoßtruppen und sicherten den Platz der Usurpatoren. Anno 1242 verlieren die Tremere jedoch langsam die Kontrolle über ihre Schöpfung: Immer mehr Gargylen werfen das Joch der Sklaverei ab, rotten sich zu Grotesken zusammen und haben mindestens ein Gildenhaus zerstört. Mittlerweile können sich einige fortpflanzen, wodurch sie sich zu einer eigenen Blutlinie entwickelt haben, doch nur ein Drittel aller Gargylen kann den Kainsfluch weitergeben. Andere Kainiten dulden sie bestenfalls mit Geringschätzung und Spott, und den meisten Gargylen bleibt nur ein kurzes, von Gewalt geprägtes Dasein.",
+    "disciplines": ["Fliegen", "Seelenstärke", "Stärke"],
+    "weakness": "Gargylen sind Rudeltiere. Eine einzelne Gargyle kann problemlos allein agieren, aber sollte sie jemals ganz allein sein – ohne Meister, Gefährten, Kind oder Freund –, halbieren sich ihre Würfelvorräte, bis sie dieses Problem löst. Zusätzlich sind Gargylen besonders anfällig gegen Beherrschungsversuche: Wenn sie sich gegen solche Kräfte wehren müssen, zählt ihre Willenskraft immer 2 Punkte weniger als ihr eigentlicher Wert.",
+    "characterCreationHint": "Die meisten Gargylen sind trieb- und instinktgesteuert; körperliche Attribute und Talente sind zentrale Bestandteile ihres Wesens. Gargylendiener benötigen den Hintergrund Mentor (meist ein Tremere), freie Gargylen haben unter Umständen Zuflucht und Herde. Der Weg des Dienens und der des Tieres sind weit verbreitet."
+  },
+  {
+    "id": 7,
+    "name": "Giovanni",
+    "nickname": "Junge, Giovanotti (Jugendliche)",
+    "description": "Es ist keine zwei Jahrhunderte her, dass Papa Augustus einen Pakt mit dem Teufel schloss: Während der furchtbaren Hungersnot um die Jahrtausendwende erhielt er Einblick in das Jenseits und die Fähigkeit, mit ihm zu interagieren, was die Aufmerksamkeit kappadozianischer Todesgelehrter erregte – Kappadozius selbst erkor ihn für das ewige Leben. Augustus scharte seine Kindheitsfreunde um sich und teilte bald sein Blut mit ihnen; sie nannten sich gegenseitig Brüder. Die Blutlinie erwuchs aus einem verschworenen Familienclan, der sich dem Handelswesen zuwandte und mit jeder Nacht reicher und mächtiger wurde. Die meisten Jungen wohnen bei ihren sterblichen Familien, die zugleich ihre beste Zuflucht sind, und nutzen die Gerüchte über ihre Herkunft geschickt zu ihrem Vorteil. Unter Augustus ist die Familie als pyramidenförmige Belohnungsstruktur organisiert, in der nur aufsteigt, wer es verdient.",
+    "disciplines": ["Auspex", "Nekromantie", "Seelenstärke"],
+    "weakness": "Wie die Kappadozianer haben die Giovanni die aschgraue Hautfärbung, die Sterbliche schnell auf ihre Andersartigkeit schließen lässt. Einige aus der Blutlinie, die noch näher an Augustus sind, können zwar den Anschein erwecken, es flösse noch Blut durch ihre Adern, aber ihr Kuss ist außergewöhnlich schmerzhaft. Diese Schwäche scheint keinem erkennbaren Muster zu folgen.",
+    "characterCreationHint": "Die Jungen legen Wert auf außergewöhnliche Auffassungsgabe und einen starken Willen: Geistige Attribute und Fertigkeiten sind üblicherweise primär, auch Kenntnisse gelten als hilfreich. Die meisten Giovanni gehen den Weg der Menschlichkeit; typische Hintergründe sind Gefolgsleute, Ressourcen, Herde und Verbündete. Ihre Generation ist meist sehr niedrig und geht nie über die elfte hinaus."
+  },
+  {
+    "id": 8,
+    "name": "Impundulu",
+    "nickname": "Hexenbrut, Vertraute (abwertend)",
+    "description": "Impundulu war zu Lebzeiten ein mächtiger Nekromant, der von einem Geistwesen erschlagen wurde und als Untoter wiederkehrte. Seine Frau, die Hexe Bomkazi, blieb bei ihm und zeugte mit Hilfe eines großen Rituals ihre Tochter Esona, in der Leben und Tod verschmolzen: Seitdem sind die Bomkazi-Hexen immun gegen das Blutsband, und Impundulus Nachkommen können nur noch von ihnen trinken. Die Blutlinie beansprucht gemeinsam mit den Bomkazi das südostafrikanische Kap als Domäne. Impundulu leben stets mit einer oder mehreren Bomkazi zusammen, deren Verhältnis immer auf Freiwilligkeit basiert, und geben den Kuss meist an Todkranke oder Nekromantiekundige weiter. Da die Linie der Bomkazi zu verkümmern droht, suchen die Impundulu inzwischen nach kainitischen Hexern, mit denen sie Wissen austauschen können.",
+    "disciplines": ["Nekromantie (hauptsächlich Pfad des Grabes und Pfad des Nachrufs)", "Präsenz", "Seelenstärke"],
+    "weakness": "Ein Impundulu kann sich nur von Bomkazi nähren. Da die Hexen mächtig sind und ihre Beziehung mit den Impundulu rein freiwillig ist, sollte er nie vergessen, Bomkazi als Gleichgestellte zu behandeln und nicht wie Gefolge, auch wenn das möglicherweise viele Komplikationen mit sich bringt."
+  },
+  {
+    "id": 9,
+    "name": "Kiasyd",
+    "nickname": "Nornen, zerbrochene Schmetterlinge (von den Malkavianern)",
+    "description": "Die Kiasyd sind im Grunde keine Blutlinie, sondern eine Ansammlung individuell verfluchter Vampire: Wenn ein Kainit den Kuss an einen Menschen weitergibt, der mit Feenwesen zu tun hatte, stirbt der Empfänger üblicherweise – in den seltenen Fällen, in denen er überlebt, löscht die Vitæ alle Erinnerungen an die Feenwesen aus und verwandelt den Neugeborenen in einen Kiasyd. Sie sind einsame Außenseiter, die instinktiv spüren, dass sie nicht zu den anderen Kainiten gehören, und deren Erzeuger meist an der Spitze ihrer Feinde stehen. Ihr Blut ist jedoch nicht steril, und ihre Kinder werden ebenfalls Kiasyd. Alle tragen ein physisches Merkmal des Feeneinflusses, von unterschiedlichen Augenfarben bis zu blauer Haut. Kiasyd haben eine Veranlagung für das Sammeln und Verschleiern von Informationen, ertragen aber selbst die Gegenwart anderer Kiasyd meist nicht lange.",
+    "disciplines": ["Mytherceria", "zwei Disziplinen des Ursprungsclans"],
+    "weakness": "Aufgrund ihrer feenhaften Merkmale sind alle Würfe, die fremdartige Natur der Kiasyd zu erkennen, um 1 erleichtert (die Schwierigkeit nimmt noch weiter ab, wenn die äußeren Merkmale besonders deutlich sind). Ihr Feenerbe sorgt außerdem dafür, dass Kiasyd besonders verwundbar für Eisen sind: Eisenwaffen verursachen nicht nur schwer heilbaren Schaden, sondern lösen direkt einen Wurf gegen Raserei oder Rötschreck aus, je nach Wesen des Kiasyd."
+  },
+  {
+    "id": 10,
+    "name": "Kinder des Osiris",
+    "nickname": "Büßer, Pharaonen (ironisch)",
+    "description": "Die Kinder des Osiris berufen sich auf den ägyptischen Pharao Osiris, der von seinem neiderfüllten, durch einen Pakt mit Apep zum untoten Dämon gewordenen Bruder Set erschlagen und von seiner Gattin Isis wieder zusammengefügt wurde. Seitdem heilt Osiris im Lichte Ras die Seelen ähnlich verfluchter Kreaturen und gilt als heller Hoffnungsschimmer der Erlösung in der Nacht. Die Büßer stammen aus den unterschiedlichsten Clans und Blutlinien, rasieren sich nach ihrer Initiation den Kopf und stehen im Ruf, freundlich und weise zu sein – als Sucher nach Golconda und gute Mentoren. Sie leben in gut versteckten Gemeinschaftstempeln, denen jeweils ein unsterblicher König als symbolische Verkörperung des Osiris vorsteht. Die Sekte rekrutiert nicht aktiv, doch verzweifelte Kainiten jeden Clans suchen die Kinder von sich aus auf.",
+    "disciplines": ["Bardo", "zwei Disziplinen des Ursprungsclans"],
+    "weakness": "Die Schwächen des Ursprungsclans. Zusätzlich macht der Initiationsritus der Sekte das Blut des Bewerbers steril, und er kann den Kuss nicht länger weitergeben."
+  },
+  {
+    "id": 11,
+    "name": "Lamien",
+    "nickname": "Gorgonen, Lilinen",
+    "description": "Vor Äonen schenkte Lazarus, ein Kind des Kappadozius, in Ägypten der mächtigen Hexe Lamia den Kuss, die behauptete, eine direkte Nachfahrin der Dunklen Mutter Lilith zu sein. Die Lamien sind berüchtigt für ihre Kampfkunst und geistige Disziplin und werden selbst von Lazarus gefürchtet. Sie streben nicht nach Macht unter den Sterblichen, sondern nach Gelehrsamkeit und okkultem Wissen, das sie durch Rituale, praktische Erfahrung und Meditation gewinnen. Auch Männer können den Kuss empfangen, müssen jedoch den weiblichen Aspekt des Göttlichen anerkennen und Frauen als mindestens gleichwertig ansehen. Die Blutlinie ist in kleine, geheime Kulte über Europa, Nordafrika und das Heilige Land verstreut, meist dort, wo die Weiblichkeit des Göttlichen verehrt wird. Unter kainitischen Prinzen ist es gerade Mode, eine Lamia als Vollstreckerin am Hof zu haben.",
+    "disciplines": ["Nekromantie", "Seelenstärke", "Stärke"],
+    "weakness": "Der Biss einer Lamia überträgt eine Seuche, „Liliths Saat“, die einen lebenden Körper dahinsiechen lässt, bis das sterbliche Opfer tot ist. Die Seuche verursacht zwei Wochen lang 1 Punkt tödlichen Schaden pro Nacht (der einen nächtlichen Wurf auf Widerstandsfähigkeit mit Schwierigkeit 7 erfordert). Ein Kainit, der Lamienblut trinkt, trägt die Krankheit ebenfalls in sich, bis jeder Tropfen Lamienblut aus seinem Körper getilgt ist.",
+    "characterCreationHint": "Fast alle Lamien sind kampferprobt, obwohl viele ihre Kampfausbildung erst nach Erhalt des Kusses bekommen. Überleben, Kampf- und Widerstandsfähigkeit sind wichtige Aspekte, ebenso Kenntnisse, insbesondere Okkultismus. Lamien besitzen selten Hintergründe, die an kainitischen Höfen Status mit sich bringen."
+  },
+  {
+    "id": 12,
+    "name": "Lhiannan",
+    "nickname": "Waldhexen, Tiermenschen",
+    "description": "Alte Gangrel erzählen von einer Gruppe von Verrätern, die dem Clan vor ewigen Zeiten den Rücken kehrte und gen Westen floh – die Lhiannan selbst behaupten jedoch, von einer ganz anderen Urmutter abzustammen, einem uralten Wesen, das sie „die Alte“ nennen. Man trifft sie in den entlegensten Winkeln ländlicher Regionen, wo sie als wilde Mystiker mit Fellumhängen, Tierschädelmasken und keltischen Halsreifen ein abgeschiedenes Leben führen und ihr Territorium aggressiv verteidigen. Wer sie sieht, erkennt sofort ihre nicht-menschliche, archaische Aura. Sie geben den Kuss nur selten und nur an Kinder mit hervorragendem Gedächtnis weiter, denn die Lhiannan verstehen sich als das lebende Gedächtnis ihres Heimatlandes. Von Jahr zu Jahr sinkt ihre Zahl, und die Blutlinie ist durch den Versuch, ihr bevorstehendes Aussterben abzuwenden, zunehmend in den Krieg der Prinzen verwickelt.",
+    "disciplines": ["Ogham", "Präsenz", "Tierhaftigkeit"],
+    "weakness": "Alle Lhiannan spüren vom Augenblick ihres Kusses an, dass ein Splitter des Geistes des Erzeugers in ihnen ist. Wenn eine Lhiannan den Kuss weitergibt, wird sie dabei eine Generation jünger; das frisch gezeugte Kind trägt dasselbe Blut, womit die Erzeugerin eine Generationsverwandtschaft mit ihrem Kind teilt. Lhiannan ziehen ihre Kraft zudem aus der Natur: Pro Woche, die eine Lhiannan außerhalb der Wildnis verbringt, halbiert sich ihr Würfelvorrat. Die Abzüge sind kumulativ, senken den Würfelvorrat jedoch nie unter die unmodifizierte Widerstandsfähigkeit des Charakters. Die Lhiannan muss einen vollen Tag in der Wildnis schlafen, um alle Abzüge wieder loszuwerden.",
+    "characterCreationHint": "Lhiannan haben meist die Fähigkeiten, die sie für das Leben in der Wildnis brauchen: außergewöhnliche Geistesschärfe und Widerstandsfähigkeit, Tierkunde, Einschüchtern, Überleben, Heimlichkeit und Handgemenge. Aufgrund ihrer Schwäche findet man bei ihnen nur selten höhere Werte des Hintergrunds Generation; oft haben sie Herden von Kultisten und ihre Erzeuger als Mentoren."
+  },
+  {
+    "id": 13,
+    "name": "Nagaraja",
+    "nickname": "Fleischfresser",
+    "description": "Vor 2000 Jahren lernte eine Splittergruppe Zauberkundiger aus dem Himalaya, die Idran, mit Hilfe eines ägyptischen Nekromanten Körper und Geist mit den Kräften der Unterwelt zu verschmelzen. In den dunklen Reichen tief unter der Welt entdeckten sie die von Totenstürmen umtoste Stadt Enoch, das Mandala der Apokalypse. Im Wunsch nach einer Blutlinie, die ihnen dienen und ihre heilige Stadt bewachen würde, beschworen sie den Untod selbst aus dem Blut ihrer Feinde. Als eine der ältesten Blutlinien sind die Fleischfresser die unangefochtenen Herren der Nekromantie in allen Ländern östlich des Indus. Bei Verhandlungen geben sie sich diplomatisch, doch in ihrem Denken sind sie fanatische Eiferer, die ihre Neugeborenen auf der neuen Seidenstraße gen Westen schicken, um Verbündete, Ressourcen und nodistische Geheimnisse zu finden. Ihr Geheimkult unterteilt sich in Shravaka (Zuhörer) und Acarya (Vorbilder).",
+    "disciplines": ["Auspex", "Beherrschung", "Nekromantie"],
+    "weakness": "Sie sind die Preta der asiatischen Mythologie und müssen frisches, rohes Fleisch essen, um ihre Stärke zu erhalten. Dies macht sie zu Parias und verwehrt ihnen jegliche Nahrung, für die sie nicht morden müssen. Das Fleisch muss von lebenden Menschen oder frischen Kadavern kommen. Sie haben die Schwächen Zackiger Biss und Fleischfresser, ohne dass sie dafür Zusatzpunkte bekommen. Die Zähne der Nagaraja sind scharf, und sie können sie nicht einziehen; sie verursachen aber +2 Würfel Schaden im Kampf.",
+    "characterCreationHint": "Nagaraja wählen primär geistige Attribute und legen Wert auf hohe Willenskraft; körperliche Attribute sind immer sekundär, denn die Nagaraja sind ebenso Krieger wie Magier. Medizin, Okkultismus und Nahkampf sind verbreitet. Ihre Schwäche sorgt dafür, dass sie nur selten den Weg der Menschlichkeit gehen."
+  },
+  {
+    "id": 14,
+    "name": "Niktuku",
+    "nickname": "Hungernde",
+    "description": "Für die meisten Nicht-Nosferatu sind die Niktuku nur eine paranoide Wahnvorstellung des unansehnlichen Clans, doch wer das Flüstern der Nosferatu gehört hat, hält es für denkbar, dass sie kein Tochterclan, sondern ein Ableger sind, der nie hätte sein dürfen. Sie sind die Hexen der Baba Yaga: Sie jagen, vernichten und fressen andere Vampire und sind am zielstrebigsten und grausamsten, wenn sie einen Prior jagen. Aufgrund ihrer Ernährungsgewohnheiten sind die meisten Diableristen, die sich diesem Zustand ganz hingeben, und alle gehören einer relativ niedrigen Generation an. Für den Kuss entführen sie die hübschesten Jugendlichen aus den Dörfern rund um ihre abgelegenen Zufluchten, von denen aus sie stets den Mond sehen können – alles Unterirdische hassen sie. Eine Erbschuld der Nosferatu treibt sie an, auch wenn die Blutlinie das Verbrechen selbst fast vollkommen vergessen hat.",
+    "disciplines": ["Auspex", "Geschwindigkeit", "Stärke"],
+    "weakness": "Die Hungernden haben das Problem, dass sie kaum Nahrung aus dem Blut der Sethskinder ziehen. Pro drei Blutpunkte, die sie trinken, erhalten sie nur einen für ihren Blutvorrat; nur für Kainitenvitæ erhalten sie die regulären Blutpunkte. Zusätzlich ist das zunehmende Alter problematisch: Pro Jahrhundert, das ab dem Moment des Kusses vergeht, verlieren sie 1 Punkt Erscheinungsbild. Dieser Punkt verschwindet jedoch nicht, sondern wertet ein körperliches Attribut auf – ihre Körper werden mit dem Alter langsam verkrümmt, grotesk und tödlich.",
+    "characterCreationHint": "Gesunde, fähige Kandidaten sind wichtig, aber Erzeuger legen vor allem anderen Wert auf Schönheit, mit besonderem Augenmerk auf Jugend und einen hohen Wert auf Erscheinungsbild. Das rigorose Training vor und nach dem Kuss bedeutet, dass Talente und Fertigkeiten schnell alle Kenntnisse verdrängen, die sie vor dem Kuss hatten."
+  },
+  {
+    "id": 15,
+    "name": "Ramanga",
+    "nickname": "Puppenspieler, Egel (abwertend)",
+    "description": "Ramanga war das älteste Kind eines Königs der Vazimba auf einer Insel vor der Küste Südostafrikas, doch ihr jüngerer Bruder Rafazi war der Thronerbe. Um über ihn erhoben zu werden, tauschte sie bei einem dunklen Geist die Sonne in ihrem Herzen gegen ein Vermächtnis aus Schatten und Illusionen ein und lernte, dass echte Macht nicht darin liegt, Befehle zu geben, sondern sie auszulösen. Eine Ramanga gibt nach außen hin immer die gehorsame Dienerin, die mit freundlichen Ratschlägen zur Seite steht, während sie im Hintergrund Könige und Königinnen wie eine Puppenspielerin kontrolliert. Sie tritt diplomatisch auf, ist oft die erste Laibon, die sich auf Treffen mit europäischen Kainiten einlässt, und investiert viel Zeit in die Erschaffung des vollkommenen Kindes. Durch regelmäßige, rituell befriedete Treffen der gesamten Blutlinie sind die Ramanga im Süden und Osten Afrikas nahezu unbezwingbar.",
+    "disciplines": ["Aizina (Schattenspiele)", "Präsenz", "Verdunkelung"],
+    "weakness": "Wenn eine Ramanga Präsenz und Aizina nutzt, um andere zu beeinflussen, steigt die Schwierigkeit um 1. Diese Erschwernis gilt nicht, wenn sie Material vom Körper des Opfers besitzt."
+  },
+  {
+    "id": 16,
+    "name": "Salubri (Heilerkaste)",
+    "nickname": "Einhörner, Hirten, Seelenfresser (abfällig)",
+    "description": "Seit den Zeiten Enochs wachen die Heiler über Kains Volk und reichen denen die Hand, die ins Wanken geraten. Unter den drei Kasten der Salubri – Heiler, Krieger, Wächter – sind es die Heiler, die die Unversehrtheit der Menschheit schützen: Sie hüten die Schwelle zwischen Kainiten und Sethskindern, kümmern sich um sterbliche Herden und dem Tier anheimgefallene Kainiten und lindern den Schmerz des Körpers und der Seele. Im Buch Nod war Saulot Kains liebstes Kind, was den Salubri Prestige und Legitimation verschafft, sich über die kainitische Gesellschaft zu stellen. Doch die Lange Nacht war grausam zu ihnen: Die Kreuzzüge erschütterten ihre Einheit, und mit Entsetzen sahen sie, wie die Tremere sich durch die Diablerie an Saulot aufschwangen, was letztlich zum Verlust ihres Clanstatus führte. Bei der Konklave von Akkon 1192 stimmten die Heiler dafür, keine Rache für die Diablerie an Saulot zu nehmen.",
+    "disciplines": ["Auspex", "Präsenz", "Valeren"],
+    "weakness": "Wenn ein Salubri auch nur 1 Punkt in Valeren investiert, manifestiert sich auf seiner Stirn das für die Disziplin bezeichnende dritte Auge. Salubri-Heiler müssen einen Wurf auf Willenskraft (Schwierigkeit 6) ablegen, wenn sie von jemand Unwilligem trinken wollen. Wenn der Wurf scheitert, müssen sie ein williges Gefäß finden oder erleiden für den Rest der Nacht einen Abzug von 2 Würfeln. Opfer, die von Präsenz beeinflusst sind, gelten als willig.",
+    "characterCreationHint": "Alle Kasten der Salubri legen Wert auf Empathie und Willenskraft. Den Heilern sind vor allem geistige Attribute wichtig, dicht gefolgt von gesellschaftlichen; an Fähigkeiten sind ihnen Wahrnehmung, Medizin und Weisheit der Alten wichtig. Fast alle Heiler folgen den unterschiedlichen Pfaden der Wege des Himmels und der Menschlichkeit."
+  },
+  {
+    "id": 17,
+    "name": "Salubri (Kriegerkaste)",
+    "nickname": "Einäugige, Brudermörder, Seelenfresser",
+    "description": "Seit den Tagen Enochs bekämpfen die Krieger die Feinde Kains und erschlagen die Unwürdigen: Dämonenanbeter, degenerierte Vampire und alle, die die zerbrechliche Symbiose zwischen Mensch und Vampir stören wollen. Ihr Zorn kommt vom Gründer ihrer Blutlinie, Samiel, einem unbeherrschten Kind Saulots, das erst im Kampf gegen die Baali im Tal Gehenna seine Bestimmung fand und mit dem Kodex des Samiel und dem Ritual der Initiation Feuer und Stahl im Blut eines passiven Clans weckte. Die Wanderlust, Samiels Gebot genannt, erfasst nahezu jeden Krieger: Sie marschieren in den Armeen der Sterblichen, wirken in militärischen Orden und sind so stark mit dem Templerorden verwoben, dass viele junge Zyklopen das Kreuz auf ihrem Wappenrock tragen. Sie räuchern Baali und Setiten gleichermaßen aus und widersetzen sich mit schwindender Kraft der wachsenden Macht des Clans Tremere – verwundet, aber ungebrochen.",
+    "disciplines": ["Auspex", "Seelenstärke", "Valeren"],
+    "weakness": "Wenn Salubri auch nur einen Punkt in Valeren investieren, manifestiert sich auf ihrer Stirn das für die Disziplin bezeichnende dritte Auge. Salubri-Krieger müssen stets ihre Kraft und Überlegenheit im Bereich der Kampfkunst unter Beweis stellen: Sie müssen einen Wurf auf Willenskraft (Schwierigkeit 6) ablegen, wenn sie von jemandem trinken wollen, den sie nicht in einem Kampf besiegt haben, oder sie erleiden für den Rest der Nacht einen Abzug von 2 Würfeln. Der Kampf kann ein Duell auf Leben und Tod sein, aber auch eine simple Schlägerei, bei der der Salubri das Opfer außer Gefecht setzt.",
+    "characterCreationHint": "Körperliche Attribute sind immer primär, vor allem Stärke und Widerstandsfähigkeit. Schwertkampf ist eine wichtige Fähigkeit, und kein bewusst für den Kuss erwählter Krieger hat weniger als 2 Punkte in einer Kampffertigkeit. Die Krieger gehen im Einklang mit Samiels Kodex oft den Pfad der Ritterlichkeit oder den Weg der Vergeltung."
+  },
+  {
+    "id": 18,
+    "name": "Salubri (Wächterkaste)",
+    "nickname": "",
+    "description": "Seit den Tagen Enochs wachen die Wächter über die kainitische Rasse und sabotieren alle übernatürlichen Rivalen. Der Legende nach reiste Zao-Lat, ein Scharlatan aus dem Westen, ins Reich der Mitte, um den zehntausend Dämonen die Erleuchtung zu stehlen, und hinterließ dort seine Kinder Zao-Zei, einen Tempeldieb, und Zao-Xue, einen gelehrten Mönch, deren Nachkommen die Wu Zao bildeten. Die Wächter sind eine Splittergruppe innerhalb eines ohnehin kleinen Clans, dem Großteil ihrer Vettern unbekannt, und halten einsam Wacht gegen die Monster, die Kains Vorherrschaft über die Nacht anfechten wollen. Sie geben sich als Mitglieder anderer Clans aus, plündern Gräber nach häretischem Geheimwissen, stürmen Festungen von Ritterorden mit Wissen um die Kainiten und warnen Prinzen flüsternd vor unvorstellbaren Bedrohungen. Trotz des langen Kontakts mit den Salubri erkennen sie den Kainsmythos nicht als Tatsache an; Wächter arbeiten stets zu zweit, und der Großteil der Kaste lebt östlich des Jangtse.",
+    "disciplines": ["Auspex", "Valeren", "Verdunkelung"],
+    "weakness": "Wenn Salubri auch nur einen Punkt in Valeren investieren, manifestiert sich auf ihrer Stirn das für die Disziplin kennzeichnende dritte Auge. Wächter können erstaunlich kurz im Denken sein, weil sie sich auf kleine, ihnen wichtige Details versteifen und dabei das größere Ganze übersehen. Wächter müssen ein Fachgebiet wählen, das spezifisch genug für eine Spezialität im Bereich Kenntnisse ist. Sie müssen einen Wurf auf Willenskraft (Schwierigkeit 6) schaffen, um sich von einer (vom Erzähler definierten) Möglichkeit loszureißen, bei der sie mehr über ihr Fachgebiet lernen könnten. Wenn das nicht gelingt, verlieren sie für den Rest der Nacht 2 Würfel aus allen Würfelvorräten.",
+    "characterCreationHint": "Diebe und Gelehrte arbeiten zusammen, um das Wissen zum Überleben des Fünften Zeitalters zu sammeln: Gesellschaftliche Attribute sind oft primär, körperliche und geistige sekundär. Nützliche Fähigkeiten sind Akademisches Wissen, Taschenspielerei, Heimlichkeit und Ausflüchte. Wächter gehören zur zehnten Generation oder sind noch älter und folgen überwiegend dem Weg der Menschlichkeit, nicht wenige auch dem Weg des Paradoxes."
+  },
+  {
+    "id": 19,
+    "name": "Wahre Brujah",
+    "nickname": "Scholaren (untereinander), Weise",
+    "description": "Die Wahren Brujah behaupten, die Brujah, die die anderen Kainiten als solche kennen, hätten ihren rechtmäßigen Besitzern die Identität des Clans gestohlen. In ihrer Version der Geschichte verriet und diablerierte ein Kind den Vorsintflutlichen, woraufhin der Clan in zwei Hälften brach: die von Vernunft und Leidenschaftslosigkeit geprägten Loyalisten und die zornigen, leidenschaftlichen Rebellen, die die Disziplin Temporis aufgaben und sich mit der Grobschlächtigkeit der Geschwindigkeit zufriedengeben mussten. Die Loyalisten wurden durch die weit häufigere Weitergabe des Kusses verdrängt und verschwanden ausgegrenzt in den Schatten der Geschichte. Aufgrund dieses ewigen Streits jagen die Wahren Brujah verbissen nach Hinweisen auf die Vergangenheit des Clans – in alten Texten, Ruinen und sogar im antiken Karthago. Sie geben den Kuss nur selten und nur aufgrund kalkulierter Logik weiter, an Sterbliche mit nüchternem Denken und beachtlichem akademischem Wissen.",
+    "disciplines": ["Präsenz", "Stärke", "Temporis"],
+    "weakness": "Wahre Brujah werden kurz nach ihrem Kuss leidenschaftslos (wenn sie das nicht bereits waren). Mit zunehmendem Alter wird dieser Zustand schlimmer. Alle Würfe auf Gewissen und Überzeugung haben Schwierigkeit +2 (maximal 9), und Punkte in Gewissen, Überzeugung, Menschlichkeit und Wegen kosten das Doppelte der üblichen Erfahrungspunktekosten.",
+    "characterCreationHint": "Geistige Attribute und Kenntnisse sind fast immer primär; Wahre Brujah, die sich durch alte Ruinen schlagen, besitzen häufig auch beachtliche körperliche Attribute. Akademisches Wissen und Okkultismus kommen unabhängig von individueller Präferenz oft vor, und die meisten Wahren Brujah bringen ihrer Nachkommenschaft bei, wie man sich verteidigt."
+  }
+]

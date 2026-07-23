@@ -38,6 +38,8 @@ import { W5RenownKey as RenownKeyEnum } from "@/@types/w5"
 import {type RequestLevelFn, type M20Sphere, type IMageSheet, getEssenceName, getEssenceDescription} from "@/@types/m20"
 import { M20Sphere as SphereEnum } from "@/@types/m20"
 import type {IHunterSheet} from "@/@types/h5.ts";
+import {getVdzBloodPool, type IVdzSheet, type VdzRequestLevelFn, VdzVirtue} from "@/@types/vdz"
+import {VDZ_HELP, vdzVirtueHelp} from "@/libs/data/vdz-helpers"
 
 const store = useStore()
 
@@ -47,6 +49,7 @@ const isVampire = computed(() => store.isVampire)
 const isWerewolf = computed(() => store.isWerewolf)
 const isMage = computed(() => store.isMage)
 const isHunter = computed(() => store.isHunter)
+const isDarkAges = computed(() => store.isDarkAges)
 
 // Referenz: die fünf Garou-Formen (W5) mit Kosten/Modifikatoren – Anzeige auf der
 // Profilseite (aus dem alten Frontend übernommen).
@@ -59,6 +62,7 @@ const werewolfForms = [
 ]
 
 const requestLevel = inject("request-m20-level") as RequestLevelFn | undefined
+const requestVdzLevel = inject("request-vdz-level") as VdzRequestLevelFn | undefined
 const updateViewer = inject("update-viewer") as (() => void) | undefined
 const toggleDicePoolFlag = inject("toggle-dice-pool-flag") as ((flag: string) => void) | undefined
 const showTip = inject("show-tip") as ((content: any, title?: any) => void) | undefined
@@ -221,6 +225,34 @@ const mocActive = computed(() => {
   const c = editingCharacter.value
   return !!(isVampire.value && c?.hasCainsMark)
 })
+
+// --- VDZ (Dark Ages) ---
+const vdzSheet = computed(() => (isDarkAges.value ? (editingCharacter.value as any as IVdzSheet) : undefined))
+
+const vdzBloodPoolMax = computed<[number, number]>(() => (vdzSheet.value ? getVdzBloodPool(vdzSheet.value.generation) : [0, 0]))
+
+const vdzVirtueRows = computed(() => {
+  const s = vdzSheet.value
+  if (!s) return []
+  return [
+    { key: VdzVirtue.ConscienceOrConviction, name: s.road?.virtues.conscienceOrConviction ?? "Gewissen/Überzeugung", value: s.virtues[VdzVirtue.ConscienceOrConviction] },
+    { key: VdzVirtue.SelfControlOrInstinct, name: s.road?.virtues.selfControlOrInstinct ?? "Selbstbeherrschung/Instinkt", value: s.virtues[VdzVirtue.SelfControlOrInstinct] },
+    { key: VdzVirtue.Courage, name: "Mut", value: s.virtues[VdzVirtue.Courage] },
+  ]
+})
+
+const vdzCurrentSin = computed(() => {
+  const s = vdzSheet.value
+  if (!s || !s.road || s.road.hierarchyOfSins.length === 0) return ""
+  return s.road.hierarchyOfSins.find(x => x.rating === s.roadRating)?.sin ?? ""
+})
+
+function changeVdzBloodPool(delta: number) {
+  const s = vdzSheet.value
+  if (!s) return
+  s.bloodPool = Math.max(0, Math.min(vdzBloodPoolMax.value[0], (s.bloodPool ?? 0) + delta))
+  saveChar(true, true)
+}
 </script>
 
 <template>
@@ -306,6 +338,28 @@ const mocActive = computed(() => {
           <TipButton :content="(editingCharacter as any as IHunterSheet).drive.redemption" class="mr-xxs" />
         </span>
 
+        <span v-else-if="isDarkAges && vdzSheet" class="side">
+          {{ getSexName(editingCharacter.sex) }}
+          <Bullet />
+          <i> Clan:</i> {{ vdzSheet.clan.name }}
+          <Bullet />
+          {{ vdzSheet.clan.nickname }}
+          <TipButton :content="vdzSheet.clan.weakness" />
+        </span>
+
+        <span v-if="isDarkAges && vdzSheet" class="side subline">
+          <i>Generation:</i> {{ vdzSheet.generation }}.
+          <Bullet />
+          <i>Weg:</i> {{ vdzSheet.road.name }}
+          <TipButton :content="vdzSheet.road.description" />
+          <Bullet />
+          <i>Wesen:</i> {{ vdzSheet.nature.name }}
+          <TipButton :content="vdzSheet.nature.description" class="mr-xxs" />
+          <Bullet />
+          <i>Verhalten:</i> {{ vdzSheet.demeanor.name }}
+          <TipButton :content="vdzSheet.demeanor.description" class="mr-xxs" />
+        </span>
+
         <span v-if="isVampire && !mocActive" class="side subline">
           <i>Generation:</i>
           <input v-if="editingCharacter.fullCustomization" class="form-control inline" v-model.number="editingCharacter.generation" />
@@ -327,7 +381,7 @@ const mocActive = computed(() => {
 
       <div class="stats">
         <div class="row">
-          <div v-if="isVampire" class="stat sire">
+          <div v-if="isVampire || isDarkAges" class="stat sire">
             <b>Erzeuger/in:</b>
             <small v-if="!editingCharacter.fullCustomization">{{ editingCharacter.sire }}</small>
             <input v-else class="form-control" type="text" v-model="editingCharacter.sire" />
@@ -344,6 +398,11 @@ const mocActive = computed(() => {
                 v-if="isMage && editingCharacter.willpower < 10"
                 class="mr-xxs"
                 @click="requestLevel?.('willpower')"
+              />
+              <LevelButton
+                v-if="isDarkAges && editingCharacter.willpower < 10"
+                class="mr-xxs"
+                @click="requestVdzLevel?.('willpower')"
               />
               <span class="dice-toggle" @click="toggleDicePoolFlag?.('willpower')" title="Alt+Klick: freie Willenskraft im Würfelpool an/aus">Willenskraft:</span>
             </b>
@@ -394,6 +453,24 @@ const mocActive = computed(() => {
             />
           </div>
 
+          <div v-if="isDarkAges && vdzSheet" class="stat wide">
+            <b>
+              Wegwert ({{ vdzSheet.road.name }}):
+              <LevelButton v-if="vdzSheet.roadRating < 10" @click="requestVdzLevel?.('road')" />
+              <TipButton :content="VDZ_HELP.roadRating + (vdzCurrentSin ? ` — Aktuelle Schwelle (Wegwert ${vdzSheet.roadRating}): ${vdzCurrentSin}` : '')" />
+            </b>
+            <Squares :max="10" :amount="vdzSheet.roadRating" :margin-at="6" />
+          </div>
+
+          <div v-if="isDarkAges && vdzSheet" class="stat">
+            <b>Blutvorrat: <TipButton :content="VDZ_HELP.bloodPool + ` — Bei Generation ${vdzSheet.generation}: maximal ${vdzBloodPoolMax[0]} Punkte, ${vdzBloodPoolMax[1]} pro Runde.`" /></b>
+            <div class="vdz-bloodpool">
+              <IconButton icon="fa-minus" @click="changeVdzBloodPool(-1)" />
+              <b class="pool-value">{{ vdzSheet.bloodPool }} / {{ vdzBloodPoolMax[0] }}</b>
+              <IconButton icon="fa-plus" @click="changeVdzBloodPool(1)" />
+            </div>
+          </div>
+
           <div v-else-if="isWerewolf" class="stat">
             <b>Rage: <TipButton content="Rage ist die unbändige Wut der Garou und ihre wichtigste Ressource im Spiel. Sie bewegt sich auf einer Skala von 0 bis 5 Punkten und verändert sich ständig je nach Situation. Meist beginnen Garou mit 1 Punkt, wenn sie ausgeruht und friedlich sind, oder mit 3 Punkten, wenn sie sich in Gefahr befinden – im Zweifel mit 2 Punkten. Jeder Rage-Punkt ersetzt einen normalen Würfel im Pool, wobei Rage-Würfel wie gewöhnliche Würfel funktionieren, aber bei einer 1 oder 2 ein brutales Ergebnis liefern: Mit einem einzelnen solchen Würfel scheitert der Wurf, mehrere brutale Ergebnisse bedeuten ein zerstörerisches Fehlschlagen. Geht es jedoch um Gewalt oder Schaden, erzeugt ein brutaler Ausgang stattdessen +4 Erfolge.
 
@@ -423,6 +500,10 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
           <label>Fokus:</label>
           <MarkdownEditor :model-value="(editingCharacter as any as IMageSheet).focus" @update:model-value="v => { (editingCharacter as any as IMageSheet).focus = v; saveChar() }" />
         </div>
+        <div v-else-if="isDarkAges" class="form-group">
+          <label>Grundsätze der Chronik: <TipButton content="Die Grundsätze der Chronik sind die Regeln und Themen, auf die sich Gruppe und Erzählerin für eure Chronik im dunklen Zeitalter geeinigt haben. Sie geben den Ton und die Grenzen vor, an die sich alle halten." /></label>
+          <MarkdownEditor v-model="editingCharacter.chroniclePrinciples" @change="saveChar()" />
+        </div>
         <div v-else class="form-group">
           <label>Grundsätze der Chronik: <TipButton content="Die Grundsätze der Chronik beschreibt eine Reihe von Regeln, die die Spieler mit ihrem Spielleiter für die bespielende Chronik festgesetzt werden. Jeder Spieler sollte sich an diese Grundsätze halten, auch wenn der Glaube des Charakters nicht komplett damit übereinstimmt. Eine Verletzung würde jedoch nur moralische Sanktionen oder die Degeneration des Charakters mit sich führen. Für weitere Informationen siehe Grundregelwerk V5 S. 172." /></label>
           <MarkdownEditor v-model="editingCharacter.chroniclePrinciples" @change="saveChar()" />
@@ -438,6 +519,10 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
         <div v-if="isMage" class="form-group">
           <label>Wunder: <TipButton content="Ein Wunder ist ein Hintergrund, der für verschiedene magische Gegenstände steht. Jeder Gegenstandstyp hat einen anderen Namen, den die Erwachten Technokraten benutzen. Artefakte (und Erfindungen) können nur von Magiern benutzt werden und nutzen die Arete-Werte ihres Benutzers. Sie können normalerweise nur ein paar Sachen machen. Einige Artefakte haben stattdessen einen einzigen dauerhaften Effekt und können von Schläfern benutzt werden. Zauber (und Gadgets) sind verbrauchbare magische Gegenstände. Sie werden in Bündeln und nicht als Einzelstücke hergestellt. Schläfer können Zauber benutzen, wenn dies mit ihrem Paradigma vereinbar ist. Fetische werden mit Spirit statt mit Prime hergestellt und erfordern Verhandlungen mit Geistern, um sie herzustellen. Die Garou und andere sich verändernde Rassen sehen die Fetische der Erwachten mit Argwohn, besonders wenn der Magier den Geist in den Fetisch gezwungen hat, anstatt sich seine Zusammenarbeit durch Chiminage zu verdienen. Periapts (und Matrizen), auch Soulgems genannt, enthalten die Quintessenz einer bestimmten Resonanz. Talismane (und Geräte) sind magische Gegenstände, die sogar Schläfer benutzen können, da sie ihre eigene Arete-Bewertung haben; sie können in der Regel mehrere Dinge tun, und viele haben Periapts daran befestigt. Ihre Herstellung erfordert jedoch Willenskraft. Grimoires (und Principiae) können Arete ohne Suche erhöhen und erfordern den Einsatz von 1 permanentem Punkt Willenskraft, aber Kopien können ohne Einsatz von Willenskraft angefertigt werden. Primers sind spezielle Grimoires/Principiae, die Arete 1 lehren – das heißt, sie können das Erwachen bewirken. Für ihre Herstellung sind zwei permanente Willenskraftpunkte erforderlich. Tomes sind ebenfalls spezielle Grimoires, die seltene und mächtige Roten beschreiben und es ermöglichen, deren Schwierigkeitsgrad zu verringern. Amulette (und Gizmos) sind Gegenstände mit „schlafender” Magie, die unter bestimmten Umständen aktiviert wird. Sie werden mit Zeit und/oder Entropie hergestellt. Reliquien sind lebende Wunder. Dieser Untertyp ergänzt einige andere: Reliquien-Talisman, Reliquien-Periapt (auch Seelenblume genannt) usw." /></label>
           <MarkdownEditor :model-value="(editingCharacter as any as IMageSheet).wonders" @update:model-value="v => { (editingCharacter as any as IMageSheet).wonders = v; saveChar() }" />
+        </div>
+        <div v-else-if="isDarkAges" class="form-group">
+          <label>Bindungen an die Sterblichkeit: <TipButton content="Was bindet deinen Kainiten noch an die Welt der Sterblichen? Menschen, Orte, Pflichten oder Überzeugungen, die deine Menschlichkeit bewahren und deinem Nichtleben Halt geben. Werden sie bedroht oder verloren, kann das deinen Weg ins Wanken bringen." /></label>
+          <MarkdownEditor v-model="editingCharacter.anchorsAndBeliefs" @change="saveChar()" />
         </div>
         <div v-else class="form-group">
           <label>Anker & Überzeugungen: <TipButton content="Wähle ein bis drei Überzeugungen und genau so viele Anker. Überzeugungen sind die Richtlinien die dein Charakter von sich aus befolgen muss und auch will, selbst bis über den Tod (oder eher Untot). Eine Überzeugung kann z.B. sein 'Du sollst nicht töten' oder 'Die Wahrheit ist heilig; du sollst nicht lügen'. Das Verstoßen gegen eine Überzeugung kann Makel mit sich bringen, oder Makel die im Rahmen einer Überzeugung erteilt werden, durch die Überzeugung abgemildert werden.
@@ -615,6 +700,27 @@ Regeln: Dein Arete-Wert bestimmt, wie viele Würfel du für Zaubereffekte nutzt 
           <Row v-if="resonanceDisciplines"><small>{{ resonanceDisciplines }}</small></Row>
         </Col>
         <Col class="col-third" />
+      </Row>
+
+      <Row v-if="isDarkAges && vdzSheet" class="row-full mt" wrap>
+        <Col class="col-third">
+          <Row><b>Tugenden</b>: <TipButton content="Die drei Tugenden bestimmen, wie du der Bestie widerstehst. Welches Paar dein Weg gewährt (Gewissen/Überzeugung und Selbstbeherrschung/Instinkt), siehst du hier; Mut hat jeder. Klicke die einzelne Tugend für Details." /></Row>
+          <Row v-for="v in vdzVirtueRows" :key="v.key">
+            <div class="vdz-virtue">
+              <LevelButton v-if="v.value < 5" @click="requestVdzLevel?.('virtue', v.key)" />
+              <small class="virtue-name">{{ v.name }} <TipButton :content="vdzVirtueHelp(v.name)" /></small>
+              <Squares :max="5" :amount="v.value" />
+            </div>
+          </Row>
+        </Col>
+        <Col class="col-third">
+          <Row><b>Aura: {{ vdzSheet.road.aura.name }}</b> <TipButton :content="vdzSheet.road.aura.description" /></Row>
+          <Row v-if="vdzCurrentSin"><small><i>Aktuelle Schwelle (Wegwert {{ vdzSheet.roadRating }}):</i> {{ vdzCurrentSin }}</small></Row>
+        </Col>
+        <Col class="col-third">
+          <Row><b>Blut pro Runde</b>: <TipButton content="Wie viele Blutpunkte pro Runde eingesetzt werden können — abhängig von der Generation." /></Row>
+          <Row><small>{{ vdzBloodPoolMax[1] }} Punkt(e)</small></Row>
+        </Col>
       </Row>
 
       <Row v-if="isMage" class="row-full mt" wrap>
@@ -836,6 +942,27 @@ Regeln: Dein Arete-Wert bestimmt, wie viele Würfel du für Zaubereffekte nutzt 
   width: 18rem;
   display: flex;
   flex-direction: column;
+}
+
+.vdz-bloodpool {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  .pool-value {
+    min-width: 4.5rem;
+    text-align: center;
+  }
+}
+
+.vdz-virtue {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  .virtue-name {
+    min-width: 9rem;
+  }
 }
 
 .simple {

@@ -153,6 +153,27 @@ select {
     background: var(--bg-1);
     color: var(--text-1);
   }
+
+  // optgroup-Label sichtbar halten – ohne eigene Regel rendern manche Browser
+  // es weiß auf weiß bzw. mit hellem System-Default.
+  optgroup {
+    background: var(--bg-2);
+    color: var(--text-2);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  optgroup option {
+    font-weight: 400;
+    color: var(--text-1);
+  }
+
+  // Deaktivierte Optionen (Platzhalter wie "Auswählen") lesbar halten.
+  option:disabled,
+  option[disabled] {
+    color: #8a8a8a;
+    background: var(--bg-1);
+  }
 }
 
 input[type="checkbox"] {
