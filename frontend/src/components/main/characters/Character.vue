@@ -6,6 +6,7 @@ import IconButton from "@/components/IconButton.vue"
 import {getGenerationName, getSexName, type ICharacter} from "@/@types/models"
 import CharacterStorage from "@/libs/io/character-storage"
 import FileCreator from "@/libs/io/file-creator"
+import MigrateCharacterModal from "@/components/main/characters/modals/MigrateCharacterModal.vue"
 import { GameLine, type IBaseSheet } from "@/@types/gameline"
 import {useRouter} from "vue-router";
 import {useStore} from "@/app/store.ts";
@@ -65,6 +66,12 @@ async function exportCharacter(char: ICharacter) {
   const full = await CharacterStorage.getFullCharacter(char.id)
   const data = full ?? char
   FileCreator.create(data.name + ".json", JSON.stringify(data))
+}
+
+const migrateModal = ref<InstanceType<typeof MigrateCharacterModal> | null>(null)
+
+function beginMigrate(char: ICharacter) {
+  migrateModal.value?.showModal(char)
 }
 
 function viewCharacter(character: ICharacter, newTab = false) {
@@ -165,9 +172,12 @@ function onDragHandleDown(e: PointerEvent) {
       <IconButton icon="fa-trash" @click="beginCharDeletion(character as any)" />
       <IconButton icon="fa-copy" @click="cloneCharacter(character as any)" />
       <IconButton icon="fa-file-arrow-down" @click="exportCharacter(character as any)" />
+      <IconButton icon="fa-wand-magic-sparkles" title="Charakter modernisieren (auf die neue Speicherung umstellen – experimentell)" @click="beginMigrate(character as any)" />
       <IconButton icon="fa-share-nodes" @click="editViewers(character as any)" />
       <IconButton icon="fa-eye" @click="viewCharacter(character as any)" />
     </div>
+
+    <MigrateCharacterModal ref="migrateModal" @migrated="updateCharacterList()" />
 
 <!--    <Modal :shown="enableSyncModalVisible" @close="enableSyncModalVisible = false">
       <div class="modals-box">
