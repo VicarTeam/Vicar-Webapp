@@ -1,0 +1,16 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    schema: "internal/storage/postgres/sql/schema.sql"
+    queries: "internal/storage/postgres/sql/queries.sql"
+    gen:
+      go:
+        package: "gen"
+        out: "internal/storage/postgres/gen"
+        sql_package: "pgx/v5"
+        emit_json_tags: false
+        emit_interface: false
+        emit_empty_slices: true
+        overrides:
+          - db_type: "jsonb"
+            go_type: "encoding/json.RawMessage"
