@@ -54,8 +54,16 @@ const drag = reactive<{
 
 provide("folder-drag", drag)
 
-const rootFolders = computed<IFolder[]>(() => CharacterStorage.rootFolders())
-const unfolderedGroups = computed(() => CharacterStorage.getUnfolderedGroups())
+// Als Methoden (nicht computed): die zugrunde liegenden CharacterStorage-Listen
+// sind nicht reaktiv, daher wuerde eine computed nach Drag/Drop veraltet cachen
+// (Charakter erschiene doppelt bis zum Reload). So laufen sie bei jedem Render
+// des per refreshForce neu gemounteten Baums frisch.
+function rootFolders(): IFolder[] {
+  return CharacterStorage.rootFolders()
+}
+function unfolderedGroups() {
+  return CharacterStorage.getUnfolderedGroups()
+}
 
 const ghostLabel = computed(() => {
   if (drag.kind === "char") return drag.char?.name ?? ""
@@ -294,14 +302,14 @@ function updateCharacterList() {
     </div>
 
     <div class="lists" data-container="__root__" :key="refreshForce">
-      <template v-for="(f, i) in rootFolders" :key="f.id">
+      <template v-for="(f, i) in rootFolders()" :key="f.id">
         <div v-if="rootFolderLine(i)" class="drop-line"></div>
         <FolderNode :folder="f" parentContainer="__root__" />
       </template>
-      <div v-if="rootFolderLine(rootFolders.length)" class="drop-line"></div>
+      <div v-if="rootFolderLine(rootFolders().length)" class="drop-line"></div>
 
       <CharacterDirectory
-        v-for="(d, i) in unfolderedGroups"
+        v-for="(d, i) in unfolderedGroups()"
         :key="'group-' + i"
         :directory="d.directory"
         :characters="d.characters"
