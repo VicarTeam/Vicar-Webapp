@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, provide, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import CreateCharacterModal from "@/components/main/characters/modals/CreateCharacterModal.vue"
 import CreateDirectoryModal from "@/components/main/characters/modals/CreateDirectoryModal.vue"
+import ClanFinderModal from "@/components/main/characters/modals/ClanFinderModal.vue"
 import ConfirmCharDeletionModal from "@/components/main/characters/modals/ConfirmCharDeletionModal.vue"
 import CharacterViewersModal from "@/components/main/characters/modals/CharacterViewersModal.vue"
 import CharacterDirectory from "@/components/main/characters/CharacterDirectory.vue"
@@ -20,6 +21,7 @@ const importFiles = ref<HTMLInputElement | null>(null)
 const createCharacterModal = ref<InstanceType<typeof CreateCharacterModal> | null>(null)
 const confirmCharDeletionModal = ref<InstanceType<typeof ConfirmCharDeletionModal> | null>(null)
 const createDirectoryModal = ref<InstanceType<typeof CreateDirectoryModal> | null>(null)
+const clanFinderModal = ref<InstanceType<typeof ClanFinderModal> | null>(null)
 const characterViewersModal = ref<InstanceType<typeof CharacterViewersModal> | null>(null)
 
 type DropTarget =
@@ -284,6 +286,9 @@ function updateCharacterList() {
       <button class="btn btn-primary big" @click="importFiles?.click()">
         IMPORTIEREN
       </button>
+      <button class="btn btn-primary big" @click="clanFinderModal?.showModal()">
+        KLAN-FINDER
+      </button>
       <button class="btn btn-primary big" @click="router.push('/skilltrees')">
         SKILL-BÄUME
       </button>
@@ -306,6 +311,7 @@ function updateCharacterList() {
 
     <CreateCharacterModal ref="createCharacterModal" />
     <CreateDirectoryModal ref="createDirectoryModal" @created="updateCharacterList" @changed="updateCharacterList" />
+    <ClanFinderModal ref="clanFinderModal" />
     <ConfirmCharDeletionModal ref="confirmCharDeletionModal" @deleted="updateCharacterList" />
     <CharacterViewersModal ref="characterViewersModal" />
 
