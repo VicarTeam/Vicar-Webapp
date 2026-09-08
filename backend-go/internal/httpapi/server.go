@@ -60,6 +60,7 @@ func (s *Server) Handler() http.Handler {
 		s.mountCharacters(r)
 		s.mountUsers(r)
 		s.mountSkillTrees(r)
+		s.mountFolders(r)
 		s.mountCdnUpload(r)
 		s.mountAdmin(r)
 	})

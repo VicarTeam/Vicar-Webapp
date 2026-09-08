@@ -449,6 +449,22 @@ export interface ICharacterDirectory {
   open: boolean;
 }
 
+/**
+ * Ein echter, verschachtelbarer Charakter-Ordner. Anders als die alte
+ * `directory`-Zeichenkette am Charakter ist ein Ordner eine eigene Entitaet:
+ * er kennt seinen Elternordner (Verschachtelung), seine Geschwister-Position
+ * (freie Sortierung) und die geordneten IDs der enthaltenen Charaktere. Der
+ * Charakter selbst wird davon nicht veraendert. `open` ist reiner UI-Zustand.
+ */
+export interface IFolder {
+  id: string;
+  name: string;
+  parentId: string;
+  position: number;
+  characters: string[];
+  open?: boolean;
+}
+
 export const CurrentCharacterVersion = 2;
 
 export enum V5Resonance {

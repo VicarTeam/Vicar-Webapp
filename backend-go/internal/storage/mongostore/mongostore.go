@@ -21,6 +21,7 @@ type Store struct {
 	refreshTokens *refreshTokenStore
 	characters    *characterStore
 	skillTrees    *skillTreeStore
+	folders       *folderStore
 }
 
 // Connect dials MongoDB and returns a ready Store.
@@ -43,6 +44,7 @@ func Connect(ctx context.Context, uri, dbName string) (*Store, error) {
 	s.refreshTokens = &refreshTokenStore{col: db.Collection("refreshtokens")}
 	s.characters = &characterStore{col: db.Collection("characters")}
 	s.skillTrees = &skillTreeStore{col: db.Collection("skilltrees")}
+	s.folders = &folderStore{col: db.Collection("folders")}
 	return s, nil
 }
 
@@ -50,6 +52,7 @@ func (s *Store) Users() storage.UserStore                 { return s.users }
 func (s *Store) RefreshTokens() storage.RefreshTokenStore { return s.refreshTokens }
 func (s *Store) Characters() storage.CharacterStore       { return s.characters }
 func (s *Store) SkillTrees() storage.SkillTreeStore       { return s.skillTrees }
+func (s *Store) Folders() storage.FolderStore             { return s.folders }
 
 func (s *Store) Close(ctx context.Context) error { return s.client.Disconnect(ctx) }
 

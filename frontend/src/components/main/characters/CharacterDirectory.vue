@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { computed, inject } from "vue"
+import { inject } from "vue"
 import type { ICharacter, ICharacterDirectory } from "@/@types/models"
 import Character from "@/components/main/characters/Character.vue"
 import IconButton from "@/components/IconButton.vue"
-import CharacterStorage from "@/libs/io/character-storage"
 
 const props = defineProps<{
   directory: ICharacterDirectory | null
   characters: ICharacter[]
-  activeDrop?: boolean
 }>()
 
-const startCharCreation = inject<(dir?: ICharacterDirectory) => void>("create-character")!
 const updateCharacterList = inject<() => void>("update-character-list")!
 
-const dirId = computed(() => (props.directory ? props.directory.id : "__root__"))
+const isShared = props.directory?.id === "@shared-chars"
 
 function toggleOpen() {
   if (!props.directory) return
@@ -24,35 +21,22 @@ function toggleOpen() {
   }
   updateCharacterList()
 }
-
-function createCharacter() {
-  if (!props.directory) return
-  startCharCreation(props.directory)
-}
-
-function removeDirectory() {
-  if (!props.directory) return
-  CharacterStorage.loadedDirectories = CharacterStorage.loadedDirectories.filter((d) => d.id !== props.directory!.id)
-  setTimeout(() => updateCharacterList(), 100)
-}
 </script>
 
 <template>
-  <div class="char-dir" :data-dropzone="dirId">
+  <div class="char-dir">
     <div class="head" v-if="directory">
-      {{ directory.name }}
-
-      <div class="actions left">
-        <IconButton icon="fa-plus" @click="createCharacter" />
-        <IconButton v-if="characters.length <= 0" icon="fa-minus" @click="removeDirectory" />
-      </div>
+      <span class="head__name">
+        <i v-if="!isShared" class="fa-solid fa-box-archive legacy-icon" title="Alter Ordner"></i>
+        {{ directory.name }}
+      </span>
 
       <div class="actions right">
         <IconButton :icon="directory.open ? 'fa-chevron-up' : 'fa-chevron-down'" @click="toggleOpen" />
       </div>
     </div>
 
-    <div class="list" v-if="!directory || directory.open" :class="{ 'drop-active': activeDrop }">
+    <div class="list" v-if="!directory || directory.open">
       <Character v-for="c in characters" :key="c.id" :character="c" />
     </div>
   </div>
@@ -79,6 +63,17 @@ function removeDirectory() {
   border-bottom: 2px solid var(--primary-color);
 }
 
+.head__name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legacy-icon {
+  color: #8a8a8a;
+  font-size: 0.85em;
+}
+
 .actions {
   position: absolute;
   top: 0;
@@ -87,9 +82,6 @@ function removeDirectory() {
   gap: 0.5rem;
   align-items: center;
 
-  &.left {
-    left: 0;
-  }
   &.right {
     right: 0;
   }
@@ -100,21 +92,5 @@ function removeDirectory() {
   flex-direction: column;
   width: 100%;
   gap: 1rem;
-  padding: 1rem;
-  border-radius: 10px;
-  transition: background-color 120ms ease, outline-color 120ms ease;
-  outline: 2px dashed rgba(255, 255, 255, 0.08);
-  outline-offset: 4px;
-}
-
-.drop-active {
-  background-color: rgba(255, 255, 255, 0.04);
-  outline-color: rgba(255, 255, 255, 0.22);
-}
-
-@media (max-width: 800px) {
-  .list {
-    padding: 0.75rem;
-  }
 }
 </style>

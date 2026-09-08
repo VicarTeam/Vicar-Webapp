@@ -27,6 +27,7 @@ type Provider interface {
 	RefreshTokens() RefreshTokenStore
 	Characters() CharacterStore
 	SkillTrees() SkillTreeStore
+	Folders() FolderStore
 	Close(ctx context.Context) error
 }
 
@@ -94,5 +95,13 @@ type SkillTreeStore interface {
 	GetOwned(ctx context.Context, id, userID string) (*models.SkillTree, error)
 	Create(ctx context.Context, t *models.SkillTree) (string, error)
 	Save(ctx context.Context, t *models.SkillTree) error
+	Delete(ctx context.Context, id string) error
+}
+
+type FolderStore interface {
+	FindByUser(ctx context.Context, userID string) ([]models.Folder, error)
+	GetOwned(ctx context.Context, id, userID string) (*models.Folder, error)
+	Create(ctx context.Context, f *models.Folder) (string, error)
+	Save(ctx context.Context, f *models.Folder) error
 	Delete(ctx context.Context, id string) error
 }

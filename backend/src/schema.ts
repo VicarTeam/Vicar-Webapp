@@ -84,3 +84,21 @@ const skillTreeSchema = new mongoose.Schema(
 
 export type SkillTree = mongoose.InferSchemaType<typeof skillTreeSchema>;
 export const SkillTree = mongoose.model<SkillTree>("SkillTree", skillTreeSchema);
+
+const folderSchema = new mongoose.Schema(
+  {
+    // Besitzer des Ordners.
+    userId: { type: String, required: true },
+    name: { type: String, default: "" },
+    // Übergeordneter Ordner ("" = Wurzel) für die Verschachtelung.
+    parentId: { type: String, default: "" },
+    // Geschwister-Reihenfolge (freie Sortierung, fraktional vergeben).
+    position: { type: Number, default: 0 },
+    // Geordnete IDs der enthaltenen Charaktere. Der Ordner besitzt die
+    // Zuordnung, der Charakter-Blob wird davon nicht berührt.
+    characters: { type: [String], default: [] },
+  }
+);
+
+export type Folder = mongoose.InferSchemaType<typeof folderSchema>;
+export const Folder = mongoose.model<Folder>("Folder", folderSchema);

@@ -7,6 +7,7 @@ export const useStore = defineStore('vicar-main', {
     editingCharacter: undefined,
     draggingCharacter: undefined,
     directoryForCharCreation: undefined,
+    folderForCharCreation: undefined,
     isLevelMode: false,
     lexiconOpen: false,
     overrideGameLine: undefined,

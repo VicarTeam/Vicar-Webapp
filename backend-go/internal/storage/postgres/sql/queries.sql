@@ -132,3 +132,20 @@ ON CONFLICT (id) DO UPDATE SET bonus_code = EXCLUDED.bonus_code, data = EXCLUDED
 
 -- name: DeleteSkillTree :exec
 DELETE FROM skill_trees WHERE id = $1;
+
+-- ========================== folders ==========================
+
+-- name: FindFoldersByUser :many
+SELECT * FROM folders WHERE user_id = $1;
+
+-- name: GetFolderOwned :one
+SELECT * FROM folders WHERE id = $1 AND user_id = $2;
+
+-- name: UpsertFolder :exec
+INSERT INTO folders (id, user_id, name, parent_id, position, characters)
+VALUES ($1, $2, $3, $4, $5, $6)
+ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, parent_id = EXCLUDED.parent_id,
+    position = EXCLUDED.position, characters = EXCLUDED.characters, updated_at = now();
+
+-- name: DeleteFolder :exec
+DELETE FROM folders WHERE id = $1;

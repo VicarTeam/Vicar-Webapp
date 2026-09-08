@@ -83,9 +83,14 @@ async function next() {
       return
     }
 
+    if (store.folderForCharCreation) {
+      await CharacterStorage.addCharacterToFolder(store.folderForCharCreation, (char as any).id)
+    }
+
     store.isLevelMode = false
     EditorHistory.clear()
     store.directoryForCharCreation = undefined
+    store.folderForCharCreation = undefined
     await router.push({ name: "viewer", params: { characterId: (char as any).id } })
   }
 
@@ -112,6 +117,7 @@ function back() {
   }
 
   store.directoryForCharCreation = undefined
+  store.folderForCharCreation = undefined
   store.editingCharacter = undefined
   EditorHistory.clear()
   router.push({ name: "main" })

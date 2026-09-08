@@ -52,6 +52,15 @@ func (q *Queries) DeleteCharactersByUser(ctx context.Context, userID string) err
 	return err
 }
 
+const deleteFolder = `-- name: DeleteFolder :exec
+DELETE FROM folders WHERE id = $1
+`
+
+func (q *Queries) DeleteFolder(ctx context.Context, id string) error {
+	_, err := q.db.Exec(ctx, deleteFolder, id)
+	return err
+}
+
 const deleteRefreshTokensByUser = `-- name: DeleteRefreshTokensByUser :exec
 DELETE FROM refresh_tokens WHERE user_id = $1
 `
@@ -91,6 +100,41 @@ DELETE FROM users WHERE id = $1
 func (q *Queries) DeleteUser(ctx context.Context, id string) error {
 	_, err := q.db.Exec(ctx, deleteUser, id)
 	return err
+}
+
+const findFoldersByUser = `-- name: FindFoldersByUser :many
+
+SELECT id, user_id, name, parent_id, position, characters, created_at, updated_at FROM folders WHERE user_id = $1
+`
+
+// ========================== folders ==========================
+func (q *Queries) FindFoldersByUser(ctx context.Context, userID string) ([]Folder, error) {
+	rows, err := q.db.Query(ctx, findFoldersByUser, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []Folder{}
+	for rows.Next() {
+		var i Folder
+		if err := rows.Scan(
+			&i.ID,
+			&i.UserID,
+			&i.Name,
+			&i.ParentID,
+			&i.Position,
+			&i.Characters,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const findSkillTreeByCode = `-- name: FindSkillTreeByCode :one
@@ -263,6 +307,31 @@ func (q *Queries) GetCharacterOwned(ctx context.Context, arg GetCharacterOwnedPa
 		&i.UserID,
 		&i.Viewers,
 		&i.Data,
+	)
+	return i, err
+}
+
+const getFolderOwned = `-- name: GetFolderOwned :one
+SELECT id, user_id, name, parent_id, position, characters, created_at, updated_at FROM folders WHERE id = $1 AND user_id = $2
+`
+
+type GetFolderOwnedParams struct {
+	ID     string
+	UserID string
+}
+
+func (q *Queries) GetFolderOwned(ctx context.Context, arg GetFolderOwnedParams) (Folder, error) {
+	row := q.db.QueryRow(ctx, getFolderOwned, arg.ID, arg.UserID)
+	var i Folder
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.Name,
+		&i.ParentID,
+		&i.Position,
+		&i.Characters,
+		&i.CreatedAt,
+		&i.UpdatedAt,
 	)
 	return i, err
 }
@@ -791,6 +860,34 @@ func (q *Queries) UpdateRefreshToken(ctx context.Context, arg UpdateRefreshToken
 		arg.IsRevoked,
 		arg.ReplacedByToken,
 		arg.RevokedAt,
+	)
+	return err
+}
+
+const upsertFolder = `-- name: UpsertFolder :exec
+INSERT INTO folders (id, user_id, name, parent_id, position, characters)
+VALUES ($1, $2, $3, $4, $5, $6)
+ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, parent_id = EXCLUDED.parent_id,
+    position = EXCLUDED.position, characters = EXCLUDED.characters, updated_at = now()
+`
+
+type UpsertFolderParams struct {
+	ID         string
+	UserID     string
+	Name       string
+	ParentID   string
+	Position   float64
+	Characters []string
+}
+
+func (q *Queries) UpsertFolder(ctx context.Context, arg UpsertFolderParams) error {
+	_, err := q.db.Exec(ctx, upsertFolder,
+		arg.ID,
+		arg.UserID,
+		arg.Name,
+		arg.ParentID,
+		arg.Position,
+		arg.Characters,
 	)
 	return err
 }

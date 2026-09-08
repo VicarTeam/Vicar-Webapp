@@ -61,3 +61,20 @@ type SkillTree struct {
 
 // IDHex returns the hex representation used as `id` by the frontend.
 func (s *SkillTree) IDHex() string { return s.ID.Hex() }
+
+// Folder is a first-class, nestable character folder. Unlike the legacy
+// `directory` string on the character sheet, a folder is its own entity: it
+// carries a parent (for nesting), a sibling position (for free ordering) and
+// the ordered ids of the characters it contains. Character sheets are never
+// modified by this — the folder owns the membership.
+type Folder struct {
+	ID         primitive.ObjectID `bson:"_id,omitempty"`
+	UserID     string             `bson:"userId"`
+	Name       string             `bson:"name"`
+	ParentID   string             `bson:"parentId"`
+	Position   float64            `bson:"position"`
+	Characters []string           `bson:"characters"`
+}
+
+// IDHex returns the hex representation used as `id` by the frontend.
+func (f *Folder) IDHex() string { return f.ID.Hex() }

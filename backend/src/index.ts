@@ -7,6 +7,7 @@ import {initCharacterRoutes} from "./api/character";
 import {initDataRoutes} from "./api/data";
 import {initUserRoutes} from "./api/user";
 import {initSkillTreeRoutes} from "./api/skilltree";
+import {initFolderRoutes} from "./api/folder";
 import {CDN_DIR, initCdnRoutes} from "./api/cdn";
 import {initAdminRoutes} from "./api/admin";
 import {Server} from "socket.io";
@@ -62,6 +63,7 @@ function buildApi(): express.Express {
   initCharacterRoutes(api);
   initUserRoutes(api);
   initSkillTreeRoutes(api);
+  initFolderRoutes(api);
   initCdnRoutes(api);
   initAdminRoutes(api);
 

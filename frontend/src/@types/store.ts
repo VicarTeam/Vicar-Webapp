@@ -6,6 +6,7 @@ export interface State {
     editingCharacter?: ICharacter|IWerewolfW5Sheet;
     isLevelMode: boolean;
     directoryForCharCreation?: ICharacterDirectory;
+    folderForCharCreation?: string;
     draggingCharacter?: ICharacter;
     overrideGameLine?: GameLine;
     lexiconOpen: boolean;

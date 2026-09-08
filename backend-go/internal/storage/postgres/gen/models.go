@@ -40,6 +40,17 @@ type Character struct {
 	DataVersion       pgtype.Text
 }
 
+type Folder struct {
+	ID         string
+	UserID     string
+	Name       string
+	ParentID   string
+	Position   float64
+	Characters []string
+	CreatedAt  pgtype.Timestamptz
+	UpdatedAt  pgtype.Timestamptz
+}
+
 type RefreshToken struct {
 	ID              string
 	UserID          string

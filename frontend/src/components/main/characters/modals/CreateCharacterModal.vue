@@ -23,16 +23,29 @@ const sex = ref<Sex>(Sex.Divers)
 const generation = ref(13)
 const generationEra = ref<Generation>(Generation.Children)
 const dir = ref<ICharacterDirectory | undefined>(undefined)
+const folderId = ref<string | undefined>(undefined)
 
 const bookSelection = ref<InstanceType<typeof BookSelection> | null>(null)
 
-const showModal = (d?: ICharacterDirectory) => {
-  dir.value = d
+const resetForm = () => {
   name.value = ""
   gameline.value = GameLine.Vampire
   sex.value = Sex.Divers
   generationEra.value = Generation.Children
   generation.value = 13
+}
+
+const showModal = (d?: ICharacterDirectory) => {
+  dir.value = d
+  folderId.value = undefined
+  resetForm()
+  show.value = true
+}
+
+const showModalInFolder = (folder: string) => {
+  dir.value = undefined
+  folderId.value = folder
+  resetForm()
   show.value = true
 }
 
@@ -133,6 +146,7 @@ const startCreateCharacter = () => {
   char.sex = sex.value
 
   store.directoryForCharCreation = dir.value
+  store.folderForCharCreation = folderId.value
 
   if (gameline.value === GameLine.Vampire) {
     char.generation = generation.value
@@ -216,7 +230,7 @@ watch(show, val => {
   }
 })
 
-defineExpose({ showModal })
+defineExpose({ showModal, showModalInFolder })
 </script>
 
 <template>

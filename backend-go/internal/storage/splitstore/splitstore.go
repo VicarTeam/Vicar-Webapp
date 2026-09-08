@@ -25,6 +25,7 @@ type Store struct {
 	refresh *splitRefresh
 	chars   *splitChars
 	trees   *splitTrees
+	folders *splitFolders
 }
 
 func New(mongo, pg storage.Provider) *Store {
@@ -33,6 +34,7 @@ func New(mongo, pg storage.Provider) *Store {
 	s.refresh = &splitRefresh{s}
 	s.chars = &splitChars{s}
 	s.trees = &splitTrees{s}
+	s.folders = &splitFolders{s}
 	return s
 }
 
@@ -40,6 +42,7 @@ func (s *Store) Users() storage.UserStore                 { return s.users }
 func (s *Store) RefreshTokens() storage.RefreshTokenStore { return s.refresh }
 func (s *Store) Characters() storage.CharacterStore       { return s.chars }
 func (s *Store) SkillTrees() storage.SkillTreeStore       { return s.trees }
+func (s *Store) Folders() storage.FolderStore             { return s.folders }
 
 func (s *Store) Close(ctx context.Context) error {
 	e1 := s.pg.Close(ctx)
@@ -399,4 +402,31 @@ func mergeUsers(primary, secondary []models.User) []models.User {
 		}
 	}
 	return out
+}
+
+// ============================ folders ============================
+//
+// Folders are a new feature with no legacy Mongo data, so they live entirely in
+// Postgres regardless of a character's storage location.
+
+type splitFolders struct{ s *Store }
+
+func (d *splitFolders) FindByUser(ctx context.Context, userID string) ([]models.Folder, error) {
+	return d.s.pg.Folders().FindByUser(ctx, userID)
+}
+
+func (d *splitFolders) GetOwned(ctx context.Context, id, userID string) (*models.Folder, error) {
+	return d.s.pg.Folders().GetOwned(ctx, id, userID)
+}
+
+func (d *splitFolders) Create(ctx context.Context, f *models.Folder) (string, error) {
+	return d.s.pg.Folders().Create(ctx, f)
+}
+
+func (d *splitFolders) Save(ctx context.Context, f *models.Folder) error {
+	return d.s.pg.Folders().Save(ctx, f)
+}
+
+func (d *splitFolders) Delete(ctx context.Context, id string) error {
+	return d.s.pg.Folders().Delete(ctx, id)
 }

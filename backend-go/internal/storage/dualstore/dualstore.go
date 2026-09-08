@@ -33,6 +33,7 @@ type Store struct {
 	refresh *dualRefresh
 	chars   *dualChars
 	trees   *dualTrees
+	folders *dualFolders
 }
 
 // New builds a dual store. mongo and pg are the two underlying providers.
@@ -47,6 +48,7 @@ func New(mongo, pg storage.Provider, mode Mode) *Store {
 	s.refresh = &dualRefresh{s}
 	s.chars = &dualChars{s}
 	s.trees = &dualTrees{s}
+	s.folders = &dualFolders{s}
 	return s
 }
 
@@ -54,6 +56,7 @@ func (s *Store) Users() storage.UserStore                 { return s.users }
 func (s *Store) RefreshTokens() storage.RefreshTokenStore { return s.refresh }
 func (s *Store) Characters() storage.CharacterStore       { return s.chars }
 func (s *Store) SkillTrees() storage.SkillTreeStore       { return s.trees }
+func (s *Store) Folders() storage.FolderStore             { return s.folders }
 
 func (s *Store) Close(ctx context.Context) error {
 	e1 := s.primary.Close(ctx)
@@ -423,6 +426,62 @@ func (d *dualTrees) Delete(ctx context.Context, id string) error {
 
 func secondErr(_ string, err error) error { return err }
 
+// ============================ folders ============================
+
+type dualFolders struct{ s *Store }
+
+func (d *dualFolders) FindByUser(ctx context.Context, userID string) ([]models.Folder, error) {
+	p, err := d.s.primary.Folders().FindByUser(ctx, userID)
+	if err != nil || !d.s.fallback {
+		return p, err
+	}
+	sec, _ := d.s.secondary.Folders().FindByUser(ctx, userID)
+	return mergeFolders(p, sec), nil
+}
+
+func (d *dualFolders) GetOwned(ctx context.Context, id, userID string) (*models.Folder, error) {
+	f, err := d.s.primary.Folders().GetOwned(ctx, id, userID)
+	if err == nil {
+		return f, nil
+	}
+	if !isNotFound(err) || !d.s.fallback {
+		return nil, err
+	}
+	f2, err2 := d.s.secondary.Folders().GetOwned(ctx, id, userID)
+	if err2 != nil {
+		return nil, err
+	}
+	logErr("backfill folder", d.s.primary.Folders().Save(ctx, cloneFolder(f2)))
+	return f2, nil
+}
+
+func (d *dualFolders) Create(ctx context.Context, f *models.Folder) (string, error) {
+	if f.ID.IsZero() {
+		f.ID = primitive.NewObjectID()
+	}
+	if _, err := d.s.primary.Folders().Create(ctx, f); err != nil {
+		return "", err
+	}
+	logErr("secondary folder create", secondErr(d.s.secondary.Folders().Create(ctx, cloneFolder(f))))
+	return f.IDHex(), nil
+}
+
+func (d *dualFolders) Save(ctx context.Context, f *models.Folder) error {
+	if err := d.s.primary.Folders().Save(ctx, f); err != nil {
+		return err
+	}
+	logErr("secondary folder save", d.s.secondary.Folders().Save(ctx, cloneFolder(f)))
+	return nil
+}
+
+func (d *dualFolders) Delete(ctx context.Context, id string) error {
+	if err := d.s.primary.Folders().Delete(ctx, id); err != nil {
+		return err
+	}
+	logErr("secondary folder delete", d.s.secondary.Folders().Delete(ctx, id))
+	return nil
+}
+
 // ---- merge + clone helpers ----
 
 func mergeChars(primary, secondary []models.Character) []models.Character {
@@ -455,7 +514,23 @@ func mergeTrees(primary, secondary []models.SkillTree) []models.SkillTree {
 	return out
 }
 
+func mergeFolders(primary, secondary []models.Folder) []models.Folder {
+	seen := make(map[string]bool, len(primary))
+	out := make([]models.Folder, 0, len(primary)+len(secondary))
+	for i := range primary {
+		seen[primary[i].IDHex()] = true
+		out = append(out, primary[i])
+	}
+	for i := range secondary {
+		if !seen[secondary[i].IDHex()] {
+			out = append(out, secondary[i])
+		}
+	}
+	return out
+}
+
 func cloneUser(u *models.User) *models.User                    { c := *u; return &c }
 func cloneRefresh(t *models.RefreshToken) *models.RefreshToken { c := *t; return &c }
 func cloneChar(c *models.Character) *models.Character          { cp := *c; return &cp }
 func cloneTree(t *models.SkillTree) *models.SkillTree          { c := *t; return &c }
+func cloneFolder(f *models.Folder) *models.Folder              { c := *f; return &c }

@@ -22,6 +22,9 @@ import (
 //go:embed sql/schema.sql
 var schemaSQL string
 
+//go:embed sql/folders.sql
+var foldersSQL string
+
 // Store is the PostgreSQL-backed storage.Provider.
 type Store struct {
 	pool *pgxpool.Pool
@@ -31,6 +34,7 @@ type Store struct {
 	refreshTokens *refreshTokenStore
 	characters    *characterStore
 	skillTrees    *skillTreeStore
+	folders       *folderStore
 }
 
 // Connect dials Postgres, applies the schema once, and returns a ready Store.
@@ -57,6 +61,7 @@ func Connect(ctx context.Context, url string) (*Store, error) {
 	s.refreshTokens = &refreshTokenStore{q: q}
 	s.characters = &characterStore{q: q}
 	s.skillTrees = &skillTreeStore{q: q}
+	s.folders = &folderStore{q: q}
 	return s, nil
 }
 
@@ -64,16 +69,35 @@ func (s *Store) Users() storage.UserStore                 { return s.users }
 func (s *Store) RefreshTokens() storage.RefreshTokenStore { return s.refreshTokens }
 func (s *Store) Characters() storage.CharacterStore       { return s.characters }
 func (s *Store) SkillTrees() storage.SkillTreeStore       { return s.skillTrees }
+func (s *Store) Folders() storage.FolderStore             { return s.folders }
 
 func (s *Store) Close(context.Context) error { s.pool.Close(); return nil }
 
-// migrate applies schema.sql exactly once, tracked in schema_migrations.
+// migrate applies each versioned migration step exactly once, tracked in
+// schema_migrations. Steps are ordered and idempotent per version, so adding a
+// new one (e.g. the folders table) upgrades existing databases in place.
 func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 	if _, err := pool.Exec(ctx, `CREATE TABLE IF NOT EXISTS schema_migrations (version text PRIMARY KEY)`); err != nil {
 		return err
 	}
+	steps := []struct {
+		version string
+		sql     string
+	}{
+		{"0001", schemaSQL},
+		{"0002", foldersSQL},
+	}
+	for _, step := range steps {
+		if err := applyMigration(ctx, pool, step.version, step.sql); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func applyMigration(ctx context.Context, pool *pgxpool.Pool, version, sql string) error {
 	var exists bool
-	if err := pool.QueryRow(ctx, `SELECT EXISTS (SELECT 1 FROM schema_migrations WHERE version = '0001')`).Scan(&exists); err != nil {
+	if err := pool.QueryRow(ctx, `SELECT EXISTS (SELECT 1 FROM schema_migrations WHERE version = $1)`, version).Scan(&exists); err != nil {
 		return err
 	}
 	if exists {
@@ -84,10 +108,10 @@ func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 		return err
 	}
 	defer tx.Rollback(ctx)
-	if _, err := tx.Exec(ctx, schemaSQL); err != nil {
+	if _, err := tx.Exec(ctx, sql); err != nil {
 		return err
 	}
-	if _, err := tx.Exec(ctx, `INSERT INTO schema_migrations (version) VALUES ('0001')`); err != nil {
+	if _, err := tx.Exec(ctx, `INSERT INTO schema_migrations (version) VALUES ($1)`, version); err != nil {
 		return err
 	}
 	return tx.Commit(ctx)

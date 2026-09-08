@@ -1,4 +1,4 @@
-import type {ICharacter, ICharacterDirectory} from "@/@types/models";
+import type {ICharacter, ICharacterDirectory, IFolder} from "@/@types/models";
 import {v4 as uuidv4} from 'uuid';
 import {del, get, patch, post, put} from "@/libs/io/rest";
 import {useStore} from "@/app/store";
@@ -14,6 +14,8 @@ export default class CharacterStorage {
 
   public static loadedCharacters: ICharacter[] = [];
   public static loadedDirectories: ICharacterDirectory[] = [];
+  /** Echte, verschachtelbare Ordner (neues System). */
+  public static loadedFolders: IFolder[] = [];
   private static initialized: boolean = false;
   /** IDs der Charaktere, deren vollständiger Blob (nicht nur das Listen-Summary) geladen ist. */
   private static fullyLoaded: Set<string> = new Set();
@@ -107,6 +109,8 @@ export default class CharacterStorage {
       }
     }
 
+    await this.loadFolders();
+
     this.initializeUpdatingSocket();
   }
 
@@ -193,6 +197,8 @@ export default class CharacterStorage {
     if (index >= 0) {
       this.loadedCharacters.splice(index, 1);
     }
+
+    await this.removeCharacterFromFolders(character.id);
   }
 
   public static getSortedCharacters(): { directory: ICharacterDirectory | null, characters: ICharacter[] }[] {
@@ -224,6 +230,257 @@ export default class CharacterStorage {
     });
 
     return directories;
+  }
+
+  private static folderOpenStorageKey = "vicar::folders-open";
+
+  private static readFolderOpenState(): Record<string, boolean> {
+    try {
+      const raw = localStorage.getItem(this.folderOpenStorageKey);
+      if (raw) {
+        return JSON.parse(raw);
+      }
+    } catch {
+      // ignore
+    }
+    return {};
+  }
+
+  private static persistFolderOpenState() {
+    const map: Record<string, boolean> = {};
+    for (const folder of this.loadedFolders) {
+      map[folder.id] = folder.open !== false;
+    }
+    try {
+      localStorage.setItem(this.folderOpenStorageKey, JSON.stringify(map));
+    } catch {
+      // ignore
+    }
+  }
+
+  /**
+   * Laedt die Ordner des Nutzers. Fehlt der Endpunkt (aeltere Backends), bleibt
+   * die Liste leer und nur das alte, abgeleitete Ordnersystem greift.
+   */
+  private static async loadFolders() {
+    const [status, res] = await get<IFolder[]>(`/folders`);
+    if (status >= 400 || !Array.isArray(res)) {
+      return;
+    }
+    const openState = this.readFolderOpenState();
+    this.loadedFolders = res.map(folder => ({
+      ...folder,
+      characters: Array.isArray(folder.characters) ? folder.characters : [],
+      open: openState[folder.id] !== false,
+    }));
+  }
+
+  private static folderedCharacterIds(): Set<string> {
+    const ids = new Set<string>();
+    for (const folder of this.loadedFolders) {
+      for (const id of folder.characters) {
+        ids.add(id);
+      }
+    }
+    return ids;
+  }
+
+  public static folderOfCharacter(characterId: string): IFolder | undefined {
+    return this.loadedFolders.find(folder => folder.characters.includes(characterId));
+  }
+
+  public static rootFolders(): IFolder[] {
+    return this.loadedFolders.filter(folder => !folder.parentId).sort((a, b) => a.position - b.position);
+  }
+
+  public static subFolders(parentId: string): IFolder[] {
+    return this.loadedFolders.filter(folder => folder.parentId === parentId).sort((a, b) => a.position - b.position);
+  }
+
+  public static charactersInFolder(folder: IFolder): ICharacter[] {
+    const byId = new Map(this.loadedCharacters.map(character => [character.id, character]));
+    const out: ICharacter[] = [];
+    for (const id of folder.characters) {
+      const character = byId.get(id);
+      if (character && !character.justViewing) {
+        out.push(character);
+      }
+    }
+    return out;
+  }
+
+  /**
+   * Gruppen fuer die Wurzel-Ebene, die NICHT im neuen Ordnersystem liegen:
+   * lose eigene Charaktere, die alten (flachen) directory-Ordner und die
+   * geteilten Charaktere. Charaktere in einem neuen Ordner erscheinen hier nicht.
+   */
+  public static getUnfolderedGroups(): { directory: ICharacterDirectory | null, characters: ICharacter[] }[] {
+    const foldered = this.folderedCharacterIds();
+    const groups: { directory: ICharacterDirectory | null, characters: ICharacter[] }[] = [];
+
+    const candidates = this.loadedCharacters.filter(character => !foldered.has(character.id));
+    const byName = (a: ICharacter, b: ICharacter) => a.name.localeCompare(b.name);
+
+    const looseOwn = candidates.filter(character => !character.justViewing && !character.directory).sort(byName);
+    if (looseOwn.length > 0) {
+      groups.push({directory: null, characters: looseOwn});
+    }
+
+    const legacyDirectories = new Map<string, ICharacter[]>();
+    for (const character of candidates) {
+      if (character.justViewing || !character.directory) {
+        continue;
+      }
+      const list = legacyDirectories.get(character.directory) ?? [];
+      list.push(character);
+      legacyDirectories.set(character.directory, list);
+    }
+    [...legacyDirectories.keys()].sort((a, b) => a.localeCompare(b)).forEach(key => {
+      const existing = this.loadedDirectories.find(directory => directory.id === key);
+      groups.push({
+        directory: {id: key, name: key, open: existing ? existing.open : true},
+        characters: legacyDirectories.get(key)!.sort(byName),
+      });
+    });
+
+    const shared = candidates.filter(character => character.justViewing).sort(byName);
+    if (shared.length > 0) {
+      groups.push({
+        characters: shared,
+        directory: {
+          id: '@shared-chars',
+          name: 'Geteilte Charaktere',
+          open: localStorage.getItem('vicar::shared-chars-open') === "1",
+        },
+      });
+    }
+
+    return groups;
+  }
+
+  public static async createFolder(name: string, parentId: string = ""): Promise<IFolder | undefined> {
+    const trimmed = name.trim();
+    if (!trimmed) {
+      return;
+    }
+    const siblings = this.loadedFolders.filter(folder => folder.parentId === parentId);
+    const position = siblings.reduce((max, folder) => Math.max(max, folder.position), 0) + 1;
+
+    const [status, res] = await post<IFolder>(`/folders`, {name: trimmed, parentId, position, characters: []});
+    if (status >= 400 || !res) {
+      return;
+    }
+    const folder: IFolder = {...res, characters: res.characters ?? [], open: true};
+    this.loadedFolders.push(folder);
+    this.persistFolderOpenState();
+    return folder;
+  }
+
+  public static async saveFolder(folder: IFolder): Promise<void> {
+    const [status] = await put(`/folders/${folder.id}`, {
+      name: folder.name,
+      parentId: folder.parentId,
+      position: folder.position,
+      characters: folder.characters,
+    });
+    if (status >= 400) {
+      console.error("Failed to save folder");
+    }
+  }
+
+  public static async renameFolder(folder: IFolder, name: string): Promise<void> {
+    const trimmed = name.trim();
+    if (!trimmed) {
+      return;
+    }
+    folder.name = trimmed;
+    await this.saveFolder(folder);
+  }
+
+  public static async deleteFolder(folder: IFolder): Promise<void> {
+    const [status] = await del(`/folders/${folder.id}`);
+    if (status >= 400) {
+      console.error("Failed to delete folder");
+      return;
+    }
+    this.loadedFolders = this.loadedFolders.filter(entry => entry.id !== folder.id);
+    this.persistFolderOpenState();
+  }
+
+  public static toggleFolderOpen(folder: IFolder) {
+    const isOpen = folder.open !== false;
+    folder.open = !isOpen;
+    this.persistFolderOpenState();
+  }
+
+  /** Ist `folderId` gleich `ancestorId` oder ein Nachfahre davon? (Zyklus-Schutz.) */
+  public static isFolderDescendant(folderId: string, ancestorId: string): boolean {
+    let current: IFolder | undefined = this.loadedFolders.find(folder => folder.id === folderId);
+    const guard = new Set<string>();
+    while (current) {
+      if (current.id === ancestorId) {
+        return true;
+      }
+      if (!current.parentId || guard.has(current.id)) {
+        return false;
+      }
+      guard.add(current.id);
+      current = this.loadedFolders.find(folder => folder.id === current!.parentId);
+    }
+    return false;
+  }
+
+  private static positionForIndex(siblings: IFolder[], index: number): number {
+    const before = index > 0 ? siblings[index - 1]?.position ?? null : null;
+    const after = index < siblings.length ? siblings[index]?.position ?? null : null;
+    if (before === null && after === null) {
+      return 0;
+    }
+    if (before === null) {
+      return (after as number) - 1;
+    }
+    if (after === null) {
+      return before + 1;
+    }
+    return (before + after) / 2;
+  }
+
+  public static async moveFolder(folder: IFolder, newParentId: string, index: number): Promise<void> {
+    if (this.isFolderDescendant(newParentId, folder.id)) {
+      return;
+    }
+    const siblings = this.loadedFolders
+      .filter(entry => entry.parentId === newParentId && entry.id !== folder.id)
+      .sort((a, b) => a.position - b.position);
+    const clamped = Math.max(0, Math.min(index, siblings.length));
+    folder.parentId = newParentId;
+    folder.position = this.positionForIndex(siblings, clamped);
+    await this.saveFolder(folder);
+  }
+
+  public static async addCharacterToFolder(folderId: string, characterId: string, index?: number): Promise<void> {
+    const target = this.loadedFolders.find(folder => folder.id === folderId);
+    if (!target) {
+      return;
+    }
+    const source = this.loadedFolders.find(folder => folder.id !== folderId && folder.characters.includes(characterId));
+    if (source) {
+      source.characters = source.characters.filter(id => id !== characterId);
+      await this.saveFolder(source);
+    }
+    target.characters = target.characters.filter(id => id !== characterId);
+    const at = index === undefined || index < 0 || index > target.characters.length ? target.characters.length : index;
+    target.characters.splice(at, 0, characterId);
+    await this.saveFolder(target);
+  }
+
+  public static async removeCharacterFromFolders(characterId: string): Promise<void> {
+    const source = this.folderOfCharacter(characterId);
+    if (!source) {
+      return;
+    }
+    source.characters = source.characters.filter(id => id !== characterId);
+    await this.saveFolder(source);
   }
 
   public static async migrateCharacters() {
