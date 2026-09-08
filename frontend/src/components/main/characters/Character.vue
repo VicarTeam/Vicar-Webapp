@@ -74,6 +74,12 @@ function beginMigrate(char: ICharacter) {
   migrateModal.value?.showModal(char)
 }
 
+function onMigrated() {
+  // Charakter liegt jetzt in Postgres -> nicht mehr Legacy, Button ausblenden.
+  ;(props.character as any).legacy = false
+  updateCharacterList()
+}
+
 function viewCharacter(character: ICharacter, newTab = false) {
   if (ctrlDown.value || newTab) {
     window.open(router.resolve({name: 'viewer', params: {characterId: character.id}}).href, '_blank');
@@ -172,12 +178,12 @@ function onDragHandleDown(e: PointerEvent) {
       <IconButton icon="fa-trash" @click="beginCharDeletion(character as any)" />
       <IconButton icon="fa-copy" @click="cloneCharacter(character as any)" />
       <IconButton icon="fa-file-arrow-down" @click="exportCharacter(character as any)" />
-      <IconButton icon="fa-wand-magic-sparkles" title="Charakter modernisieren (auf die neue Speicherung umstellen – experimentell)" @click="beginMigrate(character as any)" />
+      <IconButton v-if="(character as any).legacy" icon="fa-wand-magic-sparkles" title="Charakter modernisieren (auf die neue Speicherung umstellen – experimentell)" @click="beginMigrate(character as any)" />
       <IconButton icon="fa-share-nodes" @click="editViewers(character as any)" />
       <IconButton icon="fa-eye" @click="viewCharacter(character as any)" />
     </div>
 
-    <MigrateCharacterModal ref="migrateModal" @migrated="updateCharacterList()" />
+    <MigrateCharacterModal ref="migrateModal" @migrated="onMigrated" />
 
 <!--    <Modal :shown="enableSyncModalVisible" @close="enableSyncModalVisible = false">
       <div class="modals-box">

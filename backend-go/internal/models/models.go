@@ -46,6 +46,10 @@ type Character struct {
 	UserID  string             `bson:"userId"`
 	Viewers []string           `bson:"viewers"`
 	Data    bson.M             `bson:"data"`
+	// Legacy is a transient flag (never persisted): set by the split store for
+	// characters still living in MongoDB, so the API can tell the frontend which
+	// characters can still be migrated to Postgres.
+	Legacy bool `bson:"-"`
 }
 
 // IDHex returns the hex representation used as `id` by the frontend.

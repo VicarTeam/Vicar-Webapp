@@ -249,7 +249,7 @@ func (d *splitChars) OwnedSummaries(ctx context.Context, userID string) ([]model
 		return nil, err
 	}
 	m, _ := d.s.mongo.Characters().OwnedSummaries(ctx, userID)
-	return mergeChars(p, m), nil
+	return mergeChars(p, markLegacy(m)), nil
 }
 func (d *splitChars) SharedSummaries(ctx context.Context, userID string) ([]models.Character, error) {
 	p, err := d.s.pg.Characters().SharedSummaries(ctx, userID)
@@ -257,7 +257,7 @@ func (d *splitChars) SharedSummaries(ctx context.Context, userID string) ([]mode
 		return nil, err
 	}
 	m, _ := d.s.mongo.Characters().SharedSummaries(ctx, userID)
-	return mergeChars(p, m), nil
+	return mergeChars(p, markLegacy(m)), nil
 }
 func (d *splitChars) OwnedMini(ctx context.Context, userID string) ([]models.Character, error) {
 	p, err := d.s.pg.Characters().OwnedMini(ctx, userID)
@@ -387,6 +387,15 @@ func mergeTrees(primary, secondary []models.SkillTree) []models.SkillTree {
 		}
 	}
 	return out
+}
+
+// markLegacy flags Mongo-sourced characters so the API can offer migration only
+// for those (they still live in the legacy store).
+func markLegacy(chars []models.Character) []models.Character {
+	for i := range chars {
+		chars[i].Legacy = true
+	}
+	return chars
 }
 
 func mergeUsers(primary, secondary []models.User) []models.User {

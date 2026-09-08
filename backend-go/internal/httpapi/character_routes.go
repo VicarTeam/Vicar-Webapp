@@ -97,7 +97,7 @@ func (s *Server) getCharacters(w http.ResponseWriter, r *http.Request) {
 
 	characters := make([]map[string]any, 0, len(owned))
 	for i := range owned {
-		characters = append(characters, spread(owned[i].Data, map[string]any{"id": owned[i].IDHex()}))
+		characters = append(characters, spread(owned[i].Data, map[string]any{"id": owned[i].IDHex(), "legacy": owned[i].Legacy}))
 	}
 	sharedOut := make([]map[string]any, 0, len(shared))
 	for i := range shared {
