@@ -202,7 +202,6 @@ function startDrag(e: PointerEvent) {
 
 function beginDrag(char: ICharacter, e: PointerEvent) {
   if (e.button !== undefined && e.button !== 0) return
-  if (char.justViewing) return
   drag.kind = "char"
   drag.char = char
   drag.folder = null

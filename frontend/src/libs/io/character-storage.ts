@@ -302,7 +302,9 @@ export default class CharacterStorage {
     const out: ICharacter[] = [];
     for (const id of folder.characters) {
       const character = byId.get(id);
-      if (character && !character.justViewing) {
+      // Auch geteilte (nur ansehbare) Charaktere duerfen in Ordnern liegen - die
+      // Zuordnung lebt im Ordner, der Charakter selbst wird nie veraendert.
+      if (character) {
         out.push(character);
       }
     }
