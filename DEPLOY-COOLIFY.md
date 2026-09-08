@@ -17,9 +17,30 @@ In Coolify eine **Docker-Compose-Ressource** aus diesem Repo mit `docker-compose
 | --- | --- | --- |
 | `APP_URL` | `https://vicar.cloud` | Basis-URL (für Auth-Redirects / BACKEND_URL) |
 | `APP_DOMAIN` | `vicar.cloud` | Domain (falls du rohe Traefik-Labels nutzt, s.u.) |
-| `JWT_SECRET` | (langes Geheimnis) | Token-Signatur |
+| `JWT_SECRET` | (langes Geheimnis) | Token-Signatur — **muss identisch zum bisherigen Wert bleiben**, sonst werden alle Sessions ungültig |
 | `DISCORD_CLIENT_ID` | … | Discord-OAuth |
 | `DISCORD_CLIENT_SECRET` | … | Discord-OAuth |
+| `POSTGRES_PASSWORD` | (langes Geheimnis) | Passwort der neuen Postgres-DB (nur für den Go-Cutover, s.u.) |
+
+## 2a. Go-Backend-Cutover (Split-Modus) — `rework/backend`
+
+Ab dem Branch `rework/backend` ersetzt `docker-compose.coolify.yml` das alte Bun-Backend durch das
+**Go-Backend mit MongoDB + Postgres im Split-Modus**:
+
+- **MongoDB bleibt unverändert** (gleiches Volume `mongo_data`). Alle bestehenden Charaktere, Nutzer,
+  Skill-Bäume und Logins funktionieren weiter — Auth liest Postgres-first mit Mongo-Fallback, das
+  `JWT_SECRET` bleibt gleich, also bleiben aktive Sessions gültig.
+- **Postgres kommt neu dazu** (Volume `pg_data`, Schema wird beim Start idempotent angelegt).
+- **`DB_MODE=split`**: alte Charaktere bleiben in Mongo, **neue** Charaktere werden in Postgres angelegt.
+  Kein Dual-Write, keine Big-Bang-Migration. Einzelne Alt-Charaktere lassen sich später on-demand
+  migrieren („Charakter modernisieren" im UI bzw. `cmd/sweep` im Container).
+
+**Deploy:** Branch in Coolify auf `rework/backend` stellen → **Save** → `POSTGRES_PASSWORD` als Env
+setzen → **Deploy**. Das `cdn_data`-Volume (Avatare/Bilder) wird 1:1 weiterverwendet.
+
+**Rollback:** Branch zurück auf `main` → Deploy. Das alte Bun-Backend kommt zurück, Mongo ist
+unverändert. In Postgres neu angelegte Charaktere sind für das Bun-Backend dann nicht sichtbar
+(liegen aber weiter in Postgres, gehen also nicht verloren).
 
 ## 3. Domain (Coolify-UI) — NUR das Frontend
 - **frontend** → `https://vicar.cloud`

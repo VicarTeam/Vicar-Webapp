@@ -1,3 +1,20 @@
+# Coolify-Deployment fuer den Go-Backend-Cutover im SPLIT-Modus.
+#
+# Was passiert:
+#   - MongoDB bleibt unveraendert (gleiches Volume mongo_data) -> alle bestehenden
+#     Charaktere, Nutzer, Skill-Baeume und Logins funktionieren wie bisher weiter.
+#   - Postgres kommt neu dazu (Volume pg_data).
+#   - Das Go-Backend laeuft mit DB_MODE=split: alte Charaktere werden aus Mongo
+#     gelesen/bearbeitet, NEUE Charaktere landen in Postgres. Kein Dual-Write,
+#     keine Big-Bang-Migration. Auth/Users lesen Postgres-first mit Mongo-Fallback.
+#   - Das Frontend-nginx proxyt /api weiterhin intern an den Service `backend`.
+#
+# Rollback: In Coolify den Branch zurueck auf `main` stellen und neu deployen ->
+# das alte Bun-Backend kommt zurueck, Mongo ist unveraendert. (In Postgres neu
+# angelegte Charaktere sind dann fuer das Bun-Backend nicht sichtbar.)
+#
+# Zusaetzlich noetige Coolify-Env-Variable (neu): POSTGRES_PASSWORD.
+
 services:
   mongo:
     image: mongo:7
@@ -5,12 +22,33 @@ services:
     volumes:
       - mongo_data:/data/db
 
-  backend:
-    build:
-      context: ./backend
+  postgres:
+    image: postgres:16-alpine
     restart: unless-stopped
     environment:
+      POSTGRES_USER: vicar
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: vicar
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vicar -d vicar"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  backend:
+    build:
+      context: ./backend-go
+    restart: unless-stopped
+    # Der alte Bun-Container lief als root, daher gehoert das bestehende
+    # cdn_data-Volume root. Das Go-Image laeuft sonst als unprivilegierter
+    # Nutzer und koennte keine neuen Uploads ins Volume schreiben.
+    user: "0:0"
+    environment:
+      DB_MODE: "split"
       MONGO_URI: "mongodb://mongo:27017/vicar"
+      POSTGRES_URL: "postgres://vicar:${POSTGRES_PASSWORD}@postgres:5432/vicar?sslmode=disable"
       JWT_SECRET: "${JWT_SECRET}"
       DEV_MODE: "false"
       # Single-Origin: App-Origin bleibt gleich, API liegt unter /api.
@@ -19,18 +57,21 @@ services:
       DISCORD_CLIENT_ID: "${DISCORD_CLIENT_ID}"
       DISCORD_CLIENT_SECRET: "${DISCORD_CLIENT_SECRET}"
       DISCORD_REDIRECT_URI: "${APP_URL}/api/auth/callback"
-      # Hochgeladene Bilder (Avatare/Skill-Tree) – persistentes Volume.
-      CDN_DIR: "/app/cdn-data"
+      # Hochgeladene Bilder (Avatare/Skill-Tree) - bestehendes CDN-Volume weiterverwenden.
+      CDN_DIR: "/data/cdn"
     volumes:
-      - cdn_data:/app/cdn-data
+      - cdn_data:/data/cdn
     depends_on:
-      - mongo
+      mongo:
+        condition: service_started
+      postgres:
+        condition: service_healthy
 
   frontend:
     build:
       context: ./frontend
       args:
-        # Relative API-Base -> alle Requests/Bilder laufen same-origin über /api.
+        # Relative API-Base -> alle Requests/Bilder laufen same-origin ueber /api.
         VUE_APP_API_URL: "/api"
     restart: unless-stopped
     depends_on:
@@ -39,3 +80,4 @@ services:
 volumes:
   mongo_data:
   cdn_data:
+  pg_data:
