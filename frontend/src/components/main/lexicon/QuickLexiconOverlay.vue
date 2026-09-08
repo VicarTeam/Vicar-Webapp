@@ -437,6 +437,15 @@ function kindLabel(k: LexiconKind) {
                   <p>{{ active.payload?.trait?.description }}</p>
                 </template>
 
+                <template v-else-if="active.kind === 'predator'">
+                  <small v-if="active.payload?.description"><i>{{ active.payload.description }}</i></small>
+                  <div class="qlx-sep" />
+                  <b>Das erhältst du:</b>
+                  <p v-for="(pa, i) in (active.payload?.actions || [])" :key="i" class="qlx-effect">
+                    • {{ (pa as any).description }}
+                  </p>
+                </template>
+
                 <template v-else>
                   <p v-if="active.text">{{ active.text }}</p>
                   <small v-else class="text-muted">Keine Vorschau verfügbar.</small>
@@ -718,6 +727,11 @@ function kindLabel(k: LexiconKind) {
   height: 1px;
   background: rgba(255, 255, 255, 0.10);
   margin: 0.85rem 0;
+}
+
+.qlx-effect {
+  margin: 0.2rem 0;
+  padding-left: 0.25rem;
 }
 
 .qlx-empty {

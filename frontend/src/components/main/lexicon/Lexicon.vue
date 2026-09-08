@@ -406,7 +406,7 @@ provide("go-to-paragraph", goToParagraph)
           <section v-for="p in filterPacks(merits, true)" :key="(p as any).id">
             <h4>{{ (p as any).name }}</h4>
             <small>{{ (p as any).description }}</small>
-            <section v-for="t in (p as any).advantages" :key="(t as any).id">
+            <section v-for="t in (p as any).disadvantages" :key="(t as any).id">
               <h6>
                 {{ (t as any).name }} -
                 <small class="muted"><i>{{ "Stufe " + (t as any).level }}</i></small>
@@ -421,7 +421,7 @@ provide("go-to-paragraph", goToParagraph)
           <section v-for="p in filterPacks(backgrounds, true)" :key="(p as any).id">
             <h4>{{ (p as any).name }}</h4>
             <small>{{ (p as any).description }}</small>
-            <section v-for="t in (p as any).advantages" :key="(t as any).id">
+            <section v-for="t in (p as any).disadvantages" :key="(t as any).id">
               <h6>
                 {{ (t as any).name }} -
                 <small class="muted"><i>{{ "Stufe " + (t as any).level }}</i></small>
