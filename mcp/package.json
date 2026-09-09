@@ -1,0 +1,17 @@
+{
+  "name": "vicar-mcp",
+  "private": true,
+  "type": "module",
+  "description": "Agent/MCP interface that drives the real Vicar web UI (see ../AGENT_MCP_PLAN.md).",
+  "scripts": {
+    "spike": "tsx src/spike.ts"
+  },
+  "dependencies": {
+    "playwright": "^1.63.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}
