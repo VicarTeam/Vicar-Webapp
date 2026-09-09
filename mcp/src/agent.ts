@@ -1,11 +1,18 @@
 import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
 
+export interface AgentOption {
+  text: string;
+  disabled: boolean;
+  blocked: boolean;
+}
+
 export interface AgentAction {
   agent: string;
   kind: string;
   label: string;
   disabled: boolean;
   value?: string;
+  options?: AgentOption[];
 }
 
 export interface AgentState {

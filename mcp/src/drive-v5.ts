@@ -62,6 +62,29 @@ async function deleteFolder(agent: VicarAgent, name: string) {
   }
 }
 
+async function pickFirstSelectable(agent: VicarAgent, selectAgent: string) {
+  const sel = (await agent.state()).actions.find((a) => a.agent === selectAgent);
+  const opts = sel?.options ?? [];
+  const idx = opts.findIndex((o) => !o.disabled && !o.blocked && o.text.trim() !== "");
+  if (idx < 0) throw new Error(`no selectable option for ${selectAgent}`);
+  await agent.act(selectAgent, { index: idx });
+}
+
+async function fetchCharacter(agent: VicarAgent, name: string): Promise<any> {
+  const token = await agent.token();
+  const res = await fetch(`${agent.backendUrl}/characters`, { headers: { Authorization: `Bearer ${token}` } });
+  const body = (await res.json()) as { characters: any[] };
+  const summary = body.characters.find((c) => c.name === name);
+  if (!summary) throw new Error(`character "${name}" not found in backend`);
+  const full = await fetch(`${agent.backendUrl}/characters/${summary.id}`, { headers: { Authorization: `Bearer ${token}` } });
+  return full.json();
+}
+
+async function deleteCharacter(agent: VicarAgent, id: string) {
+  const token = await agent.token();
+  await fetch(`${agent.backendUrl}/characters/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } });
+}
+
 async function main() {
   const agent = new VicarAgent({ headless: process.env.HEADLESS !== "false" });
   await agent.open();
@@ -147,12 +170,67 @@ async function main() {
 
   console.log("[drive] advancing to skills");
   await agent.act("control:next");
-  const skillsState = await agent.waitFor((s) => s.view === "editor-skills");
-  show("skills step reached", skillsState);
+  await agent.waitFor((s) => s.view === "editor-skills");
 
+  console.log("[drive] choosing skill spread 'Spezialist' + distributing");
+  await agent.act("select:skill-spread", { value: "Spezialist" });
+  await agent.act("skills:confirm");
+  await agent.waitFor((s) => s.actions.some((a) => a.agent.startsWith("select:skill:")));
+  const skillSelects = (await agent.state()).actions.filter((a) => a.agent.startsWith("select:skill:")).map((a) => a.agent);
+  const skillTargets = ["4", "3", "3", "3", "2", "2", "2", "1", "1", "1"];
+  for (let i = 0; i < skillTargets.length && i < skillSelects.length; i++) {
+    await agent.act(skillSelects[i]!, { value: skillTargets[i]! });
+  }
+  console.log("[drive] filling specializations");
+  for (let i = 0; i < 4; i++) {
+    await agent.act(`input:spec-defined:${i}`, { value: "Allgemein" });
+  }
+  await agent.act("select:free-spec", { first: true });
+  await agent.act("input:free-spec-name", { value: "Fokus" });
+  const skillsReady = await agent.waitFor((s) => s.canProceed);
+  show("skills done", skillsReady);
+
+  console.log("[drive] advancing to disciplines (finish step)");
+  await agent.act("control:next");
+  await agent.waitFor((s) => s.view === "editor-disciplines");
+
+  console.log("[drive] picking two clan disciplines + confirming");
+  await agent.act("select:disc-2", { value: "Geschwindigkeit" });
+  await agent.act("select:disc-1", { value: "Stärke" });
+  await agent.act("disc:confirm");
+  await agent.waitFor((s) => s.actions.some((a) => a.agent.startsWith("disc:add:")));
+
+  console.log("[drive] filling discipline abilities until all dots are spent");
+  for (let guard = 0; guard < 12; guard++) {
+    const add = (await agent.state()).actions.find((a) => a.agent.startsWith("disc:add:"));
+    if (!add) break;
+    await agent.act(add.agent);
+    await agent.waitFor((s) => s.actions.some((a) => a.agent === "select:disc-ability"));
+    await pickFirstSelectable(agent, "select:disc-ability");
+    await agent.waitFor((s) => {
+      const c = s.actions.find((a) => a.agent === "disc-ability:confirm");
+      return !!c && !c.disabled;
+    });
+    await agent.act("disc-ability:confirm");
+    await agent.waitFor((s) => !s.actions.some((a) => a.agent === "select:disc-ability"));
+  }
+  const finishReady = await agent.waitFor((s) => s.canProceed);
+  show("disciplines done, ready to finish", finishReady);
+
+  console.log("[drive] finishing the character (persists to backend)");
+  await agent.act("control:finish");
+  await agent.waitFor((s) => s.view !== "editor-disciplines", 20000);
+
+  console.log("[drive] verifying the persisted character server-side");
+  const full = await fetchCharacter(agent, "Bridge Vampire");
+  console.log(`[drive] persisted: name=${full.name} clan=${full.clan?.name} predator=${full.predatorType?.name} disciplines=${JSON.stringify((full.disciplines ?? []).map((d: any) => `${d.discipline.name}:${d.points}/${d.abilities.length}`))}`);
+  const attrCount = (full.categories ?? []).flatMap((c: any) => c.attributes).filter((a: any) => a.value > 0).length;
+  console.log(`[drive] attributes with value>0: ${attrCount}`);
+
+  await deleteCharacter(agent, full.id);
   await deleteFolder(agent, folderName);
   await agent.close();
-  console.log("\n[drive] SUCCESS - bridge getState/act drives the real editor; state reflects reality");
+  console.log("\n[drive] SUCCESS - a full V5 character was built entirely through the real UI and persisted");
 }
 
 main().catch(async (err) => {
