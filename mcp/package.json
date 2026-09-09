@@ -4,7 +4,8 @@
   "type": "module",
   "description": "Agent/MCP interface that drives the real Vicar web UI (see ../AGENT_MCP_PLAN.md).",
   "scripts": {
-    "spike": "tsx src/spike.ts"
+    "spike": "tsx src/spike.ts",
+    "drive": "tsx src/drive-v5.ts"
   },
   "dependencies": {
     "playwright": "^1.63.0"
