@@ -56,8 +56,21 @@ Ohne `VICAR_AGENT_TOKEN` faellt der Login auf Dev-Login zurueck (nur lokal).
 End-to-End-Smoke-Test (mintet einen Agent-Token, startet den Server als
 Subprozess, treibt Tools): `npm run mcp-test`.
 
+## Phase 4: Live-Modus (fertig)
+
+Statt headless kann der MCP-Server den **sichtbaren Tab des Users** fernsteuern:
+Der User oeffnet die App mit `?agent=live` (Bridge), der MCP-Server verbindet
+sich als Controller; das Go-Backend relayt `agent-command`/`agent-result` ueber
+socket.io (Raeume `agent-bridge:<uid>` / `agent-controller:<uid>`), Pairing
+automatisch ueber den eingeloggten User. Ein roter Indikator zeigt im Tab, dass
+der Agent steuert.
+
+MCP-Server im Live-Modus: zusaetzlich `VICAR_LIVE=true` setzen (nutzt
+`RemoteAgent` statt headless Playwright). E2E-Test (oeffnet einen Bridge-Tab,
+treibt ihn per Relay-Controller): `npm run live-test`.
+
 ## Naechste Phasen
 
-Siehe `../AGENT_MCP_PLAN.md`:
-4. Live-Modus (WS-Relay, sichtbarer Agent-Tab) + Haertung (Context-Pool, Limits).
-Ausserdem: `data-agent`-Instrumentierung der uebrigen Gamelines (W5/M20/H5/VDZ).
+Siehe `../AGENT_MCP_PLAN.md`: Haertung (Context-Pool, Concurrency-Limits, Scopes)
+und `data-agent`-Instrumentierung der uebrigen Gamelines (W5/M20/H5/VDZ - die
+Bridge ist generisch).

@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { VicarAgent } from "./agent.js";
+import { RemoteAgent } from "./remote-agent.js";
 
 /**
  * MCP server that lets an agent drive the real Vicar web UI (see
@@ -11,23 +12,32 @@ import { VicarAgent } from "./agent.js";
  * apply unchanged.
  *
  * Env: VICAR_AGENT_TOKEN (per-user, from POST /users/@me/agent-token; omit for
- * local dev-login), VICAR_FRONTEND_URL, VICAR_BACKEND_URL, VICAR_HEADLESS=false.
+ * local dev-login), VICAR_FRONTEND_URL, VICAR_BACKEND_URL, VICAR_HEADLESS=false,
+ * VICAR_LIVE=true (drive the user's visible tab via the socket.io relay instead
+ * of a headless browser; the user opens the app with ?agent=live).
  */
+
+type AgentDriver = VicarAgent | RemoteAgent;
 
 const server = new McpServer({ name: "vicar-mcp", version: "0.1.0" });
 
-let agentInstance: VicarAgent | null = null;
-let opening: Promise<VicarAgent> | null = null;
+let agentInstance: AgentDriver | null = null;
+let opening: Promise<AgentDriver> | null = null;
 
-async function ensureAgent(): Promise<VicarAgent> {
+async function ensureAgent(): Promise<AgentDriver> {
   if (agentInstance) return agentInstance;
   if (!opening) {
-    const a = new VicarAgent({
-      frontendUrl: process.env.VICAR_FRONTEND_URL,
-      backendUrl: process.env.VICAR_BACKEND_URL,
-      agentToken: process.env.VICAR_AGENT_TOKEN,
-      headless: process.env.VICAR_HEADLESS !== "false",
-    });
+    const a: AgentDriver = process.env.VICAR_LIVE === "true"
+      ? new RemoteAgent({
+          backendUrl: process.env.VICAR_BACKEND_URL,
+          agentToken: process.env.VICAR_AGENT_TOKEN,
+        })
+      : new VicarAgent({
+          frontendUrl: process.env.VICAR_FRONTEND_URL,
+          backendUrl: process.env.VICAR_BACKEND_URL,
+          agentToken: process.env.VICAR_AGENT_TOKEN,
+          headless: process.env.VICAR_HEADLESS !== "false",
+        });
     opening = a.open().then(() => (agentInstance = a));
   }
   return opening;

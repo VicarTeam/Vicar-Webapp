@@ -7,11 +7,13 @@
     "spike": "tsx src/spike.ts",
     "drive": "tsx src/drive-v5.ts",
     "server": "tsx src/mcp-server.ts",
-    "mcp-test": "tsx src/mcp-test.ts"
+    "mcp-test": "tsx src/mcp-test.ts",
+    "live-test": "tsx src/live-test.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
     "playwright": "^1.63.0",
+    "socket.io-client": "^4.8.3",
     "zod": "^4.5.4"
   },
   "devDependencies": {
