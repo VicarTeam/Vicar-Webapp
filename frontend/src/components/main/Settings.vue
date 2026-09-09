@@ -4,7 +4,7 @@ import { useRouter } from "vue-router"
 import CharacterStorage from "@/libs/io/character-storage"
 import { DataSync } from "@/libs/data/data-sync"
 import DataManager from "@/libs/data/data-manager"
-import { get, post } from "@/libs/io/rest"
+import { del, get, post } from "@/libs/io/rest"
 import { logout as doLogout } from "@/libs/auth"
 import { SettingsData } from "@/libs/io/settings"
 
@@ -16,6 +16,9 @@ const newPasswordRepeat = ref("")
 
 const fvttToken = ref<string | null>(null)
 const fvttBackendUrl = window.location.origin
+
+const agentToken = ref<string | null>(null)
+const agentLiveUrl = window.location.origin + "/?agent=live"
 
 const devMode = computed<boolean>({
   get() {
@@ -41,6 +44,7 @@ const canChangePassword = computed(() => newPassword.value.length > 0 && newPass
 onMounted(async () => {
   await DataManager.loadLogin()
   await loadFvttToken()
+  await loadAgentToken()
 })
 
 async function loadFvttToken() {
@@ -51,6 +55,21 @@ async function loadFvttToken() {
 async function createFvttToken() {
   const [status, data] = await post<{ token: string }>(`/users/@me/fvtt-token`)
   if (status === 200) fvttToken.value = data.token
+}
+
+async function loadAgentToken() {
+  const [status, data] = await get<{ token: string | null }>(`/users/@me/agent-token`)
+  if (status === 200) agentToken.value = data.token
+}
+
+async function createAgentToken() {
+  const [status, data] = await post<{ token: string }>(`/users/@me/agent-token`)
+  if (status === 200) agentToken.value = data.token
+}
+
+async function revokeAgentToken() {
+  const [status] = await del(`/users/@me/agent-token`)
+  if (status < 400) agentToken.value = null
 }
 
 function copyText(text: string) {
@@ -147,6 +166,27 @@ async function logout() {
             {{ fvttToken ? "Token neu erstellen" : "Token erstellen" }}
           </button>
           <small class="fvtt-hint">Token im FoundryVTT-Modul „VicarTT" eintragen. Neu erstellen macht den alten ungültig.</small>
+
+          <div class="divider"></div>
+        </template>
+
+        <template v-if="DataManager.loggedInAs">
+          <p class="section-title">Agent / MCP:</p>
+          <small class="fvtt-hint">Für die Fernsteuerung per MCP-Agent. Live zusehen: <b>{{ agentLiveUrl }}</b></small>
+          <div v-if="agentToken" class="fvtt-token-row">
+            <input class="form-control" :value="agentToken" readonly @focus="(e: any) => e.target.select()" />
+            <button class="btn btn-primary" title="Kopieren" @click="copyText(agentToken!)">
+              <i class="fa-solid fa-copy"></i>
+            </button>
+          </div>
+          <small v-else class="fvtt-hint">Noch kein Token erstellt.</small>
+          <button class="btn btn-primary full" style="margin-top: 0.75rem" @click="createAgentToken">
+            {{ agentToken ? "Token neu erstellen" : "Token erstellen" }}
+          </button>
+          <button v-if="agentToken" class="btn full" style="margin-top: 0.5rem" @click="revokeAgentToken">
+            Token widerrufen
+          </button>
+          <small class="fvtt-hint">Getrennt vom Foundry-Token. Neu erstellen macht den alten ungültig. Im MCP-Server als <b>VICAR_AGENT_TOKEN</b> setzen.</small>
 
           <div class="divider"></div>
         </template>
