@@ -59,7 +59,7 @@ export class VicarAgent {
     return this.page.evaluate(() => window.__vicarAgent!.getState());
   }
 
-  async act(agent: string, params?: { value?: string }) {
+  async act(agent: string, params?: { value?: string; first?: boolean; index?: number }) {
     const result = await this.page.evaluate(
       ({ a, p }) => window.__vicarAgent!.act(a, p),
       { a: agent, p: params },
@@ -80,6 +80,10 @@ export class VicarAgent {
       last = await this.state();
     }
     return last;
+  }
+
+  async texts(selector: string): Promise<string[]> {
+    return this.page.locator(selector).allInnerTexts();
   }
 
   async hasAction(agent: string): Promise<boolean> {
