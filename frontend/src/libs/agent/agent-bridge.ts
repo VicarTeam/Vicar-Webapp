@@ -1,5 +1,7 @@
 import type { Router } from "vue-router"
+import { io } from "socket.io-client"
 import { useStore } from "@/app/store"
+import { getAccessToken } from "@/libs/auth"
 
 /**
  * Read-only + action bridge that lets an external driver (Playwright/MCP) observe
@@ -49,16 +51,26 @@ export interface AgentActParams {
   index?: number
 }
 
-export function isAgentMode(): boolean {
+export function agentMode(): string | null {
   try {
-    if (new URLSearchParams(window.location.search).has("agent")) {
-      window.sessionStorage.setItem(AGENT_FLAG, "1")
-      return true
+    const q = new URLSearchParams(window.location.search).get("agent")
+    if (q) {
+      window.sessionStorage.setItem(AGENT_FLAG, q)
+      return q
     }
-    return window.sessionStorage.getItem(AGENT_FLAG) === "1"
+    return window.sessionStorage.getItem(AGENT_FLAG)
   } catch {
-    return false
+    return null
   }
+}
+
+export function isAgentMode(): boolean {
+  return agentMode() !== null
+}
+
+/** Live mode (?agent=live): the tab is driven remotely via the socket.io relay. */
+export function isLiveAgentMode(): boolean {
+  return agentMode() === "live"
 }
 
 function isDisabled(el: Element): boolean {
@@ -188,6 +200,69 @@ export function installAgentBridge(router: Router) {
   }
 
   window.__vicarAgent = { getState, act, listActions: readActions }
+}
+
+function apiOrigin(): string {
+  const base = ((import.meta as any).env.VITE_APP_API_URL as string) || ""
+  return base.startsWith("http") ? base : window.location.origin
+}
+
+function showLiveIndicator() {
+  if (document.getElementById("vicar-agent-live")) return
+  const el = document.createElement("div")
+  el.id = "vicar-agent-live"
+  el.textContent = "● Agent steuert diesen Tab live"
+  Object.assign(el.style, {
+    position: "fixed",
+    bottom: "12px",
+    right: "12px",
+    zIndex: "999999",
+    background: "rgba(200,30,30,0.92)",
+    color: "#fff",
+    padding: "8px 12px",
+    borderRadius: "8px",
+    font: "600 13px system-ui, sans-serif",
+    pointerEvents: "none",
+    boxShadow: "0 4px 14px rgba(0,0,0,0.35)",
+  })
+  document.body.appendChild(el)
+}
+
+/**
+ * Connects the visible tab to the socket.io agent relay as the "bridge": the MCP
+ * controller sends agent-command, this executes it against the local bridge and
+ * returns agent-result. Pairing is automatic via the logged-in user.
+ */
+export function startLiveBridge() {
+  const socket = io(apiOrigin(), { path: "/api/socket.io" })
+
+  socket.on("connect", async () => {
+    const token = await getAccessToken()
+    if (token) {
+      socket.emit("agent-authenticate", { token, role: "bridge" })
+    }
+  })
+
+  socket.on("agent-authenticated", () => showLiveIndicator())
+
+  socket.on("agent-command", (msg: { id?: string; kind?: string; action?: string; params?: AgentActParams }) => {
+    const bridge = window.__vicarAgent
+    let result: unknown
+    try {
+      if (!bridge) {
+        result = { ok: false, error: "bridge not ready" }
+      } else if (msg?.kind === "getState") {
+        result = { ok: true, state: bridge.getState() }
+      } else if (msg?.kind === "act") {
+        result = bridge.act(msg.action ?? "", msg.params)
+      } else {
+        result = { ok: false, error: `unknown kind: ${msg?.kind}` }
+      }
+    } catch (e) {
+      result = { ok: false, error: String(e) }
+    }
+    socket.emit("agent-result", { id: msg?.id, result })
+  })
 }
 
 declare global {
