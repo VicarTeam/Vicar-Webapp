@@ -5,10 +5,14 @@
   "description": "Agent/MCP interface that drives the real Vicar web UI (see ../AGENT_MCP_PLAN.md).",
   "scripts": {
     "spike": "tsx src/spike.ts",
-    "drive": "tsx src/drive-v5.ts"
+    "drive": "tsx src/drive-v5.ts",
+    "server": "tsx src/mcp-server.ts",
+    "mcp-test": "tsx src/mcp-test.ts"
   },
   "dependencies": {
-    "playwright": "^1.63.0"
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "playwright": "^1.63.0",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",

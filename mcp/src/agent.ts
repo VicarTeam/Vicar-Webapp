@@ -30,6 +30,8 @@ export interface VicarAgentOptions {
   frontendUrl?: string;
   backendUrl?: string;
   headless?: boolean;
+  /** Long-lived agent token; when set the browser logs in as its owner instead of dev-login. */
+  agentToken?: string;
 }
 
 /**
@@ -41,6 +43,7 @@ export class VicarAgent {
   readonly frontendUrl: string;
   readonly backendUrl: string;
   private readonly headless: boolean;
+  private readonly agentToken?: string;
   private browser!: Browser;
   private context!: BrowserContext;
   private page!: Page;
@@ -49,6 +52,14 @@ export class VicarAgent {
     this.frontendUrl = opts.frontendUrl ?? "http://localhost:5173";
     this.backendUrl = opts.backendUrl ?? "http://localhost:6660";
     this.headless = opts.headless ?? true;
+    this.agentToken = opts.agentToken;
+  }
+
+  private loginUrl(): string {
+    if (this.agentToken) {
+      return `${this.backendUrl}/auth/login/agent?token=${encodeURIComponent(this.agentToken)}`;
+    }
+    return `${this.backendUrl}/auth/login/dev`;
   }
 
   async open() {
@@ -56,7 +67,7 @@ export class VicarAgent {
     this.context = await this.browser.newContext();
     this.page = await this.context.newPage();
 
-    await this.page.goto(`${this.backendUrl}/auth/login/dev`, { waitUntil: "networkidle" });
+    await this.page.goto(this.loginUrl(), { waitUntil: "networkidle" });
     await this.page.waitForTimeout(1200);
     await this.page.goto(`${this.frontendUrl}/?agent=1`, { waitUntil: "networkidle" });
     await this.page.waitForFunction(() => !!window.__vicarAgent, undefined, { timeout: 30000 });
@@ -98,12 +109,12 @@ export class VicarAgent {
     return s.actions.some((a) => a.agent === agent);
   }
 
-  /** Fresh access token (for server-side verification), via dev-login. */
+  /** Fresh access token (for server-side verification), via the same login path. */
   async token(): Promise<string> {
-    const res = await fetch(`${this.backendUrl}/auth/login/dev`, { redirect: "manual" });
+    const res = await fetch(this.loginUrl(), { redirect: "manual" });
     const location = res.headers.get("location") ?? "";
     const match = location.match(/s_atk=([^&]+)/);
-    if (!match) throw new Error("dev-login gave no token");
+    if (!match) throw new Error("login gave no token");
     return decodeURIComponent(match[1]);
   }
 
