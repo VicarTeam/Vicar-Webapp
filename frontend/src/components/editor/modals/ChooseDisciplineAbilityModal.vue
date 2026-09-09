@@ -98,7 +98,7 @@ defineExpose({ showModal })
         {{ `Kraft für ${discipline.discipline.name} ${discipline.currentLevel} auswählen` }}
       </p>
 
-      <select class="form-control" v-model="ability">
+      <select class="form-control" v-model="ability" data-agent="select:disc-ability">
         <option
           v-for="a in availableAbilities"
           :key="a.id"
@@ -127,7 +127,7 @@ defineExpose({ showModal })
 
       <div class="footer">
         <span v-if="costs > 0" class="mb-10">{{ `Kosten: ${overrideCosts !== -1 ? overrideCosts : costs} EXP` }}</span>
-        <button class="btn btn-primary" :disabled="!canSelectAbility" @click="addCurrentAbility">Auswählen</button>
+        <button class="btn btn-primary" :disabled="!canSelectAbility" @click="addCurrentAbility" data-agent="disc-ability:confirm">Auswählen</button>
       </div>
     </div>
   </Modal>

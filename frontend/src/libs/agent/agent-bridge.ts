@@ -12,12 +12,19 @@ import { useStore } from "@/app/store"
 
 const AGENT_FLAG = "vicar::agent"
 
+export interface AgentOption {
+  text: string
+  disabled: boolean
+  blocked: boolean
+}
+
 export interface AgentAction {
   agent: string
   kind: string
   label: string
   disabled: boolean
   value?: string
+  options?: AgentOption[]
 }
 
 export interface AgentState {
@@ -79,6 +86,13 @@ function readActions(): AgentAction[] {
     const action: AgentAction = { agent, kind: agent.split(":")[0] ?? "", label, disabled: isDisabled(el) }
     if (isField) {
       action.value = (el as HTMLInputElement).value
+    }
+    if (tag === "SELECT") {
+      action.options = Array.from((el as HTMLSelectElement).options).map((o) => ({
+        text: (o.textContent ?? "").trim(),
+        disabled: o.disabled,
+        blocked: o.classList.contains("not-selectable"),
+      }))
     }
     return action
   })

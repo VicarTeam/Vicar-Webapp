@@ -98,7 +98,7 @@ const canGoNext = computed(() => {
           <div class="spread-grid">
             <div class="col">
               <label>2 Punkten für...</label>
-              <select class="form-control" :disabled="!!characterCache" v-model="disciplineFor2">
+              <select class="form-control" :disabled="!!characterCache" v-model="disciplineFor2" data-agent="select:disc-2">
                 <option :value="null">nicht ausgewählt</option>
                 <option
                   v-for="d in (store.editingCharacter as ICharacter).clan.disciplines"
@@ -113,7 +113,7 @@ const canGoNext = computed(() => {
 
             <div class="col">
               <label>1 Punkt für...</label>
-              <select class="form-control" :disabled="!!characterCache" v-model="disciplineFor1">
+              <select class="form-control" :disabled="!!characterCache" v-model="disciplineFor1" data-agent="select:disc-1">
                 <option :value="null">nicht ausgewählt</option>
                 <option
                   v-for="d in (store.editingCharacter as ICharacter).clan.disciplines"
@@ -135,6 +135,7 @@ const canGoNext = computed(() => {
           class="btn btn-primary"
           :disabled="!disciplineFor2 || !disciplineFor1"
           @click="selectType"
+          data-agent="disc:confirm"
         >
           Auswählen
         </button>
@@ -155,7 +156,7 @@ const canGoNext = computed(() => {
               </div>
             </div>
 
-            <button class="add" type="button" v-if="d.points > d.abilities.length" @click="addAbility(d)">
+            <button class="add" type="button" v-if="d.points > d.abilities.length" @click="addAbility(d)" :data-agent="'disc:add:' + d.discipline.id" :data-agent-label="d.discipline.name">
               <i class="fa-solid fa-plus"></i>
             </button>
           </div>

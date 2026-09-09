@@ -116,7 +116,7 @@ const nextStep = computed(() => {
       <div class="wrap">
         <div class="form-group center">
           <label class="required"><b>Wähle eine Fähigkeitenverteilung:</b></label>
-          <select class="form-control input" v-model="(store.editingCharacter as IEdition5Sheet).skillspread" :disabled="!!characterCache">
+          <select class="form-control input" v-model="(store.editingCharacter as IEdition5Sheet).skillspread" :disabled="!!characterCache" data-agent="select:skill-spread">
             <option v-for="t in DefinedSpreadTypes" :key="t.id" :value="t">
               {{ getSkillSpreadName(t.id) }}
             </option>
@@ -131,7 +131,7 @@ const nextStep = computed(() => {
 
         <div class="divider"></div>
 
-        <button class="btn btn-primary" v-if="(store.editingCharacter as IEdition5Sheet).skillspread && !characterCache" @click="selectType">
+        <button class="btn btn-primary" v-if="(store.editingCharacter as IEdition5Sheet).skillspread && !characterCache" @click="selectType" data-agent="skills:confirm">
           Auswählen
         </button>
 
@@ -147,7 +147,7 @@ const nextStep = computed(() => {
                 {{ getSkillName(skill.key) }}:
               </small>
 
-              <select class="form-control control" v-model="skill.value">
+              <select class="form-control control" v-model="skill.value" :data-agent="'select:skill:' + skill.key">
                 <option :value="0">0</option>
                 <option
                   v-for="i in getAvailablePoints()"
@@ -166,19 +166,19 @@ const nextStep = computed(() => {
           <b class="mb-10">Füge bei Geisteswissenschaften, Handwerk, Darbietung und Naturwissenschaften eine kostenlose Spezialisierung hinzu:</b>
 
           <div class="defined">
-            <div class="pair" v-for="d in definedSpecializations" :key="d.key">
+            <div class="pair" v-for="(d, i) in definedSpecializations" :key="d.key">
               <input v-model="d.name" type="text" class="form-control" disabled />
-              <input v-model="d.value" type="text" class="form-control" />
+              <input v-model="d.value" type="text" class="form-control" :data-agent="'input:spec-defined:' + i" />
             </div>
           </div>
 
           <b class="mb-10">und eine kostenlose deiner Wahl:</b>
 
           <div class="free">
-            <select class="form-control" v-model="freeSpecializationKey">
+            <select class="form-control" v-model="freeSpecializationKey" data-agent="select:free-spec">
               <option v-for="key in sortedSkillKeys" :key="key" :value="key">{{ getSkillName(key) }}</option>
             </select>
-            <input v-model="freeSpecializationName" type="text" class="form-control" />
+            <input v-model="freeSpecializationName" type="text" class="form-control" data-agent="input:free-spec-name" />
           </div>
         </div>
       </div>
