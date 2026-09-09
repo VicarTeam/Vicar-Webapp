@@ -15,6 +15,9 @@ func (s *Server) mountUsers(r chi.Router) {
 	r.Get("/users/@me/fvtt-token", s.getFvttToken)
 	r.Post("/users/@me/fvtt-token", s.createFvttToken)
 	r.Delete("/users/@me/fvtt-token", s.deleteFvttToken)
+	r.Get("/users/@me/agent-token", s.getAgentToken)
+	r.Post("/users/@me/agent-token", s.createAgentToken)
+	r.Delete("/users/@me/agent-token", s.deleteAgentToken)
 }
 
 func (s *Server) getMe(w http.ResponseWriter, r *http.Request) {
@@ -86,6 +89,47 @@ func (s *Server) deleteFvttToken(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	u.FvttToken = ""
+	if err := s.store.Users().Update(r.Context(), u); err != nil {
+		text(w, http.StatusInternalServerError, "error")
+		return
+	}
+	ok(w)
+}
+
+func (s *Server) getAgentToken(w http.ResponseWriter, r *http.Request) {
+	u, err := s.store.Users().FindByID(r.Context(), auth.UserID(r))
+	if err != nil {
+		text(w, http.StatusNotFound, "Not found")
+		return
+	}
+	var tok any
+	if u.AgentToken != "" {
+		tok = u.AgentToken
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"token": tok})
+}
+
+func (s *Server) createAgentToken(w http.ResponseWriter, r *http.Request) {
+	u, err := s.store.Users().FindByID(r.Context(), auth.UserID(r))
+	if err != nil {
+		text(w, http.StatusNotFound, "Not found")
+		return
+	}
+	u.AgentToken = strings.ReplaceAll(uuid.NewString()+uuid.NewString(), "-", "")
+	if err := s.store.Users().Update(r.Context(), u); err != nil {
+		text(w, http.StatusInternalServerError, "error")
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"token": u.AgentToken})
+}
+
+func (s *Server) deleteAgentToken(w http.ResponseWriter, r *http.Request) {
+	u, err := s.store.Users().FindByID(r.Context(), auth.UserID(r))
+	if err != nil {
+		text(w, http.StatusNotFound, "Not found")
+		return
+	}
+	u.AgentToken = ""
 	if err := s.store.Users().Update(r.Context(), u); err != nil {
 		text(w, http.StatusInternalServerError, "error")
 		return

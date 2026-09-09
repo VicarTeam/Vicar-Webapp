@@ -22,6 +22,7 @@ func toUser(g gen.User) *models.User {
 		CurrentAccessToken: g.CurrentAccessToken,
 		IsAdmin:            g.IsAdmin,
 		FvttToken:          g.FvttToken,
+		AgentToken:         g.AgentToken,
 	}
 }
 
@@ -36,6 +37,7 @@ func upsertUserParams(u *models.User) gen.UpsertUserParams {
 		CurrentAccessToken: u.CurrentAccessToken,
 		IsAdmin:            u.IsAdmin,
 		FvttToken:          u.FvttToken,
+		AgentToken:         u.AgentToken,
 	}
 }
 
@@ -61,6 +63,11 @@ func (s *userStore) FindByDiscordID(ctx context.Context, discordID string) (*mod
 
 func (s *userStore) FindByFvttToken(ctx context.Context, token string) (*models.User, error) {
 	g, err := s.q.GetUserByFvttToken(ctx, token)
+	return userOrErr(g, err)
+}
+
+func (s *userStore) FindByAgentToken(ctx context.Context, token string) (*models.User, error) {
+	g, err := s.q.GetUserByAgentToken(ctx, token)
 	return userOrErr(g, err)
 }
 

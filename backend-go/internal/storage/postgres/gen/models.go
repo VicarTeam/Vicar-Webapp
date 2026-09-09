@@ -80,6 +80,7 @@ type User struct {
 	CurrentAccessToken string
 	IsAdmin            bool
 	FvttToken          string
+	AgentToken         string
 	CreatedAt          pgtype.Timestamptz
 	UpdatedAt          pgtype.Timestamptz
 }

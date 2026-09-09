@@ -167,6 +167,12 @@ func (s *Service) Authenticate(ctx context.Context, du DiscordUser) (*TokenPair,
 	return s.issueSession(ctx, user.IDHex())
 }
 
+// IssueSessionForUser issues a fresh access/refresh token pair for a known user
+// id (used by the agent-token login, which resolves the user out of band).
+func (s *Service) IssueSessionForUser(ctx context.Context, userID string) (*TokenPair, error) {
+	return s.issueSession(ctx, userID)
+}
+
 func (s *Service) issueSession(ctx context.Context, userID string) (*TokenPair, error) {
 	tokens, err := s.createTokens(userID)
 	if err != nil {

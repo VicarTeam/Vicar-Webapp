@@ -21,6 +21,29 @@ func (s *Server) mountAuth(r chi.Router) {
 	r.Post("/auth/refresh", s.authRefresh)
 	r.Get("/auth/login/password", s.authLoginPassword)
 	r.Get("/auth/login/dev", s.authLoginDev)
+	r.Get("/auth/login/agent", s.authLoginAgent)
+}
+
+// authLoginAgent exchanges a long-lived agent token for a browser session, so an
+// automation browser (MCP) can log in as the token's owner. Mirrors the dev/OAuth
+// redirect flow, but is gated by a valid agent token instead of DEV_MODE.
+func (s *Server) authLoginAgent(w http.ResponseWriter, r *http.Request) {
+	token := strings.TrimSpace(r.URL.Query().Get("token"))
+	if token == "" {
+		text(w, http.StatusBadRequest, "Missing token")
+		return
+	}
+	u, err := s.store.Users().FindByAgentToken(r.Context(), token)
+	if err != nil {
+		text(w, http.StatusUnauthorized, "Invalid token")
+		return
+	}
+	pair, err := s.auth.IssueSessionForUser(r.Context(), u.IDHex())
+	if err != nil || pair == nil {
+		text(w, http.StatusInternalServerError, "error")
+		return
+	}
+	s.redirectLoggedIn(w, r, pair, r.URL.Query().Get("r"))
 }
 
 func (s *Server) redirectLoggedIn(w http.ResponseWriter, r *http.Request, pair *auth.TokenPair, rParam string) {

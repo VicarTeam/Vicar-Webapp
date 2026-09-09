@@ -25,6 +25,9 @@ var schemaSQL string
 //go:embed sql/folders.sql
 var foldersSQL string
 
+//go:embed sql/users_agent_token.sql
+var usersAgentTokenSQL string
+
 // Store is the PostgreSQL-backed storage.Provider.
 type Store struct {
 	pool *pgxpool.Pool
@@ -86,6 +89,7 @@ func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 	}{
 		{"0001", schemaSQL},
 		{"0002", foldersSQL},
+		{"0003", usersAgentTokenSQL},
 	}
 	for _, step := range steps {
 		if err := applyMigration(ctx, pool, step.version, step.sql); err != nil {

@@ -383,8 +383,32 @@ func (q *Queries) GetSkillTreeOwned(ctx context.Context, arg GetSkillTreeOwnedPa
 	return i, err
 }
 
+const getUserByAgentToken = `-- name: GetUserByAgentToken :one
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE agent_token = $1 AND agent_token <> ''
+`
+
+func (q *Queries) GetUserByAgentToken(ctx context.Context, agentToken string) (User, error) {
+	row := q.db.QueryRow(ctx, getUserByAgentToken, agentToken)
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.DiscordID,
+		&i.Username,
+		&i.Password,
+		&i.ShortCode,
+		&i.InstalledHomebrew,
+		&i.CurrentAccessToken,
+		&i.IsAdmin,
+		&i.FvttToken,
+		&i.AgentToken,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const getUserByDiscordID = `-- name: GetUserByDiscordID :one
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, created_at, updated_at FROM users WHERE discord_id = $1
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE discord_id = $1
 `
 
 func (q *Queries) GetUserByDiscordID(ctx context.Context, discordID string) (User, error) {
@@ -400,6 +424,7 @@ func (q *Queries) GetUserByDiscordID(ctx context.Context, discordID string) (Use
 		&i.CurrentAccessToken,
 		&i.IsAdmin,
 		&i.FvttToken,
+		&i.AgentToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -407,7 +432,7 @@ func (q *Queries) GetUserByDiscordID(ctx context.Context, discordID string) (Use
 }
 
 const getUserByFvttToken = `-- name: GetUserByFvttToken :one
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, created_at, updated_at FROM users WHERE fvtt_token = $1 AND fvtt_token <> ''
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE fvtt_token = $1 AND fvtt_token <> ''
 `
 
 func (q *Queries) GetUserByFvttToken(ctx context.Context, fvttToken string) (User, error) {
@@ -423,6 +448,7 @@ func (q *Queries) GetUserByFvttToken(ctx context.Context, fvttToken string) (Use
 		&i.CurrentAccessToken,
 		&i.IsAdmin,
 		&i.FvttToken,
+		&i.AgentToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -431,7 +457,7 @@ func (q *Queries) GetUserByFvttToken(ctx context.Context, fvttToken string) (Use
 
 const getUserByID = `-- name: GetUserByID :one
 
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, created_at, updated_at FROM users WHERE id = $1
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE id = $1
 `
 
 // ============================ users ============================
@@ -448,6 +474,7 @@ func (q *Queries) GetUserByID(ctx context.Context, id string) (User, error) {
 		&i.CurrentAccessToken,
 		&i.IsAdmin,
 		&i.FvttToken,
+		&i.AgentToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -455,7 +482,7 @@ func (q *Queries) GetUserByID(ctx context.Context, id string) (User, error) {
 }
 
 const getUserByUsername = `-- name: GetUserByUsername :one
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, created_at, updated_at FROM users WHERE username = $1
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE username = $1
 `
 
 func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User, error) {
@@ -471,6 +498,7 @@ func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User,
 		&i.CurrentAccessToken,
 		&i.IsAdmin,
 		&i.FvttToken,
+		&i.AgentToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -478,7 +506,7 @@ func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User,
 }
 
 const getUserByUsernameCI = `-- name: GetUserByUsernameCI :one
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, created_at, updated_at FROM users WHERE lower(username) = lower($1)
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE lower(username) = lower($1)
 `
 
 func (q *Queries) GetUserByUsernameCI(ctx context.Context, lower string) (User, error) {
@@ -494,6 +522,7 @@ func (q *Queries) GetUserByUsernameCI(ctx context.Context, lower string) (User, 
 		&i.CurrentAccessToken,
 		&i.IsAdmin,
 		&i.FvttToken,
+		&i.AgentToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -735,7 +764,7 @@ func (q *Queries) ListSharedSummaries(ctx context.Context, userID string) ([]Lis
 }
 
 const listUsers = `-- name: ListUsers :many
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, created_at, updated_at FROM users ORDER BY username
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users ORDER BY username
 `
 
 func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
@@ -757,6 +786,7 @@ func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
 			&i.CurrentAccessToken,
 			&i.IsAdmin,
 			&i.FvttToken,
+			&i.AgentToken,
 			&i.CreatedAt,
 			&i.UpdatedAt,
 		); err != nil {
@@ -771,7 +801,7 @@ func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
 }
 
 const listUsersByIDs = `-- name: ListUsersByIDs :many
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, created_at, updated_at FROM users WHERE id = ANY($1::text[])
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE id = ANY($1::text[])
 `
 
 func (q *Queries) ListUsersByIDs(ctx context.Context, dollar_1 []string) ([]User, error) {
@@ -793,6 +823,7 @@ func (q *Queries) ListUsersByIDs(ctx context.Context, dollar_1 []string) ([]User
 			&i.CurrentAccessToken,
 			&i.IsAdmin,
 			&i.FvttToken,
+			&i.AgentToken,
 			&i.CreatedAt,
 			&i.UpdatedAt,
 		); err != nil {
@@ -915,8 +946,8 @@ func (q *Queries) UpsertSkillTree(ctx context.Context, arg UpsertSkillTreeParams
 }
 
 const upsertUser = `-- name: UpsertUser :exec
-INSERT INTO users (id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+INSERT INTO users (id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
 ON CONFLICT (id) DO UPDATE SET
     discord_id = EXCLUDED.discord_id,
     username = EXCLUDED.username,
@@ -926,6 +957,7 @@ ON CONFLICT (id) DO UPDATE SET
     current_access_token = EXCLUDED.current_access_token,
     is_admin = EXCLUDED.is_admin,
     fvtt_token = EXCLUDED.fvtt_token,
+    agent_token = EXCLUDED.agent_token,
     updated_at = now()
 `
 
@@ -939,6 +971,7 @@ type UpsertUserParams struct {
 	CurrentAccessToken string
 	IsAdmin            bool
 	FvttToken          string
+	AgentToken         string
 }
 
 func (q *Queries) UpsertUser(ctx context.Context, arg UpsertUserParams) error {
@@ -952,6 +985,7 @@ func (q *Queries) UpsertUser(ctx context.Context, arg UpsertUserParams) error {
 		arg.CurrentAccessToken,
 		arg.IsAdmin,
 		arg.FvttToken,
+		arg.AgentToken,
 	)
 	return err
 }

@@ -14,6 +14,7 @@ CREATE TABLE users (
     current_access_token text NOT NULL DEFAULT '',
     is_admin             boolean NOT NULL DEFAULT false,
     fvtt_token           text NOT NULL DEFAULT '',
+    agent_token          text NOT NULL DEFAULT '',
     created_at           timestamptz NOT NULL DEFAULT now(),
     updated_at           timestamptz NOT NULL DEFAULT now()
 );

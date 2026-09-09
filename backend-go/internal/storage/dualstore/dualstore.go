@@ -110,6 +110,9 @@ func (d *dualUsers) FindByDiscordID(ctx context.Context, discordID string) (*mod
 func (d *dualUsers) FindByFvttToken(ctx context.Context, token string) (*models.User, error) {
 	return d.find(ctx, func(u storage.UserStore) (*models.User, error) { return u.FindByFvttToken(ctx, token) })
 }
+func (d *dualUsers) FindByAgentToken(ctx context.Context, token string) (*models.User, error) {
+	return d.find(ctx, func(u storage.UserStore) (*models.User, error) { return u.FindByAgentToken(ctx, token) })
+}
 
 func (d *dualUsers) FindByIDs(ctx context.Context, ids []string) ([]models.User, error) {
 	return d.s.primary.Users().FindByIDs(ctx, ids)

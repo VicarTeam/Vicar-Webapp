@@ -51,6 +51,10 @@ func (s *userStore) FindByFvttToken(ctx context.Context, token string) (*models.
 	return s.one(ctx, bson.M{"fvttToken": token})
 }
 
+func (s *userStore) FindByAgentToken(ctx context.Context, token string) (*models.User, error) {
+	return s.one(ctx, bson.M{"agentToken": token})
+}
+
 func (s *userStore) FindByIDs(ctx context.Context, ids []string) ([]models.User, error) {
 	oids := make([]primitive.ObjectID, 0, len(ids))
 	for _, id := range ids {

@@ -117,6 +117,9 @@ func (d *splitUsers) FindByDiscordID(ctx context.Context, discordID string) (*mo
 func (d *splitUsers) FindByFvttToken(ctx context.Context, token string) (*models.User, error) {
 	return d.find(func(u storage.UserStore) (*models.User, error) { return u.FindByFvttToken(ctx, token) })
 }
+func (d *splitUsers) FindByAgentToken(ctx context.Context, token string) (*models.User, error) {
+	return d.find(func(u storage.UserStore) (*models.User, error) { return u.FindByAgentToken(ctx, token) })
+}
 
 func (d *splitUsers) FindByIDs(ctx context.Context, ids []string) ([]models.User, error) {
 	p, err := d.s.pg.Users().FindByIDs(ctx, ids)
