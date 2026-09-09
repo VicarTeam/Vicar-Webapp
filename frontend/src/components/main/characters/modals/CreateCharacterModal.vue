@@ -249,11 +249,11 @@ defineExpose({ showModal, showModalInFolder })
 
       <div class="ccm__segment">
         <div class="sex-select">
-          <div :class="{ active: gameline === GameLine.Vampire }" @click="gameline = GameLine.Vampire">V5</div>
-          <div :class="{ active: gameline === GameLine.Werewolf }" @click="gameline = GameLine.Werewolf">W5</div>
-          <div :class="{ active: gameline === GameLine.Mage }" @click="gameline = GameLine.Mage">M20</div>
-          <div :class="{ active: gameline === GameLine.Hunter }" @click="gameline = GameLine.Hunter">H5</div>
-          <div :class="{ active: gameline === GameLine.DarkAges }" @click="gameline = GameLine.DarkAges">VDZ</div>
+          <div :class="{ active: gameline === GameLine.Vampire }" @click="gameline = GameLine.Vampire" data-agent="char:gameline:V5">V5</div>
+          <div :class="{ active: gameline === GameLine.Werewolf }" @click="gameline = GameLine.Werewolf" data-agent="char:gameline:W5">W5</div>
+          <div :class="{ active: gameline === GameLine.Mage }" @click="gameline = GameLine.Mage" data-agent="char:gameline:M20">M20</div>
+          <div :class="{ active: gameline === GameLine.Hunter }" @click="gameline = GameLine.Hunter" data-agent="char:gameline:H5">H5</div>
+          <div :class="{ active: gameline === GameLine.DarkAges }" @click="gameline = GameLine.DarkAges" data-agent="char:gameline:VDZ">VDZ</div>
         </div>
       </div>
 
@@ -261,7 +261,7 @@ defineExpose({ showModal, showModalInFolder })
 
       <div class="ccm__segment">
         <label class="required">Name des Charakters:</label>
-        <input class="form-control" type="text" placeholder="Name des Charakters" v-model="name" />
+        <input class="form-control" type="text" placeholder="Name des Charakters" v-model="name" data-agent="input:char-name" />
       </div>
 
       <div v-if="gameline === GameLine.DarkAges" class="ccm__segment">
@@ -300,7 +300,7 @@ defineExpose({ showModal, showModalInFolder })
         <BookSelection ref="bookSelection" />
       </div>
 
-      <button class="btn btn-primary ccm__cta" @click="startCreateCharacter">
+      <button class="btn btn-primary ccm__cta" @click="startCreateCharacter" data-agent="char:start">
         Erstellung starten
       </button>
     </div>

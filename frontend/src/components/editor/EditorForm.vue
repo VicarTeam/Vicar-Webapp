@@ -131,13 +131,13 @@ function back() {
     </div>
 
     <div v-if="!showOnly" class="toolbar">
-      <button class="btn" @click="back">
+      <button class="btn" @click="back" data-agent="control:back">
         {{ !isCancel ? "Zurück" : "Abbrechen" }}
       </button>
 
       <div class="fill"></div>
 
-      <button class="btn btn-primary" @click="next" :disabled="!canGoNext">
+      <button class="btn btn-primary" @click="next" :disabled="!canGoNext" :data-agent="isFinish ? 'control:finish' : 'control:next'">
         {{ !isFinish ? "Weiter" : "Abschließen" }}
       </button>
     </div>

@@ -284,10 +284,10 @@ function updateCharacterList() {
     <div class="sidebar">
       <input type="file" ref="importFiles" name="files[]" hidden @change="importCharacterFromFile" />
 
-      <button class="btn btn-primary big" @click="createCharacterModal?.showModal()">
+      <button class="btn btn-primary big" @click="createCharacterModal?.showModal()" data-agent="char:new">
         NEUER CHARAKTER
       </button>
-      <button class="btn btn-primary big" @click="createDirectoryModal?.showModal()">
+      <button class="btn btn-primary big" @click="createDirectoryModal?.showModal()" data-agent="folder:new">
         NEUER ORDNER
       </button>
       <button class="btn btn-primary big" @click="importFiles?.click()">

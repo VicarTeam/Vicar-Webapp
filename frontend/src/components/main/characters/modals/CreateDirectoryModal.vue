@@ -51,8 +51,8 @@ defineExpose({ showModal, showRenameModal })
   <Modal :shown="show" @close="show = false">
     <div class="cdm">
       <span class="cdm__label">{{ mode === "rename" ? "Ordner umbenennen:" : parentId ? "Name des Unterordners:" : "Name des Ordners:" }}</span>
-      <input class="form-control" type="text" v-model="name" inputmode="text" autocomplete="off" @keyup.enter="submit" />
-      <button class="btn btn-primary cdm__cta" @click="submit">{{ mode === "rename" ? "Umbenennen" : "Abschließen" }}</button>
+      <input class="form-control" type="text" v-model="name" inputmode="text" autocomplete="off" @keyup.enter="submit" data-agent="input:folder-name" />
+      <button class="btn btn-primary cdm__cta" @click="submit" data-agent="folder:submit">{{ mode === "rename" ? "Umbenennen" : "Abschließen" }}</button>
     </div>
   </Modal>
 </template>

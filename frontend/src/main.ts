@@ -7,6 +7,7 @@ import App from './App.vue'
 import router from './app/router.ts'
 import {Backend} from "@/libs/backend.ts";
 import EventBus from "@/libs/event-bus.ts";
+import {installAgentBridge, isAgentMode} from "@/libs/agent/agent-bridge.ts";
 
 const app = createApp(App)
 
@@ -25,5 +26,9 @@ initializeDocumentEvents();
   await Backend.initAsync()
 
   app.mount('#app')
+
+  if (isAgentMode()) {
+    installAgentBridge(router)
+  }
 })()
 

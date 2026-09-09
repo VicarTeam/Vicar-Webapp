@@ -57,6 +57,7 @@ const clans = computed<IClan[]>(() => {
             type="text"
             placeholder="Name deines Erzeugers"
             v-model="(store.editingCharacter as ICharacter).sire"
+            data-agent="input:sire"
           />
         </div>
 
@@ -106,6 +107,8 @@ const clans = computed<IClan[]>(() => {
             v-for="clan in clans"
             :key="clan.id"
             type="button"
+            :data-agent="'option:clan:' + clan.name"
+            :data-agent-label="clan.name"
             @click="(store.editingCharacter as ICharacter).clan = clan"
           >
             <ClanSymbol :clan="clan" class="clan-symbol" />
