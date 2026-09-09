@@ -60,6 +60,34 @@ func (h *Hub) onConnect(clients ...any) {
 		return
 	}
 
+	// Agent live relay: a visible browser tab (role "bridge") and the MCP
+	// controller (role "controller") both authenticate here for the same user;
+	// the backend relays agent-command (controller→bridge) and agent-result
+	// (bridge→controller), so the MCP drives the user's own tab live.
+	s.On("agent-authenticate", func(args ...any) {
+		m, _ := first(args).(map[string]any)
+		token, _ := m["token"].(string)
+		role, _ := m["role"].(string)
+		user := h.auth.Authenticated(context.Background(), token)
+		if user == nil {
+			s.Disconnect(true)
+			return
+		}
+		uid := user.IDHex()
+		if role == "controller" {
+			s.Join(socket.Room("agent-controller:" + uid))
+		} else {
+			s.Join(socket.Room("agent-bridge:" + uid))
+		}
+		s.On("agent-command", func(a ...any) {
+			h.io.To(socket.Room("agent-bridge:" + uid)).Emit("agent-command", first(a))
+		})
+		s.On("agent-result", func(a ...any) {
+			h.io.To(socket.Room("agent-controller:" + uid)).Emit("agent-result", first(a))
+		})
+		_ = s.Emit("agent-authenticated")
+	})
+
 	// Web frontend authenticates via the access JWT sent in an `authenticate` event.
 	s.On("authenticate", func(args ...any) {
 		token, _ := first(args).(string)
