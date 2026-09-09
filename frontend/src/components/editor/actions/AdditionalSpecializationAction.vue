@@ -7,6 +7,7 @@ import { usePTActionRegistration } from "@/components/editor/actions/PTActionBas
 
 defineProps<{
   data: { choices: string[] }
+  index?: number
 }>()
 
 const skillInfoModal = ref<InstanceType<typeof SkillInfoModal> | null>(null)
@@ -62,7 +63,7 @@ defineExpose({ applyOutput, isReady })
     <label class="required">Wähle eine Spezialisierung:</label>
 
     <div class="row">
-      <select v-model="selected" class="form-control" @change="onSelectionChange">
+      <select v-model="selected" class="form-control" @change="onSelectionChange" :data-agent="'select:pt-action:' + (index ?? 0)">
         <option v-for="(c, i) in data.choices" :key="i" :value="c">
           {{ getSkillName(getSkillKey(c)) }}
         </option>

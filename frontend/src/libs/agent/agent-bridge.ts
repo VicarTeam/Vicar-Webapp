@@ -36,6 +36,12 @@ export interface AgentActResult {
   error?: string
 }
 
+export interface AgentActParams {
+  value?: string
+  first?: boolean
+  index?: number
+}
+
 export function isAgentMode(): boolean {
   try {
     if (new URLSearchParams(window.location.search).has("agent")) {
@@ -98,6 +104,26 @@ function summarizeCharacter(char: any): Record<string, unknown> | null {
   }
 }
 
+function selectOption(sel: HTMLSelectElement, params?: AgentActParams): AgentActResult {
+  const options = Array.from(sel.options)
+  let idx = -1
+  if (params?.value !== undefined) {
+    const target = String(params.value)
+    idx = options.findIndex((o) => (o.textContent ?? "").trim() === target || o.value === target)
+  } else if (typeof params?.index === "number") {
+    idx = params.index
+  } else if (params?.first) {
+    idx = options.findIndex((o) => !o.disabled && o.value !== "")
+    if (idx < 0) idx = options.findIndex((o) => !o.disabled)
+  }
+  if (idx < 0 || idx >= options.length) return { ok: false, error: "no matching option" }
+  if (options[idx]!.disabled) return { ok: false, error: "option is disabled" }
+  sel.selectedIndex = idx
+  sel.dispatchEvent(new Event("change", { bubbles: true }))
+  sel.dispatchEvent(new Event("input", { bubbles: true }))
+  return { ok: true }
+}
+
 function setNativeValue(el: HTMLInputElement | HTMLTextAreaElement, value: string) {
   const proto = el instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype
   const setter = Object.getOwnPropertyDescriptor(proto, "value")?.set
@@ -127,7 +153,7 @@ export function installAgentBridge(router: Router) {
     }
   }
 
-  function act(agent: string, params?: { value?: string }): AgentActResult {
+  function act(agent: string, params?: AgentActParams): AgentActResult {
     let el: Element | null = null
     try {
       el = document.querySelector(`[data-agent="${window.CSS.escape(agent)}"]`)
@@ -136,6 +162,9 @@ export function installAgentBridge(router: Router) {
     }
     if (!el) return { ok: false, error: `no element for data-agent="${agent}"` }
     const tag = el.tagName
+    if (tag === "SELECT") {
+      return selectOption(el as HTMLSelectElement, params)
+    }
     if ((tag === "INPUT" || tag === "TEXTAREA") && params && params.value !== undefined) {
       setNativeValue(el as HTMLInputElement, String(params.value))
       return { ok: true }
@@ -151,7 +180,7 @@ declare global {
   interface Window {
     __vicarAgent?: {
       getState: () => AgentState
-      act: (agent: string, params?: { value?: string }) => AgentActResult
+      act: (agent: string, params?: AgentActParams) => AgentActResult
       listActions: () => AgentAction[]
     }
   }

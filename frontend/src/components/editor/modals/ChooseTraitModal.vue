@@ -295,7 +295,7 @@ defineExpose({ showModal })
       <div class="top">
         <b class="top-title">{{ isFlaw ? 'Schwäche hinzufügen' : 'Vorteil hinzufügen' }}:</b>
 
-        <select class="form-control categorized" v-model="selectedPack">
+        <select class="form-control categorized" v-model="selectedPack" data-agent="select:trait-pack">
           <option v-if="merits.length > 0" class="category" disabled>Vorzüge</option>
           <option v-for="m in merits" :key="'m' + m.id" :value="m">
             {{ m.name }}{{ getTraitPackBonus(m, "merits", isFlaw) > 0 ? "(+" + getTraitPackBonus(m, "merits", isFlaw) + ")" : "" }}
@@ -343,7 +343,7 @@ defineExpose({ showModal })
         <div class="custom">
           <div class="form-group">
             <label>Typ (Vorzug oder Hintergrund):</label>
-            <select class="form-control" v-model="customTraitType">
+            <select class="form-control" v-model="customTraitType" data-agent="select:custom-type">
               <option value="merits">Vorzug</option>
               <option value="backgrounds">Hintergrund</option>
             </select>
@@ -351,19 +351,19 @@ defineExpose({ showModal })
 
           <div class="form-group">
             <label>Stufe:</label>
-            <select class="form-control" v-model="customTraitLevel">
+            <select class="form-control" v-model="customTraitLevel" data-agent="select:custom-level">
               <option v-for="i in maxLevel()" :key="i" :value="i">{{ i }}</option>
             </select>
           </div>
 
           <div class="form-group">
             <label>Name:</label>
-            <input class="form-control" type="text" v-model="customTraitName" />
+            <input class="form-control" type="text" v-model="customTraitName" data-agent="input:custom-name" />
           </div>
 
           <div class="form-group">
             <label>Beschreibung:</label>
-            <textarea class="form-control" v-model="customTraitDescription" style="resize: horizontal" />
+            <textarea class="form-control" v-model="customTraitDescription" style="resize: horizontal" data-agent="input:custom-desc" />
           </div>
 
           <div class="form-group">
@@ -386,7 +386,7 @@ defineExpose({ showModal })
 
       <div class="bottom">
         <span v-if="selectedTrait && calculateCosts" class="mb-10">{{ `Kosten: ${calculateCosts(selectedTrait, customLevel)} EXP` }}</span>
-        <button class="btn btn-primary" :disabled="!isReady" @click="addSelectedTrait">Auswählen</button>
+        <button class="btn btn-primary" :disabled="!isReady" @click="addSelectedTrait" data-agent="trait:confirm">Auswählen</button>
       </div>
     </div>
   </Modal>

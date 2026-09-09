@@ -8,6 +8,7 @@ import { usePTActionRegistration } from "@/components/editor/actions/PTActionBas
 
 const props = defineProps<{
   data: { choices: IFlawChoice[] }
+  index?: number
 }>()
 
 const selected = ref<IFlawChoice | null>(null)
@@ -40,7 +41,7 @@ defineExpose({ applyOutput, isReady })
 <template>
   <div class="form-group mb-0">
     <label class="required">Wähle eine Schwäche:</label>
-    <select v-model="selectValue" class="form-control">
+    <select v-model="selectValue" class="form-control" :data-agent="'select:pt-action:' + (props.index ?? 0)">
       <option v-for="(c, i) in data.choices" :key="i" :value="c.id">{{ getFlaw(c)?.name }}</option>
     </select>
   </div>

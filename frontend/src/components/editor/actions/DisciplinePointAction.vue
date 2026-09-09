@@ -12,6 +12,7 @@ type DisciplinePointActionData = {
 
 defineProps<{
   data: DisciplinePointActionData
+  index?: number
 }>()
 
 const selected = ref<number>(-1)
@@ -52,7 +53,7 @@ defineExpose({ applyOutput, isReady })
     <label class="required">Wähle eine Disziplin:</label>
 
     <div class="row">
-      <select v-model.number="selected" class="form-control">
+      <select v-model.number="selected" class="form-control" :data-agent="'select:pt-action:' + (index ?? 0)">
         <option v-for="(c, i) in data.choices" :key="i" :value="c.id">{{ getDiscipline(c.id)?.name }}</option>
       </select>
 

@@ -102,7 +102,7 @@ const isElder = computed(() => (store.editingCharacter as ICharacter | undefined
             <TipButton title="Was ist das Jagdverhalten?" content="Das Jagdverhalten beschreibt deine Art des Jagens, also wie du an das Blut kommst, um dich zu ernähren. Das Jagdverhalten kann dabei jedoch nicht nur die Art des Jagens beschreiben, sondern auch die Beute beschränken, also das WAS du jagst." />
           </label>
 
-          <select class="form-control input" v-model="(store.editingCharacter as ICharacter).predatorType" :disabled="!!characterCache">
+          <select class="form-control input" v-model="(store.editingCharacter as ICharacter).predatorType" :disabled="!!characterCache" data-agent="select:predator">
             <option v-for="p in predatorTypes" :key="p.id" :value="p">{{ p.name }}</option>
           </select>
         </div>
@@ -127,6 +127,7 @@ const isElder = computed(() => (store.editingCharacter as ICharacter | undefined
           v-if="(store.editingCharacter as ICharacter).predatorType && !characterCache"
           class="btn btn-primary"
           @click="selectType"
+          data-agent="predator:confirm"
         >
           Auswählen
         </button>
@@ -136,6 +137,7 @@ const isElder = computed(() => (store.editingCharacter as ICharacter | undefined
             <component
               :is="actionComponent(a.type)"
               :data="a.data"
+              :index="i"
               :ref="(el: any) => registerAction(el)"
             />
           </div>

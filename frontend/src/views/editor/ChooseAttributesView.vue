@@ -97,7 +97,7 @@ const canGoNext = computed(() => {
                 {{getAttributeName(attr.key)}}:
               </small>
 
-              <select class="form-control control" v-model="attr.value">
+              <select class="form-control control" v-model="attr.value" :data-agent="'select:attr:' + attr.key">
                 <option :value="0">0</option>
                 <option
                   v-for="i in [1, 2, 3, 4]"

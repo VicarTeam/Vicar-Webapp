@@ -208,7 +208,7 @@ const isMage = computed(() => editingCharacter.value?.game === GameLine.Mage)
               </div>
             </div>
 
-            <button v-if="hasTraitPointsLeft()" class="trait-add" type="button" @click="startAddingTrait(false)">
+            <button v-if="hasTraitPointsLeft()" class="trait-add" type="button" @click="startAddingTrait(false)" data-agent="trait:add" data-agent-label="Vorzug hinzufügen">
               <i class="fa-solid fa-plus"></i>
             </button>
           </div>
@@ -264,7 +264,7 @@ const isMage = computed(() => editingCharacter.value?.game === GameLine.Mage)
               </div>
             </div>
 
-            <button class="trait-add" type="button" @click="startAddingTrait(true)">
+            <button class="trait-add" type="button" @click="startAddingTrait(true)" data-agent="flaw:add" data-agent-label="Schwäche hinzufügen">
               <i class="fa-solid fa-plus"></i>
             </button>
           </div>
