@@ -36,6 +36,7 @@ export interface AgentState {
   gameline: string | null
   levelMode: boolean
   activeTab: string | null
+  hints: string[]
   character: Record<string, unknown> | null
   actions: AgentAction[]
   canProceed: boolean
@@ -102,6 +103,9 @@ function readActions(): AgentAction[] {
       const input = el as HTMLInputElement
       action.value = input.type === "checkbox" ? (input.checked ? "checked" : "unchecked") : input.value
     }
+    if (el.hasAttribute("data-agent-richtext")) {
+      action.value = (el.textContent ?? "").trim().replace(/\s+/g, " ").slice(0, 400)
+    }
     if (tag === "SELECT") {
       const sel = el as HTMLSelectElement
       action.options = Array.from(sel.options).map((o) => ({
@@ -129,6 +133,10 @@ function summarizeCharacter(char: any): Record<string, unknown> | null {
     generation: char.generation,
     generationEra: char.generationEra,
     exp: char.exp,
+    humanity: char.humanity,
+    hunger: char.hunger,
+    bloodPotency: char.bloodPotency,
+    avatar: char.avatar,
     disciplines: Array.isArray(char.disciplines) ? char.disciplines.length : undefined,
     tribe: char.tribe?.name ?? undefined,
     auspice: char.auspice?.name ?? undefined,
@@ -182,6 +190,9 @@ export function installAgentBridge(router: Router) {
       gameline: char?.game ?? null,
       levelMode: !!store.isLevelMode,
       activeTab: document.querySelector('[data-agent^="tab:"].active')?.getAttribute("data-agent") ?? null,
+      hints: Array.from(document.querySelectorAll<HTMLElement>("[data-agent-hint]"))
+        .map((el) => (el.textContent ?? "").trim().replace(/\s+/g, " "))
+        .filter((t) => t.length > 0),
       character: summarizeCharacter(char),
       actions,
       canProceed: proceed ? !proceed.disabled : false,
@@ -203,6 +214,10 @@ export function installAgentBridge(router: Router) {
     }
     if ((tag === "INPUT" || tag === "TEXTAREA") && params && params.value !== undefined) {
       setNativeValue(el as HTMLInputElement, String(params.value))
+      return { ok: true }
+    }
+    if (el.hasAttribute("data-agent-richtext") && params && params.value !== undefined) {
+      el.dispatchEvent(new CustomEvent("vicar-agent-set", { detail: { value: String(params.value) } }))
       return { ok: true }
     }
     ;(el as HTMLElement).click()

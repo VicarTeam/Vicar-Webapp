@@ -22,6 +22,7 @@ export interface AgentState {
   gameline: string | null;
   levelMode: boolean;
   activeTab: string | null;
+  hints: string[];
   character: Record<string, unknown> | null;
   actions: AgentAction[];
   canProceed: boolean;
