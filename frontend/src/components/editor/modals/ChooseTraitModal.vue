@@ -316,7 +316,7 @@ defineExpose({ showModal })
 
         <div class="trait-pack-content">
           <div class="traits">
-            <div class="trait" v-for="trait in traitsList" :key="trait.id" @click="selectTrait(trait)" :class="{ selected: trait === selectedTrait }">
+            <div class="trait" v-for="trait in traitsList" :key="trait.id" @click="selectTrait(trait)" :class="{ selected: trait === selectedTrait }" :data-agent="'option:trait:' + trait.name" :data-agent-label="trait.name">
               <b>{{ trait.name }}</b> - <small><i><b>Stufe</b>: {{ trait.level }}</i></small>
             </div>
           </div>
@@ -376,11 +376,11 @@ defineExpose({ showModal })
       <div class="optional-trait-options" v-if="selectedTrait">
         <div class="form-group half">
           <label>(optional) Stufe erhöhen:</label>
-          <input class="form-control" type="number" v-model="customLevel" :min="minCustomLevel" :max="maxCustomLevel" />
+          <input class="form-control" type="number" v-model="customLevel" :min="minCustomLevel" :max="maxCustomLevel" data-agent="input:trait-level" />
         </div>
         <div class="form-group half">
           <label>(optional) Spezialisierung festlegen:</label>
-          <input class="form-control" type="text" v-model="specialization" />
+          <input class="form-control" type="text" v-model="specialization" data-agent="input:trait-specialization" />
         </div>
       </div>
 

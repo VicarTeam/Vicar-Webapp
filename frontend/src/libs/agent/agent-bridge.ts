@@ -100,11 +100,16 @@ function readActions(): AgentAction[] {
       action.value = (el as HTMLInputElement).value
     }
     if (tag === "SELECT") {
-      action.options = Array.from((el as HTMLSelectElement).options).map((o) => ({
+      const sel = el as HTMLSelectElement
+      action.options = Array.from(sel.options).map((o) => ({
         text: (o.textContent ?? "").trim(),
         disabled: o.disabled,
         blocked: o.classList.contains("not-selectable"),
       }))
+      // Object-valued selects (v-model bound to an object) render el.value as
+      // "[object Object]"; report the selected option's text instead.
+      const selected = sel.options[sel.selectedIndex]
+      action.value = selected ? (selected.textContent ?? "").trim() : ""
     }
     return action
   })
