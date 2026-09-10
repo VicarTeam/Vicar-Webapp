@@ -148,7 +148,7 @@ const renegadeAbiities = computed<ILeveledDisciplineAbility[]>(() => {
     </div>
 
     <div class="card" v-if="isLevelMode">
-      <button class="btn btn-primary" @click="newDisciplineModal?.showModal()">Neue Disziplin erlernen</button>
+      <button class="btn btn-primary" @click="newDisciplineModal?.showModal()" data-agent="disc:new">Neue Disziplin erlernen</button>
     </div>
 
     <DisciplineAbilityInfoModal ref="abilityInfoModal" />

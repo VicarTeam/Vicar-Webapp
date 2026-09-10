@@ -107,7 +107,7 @@ defineExpose({ showModal })
     <div class="new-disc-modal">
       <b>Neue Disziplin erlernen:</b>
 
-      <select v-model="discipline" class="form-control" @change="chooseAbility">
+      <select v-model="discipline" class="form-control" @change="chooseAbility" data-agent="select:new-discipline">
         <option v-for="d in disciplines" :key="d.id" :value="d">{{ d.name }}</option>
       </select>
 
@@ -117,7 +117,7 @@ defineExpose({ showModal })
       </div>
 
       <div class="actions">
-        <button class="btn btn-primary" :disabled="neededExp > (editingCharacter?.exp ?? 0) || !discipline || !ability" @click="level">
+        <button class="btn btn-primary" :disabled="neededExp > (editingCharacter?.exp ?? 0) || !discipline || !ability" @click="level" data-agent="level:confirm">
           Abschließen
         </button>
       </div>
