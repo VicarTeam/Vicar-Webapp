@@ -50,6 +50,8 @@ function onClick(nr: number, e: MouseEvent) {
       :key="i"
       class="square"
       :class="{ filled: isFilled(i), through: isStain(i), 'ml-10': i === 6 }"
+      :data-agent="'set:humanity:' + i"
+      :data-agent-label="'Menschlichkeit auf ' + i"
       @click="onClick(i, $event)"
     ></span>
   </div>

@@ -21,6 +21,7 @@ import CharacterStorage from "@/libs/io/character-storage"
 import { uploadImage } from "@/libs/io/cdn"
 import { playFx } from "@/libs/fx/fx"
 import DataManager from "@/libs/data/data-manager"
+import { isAgentMode } from "@/libs/agent/agent-bridge"
 import { skillTreeResolver } from "@/libs/resolvers/skilltree-resolver"
 import { getResonanceDisciplines } from "@/app/data/v5"
 import {
@@ -68,6 +69,7 @@ const toggleDicePoolFlag = inject("toggle-dice-pool-flag") as ((flag: string) =>
 const showTip = inject("show-tip") as ((content: any, title?: any) => void) | undefined
 
 const avatarUploader = ref<HTMLInputElement | null>(null)
+const agentMode = isAgentMode()
 const levelBloodPotencyModal = ref<InstanceType<typeof BloodPotencyModal> | null>(null)
 const levelRenownModal = ref<InstanceType<typeof RenownModal> | null>(null)
 const confirmDeleteModal = ref<InstanceType<typeof ConfirmDeleteModal> | null>(null)
@@ -265,6 +267,15 @@ function changeVdzBloodPool(delta: number) {
       @change="onAvatarUpload"
     />
 
+    <input
+      v-if="agentMode"
+      type="text"
+      hidden
+      data-agent="input:avatar-url"
+      data-agent-label="Avatar per URL setzen"
+      @change="e => { editingCharacter!.avatar = (e.target as HTMLInputElement).value; saveChar(); updateViewer?.() }"
+    />
+
     <div class="meta">
       <Avatar
         :src="editingCharacter.avatar"
@@ -426,6 +437,7 @@ function changeVdzBloodPool(delta: number) {
               <LevelButton
                 v-if="editingCharacter.bloodPotency < 10 && editingCharacter.cainsMarkLevel !== -5"
                 @click="levelBloodPotencyModal?.showModal()"
+                data-agent="level:blood-potency"
               />
               <i
                 v-if="editingCharacter.fullCustomization && editingCharacter.bloodPotency > 0"
@@ -449,6 +461,8 @@ function changeVdzBloodPool(delta: number) {
             <Squares
               :max="5"
               :amount="editingCharacter.hunger"
+              agent-id="set:hunger"
+              agent-label="Hunger auf"
               @click="v => { editingCharacter!.hunger = v === editingCharacter!.hunger ? 0 : v; saveChar(true, true) }"
             />
           </div>
@@ -502,11 +516,11 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
         </div>
         <div v-else-if="isDarkAges" class="form-group">
           <label>Grundsätze der Chronik: <TipButton content="Die Grundsätze der Chronik sind die Regeln und Themen, auf die sich Gruppe und Erzählerin für eure Chronik im dunklen Zeitalter geeinigt haben. Sie geben den Ton und die Grenzen vor, an die sich alle halten." /></label>
-          <MarkdownEditor v-model="editingCharacter.chroniclePrinciples" @change="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.chroniclePrinciples" @change="saveChar()" agent-id="input:chronicle-principles" agent-label="Grundsätze der Chronik" />
         </div>
         <div v-else class="form-group">
           <label>Grundsätze der Chronik: <TipButton content="Die Grundsätze der Chronik beschreibt eine Reihe von Regeln, die die Spieler mit ihrem Spielleiter für die bespielende Chronik festgesetzt werden. Jeder Spieler sollte sich an diese Grundsätze halten, auch wenn der Glaube des Charakters nicht komplett damit übereinstimmt. Eine Verletzung würde jedoch nur moralische Sanktionen oder die Degeneration des Charakters mit sich führen. Für weitere Informationen siehe Grundregelwerk V5 S. 172." /></label>
-          <MarkdownEditor v-model="editingCharacter.chroniclePrinciples" @change="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.chroniclePrinciples" @change="saveChar()" agent-id="input:chronicle-principles" agent-label="Grundsätze der Chronik" />
         </div>
       </div>
 
@@ -522,12 +536,12 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
         </div>
         <div v-else-if="isDarkAges" class="form-group">
           <label>Bindungen an die Sterblichkeit: <TipButton content="Was bindet deinen Kainiten noch an die Welt der Sterblichen? Menschen, Orte, Pflichten oder Überzeugungen, die deine Menschlichkeit bewahren und deinem Nichtleben Halt geben. Werden sie bedroht oder verloren, kann das deinen Weg ins Wanken bringen." /></label>
-          <MarkdownEditor v-model="editingCharacter.anchorsAndBeliefs" @change="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.anchorsAndBeliefs" @change="saveChar()" agent-id="input:anchors" agent-label="Anker & Überzeugungen" />
         </div>
         <div v-else class="form-group">
           <label>Anker & Überzeugungen: <TipButton content="Wähle ein bis drei Überzeugungen und genau so viele Anker. Überzeugungen sind die Richtlinien die dein Charakter von sich aus befolgen muss und auch will, selbst bis über den Tod (oder eher Untot). Eine Überzeugung kann z.B. sein 'Du sollst nicht töten' oder 'Die Wahrheit ist heilig; du sollst nicht lügen'. Das Verstoßen gegen eine Überzeugung kann Makel mit sich bringen, oder Makel die im Rahmen einer Überzeugung erteilt werden, durch die Überzeugung abgemildert werden.
             Anker sind Personen, die zu Lebzeiten die Wichtigkeit des Lebens gestützt haben. Anker müssen lebende Menschen sein und sollte ein Anker verletzt werden oder gar sterben, kann das zum Verlust von Menschlickeit führen. Ein Anker kann z.B. der Liebespartner oder ein Kind sein." /></label>
-          <MarkdownEditor v-model="editingCharacter.anchorsAndBeliefs" @change="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.anchorsAndBeliefs" @change="saveChar()" agent-id="input:anchors" agent-label="Anker & Überzeugungen" />
         </div>
       </div>
 
@@ -581,7 +595,7 @@ Regeln: Du speicherst Quintessenz entsprechend deines Avatar-Werts und kannst si
 
         <div class="form-group">
           <label>Geschichte:</label>
-          <MarkdownEditor v-model="editingCharacter.backstory" @change="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.backstory" @change="saveChar()" agent-id="input:backstory" agent-label="Hintergrundgeschichte" />
         </div>
       </div>
 
@@ -634,7 +648,7 @@ Regeln: Dein Arete-Wert bestimmt, wie viele Würfel du für Zaubereffekte nutzt 
 
         <div class="form-group">
           <label>Notizen:</label>
-          <MarkdownEditor v-model="editingCharacter.notes" @change="saveChar()" />
+          <MarkdownEditor v-model="editingCharacter.notes" @change="saveChar()" agent-id="input:notes" agent-label="Notizen" />
         </div>
       </div>
     </div>

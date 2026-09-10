@@ -16,7 +16,7 @@ import { Markdown } from "tiptap-markdown"
  * Keine Toolbar.
  */
 
-const props = withDefaults(defineProps<{ modelValue?: string }>(), {
+const props = withDefaults(defineProps<{ modelValue?: string; agentId?: string; agentLabel?: string }>(), {
   modelValue: "",
 })
 
@@ -61,11 +61,25 @@ function insertTable() {
   editor.value?.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
 }
 
+function onAgentSet(e: Event) {
+  const val = (e as CustomEvent).detail?.value ?? ""
+  editor.value?.commands.setContent(val, false)
+  emit("update:modelValue", val)
+  emit("change")
+}
+
 onBeforeUnmount(() => editor.value?.destroy())
 </script>
 
 <template>
-  <div class="md-editor" @click.self="editor?.commands.focus('end')">
+  <div
+    class="md-editor"
+    :data-agent="agentId || undefined"
+    :data-agent-richtext="agentId ? '' : undefined"
+    :data-agent-label="agentId ? (agentLabel ?? agentId) : undefined"
+    @vicar-agent-set="onAgentSet"
+    @click.self="editor?.commands.focus('end')"
+  >
     <FloatingMenu v-if="editor" :editor="editor" :tippy-options="{ duration: 100, placement: 'left-start' }">
       <button type="button" class="md-floating-add" @click="insertTable">
         <i class="fa-solid fa-table-cells"></i> Tabelle

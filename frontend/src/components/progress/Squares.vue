@@ -11,6 +11,8 @@ const props = defineProps<{
   max?: number
   marginAt?: number
   targetType?: string
+  agentId?: string
+  agentLabel?: string
 }>()
 
 const emit = defineEmits<{
@@ -49,6 +51,8 @@ function onClick(i: number) {
       :key="i"
       class="square"
       :class="{ active: i <= amount, 'ml-10': isMargin(i) }"
+      :data-agent="agentId ? agentId + ':' + i : undefined"
+      :data-agent-label="agentId ? (agentLabel ?? agentId) + ' ' + i : undefined"
       @click="onClick(i)"
     ></span>
   </div>
