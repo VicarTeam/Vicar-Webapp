@@ -37,7 +37,7 @@ function onKeyDown(event: KeyboardEvent) {
   <teleport v-if="shown" to="body">
     <Blur :disabled="!withBlur" hard>
       <div class="modal-card card" v-bind="$attrs">
-        <button v-if="withClose" type="button" class="modal-close iconbtn" @click="emit('close')">
+        <button v-if="withClose" type="button" class="modal-close iconbtn" @click="emit('close')" data-agent="modal:close" data-agent-label="Schließen">
           <i class="fa-solid fa-xmark"></i>
         </button>
         <div class="card-content">
