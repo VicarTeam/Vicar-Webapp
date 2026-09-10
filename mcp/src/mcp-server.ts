@@ -14,7 +14,8 @@ import { RemoteAgent } from "./remote-agent.js";
  * Env: VICAR_AGENT_TOKEN (per-user, from POST /users/@me/agent-token; omit for
  * local dev-login), VICAR_FRONTEND_URL, VICAR_BACKEND_URL, VICAR_HEADLESS=false,
  * VICAR_LIVE=true (drive the user's visible tab via the socket.io relay instead
- * of a headless browser; the user opens the app with ?agent=live).
+ * of a headless browser; the user opens the app with ?agent=live), VICAR_SOCKET_PATH
+ * (socket.io path; default /socket.io locally, /api/socket.io behind the prod proxy).
  */
 
 type AgentDriver = VicarAgent | RemoteAgent;
@@ -31,6 +32,7 @@ async function ensureAgent(): Promise<AgentDriver> {
       ? new RemoteAgent({
           backendUrl: process.env.VICAR_BACKEND_URL,
           agentToken: process.env.VICAR_AGENT_TOKEN,
+          socketPath: process.env.VICAR_SOCKET_PATH,
         })
       : new VicarAgent({
           frontendUrl: process.env.VICAR_FRONTEND_URL,

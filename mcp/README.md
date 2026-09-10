@@ -69,6 +69,22 @@ MCP-Server im Live-Modus: zusaetzlich `VICAR_LIVE=true` setzen (nutzt
 `RemoteAgent` statt headless Playwright). E2E-Test (oeffnet einen Bridge-Tab,
 treibt ihn per Relay-Controller): `npm run live-test`.
 
+### Prod (vicar.cloud)
+
+Hinter dem Prod-Proxy liegt das Backend unter `/api`, socket.io unter
+`/api/socket.io`:
+
+```bash
+VICAR_BACKEND_URL=https://vicar.cloud/api \
+VICAR_SOCKET_PATH=/api/socket.io \
+VICAR_LIVE=true \
+VICAR_AGENT_TOKEN=<token> \
+npm run server
+```
+
+Der User oeffnet dann `https://vicar.cloud/?agent=live` (als derselbe User
+eingeloggt), damit ein Bridge-Tab verbunden ist.
+
 ## Naechste Phasen
 
 Siehe `../AGENT_MCP_PLAN.md`: Haertung (Context-Pool, Concurrency-Limits, Scopes)

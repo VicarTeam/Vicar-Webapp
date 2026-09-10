@@ -2,8 +2,11 @@ import { io, type Socket } from "socket.io-client";
 import type { AgentState } from "./agent.js";
 
 export interface RemoteAgentOptions {
+  /** HTTP base for REST (e.g. http://localhost:6660 locally, https://vicar.cloud/api in prod). */
   backendUrl?: string;
   agentToken?: string;
+  /** socket.io path (default /socket.io locally; /api/socket.io behind the prod proxy). */
+  socketPath?: string;
 }
 
 /**
@@ -15,6 +18,7 @@ export interface RemoteAgentOptions {
 export class RemoteAgent {
   readonly backendUrl: string;
   private readonly agentToken?: string;
+  private readonly socketPath: string;
   private socket!: Socket;
   private nextId = 1;
   private pending = new Map<string, (result: any) => void>();
@@ -22,6 +26,7 @@ export class RemoteAgent {
   constructor(opts: RemoteAgentOptions = {}) {
     this.backendUrl = opts.backendUrl ?? "http://localhost:6660";
     this.agentToken = opts.agentToken;
+    this.socketPath = opts.socketPath ?? "/socket.io";
   }
 
   private loginUrl(): string {
@@ -41,7 +46,9 @@ export class RemoteAgent {
 
   async open() {
     const token = await this.token();
-    this.socket = io(this.backendUrl, { path: "/socket.io", transports: ["websocket", "polling"] });
+    // socket.io needs the bare origin; the path (e.g. /api/socket.io in prod) is separate.
+    const origin = new URL(this.backendUrl).origin;
+    this.socket = io(origin, { path: this.socketPath, transports: ["websocket", "polling"] });
     await new Promise<void>((resolve, reject) => {
       const timer = setTimeout(() => reject(new Error("agent-authenticate timeout")), 15000);
       this.socket.on("connect", () => this.socket.emit("agent-authenticate", { token, role: "controller" }));
