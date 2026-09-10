@@ -264,7 +264,7 @@ const itemsData = computed(() => DataManager.selectedLanguage.items ?? [])
       <div class="money-holder">
         <div class="inventory-fit">
           <b>Mitgeführt</b>
-          <IconButton style="width: 2rem; height: 2rem" icon="fa-plus" @click="beginAddingItemTo('carriedItems')" data-agent="inventory:add-carried" />
+          <IconButton style="width: 2rem; height: 2rem" icon="fa-plus" @click="beginAddingItemTo('carriedItems')" data-agent="inventory:add-carried" data-agent-label="Mitgeführten Gegenstand hinzufügen" />
         </div>
 
         <span>Bargeld</span>
@@ -279,7 +279,7 @@ const itemsData = computed(() => DataManager.selectedLanguage.items ?? [])
 
         <div class="inventory-fit">
           <b>Besitz</b>
-          <IconButton style="width: 2rem; height: 2rem" icon="fa-plus" @click="beginAddingItemTo('ownedItems')" data-agent="inventory:add-owned" />
+          <IconButton style="width: 2rem; height: 2rem" icon="fa-plus" @click="beginAddingItemTo('ownedItems')" data-agent="inventory:add-owned" data-agent-label="Besitz-Gegenstand hinzufügen" />
         </div>
       </div>
     </div>
