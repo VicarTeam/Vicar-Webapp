@@ -266,7 +266,7 @@ defineExpose({ showModal, showModalInFolder })
 
       <div v-if="gameline === GameLine.DarkAges" class="ccm__segment">
         <label class="required">Generation:</label>
-        <select class="form-control" v-model.number="generation">
+        <select class="form-control" v-model.number="generation" data-agent="select:generation">
           <option v-for="o in vdzGenerationOptions" :key="o.gen" :value="o.gen">{{ o.label }}</option>
         </select>
         <small class="ccm__hint">Je niedriger die Generation, desto mächtiger das Blut — aber desto näher an den Ahnen und ihrer Aufmerksamkeit.</small>
@@ -275,23 +275,23 @@ defineExpose({ showModal, showModalInFolder })
       <div v-if="gameline === GameLine.Vampire" class="ccm__segment">
         <label class="required">Generation:</label>
         <div class="ccm__row">
-          <select v-model="generationEra" @change="onEraChange" class="form-control">
+          <select v-model="generationEra" @change="onEraChange" class="form-control" data-agent="select:generation-era">
             <option :value="Generation.Children">Kinder</option>
             <option :value="Generation.Newborn">Neugeborene</option>
             <option :value="Generation.Ancillae">Ancillae</option>
             <option :value="Generation.Older">älter/benutzerdefiniert</option>
             <option :value="Generation.Elder">Methusa/Antediluvian</option>
           </select>
-          <input class="form-control" type="number" :min="eraMin" :max="eraMax" v-model.number="generation" inputmode="numeric" />
+          <input class="form-control" type="number" :min="eraMin" :max="eraMax" v-model.number="generation" inputmode="numeric" data-agent="input:generation" />
         </div>
       </div>
 
       <div class="ccm__segment">
         <label class="required">Geschlecht:</label>
         <div class="sex-select">
-          <div :class="{ active: sex === Sex.Male }" @click="sex = Sex.Male">männlich</div>
-          <div :class="{ active: sex === Sex.Divers }" @click="sex = Sex.Divers">divers</div>
-          <div :class="{ active: sex === Sex.Female }" @click="sex = Sex.Female">weiblich</div>
+          <div :class="{ active: sex === Sex.Male }" @click="sex = Sex.Male" data-agent="char:sex:male">männlich</div>
+          <div :class="{ active: sex === Sex.Divers }" @click="sex = Sex.Divers" data-agent="char:sex:divers">divers</div>
+          <div :class="{ active: sex === Sex.Female }" @click="sex = Sex.Female" data-agent="char:sex:female">weiblich</div>
         </div>
       </div>
 

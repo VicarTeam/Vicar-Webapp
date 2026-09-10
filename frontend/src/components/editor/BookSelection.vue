@@ -53,7 +53,7 @@ defineExpose({ activeBooks })
 <template>
   <div class="book-selection">
     <div class="custom-checkbox" v-if="!disabled">
-      <input type="checkbox" id="book-0" v-model="useAllBooks" />
+      <input type="checkbox" id="book-0" v-model="useAllBooks" data-agent="toggle:all-books" data-agent-label="Alle Bücher verwenden" />
       <label for="book-0">Alle Bücher verwenden</label>
     </div>
 
@@ -61,6 +61,8 @@ defineExpose({ activeBooks })
       <input
         :disabled="book.id === 1 || disabled"
         type="checkbox"
+        :data-agent="'toggle:book:' + book.id"
+        :data-agent-label="getBookName(book.id)"
         :id="'book-' + book.id"
         v-model="book.active"
       />
