@@ -77,7 +77,7 @@ const canGoNext = computed(() => {
       <div class="wrap">
         <div class="form-group intro">
           <label class="required"><b>Gib folgendermaßen Punkte für deine Attribute aus:</b></label>
-          <ul>
+          <ul data-agent-hint>
             <li>Nimm {{getAvailableAmount(4)}} Attribut auf 4</li>
             <li>Nimm {{getAvailableAmount(3)}} Attribut(e) auf 3</li>
             <li>Nimm {{getAvailableAmount(2)}} Attribut(e) auf 2</li>

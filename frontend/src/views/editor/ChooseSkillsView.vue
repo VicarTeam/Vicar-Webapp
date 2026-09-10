@@ -123,7 +123,7 @@ const nextStep = computed(() => {
           </select>
         </div>
 
-        <ul v-if="(store.editingCharacter as IEdition5Sheet).skillspread" class="list">
+        <ul v-if="(store.editingCharacter as IEdition5Sheet).skillspread" class="list" data-agent-hint>
           <li v-for="(s, i) in (store.editingCharacter as IEdition5Sheet).skillspread.spreads" :key="i">
             {{ `${getAvailableAmount(s.points)} Fähigkeit(en) auf ${s.points}` }}
           </li>
@@ -168,7 +168,7 @@ const nextStep = computed(() => {
           <div class="defined">
             <div class="pair" v-for="(d, i) in definedSpecializations" :key="d.key">
               <input v-model="d.name" type="text" class="form-control" disabled />
-              <input v-model="d.value" type="text" class="form-control" :data-agent="'input:spec-defined:' + i" />
+              <input v-model="d.value" type="text" class="form-control" :data-agent="'input:spec-defined:' + i" :data-agent-label="d.name" />
             </div>
           </div>
 
