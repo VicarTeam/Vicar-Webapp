@@ -264,7 +264,7 @@ const itemsData = computed(() => DataManager.selectedLanguage.items ?? [])
       <div class="money-holder">
         <div class="inventory-fit">
           <b>Mitgeführt</b>
-          <IconButton style="width: 2rem; height: 2rem" icon="fa-plus" @click="beginAddingItemTo('carriedItems')" />
+          <IconButton style="width: 2rem; height: 2rem" icon="fa-plus" @click="beginAddingItemTo('carriedItems')" data-agent="inventory:add-carried" />
         </div>
 
         <span>Bargeld</span>
@@ -279,7 +279,7 @@ const itemsData = computed(() => DataManager.selectedLanguage.items ?? [])
 
         <div class="inventory-fit">
           <b>Besitz</b>
-          <IconButton style="width: 2rem; height: 2rem" icon="fa-plus" @click="beginAddingItemTo('ownedItems')" />
+          <IconButton style="width: 2rem; height: 2rem" icon="fa-plus" @click="beginAddingItemTo('ownedItems')" data-agent="inventory:add-owned" />
         </div>
       </div>
     </div>
@@ -335,23 +335,23 @@ const itemsData = computed(() => DataManager.selectedLanguage.items ?? [])
         <div class="add-forms">
           <div v-if="!editingCustomItem" class="add-form">
             <div class="add-stack">
-              <select class="form-control" v-model="addingItemPredefinedCategory">
+              <select class="form-control" v-model="addingItemPredefinedCategory" data-agent="select:item-category">
                 <option v-for="(g, idx) in itemsData" :key="idx" :value="g">
                   {{ g.category }}
                 </option>
               </select>
 
-              <select class="form-control" v-model="addingItemPredefinedItem" v-if="addingItemPredefinedCategory">
+              <select class="form-control" v-model="addingItemPredefinedItem" v-if="addingItemPredefinedCategory" data-agent="select:item">
                 <option :value="null" disabled style="opacity: 0.5; font-style: italic">– Bitte wählen –</option>
                 <option v-for="(i, idx) in addingItemPredefinedCategory.items" :key="idx" :value="i">
                   {{ i.name }}
                 </option>
               </select>
 
-              <input class="form-control" type="number" placeholder="Anzahl" :min="1" :step="1" v-model="addingItemPredefinedAmount" />
+              <input class="form-control" type="number" placeholder="Anzahl" :min="1" :step="1" v-model="addingItemPredefinedAmount" data-agent="input:item-amount" />
             </div>
 
-            <button class="btn btn-primary" :disabled="!canAddPredefined" @click="addPredefinedItem">Hinzufügen</button>
+            <button class="btn btn-primary" :disabled="!canAddPredefined" @click="addPredefinedItem" data-agent="inventory:add-submit">Hinzufügen</button>
           </div>
 
           <div v-if="!editingCustomItem" class="addborder" />

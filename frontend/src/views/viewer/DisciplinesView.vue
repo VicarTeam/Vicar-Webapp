@@ -130,7 +130,7 @@ const renegadeAbiities = computed<ILeveledDisciplineAbility[]>(() => {
       <div class="discipline card" v-for="d in editingCharacter.disciplines" :key="d.discipline.id" :id="`hldc-${d.discipline.id}`">
         <div class="top">
           <div class="d-flex align-items-center" style="gap: 0.5rem; flex-grow: 1">
-            <LevelButton v-if="d.currentLevel - 1 < getMaxDisciplineLevel(d)" @click="levelDiscipline(d)" />
+            <LevelButton v-if="d.currentLevel - 1 < getMaxDisciplineLevel(d)" @click="levelDiscipline(d)" :data-agent="'level:disc:' + d.discipline.id" />
             <b @click="setDicePool?.('disc', d.discipline.name, Math.min(d.currentLevel - 1, 5))">{{ d.discipline.name }}</b>
             <TipButton :content="d.discipline.summary" />
           </div>

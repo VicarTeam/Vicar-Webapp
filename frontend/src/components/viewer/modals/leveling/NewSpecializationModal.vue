@@ -56,10 +56,10 @@ defineExpose({ showModal })
         {{ `Kosten: ${neededExp} EXP` }}
       </div>
 
-      <input type="text" class="form-control" v-model="specialization" />
+      <input type="text" class="form-control" v-model="specialization" data-agent="input:specialization" />
 
       <div class="actions">
-        <button class="btn btn-primary" :disabled="neededExp > editingCharacter.exp" @click="level">
+        <button class="btn btn-primary" :disabled="neededExp > editingCharacter.exp" @click="level" data-agent="level:confirm">
           Abschließen
         </button>
       </div>

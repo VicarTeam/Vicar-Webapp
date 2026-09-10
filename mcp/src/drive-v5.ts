@@ -229,26 +229,51 @@ async function main() {
 
   console.log("[drive] --- viewer instrumentation ---");
   await agent.waitFor((s) => s.view.startsWith("viewer"));
-  await agent.act("input:concept", { value: "Nachtwandler" });
-  const conceptVal = (await agent.state()).actions.find((a) => a.agent === "input:concept")?.value;
-  console.log(`[drive] profile concept -> "${conceptVal}"`);
 
-  await agent.act("tab:attributes");
-  const tabState = await agent.waitFor((s) => s.activeTab === "tab:attributes");
-  console.log(`[drive] active tab -> ${tabState.activeTab}`);
+  await agent.act("input:concept", { value: "Nachtwandler" });
+  console.log(`[drive] profile concept -> "${(await agent.state()).actions.find((a) => a.agent === "input:concept")?.value}"`);
 
   await agent.act("level:toggle");
-  const lvl = await agent.waitFor((s) => s.levelMode === true);
-  console.log(`[drive] level mode -> ${lvl.levelMode}`);
+  await agent.waitFor((s) => s.levelMode === true);
 
+  console.log("[drive] adding 50 XP");
+  await agent.act("exp:open");
+  await agent.waitFor((s) => s.actions.some((a) => a.agent === "exp:apply"));
+  await agent.act("input:exp-amount", { value: "50" });
+  await agent.act("exp:apply");
+  const afterXp = await agent.waitFor((s) => Number((s.character as any)?.exp) >= 50);
+  console.log(`[drive] exp now ${(afterXp.character as any).exp}`);
+
+  console.log("[drive] spending XP on an attribute");
+  await agent.act("tab:attributes");
+  await agent.waitFor((s) => s.activeTab === "tab:attributes");
+  const attrUp = (await agent.state()).actions.find((a) => a.agent.startsWith("level:attr:"));
+  if (!attrUp) throw new Error("no attribute level button visible");
+  await agent.act(attrUp.agent);
+  await agent.waitFor((s) => { const c = s.actions.find((a) => a.agent === "level:confirm"); return !!c && !c.disabled; });
+  await agent.act("level:confirm");
+  await agent.waitFor((s) => !s.actions.some((a) => a.agent === "level:confirm"));
+  console.log(`[drive] leveled ${attrUp.agent}; exp now ${((await agent.state()).character as any).exp}`);
+
+  console.log("[drive] adding an inventory item");
+  await agent.act("tab:inventory");
+  await agent.waitFor((s) => s.activeTab === "tab:inventory");
+  await agent.act("inventory:add-carried");
+  await agent.waitFor((s) => s.actions.some((a) => a.agent === "select:item"));
+  await agent.act("select:item-category", { first: true });
+  await agent.act("select:item", { first: true });
+  await agent.act("input:item-amount", { value: "1" });
+  await agent.act("inventory:add-submit");
+  console.log("[drive] inventory item added");
+
+  console.log("[drive] toggling info flags + avatar orientation");
   await agent.act("info:open");
   await agent.waitFor((s) => s.actions.some((a) => a.agent === "toggle:advanced-disciplines"));
   const before = (await agent.state()).actions.find((a) => a.agent === "toggle:advanced-disciplines")?.value;
   await agent.act("toggle:advanced-disciplines");
   const after = (await agent.state()).actions.find((a) => a.agent === "toggle:advanced-disciplines")?.value;
   await agent.act("select:avatar-orientation", { value: "Oben" });
-  const orient = (await agent.state()).actions.find((a) => a.agent === "select:avatar-orientation")?.value;
-  console.log(`[drive] info: advanced-disciplines ${before} -> ${after}, avatar-orientation -> "${orient}"`);
+  console.log(`[drive] info: advanced-disciplines ${before} -> ${after}, avatar-orientation -> "${(await agent.state()).actions.find((a) => a.agent === "select:avatar-orientation")?.value}"`);
 
   await deleteCharacter(agent, full.id);
   await deleteFolder(agent, folderName);

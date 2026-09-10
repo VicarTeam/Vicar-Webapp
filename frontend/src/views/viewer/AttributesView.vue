@@ -84,7 +84,7 @@ function deleteAttribute(attr: IAttributeData | M20Attribute) {
       <div class="cat-head"><b>{{ getCategoryName(cat.name) }}</b></div>
 
       <div class="attribute" :class="{ modified: effAttr(attr.key).modified }" v-for="attr in cat.attributes" :key="attr.key" :id="`hlat-${attr.key}`">
-        <LevelButton v-if="attr.value < 5 && !effAttr(attr.key).locked" @click="levelAttributeModal?.showModal(attr)" />
+        <LevelButton v-if="attr.value < 5 && !effAttr(attr.key).locked" @click="levelAttributeModal?.showModal(attr)" :data-agent="'level:attr:' + attr.key" />
         <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && attr.value > 0 && !effAttr(attr.key).locked" @click="deleteAttribute(attr)" />
         <small class="name" @click="setDicePool?.('attr', getAttributeName(attr.key), effAttr(attr.key).value, isHumanInteractionAttribute(attr.key))">
           <TipButton :content="getAttributeDescription(attr.key)" />

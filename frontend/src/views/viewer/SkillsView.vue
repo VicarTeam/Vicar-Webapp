@@ -91,8 +91,8 @@ function deleteSkillSpecs(skill: ISkillData) {
       <div class="cat-head"><b>{{ getCategoryName(cat.name) }}</b></div>
 
       <div class="skill" :class="{ modified: effSkill(skill.key).modified }" v-for="skill in cat.skills" :key="skill.key" :id="`hlsk-${skill.key}`">
-        <LevelButton v-if="skill.value < 5 && !effSkill(skill.key).locked" @click="levelSkillModal?.showModal(skill)" />
-        <LevelButton @click="levelSpecializationModal?.showModal(skill)" icon="fa-plus" />
+        <LevelButton v-if="skill.value < 5 && !effSkill(skill.key).locked" @click="levelSkillModal?.showModal(skill)" :data-agent="'level:skill:' + skill.key" />
+        <LevelButton @click="levelSpecializationModal?.showModal(skill)" icon="fa-plus" :data-agent="'level:skill-spec:' + skill.key" />
         <i class="iconbtnprim fa-solid fa-minus" v-if="editingCharacter.fullCustomization && skill.value > 0 && !effSkill(skill.key).locked" @click="deleteSkill(skill)" />
         <i class="iconbtnprim fa-solid fa-trash" v-if="editingCharacter.fullCustomization && skill.specialization.length > 0" @click="deleteSkillSpecs(skill)" />
 
