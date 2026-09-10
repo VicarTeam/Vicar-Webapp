@@ -62,7 +62,7 @@ const isMage = computed(() => editingCharacter.value?.game === GameLine.Mage)
     <div class="trait card">
       <div class="title">
         <b>Vorteile</b>
-        <LevelButton icon="fa-plus" class="ml-10" @click="addNewTrait" />
+        <LevelButton icon="fa-plus" class="ml-10" @click="addNewTrait" data-agent="trait:add" data-agent-label="Vorzug hinzufügen" />
       </div>
 
       <div class="list">
@@ -97,7 +97,7 @@ const isMage = computed(() => editingCharacter.value?.game === GameLine.Mage)
     <div v-if="!isMage" class="trait card">
       <div class="title">
         <b>Schwächen</b>
-        <LevelButton icon="fa-plus" class="ml-10" @click="addNewFlaw" />
+        <LevelButton icon="fa-plus" class="ml-10" @click="addNewFlaw" data-agent="flaw:add" data-agent-label="Schwäche hinzufügen" />
       </div>
 
       <div class="list">
