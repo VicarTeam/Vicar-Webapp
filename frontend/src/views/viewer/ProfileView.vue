@@ -384,7 +384,7 @@ function changeVdzBloodPool(delta: number) {
           <div v-if="isVampire || isDarkAges" class="stat sire">
             <b>Erzeuger/in:</b>
             <small v-if="!editingCharacter.fullCustomization">{{ editingCharacter.sire }}</small>
-            <input v-else class="form-control" type="text" v-model="editingCharacter.sire" />
+            <input v-else class="form-control" type="text" v-model="editingCharacter.sire" data-agent="input:sire" />
           </div>
 
           <div class="stat" id="hlst-health">
@@ -493,7 +493,7 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
       <div class="column">
         <div class="form-group">
           <label>Chronik: <TipButton content="Die Chronik beschreibt die Kampagne bzw. eine Zusammenfassung von Geschichten, die die Charaktere durchlaufen. Wie die Chronik benannt wird ist vom Spielleiter festzulegen." /></label>
-          <input class="form-control" type="text" v-model="editingCharacter.chronicle" @input="saveChar()" />
+          <input class="form-control" type="text" v-model="editingCharacter.chronicle" @input="saveChar()" data-agent="input:chronicle" />
         </div>
 
         <div v-if="isMage" class="form-group">
@@ -513,7 +513,7 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
       <div class="column">
         <div class="form-group">
           <label>Konzept: <TipButton content="Das Konzept ist eine kurze Zusammenfassung (am besten nur ein Wort), die den Charakter oder die Tätigkeit dieses beschreibt." /></label>
-          <input class="form-control" type="text" v-model="editingCharacter.concept" @input="saveChar()" />
+          <input class="form-control" type="text" v-model="editingCharacter.concept" @input="saveChar()" data-agent="input:concept" />
         </div>
 
         <div v-if="isMage" class="form-group">
@@ -534,7 +534,7 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
       <div class="column">
         <div v-if="isVampire || isHunter" class="form-group">
           <label>Ambition: <TipButton content="Die Ambition ist das was dein Charakter in der Chronik antreibt voran zu streiten. Ein höheres Ziel als der Überlebensantrieb. Sollte eine Ambition während der Chronik erreicht werden, sollte eine neue Ambition gewählt werden. Ambitionen müssen im Spiel messabr sein, z.B. 'Ich hege die Ambition, Menschlichkeit 10 zu erreichen'. Wurde in einer Spielsitzung auf die Amibition hingearbeitet - der SL entscheidet - so kann ein Punkt Schwerer Schaden Willenskraft wieder hergestellt werden." /></label>
-          <input class="form-control" type="text" v-model="editingCharacter.ambition" @input="saveChar()" />
+          <input class="form-control" type="text" v-model="editingCharacter.ambition" @input="saveChar()" data-agent="input:ambition" />
         </div>
 
         <div v-else-if="isWerewolf" class="form-group compact">

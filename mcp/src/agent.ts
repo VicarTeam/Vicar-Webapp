@@ -20,6 +20,8 @@ export interface AgentState {
   view: string;
   path: string;
   gameline: string | null;
+  levelMode: boolean;
+  activeTab: string | null;
   character: Record<string, unknown> | null;
   actions: AgentAction[];
   canProceed: boolean;

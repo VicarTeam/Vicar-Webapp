@@ -455,7 +455,7 @@ onUnmounted(() => {
     <div class="top-bar">
       <div class="actions left">
         <IconButton icon="fa-angles-left" @click="backToMain" />
-        <IconButton icon="fa-info" @click="characterInfoModal?.showModal(editingCharacter)" />
+        <IconButton icon="fa-info" @click="characterInfoModal?.showModal(editingCharacter)" data-agent="info:open" />
         <IconButton
           icon="fa-dice"
           v-if="editingCharacter.connectedFoundryId"
@@ -465,29 +465,31 @@ onUnmounted(() => {
       </div>
 
       <Tabs class="center" @before-change="switchTab" v-model="selectedTab">
-        <Tab value="viewer-profile" text="Profil" ref="tabProfile" />
-        <Tab v-if="isMage" value="viewer-tradition" text="Allianz" />
-        <Tab v-if="isDarkAges" value="viewer-vdz-road" text="Weg & Hintergründe" />
-        <Tab value="viewer-inventory" text="Inventar" ref="tabInventory" />
-        <Tab value="viewer-attributes" text="Attribute" ref="tabAttributes" />
-        <Tab value="viewer-skills" text="Fähigkeiten" ref="tabSkills" />
+        <Tab value="viewer-profile" text="Profil" ref="tabProfile" data-agent="tab:profile" />
+        <Tab v-if="isMage" value="viewer-tradition" text="Allianz" data-agent="tab:tradition" />
+        <Tab v-if="isDarkAges" value="viewer-vdz-road" text="Weg & Hintergründe" data-agent="tab:vdz-road" />
+        <Tab value="viewer-inventory" text="Inventar" ref="tabInventory" data-agent="tab:inventory" />
+        <Tab value="viewer-attributes" text="Attribute" ref="tabAttributes" data-agent="tab:attributes" />
+        <Tab value="viewer-skills" text="Fähigkeiten" ref="tabSkills" data-agent="tab:skills" />
         <Tab
           v-if="isVampire"
           value="viewer-disciplines"
           text="Disziplinen"
           ref="tabDisciplines"
+          data-agent="tab:disciplines"
         />
         <Tab
           v-if="canAccessRituals && isVampire"
           value="viewer-bloodrituals"
           text="Rituale"
           ref="tabBloodRituals"
+          data-agent="tab:bloodrituals"
         />
         <Tab v-if="isDarkAges" value="viewer-vdz-disciplines" text="Disziplinen" />
         <Tab v-if="isWerewolf" value="viewer-gifts" text="Gaben & Riten" />
         <Tab v-if="isHunter" value="viewer-edges" text="Edges" />
         <Tab v-if="isDarkAges" value="viewer-vdz-traits" text="Vorzüge & Schwächen" />
-        <Tab v-if="!isDarkAges" value="viewer-traits" text="Vorteile & Schwächen" ref="tabTraits" />
+        <Tab v-if="!isDarkAges" value="viewer-traits" text="Vorteile & Schwächen" ref="tabTraits" data-agent="tab:traits" />
         <Tab
           v-if="(editingCharacter.skillTrees?.length ?? 0) > 0"
           value="viewer-skilltrees"
@@ -506,6 +508,7 @@ onUnmounted(() => {
             icon="fa-pen"
             class="exp-edit"
             @click="addExpModal?.showModal()"
+            data-agent="exp:open"
           />
         </small>
         <RestButton />
@@ -513,6 +516,7 @@ onUnmounted(() => {
           v-if="!editingCharacter.justViewing"
           class="btn btn-primary"
           @click="switchLevelMode"
+          data-agent="level:toggle"
         >
           {{ isLevelMode ? "Modus: Leveln" : "Modus: Vorschau" }}
         </button>
@@ -520,6 +524,7 @@ onUnmounted(() => {
           v-if="!editingCharacter.justViewing"
           class="btn btn-primary"
           @click="saveCurrentCharacter"
+          data-agent="char:save"
         >
           {{ saveText || "Speichern" }}
         </button>

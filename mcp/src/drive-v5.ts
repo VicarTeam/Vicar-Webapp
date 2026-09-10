@@ -227,6 +227,29 @@ async function main() {
   const attrCount = (full.categories ?? []).flatMap((c: any) => c.attributes).filter((a: any) => a.value > 0).length;
   console.log(`[drive] attributes with value>0: ${attrCount}`);
 
+  console.log("[drive] --- viewer instrumentation ---");
+  await agent.waitFor((s) => s.view.startsWith("viewer"));
+  await agent.act("input:concept", { value: "Nachtwandler" });
+  const conceptVal = (await agent.state()).actions.find((a) => a.agent === "input:concept")?.value;
+  console.log(`[drive] profile concept -> "${conceptVal}"`);
+
+  await agent.act("tab:attributes");
+  const tabState = await agent.waitFor((s) => s.activeTab === "tab:attributes");
+  console.log(`[drive] active tab -> ${tabState.activeTab}`);
+
+  await agent.act("level:toggle");
+  const lvl = await agent.waitFor((s) => s.levelMode === true);
+  console.log(`[drive] level mode -> ${lvl.levelMode}`);
+
+  await agent.act("info:open");
+  await agent.waitFor((s) => s.actions.some((a) => a.agent === "toggle:advanced-disciplines"));
+  const before = (await agent.state()).actions.find((a) => a.agent === "toggle:advanced-disciplines")?.value;
+  await agent.act("toggle:advanced-disciplines");
+  const after = (await agent.state()).actions.find((a) => a.agent === "toggle:advanced-disciplines")?.value;
+  await agent.act("select:avatar-orientation", { value: "Oben" });
+  const orient = (await agent.state()).actions.find((a) => a.agent === "select:avatar-orientation")?.value;
+  console.log(`[drive] info: advanced-disciplines ${before} -> ${after}, avatar-orientation -> "${orient}"`);
+
   await deleteCharacter(agent, full.id);
   await deleteFolder(agent, folderName);
   await agent.close();

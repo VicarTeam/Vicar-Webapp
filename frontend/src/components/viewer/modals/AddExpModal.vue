@@ -31,10 +31,10 @@ defineExpose({ showModal })
   <Modal :shown="show" @close="show = false">
     <div class="form-group">
       <label class="required">Erfahrungspunkte ändern:</label>
-      <input class="form-control" type="number" v-model.number="exp" />
+      <input class="form-control" type="number" v-model.number="exp" data-agent="input:exp-amount" />
     </div>
     <div class="actions">
-      <button class="btn btn-primary" @click="addExp">Ändern</button>
+      <button class="btn btn-primary" @click="addExp" data-agent="exp:apply">Ändern</button>
     </div>
   </Modal>
 </template>

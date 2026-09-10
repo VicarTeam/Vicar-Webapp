@@ -34,6 +34,8 @@ export interface AgentState {
   view: string
   path: string
   gameline: string | null
+  levelMode: boolean
+  activeTab: string | null
   character: Record<string, unknown> | null
   actions: AgentAction[]
   canProceed: boolean
@@ -97,7 +99,8 @@ function readActions(): AgentAction[] {
       .slice(0, 80)
     const action: AgentAction = { agent, kind: agent.split(":")[0] ?? "", label, disabled: isDisabled(el) }
     if (isField) {
-      action.value = (el as HTMLInputElement).value
+      const input = el as HTMLInputElement
+      action.value = input.type === "checkbox" ? (input.checked ? "checked" : "unchecked") : input.value
     }
     if (tag === "SELECT") {
       const sel = el as HTMLSelectElement
@@ -177,6 +180,8 @@ export function installAgentBridge(router: Router) {
       view: String(router.currentRoute.value.name ?? ""),
       path: window.location.pathname,
       gameline: char?.game ?? null,
+      levelMode: !!store.isLevelMode,
+      activeTab: document.querySelector('[data-agent^="tab:"].active')?.getAttribute("data-agent") ?? null,
       character: summarizeCharacter(char),
       actions,
       canProceed: proceed ? !proceed.disabled : false,

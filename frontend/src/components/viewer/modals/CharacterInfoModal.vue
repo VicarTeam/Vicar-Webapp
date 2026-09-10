@@ -231,17 +231,17 @@ defineExpose({ showModal })
         <label><b>Spielleiter-Regeln:</b></label>
 
         <div v-if="isVampire" class="custom-checkbox d-flex align-items-center">
-          <input type="checkbox" id="disc" v-model="(character as any).useAdavancedDisciplines" @change="save" />
+          <input type="checkbox" id="disc" v-model="(character as any).useAdavancedDisciplines" @change="save" data-agent="toggle:advanced-disciplines" data-agent-label="Erweiterte Disziplinen" />
           <label for="disc">Erweiterte Disziplinen</label>
         </div>
 
         <div v-if="isVampire" class="custom-checkbox d-flex align-items-center">
-          <input type="checkbox" id="pow" v-model="(character as any).allowLearningOfAllPowers" @change="save" />
+          <input type="checkbox" id="pow" v-model="(character as any).allowLearningOfAllPowers" @change="save" data-agent="toggle:all-powers" data-agent-label="Alle Kräfte erlernen können" />
           <label for="pow">Alle Kräfte erlernen können</label>
         </div>
 
         <div class="custom-checkbox d-flex align-items-center">
-          <input type="checkbox" id="cust" v-model="(character as any).fullCustomization" @change="save" />
+          <input type="checkbox" id="cust" v-model="(character as any).fullCustomization" @change="save" data-agent="toggle:full-customization" data-agent-label="Volle Editierbarkeit" />
           <label for="cust">Volle Editierbarkeit</label>
         </div>
       </div>
@@ -255,7 +255,7 @@ defineExpose({ showModal })
 
       <div v-if="isVampire" class="form-group mb-0">
         <b>Avatarausrichtung:</b>
-        <select class="form-control" v-model="character!.avatarOrientation">
+        <select class="form-control" v-model="character!.avatarOrientation" data-agent="select:avatar-orientation">
           <option :value="AvatarOrientation.Top">Oben</option>
           <option :value="undefined">Zentriert</option>
           <option :value="AvatarOrientation.Bottom">Unten</option>
