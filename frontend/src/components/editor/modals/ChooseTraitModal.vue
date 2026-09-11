@@ -239,6 +239,22 @@ const isReadyForCustom = computed(() => {
 
 const isReady = computed(() => isReadyForNormalUse.value || isReadyForCustom.value)
 
+const agentHint = computed(() => {
+  const sp = selectedPack.value
+  const cp = _customPack.value
+  const kind = isFlaw.value ? "Schwaeche" : "Vorzug"
+  if (!sp) {
+    return `${kind} hinzufuegen: Waehle zuerst eine Kategorie ueber select:trait-pack (die Optionen sind die Pakete); erst danach erscheinen die Eintraege als option:trait:<Name> zum Anklicken. Fuer eine freie Eigenschaft die Option "[GM] Benutzerdefiniert" waehlen.`
+  }
+  if (cp && sp.id === cp.id) {
+    return `Benutzerdefiniert gewaehlt: setze select:custom-type, select:custom-level, input:custom-name und input:custom-desc, dann bestaetige mit trait:confirm.`
+  }
+  if (!selectedTrait.value) {
+    return `Kategorie "${sp.name}" gewaehlt: klicke einen Eintrag (option:trait:<Name>), optional input:trait-level / input:trait-specialization, dann trait:confirm.`
+  }
+  return `"${selectedTrait.value.name}" gewaehlt: optional input:trait-level / input:trait-specialization anpassen, dann mit trait:confirm bestaetigen.`
+})
+
 function addSelectedTrait() {
   const char = editingCharacter.value
   const sp = selectedPack.value
@@ -292,6 +308,7 @@ defineExpose({ showModal })
 <template>
   <Modal :shown="show" v-if="editingCharacter && data" @close="show = false">
     <div class="wrap">
+      <span data-agent-hint style="display: none">{{ agentHint }}</span>
       <div class="top">
         <b class="top-title">{{ isFlaw ? 'Schwäche hinzufügen' : 'Vorteil hinzufügen' }}:</b>
 
