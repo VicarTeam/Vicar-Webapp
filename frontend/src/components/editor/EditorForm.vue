@@ -9,6 +9,7 @@ import CharacterStorage from "@/libs/io/character-storage"
 import { EditorHistory } from "@/libs/editor-history"
 import FileCreator from "@/libs/io/file-creator"
 import DataManager from "@/libs/data/data-manager"
+import { isAgentMode } from "@/libs/agent/agent-bridge"
 
 const props = withDefaults(
   defineProps<{
@@ -91,7 +92,18 @@ async function next() {
     EditorHistory.clear()
     store.directoryForCharCreation = undefined
     store.folderForCharCreation = undefined
-    await router.push({ name: "viewer", params: { characterId: (char as any).id } })
+
+    // Right after creation the viewer would render from the in-memory wizard
+    // character instead of the canonical stored blob, leaving it with missing
+    // data until a manual reload. A full navigation reproduces a fresh load (F5)
+    // so the viewer preloads the authoritative character from the backend. In
+    // agent mode we keep the SPA navigation, so the driving bridge stays alive.
+    const target = { name: "viewer", params: { characterId: (char as any).id } }
+    if (isAgentMode()) {
+      await router.push(target)
+    } else {
+      window.location.assign(router.resolve(target).href)
+    }
   }
 
   const event = { next: n, cancel: false }
