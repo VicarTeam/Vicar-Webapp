@@ -53,7 +53,7 @@ server.registerTool(
   "get_state",
   {
     title: "Get editor state",
-    description: "Return the current UI state: view/step, the character summary, the available actions (their data-agent ids, labels, disabled/options) and whether the step can proceed.",
+    description: "Return the current UI state: view, the `step` orientation and `hints` for what to do now, the character summary, the available actions (their data-agent ids, labels, disabled/options) and whether the step can proceed. Read `step`/`hints` first - they point at the right actions and at bulk helpers (act_many, select:level-target).",
     inputSchema: {},
   },
   async () => {
@@ -81,6 +81,42 @@ server.registerTool(
       .then(() => ({ ok: true }))
       .catch((e) => ({ ok: false, error: String(e?.message ?? e) }));
     return json({ result, state: await a.state() });
+  },
+);
+
+server.registerTool(
+  "act_many",
+  {
+    title: "Perform several actions in one call",
+    description:
+      "Run a sequence of actions in order and return ONE final state. Use this to save round-trips whenever you would otherwise call `act` many times, e.g. set every attribute/skill select at once during creation, or open a leveling modal + pick select:level-target + level:confirm together. Each item is like `act`: { action, value?, first?, index? }. Stops at the first failing step unless continueOnError is true.",
+    inputSchema: {
+      actions: z
+        .array(
+          z.object({
+            action: z.string(),
+            value: z.string().optional(),
+            first: z.boolean().optional(),
+            index: z.number().optional(),
+          }),
+        )
+        .min(1)
+        .describe("actions executed in order"),
+      continueOnError: z.boolean().optional().describe("keep going after a failing step (default: stop)"),
+    },
+  },
+  async ({ actions, continueOnError }) => {
+    const a = await ensureAgent();
+    const results: { action: string; ok: boolean; error?: string }[] = [];
+    for (const step of actions) {
+      const r = await a
+        .act(step.action, { value: step.value, first: step.first, index: step.index })
+        .then(() => ({ action: step.action, ok: true }))
+        .catch((e) => ({ action: step.action, ok: false, error: String(e?.message ?? e) }));
+      results.push(r);
+      if (!r.ok && !continueOnError) break;
+    }
+    return json({ results, state: await a.state() });
   },
 );
 
