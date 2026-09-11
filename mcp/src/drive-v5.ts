@@ -278,16 +278,62 @@ async function main() {
   const afterXp = await agent.waitFor((s) => Number((s.character as any)?.exp) >= 300);
   console.log(`[drive] exp now ${(afterXp.character as any).exp}`);
 
-  console.log("[drive] spending XP on an attribute");
+  console.log("[drive] spending XP on an attribute (jump straight to a higher level)");
   await agent.act("tab:attributes");
-  await agent.waitFor((s) => s.activeTab === "tab:attributes");
+  const atTab = await agent.waitFor((s) => s.activeTab === "tab:attributes");
+  console.log(`[drive] step: ${atTab.step}`);
+  const expBeforeLvl = Number((await agent.state()).character?.exp);
   const attrUp = (await agent.state()).actions.find((a) => a.agent.startsWith("level:attr:"));
   if (!attrUp) throw new Error("no attribute level button visible");
   await agent.act(attrUp.agent);
+  await agent.waitFor((s) => s.actions.some((a) => a.agent === "select:level-target"));
+  const targetSel = (await agent.state()).actions.find((a) => a.agent === "select:level-target");
+  const targetOpts = targetSel?.options ?? [];
+  let targetIdx = -1;
+  for (let i = 0; i < targetOpts.length; i++) {
+    if (!targetOpts[i]!.disabled && targetOpts[i]!.text.trim() !== "") targetIdx = i;
+  }
+  if (targetIdx < 0) throw new Error("no affordable target level");
+  console.log(`[drive] target-level options: ${targetOpts.map((o) => o.text).join(" | ")}; picking "${targetOpts[targetIdx]!.text}"`);
+  await agent.act("select:level-target", { index: targetIdx });
   await agent.waitFor((s) => { const c = s.actions.find((a) => a.agent === "level:confirm"); return !!c && !c.disabled; });
   await agent.act("level:confirm");
   await agent.waitFor((s) => !s.actions.some((a) => a.agent === "level:confirm"));
-  console.log(`[drive] leveled ${attrUp.agent}; exp now ${((await agent.state()).character as any).exp}`);
+  const expAfterLvl = Number((await agent.state()).character?.exp);
+  console.log(`[drive] leveled ${attrUp.agent} in one jump; exp ${expBeforeLvl} -> ${expAfterLvl} (spent ${expBeforeLvl - expAfterLvl})`);
+
+  console.log("[drive] multi-level jump on a skill (several dots in one confirm)");
+  await agent.act("tab:skills");
+  await agent.waitFor((s) => s.activeTab === "tab:skills");
+  const expBeforeSkill = Number((await agent.state()).character?.exp);
+  const skillButtons = (await agent.state()).actions
+    .filter((a) => a.agent.startsWith("level:skill:") && !a.agent.startsWith("level:skill-spec:"))
+    .map((a) => a.agent);
+
+  let skillIdx = -1;
+  let skillUp = "";
+  let skillOpts: { text: string; disabled: boolean; blocked: boolean }[] = [];
+  for (const candidate of skillButtons) {
+    await agent.act(candidate);
+    await agent.waitFor((s) => s.actions.some((a) => a.agent === "select:level-target"));
+    const opts = (await agent.state()).actions.find((a) => a.agent === "select:level-target")?.options ?? [];
+    let highest = -1;
+    for (let i = 0; i < opts.length; i++) {
+      if (!opts[i]!.disabled && opts[i]!.text.trim() !== "") highest = i;
+    }
+    if (highest >= 1) { skillIdx = highest; skillUp = candidate; skillOpts = opts; break; }
+    await agent.act("modal:close");
+    await agent.waitFor((s) => !s.actions.some((a) => a.agent === "select:level-target"));
+  }
+  if (skillIdx < 0) throw new Error("no skill with a multi-level jump available");
+  const jumpSteps = skillIdx + 1;
+  console.log(`[drive] ${skillUp} target options: ${skillOpts.map((o) => o.text).join(" | ")}; jumping ${jumpSteps} level(s) to "${skillOpts[skillIdx]!.text}"`);
+  await agent.act("select:level-target", { index: skillIdx });
+  await agent.waitFor((s) => { const c = s.actions.find((a) => a.agent === "level:confirm"); return !!c && !c.disabled; });
+  await agent.act("level:confirm");
+  await agent.waitFor((s) => !s.actions.some((a) => a.agent === "level:confirm"));
+  const expAfterSkill = Number((await agent.state()).character?.exp);
+  console.log(`[drive] skill jumped ${jumpSteps} level(s) in ONE confirm; exp ${expBeforeSkill} -> ${expAfterSkill} (spent ${expBeforeSkill - expAfterSkill})`);
 
   console.log("[drive] profile: setting humanity, hunger, blood potency, anchors, avatar");
   await agent.act("tab:profile");
