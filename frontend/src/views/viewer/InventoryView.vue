@@ -45,11 +45,25 @@ onMounted(() => {
     CharacterStorage.saveCharacter(c)
   }
 
-  bank.value = String(c.inventory.bank)
-  cash.value = String(c.inventory.cash)
+  bank.value = formatMoney(c.inventory.bank)
+  cash.value = formatMoney(c.inventory.cash)
 
   addingItemPredefinedCategory.value = DataManager.selectedLanguage.items?.[0] ?? null
 })
+
+/** Displays a whole-number money amount with "." as a thousands separator (1000000 -> "1.000.000"). */
+function formatMoney(value: number): string {
+  if (!Number.isFinite(value)) return "0"
+  return new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 }).format(Math.trunc(value))
+}
+
+/** While editing, show the plain number so typing and +/- math stay unambiguous. */
+function onMoneyFocus(key: "bank" | "cash") {
+  const c = editingCharacter.value
+  if (!c) return
+  if (key === "bank") bank.value = String(c.inventory.bank)
+  else cash.value = String(c.inventory.cash)
+}
 
 function beginAddingItemTo(inventory: "carriedItems" | "ownedItems") {
   addingItemCustomName.value = ""
@@ -92,26 +106,28 @@ function resolveMoneyEval(key: "bank" | "cash", allowNegative = false) {
   if (!c) return
 
   const current = key === "bank" ? bank.value : cash.value
-  let rawValue = current.replace(/[^0-9.,+-]/g, "").replace(/,/g, ".")
+  // "." (and any other non-math character) is a thousands separator here, so strip
+  // everything but digits and +/- before evaluating - "1.000 + 500" stays valid math.
+  const rawValue = current.replace(/[^0-9+-]/g, "")
 
   try {
-    const result = Number(Function(`"use strict"; return (${rawValue})`)())
+    const result = Math.trunc(Number(Function(`"use strict"; return (${rawValue})`)()))
     if (!Number.isFinite(result)) throw new Error("not finite")
 
     if (result < 0 && !allowNegative) {
-      if (key === "bank") bank.value = String(c.inventory.bank)
-      else cash.value = String(c.inventory.cash)
+      if (key === "bank") bank.value = formatMoney(c.inventory.bank)
+      else cash.value = formatMoney(c.inventory.cash)
       return
     }
 
-    if (key === "bank") bank.value = String(result)
-    else cash.value = String(result)
+    if (key === "bank") bank.value = formatMoney(result)
+    else cash.value = formatMoney(result)
 
     c.inventory[key] = result
     CharacterStorage.saveCharacter(c, true)
   } catch {
-    if (key === "bank") bank.value = String(c.inventory.bank)
-    else cash.value = String(c.inventory.cash)
+    if (key === "bank") bank.value = formatMoney(c.inventory.bank)
+    else cash.value = formatMoney(c.inventory.cash)
   }
 }
 
@@ -208,8 +224,8 @@ function resolveTransfer() {
   c.inventory[transferDirection.value] -= transferAmount.value
   c.inventory[transferDirection.value === "bank" ? "cash" : "bank"] += transferAmount.value
 
-  bank.value = String(c.inventory.bank)
-  cash.value = String(c.inventory.cash)
+  bank.value = formatMoney(c.inventory.bank)
+  cash.value = formatMoney(c.inventory.cash)
 
   CharacterStorage.saveCharacter(c, true)
   showTransferModal.value = false
@@ -268,13 +284,13 @@ const itemsData = computed(() => DataManager.selectedLanguage.items ?? [])
         </div>
 
         <span>Bargeld</span>
-        <input class="form-control" type="text" v-model="cash" @keydown.enter="resolveMoneyEval('cash')" @focusout="resolveMoneyEval('cash')" />
+        <input class="form-control" type="text" v-model="cash" @focus="onMoneyFocus('cash')" @keydown.enter="resolveMoneyEval('cash')" @focusout="resolveMoneyEval('cash')" />
         <IconButton style="width: 3rem; height: 3rem; margin-left: 1rem" icon="fa-arrow-left" @click="transferTo('bank')" />
       </div>
 
       <div class="money-holder">
         <IconButton style="width: 3rem; height: 3rem; margin-right: 1rem" icon="fa-arrow-right" @click="transferTo('cash')" />
-        <input class="form-control" type="text" v-model="bank" @keydown.enter="resolveMoneyEval('bank', true)" @focusout="resolveMoneyEval('bank', true)" />
+        <input class="form-control" type="text" v-model="bank" @focus="onMoneyFocus('bank')" @keydown.enter="resolveMoneyEval('bank', true)" @focusout="resolveMoneyEval('bank', true)" />
         <span>Bank</span>
 
         <div class="inventory-fit">
