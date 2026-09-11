@@ -36,6 +36,7 @@ export interface AgentState {
   gameline: string | null
   levelMode: boolean
   activeTab: string | null
+  step: string | null
   hints: string[]
   character: Record<string, unknown> | null
   actions: AgentAction[]
@@ -122,6 +123,36 @@ function readActions(): AgentAction[] {
   })
 }
 
+/**
+ * Short, view-specific orientation for the driving agent: what this step is for
+ * and how to complete it efficiently (pointing at bulk helpers where they apply).
+ */
+const STEP_INFO: Record<string, string> = {
+  "editor-clan": "Clan-Schritt: waehle einen Clan (option:clan:<Name>) und trage den Erzeuger ein (input:sire), dann control:next.",
+  "editor-predator-type": "Jagdverhalten: select:predator + predator:confirm, danach die Folge-Selects (select:pt-action:<i>), dann control:next.",
+  "editor-traits": "Vorzuege/Schwaechen: pro Eintrag trait:add bzw. flaw:add, dann im Modal Kategorie (select:trait-pack) -> Eintrag (option:trait:<Name>) -> trait:confirm. Budget siehe hints.",
+  "editor-attributes": "Attribute verteilen: setze alle select:attr:<key> auf die geforderten Werte (siehe hints). Nutze act_many, um alle in EINEM Aufruf zu setzen statt einzeln.",
+  "editor-skills": "Faehigkeiten: zuerst select:skill-spread + skills:confirm, dann alle select:skill:<key> setzen (act_many!), danach die Spezialisierungen (input:spec-defined:<i>, select:free-spec, input:free-spec-name).",
+  "editor-disciplines": "Disziplinen (Abschluss-Schritt): select:disc-1/disc-2 + disc:confirm, dann pro Karte disc:add:<id> -> select:disc-ability -> disc-ability:confirm bis alle Punkte weg sind, dann control:finish.",
+  "editor-gifts": "Gaben-Schritt: folge den sichtbaren Aktionen, dann control:next/finish.",
+  "editor-edges": "Edges-Schritt: folge den sichtbaren Aktionen, dann control:next/finish.",
+  "viewer-attributes": "Attribute (Level-Modus): level:attr:<key> oeffnet das Modal; dort select:level-target auf die Zielstufe setzen (Kosten kumulativ) und level:confirm - ein einziger Sprung statt vieler Schritte.",
+  "viewer-skills": "Faehigkeiten (Level-Modus): level:skill:<key> oeffnet das Modal; select:level-target auf die Zielstufe, dann level:confirm.",
+  "viewer-disciplines": "Disziplinen (Level-Modus): level:disc:<id> zum Steigern (Faehigkeit via select:disc-ability + disc-ability:confirm) oder disc:new fuer eine neue Disziplin.",
+  "viewer-profile": "Profil: Felder wie input:concept/ambition/sire, level:blood-potency (Modal mit select:level-target), set:humanity:<i>, set:hunger:<i>, input:anchors. XP via exp:open.",
+  "viewer-inventory": "Inventar: inventory:add-carried/add-owned -> select:item-category -> select:item -> input:item-amount -> inventory:add-submit.",
+  "viewer-traits": "Vorzuege/Schwaechen (Level-Modus): trait:add/flaw:add, dann im Modal Kategorie + Eintrag + trait:confirm.",
+}
+
+function stepInfo(view: string, levelMode: boolean): string | null {
+  const base = STEP_INFO[view]
+  if (!base) return null
+  if (view.startsWith("viewer-") && !levelMode && view !== "viewer-profile" && view !== "viewer-inventory") {
+    return `${base} Hinweis: Level-Modus ist aus - erst level:toggle, sonst sind die Level-Buttons nicht sichtbar.`
+  }
+  return base
+}
+
 function summarizeCharacter(char: any): Record<string, unknown> | null {
   if (!char) return null
   return {
@@ -183,13 +214,16 @@ export function installAgentBridge(router: Router) {
     const finish = actions.find((a) => a.agent === "control:finish")
     const proceed = finish ?? next
     const char = store.editingCharacter as any
+    const view = String(router.currentRoute.value.name ?? "")
+    const levelMode = !!store.isLevelMode
     return {
       agentMode: true,
-      view: String(router.currentRoute.value.name ?? ""),
+      view,
       path: window.location.pathname,
       gameline: char?.game ?? null,
-      levelMode: !!store.isLevelMode,
+      levelMode,
       activeTab: document.querySelector('[data-agent^="tab:"].active')?.getAttribute("data-agent") ?? null,
+      step: stepInfo(view, levelMode),
       hints: Array.from(document.querySelectorAll<HTMLElement>("[data-agent-hint]"))
         .map((el) => (el.textContent ?? "").trim().replace(/\s+/g, " "))
         .filter((t) => t.length > 0),
