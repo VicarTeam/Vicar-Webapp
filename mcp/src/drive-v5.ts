@@ -28,6 +28,32 @@ async function addCustomTrait(agent: VicarAgent, addAgent: string, level: string
   await agent.waitFor((s) => !s.actions.some((a) => a.agent === "trait:confirm"));
 }
 
+async function addPredefinedTrait(agent: VicarAgent, addAgent: string): Promise<{ pack: string; trait: string }> {
+  await agent.act(addAgent);
+  const opened = await agent.waitFor((s) => s.actions.some((a) => a.agent === "select:trait-pack"));
+  console.log(`[drive]   hint on open: ${JSON.stringify(opened.hints)}`);
+
+  const packSel = (await agent.state()).actions.find((a) => a.agent === "select:trait-pack");
+  const pack = (packSel?.options ?? []).find(
+    (o) => !o.disabled && o.text.trim() !== "" && !o.text.includes("[GM]"),
+  );
+  if (!pack) throw new Error(`no selectable predefined trait pack for ${addAgent}`);
+  await agent.act("select:trait-pack", { value: pack.text });
+
+  await agent.waitFor((s) => s.actions.some((a) => a.agent.startsWith("option:trait:")));
+  const entry = (await agent.state()).actions.find((a) => a.agent.startsWith("option:trait:"));
+  if (!entry) throw new Error(`pack "${pack.text}" exposed no trait entries`);
+  await agent.act(entry.agent);
+
+  await agent.waitFor((s) => {
+    const c = s.actions.find((a) => a.agent === "trait:confirm");
+    return !!c && !c.disabled;
+  });
+  await agent.act("trait:confirm");
+  await agent.waitFor((s) => !s.actions.some((a) => a.agent === "trait:confirm"));
+  return { pack: pack.text, trait: entry.agent };
+}
+
 function remainingFrom(headText: string): number {
   const m = headText.replace(/\s+/g, " ").match(/(\d+)\s*\/\s*(\d+)(?:\s*\(\+(\d+)\))?/);
   if (!m) return 0;
@@ -141,10 +167,16 @@ async function main() {
   await agent.act("control:next");
   await agent.waitFor((s) => s.view === "editor-traits");
 
+  console.log("[drive] selecting a PREDEFINED Vorzug (pack + entry) and a PREDEFINED Schwaeche");
+  const pickedTrait = await addPredefinedTrait(agent, "trait:add");
+  console.log(`[drive] predefined Vorzug added from pack "${pickedTrait.pack}" via ${pickedTrait.trait}`);
+  const pickedFlaw = await addPredefinedTrait(agent, "flaw:add");
+  console.log(`[drive] predefined Schwaeche added from pack "${pickedFlaw.pack}" via ${pickedFlaw.trait}`);
+
   const heads = await agent.texts(".pack .head");
   const traitRemaining = remainingFrom(heads[0] ?? "");
   const flawRemaining = heads[1] ? remainingFrom(heads[1]) : 0;
-  console.log(`[drive] spending trait points (${traitRemaining}) + flaw points (${flawRemaining}) via custom GM traits`);
+  console.log(`[drive] spending remaining trait points (${traitRemaining}) + flaw points (${flawRemaining}) via custom GM traits`);
   await spendPoints(agent, "trait:add", traitRemaining);
   await spendPoints(agent, "flaw:add", flawRemaining);
   const traitsReady = await agent.waitFor((s) => s.canProceed);
