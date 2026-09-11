@@ -11,46 +11,74 @@ import { useStore } from "@/app/store"
 
 const store = useStore()
 
+const MAX_LEVEL = 5
+
 const show = ref(false)
 const data = ref<IAttributeData | null>(null)
+const target = ref(0)
 
 const editingCharacter = computed(() => store.editingCharacter as ICharacter | undefined)
 
 function showModal(d: IAttributeData) {
   data.value = d
+  target.value = d.value + 1
   show.value = true
 }
 
-const neededExp = computed(() => {
-  if (!editingCharacter.value || !data.value) return Infinity
-  return levelResolver.resolveAttribute(editingCharacter.value, data.value.key)
+/** Cumulative cost to raise the attribute from its current value up to `toLevel`. */
+function cumulativeCost(toLevel: number): number {
+  const d = data.value
+  if (!d) return Infinity
+  let cost = 0
+  for (let v = d.value; v < toLevel; v++) {
+    cost += (v + 1) * 5
+  }
+  return cost
+}
+
+const reachableLevels = computed(() => {
+  const d = data.value
+  const exp = editingCharacter.value?.exp ?? 0
+  if (!d) return []
+  const out: { level: number; cost: number; affordable: boolean }[] = []
+  for (let lvl = d.value + 1; lvl <= MAX_LEVEL; lvl++) {
+    const cost = cumulativeCost(lvl)
+    out.push({ level: lvl, cost, affordable: cost <= exp })
+  }
+  return out
 })
+
+const neededExp = computed(() => cumulativeCost(target.value))
 
 function level() {
   const char = editingCharacter.value
   const d = data.value
   if (!char || !d) return
-  if (char.exp < neededExp.value) return
 
-  const translatedAttr = getAttributeName(d.key);
+  const translatedAttr = getAttributeName(d.key)
 
-  CharacterStorage.trackLevelChange(
-    char,
-    LevelChangeType.Attribute,
-    neededExp.value,
-    `${translatedAttr}: ${d.value} → ${d.value + 1}`,
-  )
+  while (d.value < target.value && d.value < MAX_LEVEL) {
+    const cost = levelResolver.resolveAttribute(char, d.key)
+    if (char.exp < cost) break
 
-  d.value++
+    CharacterStorage.trackLevelChange(
+      char,
+      LevelChangeType.Attribute,
+      cost,
+      `${translatedAttr}: ${d.value} → ${d.value + 1}`,
+    )
 
-  if (d.key === AttributeKeys.Stamina) {
-    char.health = d.value + 3
-  }
+    d.value++
 
-  if (d.key === AttributeKeys.Composure) {
-    char.willpower = d.value + DataManager.getAttributeValue(char, AttributeKeys.Resolve)
-  } else if (d.key === AttributeKeys.Resolve) {
-    char.willpower = d.value + DataManager.getAttributeValue(char, AttributeKeys.Composure)
+    if (d.key === AttributeKeys.Stamina) {
+      char.health = d.value + 3
+    }
+
+    if (d.key === AttributeKeys.Composure) {
+      char.willpower = d.value + DataManager.getAttributeValue(char, AttributeKeys.Resolve)
+    } else if (d.key === AttributeKeys.Resolve) {
+      char.willpower = d.value + DataManager.getAttributeValue(char, AttributeKeys.Composure)
+    }
   }
 
   CharacterStorage.saveCharacter(char)
@@ -63,10 +91,20 @@ defineExpose({ showModal })
 <template>
   <Modal :shown="show" @close="show = false">
     <div v-if="data && editingCharacter" class="mini-modal">
+      <span data-agent-hint style="display: none">Attribut steigern: waehle die Zielstufe (select:level-target, Kosten sind kumulativ) und bestaetige mit level:confirm. Ein Sprung auf eine hoehere Stufe zahlt alle Zwischenstufen.</span>
       <b>Attribut steigern:</b>
 
+      <div class="form-group centerline">
+        <label>Zielstufe:</label>
+        <select class="form-control" v-model.number="target" data-agent="select:level-target" data-agent-label="Zielstufe">
+          <option v-for="r in reachableLevels" :key="r.level" :value="r.level" :disabled="!r.affordable">
+            Stufe {{ r.level }} ({{ r.cost }} EXP)
+          </option>
+        </select>
+      </div>
+
       <div class="centerline">
-        {{ data.value }} &#8594; {{ data.value + 1 }}
+        {{ data.value }} &#8594; {{ target }}
         <bullet />
         {{ `Kosten: ${neededExp} EXP` }}
       </div>
