@@ -38,6 +38,11 @@ export default defineConfig({
         // Nur die App-Shell precachen – NICHT die vielen statischen Symbol-PNGs.
         globPatterns: ['**/*.{js,css,html,woff,woff2}'],
         navigateFallback: '/index.html',
+        // Backend-Navigationen (Discord-Login /api/auth/login/..., OAuth-Callback
+        // /api/auth/callback/...) NICHT mit der App-Shell beantworten, sondern ans
+        // Netzwerk/Backend durchlassen. Sonst schluckt der SPA-Fallback den Redirect
+        // und man landet scheinbar wieder im Frontend (nur ein Hard-Reload half).
+        navigateFallbackDenylist: [/^\/api(\/|$)/],
         runtimeCaching: [
           {
             // Hochgeladene Bilder (Avatare/Skill-Tree) vom Backend-CDN. Dateinamen
