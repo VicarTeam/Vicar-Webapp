@@ -1,0 +1,52 @@
+[
+  {
+    "key": "zuflucht",
+    "name": "Zuflucht",
+    "description": "Hier ist man sicher. Wer eindringen will, muss die Stufe als zusätzliche Schwierigkeit überwinden.",
+    "levels": [
+      { "level": 1, "description": "ein sicherer Ort" },
+      { "level": 2, "description": "gut geschützt, versteckt" },
+      { "level": 3, "description": "mehrere Orte oder eine Festung" }
+    ]
+  },
+  {
+    "key": "ressourcen",
+    "name": "Ressourcen",
+    "description": "Was zur Stufe passt, kann man sich ohne Wurf beschaffen.",
+    "levels": [
+      { "level": 1, "description": "bescheiden" },
+      { "level": 2, "description": "wohlhabend" },
+      { "level": 3, "description": "reich" }
+    ]
+  },
+  {
+    "key": "kontakte",
+    "name": "Kontakte",
+    "description": "Informationen aus einem Bereich bekommt man als Routine.",
+    "levels": [
+      { "level": 1, "description": "ein Bereich (z.B. Polizei)" },
+      { "level": 2, "description": "zwei Bereiche" },
+      { "level": 3, "description": "drei Bereiche" }
+    ]
+  },
+  {
+    "key": "verbuendete",
+    "name": "Verbündete",
+    "description": "Ein NSC, der hilft, wenn man ihn ruft. Er hat eigene Ziele und will gelegentlich etwas zurück.",
+    "levels": [
+      { "level": 1, "description": "ein Helfer mit Gegenwehr 2" },
+      { "level": 2, "description": "ein Helfer mit Gegenwehr 3" },
+      { "level": 3, "description": "ein Helfer mit Gegenwehr 4" }
+    ]
+  },
+  {
+    "key": "stammspender",
+    "name": "Stammspender",
+    "description": "Menschen, die freiwillig Blut geben. Sie müssen geschützt werden, denn jeder von ihnen ist ein Wissender und damit ein Risiko für den Bund.",
+    "levels": [
+      { "level": 1, "description": "ein Mensch, der freiwillig gibt" },
+      { "level": 2, "description": "eine kleine Gruppe, die Bescheid weiß" },
+      { "level": 3, "description": "ein ganzes Netzwerk, etwa ein Club oder eine Klinik" }
+    ]
+  }
+]

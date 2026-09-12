@@ -1,0 +1,113 @@
+{
+  "title": "Der Bund der Schweigenden Nacht",
+  "subtitle": "Geschlossen unter den Alten Häusern der Vesperi",
+  "preamble": "Im Angesicht dessen, was offenbar ward,\\\nim Gedenken an Blut, Brand, Eisen und Verrat,\\\nund wissend, dass kein Haus allein bestehen könne wider eine Welt, die um unser Dasein weiß,\\\nsei dieser Bund geschlossen und gehalten, solange Nacht der Nacht folget und Cruor in den Adern der Deathborne fließet.\n\nDenn wir, die aus dem Tode Geborenen, haben gesehen, was geschieht, wenn die Sterblichen Gewissheit erlangen.\n\nWo einst Gerücht war, ward Wissen.\\\nWo Wissen war, ward Furcht.\\\nWo Furcht war, ward Jagd.\\\nUnd wo Jagd war, folgten Feuer, Ketten und der Letzte Schlag.\n\nDarum geloben die unterzeichnenden Häuser, ihre Nachkommen, ihre Scions und jene, die unter ihrem Schutz und Recht stehen, die Existenz der Vesperi vor der Welt der Lebenden zu verhüllen.\n\nNicht aus Scham.\n\nNicht aus Reue.\n\nSondern aus Notwendigkeit.\n\nUnd dieser Bund soll genannt werden:\n\n> **Der Bund der Schweigenden Nacht**",
+  "articles": [
+    {
+      "key": "artikel_1",
+      "number": 1,
+      "name": "Erster Artikel",
+      "title": "Von der verborgenen Natur",
+      "body": "Kein Vesper soll durch Wort, Tat oder Unterlassung die Wahrheit unserer Art solchermaßen offenbaren, dass dieselbe unter den Sterblichen als gewisses und beweisbares Wissen Bestand haben könne.\n\nEin Sterblicher mag sehen.\n\nEin Sterblicher mag glauben.\n\nEin Sterblicher mag gar wissen.\n\nDoch niemals soll die Welt als Ganzes Gewissheit besitzen.\n\nGerücht ist kein Bruch.\n\nFurcht ist kein Bruch.\n\nAberglaube ist kein Bruch.\n\nBeweis ist ein Bruch."
+    },
+    {
+      "key": "artikel_2",
+      "number": 2,
+      "name": "Zweiter Artikel",
+      "title": "Von Zeugen und Wissenden",
+      "body": "Nicht jeder Sterbliche, der unsere Natur erkennt, soll darum vernichtet werden.\n\nDenn Wissen eines Einzelnen ist nicht Wissen der Welt.\n\nEin Wissender mag geduldet werden, sofern:\n\n- sein Schweigen gewahrt ist,\n- sein Wissen nicht verbreitet wird,\n- keine dauerhaften Beweise unter seiner Hand bestehen,\n- und sein Bestehen nicht die Sicherheit der Vesperi gefährdet.\n\nWo Schweigen durch Überzeugung, Eid, Bindung oder Entfernung des Beweises erreicht werden kann, soll der Letzte Schlag des Sterblichen nicht leichtfertig gesucht werden.\n\nWo aber ein Wissender danach trachtet, unsere Natur öffentlich, dauerhaft und unwiderlegbar zu machen, endet jede Duldung."
+    },
+    {
+      "key": "artikel_3",
+      "number": 3,
+      "name": "Dritter Artikel",
+      "title": "Von Schrift, Bild und Zeugnis",
+      "body": "Kein Vesper soll wissentlich Schrift, Bildnis, Aufnahme, Artefakt oder sonstiges Zeugnis zurücklassen, durch welches die wahre Natur der Deathborne zweifelsfrei bewiesen werden kann.\n\nWas geschaffen ward, soll verborgen werden.\n\nWas verbreitet ward, soll zurückgerufen werden.\n\nWas nicht zurückgerufen werden kann, soll unglaubwürdig gemacht werden.\n\nUnd was weder verborgen noch entwertet werden kann, soll vernichtet werden.\n\nDenn ein einzelner Zeuge stirbt.\n\nEin geschriebener Beweis überdauert ihn."
+    },
+    {
+      "key": "artikel_4",
+      "number": 4,
+      "name": "Vierter Artikel",
+      "title": "Von den Namen",
+      "body": "Die wahren Namen, Abstammungen und Orte der Alten Häuser sollen nicht leichtfertig in die Hände der Sterblichen gelangen.\n\nEbenso sollen die Namen von Sire und Scion, die Wege des Roten Übergangs und die Geheimnisse des Cruor verborgen bleiben.\n\nDenn wer einen Deathborne kennt, mag ihm begegnen.\n\nWer seine Linie kennt, mag ihn finden.\n\nWer seine Natur kennt, mag ihn zerstören."
+    },
+    {
+      "key": "artikel_5",
+      "number": 5,
+      "name": "Fünfter Artikel",
+      "title": "Vom Roten Übergang",
+      "body": "Kein Roter Übergang soll an einem Ort oder unter Umständen vollzogen werden, durch welche die Wahrheit unserer Art der sterblichen Welt offenbar werden kann.\n\nDer Sire trägt Verantwortung für die Umstände der Erhebung seines Scions.\n\nEin Scion, dessen Erwachen unmittelbar die Schweigende Nacht gefährdet, fällt zunächst unter die Verantwortung seines Sires.\n\nWo ein Sire grob fahrlässig oder absichtlich einen solchen Bruch verursacht, kann Schuld nicht allein dem Scion auferlegt werden."
+    },
+    {
+      "key": "artikel_6",
+      "number": 6,
+      "name": "Sechster Artikel",
+      "title": "Von Scion und Sire",
+      "body": "Ein Sire soll seinen Scion lehren:\n\n- was er geworden ist,\n- was Cruor ist,\n- welche Gefahren sein Zustand trägt,\n- und warum die Schweigende Nacht Bestand haben muss.\n\nUnwissenheit eines jungen Deathborne mag Schuld mindern.\n\nSie hebt die Gefahr jedoch nicht auf.\n\nDarum soll kein Sire einen Scion erheben und ihn sodann ohne Lehre, Führung oder Kenntnis der Gesetze zurücklassen.\n\nWer Leben nach dem Tode schenkt, übernimmt Verantwortung für das, was daraus erwächst."
+    },
+    {
+      "key": "artikel_7",
+      "number": 7,
+      "name": "Siebter Artikel",
+      "title": "Von Haus und Blut",
+      "body": "Kein Haus soll einen offenen Bruch der Schweigenden Nacht dulden, nur weil der Schuldige aus seinem eigenen Blut stammt.\n\nKein Haus soll einen fremden Vesper allein deshalb verurteilen, weil sein Cruor einer anderen Linie folgt.\n\nIn Angelegenheiten der Schweigenden Nacht steht die Sicherheit aller Deathborne über Stolz, Blut und alter Feindschaft.\n\nDenn wenn die Sterblichen zur Jagd rufen, fragen sie nicht nach Haus, Linie oder Eid.\n\nSie verbrennen uns alle gleich."
+    },
+    {
+      "key": "artikel_8",
+      "number": 8,
+      "name": "Achter Artikel",
+      "title": "Von Krieg unter Vesperi",
+      "body": "Fehden, Kriege und persönliche Rache unter Vesperi entbinden niemanden von diesem Bund.\n\nKein Haus soll die Existenz eines anderen Hauses den Sterblichen offenbaren, um daraus Vorteil zu ziehen.\n\nKein Vesper soll menschliche Heere, Kirchen, Staaten oder andere sterbliche Mächte gegen seinesgleichen führen, indem er ihnen die Wahrheit unserer Natur preisgibt.\n\nWer den Sterblichen die Jagd auf einen Feind lehrt, lehrt sie zugleich die Jagd auf sich selbst."
+    },
+    {
+      "key": "artikel_9",
+      "number": 9,
+      "name": "Neunter Artikel",
+      "title": "Von menschlichen Ämtern und Institutionen",
+      "body": "Vesperi dürfen unter den Sterblichen Einfluss nehmen, Besitz halten, Ämter lenken, Handel treiben und Verbindungen zu menschlichen Institutionen unterhalten.\n\nDoch kein solcher Einfluss darf dazu führen, dass eine sterbliche Institution die Existenz der Deathborne als öffentliches, gesichertes Wissen anerkennt.\n\nEin Richter mag wissen.\n\nEin Arzt mag wissen.\n\nEin Priester mag wissen.\n\nEin König mag wissen.\n\nDoch Gericht, Universität, Kirche oder Krone sollen es nicht als Wahrheit der Welt verkünden."
+    },
+    {
+      "key": "artikel_10",
+      "number": 10,
+      "name": "Zehnter Artikel",
+      "title": "Von den Hütern des Wissens",
+      "body": "Wo menschliche Gruppen, Familien oder Einrichtungen über Generationen hinweg Kenntnis von den Vesperi besitzen, sollen sie besonders geprüft werden.\n\nSolches Wissen kann geduldet werden, wenn es:\n\n- begrenzt bleibt,\n- kontrolliert wird,\n- dem Schweigen verpflichtet ist,\n- und keine Gefahr öffentlicher Offenbarung darstellt.\n\nWo jedoch aus verborgenem Wissen organisierte Jagd erwächst, gilt die Duldung als verwirkt."
+    },
+    {
+      "key": "artikel_11",
+      "number": 11,
+      "name": "Elfter Artikel",
+      "title": "Vom Urteil",
+      "body": "Ein Bruch der Schweigenden Nacht soll nach Schwere, Absicht und verursachter Gefahr beurteilt werden.\n\nNicht jeder Fehler verlangt den Letzten Schlag.\n\nMögliche Urteile seien:\n\n- Wiedergutmachung,\n- Entfernung des Beweises,\n- Verpflichtung zur Geheimhaltung,\n- Verlust von Rechten,\n- Hausstrafe,\n- Verbannung,\n- Cruor-Bindung,\n- Starre,\n- und im äußersten Falle der Letzte Schlag.\n\nDer Letzte Schlag soll dort gesprochen werden, wo der Schuldige eine fortdauernde Gefahr für die verborgene Existenz der Deathborne darstellt und kein geringeres Mittel diese Gefahr zuverlässig beendet."
+    },
+    {
+      "key": "artikel_12",
+      "number": 12,
+      "name": "Zwölfter Artikel",
+      "title": "Vom Verrat an der Nacht",
+      "body": "Wer absichtlich und wissentlich danach strebt, die Existenz der Vesperi vor der gesamten sterblichen Welt zu offenbaren, soll als **Verräter der Nacht** gelten.\n\nKein Haus soll ihm Schutz gewähren.\n\nKein Eid soll ihn vor dem Urteil bewahren.\n\nKein Sire soll ihn als Scion beanspruchen, um ihn dem Recht zu entziehen.\n\nKein alter Dienst, kein Titel und keine Blutstärke soll seine Tat ungeschehen machen.\n\nDenn wer die Nacht verrät, gefährdet alle, die in ihr bestehen."
+    },
+    {
+      "key": "artikel_13",
+      "number": 13,
+      "name": "Dreizehnter Artikel",
+      "title": "Von höherer Not",
+      "body": "Wo eine größere Gefahr die Offenbarung einzelner Wahrheiten notwendig macht, soll die Tat nicht allein nach ihrer Form, sondern nach ihrer Notwendigkeit beurteilt werden.\n\nDenn auch dieser Bund darf nicht zur Torheit werden.\n\nWer einen Sterblichen warnt, um hundert Deathborne vor Vernichtung zu retten, ist nicht gleich jenem, der unsere Natur aus Eitelkeit offenbart.\n\nNotwendigkeit hebt das Gesetz nicht auf.\n\nDoch sie soll im Urteil gewogen werden."
+    },
+    {
+      "key": "artikel_14",
+      "number": 14,
+      "name": "Vierzehnter Artikel",
+      "title": "Von den Häusern",
+      "body": "Die unterzeichnenden Häuser erkennen an, dass kein einzelnes Haus Eigentümer dieses Bundes ist.\n\nKein Haus allein darf seine Worte verändern.\n\nKein Haus allein darf sich von seiner Pflicht lossagen.\n\nÄnderungen bedürfen der Zustimmung jener Mächte, die nach geltendem Recht als Träger des Bundes anerkannt sind.\n\nDenn die Schweigende Nacht gehört keinem Haus.\n\nSie schützt sie alle."
+    },
+    {
+      "key": "artikel_15",
+      "number": 15,
+      "name": "Fünfzehnter Artikel",
+      "title": "Von Dauer und Ende",
+      "body": "Dieser Bund gilt:\n\nsolange die sterbliche Welt nicht in allgemeiner Gewissheit um die Deathborne weiß,\n\nsolange Vesperi unter Menschen bestehen,\n\nsolange Cruor durch Deathborne fließt,\n\nund solange die Geheimhaltung unsere Art vor Vernichtung schützt.\n\nSollte je ein Tag kommen, an welchem die Schweigende Nacht ihren Zweck verloren hat, so soll sie nicht durch den Willen eines Einzelnen enden, sondern durch gemeinsamen Beschluss jener, die ihr unterstehen.\n\nBis dahin sei jedes Haus gebunden.\n\nJeder Sire.\n\nJeder Scion.\n\nJeder Vesper."
+    }
+  ],
+  "oath": "So schwören wir, nicht einander zu lieben,\\\nnicht einander zu dienen,\\\nnicht einander zu vergeben,\n\nsondern dies allein:\n\nDass unsere Feindschaft niemals größer werde als unser gemeinsames Bedürfnis zu bestehen.\n\nWir verbergen die Nacht vor dem Tage.\n\nWir verbergen das Blut vor dem Auge.\n\nWir verbergen den Namen vor der Menge.\n\nUnd wo einer von uns durch Torheit die Welt zur Jagd ruft,\\\nsollen die Übrigen sein Werk zum Schweigen bringen.\n\nNicht um eines Hauses willen.\n\nNicht um eines Herrschers willen.\n\nNicht um eines Gottes willen.\n\nSondern um der Nacht willen, die uns alle birgt.\n\nSo geschlossen.\n\nSo bezeugt.\n\nSo gebunden.\n\n**Solange Nacht der Nacht folget.**"
+}

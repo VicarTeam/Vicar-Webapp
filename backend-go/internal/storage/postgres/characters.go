@@ -3,14 +3,20 @@ package postgres
 import (
 	"context"
 
+	"github.com/VicarTeam/vicar-backend/internal/darkborne"
 	"github.com/VicarTeam/vicar-backend/internal/models"
 	"github.com/VicarTeam/vicar-backend/internal/storage"
 	"github.com/VicarTeam/vicar-backend/internal/storage/postgres/gen"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-type characterStore struct{ q *gen.Queries }
+type characterStore struct {
+	q         *gen.Queries
+	pool      *pgxpool.Pool
+	darkborne *darkborneStore
+}
 
 // summaryFields is the flat projected form used to rebuild the card shape.
 type summaryFields struct {
@@ -23,6 +29,8 @@ type summaryFields struct {
 	chronicle                                               string
 	exp                                                     int32
 	directory, dataVersion                                  string
+	bloodlineKey, houseKey                                  string
+	bloodStrength, glied                                    int32
 }
 
 // buildSummary rebuilds the projected subdocument the frontend card expects
@@ -62,6 +70,12 @@ func buildSummary(f summaryFields) bson.M {
 	if f.creedName != "" {
 		m["creed"] = bson.M{"name": f.creedName}
 	}
+	if f.bloodlineKey != "" || f.houseKey != "" {
+		m["bloodline"] = f.bloodlineKey
+		m["house"] = f.houseKey
+		m["bloodStrength"] = f.bloodStrength
+		m["glied"] = f.glied
+	}
 	return m
 }
 
@@ -84,6 +98,8 @@ func (s *characterStore) OwnedSummaries(ctx context.Context, userID string) ([]m
 			creedName: r.CreedName.String, generation: r.Generation.Int32, generationEra: r.GenerationEra.String,
 			hasCainsMark: r.HasCainsMark.Bool, chronicle: r.Chronicle.String, exp: r.Exp.Int32,
 			directory: r.Directory.String, dataVersion: r.DataVersion.String,
+			bloodlineKey: r.BloodlineKey.String, houseKey: r.HouseKey.String,
+			bloodStrength: r.BloodStrength.Int32, glied: r.Glied.Int32,
 		}))
 	}
 	return out, nil
@@ -104,6 +120,8 @@ func (s *characterStore) SharedSummaries(ctx context.Context, userID string) ([]
 			creedName: r.CreedName.String, generation: r.Generation.Int32, generationEra: r.GenerationEra.String,
 			hasCainsMark: r.HasCainsMark.Bool, chronicle: r.Chronicle.String, exp: r.Exp.Int32,
 			directory: r.Directory.String, dataVersion: r.DataVersion.String,
+			bloodlineKey: r.BloodlineKey.String, houseKey: r.HouseKey.String,
+			bloodStrength: r.BloodStrength.Int32, glied: r.Glied.Int32,
 		}))
 	}
 	return out, nil
@@ -171,14 +189,33 @@ func (s *characterStore) Insert(ctx context.Context, c *models.Character) error 
 	}); err != nil {
 		return err
 	}
-	if err := s.q.UpdateCharacterData(ctx, gen.UpdateCharacterDataParams{ID: c.IDHex(), Data: jsonFromBson(c.Data)}); err != nil {
+	if err := s.writeData(ctx, c.IDHex(), c.Data); err != nil {
 		return err
 	}
 	return s.q.UpdateCharacterViewers(ctx, gen.UpdateCharacterViewersParams{ID: c.IDHex(), Viewers: viewers})
 }
 
 func (s *characterStore) ReplaceData(ctx context.Context, id string, data bson.M) error {
-	return s.q.UpdateCharacterData(ctx, gen.UpdateCharacterDataParams{ID: id, Data: jsonFromBson(data)})
+	return s.writeData(ctx, id, data)
+}
+
+func (s *characterStore) writeData(ctx context.Context, id string, data bson.M) error {
+	params := gen.UpdateCharacterDataParams{ID: id, Data: jsonFromBson(data)}
+	if s.darkborne == nil || s.pool == nil || !darkborne.IsDeathborne(data) {
+		return s.q.UpdateCharacterData(ctx, params)
+	}
+	tx, err := s.pool.Begin(ctx)
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback(ctx)
+	if err := s.q.WithTx(tx).UpdateCharacterData(ctx, params); err != nil {
+		return err
+	}
+	if err := saveDarkborneSheet(ctx, tx, id, data); err != nil {
+		return err
+	}
+	return tx.Commit(ctx)
 }
 
 func (s *characterStore) Save(ctx context.Context, c *models.Character) error {

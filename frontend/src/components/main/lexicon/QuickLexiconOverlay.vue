@@ -11,6 +11,12 @@ import type {
 } from "@/@types/data"
 import type { ISectionatedCustomLexicon } from "@/@types/custom-lexicon"
 import {useStore} from "@/app/store.ts";
+import { GameLine } from "@/@types/gameline"
+import { Universe, getUniverseInfo } from "@/@types/universe"
+import { ensureLexiconUniverse, lexiconUniverse } from "@/components/main/lexicon/lexicon-universe"
+import LexiconMarkdown from "@/components/main/lexicon/LexiconMarkdown.vue"
+import { markdownToPlainText } from "@/components/main/lexicon/lexicon-markdown"
+import { DarkborneData } from "@/libs/data/darkborne-data"
 
 type LexiconKind =
   | "clan"
@@ -21,6 +27,19 @@ type LexiconKind =
   | "trait"
   | "predator"
   | "custom"
+  | "dbart"
+  | "dbform"
+  | "dbhouse"
+  | "dbscar"
+  | "dbinfluence"
+  | "dbanathema"
+  | "dbbackground"
+  | "dborder"
+  | "dbcourtrank"
+  | "dbfirst"
+  | "dbcovenant"
+  | "dbcourttype"
+  | "dblexicon"
 
 type LexiconEntry = {
   id: string
@@ -43,6 +62,45 @@ const scrollRef = ref<HTMLDivElement | null>(null)
 
 const customLexicon = computed<ISectionatedCustomLexicon>(() => data.selectedLanguage.customLexicon)
 
+const dbLoaded = ref(false)
+
+const universe = computed(() => lexiconUniverse.value)
+const isDarkborne = computed(() => universe.value === Universe.Darkborne)
+const universeLabel = computed(() => getUniverseInfo(universe.value).name)
+const searchPlaceholder = computed(() =>
+  isDarkborne.value
+    ? "Suchen… (Kunst, Form, Haus, Anathema, Order, …)"
+    : "Suchen… (Clan, Disziplin, Kraft, Ritual, Trait, …)"
+)
+
+async function loadDarkborne() {
+  if (!isDarkborne.value || dbLoaded.value) return
+  try {
+    await DarkborneData.load()
+    dbLoaded.value = true
+  } catch {
+    dbLoaded.value = false
+  }
+}
+
+function influenceKindLabel(kind?: string) {
+  if (kind === "physical") return "körperlich"
+  if (kind === "symbolic") return "symbolisch"
+  return kind ?? ""
+}
+
+function dbLevelName(level?: string) {
+  return level ? DarkborneData.anathemaLevelName(level) : ""
+}
+
+function dbInfluenceName(key?: string) {
+  return key ? DarkborneData.influenceName(key) : ""
+}
+
+function dbArtName(key?: string) {
+  return key ? DarkborneData.art(key)?.name ?? "" : ""
+}
+
 function norm(s: string) {
   return (s || "")
     .toLowerCase()
@@ -62,7 +120,7 @@ function uniqById<T extends { id: string }>(arr: T[]) {
   return out
 }
 
-const index = computed<LexiconEntry[]>(() => {
+const v5Index = computed<LexiconEntry[]>(() => {
   const entries: LexiconEntry[] = []
 
   const clans: IClan[] = data.selectedLanguage.books
@@ -230,6 +288,204 @@ const index = computed<LexiconEntry[]>(() => {
   return uniqById(entries)
 })
 
+const dbIndex = computed<LexiconEntry[]>(() => {
+  if (!dbLoaded.value || !DarkborneData.isLoaded) return []
+
+  const content = DarkborneData.content
+  const entries: LexiconEntry[] = []
+  let idx = 0
+
+  for (const art of content.arts) {
+    const artEntry: LexiconEntry = {
+      id: `${GameLine.Deathborne}:art:${art.key}:${idx++}`,
+      kind: "dbart",
+      title: art.name,
+      subtitle: `Blutkunst • ${art.shortName}`,
+      text: [art.principle, art.summary].filter(Boolean).join(" • "),
+      tags: [art.shortName, "blutkunst", art.isPrimal ? "urkunst" : ""].filter(Boolean) as string[],
+      payload: art,
+      sub: [],
+    }
+
+    entries.push(artEntry)
+
+    for (const form of art.forms) {
+      const formEntry: LexiconEntry = {
+        id: `${GameLine.Deathborne}:form:${form.key}:${idx++}`,
+        kind: "dbform",
+        title: form.name,
+        subtitle: `${art.shortName}-Form • Stufe ${form.level}`,
+        text: [form.effect, form.limits].filter(Boolean).join(" • "),
+        tags: ["form", "gefestigte form", art.shortName],
+        payload: { art, form },
+      }
+
+      entries.push(formEntry)
+      artEntry.sub?.push(formEntry)
+    }
+  }
+
+  for (const house of content.houses) {
+    const scarEntry: LexiconEntry = {
+      id: `${GameLine.Deathborne}:scar:${house.scar.key}:${idx++}`,
+      kind: "dbscar",
+      title: house.scar.name,
+      subtitle: `Blood Scar • ${house.name}`,
+      text: [house.scar.summary, house.scar.permanentEffect].filter(Boolean).join(" • "),
+      tags: ["blood scar", "makel", house.name],
+      payload: { house, scar: house.scar },
+    }
+
+    entries.push({
+      id: `${GameLine.Deathborne}:house:${house.key}:${idx++}`,
+      kind: "dbhouse",
+      title: house.name,
+      subtitle: `Haus • ${house.epithet}`,
+      text: [house.idea, house.description].filter(Boolean).join(" • "),
+      tags: ["haus", "blutlinie", house.epithet, house.scar.name],
+      payload: house,
+      sub: [scarEntry],
+    })
+    entries.push(scarEntry)
+  }
+
+  for (const influence of content.influences) {
+    entries.push({
+      id: `${GameLine.Deathborne}:influence:${influence.key}:${idx++}`,
+      kind: "dbinfluence",
+      title: influence.name,
+      subtitle: `Einfluss • ${influenceKindLabel(influence.kind)}`,
+      text: [DarkborneData.anathemaLevelName(influence.baseLevel), influence.note].filter(Boolean).join(" • "),
+      tags: ["einfluss", "anathema", influenceKindLabel(influence.kind)],
+      payload: influence,
+    })
+  }
+
+  for (const level of content.anathemaLevels) {
+    entries.push({
+      id: `${GameLine.Deathborne}:anathema:${level.level}:${idx++}`,
+      kind: "dbanathema",
+      title: level.name,
+      subtitle: "Anathema-Stufe",
+      text: [level.physical, level.symbolic].filter(Boolean).join(" • "),
+      tags: ["anathema", "stufe", "verwundbarkeit"],
+      payload: level,
+    })
+  }
+
+  for (const background of content.backgrounds) {
+    entries.push({
+      id: `${GameLine.Deathborne}:background:${background.key}:${idx++}`,
+      kind: "dbbackground",
+      title: background.name,
+      subtitle: "Hintergrund",
+      text: background.description,
+      tags: ["hintergrund"],
+      payload: background,
+    })
+  }
+
+  for (const order of content.orders) {
+    entries.push({
+      id: `${GameLine.Deathborne}:order:${order.key}:${idx++}`,
+      kind: "dborder",
+      title: order.name,
+      subtitle: `Order • ${order.motto}`,
+      text: order.description,
+      tags: ["order", "politik", "überzeugung"],
+      payload: order,
+    })
+  }
+
+  for (const rank of content.court.ranks) {
+    entries.push({
+      id: `${GameLine.Deathborne}:courtrank:${rank.level}:${idx++}`,
+      kind: "dbcourtrank",
+      title: rank.name,
+      subtitle: `Stand ${rank.level}`,
+      text: rank.rights,
+      tags: ["court", "stand", "rang"],
+      payload: rank,
+    })
+  }
+
+  for (const first of content.firsts ?? []) {
+    entries.push({
+      id: `${GameLine.Deathborne}:first:${first.key}:${idx++}`,
+      kind: "dbfirst",
+      title: first.name,
+      subtitle: [first.title, first.houseKey ? DarkborneData.house(first.houseKey)?.name : ""].filter(Boolean).join(" • "),
+      text: [first.ideal, first.description, first.urScar].filter(Boolean).join(" • "),
+      tags: ["die neun", "erste", "ursprung", first.fate.toLowerCase()],
+      payload: first,
+    })
+  }
+
+  for (const article of content.covenant?.articles ?? []) {
+    entries.push({
+      id: `${GameLine.Deathborne}:covenant:${article.key}:${idx++}`,
+      kind: "dbcovenant",
+      title: `${article.name}: ${article.title}`,
+      subtitle: "Bund der Schweigenden Nacht",
+      text: markdownToPlainText(article.body),
+      tags: ["bund", "artikel", "geheimhaltung", "schweigende nacht"],
+      payload: article,
+    })
+  }
+
+  for (const courtType of content.courtTypes ?? []) {
+    entries.push({
+      id: `${GameLine.Deathborne}:courttype:${courtType.key}:${idx++}`,
+      kind: "dbcourttype",
+      title: courtType.name,
+      subtitle: "Court-Typ",
+      text: courtType.description,
+      tags: ["court", "politik", "herrschaft"],
+      payload: courtType,
+    })
+  }
+
+  for (const mandate of content.courtMandates ?? []) {
+    entries.push({
+      id: `${GameLine.Deathborne}:mandate:${mandate.key}:${idx++}`,
+      kind: "dbcourttype",
+      title: mandate.name,
+      subtitle: "Mandate",
+      text: mandate.description,
+      tags: ["mandate", "court", "legitimation"],
+      payload: mandate,
+    })
+  }
+
+  for (const structure of content.courtStructures ?? []) {
+    entries.push({
+      id: `${GameLine.Deathborne}:structure:${structure.key}:${idx++}`,
+      kind: "dbcourttype",
+      title: structure.name,
+      subtitle: "Einrichtung eines Courts",
+      text: structure.description,
+      tags: ["court", "amt", "politik"],
+      payload: structure,
+    })
+  }
+
+  for (const entry of content.lexicon) {
+    entries.push({
+      id: `${entry.gameline || GameLine.Deathborne}:lexicon:${entry.key}:${idx++}`,
+      kind: "dblexicon",
+      title: entry.title,
+      subtitle: entry.section,
+      text: markdownToPlainText(entry.body),
+      tags: [...(entry.tags ?? []), "regelwerk"],
+      payload: entry,
+    })
+  }
+
+  return uniqById(entries)
+})
+
+const index = computed<LexiconEntry[]>(() => (isDarkborne.value ? dbIndex.value : v5Index.value))
+
 const results = computed(() => {
   const query = norm(q.value)
   if (!query) return index.value.slice(0, 40)
@@ -314,8 +570,18 @@ watch(
     if (!open) return
     q.value = ""
     activeId.value = null
+    ensureLexiconUniverse(ui.editingCharacter?.game)
+    void loadDarkborne()
     await nextTick()
     inputRef.value?.focus()
+  }
+)
+
+watch(
+  () => universe.value,
+  () => {
+    activeId.value = null
+    void loadDarkborne()
   }
 )
 
@@ -335,6 +601,19 @@ function kindLabel(k: LexiconKind) {
   if (k === "oblivionceremony") return "Zeremonie"
   if (k === "trait") return "Trait"
   if (k === "predator") return "Jagdverhalten"
+  if (k === "dbart") return "Blutkunst"
+  if (k === "dbform") return "Form"
+  if (k === "dbhouse") return "Haus"
+  if (k === "dbscar") return "Blood Scar"
+  if (k === "dbinfluence") return "Einfluss"
+  if (k === "dbanathema") return "Anathema"
+  if (k === "dbbackground") return "Hintergrund"
+  if (k === "dborder") return "Order"
+  if (k === "dbcourtrank") return "Stand"
+  if (k === "dbfirst") return "Die Neun"
+  if (k === "dbcovenant") return "Bund"
+  if (k === "dbcourttype") return "Court"
+  if (k === "dblexicon") return "Regelwerk"
   return "Lexikon"
 }
 </script>
@@ -349,6 +628,7 @@ function kindLabel(k: LexiconKind) {
           <div class="qlx-title">
             <span class="qlx-kbd">Ctrl</span><span class="qlx-kbd">K</span>
             <b>Quick Lexikon</b>
+            <span class="qlx-chip qlx-universe">{{ universeLabel }}</span>
           </div>
 
           <button class="qlx-close" type="button" @click="close">×</button>
@@ -360,7 +640,7 @@ function kindLabel(k: LexiconKind) {
             class="form-control qlx-input"
             type="text"
             v-model="q"
-            placeholder="Suchen… (Clan, Disziplin, Kraft, Ritual, Trait, …)"
+            :placeholder="searchPlaceholder"
           />
           <div class="qlx-hint">
             <span class="qlx-chip">↑↓</span>
@@ -444,6 +724,118 @@ function kindLabel(k: LexiconKind) {
                   <p v-for="(pa, i) in (active.payload?.actions || [])" :key="i" class="qlx-effect">
                     • {{ (pa as any).description }}
                   </p>
+                </template>
+
+                <template v-else-if="active.kind === 'dbart'">
+                  <small v-if="active.payload?.principle"><i>{{ active.payload.principle }}</i></small>
+                  <div class="qlx-sep" />
+                  <p v-if="active.payload?.summary">{{ active.payload.summary }}</p>
+                  <p v-if="active.payload?.isPrimal"><b>Urkunst</b>: ohne Gegenkunst, erzeugt Instabilität</p>
+                  <p v-else-if="dbArtName(active.payload?.counterKey)">
+                    <b>Gegenkunst</b>: {{ dbArtName(active.payload?.counterKey) }}
+                  </p>
+                  <b>Stufen</b>
+                  <p v-for="l in (active.payload?.levels || [])" :key="l.depth" class="qlx-effect">
+                    • Tiefe {{ l.depth }}: {{ (l.examples || []).join(", ") }}
+                  </p>
+                  <template v-if="(active.payload?.limits || []).length > 0">
+                    <b>Grenzen</b>
+                    <p v-for="(limit, i) in active.payload.limits" :key="i" class="qlx-effect">• {{ limit }}</p>
+                  </template>
+                </template>
+
+                <template v-else-if="active.kind === 'dbform'">
+                  <small class="text-muted">{{ active.payload?.art?.name }}</small>
+                  <div class="qlx-sep" />
+                  <p><b>Stufe</b>: {{ active.payload?.form?.level }}</p>
+                  <p><b>Schwierigkeit</b>: {{ active.payload?.form?.difficulty }}</p>
+                  <p><b>Cruor</b>: {{ active.payload?.form?.cost }}</p>
+                  <p><b>Wirkung</b>: {{ active.payload?.form?.effect }}</p>
+                  <p v-if="active.payload?.form?.limits"><b>Grenzen</b>: {{ active.payload.form.limits }}</p>
+                </template>
+
+                <template v-else-if="active.kind === 'dbhouse'">
+                  <small v-if="active.payload?.epithet"><i>{{ active.payload.epithet }}</i></small>
+                  <div class="qlx-sep" />
+                  <p><b>Leitidee</b>: {{ active.payload?.idea }}</p>
+                  <p v-if="active.payload?.reputation"><b>Ruf</b>: {{ active.payload.reputation }}</p>
+                  <p v-if="active.payload?.description">{{ active.payload.description }}</p>
+                  <p v-if="active.payload?.scar">
+                    <b>Blood Scar</b>: {{ active.payload.scar.name }}, {{ active.payload.scar.summary }}
+                  </p>
+                  <b>Anathema</b>
+                  <p v-for="(a, i) in (active.payload?.anathema || [])" :key="i" class="qlx-effect">
+                    • {{ dbInfluenceName(a.influenceKey) }}: {{ dbLevelName(a.level) }}
+                  </p>
+                </template>
+
+                <template v-else-if="active.kind === 'dbscar'">
+                  <small v-if="active.payload?.scar?.summary"><i>{{ active.payload.scar.summary }}</i></small>
+                  <div class="qlx-sep" />
+                  <p><b>Auslöser</b>: {{ (active.payload?.scar?.triggers || []).join(", ") }}</p>
+                  <p><b>Dauerhafte Wirkung</b>: {{ active.payload?.scar?.permanentEffect }}</p>
+                  <b>Zwänge</b>
+                  <p v-for="(c, i) in (active.payload?.scar?.compulsions || [])" :key="i" class="qlx-effect">
+                    • {{ c }}
+                  </p>
+                </template>
+
+                <template v-else-if="active.kind === 'dbinfluence'">
+                  <small class="text-muted">{{ influenceKindLabel(active.payload?.kind) }}</small>
+                  <div class="qlx-sep" />
+                  <p><b>Grundstufe</b>: {{ dbLevelName(active.payload?.baseLevel) }}</p>
+                  <p v-if="active.payload?.note">{{ active.payload.note }}</p>
+                </template>
+
+                <template v-else-if="active.kind === 'dbanathema'">
+                  <small class="text-muted">Anathema-Stufe</small>
+                  <div class="qlx-sep" />
+                  <p><b>Körperlich</b>: {{ active.payload?.physical }}</p>
+                  <p><b>Symbolisch</b>: {{ active.payload?.symbolic }}</p>
+                </template>
+
+                <template v-else-if="active.kind === 'dbbackground'">
+                  <small v-if="active.payload?.description"><i>{{ active.payload.description }}</i></small>
+                  <div class="qlx-sep" />
+                  <p v-for="l in (active.payload?.levels || [])" :key="l.level" class="qlx-effect">
+                    • Stufe {{ l.level }}: {{ l.description }}
+                  </p>
+                </template>
+
+                <template v-else-if="active.kind === 'dborder'">
+                  <small v-if="active.payload?.motto"><i>{{ active.payload.motto }}</i></small>
+                  <div class="qlx-sep" />
+                  <p>{{ active.payload?.description }}</p>
+                </template>
+
+                <template v-else-if="active.kind === 'dbcourtrank'">
+                  <small class="text-muted">Stand im Court</small>
+                  <div class="qlx-sep" />
+                  <p><b>Rechte</b>: {{ active.payload?.rights }}</p>
+                  <p><b>Bonus</b>: {{ active.payload?.bonus }} Würfel</p>
+                </template>
+
+                <template v-else-if="active.kind === 'dblexicon'">
+                  <small class="text-muted">{{ active.payload?.section }}</small>
+                  <div class="qlx-sep" />
+                  <LexiconMarkdown class="qlx-md" :source="active.payload?.body || ''" />
+                </template>
+
+                <template v-else-if="active.kind === 'dbfirst'">
+                  <small class="text-muted">{{ active.payload?.role }}</small>
+                  <div class="qlx-sep" />
+                  <p><b>Antrieb:</b> {{ active.payload?.motivation }}</p>
+                  <p><b>Späteres Ideal:</b> {{ active.payload?.ideal }}</p>
+                  <p>{{ active.payload?.description }}</p>
+                  <p v-if="active.payload?.urScar"><b>Ur-Scar:</b> {{ active.payload?.urScar }}</p>
+                  <p v-if="active.payload?.fate"><b>Schicksal:</b> {{ active.payload?.fate }}</p>
+                  <blockquote v-if="active.payload?.question">{{ active.payload?.question }}</blockquote>
+                </template>
+
+                <template v-else-if="active.kind === 'dbcovenant'">
+                  <small class="text-muted">Der Bund der Schweigenden Nacht</small>
+                  <div class="qlx-sep" />
+                  <LexiconMarkdown class="qlx-md" :source="active.payload?.body || ''" />
                 </template>
 
                 <template v-else>
@@ -652,6 +1044,15 @@ function kindLabel(k: LexiconKind) {
 
 .qlx-kind.big {
   font-size: 0.78rem;
+}
+
+.qlx-universe {
+  font-family: Cinzel, serif;
+  letter-spacing: 0.02em;
+}
+
+.qlx-md {
+  font-size: 1rem;
 }
 
 .qlx-item-title {

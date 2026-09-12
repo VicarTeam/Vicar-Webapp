@@ -1,0 +1,82 @@
+[
+  {
+    "pairKey": "flesh_motion",
+    "situation": "stärker zuschlagen",
+    "artA": "flesh",
+    "artB": "motion",
+    "textA": "Muskelkraft erhöhen",
+    "textB": "Impuls des Schlages erhöhen"
+  },
+  {
+    "pairKey": "flesh_motion",
+    "situation": "schneller rennen",
+    "artA": "flesh",
+    "artB": "motion",
+    "textA": "Körper optimieren",
+    "textB": "Bewegung beschleunigen"
+  },
+  {
+    "pairKey": "flesh_motion",
+    "situation": "schneller reagieren",
+    "artA": "flesh",
+    "artB": "motion",
+    "textA": "ja",
+    "textB": "nein"
+  },
+  {
+    "pairKey": "flesh_motion",
+    "situation": "Kugel ausweichen",
+    "artA": "flesh",
+    "artB": "motion",
+    "textA": "körperliche Reaktion",
+    "textB": "eigene Bewegung abrupt umlenken"
+  },
+  {
+    "pairKey": "flesh_motion",
+    "situation": "höher springen",
+    "artA": "flesh",
+    "artB": "motion",
+    "textA": "Beine verstärken",
+    "textB": "Aufwärtsimpuls verändern"
+  },
+  {
+    "pairKey": "flesh_motion",
+    "situation": "schwere Tür stemmen",
+    "artA": "flesh",
+    "artB": "motion",
+    "textA": "ja",
+    "textB": "nur durch Bewegung oder Impuls"
+  },
+  {
+    "pairKey": "flesh_motion",
+    "situation": "stillstehendes Auto anheben",
+    "artA": "flesh",
+    "artB": "motion",
+    "textA": "ja",
+    "textB": "nein"
+  },
+  {
+    "pairKey": "flesh_motion",
+    "situation": "fahrendes Auto abbremsen",
+    "artA": "flesh",
+    "artB": "motion",
+    "textA": "nein",
+    "textB": "ja"
+  },
+  {
+    "pairKey": "flesh_motion",
+    "situation": "Knochen härten",
+    "artA": "flesh",
+    "artB": "motion",
+    "textA": "ja",
+    "textB": "nein"
+  },
+  {
+    "pairKey": "flesh_motion",
+    "situation": "Fall aus großer Höhe überstehen",
+    "artA": "flesh",
+    "artB": "motion",
+    "textA": "Körper widerstandsfähiger",
+    "textB": "Fallimpuls reduzieren"
+  }
+]

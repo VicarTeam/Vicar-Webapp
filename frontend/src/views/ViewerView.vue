@@ -20,6 +20,7 @@ import HuntCalculatorModal from "@/components/main/characters/modals/HuntCalcula
 import SearchHighlightModal from "@/components/main/characters/modals/SearchHighlightModal.vue"
 import M20LevelModal from "@/components/viewer/modals/leveling/M20LevelModal.vue"
 import VdzLevelModal from "@/components/viewer/modals/leveling/VdzLevelModal.vue"
+import DbLevelModal from "@/components/viewer/modals/leveling/DbLevelModal.vue"
 
 import CharacterStorage from "@/libs/io/character-storage"
 import EventBus from "@/libs/event-bus"
@@ -43,6 +44,7 @@ const isWerewolf = computed(() => store.isWerewolf)
 const isMage = computed(() => store.isMage)
 const isHunter = computed(() => store.isHunter)
 const isDarkAges = computed(() => store.isDarkAges)
+const isDeathborne = computed(() => store.isDeathborne)
 
 const selectedTab = ref<string>("viewer-profile")
 const saveText = ref<string>("")
@@ -69,6 +71,7 @@ const huntCalculatorModal = ref<InstanceType<typeof HuntCalculatorModal> | null>
 const searchHighlightModal = ref<InstanceType<typeof SearchHighlightModal> | null>(null)
 const m20LevelModal = ref<InstanceType<typeof M20LevelModal> | null>(null)
 const vdzLevelModal = ref<InstanceType<typeof VdzLevelModal> | null>(null)
+const dbLevelModal = ref<InstanceType<typeof DbLevelModal> | null>(null)
 
 const tabProfile = ref<InstanceType<typeof Tab> | null>(null)
 const tabInventory = ref<InstanceType<typeof Tab> | null>(null)
@@ -137,6 +140,10 @@ function requestVdzLeveling(type: string, subject?: unknown) {
   vdzLevelModal.value?.showModal(type as any, subject as any)
 }
 
+function requestDbLeveling(type: string, subject?: unknown) {
+  dbLevelModal.value?.showModal(type as any, subject as any)
+}
+
 function setDicePool(
   type: "attr" | "skill" | "disc",
   name: string,
@@ -184,6 +191,7 @@ function clearDicePool() {
 provide("update-viewer", updaterViewer)
 provide("request-m20-level", requestM20Leveling as unknown as RequestLevelFn)
 provide("request-vdz-level", requestVdzLeveling)
+provide("request-db-level", requestDbLeveling)
 provide("set-dice-pool", setDicePool)
 provide("toggle-dice-pool-flag", toggleDicePoolFlag)
 
@@ -468,6 +476,7 @@ onUnmounted(() => {
         <Tab value="viewer-profile" text="Profil" ref="tabProfile" data-agent="tab:profile" />
         <Tab v-if="isMage" value="viewer-tradition" text="Allianz" data-agent="tab:tradition" />
         <Tab v-if="isDarkAges" value="viewer-vdz-road" text="Weg & Hintergründe" data-agent="tab:vdz-road" />
+        <Tab v-if="isDeathborne" value="viewer-db-blood" text="Blut & Hunger" data-agent="tab:db-blood" />
         <Tab value="viewer-inventory" text="Inventar" ref="tabInventory" data-agent="tab:inventory" />
         <Tab value="viewer-attributes" text="Attribute" ref="tabAttributes" data-agent="tab:attributes" />
         <Tab value="viewer-skills" text="Fähigkeiten" ref="tabSkills" data-agent="tab:skills" />
@@ -486,10 +495,13 @@ onUnmounted(() => {
           data-agent="tab:bloodrituals"
         />
         <Tab v-if="isDarkAges" value="viewer-vdz-disciplines" text="Disziplinen" />
+        <Tab v-if="isDeathborne" value="viewer-db-arts" text="Blutkünste" data-agent="tab:db-arts" />
         <Tab v-if="isWerewolf" value="viewer-gifts" text="Gaben & Riten" />
         <Tab v-if="isHunter" value="viewer-edges" text="Edges" />
         <Tab v-if="isDarkAges" value="viewer-vdz-traits" text="Vorzüge & Schwächen" />
-        <Tab v-if="!isDarkAges" value="viewer-traits" text="Vorteile & Schwächen" ref="tabTraits" data-agent="tab:traits" />
+        <Tab v-if="isDeathborne" value="viewer-db-anchors" text="Anker & Menschenzüge" data-agent="tab:db-anchors" />
+        <Tab v-if="isDeathborne" value="viewer-db-court" text="Court & Schulden" data-agent="tab:db-court" />
+        <Tab v-if="!isDarkAges && !isDeathborne" value="viewer-traits" text="Vorteile & Schwächen" ref="tabTraits" data-agent="tab:traits" />
         <Tab
           v-if="(editingCharacter.skillTrees?.length ?? 0) > 0"
           value="viewer-skilltrees"
@@ -553,6 +565,7 @@ onUnmounted(() => {
     <SearchHighlightModal ref="searchHighlightModal" />
     <M20LevelModal ref="m20LevelModal" />
     <VdzLevelModal ref="vdzLevelModal" />
+    <DbLevelModal ref="dbLevelModal" />
 
     <div v-if="dicePoolLeft || dicePoolRight || dicePoolExtra" class="simple-dice-calc card">
       <h4 class="card-title">Würfelpool:</h4>

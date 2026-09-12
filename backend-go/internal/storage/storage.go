@@ -10,6 +10,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/VicarTeam/vicar-backend/internal/darkborne"
 	"github.com/VicarTeam/vicar-backend/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -40,6 +41,19 @@ type Migrator interface {
 	// LegacyCharacterIDs returns the ids of characters still in the legacy store
 	// (for a bulk sweep). Owner-scoped when ownerID is non-empty.
 	LegacyCharacterIDs(ctx context.Context, ownerID string) ([]string, error)
+}
+
+type DarkborneProvider interface {
+	Darkborne() DarkborneStore
+}
+
+type DarkborneStore interface {
+	Revision(ctx context.Context) (string, error)
+	Content(ctx context.Context) (*darkborne.Content, error)
+	Lexicon(ctx context.Context, gameline string) ([]darkborne.LexiconEntry, error)
+	SaveSheet(ctx context.Context, characterID string, data map[string]any) error
+	LoadSheet(ctx context.Context, characterID string) (map[string]any, error)
+	DeleteSheet(ctx context.Context, characterID string) error
 }
 
 type UserStore interface {

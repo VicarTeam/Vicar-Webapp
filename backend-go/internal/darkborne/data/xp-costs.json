@@ -1,0 +1,62 @@
+[
+  {
+    "key": "attribute",
+    "name": "Attribut oder Wille",
+    "formula": "neuer Wert × 5",
+    "scope": "core"
+  },
+  {
+    "key": "fertigkeit",
+    "name": "Fertigkeit",
+    "formula": "neuer Wert × 3",
+    "scope": "core"
+  },
+  {
+    "key": "spezialisierung",
+    "name": "Neue Spezialisierung",
+    "formula": "3",
+    "scope": "core"
+  },
+  {
+    "key": "hintergrund",
+    "name": "Hintergrund",
+    "formula": "neue Stufe × 3",
+    "scope": "core"
+  },
+  {
+    "key": "kunst_mit_affinitaet",
+    "name": "Kunst mit Affinität",
+    "formula": "neue Tiefe × 5",
+    "scope": "deathborne"
+  },
+  {
+    "key": "kunst_ohne_affinitaet",
+    "name": "Kunst ohne Affinität",
+    "formula": "neue Tiefe × 7",
+    "scope": "deathborne"
+  },
+  {
+    "key": "gefestigte_form",
+    "name": "Gefestigte Form",
+    "formula": "3",
+    "scope": "deathborne"
+  },
+  {
+    "key": "eigene_form",
+    "name": "Eigene Form",
+    "formula": "Wirkungsstufe × 3 (halbiert nach dreimaliger erfolgreicher Improvisation)",
+    "scope": "deathborne"
+  },
+  {
+    "key": "blutstaerke",
+    "name": "Blutstärke",
+    "formula": "neuer Wert × 10 + Glied, dazu Ereignis und Ankererschütterung",
+    "scope": "deathborne"
+  },
+  {
+    "key": "entfremdung_ablegen",
+    "name": "Entfremdung ablegen",
+    "formula": "5",
+    "scope": "deathborne"
+  }
+]

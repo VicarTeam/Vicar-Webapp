@@ -84,14 +84,16 @@ SELECT EXISTS (SELECT 1 FROM characters WHERE id = $1);
 SELECT id, game, name, avatar, avatar_orientation, sex, concept,
        clan_name, clan_slogan, clan_nickname, tribe_name, auspice_name,
        tradition_name, creed_name, generation, generation_era, has_cains_mark,
-       chronicle, exp, directory, data_version
+       chronicle, exp, directory, data_version,
+       bloodline_key, house_key, blood_strength, glied
 FROM characters WHERE user_id = $1;
 
 -- name: ListSharedSummaries :many
 SELECT id, game, name, avatar, avatar_orientation, sex, concept,
        clan_name, clan_slogan, clan_nickname, tribe_name, auspice_name,
        tradition_name, creed_name, generation, generation_era, has_cains_mark,
-       chronicle, exp, directory, data_version
+       chronicle, exp, directory, data_version,
+       bloodline_key, house_key, blood_strength, glied
 FROM characters WHERE @user_id::text = ANY(viewers);
 
 -- name: ListOwnedMini :many

@@ -1,0 +1,38 @@
+[
+  {
+    "key": "dauer",
+    "name": "Dauer",
+    "mundane": "Die Wirkung hält länger an.",
+    "supernatural": "Grundwirkung: eine Handlung bis eine Szene. Je Steigerung: Nacht, Woche, Monat. Dauerhaft nur mit Tiefe 5."
+  },
+  {
+    "key": "reichweite",
+    "name": "Reichweite",
+    "mundane": "Die Wirkung reicht weiter.",
+    "supernatural": "Berührung, dann Sichtweite, dann Hörweite, dann über eine Verbindung (Blut, Erinnerung, Bindung)."
+  },
+  {
+    "key": "ziele",
+    "name": "Ziele",
+    "mundane": "Die Wirkung erfasst ein weiteres Ziel.",
+    "supernatural": "+1 Ziel, drei Steigerungen erfassen eine Gruppe."
+  },
+  {
+    "key": "unauffaellig",
+    "name": "Unauffällig",
+    "mundane": "Niemand bemerkt, was geschehen ist, es entsteht kein Aufsehen.",
+    "supernatural": "Niemand erkennt die Wirkung als übernatürlich."
+  },
+  {
+    "key": "praezise",
+    "name": "Präzise",
+    "mundane": "Genau das gewünschte Detail, keine Nebenwirkungen. Drei Präzise ermöglichen einen Kern-Treffer.",
+    "supernatural": "Genau das gewünschte Detail, keine Nebenwirkungen."
+  },
+  {
+    "key": "wucht",
+    "name": "Wucht",
+    "mundane": "+1 Schaden oder eine spürbar stärkere Wirkung.",
+    "supernatural": "Stärkere Wirkung innerhalb der Wirkungsstufe, oder +1 Schaden."
+  }
+]

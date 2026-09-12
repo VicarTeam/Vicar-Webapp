@@ -1,0 +1,37 @@
+[
+  {
+    "level": "none",
+    "name": "Keine",
+    "physical": "keine besondere Wirkung",
+    "symbolic": "keine besondere Wirkung",
+    "order": 0
+  },
+  {
+    "level": "low",
+    "name": "Gering",
+    "physical": "-1 Würfel, keine Routine",
+    "symbolic": "Unbehagen: -1 Würfel, keine Routine",
+    "order": 1
+  },
+  {
+    "level": "moderate",
+    "name": "Mäßig",
+    "physical": "-2 Würfel, übernatürliche Kräfte kosten +1 Treibstoff",
+    "symbolic": "1 Treibstoff pro Szene, solange man bleibt",
+    "order": 2
+  },
+  {
+    "level": "strong",
+    "name": "Stark",
+    "physical": "1 Verheerung pro Runde, Kräfte nur bis Wirkungsstufe 2",
+    "symbolic": "Die Grenze hält, man kommt nicht hindurch. Wird man gewaltsam hineingebracht: 1 Verheerung pro Runde",
+    "order": 3
+  },
+  {
+    "level": "extreme",
+    "name": "Extrem",
+    "physical": "3 Verheerung pro Runde, keine Kräfte",
+    "symbolic": "Die Grenze hält und zehrt: 2 Treibstoff pro Runde, bei leerem Vorrat ein Kern-Zustand",
+    "order": 4
+  }
+]

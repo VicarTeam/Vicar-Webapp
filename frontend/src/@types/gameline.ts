@@ -7,6 +7,7 @@ export enum GameLine {
   Mage = 'm20',
   Hunter = 'h5',
   DarkAges = 'vdz',
+  Deathborne = 'db',
 }
 
 export interface IBaseSheet {
@@ -72,6 +73,15 @@ export enum LevelChangeType {
   VDZ_Road = 'vdz_road',
   VDZ_Willpower = 'vdz_willpower',
   VDZ_Background = 'vdz_background',
+  DB_Attribute = 'db_attribute',
+  DB_Skill = 'db_skill',
+  DB_Specialization = 'db_specialization',
+  DB_Art = 'db_art',
+  DB_Form = 'db_form',
+  DB_BloodStrength = 'db_blood_strength',
+  DB_Wille = 'db_wille',
+  DB_Background = 'db_background',
+  DB_Alienation = 'db_alienation',
   Unknown = 'unknown',
 }
 
@@ -136,6 +146,24 @@ export function levelChangeTypeLabel(type: LevelChangeType): string {
       return "Willenskraft";
     case LevelChangeType.VDZ_Background:
       return "Hintergrund";
+    case LevelChangeType.DB_Attribute:
+      return "Attribut";
+    case LevelChangeType.DB_Skill:
+      return "Fertigkeit";
+    case LevelChangeType.DB_Specialization:
+      return "Spezialisierung";
+    case LevelChangeType.DB_Art:
+      return "Blutkunst";
+    case LevelChangeType.DB_Form:
+      return "Form";
+    case LevelChangeType.DB_BloodStrength:
+      return "Blutstärke";
+    case LevelChangeType.DB_Wille:
+      return "Wille";
+    case LevelChangeType.DB_Background:
+      return "Hintergrund";
+    case LevelChangeType.DB_Alienation:
+      return "Entfremdung";
     default:
       return "Unbekannt";
   }

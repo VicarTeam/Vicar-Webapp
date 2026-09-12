@@ -1,0 +1,68 @@
+[
+  {
+    "key": "the_continuance",
+    "name": "The Continuance",
+    "motto": "Die Nacht muss überdauern.",
+    "description": "The Continuance ist wahrscheinlich die einflussreichste politische Order der Deathborne. Ihre zentrale Überzeugung lautet, dass das langfristige Überleben der Vesperi über nahezu allen anderen politischen Zielen steht. Sie unterstützt den Covenant of Silent Night, stabile Courts, kontrollierte Rote Übergänge und politische Langzeitplanung. Menschen sind für sie weder Vieh noch Gleichgestellte, sondern die Welt, in der die Deathborne existieren müssen, weshalb sie Einfluss und Kooperation der offenen Herrschaft vorzieht."
+  },
+  {
+    "key": "the_ascendant_creed",
+    "name": "The Ascendant Creed",
+    "motto": "Wir wurden nicht verflucht. Wir wurden erhöht.",
+    "description": "Die Ascendants betrachten Deathborne als eine höhere Form menschlicher Existenz. Sterblichkeit ist in ihren Augen ein biologischer Zustand, der überwunden werden kann. Sie glauben häufig, dass Vesperi Menschen führen sollten, dass der Rote Übergang nicht unnötig eingeschränkt werden darf und dass Blutstärke aktiv gesteigert werden sollte. Radikale Ascendants fragen sogar, warum die Menschheit überhaupt sterblich bleiben sollte."
+  },
+  {
+    "key": "the_mortalists",
+    "name": "The Mortalists",
+    "motto": "Wir sind Menschen, die nicht mehr sterben.",
+    "description": "Mortalists lehnen die Vorstellung ab, Deathborne seien eine eigene höhere Spezies. Für sie bleibt jeder Vesper grundsätzlich ein Mensch nach dem Tod. Sie unterstützen enge Beziehungen zu Menschen, freiwillige Rote Übergänge, den Schutz menschlicher Autonomie und möglichst geringe Herrschaft über Sterbliche. Ein radikaler Zweig betrachtet den Deathborne-Zustand als Fehler, der eines Tages geheilt werden muss."
+  },
+  {
+    "key": "the_red_communion",
+    "name": "The Red Communion",
+    "motto": "Im Cruor liegt die Antwort.",
+    "description": "The Red Communion ist weniger politische Partei als mystische und wissenschaftliche Bewegung. Ihre Mitglieder erforschen Cruor, Blutstärke, den Roten Übergang, die Blutkünste und die Herkunft der Neun. Sie glauben, dass die Deathborne ihren eigenen Zustand noch längst nicht verstehen. Andere Orders werfen ihnen vor, Scions zu experimentellen Zwecken zu erschaffen, fremdes Cruor zu sammeln und Blood Scars künstlich zu verändern, und die Order bestreitet nicht alles davon."
+  },
+  {
+    "key": "the_last_dawn",
+    "name": "The Last Dawn",
+    "motto": "Unsterblichkeit ist kein Recht.",
+    "description": "The Last Dawn vertritt eine radikale moralische Position und glaubt, dass der Rote Übergang nur unter außergewöhnlichen Umständen durchgeführt werden darf. Einige Mitglieder akzeptieren ausschließlich ausdrückliche Zustimmung, langjährige Vorbereitung und strenge Prüfung. Andere fordern, dass es überhaupt keine neuen Deathborne mehr geben soll, und der extremste Flügel glaubt, die Vesperi sollten eines Tages freiwillig aussterben. Suizidal ist die Order deshalb nicht: Sie unterscheidet zwischen dem eigenen Weiterleben und dem weiteren Erschaffen ihrer Art."
+  },
+  {
+    "key": "the_sovereign_path",
+    "name": "The Sovereign Path",
+    "motto": "Wir benötigen keine Erlaubnis zu existieren.",
+    "description": "The Sovereign Path lehnt übermäßige zentrale Kontrolle über Vesperi ab. Die Order besitzt starke Überschneidungen mit Individualisten, unabhängigen Courts und alten Wanderern. Ihre Kernposition lautet, dass weder Haus noch Court noch Covenant mehr Autorität beanspruchen darf, als für das Überleben der Deathborne tatsächlich notwendig ist. Sie akzeptieren den Covenant of Silent Night häufig, hassen es aber, wenn er als Vorwand benutzt wird, um politische Gegner zu kontrollieren."
+  },
+  {
+    "key": "the_pale_crown",
+    "name": "The Pale Crown",
+    "motto": "Menschen herrschen, weil wir es zulassen.",
+    "description": "The Pale Crown ist eine offen elitäre Bewegung. Ihre Mitglieder glauben, dass Deathborne aufgrund ihrer Langlebigkeit und Macht natürlicherweise für Herrschaft geeignet sind. Anders als die Ascendants interessiert sie weniger biologische Überlegenheit, sondern politische Macht, Kontrolle, Dynastie und Imperien. Die Order unterstützt häufig starke Regents und Crown Courts, ist sich intern aber uneinig, ob Menschen verborgen gelenkt werden sollen oder ob der Covenant längst überholt ist."
+  },
+  {
+    "key": "the_wayfarers",
+    "name": "The Wayfarers",
+    "motto": "Keine Nacht gehört einem Court.",
+    "description": "The Wayfarers sind eine lose Order aus Reisenden, Händlern, Boten, Exploratoren und unabhängigen Vermittlern. Sie verteidigen das Recht der Vesperi auf Bewegung, Reise und Austausch zwischen den Courts. Viele besitzen politische Immunitäten oder alte Passierrechte. Da Deathborne über Jahrhunderte leben, sind Wayfarers häufig Träger von Nachrichten, Geheimnissen, alten Verträgen und diplomatischen Botschaften, und einige wissen mehr über die internationale Politik der Vesperi als jeder einzelne Regent."
+  },
+  {
+    "key": "the_black_tribunal",
+    "name": "The Black Tribunal",
+    "motto": "Ein unsterbliches Verbrechen darf nicht durch Zeit verschwinden.",
+    "description": "The Black Tribunal entstand aus der Überzeugung, dass regionale Courts manche Verbrechen nicht zuverlässig verfolgen können. Die Order besteht aus Ermittlern, Richtern und Vollstreckern und beschäftigt sich mit besonders schweren transregionalen Verbrechen wie systematischen Covenant-Brüchen, verbotenen Roten Übergängen, Handel mit Vesperi, organisierter Jagd auf Scions und extremen Cruor-Experimenten. Das Tribunal behauptet, unabhängig zu sein, und viele Regents akzeptieren seine Existenz nur widerwillig."
+  },
+  {
+    "key": "the_veiled_choir",
+    "name": "The Veiled Choir",
+    "motto": "Die Nacht hat Bedeutung.",
+    "description": "The Veiled Choir ist eine spirituelle und religiöse Bewegung. Sie glaubt, dass der Deathborne-Zustand nicht bloß Zufall oder ein gescheitertes Ritual war, sondern dass irgendetwas die Neun zurückgebracht, den Roten Übergang ermöglicht und Cruor erschaffen hat. Worum es sich dabei handelt, darüber streiten die eigenen Mitglieder: Die Theorien reichen von einem unbekannten Gott über den Tod selbst bis zu einer verborgenen Schicht der Wirklichkeit. Wo die Red Communion fragt, wie Cruor funktioniert, fragt der Veiled Choir, warum Cruor existiert."
+  },
+  {
+    "key": "the_ashen_hand",
+    "name": "The Ashen Hand",
+    "motto": "Die Schweigende Nacht wird verteidigt.",
+    "description": "The Ashen Hand ist eine militante Bewegung, die den Covenant of Silent Night extrem streng auslegt. Sie verfolgt bekannte Covenant-Brecher, gefährliche Zeugen, unkontrollierte Scions und übernatürliche Bedrohungen der Geheimhaltung. Moderate Mitglieder arbeiten offiziell für Courts, radikale Zellen handeln ohne Erlaubnis. Unterstützer nennen die Order notwendig, Kritiker nennen sie Fanatiker mit juristischem Vorwand."
+  }
+]

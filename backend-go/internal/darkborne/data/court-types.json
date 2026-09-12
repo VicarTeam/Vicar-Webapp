@@ -1,0 +1,27 @@
+[
+  {
+    "key": "crown_court",
+    "name": "Crown Court",
+    "description": "Ein einzelner Regent besitzt starke zentrale Macht. Diese Form ist typisch für sehr alte Regionen."
+  },
+  {
+    "key": "council_court",
+    "name": "Council Court",
+    "description": "Mehrere Vesperi oder Häuser regieren gemeinsam. Ein solcher Court ist häufig stabiler, arbeitet dafür aber langsam."
+  },
+  {
+    "key": "compact_court",
+    "name": "Compact Court",
+    "description": "Die Herrschaft basiert fast vollständig auf Verträgen. Politische Macht hängt stark davon ab, welche Verpflichtungen ein Vesper besitzt."
+  },
+  {
+    "key": "free_court",
+    "name": "Free Court",
+    "description": "Die Zentralmacht ist extrem gering. Der Court existiert hauptsächlich, um Covenant-Brüche, territoriale Konflikte und äußere Bedrohungen zu behandeln."
+  },
+  {
+    "key": "martial_court",
+    "name": "Martial Court",
+    "description": "Ein stark militärisch organisierter Court. Typisch ist diese Form in Grenzregionen, Kriegsgebieten und Gebieten mit starken übernatürlichen Gegnern."
+  }
+]

@@ -240,6 +240,41 @@ const router = createRouter({
           component: () => import('@/views/editor/vdz/ChooseFinishingVdzView.vue')
         },
         {
+          path: 'db-age',
+          name: 'editor-db-age',
+          component: () => import('@/views/editor/db/ChooseAgeDbView.vue')
+        },
+        {
+          path: 'db-lineage',
+          name: 'editor-db-lineage',
+          component: () => import('@/views/editor/db/ChooseLineageDbView.vue')
+        },
+        {
+          path: 'db-attributes',
+          name: 'editor-db-attributes',
+          component: () => import('@/views/editor/db/ChooseAttributesDbView.vue')
+        },
+        {
+          path: 'db-skills',
+          name: 'editor-db-skills',
+          component: () => import('@/views/editor/db/ChooseSkillsDbView.vue')
+        },
+        {
+          path: 'db-arts',
+          name: 'editor-db-arts',
+          component: () => import('@/views/editor/db/ChooseArtsDbView.vue')
+        },
+        {
+          path: 'db-forms',
+          name: 'editor-db-forms',
+          component: () => import('@/views/editor/db/ChooseFormsDbView.vue')
+        },
+        {
+          path: 'db-finishing',
+          name: 'editor-db-finishing',
+          component: () => import('@/views/editor/db/ChooseFinishingDbView.vue')
+        },
+        {
           path: 'creed',
           name: 'editor-creed',
           component: () => import('@/views/editor/h5/ChooseCreedView.vue')
@@ -336,6 +371,26 @@ const router = createRouter({
           path: 'vdz-traits',
           name: 'viewer-vdz-traits',
           component: () => import('@/views/viewer/VdzTraitsView.vue')
+        },
+        {
+          path: 'db-blood',
+          name: 'viewer-db-blood',
+          component: () => import('@/views/viewer/db/DbBloodView.vue')
+        },
+        {
+          path: 'db-arts',
+          name: 'viewer-db-arts',
+          component: () => import('@/views/viewer/db/DbArtsView.vue')
+        },
+        {
+          path: 'db-anchors',
+          name: 'viewer-db-anchors',
+          component: () => import('@/views/viewer/db/DbAnchorsView.vue')
+        },
+        {
+          path: 'db-court',
+          name: 'viewer-db-court',
+          component: () => import('@/views/viewer/db/DbCourtView.vue')
         },
         {
           path: 'skilltrees',

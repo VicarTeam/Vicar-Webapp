@@ -43,3 +43,11 @@ html.theme--vdz {
   --image-to-accent-filter: invert(14%) sepia(16%) saturate(1100%) hue-rotate(315deg) brightness(48%) contrast(92%);
   --image-to-primary-color-filter: invert(14%) sepia(16%) saturate(1100%) hue-rotate(315deg) brightness(48%) contrast(92%);
 }
+
+html.theme--db {
+  --accent: #4a1533;
+  --primary-color: #4a1533;
+  --accent-contrast: #f3e7ee;
+  --image-to-accent-filter: invert(11%) sepia(42%) saturate(2600%) hue-rotate(298deg) brightness(58%) contrast(96%);
+  --image-to-primary-color-filter: invert(11%) sepia(42%) saturate(2600%) hue-rotate(298deg) brightness(58%) contrast(96%);
+}

@@ -46,6 +46,7 @@ func (s *Server) Handler() http.Handler {
 	// Public routes (no auth), registered before the auth guard.
 	s.mountAuth(api)
 	s.mountData(api)
+	s.mountDarkborne(api)
 	s.mountCdnStatic(api)
 
 	// Realtime (socket.io): FoundryVTT bridge + GM fx. Authenticates via its own
@@ -58,6 +59,7 @@ func (s *Server) Handler() http.Handler {
 	api.Group(func(r chi.Router) {
 		r.Use(s.auth.Middleware)
 		s.mountCharacters(r)
+		s.mountDarkborneCharacters(r)
 		s.mountUsers(r)
 		s.mountSkillTrees(r)
 		s.mountFolders(r)

@@ -1,0 +1,100 @@
+{
+  "methods": [
+    {
+      "key": "verfuehren",
+      "name": "Verführen",
+      "attribute": "raffinesse",
+      "skill": "ueberzeugen",
+      "difficulty": 2,
+      "note": "in Bars, Clubs, auf Partys"
+    },
+    {
+      "key": "ueberfall",
+      "name": "Überfall",
+      "attribute": "geschick",
+      "skill": "heimlichkeit",
+      "difficulty": 2,
+      "note": "in dunklen Ecken"
+    },
+    {
+      "key": "strasse",
+      "name": "Straße",
+      "attribute": "gespuer",
+      "skill": "strasse",
+      "difficulty": 2,
+      "note": "Obdachlose, Drogenszene, Nachtschwärmer"
+    },
+    {
+      "key": "tiere",
+      "name": "Tiere",
+      "attribute": "geschick",
+      "skill": "ueberleben",
+      "difficulty": 1,
+      "note": "in Parks und Wäldern"
+    },
+    {
+      "key": "stammspender",
+      "name": "Stammspender",
+      "attribute": null,
+      "skill": null,
+      "difficulty": null,
+      "note": "Hintergrund, Routine, solange der Vesper nicht hungrig ist"
+    }
+  ],
+  "sources": [
+    {
+      "key": "human_moderate",
+      "name": "Mensch, maßvoll",
+      "cruor": 2,
+      "note": "Das Opfer ist geschwächt, aber unversehrt"
+    },
+    {
+      "key": "human_deep",
+      "name": "Mensch, tief",
+      "cruor": 4,
+      "note": "Das Opfer bricht zusammen und braucht Hilfe"
+    },
+    {
+      "key": "human_drained",
+      "name": "Mensch, leer",
+      "cruor": 6,
+      "note": "Das Opfer stirbt"
+    },
+    {
+      "key": "animal",
+      "name": "Tier",
+      "cruor": 1,
+      "note": "Ab Blutstärke 2 nur halb (1 pro zwei Tiere), ab Blutstärke 4 wirkungslos"
+    },
+    {
+      "key": "blood_bag",
+      "name": "Blutkonserve",
+      "cruor": 1,
+      "note": "1 Cruor pro Beutel, höchstens 2 pro Nacht, ab Blutstärke 4 wirkungslos"
+    },
+    {
+      "key": "vesper_cruor",
+      "name": "Cruor eines Vesper",
+      "cruor": 3,
+      "note": "3 Cruor pro Schluck, Blutbindung +1 Stufe"
+    }
+  ],
+  "increases": [
+    {
+      "key": "wucht",
+      "effect": "Er trinkt tief (4 Cruor) und entscheidet, ob das Opfer überlebt."
+    },
+    {
+      "key": "unauffaellig",
+      "effect": "Kein Aufsehen, keine Spuren."
+    },
+    {
+      "key": "praezise",
+      "effect": "Das Opfer erinnert sich an nichts Verdächtiges."
+    },
+    {
+      "key": "dauer",
+      "effect": "Das Opfer steht bis zum Ende des Kapitels erneut zur Verfügung."
+    }
+  ]
+}

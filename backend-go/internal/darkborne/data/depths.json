@@ -1,0 +1,37 @@
+[
+  {
+    "depth": 1,
+    "name": "Berührung",
+    "meaning": "Das Cruor greift nur leicht in die Wirklichkeit ein, die Wirkung bleibt im Rahmen des Möglichen.",
+    "target": "der Vesper selbst",
+    "scale": "kleine, kurze Eingriffe, kaum von Glück zu unterscheiden"
+  },
+  {
+    "depth": 2,
+    "name": "Formung",
+    "meaning": "Das Cruor formt gezielt und verlässlich, die Wirkung reicht knapp über das Menschliche hinaus.",
+    "target": "selbst oder durch Berührung",
+    "scale": "gezielt, zuverlässig, knapp übermenschlich"
+  },
+  {
+    "depth": 3,
+    "name": "Beherrschung",
+    "meaning": "Das Cruor beherrscht sein Prinzip und wirkt sicher auf andere, ohne jede Erklärung zu sprengen.",
+    "target": "ein anderes Ziel in Sichtweite",
+    "scale": "deutlich übermenschlich, aber noch erklärbar"
+  },
+  {
+    "depth": 4,
+    "name": "Überschreitung",
+    "meaning": "Das Cruor überschreitet die Regeln der Wirklichkeit sichtbar. Wirkungen ab dieser Stufe erzeugen vor Zeugen Aufsehen, sofern sie nicht unauffällig gemacht werden.",
+    "target": "ein Ziel oder ein Raum",
+    "scale": "offensichtlich unmöglich, Zeugen merken, dass etwas nicht stimmt"
+  },
+  {
+    "depth": 5,
+    "name": "Meisterschaft",
+    "meaning": "Das Cruor wendet das Prinzip der Kunst selbst in seiner äußersten Form an.",
+    "target": "Gruppen, Orte, Verbindungen",
+    "scale": "das Prinzip selbst in extremer Form"
+  }
+]

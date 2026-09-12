@@ -70,7 +70,7 @@ async function next() {
       ;(char as any).directory = directoryForCharCreation.value.id
     }
 
-    if (char.game !== GameLine.Mage && char.game !== GameLine.DarkAges) {
+    if (char.game !== GameLine.Mage && char.game !== GameLine.DarkAges && char.game !== GameLine.Deathborne) {
       ;(char as any).requiredPointSpreads = []
       ;(char as any).health = DataManager.getAttributeValue(char as any, AttributeKeys.Stamina) + 3
       ;(char as any).willpower =

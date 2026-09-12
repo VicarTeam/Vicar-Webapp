@@ -41,6 +41,19 @@ import { M20Sphere as SphereEnum } from "@/@types/m20"
 import type {IHunterSheet} from "@/@types/h5.ts";
 import {getVdzBloodPool, type IVdzSheet, type VdzRequestLevelFn, VdzVirtue} from "@/@types/vdz"
 import {VDZ_HELP, vdzVirtueHelp} from "@/libs/data/vdz-helpers"
+import type {IDbSheet} from "@/@types/deathborne"
+import {DarkborneData} from "@/libs/data/darkborne-data"
+import {
+  DB_MAX_HUNGER,
+  dbCruorMax,
+  dbCruorState,
+  dbCruorStateHint,
+  dbCruorStateName,
+  dbCruorValue,
+  dbSetCruorValue,
+  dbUpkeep,
+} from "@/libs/data/darkborne-rules"
+import CruorTrack from "@/components/progress/CruorTrack.vue"
 
 const store = useStore()
 
@@ -51,6 +64,7 @@ const isWerewolf = computed(() => store.isWerewolf)
 const isMage = computed(() => store.isMage)
 const isHunter = computed(() => store.isHunter)
 const isDarkAges = computed(() => store.isDarkAges)
+const isDeathborne = computed(() => store.isDeathborne)
 
 // Referenz: die fünf Garou-Formen (W5) mit Kosten/Modifikatoren – Anzeige auf der
 // Profilseite (aus dem alten Frontend übernommen).
@@ -231,6 +245,34 @@ const mocActive = computed(() => {
 // --- VDZ (Dark Ages) ---
 const vdzSheet = computed(() => (isDarkAges.value ? (editingCharacter.value as any as IVdzSheet) : undefined))
 
+const dbSheet = computed(() => (isDeathborne.value ? (editingCharacter.value as any as IDbSheet) : undefined))
+const dbHouse = computed(() => {
+  const sheet = dbSheet.value
+  if (!sheet || !DarkborneData.isLoaded) return undefined
+  return DarkborneData.house(sheet.bloodline || sheet.house)
+})
+const dbStartAge = computed(() => {
+  const sheet = dbSheet.value
+  if (!sheet || !DarkborneData.isLoaded) return undefined
+  return DarkborneData.startAge(sheet.startAge)
+})
+const dbCourtRank = computed(() => {
+  const sheet = dbSheet.value
+  if (!sheet || !DarkborneData.isLoaded) return undefined
+  return DarkborneData.courtRank(sheet.courtRank)
+})
+const dbCruorLimit = computed(() => (dbSheet.value ? dbCruorMax(dbSheet.value) : 0))
+const dbPassingPending = computed(() => dbSheet.value?.bloodAge === 0)
+const dbCruorCurrent = computed(() => (dbSheet.value ? dbCruorValue(dbSheet.value) : 0))
+const dbState = computed(() => (dbSheet.value ? dbCruorState(dbSheet.value) : undefined))
+
+function setDbCruorValue(value: number) {
+  const sheet = dbSheet.value
+  if (!sheet) return
+  dbSetCruorValue(sheet, value)
+  saveChar()
+}
+
 const vdzBloodPoolMax = computed<[number, number]>(() => (vdzSheet.value ? getVdzBloodPool(vdzSheet.value.generation) : [0, 0]))
 
 const vdzVirtueRows = computed(() => {
@@ -349,6 +391,52 @@ function changeVdzBloodPool(delta: number) {
           <TipButton :content="(editingCharacter as any as IHunterSheet).drive.redemption" class="mr-xxs" />
         </span>
 
+        <span v-else-if="isDeathborne && dbSheet" class="side">
+          {{ getSexName(editingCharacter.sex) }}
+          <Bullet />
+          <i> Blutlinie:</i> {{ dbHouse?.name ?? "unbekannt" }}
+          <template v-if="dbHouse">
+            <Bullet />
+            {{ dbHouse.epithet }}
+            <TipButton :content="`${dbHouse.scar.name}: ${dbHouse.scar.summary} ${dbHouse.scar.permanentEffect}`" />
+          </template>
+          <template v-if="dbSheet.house && dbSheet.house !== dbSheet.bloodline">
+            <Bullet />
+            <i> Haus:</i> {{ DarkborneData.isLoaded ? (DarkborneData.house(dbSheet.house)?.name ?? dbSheet.house) : dbSheet.house }}
+          </template>
+        </span>
+
+        <span v-if="isDeathborne && dbSheet" class="side subline">
+          <i>Blutstärke:</i> {{ dbSheet.bloodStrength }}
+          <Bullet />
+          <i>Glied:</i> {{ dbSheet.glied }}
+          <Bullet />
+          <i>Blutalter:</i>
+          <span v-if="dbPassingPending">Roter Übergang steht aus</span>
+          <span v-else>{{ dbSheet.bloodAge }} Jahre</span>
+          <template v-if="dbStartAge">
+            <Bullet />
+            {{ dbStartAge.name }}
+          </template>
+          <template v-if="dbSheet.court">
+            <Bullet />
+            <i>Court:</i> {{ dbSheet.court }}
+            <template v-if="dbCourtRank">
+              ({{ dbCourtRank.name }})
+              <TipButton :content="dbCourtRank.rights" />
+            </template>
+          </template>
+          <template v-if="dbSheet.order && DarkborneData.isLoaded">
+            <Bullet />
+            <i>Order:</i> {{ DarkborneData.order(dbSheet.order)?.name ?? dbSheet.order }}
+          </template>
+          <template v-if="dbSheet.alienation">
+            <Bullet />
+            <i>Entfremdung</i>
+            <TipButton content="Proben mit moderner Technik, heutigen Umgangsformen und aktueller Sprache sind um 1 erschwert." />
+          </template>
+        </span>
+
         <span v-else-if="isDarkAges && vdzSheet" class="side">
           {{ getSexName(editingCharacter.sex) }}
           <Bullet />
@@ -392,6 +480,30 @@ function changeVdzBloodPool(delta: number) {
 
       <div class="stats">
         <div class="row">
+          <div v-if="isDeathborne && dbSheet" class="stat sire">
+            <b>Sire:</b>
+            <small v-if="!editingCharacter.fullCustomization">{{ dbSheet.sire }}</small>
+            <input v-else class="form-control" type="text" v-model="dbSheet.sire" @change="saveChar()" data-agent="input:db-sire" />
+          </div>
+
+          <div v-if="isDeathborne && dbSheet" class="stat wide">
+            <CruorTrack
+              :value="dbCruorCurrent"
+              :max="dbCruorLimit"
+              :hunger-max="DB_MAX_HUNGER"
+              compact
+              agent-id="db:profile:cruor"
+              @update:value="setDbCruorValue"
+            >
+              <template #tip>
+                <TipButton :content="dbState ? dbCruorStateHint(dbState) : ''" />
+              </template>
+            </CruorTrack>
+            <small class="muted">
+              {{ dbState ? dbCruorStateName(dbState) : "" }}, Unterhalt {{ dbUpkeep(dbSheet) }} pro Nacht
+            </small>
+          </div>
+
           <div v-if="isVampire || isDarkAges" class="stat sire">
             <b>Erzeuger/in:</b>
             <small v-if="!editingCharacter.fullCustomization">{{ editingCharacter.sire }}</small>
@@ -510,6 +622,25 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
           <input class="form-control" type="text" v-model="editingCharacter.chronicle" @input="saveChar()" data-agent="input:chronicle" />
         </div>
 
+        <div v-if="isDeathborne && dbSheet" class="form-group">
+          <label>
+            Früheres Leben:
+            <TipButton content="Wer warst du als Mensch? Beruf, Familie, Heimat, Überzeugungen. Daraus wachsen Spezialisierungen und menschliche Anker." />
+          </label>
+          <MarkdownEditor v-model="dbSheet.formerLife" @change="saveChar()" agent-id="input:db-former-life" agent-label="Früheres Leben" />
+        </div>
+
+        <div v-if="isDeathborne && dbSheet" class="form-group">
+          <label>
+            Dein Tod:
+            <TipButton content="Wie bist du gestorben? Steht der Rote Übergang noch aus, bleibt das Feld leer, bis er im Spiel vollzogen wird." />
+          </label>
+          <MarkdownEditor v-model="dbSheet.death" @change="saveChar()" agent-id="input:db-death" agent-label="Dein Tod" />
+          <small v-if="dbPassingPending" class="muted">
+            Blutalter 0: Der Rote Übergang steht noch aus. Trag Tod und Blutalter ein, sobald er vollzogen ist.
+          </small>
+        </div>
+
         <div v-if="isMage" class="form-group">
           <label>Fokus:</label>
           <MarkdownEditor :model-value="(editingCharacter as any as IMageSheet).focus" @update:model-value="v => { (editingCharacter as any as IMageSheet).focus = v; saveChar() }" />
@@ -533,6 +664,13 @@ Immer wenn Rage eingesetzt wird, ist ein Rage-Test erforderlich: Der Spieler wü
         <div v-if="isMage" class="form-group">
           <label>Wunder: <TipButton content="Ein Wunder ist ein Hintergrund, der für verschiedene magische Gegenstände steht. Jeder Gegenstandstyp hat einen anderen Namen, den die Erwachten Technokraten benutzen. Artefakte (und Erfindungen) können nur von Magiern benutzt werden und nutzen die Arete-Werte ihres Benutzers. Sie können normalerweise nur ein paar Sachen machen. Einige Artefakte haben stattdessen einen einzigen dauerhaften Effekt und können von Schläfern benutzt werden. Zauber (und Gadgets) sind verbrauchbare magische Gegenstände. Sie werden in Bündeln und nicht als Einzelstücke hergestellt. Schläfer können Zauber benutzen, wenn dies mit ihrem Paradigma vereinbar ist. Fetische werden mit Spirit statt mit Prime hergestellt und erfordern Verhandlungen mit Geistern, um sie herzustellen. Die Garou und andere sich verändernde Rassen sehen die Fetische der Erwachten mit Argwohn, besonders wenn der Magier den Geist in den Fetisch gezwungen hat, anstatt sich seine Zusammenarbeit durch Chiminage zu verdienen. Periapts (und Matrizen), auch Soulgems genannt, enthalten die Quintessenz einer bestimmten Resonanz. Talismane (und Geräte) sind magische Gegenstände, die sogar Schläfer benutzen können, da sie ihre eigene Arete-Bewertung haben; sie können in der Regel mehrere Dinge tun, und viele haben Periapts daran befestigt. Ihre Herstellung erfordert jedoch Willenskraft. Grimoires (und Principiae) können Arete ohne Suche erhöhen und erfordern den Einsatz von 1 permanentem Punkt Willenskraft, aber Kopien können ohne Einsatz von Willenskraft angefertigt werden. Primers sind spezielle Grimoires/Principiae, die Arete 1 lehren – das heißt, sie können das Erwachen bewirken. Für ihre Herstellung sind zwei permanente Willenskraftpunkte erforderlich. Tomes sind ebenfalls spezielle Grimoires, die seltene und mächtige Roten beschreiben und es ermöglichen, deren Schwierigkeitsgrad zu verringern. Amulette (und Gizmos) sind Gegenstände mit „schlafender” Magie, die unter bestimmten Umständen aktiviert wird. Sie werden mit Zeit und/oder Entropie hergestellt. Reliquien sind lebende Wunder. Dieser Untertyp ergänzt einige andere: Reliquien-Talisman, Reliquien-Periapt (auch Seelenblume genannt) usw." /></label>
           <MarkdownEditor :model-value="(editingCharacter as any as IMageSheet).wonders" @update:model-value="v => { (editingCharacter as any as IMageSheet).wonders = v; saveChar() }" />
+        </div>
+        <div v-else-if="isDeathborne" class="form-group">
+          <label>
+            Überzeugungen:
+            <TipButton content="Ein bis drei Überzeugungen, die dein Vesper von sich aus befolgen will: Sätze wie 'Ich töte keine Kinder' oder 'Ein gegebenes Wort halte ich'. Handelt er dagegen, erschüttert das seine Anker. Die Anker selbst führst du im Tab Anker und Menschenzüge." />
+          </label>
+          <MarkdownEditor v-model="editingCharacter.anchorsAndBeliefs" @change="saveChar()" agent-id="input:db-beliefs" agent-label="Überzeugungen" />
         </div>
         <div v-else-if="isDarkAges" class="form-group">
           <label>Bindungen an die Sterblichkeit: <TipButton content="Was bindet deinen Kainiten noch an die Welt der Sterblichen? Menschen, Orte, Pflichten oder Überzeugungen, die deine Menschlichkeit bewahren und deinem Nichtleben Halt geben. Werden sie bedroht oder verloren, kann das deinen Weg ins Wanken bringen." /></label>

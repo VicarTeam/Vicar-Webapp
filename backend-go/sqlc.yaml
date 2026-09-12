@@ -4,6 +4,7 @@ sql:
     schema:
       - "internal/storage/postgres/sql/schema.sql"
       - "internal/storage/postgres/sql/folders.sql"
+      - "internal/storage/postgres/sql/characters_darkborne_summary.sql"
     queries: "internal/storage/postgres/sql/queries.sql"
     gen:
       go:

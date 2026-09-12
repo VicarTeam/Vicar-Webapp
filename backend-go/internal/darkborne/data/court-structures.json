@@ -1,0 +1,57 @@
+[
+  {
+    "key": "seat",
+    "name": "Der Seat",
+    "description": "Das politische Zentrum eines Courts wird als Seat bezeichnet. Er ist nicht zwingend ein einzelnes Gebäude, sondern kann ein Anwesen, ein unterirdischer Komplex, ein Theater, eine Kirche, ein Hotel, ein ganzer Stadtteil oder ein wandernder Treffpunkt sein. Der Seat ist der Ort, an dem Urteile gesprochen, Abkommen geschlossen, Rechte vergeben und Konflikte beigelegt werden. In vielen Courts gilt er als besonders geschützter Ort."
+  },
+  {
+    "key": "regent",
+    "name": "Der Regent",
+    "description": "Die häufigste Form regionaler Führung ist der Regent, der anerkannte politische Kopf eines Courts. Der Titel bedeutet nicht automatisch absoluter Herrscher, denn seine konkrete Macht hängt vom jeweiligen Court ab. Ein Regent kann Monarch, Vorsitzender eines Rates, Richter, militärischer Beschützer oder diplomatischer Vertreter sein. Seine Herrschaft beruht stets auf einem Mandate, das erklären muss, warum dieser Court ihm gehorcht."
+  },
+  {
+    "key": "night_council",
+    "name": "Der Night Council",
+    "description": "Größere Courts besitzen häufig einen Night Council. Der Rat kann aus Vertretern großer Häuser, alten unabhängigen Vesperi, Vertretern wichtiger Orders, Richtern und regionalen Machtträgern bestehen. Je nach Court ist er beratend, gesetzgebend, kontrollierend oder vollständig herrschend. Manche Regents hassen ihren Council, andere wären ohne ihn politisch bedeutungslos."
+  },
+  {
+    "key": "keeper_of_accord",
+    "name": "Der Keeper of Accord",
+    "description": "Viele Courts besitzen ein Amt, das direkt aus dem Covenant of Silent Night hervorgegangen ist: den Keeper of Accord. Seine Aufgabe ist es, mögliche Brüche des Covenants zu untersuchen, zu dokumentieren, einzudämmen und vor Gericht zu bringen. Er ist damit weder gewöhnlicher Polizist noch Henker, sondern vor allem derjenige, der entscheidet, ob eine Tat nur ein lokales Verbrechen ist oder die Schweigende Nacht gefährdet. In manchen Courts ist der Keeper mächtiger als der Regent."
+  },
+  {
+    "key": "arbiter",
+    "name": "Der Arbiter",
+    "description": "Ein Arbiter ist Richter für Streitigkeiten zwischen Vesperi. Er entscheidet über Verträge, Schuld, Besitz, Sire-Scion-Konflikte, Hausrecht und Rechte innerhalb des Courts. Arbiter stammen historisch häufig aus Enathar-Traditionen, das Amt ist jedoch nicht an ein Haus gebunden."
+  },
+  {
+    "key": "warden",
+    "name": "Der Warden",
+    "description": "Der Warden ist für gewaltsame Sicherheit verantwortlich. Seine Aufgaben können die Jagd auf Covenant-Brecher, den Schutz des Seats, die Vollstreckung von Urteilen und die Verteidigung gegen äußere Bedrohungen umfassen. In kleineren Courts können Regent, Keeper und Warden dieselbe Person sein."
+  },
+  {
+    "key": "domain",
+    "name": "Domain",
+    "description": "Innerhalb eines Courts können einzelne Vesperi oder Gruppen eigene Domains besitzen. Eine Domain kann Jagdrecht, Schutzrecht, wirtschaftlichen Einfluss, Aufenthaltsrecht und den Besitz bestimmter Orte beinhalten. Sie ist jedoch kein kleiner souveräner Staat, sondern bleibt dem Court untergeordnet."
+  },
+  {
+    "key": "residency",
+    "name": "Das Recht auf Aufenthalt",
+    "description": "Viele Courts unterscheiden zwischen Besucher, Bewohner, Protected Resident und Sworn Member. Ein fremder Vesper kann ein Gebiet betreten, ohne automatisch politische Rechte zu besitzen. Ein dauerhaft ansässiger Deathborne kann hingegen verpflichtet sein, sich registrieren zu lassen, einen lokalen Sire oder Sponsor zu benennen, dem Covenant des Courts zuzustimmen und regionale Abgaben oder Dienste zu leisten."
+  },
+  {
+    "key": "recognition",
+    "name": "Anerkennung eines Courts",
+    "description": "Ein Court entsteht nicht automatisch dadurch, dass ein mächtiger Vesper ein Gebiet für sich beansprucht, er muss anerkannt werden. Anerkennung kann durch die Alten Häuser, benachbarte Courts, regionale Vesperi, bestehende Verträge oder jahrhundertelange faktische Herrschaft erfolgen. Dadurch existieren Courts mit vollkommen unterschiedlicher Legitimation: Ein Court kann demokratisch wirken, aristokratisch sein, von einem einzelnen Vesper geführt werden, durch mehrere Häuser geteilt werden, aus einem Rat bestehen oder nur sehr lose organisiert sein."
+  },
+  {
+    "key": "territory",
+    "name": "Die territoriale Reichweite",
+    "description": "Courts besitzen keine überall identischen Grenzen. Ein städtischer Court kann nur wenige Quadratkilometer kontrollieren, ein anderer eine ganze Region umfassen. Besonders alte Courts folgen häufig historischen Grenzen, die für Menschen längst keine Bedeutung mehr besitzen, weshalb vampirische Territorien politische Karten überdauern können. Eine menschliche Grenze kann sich verändern, der Court muss es nicht."
+  },
+  {
+    "key": "conflicts",
+    "name": "Konflikte zwischen Courts",
+    "description": "Courts können miteinander handeln, Bündnisse schließen, Krieg führen, Vesperi ausliefern, Sanktionen verhängen und gemeinsame Jagden erklären. Der Covenant of Silent Night verhindert keinen Krieg zwischen Courts, er begrenzt lediglich, wie dieser Krieg geführt werden darf. Ein Court darf beispielsweise nicht einfach menschliche Behörden darüber informieren, dass in der Nachbarstadt Vampire leben."
+  }
+]

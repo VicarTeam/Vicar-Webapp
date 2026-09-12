@@ -6,7 +6,9 @@ package postgres
 import (
 	"context"
 	_ "embed"
+
 	"encoding/json"
+	"github.com/VicarTeam/vicar-backend/internal/darkborne"
 	"time"
 
 	"errors"
@@ -28,6 +30,15 @@ var foldersSQL string
 //go:embed sql/users_agent_token.sql
 var usersAgentTokenSQL string
 
+//go:embed sql/darkborne.sql
+var darkborneSQL string
+
+//go:embed sql/darkborne_lore.sql
+var darkborneLoreSQL string
+
+//go:embed sql/characters_darkborne_summary.sql
+var charactersDarkborneSummarySQL string
+
 // Store is the PostgreSQL-backed storage.Provider.
 type Store struct {
 	pool *pgxpool.Pool
@@ -38,6 +49,7 @@ type Store struct {
 	characters    *characterStore
 	skillTrees    *skillTreeStore
 	folders       *folderStore
+	darkborne     *darkborneStore
 }
 
 // Connect dials Postgres, applies the schema once, and returns a ready Store.
@@ -62,10 +74,23 @@ func Connect(ctx context.Context, url string) (*Store, error) {
 	s := &Store{pool: pool, q: q}
 	s.users = &userStore{q: q}
 	s.refreshTokens = &refreshTokenStore{q: q}
-	s.characters = &characterStore{q: q}
+	s.darkborne = newDarkborneStore(pool)
+	s.characters = &characterStore{q: q, pool: pool, darkborne: s.darkborne}
 	s.skillTrees = &skillTreeStore{q: q}
 	s.folders = &folderStore{q: q}
+	if err := seedDarkborne(ctx, s.darkborne); err != nil {
+		pool.Close()
+		return nil, err
+	}
 	return s, nil
+}
+
+func seedDarkborne(ctx context.Context, store *darkborneStore) error {
+	content, err := darkborne.Embedded()
+	if err != nil {
+		return err
+	}
+	return store.Seed(ctx, content)
 }
 
 func (s *Store) Users() storage.UserStore                 { return s.users }
@@ -73,6 +98,7 @@ func (s *Store) RefreshTokens() storage.RefreshTokenStore { return s.refreshToke
 func (s *Store) Characters() storage.CharacterStore       { return s.characters }
 func (s *Store) SkillTrees() storage.SkillTreeStore       { return s.skillTrees }
 func (s *Store) Folders() storage.FolderStore             { return s.folders }
+func (s *Store) Darkborne() storage.DarkborneStore        { return s.darkborne }
 
 func (s *Store) Close(context.Context) error { s.pool.Close(); return nil }
 
@@ -90,6 +116,9 @@ func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 		{"0001", schemaSQL},
 		{"0002", foldersSQL},
 		{"0003", usersAgentTokenSQL},
+		{"0004", darkborneSQL},
+		{"0005", darkborneLoreSQL},
+		{"0006", charactersDarkborneSummarySQL},
 	}
 	for _, step := range steps {
 		if err := applyMigration(ctx, pool, step.version, step.sql); err != nil {

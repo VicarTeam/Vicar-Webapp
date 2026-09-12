@@ -27,11 +27,26 @@ import {
   vdzSkillAbilities,
   vdzTalentAbilities,
 } from "@/@types/vdz"
+import {
+  DbCategory,
+  getDbCategoryName,
+  getDbSkillName,
+  getDbSkillsOf,
+  type IDbSheet,
+} from "@/@types/deathborne"
 
 const store = useStore()
 const editingCharacter = computed(() => store.editingCharacter as ICharacter | undefined)
 const isMage = computed(() => editingCharacter.value?.game === GameLine.Mage)
 const isDarkAges = computed(() => editingCharacter.value?.game === GameLine.DarkAges)
+const isDeathborne = computed(() => editingCharacter.value?.game === GameLine.Deathborne)
+const isLevelMode = computed(() => store.isLevelMode)
+const dbSheet = computed(() => editingCharacter.value as unknown as IDbSheet)
+const requestDbLevel = inject("request-db-level") as ((type: string, subject?: unknown) => void) | undefined
+
+function dbSpecsOf(skill: string): string[] {
+  return dbSheet.value.specializations.filter(s => s.skill === skill).map(s => s.name)
+}
 const requestVdzLevel = inject("request-vdz-level") as VdzRequestLevelFn | undefined
 
 const levelSkillModal = ref<InstanceType<typeof SkillModal> | null>(null)
@@ -87,7 +102,7 @@ function deleteSkillSpecs(skill: ISkillData) {
 
 <template>
   <div v-if="editingCharacter" class="skills-view">
-    <div v-if="!isMage && !isDarkAges" class="card category" v-for="cat in editingCharacter.categories" :key="cat.name">
+    <div v-if="!isMage && !isDarkAges && !isDeathborne" class="card category" v-for="cat in editingCharacter.categories" :key="cat.name">
       <div class="cat-head"><b>{{ getCategoryName(cat.name) }}</b></div>
 
       <div class="skill" :class="{ modified: effSkill(skill.key).modified }" v-for="skill in cat.skills" :key="skill.key" :id="`hlsk-${skill.key}`">
@@ -121,6 +136,36 @@ function deleteSkillSpecs(skill: ISkillData) {
         <Dots :amount="effSkill(skill.key).value" :max="5" />
       </div>
     </div>
+
+    <template v-if="isDeathborne">
+      <div
+        class="card category"
+        v-for="category in [DbCategory.Body, DbCategory.Social, DbCategory.Mind]"
+        :key="category"
+      >
+        <div class="cat-head"><b>{{ getDbCategoryName(category) }}</b></div>
+        <div class="skill" v-for="s in getDbSkillsOf(category)" :key="s">
+          <LevelButton
+            v-if="(dbSheet.skills[s] ?? 0) < 5"
+            @click="requestDbLevel?.('skill', s)"
+            :data-agent="'level:db-skill:' + s"
+          />
+          <small class="name" @click="setDicePool?.('skill', getDbSkillName(s), dbSheet.skills[s] ?? 0)">
+            {{ getDbSkillName(s) }}
+            <em v-if="dbSpecsOf(s).length > 0" class="db-spec">{{ dbSpecsOf(s).join(", ") }}</em>
+          </small>
+          <Dots :amount="dbSheet.skills[s] ?? 0" :max="5" />
+        </div>
+      </div>
+
+      <div v-if="isLevelMode" class="card category">
+        <div class="cat-head"><b>Spezialisierungen</b></div>
+        <div class="skill">
+          <LevelButton @click="requestDbLevel?.('specialization')" data-agent="level:db-specialization" />
+          <small class="name">Neue Spezialisierung</small>
+        </div>
+      </div>
+    </template>
 
     <template v-if="isDarkAges">
       <div

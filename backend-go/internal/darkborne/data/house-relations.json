@@ -1,0 +1,38 @@
+[
+  {
+    "key": "kharven_kaelor",
+    "houseA": "kharven",
+    "houseB": "kaelor",
+    "description": "Kharven hält dauerhafte Ordnung für notwendig. Kaelor betrachtet aufgezwungene Ordnung als potentiellen Tyrannenstaat."
+  },
+  {
+    "key": "veyran_kaelor",
+    "houseA": "veyran",
+    "houseB": "kaelor",
+    "description": "Der offensichtlichste Konflikt zwischen zwei Häusern. Herrschaft steht hier gegen freiwillige Gefolgschaft."
+  },
+  {
+    "key": "enathar_kaelor",
+    "houseA": "enathar",
+    "houseB": "kaelor",
+    "description": "Gesetz gegen persönliche Freiheit. Allerdings arbeiten beide überraschend häufig zusammen, wenn Verträge tatsächlich freiwillig geschlossen wurden."
+  },
+  {
+    "key": "imreth_nyrath",
+    "houseA": "imreth",
+    "houseB": "nyrath",
+    "description": "Veränderung gegen Bewahrung. Nyrath fragt, was verloren geht. Imreth fragt, warum es überhaupt behalten werden soll."
+  },
+  {
+    "key": "thenera_varyss",
+    "houseA": "thenera",
+    "houseB": "varyss",
+    "description": "Familie gegen Selbstdefinition. Thenera betrachtet Abstammung als Verpflichtung. Varyss betrachtet Abstammung als Ursprung, nicht als Schicksal."
+  },
+  {
+    "key": "sarrath",
+    "houseA": "sarrath",
+    "houseB": "",
+    "description": "Sarrath steht häufig außerhalb klarer Hausblöcke. Andere Häuser nutzen seine Mitglieder als Ermittler, Berater, Seher und Beobachter. Und vertrauen ihnen trotzdem nie vollständig."
+  }
+]

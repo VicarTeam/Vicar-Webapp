@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { getGameLineLabel } from "@/@types/universe"
+import { GameLine } from "@/@types/gameline"
 import { computed, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import DataManager from "@/libs/data/data-manager"
@@ -223,7 +225,7 @@ async function removeChar(c: AdminCharacterSummary) {
             <img class="acp-av" :src="resolveAssetUrl(c.avatar) || '/img/placeholder.jpg'" alt="" />
             <div class="acp-row-main">
               <span class="name">{{ c.name || "—" }}</span>
-              <span class="tag tech">{{ (c.game || "v5").toUpperCase() }}</span>
+              <span class="tag tech">{{ getGameLineLabel(c.game as GameLine | undefined) }}</span>
             </div>
             <div class="acp-row-actions">
               <button class="mini danger" @click.stop="removeChar(c)" title="Charakter löschen">✕</button>

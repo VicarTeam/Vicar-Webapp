@@ -1,0 +1,1111 @@
+[
+  {
+    "key": "blood",
+    "name": "Die Kunst des Blutes",
+    "shortName": "Blut",
+    "principle": "Cruor kann Cruor verändern.",
+    "summary": "Die Urkunst verwendet Cruor nicht als Werkzeug, sie verändert das Werkzeug selbst. Sie ist die älteste und gefährlichste Form der Cruor-Manipulation und gilt als Ursprung aller anderen Künste. Weil sie an dem System arbeitet, das Körper, Blutstärke und Identität trägt, besitzt sie keine Gegenkunst, sondern erzeugt Instabilität.",
+    "isPrimal": true,
+    "counterKey": null,
+    "typicalAttributes": ["gespuer", "verstand", "kraft"],
+    "limits": [
+      "Wirkt nur auf Körper mit Blut oder Cruor.",
+      "Jede Nutzung ab Stufe 3 bringt Blutwürfel (Instabilität)."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "eigenes Cruor bewusst lenken",
+          "fremdes Cruor durch Berührung oder Geschmack erkennen"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "Blutspuren verfolgen",
+          "Abstammung und Glied erkennen",
+          "Cruor im eigenen Körper speichern"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "Blut in einem fremden Körper kontrollieren",
+          "Blut aus einer Wunde ziehen",
+          "fremdes Cruor destabilisieren"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "Regeneration erzwingen oder verhindern",
+          "Blut mit Eigenschaften versehen",
+          "Sire-Scion-Verbindungen lesen"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "Blutnarben beeinflussen",
+          "Blutstärke rauben",
+          "einen Roten Übergang manipulieren"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "blutwitterung",
+        "name": "Blutwitterung",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Durch Berührung oder einen Tropfen auf der Zunge erkennt der Vesper, ob Blut von einem Menschen, einem Tier oder einem Vesper stammt, und ob dessen Blutstärke höher, gleich oder niedriger ist.",
+        "limits": "Keine Linie, kein Haus, kein Name."
+      },
+      {
+        "key": "rote_faehrte",
+        "name": "Rote Fährte",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Der Vesper folgt einer Blutspur, die höchstens eine Nacht alt ist.",
+        "limits": "Die Spur muss irgendwo sichtbares Blut enthalten haben, Regen und Reinigung brechen sie ab."
+      }
+    ]
+  },
+  {
+    "key": "flesh",
+    "name": "Die Kunst des Fleisches",
+    "shortName": "Fleisch",
+    "principle": "Der Körper kann neu geschrieben werden.",
+    "summary": "Fleisch verändert den materiellen Körper: Gewebe, Muskeln, Knochen, Nerven, Haut, Organe und Form. Ein Vesper wird dadurch tatsächlich stärker, widerstandsfähiger oder schneller in seinen Reaktionen, statt nur so zu wirken. Was sie formt, bleibt ein Körper und braucht weiterhin Schritte, Bodenhaftung und Anlauf.",
+    "isPrimal": false,
+    "counterKey": "spirit",
+    "typicalAttributes": ["kraft", "geschick"],
+    "limits": [
+      "Fleisch macht schneller, aber nicht unmöglich schnell: Der Körper braucht weiter Schritte, Bodenhaftung und Anlauf.",
+      "Fleisch wirkt nicht auf nichtlebende Materie.",
+      "Fremde Körper verändern ist schwerer und gefährlich."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "Sinne schärfen",
+          "Nachtsicht",
+          "kleine Veränderungen am eigenen Körper"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "Muskeln verdichten (Kraft wie ein Spitzenathlet)",
+          "Haut verhärten",
+          "Reflexe beschleunigen",
+          "Klauen formen"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "deutlich übermenschliche Kraft",
+          "Knochenpanzer",
+          "Kiemen und Kletterhaftung",
+          "Regeneration gezielt lenken"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "Gestalt grundlegend verändern (anderes Gesicht, andere Größe)",
+          "Gliedmaßen hinzufügen",
+          "einen fremden Körper leicht verändern"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "vollständige Metamorphose",
+          "fremde Körper tiefgreifend umformen"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "nachtaugen",
+        "name": "Nachtaugen",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Der Vesper sieht in fast völliger Dunkelheit wie in der Dämmerung, bis zum Ende der Szene.",
+        "limits": "Vollkommene Finsternis bleibt finster, grelles Licht blendet doppelt."
+      },
+      {
+        "key": "lebendiger_anschein",
+        "name": "Lebendiger Anschein",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Einer der Menschenzüge Wärme, Herzschlag oder Mimik zählt bis zum Ende der Szene als 3.",
+        "limits": "Nicht, wenn der Zug bereits auf 0 steht, nicht bei Hunger."
+      }
+    ]
+  },
+  {
+    "key": "spirit",
+    "name": "Die Kunst des Geistes",
+    "shortName": "Geist",
+    "principle": "Bewusstsein kann Bewusstsein formen.",
+    "summary": "Geist wirkt auf Gedanken, Emotionen, Willen, Träume und Wahrnehmung. Sie liest, verstärkt, dämpft und verbindet Bewusstsein, ohne den Körper anzurühren. Sie verändert, was jemand fühlt und denkt, aber sie befiehlt nicht und löscht nichts.",
+    "isPrimal": false,
+    "counterKey": "flesh",
+    "typicalAttributes": ["gespuer", "raffinesse", "praesenz"],
+    "limits": [
+      "Geist befiehlt nicht (das ist Herrschaft) und löscht keine Erinnerungen (das ist Vergessen).",
+      "Er verändert, was jemand fühlt und denkt, nicht was er tun muss."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "Emotionen einer Person im Gespräch spüren",
+          "eigene Schmerzen geistig unterdrücken"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "Oberflächengedanken durch Berührung lesen",
+          "Emotionen verstärken oder dämpfen",
+          "mentale Barriere errichten"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "Gedanken auf Sicht lesen",
+          "telepathisch sprechen",
+          "Träume betreten",
+          "Persönlichkeitsschichten erkennen"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "Bewusstsein projizieren",
+          "mentale Zustände über Nächte verändern",
+          "mehrere Geister verbinden"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "Bewusstsein aus dem Körper lösen",
+          "Fragmente fremder Persönlichkeiten isolieren",
+          "dauerhafte Veränderung eines Geistes"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "gefuehlslese",
+        "name": "Gefühlslese",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Im Gespräch erkennt der Vesper die vorherrschende Emotion seines Gegenübers.",
+        "limits": "Nur eine Emotion, kein Grund, keine Gedanken."
+      },
+      {
+        "key": "stille_im_kopf",
+        "name": "Stille im Kopf",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Bis zum Ende der Szene erhält der Vesper +2 Würfel auf Widerstand gegen Geist, Herrschaft und Vergessen.",
+        "limits": "Der Vesper wirkt kalt und abwesend. -1 Würfel auf Überzeugen und Menschenkenntnis."
+      }
+    ]
+  },
+  {
+    "key": "dominion",
+    "name": "Die Kunst der Herrschaft",
+    "shortName": "Herrschaft",
+    "principle": "Ein Wille kann einem anderen Richtung geben.",
+    "summary": "Herrschaft erzwingt Hierarchie: Befehl, Unterwerfung, Gehorsam und Autorität. Ein Wille gibt einem anderen Richtung, von der geforderten Aufmerksamkeit bis zu Befehlen, die Nächte überdauern. Sie erzeugt Gehorsam, niemals echte Zustimmung.",
+    "isPrimal": false,
+    "counterKey": "freedom",
+    "typicalAttributes": ["praesenz"],
+    "limits": [
+      "Herrschaft verändert keine Erinnerungen und erschafft keine echte Loyalität.",
+      "Sie sagt \"Du wirst gehorchen\", nie \"Du willst gehorchen\".",
+      "Befehle gegen die Selbsterhaltung verlangen mindestens Stufe 4.",
+      "Kaelor spüren jeden Versuch sofort."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "Aufmerksamkeit verlangen",
+          "einen Moment Stille erzwingen"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "ein einzelnes Befehlswort",
+          "Angst durch Autorität erzeugen"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "einen kurzen Befehl aus einem Satz erzwingen",
+          "Widerstand einer Person schwächen",
+          "jemanden zum Schweigen bringen"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "eine Person zu einer bestimmten Handlung zwingen",
+          "eine Gruppe beeinflussen"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "Kontrolle über schwächere Geister übernehmen",
+          "Befehle, die Nächte überdauern"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "blick_des_herrn",
+        "name": "Blick des Herrn",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Eine Person, die den Vesper ansieht, hört zu, bis er seinen Satz beendet hat.",
+        "limits": "Blickkontakt nötig, keine Handlung wird erzwungen."
+      },
+      {
+        "key": "das_eine_wort",
+        "name": "Das Eine Wort",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Ein einziges Befehlswort (\"Halt!\", \"Schweig!\", \"Geh!\") wird für einen Moment befolgt.",
+        "limits": "Blickkontakt nötig, nichts gegen die Selbsterhaltung, nicht gegen Vesperi höherer Blutstärke."
+      }
+    ]
+  },
+  {
+    "key": "freedom",
+    "name": "Die Kunst der Freiheit",
+    "shortName": "Freiheit",
+    "principle": "Jede aufgezwungene Ordnung kann gebrochen werden.",
+    "summary": "Freiheit löst Kontrolle, auch die Kontrolle, die ein Vesper über sich selbst hat. Sie schüttelt Befehle ab, beendet hypnotische Zustände, bricht fremde Beherrschung und setzt Unterdrücktes frei. Sie ist ebenso gefährlich wie Herrschaft, denn wer entfesselt wird, handelt frei, nicht vernünftig.",
+    "isPrimal": false,
+    "counterKey": "dominion",
+    "typicalAttributes": ["praesenz", "gespuer", "raffinesse"],
+    "limits": [
+      "Freiheit bedeutet nicht Vernunft.",
+      "Wer entfesselt wird, tut, was er will, nicht was klug ist.",
+      "Blutbindungen sind Sache der Trennung."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "eigene Furcht überwinden",
+          "einen Befehl an sich selbst als fremd erkennen"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "mentale Befehle abschütteln",
+          "hypnotische Zustände beenden",
+          "soziale Hemmungen einer Person lösen"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "fremde Beherrschung bei anderen brechen",
+          "unterdrückte Wünsche freisetzen",
+          "andere gegen Kontrolle schützen"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "Selbstkontrolle einer Person zerstören",
+          "eine Gruppe in chaotisches Verhalten treiben",
+          "magische Zwänge destabilisieren"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "Loyalität und Disziplin ganzer Gemeinschaften untergraben",
+          "Zwänge lösen, die für unlösbar gelten"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "mut",
+        "name": "Mut",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Der Vesper ignoriert bis zum Ende der Szene jede Wirkung von Angst.",
+        "limits": "Nur der Vesper selbst."
+      },
+      {
+        "key": "kette_abstreifen",
+        "name": "Kette abstreifen",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Ein Befehl oder Zwang, der auf dem Vesper liegt, endet sofort.",
+        "limits": "Nicht gegen Wirkungen über Stufe 2, nicht gegen Blutbindungen, nicht gegen Scar-Zwänge."
+      }
+    ]
+  },
+  {
+    "key": "veil",
+    "name": "Die Kunst des Schleiers",
+    "shortName": "Schleier",
+    "principle": "Was nicht beachtet wird, kann verborgen bleiben.",
+    "summary": "Schleier macht nicht unsichtbar, sondern sorgt dafür, dass etwas nicht richtig wahrgenommen wird. Präsenz, Geräusche, Gesichter, Spuren und ganze Räume rutschen aus der bewussten Aufmerksamkeit. Die Kunst arbeitet an Beobachtern, nicht am Licht, und Aufzeichnungen bleiben ihr Feind.",
+    "isPrimal": false,
+    "counterKey": "revelation",
+    "typicalAttributes": ["raffinesse", "geschick"],
+    "limits": [
+      "Schleier wirkt auf Aufmerksamkeit, nicht auf Licht.",
+      "Kameras zeichnen alles auf.",
+      "Wer später die Aufnahme sieht, bemerkt den Vesper, außer die Wirkung hat Stufe 5 erreicht.",
+      "Wer aktiv und gezielt sucht, würfelt Widerstand."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "eigene Präsenz abschwächen",
+          "Geräusche der eigenen Bewegung dämpfen"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "das eigene Gesicht schwer erinnerbar machen",
+          "Spuren verschleiern",
+          "sich in Menschenmengen auflösen"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "Aufmerksamkeit anderer umlenken",
+          "eine andere Person oder einen Gegenstand aus der bewussten Wahrnehmung entfernen"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "einen ganzen Raum übersehen lassen",
+          "die Erinnerung an die eigene Anwesenheit unscharf machen"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "mehrere Personen gemeinsam verschleiern",
+          "ein ganzes Ereignis schwer beobachtbar machen"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "graue_gestalt",
+        "name": "Graue Gestalt",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "In belebten Räumen wird der Vesper übersehen.",
+        "limits": "Endet, sobald er jemanden anspricht, berührt oder rennt, wirkt nicht auf Kameras."
+      },
+      {
+        "key": "vergessenes_gesicht",
+        "name": "Vergessenes Gesicht",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Wer den Vesper in dieser Szene nur kurz gesehen hat, kann sein Gesicht später nicht beschreiben.",
+        "limits": "Nicht bei längeren Gesprächen, nicht bei Menschen, die ihn bereits kennen, nicht auf Aufnahmen."
+      }
+    ]
+  },
+  {
+    "key": "revelation",
+    "name": "Die Kunst der Offenbarung",
+    "shortName": "Offenbarung",
+    "principle": "Was existiert, kann erkannt werden.",
+    "summary": "Offenbarung zwingt verborgene Informationen in die Wahrnehmung. Sie erkennt Vesperi, Cruor, bewusste Lügen, Illusionen, Spuren an Orten und die Handschrift anderer Blutkünste. Sie zeigt, was existiert oder existierte, und überlässt die Deutung dem Betrachter.",
+    "isPrimal": false,
+    "counterKey": "veil",
+    "typicalAttributes": ["gespuer", "verstand"],
+    "limits": [
+      "Offenbarung zeigt, was existiert oder existierte, nicht was sein wird.",
+      "Sie macht Informationen sichtbar, nicht verständlich.",
+      "Sarrath laufen dabei Gefahr, Muster zu sehen, wo keine sind."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "Deathborne von Menschen unterscheiden",
+          "übernatürliche Sinne für einen Moment"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "versteckte Personen entdecken",
+          "Cruor und Blutlinienmerkmale wahrnehmen",
+          "bewusste Lügen spüren"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "Illusionen und Schleier durchschauen",
+          "emotionale Spuren an Orten wahrnehmen",
+          "Manipulation erkennen"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "Ereignisspuren an Orten erkennen",
+          "vergangene Anwesenheit rekonstruieren",
+          "die Wirkung anderer Blutkünste identifizieren"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "absichtlich verborgene Wahrheiten aufdecken",
+          "jede Täuschung in einem Raum auf einmal durchschauen"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "der_zweite_blick",
+        "name": "Der Zweite Blick",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Der Vesper erkennt, ob eine Person, mit der er spricht, ein Vesper ist.",
+        "limits": "Nur ja oder nein, eine Person, keine Blutstärke, keine Linie."
+      },
+      {
+        "key": "falscher_klang",
+        "name": "Falscher Klang",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Bis zum Ende der Szene bemerkt der Vesper, wenn jemand eine bewusste Lüge ausspricht.",
+        "limits": "Keine Halbwahrheiten, kein Verschweigen, keine Lügen, an die der Sprecher selbst glaubt."
+      }
+    ]
+  },
+  {
+    "key": "motion",
+    "name": "Die Kunst der Bewegung",
+    "shortName": "Bewegung",
+    "principle": "Bewegung ist ein Zustand, kein Ergebnis von Muskelkraft.",
+    "summary": "Bewegung manipuliert Geschwindigkeit, Richtung, Impuls und Trägheit. Sie bremst Stürze, lenkt Sprünge und Geschosse um, nimmt Objekten den Schwung und überträgt ihn weiter. Der Körper selbst bleibt dabei unverändert, das ist die harte Trennlinie zum Fleisch.",
+    "isPrimal": false,
+    "counterKey": "stillness",
+    "typicalAttributes": ["geschick"],
+    "limits": [
+      "Bewegung macht keine Muskeln stärker, verbessert keine Reflexe und heilt nichts.",
+      "Ein stillstehendes Auto anheben kann sie nicht, ein fahrendes abbremsen schon."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "den eigenen Sturz abbremsen",
+          "einen Schritt unnatürlich leise und sicher setzen"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "aus dem Stand beschleunigen",
+          "einen Sprung in der Luft umlenken",
+          "an Wänden entlanglaufen"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "Kugeln leicht ablenken",
+          "einem bewegten Objekt Schwung nehmen",
+          "Schwung von einem Objekt auf ein anderes übertragen"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "Menschen zurückschleudern",
+          "ein fahrendes Auto stoppen",
+          "Geschosse stark umlenken"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "Bewegungsenergie speichern und später freisetzen",
+          "Schwung zwischen mehreren Zielen verteilen"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "fallbruch",
+        "name": "Fallbruch",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Der Vesper übersteht einen Sturz über mehrere Stockwerke ohne Schaden.",
+        "limits": "Nur der eigene Körper, nur nach unten."
+      },
+      {
+        "key": "antritt",
+        "name": "Antritt",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Aus dem Stand erreicht der Vesper sofort volle Geschwindigkeit und legt in einer Handlung die doppelte Strecke zurück.",
+        "limits": "Nur geradeaus, nicht, wenn er festgehalten wird."
+      }
+    ]
+  },
+  {
+    "key": "stillness",
+    "name": "Die Kunst des Stillstands",
+    "shortName": "Stillstand",
+    "principle": "Veränderung kann verhindert werden.",
+    "summary": "Stillstand ist mehr als nicht bewegen, er erhält einen Zustand. Er fixiert Objekte, stoppt Blutungen, dämpft Vibrationen, senkt Cruor-Aktivität und setzt Verfall über Jahre aus. Er erschafft keine Bewegung und heilt nichts, er hält nur an.",
+    "isPrimal": false,
+    "counterKey": "motion",
+    "typicalAttributes": ["gespuer", "praesenz"],
+    "limits": [
+      "Stillstand erschafft keine Bewegung und heilt nichts, er hält nur an.",
+      "Was er anhält, setzt sich fort, sobald die Wirkung endet."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "vollkommen regungslos werden",
+          "eigene Blutungen stoppen"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "ein berührtes Objekt fixieren",
+          "Vibrationen dämpfen",
+          "Zerfall eines Gegenstands verlangsamen"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "einen Gegner körperlich abbremsen",
+          "Blutungen bei anderen stoppen",
+          "Cruor-Aktivität eines Ziels senken"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "einen bewegten Gegenstand vollständig stoppen",
+          "eine Person nahezu bewegungslos machen"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "Verfall über Jahre aussetzen",
+          "einen ganzen Bereich in extreme Ruhe zwingen"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "totenruhe",
+        "name": "Totenruhe",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Der Vesper wird vollkommen regungslos, ohne Atem und Herzschlag, und wirkt wie eine Leiche.",
+        "limits": "Er kann dabei nicht handeln, jede Bewegung beendet die Wirkung."
+      },
+      {
+        "key": "festhalten",
+        "name": "Festhalten",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Ein Objekt, das der Vesper berührt, bewegt sich nicht mehr: eine Tür, ein Seil, ein Fahrzeug im Stand. Wer es bewegen will, braucht Kraft + Athletik gegen Schwierigkeit 4.",
+        "limits": "Nur solange der Vesper es berührt, nicht gegen Lebewesen."
+      }
+    ]
+  },
+  {
+    "key": "binding",
+    "name": "Die Kunst der Bindung",
+    "shortName": "Bindung",
+    "principle": "Was getrennt ist, kann durch Cruor verbunden werden.",
+    "summary": "Bindung erzeugt Beziehungen zwischen Personen, Orten und Dingen. Sie macht Versprechen spürbar, bindet Gegenstände an ihren Besitzer, teilt Empfindungen, verteilt Verletzungen und schmiedet Schwüre, die Jahrzehnte überdauern. Sie verbindet, was schon da ist, und erfindet keine Gefühle.",
+    "isPrimal": false,
+    "counterKey": "severance",
+    "typicalAttributes": ["praesenz", "verstand"],
+    "limits": [
+      "Bindung erschafft keine Gefühle und keine Loyalität.",
+      "Sie verbindet, was schon da ist: Versprechen, Nähe, Blut, Besitz."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "ein gegebenes Versprechen spürbar machen",
+          "einen Gegenstand als eigenen erkennen"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "einen Gegenstand an seinen Besitzer binden",
+          "eine Schutzbindung um eine Person legen"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "Empfindungen zwischen zwei Personen teilen",
+          "einen Schwur verstärken",
+          "eine Blutverbindung herstellen"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "Verletzungen zwischen Personen verteilen",
+          "einen Vesper an einen Ort binden"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "Bindungen, die Jahrzehnte überdauern",
+          "ganze Gruppen durch einen Schwur aneinander ketten"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "handschlag",
+        "name": "Handschlag",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Zwei Personen, die sich etwas versprechen, spüren ab jetzt, wenn der andere das Versprechen bricht.",
+        "limits": "Beide müssen zustimmen, keine Strafe für den Bruch."
+      },
+      {
+        "key": "blutsiegel",
+        "name": "Blutsiegel",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Ein Gegenstand wird mit einem Tropfen Blut an seinen Besitzer gebunden. Wird er entwendet, spürt der Besitzer die Richtung.",
+        "limits": "Nur ein Gegenstand pro Person, reicht höchstens über eine Stadt."
+      }
+    ]
+  },
+  {
+    "key": "severance",
+    "name": "Die Kunst der Trennung",
+    "shortName": "Trennung",
+    "principle": "Keine Verbindung ist untrennbar.",
+    "summary": "Trennung löst Schwüre, Bindungen, Markierungen und Beziehungen. Sie schneidet eigene Gefühle ab, entfernt übernatürliche Spuren, lockert Blutbindungen und isoliert gebundene Kräfte voneinander. Auf ihrer höchsten Stufe trennt sie einen Vesper sogar von seiner Blutlinie, was sie politisch hochbrisant macht.",
+    "isPrimal": false,
+    "counterKey": "binding",
+    "typicalAttributes": ["verstand", "praesenz"],
+    "limits": [
+      "Trennung zerstört nur Verbindungen, keine Körper und keine Erinnerungen.",
+      "Wer getrennt wird, bleibt, wer er ist, nur ohne das Band.",
+      "Die Formen der Stufe 5 sind politisch explosiv."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "eigene Gefühle für eine Person für eine Szene abschneiden"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "übernatürliche Markierungen entfernen",
+          "emotionale Verbindungen abschwächen"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "Schwüre brechen",
+          "Blutbindungen um eine Stufe lösen",
+          "Sire-Einflüsse reduzieren"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "Bindungen zwischen anderen Personen trennen",
+          "gebundene Kräfte voneinander isolieren"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "einen Vesper vorübergehend von seiner Blutlinie trennen",
+          "eine Blood Scar unterdrücken",
+          "eine Kunst von ihrem Anwender isolieren"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "kalter_abschied",
+        "name": "Kalter Abschied",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Bis zum Ende der Szene empfindet der Vesper nichts für eine bestimmte Person und erhält +2 Würfel auf Widerstand gegen ihre Einflussnahme.",
+        "limits": "Ist diese Person ein Anker, kann er in dieser Szene keinen Halt geben."
+      },
+      {
+        "key": "markierung_tilgen",
+        "name": "Markierung tilgen",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Eine übernatürliche Markierung oder Spur an einer Person oder einem Gegenstand verschwindet, etwa ein Blutsiegel.",
+        "limits": "Nicht gegen Wirkungen über Stufe 2, nicht gegen Blutbindungen."
+      }
+    ]
+  },
+  {
+    "key": "shaping",
+    "name": "Die Kunst der Formung",
+    "shortName": "Formung",
+    "principle": "Materie kann eine neue Form annehmen.",
+    "summary": "Formung verändert nichtlebende Materie: Metall, Stein, Holz, Glas und verhärtetes Cruor. Sie repariert, öffnet, verbiegt, schafft improvisierte Waffen und Barrieren und gestaltet auf höchster Stufe ganze Räume um. Sie erschafft nichts aus dem Nichts und rührt lebendes Gewebe nie an.",
+    "isPrimal": false,
+    "counterKey": "decay",
+    "typicalAttributes": ["geschick", "verstand", "kraft"],
+    "limits": [
+      "Formung erschafft keine Materie, sie verändert nur vorhandene.",
+      "Sie wirkt nie auf lebendes Gewebe (das ist Fleisch)."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "kleine Gegenstände durch Berührung verbiegen",
+          "einen Kratzer glätten"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "Schlösser und Mechaniken formen",
+          "eigenes Cruor zu einer Klinge verhärten",
+          "Gegenstände reparieren"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "Metall und Stein in Handgröße formen",
+          "improvisierte Waffen und Werkzeuge schaffen"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "Öffnungen in Wände formen",
+          "Barrieren aus vorhandenem Material errichten"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "ganze Räume umgestalten",
+          "Strukturen in Gebäudegröße verändern"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "weiches_schloss",
+        "name": "Weiches Schloss",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Der Vesper öffnet ein einfaches mechanisches Schloss durch Berührung.",
+        "limits": "Keine elektronischen Schlösser, keine Tresore, das Schloss ist danach sichtbar verformt."
+      },
+      {
+        "key": "blutklinge",
+        "name": "Blutklinge",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Eigenes Cruor tritt aus der Handfläche und verhärtet bis zum Ende der Szene zu einer Klinge mit Schaden 2.",
+        "limits": "Eindeutig übernatürlich, Aufsehen +2 vor Zeugen."
+      }
+    ]
+  },
+  {
+    "key": "decay",
+    "name": "Die Kunst des Verfalls",
+    "shortName": "Verfall",
+    "principle": "Alles Geordnete kann zerfallen.",
+    "summary": "Verfall beschleunigt das Ende von Strukturen, toten wie lebenden. Metall korrodiert, Holz verrottet, Heilung stockt, Gewebe nekrotisiert, Waffen brechen und Mauern stürzen ein. Sie erschafft nichts und formt nichts, sie holt nur vor, was ohnehin geschehen würde.",
+    "isPrimal": false,
+    "counterKey": "shaping",
+    "typicalAttributes": ["verstand", "gespuer", "kraft"],
+    "limits": [
+      "Verfall erschafft nichts und formt nichts, er beschleunigt nur, was ohnehin geschehen würde.",
+      "Schaden durch Verfall ist Verheerung."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "kleine Metallteile korrodieren",
+          "Pflanzen welken lassen"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "Holz verrotten",
+          "Stein schwächen",
+          "Gegenstände altern lassen"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "Heilung erschweren",
+          "Fleischnekrose durch Berührung",
+          "Cruor eines Ziels schädigen"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "Waffen in der Hand brechen lassen",
+          "Mauern zum Einsturz bringen"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "Körpergewebe innerhalb von Sekunden zerfallen lassen"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "rost",
+        "name": "Rost",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Ein berührtes Metallteil bis zur Größe einer Kette oder eines Schlosses korrodiert innerhalb einer Minute und bricht.",
+        "limits": "Nur Metall, nur kleine Teile, dauert eine Minute."
+      },
+      {
+        "key": "faulende_wunde",
+        "name": "Faulende Wunde",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Die nächste Wunde, die der Vesper in dieser Szene mit bloßer Hand verursacht, zählt als Verheerung.",
+        "limits": "Nur mit bloßer Hand, nur eine Wunde."
+      }
+    ]
+  },
+  {
+    "key": "memory",
+    "name": "Die Kunst der Erinnerung",
+    "shortName": "Erinnerung",
+    "principle": "Vergangenes kann erhalten werden.",
+    "summary": "Erinnerung behandelt Gedächtnis nicht nur als Gedankeninhalt, sondern als Spur von Identität. Sie ruft ab, liest, teilt, rekonstruiert Verlorenes und prägt Erinnerungen in Gegenstände oder Cruor ein. Sie zeigt, was jemand erlebt hat, und wiederholt dabei auch dessen Irrtümer.",
+    "isPrimal": false,
+    "counterKey": "oblivion",
+    "typicalAttributes": ["verstand", "gespuer"],
+    "limits": [
+      "Erinnerung zeigt, was jemand erlebt hat, nicht was wirklich geschah.",
+      "Falsche Erinnerungen bleiben falsch.",
+      "Keine Zeitreise."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "eigene Erinnerungen vollkommen klar abrufen",
+          "den stärksten Eindruck eines berührten Gegenstands spüren"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "Erinnerungen durch Berührung lesen",
+          "eine eigene Erinnerung mit jemandem teilen"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "verlorene oder unterdrückte Erinnerungen rekonstruieren",
+          "vergangene Eindrücke an Orten wahrnehmen",
+          "Wissen kurzfristig übertragen"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "Erinnerungen in Gegenstände oder Cruor einprägen",
+          "beschädigte Identität stabilisieren"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "Erinnerungsarchive erschaffen",
+          "Erinnerungen Verstorbener aus ihrem Blut zurückgewinnen"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "echo",
+        "name": "Echo",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Der Vesper berührt einen Gegenstand und spürt die stärkste Emotion, die sein letzter Besitzer damit verband.",
+        "limits": "Nur eine Emotion, keine Bilder, keine Namen."
+      },
+      {
+        "key": "klares_gedaechtnis",
+        "name": "Klares Gedächtnis",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Der Vesper ruft eine Szene der letzten Nacht vollkommen detailgetreu ab und erhält +2 Würfel auf Nachforschung, die sich darauf stützt.",
+        "limits": "Nur eigene Erinnerungen, nur die letzte Nacht."
+      }
+    ]
+  },
+  {
+    "key": "oblivion",
+    "name": "Die Kunst des Vergessens",
+    "shortName": "Vergessen",
+    "principle": "Was erinnert wird, kann bedeutungslos werden.",
+    "summary": "Vergessen vernichtet keine Materie, es entfernt Erinnerung, Wiedererkennbarkeit oder Bedeutung. Namen verblassen, Minuten fallen aus, Gesichter werden unkenntlich und Zusammenhänge fragmentieren. Es schafft keine neuen Erinnerungen, und die Lücke bleibt für das Opfer oft spürbar.",
+    "isPrimal": false,
+    "counterKey": "memory",
+    "typicalAttributes": ["raffinesse", "verstand"],
+    "limits": [
+      "Vergessen schafft keine neuen Erinnerungen.",
+      "Wer etwas vergisst, spürt oft eine Lücke.",
+      "Aufzeichnungen, Fotos und Dokumente bleiben bestehen.",
+      "Nyrath vergessen besonders schwer: Gegen sie gilt Schwierigkeit +2."
+    ],
+    "levels": [
+      {
+        "depth": 1,
+        "examples": [
+          "ein Name, den jemand gerade gehört hat, verblasst"
+        ]
+      },
+      {
+        "depth": 2,
+        "examples": [
+          "eine Person vergisst die letzten Minuten",
+          "Details einer Erinnerung löschen"
+        ]
+      },
+      {
+        "depth": 3,
+        "examples": [
+          "Gesichter vergessen lassen",
+          "Wissen blockieren",
+          "die emotionale Bedeutung einer Erinnerung abtrennen"
+        ]
+      },
+      {
+        "depth": 4,
+        "examples": [
+          "Erinnerungszusammenhänge fragmentieren",
+          "mehrere Menschen dasselbe Ereignis vergessen lassen"
+        ]
+      },
+      {
+        "depth": 5,
+        "examples": [
+          "eine Person kaum noch erinnerbar machen",
+          "ein bestimmtes Wissen kann nicht mehr dauerhaft im Gedächtnis bleiben"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "key": "verblassen",
+        "name": "Verblassen",
+        "level": 1,
+        "difficulty": 1,
+        "cost": 1,
+        "effect": "Ein Mensch, mit dem der Vesper nur kurz gesprochen hat, vergisst seinen Namen.",
+        "limits": "Nur der Name, nicht das Gesicht."
+      },
+      {
+        "key": "luecke",
+        "name": "Lücke",
+        "level": 2,
+        "difficulty": 2,
+        "cost": 1,
+        "effect": "Ein berührter Mensch vergisst die letzten Minuten.",
+        "limits": "Nur Menschen, nicht mehr als fünf Minuten, das Gefühl, etwas verpasst zu haben, bleibt."
+      }
+    ]
+  }
+]

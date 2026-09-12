@@ -58,6 +58,17 @@ func (s *Store) Characters() storage.CharacterStore       { return s.chars }
 func (s *Store) SkillTrees() storage.SkillTreeStore       { return s.trees }
 func (s *Store) Folders() storage.FolderStore             { return s.folders }
 
+func (s *Store) Darkborne() storage.DarkborneStore {
+	for _, provider := range []storage.Provider{s.primary, s.secondary} {
+		if p, ok := provider.(storage.DarkborneProvider); ok {
+			if store := p.Darkborne(); store != nil {
+				return store
+			}
+		}
+	}
+	return nil
+}
+
 func (s *Store) Close(ctx context.Context) error {
 	e1 := s.primary.Close(ctx)
 	e2 := s.secondary.Close(ctx)

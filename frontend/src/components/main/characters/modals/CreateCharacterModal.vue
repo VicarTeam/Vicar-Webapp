@@ -12,12 +12,17 @@ import { NewW5Sheet } from "@/@types/w5"
 import { NewMageSheet } from "@/@types/m20"
 import { NewH5Sheet } from "@/@types/h5"
 import { NewVdzSheet, getVdzBloodPool } from "@/@types/vdz"
+import { NewDbSheet } from "@/@types/deathborne"
+import { Universe, getUniverse, getUniverseInfo, universes } from "@/@types/universe"
+import { DarkborneData } from "@/libs/data/darkborne-data"
 
 const router = useRouter()
 const store = useStore()
 
 const show = ref(false)
 const name = ref("")
+const universe = ref<Universe>(Universe.WorldOfDarkness)
+const darkborneReady = ref(DarkborneData.isLoaded)
 const gameline = ref<GameLine>(GameLine.Vampire)
 const sex = ref<Sex>(Sex.Divers)
 const generation = ref(13)
@@ -29,16 +34,26 @@ const bookSelection = ref<InstanceType<typeof BookSelection> | null>(null)
 
 const resetForm = () => {
   name.value = ""
+  universe.value = Universe.WorldOfDarkness
   gameline.value = GameLine.Vampire
   sex.value = Sex.Divers
   generationEra.value = Generation.Children
   generation.value = 13
 }
 
+const checkDarkborne = () => {
+  DarkborneData.load()
+    .then(() => (darkborneReady.value = true))
+    .catch(() => (darkborneReady.value = false))
+}
+
+const isUniverseAvailable = (id: Universe) => id !== Universe.Darkborne || darkborneReady.value
+
 const showModal = (d?: ICharacterDirectory) => {
   dir.value = d
   folderId.value = undefined
   resetForm()
+  checkDarkborne()
   show.value = true
 }
 
@@ -46,6 +61,7 @@ const showModalInFolder = (folder: string) => {
   dir.value = undefined
   folderId.value = folder
   resetForm()
+  checkDarkborne()
   show.value = true
 }
 
@@ -103,6 +119,7 @@ const newChar = (): any => {
   if (gameline.value === GameLine.Mage) return NewMageSheet()
   if (gameline.value === GameLine.Hunter) return NewH5Sheet()
   if (gameline.value === GameLine.DarkAges) return NewVdzSheet()
+  if (gameline.value === GameLine.Deathborne) return NewDbSheet()
   return undefined
 }
 
@@ -168,6 +185,7 @@ const startCreateCharacter = () => {
   else if (gameline.value === GameLine.Mage) router.push({ name: "editor-identity" })
   else if (gameline.value === GameLine.Hunter) router.push({ name: "editor-creed" })
   else if (gameline.value === GameLine.DarkAges) router.push({ name: "editor-vdz-clan" })
+  else if (gameline.value === GameLine.Deathborne) router.push({ name: "editor-db-age" })
 
   show.value = false
 }
@@ -209,6 +227,13 @@ const GAME_TIPS: Record<GameLine, Record<number, string>> = {
     4: "Was treibt dich an, dich gegen die Dunkelheit zu stellen?",
     5: "Was würdest du opfern, um die Menschheit zu schützen?",
   },
+  [GameLine.Deathborne]: {
+    1: "Wer warst du als Mensch, und was hast du geliebt?",
+    2: "Wie bist du gestorben?",
+    3: "Wer hat dich zurückgeholt, und weißt du, warum?",
+    4: "Was aus deinem ersten Leben existiert noch?",
+    5: "Wovon hält dich der Hunger bisher ab?",
+  },
   [GameLine.DarkAges]: {
     1: "Wer warst du im Jahr 1242 – Bauer, Ritter, Mönch, Kaufmann?",
     2: "Wer hat dir den Kuss geschenkt, und warum gerade dir?",
@@ -222,7 +247,25 @@ const getCreateTip = (gameLine: GameLine, questionNr: number): string => {
   return GAME_TIPS[gameLine]?.[questionNr] ?? ""
 }
 
-watch(gameline, gl => store.overrideGameLine = gl)
+const universeInfo = computed(() => getUniverseInfo(universe.value))
+
+const gamelineInfo = computed(() => universeInfo.value.gamelines.find(gl => gl.id === gameline.value))
+
+const selectUniverse = (id: Universe) => {
+  if (universe.value === id) return
+  if (!isUniverseAvailable(id)) return
+  universe.value = id
+  const first = getUniverseInfo(id).gamelines[0]
+  if (first) gameline.value = first.id
+}
+
+watch(gameline, gl => {
+  store.overrideGameLine = gl
+  universe.value = getUniverse(gl)
+  if (getUniverse(gl) === Universe.Darkborne) {
+    void DarkborneData.load()
+  }
+})
 watch(show, val => {
   if (!val) {
     store.overrideGameLine = undefined
@@ -248,13 +291,34 @@ defineExpose({ showModal, showModalInFolder })
       </div>
 
       <div class="ccm__segment">
-        <div class="sex-select">
-          <div :class="{ active: gameline === GameLine.Vampire }" @click="gameline = GameLine.Vampire" data-agent="char:gameline:V5">V5</div>
-          <div :class="{ active: gameline === GameLine.Werewolf }" @click="gameline = GameLine.Werewolf" data-agent="char:gameline:W5">W5</div>
-          <div :class="{ active: gameline === GameLine.Mage }" @click="gameline = GameLine.Mage" data-agent="char:gameline:M20">M20</div>
-          <div :class="{ active: gameline === GameLine.Hunter }" @click="gameline = GameLine.Hunter" data-agent="char:gameline:H5">H5</div>
-          <div :class="{ active: gameline === GameLine.DarkAges }" @click="gameline = GameLine.DarkAges" data-agent="char:gameline:VDZ">VDZ</div>
+        <label class="required">Universum:</label>
+        <div class="sex-select wide">
+          <div
+            v-for="u in universes"
+            :key="u.id"
+            :class="{ active: universe === u.id, disabled: !isUniverseAvailable(u.id) }"
+            @click="selectUniverse(u.id)"
+            :data-agent="`char:universe:${u.id}`"
+          >{{ u.name }}</div>
         </div>
+        <small class="ccm__hint">{{ universeInfo.tagline }}. {{ universeInfo.description }}</small>
+        <small v-if="!darkborneReady" class="ccm__hint">
+          Darkborne ist gerade nicht verfügbar: Die Regelwerksdaten kommen vom Server und konnten nicht geladen werden.
+        </small>
+      </div>
+
+      <div class="ccm__segment">
+        <label class="required">Regelwerk:</label>
+        <div class="sex-select">
+          <div
+            v-for="gl in universeInfo.gamelines"
+            :key="gl.id"
+            :class="{ active: gameline === gl.id }"
+            @click="gameline = gl.id"
+            :data-agent="`char:gameline:${gl.label.toUpperCase()}`"
+          >{{ gl.label }}</div>
+        </div>
+        <small v-if="gamelineInfo" class="ccm__hint">{{ gamelineInfo.name }}: {{ gamelineInfo.description }}</small>
       </div>
 
       <div class="ccm__divider"></div>
@@ -361,6 +425,16 @@ defineExpose({ showModal, showModalInFolder })
 
 .ccm__cta {
   width: 100%;
+}
+
+.sex-select.wide div {
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+.sex-select div.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .sex-select {

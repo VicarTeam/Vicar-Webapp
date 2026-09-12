@@ -1,0 +1,135 @@
+[
+  {
+    "key": "sunlight",
+    "name": "Sonnenlicht",
+    "kind": "physical",
+    "baseLevel": "strong",
+    "note": "Morgendämmerung oder dichte Wolken wirken eine Stufe schwächer, ungeschützte Mittagssonne eine Stufe stärker."
+  },
+  {
+    "key": "fire",
+    "name": "Feuer",
+    "kind": "physical",
+    "baseLevel": "strong",
+    "note": "Eine kleine Flamme oder eine kurze Berührung wirkt eine Stufe schwächer, ein Großbrand eine Stufe stärker."
+  },
+  {
+    "key": "threshold",
+    "name": "Schwellen und Einladungen",
+    "kind": "symbolic",
+    "baseLevel": "none",
+    "note": "Nur die Blutlinie Veyran reagiert auf eine bewohnte Schwelle. Eine einfache freiwillige Einladung öffnet sie."
+  },
+  {
+    "key": "revoked_hospitality",
+    "name": "Widerrufene Gastfreundschaft",
+    "kind": "symbolic",
+    "baseLevel": "none",
+    "note": "Wird eine gewährte Einladung widerrufen, belastet der Ort einen Veyran, bis er ihn verlässt."
+  },
+  {
+    "key": "garlic",
+    "name": "Knoblauch",
+    "kind": "physical",
+    "baseLevel": "none",
+    "note": "Ohne Wirkung im Grundprofil. Nur als persönliches Anathema eines Varyss möglich, dort zusammen mit Weißdorn."
+  },
+  {
+    "key": "religious_symbols",
+    "name": "Religiöse Symbole",
+    "kind": "symbolic",
+    "baseLevel": "none",
+    "note": "Das Objekt selbst wirkt nie. Entscheidend ist der aufrichtige Glaube dessen, der es trägt."
+  },
+  {
+    "key": "lived_faith",
+    "name": "Gelebter Glaube",
+    "kind": "symbolic",
+    "baseLevel": "none",
+    "note": "Ein Kreidesymbol in der Hand eines tief Gläubigen hält einen Enathar auf, ein goldenes Kreuz an einem Zweifler nicht."
+  },
+  {
+    "key": "consecrated_ground",
+    "name": "Geweihter Boden",
+    "kind": "symbolic",
+    "baseLevel": "none",
+    "note": "Ein Ort jahrhundertealten Glaubens gilt als starke Quelle und wirkt eine Stufe stärker."
+  },
+  {
+    "key": "running_water",
+    "name": "Fließendes Wasser",
+    "kind": "symbolic",
+    "baseLevel": "none",
+    "note": "Gilt nur für natürliche Strömung. Eine Brücke senkt die Stufe, das Durchschwimmen erhöht sie."
+  },
+  {
+    "key": "silver",
+    "name": "Silber",
+    "kind": "physical",
+    "baseLevel": "none",
+    "note": "Nur Kharven und einzelne Varyss reagieren darauf. Bei Kharven zählen Verletzungen durch Silber als Verheerung."
+  },
+  {
+    "key": "salt",
+    "name": "Salz",
+    "kind": "physical",
+    "baseLevel": "none",
+    "note": "Bei Imreth wirkt es nur in offenen Wunden."
+  },
+  {
+    "key": "mirrors",
+    "name": "Spiegel",
+    "kind": "symbolic",
+    "baseLevel": "none",
+    "note": "Spiegel und Kameras zeigen Vesperi ganz normal. Nur Nyrath und Sarrath reagieren auf ihr Spiegelbild."
+  },
+  {
+    "key": "holy_water",
+    "name": "Weihwasser",
+    "kind": "physical",
+    "baseLevel": "none",
+    "note": "Ohne Wirkung im Grundprofil. Keine Blutlinie der Alten Häuser weicht davon ab."
+  },
+  {
+    "key": "binding_circles",
+    "name": "Bindekreise",
+    "kind": "symbolic",
+    "baseLevel": "none",
+    "note": "Kaelor reagiert extrem darauf. In Bindung verdoppelt sich sein Unterhalt."
+  },
+  {
+    "key": "identity_erasure",
+    "name": "Identitätsauslöschung",
+    "kind": "symbolic",
+    "baseLevel": "none",
+    "note": "Wird die Existenz eines Nyrath systematisch ausgelöscht, wird pro Kapitel ein Anker erschüttert."
+  },
+  {
+    "key": "cold_iron",
+    "name": "Kaltes Eisen",
+    "kind": "physical",
+    "baseLevel": "none",
+    "note": "Nur als persönliches Anathema eines Varyss auf Stufe Mäßig."
+  },
+  {
+    "key": "bell_chime",
+    "name": "Glockenklang",
+    "kind": "symbolic",
+    "baseLevel": "none",
+    "note": "Nur als persönliches Anathema eines Varyss auf Stufe Mäßig."
+  },
+  {
+    "key": "ash_circles",
+    "name": "Kreise aus Asche",
+    "kind": "symbolic",
+    "baseLevel": "none",
+    "note": "Nur als persönliches Anathema eines Varyss auf Stufe Mäßig."
+  },
+  {
+    "key": "hawthorn",
+    "name": "Weißdorn",
+    "kind": "physical",
+    "baseLevel": "none",
+    "note": "Nur als persönliches Anathema eines Varyss auf Stufe Mäßig, dort zusammen mit Knoblauch."
+  }
+]

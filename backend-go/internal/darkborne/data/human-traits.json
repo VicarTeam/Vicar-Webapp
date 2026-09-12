@@ -1,0 +1,68 @@
+[
+  {
+    "key": "atem",
+    "name": "Atem",
+    "description": "Wie selbstverständlich der Vesper noch atmet.",
+    "levels": [
+      { "value": 3, "description": "unbewusst, wie bei einem Menschen" },
+      { "value": 2, "description": "nur bewusst, wer nicht daran denkt, hört auf" },
+      { "value": 1, "description": "bewusst, aber zu gleichmäßig und mechanisch" },
+      { "value": 0, "description": "Luft wird nur noch zum Sprechen und Riechen bewegt, die Brust bleibt sonst reglos" }
+    ]
+  },
+  {
+    "key": "waerme",
+    "name": "Wärme",
+    "description": "Wie warm sich der Körper des Vesper anfühlt.",
+    "levels": [
+      { "value": 3, "description": "satt fühlt sich der Körper warm an" },
+      { "value": 2, "description": "nur direkt nach dem Trinken warm" },
+      { "value": 1, "description": "selbst satt nur lauwarm" },
+      { "value": 0, "description": "immer kalt wie eine Leiche" }
+    ]
+  },
+  {
+    "key": "herzschlag",
+    "name": "Herzschlag",
+    "description": "Ob und wie das Herz des Vesper noch schlägt.",
+    "levels": [
+      { "value": 3, "description": "rast bei Gefühlen und Anstrengung" },
+      { "value": 2, "description": "reagiert nur auf Anstrengung und Trinken" },
+      { "value": 1, "description": "langsam und unregelmäßig, Sekunden zwischen den Schlägen" },
+      { "value": 0, "description": "kaum fühlbar, minutenlang still" }
+    ]
+  },
+  {
+    "key": "essen",
+    "name": "Essen",
+    "description": "Wie viel menschliche Nahrung der Vesper noch verträgt.",
+    "levels": [
+      { "value": 3, "description": "ein ganzes Abendessen ohne Folgen" },
+      { "value": 2, "description": "einige Bissen und ein Glas" },
+      { "value": 1, "description": "ein Bissen oder Schluck, danach Übelkeit" },
+      { "value": 0, "description": "jede Nahrung wird sofort wieder ausgestoßen" }
+    ]
+  },
+  {
+    "key": "traeume",
+    "name": "Träume",
+    "description": "Was die Ruhe am Tag dem Vesper noch bringt.",
+    "levels": [
+      { "value": 3, "description": "Ruhe mit Träumen wie ein Mensch" },
+      { "value": 2, "description": "Träume selten und blass" },
+      { "value": 1, "description": "Ruhe ohne Träume, nur Dunkelheit" },
+      { "value": 0, "description": "keine Ruhe mehr, nur regungsloses Warten" }
+    ]
+  },
+  {
+    "key": "mimik",
+    "name": "Mimik",
+    "description": "Wie lebendig das Gesicht des Vesper noch wirkt.",
+    "levels": [
+      { "value": 3, "description": "Erröten, Tränen, Gänsehaut, unwillkürliche Regungen" },
+      { "value": 2, "description": "nur bewusst gesteuerte Mimik" },
+      { "value": 1, "description": "Regungen wirken verzögert und einstudiert" },
+      { "value": 0, "description": "das Gesicht bleibt still, jede Regung wirkt wie eine Maske" }
+    ]
+  }
+]

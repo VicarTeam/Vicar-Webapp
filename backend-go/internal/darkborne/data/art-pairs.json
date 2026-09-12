@@ -1,0 +1,198 @@
+[
+  {
+    "key": "flesh_spirit",
+    "artA": "flesh",
+    "artB": "spirit",
+    "question": "Muss der Körper dem Geist folgen, oder der Geist dem Körper?",
+    "effects": [
+      {
+        "name": "Gefühl wird Fleisch",
+        "effect": "Eine starke Emotion verändert sichtbar den Körper: Adern treten hervor, Knochen verschieben sich. Aufsehen +1, wenn es jemand sieht.",
+        "severity": "light"
+      },
+      {
+        "name": "Wunde im Kopf",
+        "effect": "Jede Wunde in dieser Szene bringt zusätzlich -1 Würfel auf geistige Proben.",
+        "severity": "light"
+      },
+      {
+        "name": "Falsche Gestalt",
+        "effect": "Cruor weiß nicht, welche Form richtig ist. Regeneration kostet bis zum Ende der Szene doppelt.",
+        "severity": "light"
+      },
+      {
+        "name": "Taubheit",
+        "effect": "Körper und Geist trennen sich. Eine Runde lang keine Handlung, danach -2 Würfel bis zum Ende der Szene.",
+        "severity": "heavy"
+      }
+    ]
+  },
+  {
+    "key": "dominion_freedom",
+    "artA": "dominion",
+    "artB": "freedom",
+    "question": "Das Cruor will Kontrolle aufbauen und Kontrolle auflösen.",
+    "effects": [
+      {
+        "name": "Kontrollzwang",
+        "effect": "Der Vesper muss die Führung an sich reißen. Bis zum Ende der Szene keine Zusammenarbeit möglich.",
+        "severity": "light"
+      },
+      {
+        "name": "Impulsivität",
+        "effect": "Die nächste Handlung geschieht aus dem Bauch, die SL bestimmt ihre Richtung.",
+        "severity": "light"
+      },
+      {
+        "name": "Leere Befehle",
+        "effect": "Der nächste Einsatz von Herrschaft in dieser Szene misslingt automatisch.",
+        "severity": "light"
+      },
+      {
+        "name": "Gebrochenes Band",
+        "effect": "Der Vesper bricht unbewusst eine eigene Bindung: Ein nächtlicher Anker wird erschüttert.",
+        "severity": "heavy"
+      }
+    ]
+  },
+  {
+    "key": "veil_revelation",
+    "artA": "veil",
+    "artB": "revelation",
+    "question": "Information muss verborgen werden. Information muss sichtbar werden.",
+    "effects": [
+      {
+        "name": "Entblößt",
+        "effect": "Jeder Schleier auf dem Vesper endet, alle Anwesenden bemerken ihn plötzlich.",
+        "severity": "light"
+      },
+      {
+        "name": "Überlastung",
+        "effect": "Zu viele Eindrücke: -2 Würfel auf Wahrnehmung bis zum Ende der Szene.",
+        "severity": "light"
+      },
+      {
+        "name": "Trugbild",
+        "effect": "Die SL fügt der nächsten Wahrnehmung ein falsches Detail hinzu, ohne es anzukündigen.",
+        "severity": "light"
+      },
+      {
+        "name": "Kein Filter",
+        "effect": "Der Vesper kann nichts mehr ausblenden. Bis zum Ende der Nacht keine Routine und keine Konzentration.",
+        "severity": "heavy"
+      }
+    ]
+  },
+  {
+    "key": "motion_stillness",
+    "artA": "motion",
+    "artB": "stillness",
+    "question": "Zustände dynamisch verändern. Zustände konservieren.",
+    "effects": [
+      {
+        "name": "Durchgehen",
+        "effect": "Der Vesper beschleunigt unkontrolliert und landet dort, wo die SL es bestimmt.",
+        "severity": "light"
+      },
+      {
+        "name": "Plötzliche Starre",
+        "effect": "Eine Runde lang bewegungsunfähig.",
+        "severity": "light"
+      },
+      {
+        "name": "Herzstolpern",
+        "effect": "Der Rhythmus des Cruor bricht: 1 Cruor geht verloren.",
+        "severity": "light"
+      },
+      {
+        "name": "Gegenlauf",
+        "effect": "Bewegungen stoppen oder beschleunigen spontan. Bis zum Ende der Szene -2 Würfel auf alle körperlichen Handlungen.",
+        "severity": "heavy"
+      }
+    ]
+  },
+  {
+    "key": "binding_severance",
+    "artA": "binding",
+    "artB": "severance",
+    "question": "Verbinden und lösen zugleich.",
+    "effects": [
+      {
+        "name": "Ungewolltes Band",
+        "effect": "Eine Person in der Nähe fühlt sich plötzlich an den Vesper gebunden und folgt ihm bis zum Ende des Kapitels.",
+        "severity": "light"
+      },
+      {
+        "name": "Riss",
+        "effect": "Eine Beziehung zerbricht ohne Grund: Ein Anker wird erschüttert.",
+        "severity": "light"
+      },
+      {
+        "name": "Falsches Blut",
+        "effect": "Das Cruor deutet die eigene Abstammung falsch. Bis zum Ende der Nacht spürt der Vesper seinen Sire als Fremden und fremde Vesperi als Verwandte.",
+        "severity": "light"
+      },
+      {
+        "name": "Entwurzelt",
+        "effect": "Die Sire-Scion-Verbindung wird instabil. Bis zum Ende des Kapitels kommt bei der ererbten Kunst 1 zusätzlicher Blutwürfel in jeden Pool.",
+        "severity": "heavy"
+      }
+    ]
+  },
+  {
+    "key": "shaping_decay",
+    "artA": "shaping",
+    "artB": "decay",
+    "question": "Materie soll Struktur erhalten. Struktur soll verschwinden.",
+    "effects": [
+      {
+        "name": "Zerbröseln",
+        "effect": "Alles, was der Vesper in dieser Szene geformt hat, zerfällt.",
+        "severity": "light"
+      },
+      {
+        "name": "Falsches Gewebe",
+        "effect": "Das Cruor behandelt eigenes Gewebe falsch: 1 Verheerung.",
+        "severity": "light"
+      },
+      {
+        "name": "Wucherung",
+        "effect": "Die nächste Regeneration hinterlässt eine sichtbare, dauerhafte Veränderung.",
+        "severity": "light"
+      },
+      {
+        "name": "Brüchig",
+        "effect": "Bis zum Ende der Nacht zählt jede Wunde, die der Vesper erleidet, als Verheerung.",
+        "severity": "heavy"
+      }
+    ]
+  },
+  {
+    "key": "memory_oblivion",
+    "artA": "memory",
+    "artB": "oblivion",
+    "question": "Information bewahren. Information vernichten.",
+    "effects": [
+      {
+        "name": "Falsche Erinnerung",
+        "effect": "Die SL gibt dem Spieler eine Erinnerung, die nie geschehen ist, und verrät nicht, welche.",
+        "severity": "light"
+      },
+      {
+        "name": "Lücke",
+        "effect": "Der Vesper vergisst, was in der letzten Stunde geschah.",
+        "severity": "light"
+      },
+      {
+        "name": "Fremdes Leben",
+        "effect": "Erinnerungen eines anderen, etwa eines Opfers, vermischen sich mit den eigenen. -1 Würfel bis zum Ende der Szene.",
+        "severity": "light"
+      },
+      {
+        "name": "Bruch der Kontinuität",
+        "effect": "Uralte Erinnerungen brechen hervor und verdrängen die Gegenwart. Ein Anker wird erschüttert.",
+        "severity": "heavy"
+      }
+    ]
+  }
+]

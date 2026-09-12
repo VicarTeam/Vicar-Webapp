@@ -38,6 +38,10 @@ type Character struct {
 	Exp               pgtype.Int4
 	Directory         pgtype.Text
 	DataVersion       pgtype.Text
+	BloodlineKey      pgtype.Text
+	HouseKey          pgtype.Text
+	BloodStrength     pgtype.Int4
+	Glied             pgtype.Int4
 }
 
 type Folder struct {

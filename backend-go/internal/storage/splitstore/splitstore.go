@@ -44,6 +44,14 @@ func (s *Store) Characters() storage.CharacterStore       { return s.chars }
 func (s *Store) SkillTrees() storage.SkillTreeStore       { return s.trees }
 func (s *Store) Folders() storage.FolderStore             { return s.folders }
 
+func (s *Store) Darkborne() storage.DarkborneStore {
+	provider, ok := s.pg.(storage.DarkborneProvider)
+	if !ok {
+		return nil
+	}
+	return provider.Darkborne()
+}
+
 func (s *Store) Close(ctx context.Context) error {
 	e1 := s.pg.Close(ctx)
 	e2 := s.mongo.Close(ctx)

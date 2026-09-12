@@ -1,0 +1,102 @@
+{
+  "hunger": [
+    {
+      "key": "starren",
+      "name": "Starren",
+      "effect": "Der Blick bleibt an einer Halsschlagader hängen. Jeder in der Nähe bemerkt es.",
+      "severity": "light"
+    },
+    {
+      "key": "kaelte_bricht_durch",
+      "name": "Kälte bricht durch",
+      "effect": "Das Herz setzt aus, die Haut wird eiskalt. Bis zum Ende der Szene gilt der Vesper als leer.",
+      "severity": "light"
+    },
+    {
+      "key": "reizbar",
+      "name": "Reizbar",
+      "effect": "Ein scharfes Wort oder eine grobe Geste gegen jemanden, der es sich merkt.",
+      "severity": "light"
+    },
+    {
+      "key": "blutgeruch",
+      "name": "Blutgeruch",
+      "effect": "Die Konzentration reißt. Die aktuelle Handlung wird zu einem Erfolg mit Preis.",
+      "severity": "light"
+    },
+    {
+      "key": "zubeissen",
+      "name": "Zubeißen",
+      "effect": "Der Vesper beißt die nächste Person in Reichweite, bevor er sich entschieden hat.",
+      "severity": "heavy"
+    },
+    {
+      "key": "jagdinstinkt",
+      "name": "Jagdinstinkt",
+      "effect": "Er verfolgt die nächste Beute, bis er getrunken hat oder 1 Wille zahlt.",
+      "severity": "heavy"
+    },
+    {
+      "key": "tunnelblick",
+      "name": "Tunnelblick",
+      "effect": "Nur Blut zählt. -2 Würfel auf alles andere bis zum Ende der Szene.",
+      "severity": "heavy"
+    },
+    {
+      "key": "raserei",
+      "name": "Raserei",
+      "effect": "Die SL übernimmt die Figur, bis sie getrunken hat oder ein Anker Halt gibt.",
+      "severity": "heavy"
+    }
+  ],
+  "instability": [
+    {
+      "key": "blutige_traenen",
+      "name": "Blutige Tränen",
+      "effect": "Blut tritt aus Augen, Nase oder Poren. Aufsehen +1, wenn es jemand sieht.",
+      "severity": "light"
+    },
+    {
+      "key": "rueckfluss",
+      "name": "Rückfluss",
+      "effect": "Die Wirkung trifft zur Hälfte den Vesper selbst.",
+      "severity": "light"
+    },
+    {
+      "key": "verlust",
+      "name": "Verlust",
+      "effect": "2 Cruor versickern.",
+      "severity": "light"
+    },
+    {
+      "key": "taubes_blut",
+      "name": "Taubes Blut",
+      "effect": "Bis zum Ende der nächsten Runde sind keine Blutkünste möglich.",
+      "severity": "light"
+    },
+    {
+      "key": "fremdes_echo",
+      "name": "Fremdes Echo",
+      "effect": "Fremdes Cruor im Körper erwacht. Erinnerungsfetzen, fremde Gefühle, eine kurze Bindung an einen Unbekannten.",
+      "severity": "heavy"
+    },
+    {
+      "key": "verschiebung",
+      "name": "Verschiebung",
+      "effect": "Ein neues persönliches Anathema auf Stufe Gering entsteht.",
+      "severity": "heavy"
+    },
+    {
+      "key": "ausduennung",
+      "name": "Ausdünnung",
+      "effect": "Die Blutstärke zählt bis zum Ende des Kapitels um 1 niedriger.",
+      "severity": "heavy"
+    },
+    {
+      "key": "sog",
+      "name": "Sog",
+      "effect": "Hunger +2.",
+      "severity": "heavy"
+    }
+  ]
+}

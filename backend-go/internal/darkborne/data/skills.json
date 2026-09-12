@@ -1,0 +1,92 @@
+[
+  {
+    "key": "athletik",
+    "name": "Athletik",
+    "category": "body",
+    "description": "Laufen, klettern, springen, schwimmen und ausweichen."
+  },
+  {
+    "key": "kampf",
+    "name": "Kampf",
+    "category": "body",
+    "description": "Nahkampf mit und ohne Waffen sowie Ringen."
+  },
+  {
+    "key": "schiessen",
+    "name": "Schießen",
+    "category": "body",
+    "description": "Schusswaffen, Bögen und Wurfwaffen."
+  },
+  {
+    "key": "heimlichkeit",
+    "name": "Heimlichkeit",
+    "category": "body",
+    "description": "Schleichen, verstecken, beschatten und Taschendiebstahl."
+  },
+  {
+    "key": "ueberleben",
+    "name": "Überleben",
+    "category": "body",
+    "description": "Wildnis, Spurenlesen, Tiere und sich unter harten Bedingungen behaupten."
+  },
+  {
+    "key": "ueberzeugen",
+    "name": "Überzeugen",
+    "category": "social",
+    "description": "Rhetorik, Verhandeln, Einschüchtern und Führen."
+  },
+  {
+    "key": "taeuschen",
+    "name": "Täuschen",
+    "category": "social",
+    "description": "Lügen, verkleiden und falsche Fährten legen."
+  },
+  {
+    "key": "menschenkenntnis",
+    "name": "Menschenkenntnis",
+    "category": "social",
+    "description": "Motive erkennen, Lügen durchschauen und Stimmungen lesen."
+  },
+  {
+    "key": "etikette",
+    "name": "Etikette",
+    "category": "social",
+    "description": "Höfe, Protokoll, Politik und gehobene Gesellschaft."
+  },
+  {
+    "key": "strasse",
+    "name": "Straße",
+    "category": "social",
+    "description": "Unterwelt, Gerüchte, Schwarzmarkt und Gassen."
+  },
+  {
+    "key": "nachforschung",
+    "name": "Nachforschung",
+    "category": "mind",
+    "description": "Spuren sichern, recherchieren und Zusammenhänge finden."
+  },
+  {
+    "key": "bildung",
+    "name": "Bildung",
+    "category": "mind",
+    "description": "Geschichte, Recht, Sprachen und Wissenschaften."
+  },
+  {
+    "key": "medizin",
+    "name": "Medizin",
+    "category": "mind",
+    "description": "Erste Hilfe, Anatomie, Krankheiten und Gifte."
+  },
+  {
+    "key": "okkultes",
+    "name": "Okkultes",
+    "category": "mind",
+    "description": "Wissen über die verborgene Welt, Rituale und Legenden."
+  },
+  {
+    "key": "technik",
+    "name": "Technik",
+    "category": "mind",
+    "description": "Computer, Überwachung, Fahrzeuge und Mechanik."
+  }
+]

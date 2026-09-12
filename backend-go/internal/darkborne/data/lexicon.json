@@ -1,0 +1,1747 @@
+[
+  {
+    "key": "grundregeln_kern_und_schablone",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Kern und Schablone",
+    "body": "Darkborne ist ein erzählerisches Pen-and-Paper-Rollenspiel über die verborgenen Kreaturen der Nacht. Das Grundregelwerk enthält den **Kern**: alle Regeln, die für jede Kreatur gelten. Jede Kreatur bringt zusätzlich eine **Schablone** mit. Die erste Schablone sind die **Deathborne** (Vesperi).\n\nDer Kern definiert, wie etwas funktioniert. Die Schablone definiert, was es für eine bestimmte Kreatur bedeutet.\n\n| Kern | Beispiel Deathborne |\n|---|---|\n| Potenz | Blutstärke |\n| Treibstoff | Cruor |\n| Risikowürfel | Blutwürfel |\n| Übernatürliche Kräfte | Blutkünste |\n| Verwundbarkeiten | Anathema |\n| Makel | Blood Scar |\n| Gemeinschaft | Court |\n| Kern-Zustand | Starre, Letzter Schlag |\n\n**Was man braucht**\n\n- Zehnseitige Würfel (W10) in zwei Farben: normale Würfel und Risikowürfel\n- Einen Charakterbogen pro Spieler\n- Eine Spielleitung (SL) und Spieler mit ihren Spielercharakteren (SC)\n\n**Begriffe**\n\n| Begriff | Bedeutung |\n|---|---|\n| SL | Spielleitung |\n| SC | Spielercharakter |\n| NSC | Nichtspielercharakter, von der SL geführt |\n| Szene | ein zusammenhängender Abschnitt an einem Ort mit einem Ziel |\n| Runde | im Konflikt: jede beteiligte Figur führt eine Handlung aus |\n| Sitzung | ein Spielabend |\n| Kapitel | eine abgeschlossene Geschichte über mehrere Sitzungen |\n| Chronik | die gesamte Kampagne |",
+    "tags": [
+      "kern",
+      "schablone",
+      "begriffe",
+      "sl",
+      "szene",
+      "chronik"
+    ],
+    "position": 10,
+    "parentKey": null
+  },
+  {
+    "key": "grundregeln_grundprinzipien",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Grundprinzipien: wann gewürfelt wird",
+    "body": "Würfel sind ein Werkzeug für Momente, in denen etwas auf dem Spiel steht, nicht der Motor jeder Handlung. Vier Grundsätze bestimmen, wann gewürfelt wird.\n\n**1. Kein Wurf ohne Einsatz**\n\nSteht nichts auf dem Spiel oder wäre ein Scheitern langweilig, gelingt die Handlung einfach. Gewürfelt wird nur, wenn:\n\n- sich jemand aktiv widersetzt,\n- Zeitdruck oder Gefahr herrschen,\n- ein Scheitern die Geschichte in eine interessante Richtung lenkt,\n- oder der Spieler mehr erreichen will, als Routine erlaubt.\n\n**2. Routine statt Wurf**\n\nWer nicht unter Druck steht, darf auf den Wurf verzichten und die **Hälfte seines Pools (abgerundet) als Erfolge** nehmen. Reicht das für die Schwierigkeit, gelingt die Handlung. Routine bringt nie Steigerungen. Wer mehr will als das bloße Gelingen, muss würfeln und damit etwas riskieren.\n\nRoutine ist nicht möglich:\n\n- unter Zeitdruck oder in Gefahr,\n- gegen aktiven Widerstand,\n- wenn Risikowürfel im Pool sind.\n\n**3. Nur die Spieler würfeln**\n\nNSC besitzen feste Werte. Ihre **Gegenwehr** ist direkt die Schwierigkeit, gegen die ein SC würfelt. Ausnahme: Tritt ein zentraler NSC in einem entscheidenden Duell an, darf die SL für ihn würfeln.\n\n**4. Eine Szene, ein Wurf**\n\nVerhandlungen, Recherchen, Intrigen und Verhöre werden zuerst ausgespielt und dann mit **einem einzigen Wurf** aufgelöst. Gute Argumente, Druckmittel und clevere Ideen aus dem Rollenspiel geben Bonuswürfel oder senken die Schwierigkeit.\n\nBei Ermittlungen gilt zusätzlich: **Die Hinweise, die die Geschichte voranbringen, gibt es immer.** Wer an der richtigen Stelle sucht, findet sie. Der Wurf entscheidet nur über zusätzliche Informationen, über Zeit und darüber, ob jemand die Suche bemerkt.",
+    "tags": [
+      "würfeln",
+      "routine",
+      "probe",
+      "einsatz",
+      "grundsätze",
+      "ermittlung"
+    ],
+    "position": 20,
+    "parentKey": null
+  },
+  {
+    "key": "grundregeln_attribute",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Attribute",
+    "body": "Attribute beschreiben, wie eine Figur handelt. Es gibt sechs Attribute in drei Bereichen, jeweils ein kraftvolles und ein feinsinniges.\n\n| | Kraftvoll | Feinsinnig |\n|---|---|---|\n| **Körper** | Kraft | Geschick |\n| **Geist** | Verstand | Gespür |\n| **Sozial** | Präsenz | Raffinesse |\n\n- **Kraft:** rohe Stärke, Ausdauer, körperliche Belastbarkeit\n- **Geschick:** Präzision, Schnelligkeit, Körperbeherrschung\n- **Verstand:** Wissen, Logik, Planung, Gedächtnis\n- **Gespür:** Wahrnehmung, Intuition, Geistesgegenwart\n- **Präsenz:** Autorität, Ausstrahlung, Durchsetzungskraft\n- **Raffinesse:** Charme, Manipulation, feine Andeutung\n\nAttribute reichen von 1 bis 5. Ein durchschnittlicher Mensch hat 2, ein Wert von 5 ist menschliche Spitzenklasse.",
+    "tags": [
+      "attribute",
+      "kraft",
+      "geschick",
+      "verstand",
+      "gespür",
+      "präsenz",
+      "raffinesse"
+    ],
+    "position": 30,
+    "parentKey": null
+  },
+  {
+    "key": "grundregeln_wille",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Wille",
+    "body": "Wille ist die Kraft der Person. Übernatürliche Kräfte treibt der Treibstoff an, der Wille hält den Menschen darin zusammen. Jede Kreatur und jeder Mensch besitzt Wille.\n\n**Wert (1 bis 5):** Widerstand gegen alles, was von außen in eine Person eindringen will. Der Widerstandspool ist immer Wille + ein Attribut.\n\n| Widerstand gegen | Pool |\n|---|---|\n| Befehle, Einschüchterung, Angst, Zwang | Wille + Präsenz |\n| Täuschung der Sinne, Illusionen, Verbergen | Wille + Gespür |\n| Eingriffe in Gedanken, Gefühle und Erinnerungen | Wille + Verstand |\n\n**Vorrat (höchstens so hoch wie der Wert):** Punkte, die man ausgeben kann:\n\n- **+2 Würfel** auf einen Wurf, vor dem Würfeln angesagt\n- einen **Zwang ablehnen**\n- **eine letzte Handlung** trotz Zusammenbruch\n\nDer Vorrat füllt sich wieder auf:\n\n- **+1**, wenn man einen Zwang annimmt (ist der Vorrat voll, gibt es stattdessen 1 XP)\n- **+1**, wenn man eine Szene mit einem menschlichen Anker verbringt (einmal pro Sitzung)\n- **vollständig** zu Beginn jedes Kapitels",
+    "tags": [
+      "wille",
+      "widerstand",
+      "vorrat",
+      "bonuswürfel",
+      "zwang",
+      "kapitel"
+    ],
+    "position": 40,
+    "parentKey": null
+  },
+  {
+    "key": "grundregeln_makel_und_zwaenge",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Makel und Zwänge",
+    "body": "Jede Kreatur trägt einen **Makel**, eine tiefe Prägung ihrer Herkunft. Bei den Deathborne ist das die Blood Scar. Die Schablone beschreibt, welche Makel es gibt und wodurch sie ausgelöst werden.\n\nEin Makel wirkt über **Zwänge**. Die SL oder der Spieler selbst schlägt vor, dass der Makel gerade zuschlägt, und beschreibt, was die Figur tun oder erleiden würde.\n\n- **Annehmen:** Es passiert. Die Figur erhält 1 Wille.\n- **Ablehnen:** Die Figur zahlt 1 Wille und behält die Kontrolle.\n- **Kein Wille mehr:** Der Zwang muss angenommen werden.\n\nZwänge sollen der Figur echte Probleme machen, aber nie ihre Geschichte beenden. Spieler werden ausdrücklich ermutigt, Zwänge für die eigene Figur vorzuschlagen.",
+    "tags": [
+      "makel",
+      "zwang",
+      "blood scar",
+      "wille",
+      "annehmen",
+      "ablehnen"
+    ],
+    "position": 50,
+    "parentKey": null
+  },
+  {
+    "key": "grundregeln_fertigkeiten",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Fertigkeiten und Spezialisierungen",
+    "body": "Fertigkeiten beschreiben, womit eine Figur handelt. Sie reichen von 0 bis 5.\n\n**Körper**\n\n- **Athletik:** laufen, klettern, springen, schwimmen, ausweichen\n- **Kampf:** Nahkampf mit und ohne Waffen, Ringen\n- **Schießen:** Schusswaffen, Bögen, Wurfwaffen\n- **Heimlichkeit:** schleichen, verstecken, beschatten, Taschendiebstahl\n- **Überleben:** Wildnis, Spurenlesen, Tiere, sich unter harten Bedingungen behaupten\n\n**Sozial**\n\n- **Überzeugen:** Rhetorik, Verhandeln, Einschüchtern, Führen\n- **Täuschen:** lügen, verkleiden, falsche Fährten legen\n- **Menschenkenntnis:** Motive erkennen, Lügen durchschauen, Stimmungen lesen\n- **Etikette:** Höfe, Protokoll, Politik, gehobene Gesellschaft\n- **Straße:** Unterwelt, Gerüchte, Schwarzmarkt, Gassen\n\n**Geist**\n\n- **Nachforschung:** Spuren sichern, recherchieren, Zusammenhänge finden\n- **Bildung:** Geschichte, Recht, Sprachen, Wissenschaften\n- **Medizin:** Erste Hilfe, Anatomie, Krankheiten, Gifte\n- **Okkultes:** Wissen über die verborgene Welt, Rituale, Legenden\n- **Technik:** Computer, Überwachung, Fahrzeuge, Mechanik\n\nDas Attribut ist das Wie, die Fertigkeit das Womit. Dieselbe Fertigkeit kann mit verschiedenen Attributen kombiniert werden:\n\n- Präsenz + Überzeugen: einschüchtern\n- Raffinesse + Überzeugen: verhandeln, bezirzen\n- Präsenz + Kampf: mit Gewalt drohen\n- Geschick + Täuschen: Taschenspielertricks\n\nOhne passende Fertigkeit würfelt man nur das Attribut. Bei Fertigkeiten, die Ausbildung verlangen (etwa Medizin bei einer Operation), kann die SL entscheiden, dass es ohne Fertigkeit nicht möglich ist.\n\n**Spezialisierungen**\n\nEine Spezialisierung ist ein enger Bereich innerhalb einer Fertigkeit, etwa Medizin (Chirurgie) oder Schießen (Scharfschütze). Passt sie zur Handlung, gibt sie **+1 Würfel**. Spezialisierungen stammen meist aus dem früheren Leben einer Figur.",
+    "tags": [
+      "fertigkeiten",
+      "spezialisierung",
+      "athletik",
+      "überzeugen",
+      "okkultes",
+      "pool"
+    ],
+    "position": 60,
+    "parentKey": null
+  },
+  {
+    "key": "grundregeln_hintergruende",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Hintergründe und abgeleitete Werte",
+    "body": "Hintergründe sind Besitz, Beziehungen und Mittel einer Figur. Sie haben Stufen von 1 bis 3. Die Schablone kann weitere Hintergründe hinzufügen, bei den Deathborne den Stammspender.\n\n| Hintergrund | Stufe 1 | Stufe 2 | Stufe 3 |\n|---|---|---|---|\n| **Zuflucht** | ein sicherer Ort | gut geschützt, versteckt | mehrere Orte oder eine Festung |\n| **Ressourcen** | bescheiden | wohlhabend | reich |\n| **Kontakte** | ein Bereich (z.B. Polizei) | zwei Bereiche | drei Bereiche |\n| **Verbündete** | ein Helfer mit Gegenwehr 2 | Gegenwehr 3 | Gegenwehr 4 |\n\n- **Zuflucht:** Hier ist man sicher. Wer eindringen will, muss die Stufe als zusätzliche Schwierigkeit überwinden.\n- **Ressourcen:** Was zur Stufe passt, kann man sich ohne Wurf beschaffen.\n- **Kontakte:** Informationen aus einem Bereich bekommt man als Routine.\n- **Verbündete:** Ein NSC, der hilft, wenn man ihn ruft. Er hat eigene Ziele und will gelegentlich etwas zurück.\n\n**Abgeleitete Werte**\n\n- **Gesundheit:** Kraft + 5 Kästchen\n- **Wille-Vorrat:** höchstens der Wert von Wille",
+    "tags": [
+      "hintergründe",
+      "zuflucht",
+      "ressourcen",
+      "kontakte",
+      "verbündete",
+      "gesundheit"
+    ],
+    "position": 70,
+    "parentKey": null
+  },
+  {
+    "key": "grundregeln_proben",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Proben: Pool und Schwierigkeit",
+    "body": "Ein Pool besteht aus zwei Werten:\n\n- **Attribut + Fertigkeit** für gewöhnliche Handlungen\n- **Attribut + Kraftwert** für übernatürliche Handlungen, bei den Deathborne die Tiefe der Blutkunst\n\nJeder Würfel, der **6 oder höher** zeigt, ist ein **Erfolg**. Die Schwierigkeit gibt an, wie viele Erfolge nötig sind.\n\n| Schwierigkeit | Beschreibung |\n|---|---|\n| 1 | leicht, nur unter Druck überhaupt einen Wurf wert |\n| 2 | normal |\n| 3 | schwer |\n| 4 | sehr schwer, nur Könner schaffen es verlässlich |\n| 5 | heroisch |\n| 6+ | jenseits menschlicher Möglichkeiten |\n\nGegen einen NSC ist die Schwierigkeit seine **Gegenwehr**, oder die Schwierigkeit der Aufgabe, wenn diese höher ist.\n\n**Beispiel:** Mara (Geschick 3, Heimlichkeit 2) will sich an einer Wache vorbeischleichen. Die Wache hat Gegenwehr 3. Mara steht unter Zeitdruck, also keine Routine. Sie würfelt 5 Würfel: 2, 6, 7, 9, 10. Das sind 4 Erfolge, einer über der Schwierigkeit, plus eine Gratis-Steigerung durch die 10.",
+    "tags": [
+      "probe",
+      "pool",
+      "schwierigkeit",
+      "erfolg",
+      "würfeln",
+      "gegenwehr"
+    ],
+    "position": 80,
+    "parentKey": null
+  },
+  {
+    "key": "grundregeln_steigerungen",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Steigerungen und Zehnen",
+    "body": "Hat man mindestens so viele Erfolge wie die Schwierigkeit, gelingt die Handlung. **Jeder Erfolg darüber hinaus ist eine Steigerung.** Steigerungen werden aus einem festen Menü gewählt, das für alle Kreaturen gleich ist.\n\n| Steigerung | Wirkung |\n|---|---|\n| **Dauer** | Die Wirkung hält länger an |\n| **Reichweite** | Die Wirkung reicht weiter |\n| **Ziele** | Die Wirkung erfasst ein weiteres Ziel |\n| **Unauffällig** | Niemand bemerkt, was geschehen ist, es entsteht kein Aufsehen |\n| **Präzise** | Genau das gewünschte Detail, keine Nebenwirkungen. Drei Präzise ermöglichen einen Kern-Treffer |\n| **Wucht** | +1 Schaden oder eine spürbar stärkere Wirkung |\n\nEine Steigerung kann mehrfach gewählt werden. Bei übernatürlichen Kräften legt die Schablone Grenzen fest: Steigerungen machen eine Wirkung größer, aber nie tiefer als erlaubt.\n\n**Zehnen:** Jede **10** zählt als Erfolg und bringt zusätzlich **eine Steigerung gratis**, die der Spieler wählt.",
+    "tags": [
+      "steigerung",
+      "zehnen",
+      "wucht",
+      "präzise",
+      "unauffällig",
+      "dauer"
+    ],
+    "position": 90,
+    "parentKey": "grundregeln_proben"
+  },
+  {
+    "key": "grundregeln_risikowuerfel",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Risikowürfel",
+    "body": "Manche Umstände ersetzen normale Würfel im Pool durch **Risikowürfel** in einer anderen Farbe. Bei den Deathborne heißen sie Blutwürfel.\n\n- Risikowürfel zählen Erfolge wie normale Würfel.\n- Zeigt ein Risikowürfel eine **1**, tritt eine **Folge** ein. Die Schablone enthält die passenden Folgen.\n- Zeigen **mehrere** Risikowürfel eine 1, tritt eine **schwere Folge** ein.\n- Zeigt ein Risikowürfel eine **10**, wählt die **SL** die Gratis-Steigerung. Die Wirkung schießt über das Ziel hinaus (**Überschlag**).\n- Ein Pool kann nie mehr Risikowürfel enthalten, als er Würfel hat.\n- Mit Risikowürfeln im Pool ist keine Routine möglich.\n\nEinsen auf normalen Würfeln haben keine Bedeutung.",
+    "tags": [
+      "risikowürfel",
+      "blutwürfel",
+      "folge",
+      "überschlag",
+      "einsen",
+      "routine"
+    ],
+    "position": 100,
+    "parentKey": "grundregeln_proben"
+  },
+  {
+    "key": "grundregeln_erfolg_mit_preis",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Erfolg mit Preis, Modifikatoren und vergleichende Proben",
+    "body": "**Erfolg mit Preis**\n\nScheitert ein Wurf, darf der Spieler stattdessen Erfolg mit Preis wählen. Die Handlung gelingt ohne Steigerungen, aber die SL nennt einen Preis, zum Beispiel:\n\n- Schaden, etwa die Gefahr eines Gegners\n- Aufsehen +1 oder +2\n- eine Schuld gegenüber jemandem\n- Treibstoff\n- eine Komplikation, die sofort oder später eintritt\n\nDer Spieler hört den Preis, bevor er sich entscheidet.\n\n**Modifikatoren**\n\n- Günstige oder ungünstige Umstände geben Bonus- oder Maluswürfel, insgesamt höchstens drei in jede Richtung. Wille-Punkte zählen nicht zu dieser Grenze.\n- **Zusammenarbeit:** Jeder Helfer mit passender Fertigkeit gibt +1 Würfel, innerhalb der Grenze von +3.\n- Sinkt ein Pool unter 1, würfelt man **einen Würfel**, der nur mit einer 10 gelingt. Diese 10 bringt keine Gratis-Steigerung.\n\n**Vergleichende Proben**\n\nStehen sich zwei SC gegenüber, würfeln beide. Wer mehr Erfolge hat, gewinnt, die Differenz sind Steigerungen. Bei Gleichstand bleibt alles, wie es ist, oder der Verteidiger setzt sich durch. Tritt ein zentraler NSC in einem entscheidenden Duell an, darf die SL für ihn würfeln. Sein Pool ist dann **Gegenwehr mal 2**.",
+    "tags": [
+      "erfolg mit preis",
+      "modifikatoren",
+      "bonuswürfel",
+      "zusammenarbeit",
+      "vergleichende probe",
+      "duell"
+    ],
+    "position": 110,
+    "parentKey": "grundregeln_proben"
+  },
+  {
+    "key": "grundregeln_konflikt",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Konflikt: NSC-Werte, Tempo und Ablauf",
+    "body": "Kämpfe werden gewürfelt, aber schlank: **Jeder SC würfelt einen Wurf pro Runde**, und dieser Wurf klärt Angriff und Verteidigung zugleich.\n\n**Werte von NSC**\n\n| Wert | Bedeutung |\n|---|---|\n| **Gegenwehr** | die Schwierigkeit für alles, was gegen den NSC gerichtet ist |\n| **Gefahr** | der Schaden, den der NSC austeilt, wenn ein SC gegen ihn scheitert |\n| **Zähigkeit** | wie viel Schaden der NSC einsteckt, bevor er ausgeschaltet ist |\n\n| Gegenwehr | Beispiel |\n|---|---|\n| 1 | harmlos: ein Kind, ein verängstigter Passant |\n| 2 | durchschnittlich: ein Türsteher, eine Bürokraft |\n| 3 | geübt: eine Polizistin, ein Straßenschläger |\n| 4 | gefährlich: ein Soldat, eine erfahrene Jägerin |\n| 5 | Elite: Spezialeinheit, ein alter Meister seines Fachs |\n| 6+ | übermenschlich |\n\nGefahr liegt meist zwischen 1 (unbewaffnet) und 4 (schwer bewaffnet oder übernatürlich). Zähigkeit liegt bei Menschen zwischen 5 und 8, bei übernatürlichen Wesen höher. NSC haben keine Gesundheitsleiste und erhalten keine Abzüge.\n\n**Tempo: Initiative nach Handlung**\n\n| Tempo | Handlungen |\n|---|---|\n| **1. Blitz** | ein Wort, ein Blick, volle Abwehr, Gefestigte Formen |\n| **2. Schnell** | schießen, werfen, in Deckung springen, ein kurzer Sprint |\n| **3. Normal** | Nahkampf, ringen, laufen, die meisten Handlungen |\n| **4. Langsam** | Handlungen, die Konzentration brauchen: Erste Hilfe, ein Schloss knacken, komplexe übernatürliche Wirkungen |\n\n**Ablauf einer Runde**\n\n1. **Lage:** Die SL beschreibt die Situation und kündigt an, was die Gegner vorhaben, soweit die Figuren es erkennen können.\n2. **Ansage:** Jeder Spieler sagt an, was seine Figur tut. Daraus ergibt sich ihr Tempo.\n3. **Abwicklung:** Die Handlungen werden in der Reihenfolge ihres Tempos abgewickelt. Bei gleichem Tempo handeln SC vor NSC, SC untereinander in beliebiger Reihenfolge.\n\nWird eine Handlung durch eine schnellere unmöglich, darf der Spieler sie in eine Handlung desselben oder eines langsameren Tempos ändern.\n\n**Handlanger**\n\nEine Gruppe gleichartiger, schwacher Gegner wird als ein NSC geführt: Grundwerte eines Mitglieds, **+1 Gegenwehr** und **+3 Zähigkeit** pro weiterem Mitglied, höchstens drei weitere. Jedes Mal, wenn die Gruppe 3 Schaden genommen hat, fällt ein Mitglied aus, und die Gegenwehr sinkt um 1.\n\n**Das Ende eines Kampfes**\n\nKämpfe enden selten mit dem Tod aller Beteiligten. NSC fliehen, ergeben sich oder verhandeln, wenn ihre Lage aussichtslos wird. Auch SC dürfen jederzeit fliehen oder aufgeben, die SL nennt dann den Preis.",
+    "tags": [
+      "kampf",
+      "konflikt",
+      "initiative",
+      "tempo",
+      "runde",
+      "handlanger",
+      "gegenwehr"
+    ],
+    "position": 120,
+    "parentKey": null
+  },
+  {
+    "key": "grundregeln_kampfwurf",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Der Kampfwurf und volle Abwehr",
+    "body": "Die Schwierigkeit des Wurfs richtet sich nach der Lage.\n\n| Lage | Schwierigkeit |\n|---|---|\n| Du greifst einen NSC an | seine Gegenwehr |\n| Du tust etwas anderes, während dich niemand angreift | die Schwierigkeit der Aufgabe |\n| Du wirst angegriffen, während du etwas tust | das Höhere von Aufgabe und Gegenwehr des Angreifers |\n| Mehrere greifen dich an | Gegenwehr des stärksten Angreifers +1 pro weiterem, höchstens +2 |\n\n**Gelingt der Wurf:** Die Handlung gelingt, Angriffe auf dich gehen fehl. Bei einem Angriff richtest du Schaden in Höhe deiner Waffe an. Jede Steigerung Wucht erhöht den Schaden um 1, andere Steigerungen bringen Vorteile: entwaffnen, zu Boden bringen, Deckung erreichen, einen Verbündeten schützen, unauffällig bleiben.\n\n**Scheitert der Wurf:** Die Handlung misslingt. Greift dich jemand an, nimmst du Schaden in Höhe seiner **Gefahr**, bei mehreren Angreifern die höchste Gefahr +1 pro weiterem. Alternativ wählst du Erfolg mit Preis: Die Handlung gelingt, der Preis ist der Schaden.\n\n**Zeitpunkt des Wurfs**\n\nNormalerweise würfelt ein SC zum Tempo seiner Handlung. Greift ihn aber ein schnellerer NSC an, würfelt er schon zum Tempo dieses Angriffs:\n\n- Scheitert der Wurf, trifft ihn der Schaden sofort, und seine Handlung ist verloren.\n- Gelingt der Wurf, geht der Angriff fehl, und die eigene Handlung wirkt erst zu ihrem eigenen Tempo.\n\n**Volle Abwehr**\n\nWer nur ausweichen, sich schützen oder in Deckung bleiben will, handelt mit Tempo **Blitz** und erhält **+2 Würfel**, üblicherweise Geschick + Athletik. Gelingt der Wurf, geht jeder Angriff dieser Runde gegen ihn fehl. Steigerungen verbessern die Position: Deckung für die nächste Runde, Abstand gewinnen, einen Fluchtweg finden.",
+    "tags": [
+      "kampfwurf",
+      "angriff",
+      "verteidigung",
+      "volle abwehr",
+      "schaden",
+      "tempo"
+    ],
+    "position": 130,
+    "parentKey": "grundregeln_konflikt"
+  },
+  {
+    "key": "grundregeln_waffen_und_ruestung",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Waffen, Rüstung und Kern-Treffer",
+    "body": "| Waffe | Schaden | Tempo |\n|---|---|---|\n| Unbewaffnet | 1 | Normal |\n| Messer, Knüppel, improvisierte Waffe | 2 | Normal |\n| Schwert, Axt, schwere Nahkampfwaffe | 3 | Normal |\n| Pistole | 2 | Schnell |\n| Gewehr, Schrotflinte | 3 | Schnell |\n| Automatische Waffe | 3, Steigerung Ziele gratis | Schnell |\n\nSchaden ist grundsätzlich **Wunde**. Die Schablone legt fest, welche Quellen bei ihrer Kreatur Verheerung verursachen.\n\n| Rüstung | Schutz | Nachteil |\n|---|---|---|\n| Leichte Schutzweste, Lederkleidung | -1 Wunde pro Treffer | keiner |\n| Schwere Schutzweste, Plattenteile | -2 Wunden pro Treffer | -1 Würfel auf Geschick |\n\nRüstung schützt nie gegen Verheerung.\n\n**Kern-Treffer**\n\nManche Verletzungen sind mehr als Kästchen auf einer Leiste: ein Stich ins Herz, ein abgetrennter Kopf. Ein Kern-Treffer ist möglich, wenn:\n\n- ein Angriff **drei Steigerungen Präzise** erzielt und die Waffe dafür geeignet ist, oder\n- das Ziel wehrlos ist, also gefesselt, bewusstlos oder gelähmt. Dann ist kein Wurf nötig.\n\nWas ein Kern-Treffer bewirkt, legt die Schablone fest. Bei Menschen ist er meist tödlich.",
+    "tags": [
+      "waffen",
+      "rüstung",
+      "schaden",
+      "kern-treffer",
+      "pistole",
+      "verheerung"
+    ],
+    "position": 140,
+    "parentKey": "grundregeln_konflikt"
+  },
+  {
+    "key": "grundregeln_schaden",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Schaden, Gesundheitsleiste und Heilung",
+    "body": "Jede Figur hat **Kraft + 5** Kästchen Gesundheit. Schaden gibt es in drei Schichten.\n\n| Schicht | Markierung | Beschreibung |\n|---|---|---|\n| **Wunde** | / | gewöhnliche Verletzungen: Schnitte, Prellungen, Schusswunden |\n| **Verheerung** | X | Schaden, der schwer heilt: Verbrennungen, Säure, Verwundbarkeiten |\n| **Kern** | Zustand | Verletzungen des Wesenskerns, die nicht über Kästchen laufen |\n\n**Schaden eintragen**\n\n- Neuer Schaden füllt freie Kästchen von links nach rechts.\n- Verheerung wird immer links vor Wunden eingetragen. Wunden rutschen dabei nach rechts.\n- Ist die Leiste voll, verwandelt jede weitere Wunde eine vorhandene Wunde in eine Verheerung.\n- Ist die Leiste voll mit Verheerung, führt jeder weitere Schaden zu einem **Kern-Zustand**.\n\n**Zusammenbruch**\n\nIst die Leiste voll und enthält noch mindestens eine Wunde, bricht die Figur zusammen. Sie ist handlungsunfähig, bis sie geheilt wird oder Schaden abbaut. Mit 1 Wille kann sie eine letzte Handlung ausführen. Ist die Leiste voll mit Verheerung, steht die Figur am Abgrund. Ein Mensch stirbt am Ende der Szene, wenn ihm niemand hilft (Medizin, Schwierigkeit 3).\n\n**Abzüge bei Menschen**\n\n- **-1 Würfel**, sobald die Hälfte der Leiste gefüllt ist\n- **-2 Würfel**, wenn nur noch ein Kästchen frei ist\n\n**Heilung bei Menschen**\n\n| Schicht | Heilung |\n|---|---|\n| Wunde | 1 Kästchen pro Tag Ruhe |\n| Verheerung | 1 Kästchen pro Woche mit Behandlung (Medizin, Schwierigkeit 2), ohne Behandlung gar nicht |\n| Kern | Tod, oder eine bleibende Verletzung nach Wahl der SL |\n\nÜbernatürliche Kreaturen heilen nach den Regeln ihrer Schablone. NSC haben statt einer Leiste **Zähigkeit**: Jeder Schaden senkt sie, bei 0 ist der NSC ausgeschaltet.",
+    "tags": [
+      "schaden",
+      "gesundheit",
+      "wunde",
+      "verheerung",
+      "zusammenbruch",
+      "heilung",
+      "abzüge"
+    ],
+    "position": 150,
+    "parentKey": null
+  },
+  {
+    "key": "grundregeln_anker",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Anker und Abdriften",
+    "body": "Übernatürliche Kreaturen verlieren ihre Menschlichkeit nicht auf einen Schlag. Sie **driften ab**: Jahre, Macht und Hunger lösen sie langsam von der Person, die sie einmal waren. Darkborne misst das nicht mit einer Moralskala, sondern mit **Ankern**. Jede Figur hat **fünf Ankerplätze** in zwei Spalten.\n\n| Menschliche Anker | Nächtliche Anker |\n|---|---|\n| Menschen, Orte, Gewohnheiten, Überzeugungen: alles, was die Figur an die Welt der Lebenden bindet | Mentoren, Nachkommen, Gemeinschaften, Ämter, Schwüre, Überzeugungen der verborgenen Welt |\n| Meine Tochter Mia. Die Wohnung in Ehrenfeld. Ich lüge nicht. | Meine Lehrmeisterin. Mein Amt am Hof. Der Schwur, den ich dem Rat geleistet habe. |\n\nEin Anker muss konkret sein. Nicht \"Familie\", sondern \"mein Bruder Jonas\".\n\n**Halt**\n\nJeder Anker kann **einmal pro Sitzung Halt geben**. Die Figur denkt an ihn, klammert sich an ihn, und wendet damit eine passende Folge vollständig ab.\n\n| Anker | Wendet ab |\n|---|---|\n| **Menschlich** | Folgen von Gier und Kontrollverlust, bei den Deathborne die Hunger-Folgen |\n| **Nächtlich** | Folgen von Instabilität, oder einen Zwang, ohne Wille zu zahlen |\n\nDer Spieler beschreibt, wie der Anker hilft. Zusätzlich gilt: Ist ein menschlicher Anker in der Szene anwesend oder geht es um ihn, erhält die Figur **+1 Würfel**, um als Mensch durchzugehen.\n\nDie Regeln urteilen nicht. Wer nur nächtliche Anker besitzt, ist nicht böse, wer nur menschliche besitzt, nicht gut. Die Verteilung beschreibt, wo eine Figur steht, und beide Seiten haben ihren Preis.",
+    "tags": [
+      "anker",
+      "halt",
+      "menschlicher anker",
+      "nächtlicher anker",
+      "abdriften",
+      "menschlichkeit"
+    ],
+    "position": 160,
+    "parentKey": null
+  },
+  {
+    "key": "grundregeln_anker_zustaende",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Anker: fest, erschüttert, verloren",
+    "body": "Ein Anker ist immer in einem von drei Zuständen:\n\n- **Fest:** Er gibt Halt.\n- **Erschüttert:** Er gibt keinen Halt, bis er gefestigt wird.\n- **Verloren:** Der Platz ist leer. Die Schablone legt fest, was die Figur dabei dauerhaft einbüßt, bei den Deathborne sinkt ein Menschenzug.\n\nWird ein erschütterter Anker erneut erschüttert, ist er verloren.\n\n| Auslöser | Menschlicher Anker | Nächtlicher Anker |\n|---|---|---|\n| Die Figur handelt gegen den Anker | ja | ja |\n| Ein Kapitel vergeht ohne Szene mit dem Anker | ja | nein, die Nacht hält sich selbst |\n| Jahre vergehen (Zeitsprung) | ja, Menschen altern, ziehen fort, sterben | nur bei politischen Umbrüchen |\n| Die Figur steigert ihre Potenz | einer nach Wahl des Spielers | nein |\n| Kontrollverlust lässt die Figur etwas tun, das der Mensch in ihr nie getan hätte | einer nach Wahl des Spielers | nein |\n\n**Anker festigen:** Ein erschütterter Anker wird in einer Szene wieder fest, in der sich die Figur ihm zuwendet. Diese Szene muss etwas kosten: Zeit, die an anderer Stelle fehlt, ein Risiko für die Geheimhaltung (Aufsehen +1), oder eine unbequeme Wahrheit, die ausgesprochen wird.\n\n**Neue Anker:** Nächtliche Anker entstehen im Spiel fast von selbst: ein Schwur, ein Amt, ein eigener Scion, die Aufnahme in eine Order. Menschliche Anker sind schwer zu gewinnen. Die Figur braucht Szenen mit diesem Menschen oder Ort über mindestens ein Kapitel, und jede dieser Szenen riskiert die Geheimhaltung. Sind alle fünf Plätze belegt, muss ein bestehender Anker weichen.\n\n**Loslassen:** Eine Figur darf einen menschlichen Anker bewusst aufgeben. Dafür erhält sie sofort einen nächtlichen Anker auf dem frei gewordenen Platz und **2 XP**. Die dauerhafte Einbuße tritt trotzdem ein.\n\n**Erzwungene Anker:** Manche Anker kann eine Figur nicht selbst aufgeben, etwa die Blutbindung. Sie besetzen einen Platz, geben Halt wie jeder andere Anker und lassen sich nur durch die genannten Mittel lösen.\n\n**Entmenscht und treibend**\n\n- **Entmenscht:** Ohne menschlichen Anker kann die Figur Folgen von Gier und Kontrollverlust nicht mehr abwenden. Als Mensch geht sie nur noch mit übernatürlicher Hilfe durch.\n- **Treibend:** Ohne jeden Anker hält die Figur nichts. In jeder Krise entscheidet die SL, was sie tut. Findet sie bis zum Ende des Kapitels keinen neuen Anker, wird sie zum NSC.",
+    "tags": [
+      "anker",
+      "erschüttert",
+      "verloren",
+      "festigen",
+      "loslassen",
+      "entmenscht",
+      "treibend"
+    ],
+    "position": 170,
+    "parentKey": "grundregeln_anker"
+  },
+  {
+    "key": "grundregeln_erfahrung",
+    "gameline": "db",
+    "section": "Grundregeln",
+    "title": "Erfahrung und XP",
+    "body": "Am Ende jeder Sitzung erhält jede Figur **1 XP** und beantwortet vier Fragen. Jedes Ja bringt 1 weiteren XP:\n\n1. Hat dein Makel dir in dieser Sitzung echte Probleme gemacht?\n2. Hast du einen Anker verteidigt, gefestigt oder verloren?\n3. Hast du etwas Neues über die verborgene Welt erfahren?\n4. Hat sich deine Lage in einer Gemeinschaft verändert?\n\nDazu kommen **1 XP**, wenn ein Zwang angenommen wird, während der Wille-Vorrat voll ist, und **2 XP** für das Loslassen eines menschlichen Ankers.\n\nXP werden zwischen den Sitzungen ausgegeben. Eine Steigerung muss zur Geschichte passen: Wer nie mit Computern zu tun hatte, lernt Technik nicht über Nacht.\n\n| Was | Kosten |\n|---|---|\n| Attribut | neuer Wert mal 5 |\n| Wille | neuer Wert mal 5 |\n| Fertigkeit | neuer Wert mal 3 |\n| Neue Spezialisierung | 3 |\n| Hintergrund | neue Stufe mal 3 |\n\nÜbernatürliche Werte kosten, was die Schablone angibt.",
+    "tags": [
+      "xp",
+      "erfahrung",
+      "steigern",
+      "kosten",
+      "sitzung",
+      "fragen"
+    ],
+    "position": 180,
+    "parentKey": null
+  },
+  {
+    "key": "blut_cruor",
+    "gameline": "db",
+    "section": "Blut und Hunger",
+    "title": "Der Cruor-Vorrat",
+    "body": "Cruor erhält den Körper, heilt Wunden und treibt die Blutkünste an. Jeder Vesper hat einen **Vorrat**, dessen Größe von seiner Blutstärke abhängt.\n\n| Ausgabe | Kosten |\n|---|---|\n| **Unterhalt** | jede Nacht beim Erwachen, abhängig von der Blutstärke |\n| **Gefestigte Form** | 1 |\n| **Eigene Form** | Wirkungsstufe - 1, mindestens 1 |\n| **Improvisierte Wirkung** | Wirkungsstufe |\n| **Wunde heilen** | 1 pro Kästchen |\n| **Verheerung heilen** | 3 pro Kästchen, ab Blutstärke 3 nur 2, dazu eine Ruhe am Tag |\n| **Körperteile nachbilden** | siehe Regeneration |\n\nJeder Punkt, der nicht mehr bezahlt werden kann, wird zu einem Hungerpunkt.",
+    "tags": [
+      "cruor",
+      "vorrat",
+      "kosten",
+      "unterhalt",
+      "heilen",
+      "treibstoff"
+    ],
+    "position": 10,
+    "parentKey": null
+  },
+  {
+    "key": "blut_hunger",
+    "gameline": "db",
+    "section": "Blut und Hunger",
+    "title": "Hunger",
+    "body": "Ist der Vorrat leer, darf ein Vesper trotzdem weitermachen. **Jeder Punkt, der nicht mehr bezahlt werden kann, wird zu einem Hungerpunkt.**\n\n- Hunger reicht von 0 bis **5**.\n- Müsste ein Vesper einen sechsten Hungerpunkt nehmen, fällt er in **Hungerstarre**.\n- Wer Blut trinkt, baut zuerst Hunger ab, 1 Cruor pro Hungerpunkt, und füllt erst danach den Vorrat.\n- Jeder Hungerpunkt bringt in jedem Wurf einen Blutwürfel.\n- Wer Hunger hat, bekommt **keine Routine**, auch nicht bei Gefestigten Formen.\n\nSatte Vesperi erzählen, hungrige würfeln.",
+    "tags": [
+      "hunger",
+      "hungerpunkte",
+      "hungerstarre",
+      "leer",
+      "trinken",
+      "routine"
+    ],
+    "position": 20,
+    "parentKey": null
+  },
+  {
+    "key": "blut_blutwuerfel",
+    "gameline": "db",
+    "section": "Blut und Hunger",
+    "title": "Blutwürfel",
+    "body": "Blutwürfel sind die Risikowürfel der Deathborne. Sie ersetzen normale Würfel im Pool, zählen Erfolge ganz normal, aber eine **1** löst eine **Folge** aus. Es gibt nur eine Art von Blutwürfeln, aber mehrere Quellen.\n\n| Quelle | Blutwürfel | Folge bei einer 1 |\n|---|---|---|\n| **Hunger** | so viele wie Hungerpunkte, in jedem Wurf | Hunger-Folge |\n| **Spannung** | so viele wie die Spannung, wenn eine Kunst mit Gegenkunst eingesetzt wird | Dissonanz-Folge des Kunstpaares |\n| **Kunst des Blutes** | Wirkungsstufe - 2, mindestens 0, bei jeder Nutzung | Instabilität |\n| **Hohler Schlag** | +1 bei allen Blutkünsten | Instabilität |\n\nStammen Blutwürfel aus mehreren Quellen, wählt die SL die passende Folge. Zeigen mehrere Blutwürfel eine 1, ist die Folge **schwer**. Ab Blutstärke 6 sind Hunger-Folgen immer schwer.",
+    "tags": [
+      "blutwürfel",
+      "risikowürfel",
+      "folge",
+      "spannung",
+      "instabilität",
+      "hunger"
+    ],
+    "position": 30,
+    "parentKey": null
+  },
+  {
+    "key": "blut_fuellstand",
+    "gameline": "db",
+    "section": "Blut und Hunger",
+    "title": "Füllstand und Kernschleife",
+    "body": "Wie voll ein Vesper ist, sieht und spürt man.\n\n| Füllstand | Wann | Körper | Mechanik |\n|---|---|---|---|\n| **Satt** | Vorrat mindestens halb voll | warm, Herzschlag, gesunde Farbe | Als Mensch durchgehen ist Routine |\n| **Kühl** | Vorrat unter der Hälfte | kühl, blass | normal |\n| **Leer** | Vorrat 0 | kalt, kaum Herzschlag | Als Mensch durchgehen nur mit Wurf |\n| **Hungrig** | Hunger 1 oder mehr | Menschen spüren instinktiv Gefahr | Blutwürfel, keine Routine |\n\n**Die Kernschleife**\n\nDer Vorrat ist endlich, jede Nacht kostet Unterhalt, Hunger bringt Blutwürfel, und Nachfüllen heißt Jagen, mit allen Risiken für den Bund. Daraus entsteht der Kreislauf, der das Leben eines Vesper bestimmt:\n\n**Jagen, Cruor, Künste, Hunger, Jagen.**",
+    "tags": [
+      "füllstand",
+      "satt",
+      "kühl",
+      "leer",
+      "hungrig",
+      "kernschleife"
+    ],
+    "position": 40,
+    "parentKey": null
+  },
+  {
+    "key": "blut_hunger_folgen",
+    "gameline": "db",
+    "section": "Blut und Hunger",
+    "title": "Hunger-Folgen",
+    "body": "Die SL wählt eine passende Folge. **Menschliche Anker können Hunger-Folgen abwenden.**\n\n**Leichte Hunger-Folgen**\n\n- **Starren:** Der Blick bleibt an einer Halsschlagader hängen. Jeder in der Nähe bemerkt es.\n- **Kälte bricht durch:** Das Herz setzt aus, die Haut wird eiskalt. Bis zum Ende der Szene gilt der Vesper als leer.\n- **Reizbar:** Ein scharfes Wort oder eine grobe Geste gegen jemanden, der es sich merkt.\n- **Blutgeruch:** Die Konzentration reißt. Die aktuelle Handlung wird zu einem Erfolg mit Preis.\n\n**Schwere Hunger-Folgen**\n\n- **Zubeißen:** Der Vesper beißt die nächste Person in Reichweite, bevor er sich entschieden hat.\n- **Jagdinstinkt:** Er verfolgt die nächste Beute, bis er getrunken hat oder 1 Wille zahlt.\n- **Tunnelblick:** Nur Blut zählt. -2 Würfel auf alles andere bis zum Ende der Szene.\n- **Raserei:** Die SL übernimmt die Figur, bis sie getrunken hat oder ein Anker Halt gibt.",
+    "tags": [
+      "hunger-folgen",
+      "raserei",
+      "zubeißen",
+      "tunnelblick",
+      "starren",
+      "anker"
+    ],
+    "position": 50,
+    "parentKey": null
+  },
+  {
+    "key": "blut_instabilitaet",
+    "gameline": "db",
+    "section": "Blut und Hunger",
+    "title": "Instabilität",
+    "body": "Folgen der Kunst des Blutes und des Hohlen Schlags. **Nächtliche Anker können sie abwenden.**\n\n**Leichte Instabilität**\n\n- **Blutige Tränen:** Blut tritt aus Augen, Nase oder Poren. Aufsehen +1, wenn es jemand sieht.\n- **Rückfluss:** Die Wirkung trifft zur Hälfte den Vesper selbst.\n- **Verlust:** 2 Cruor versickern.\n- **Taubes Blut:** Bis zum Ende der nächsten Runde sind keine Blutkünste möglich.\n\n**Schwere Instabilität**\n\n- **Fremdes Echo:** Fremdes Cruor im Körper erwacht. Erinnerungsfetzen, fremde Gefühle, eine kurze Bindung an einen Unbekannten.\n- **Verschiebung:** Ein neues persönliches Anathema auf Stufe Gering entsteht.\n- **Ausdünnung:** Die Blutstärke zählt bis zum Ende des Kapitels um 1 niedriger.\n- **Sog:** Hunger +2.",
+    "tags": [
+      "instabilität",
+      "blutige tränen",
+      "rückfluss",
+      "ausdünnung",
+      "kunst des blutes",
+      "anker"
+    ],
+    "position": 60,
+    "parentKey": null
+  },
+  {
+    "key": "blut_blutquellen",
+    "gameline": "db",
+    "section": "Blut und Hunger",
+    "title": "Blutquellen",
+    "body": "| Quelle | Ertrag | Anmerkung |\n|---|---|---|\n| **Mensch, maßvoll** | 2 Cruor | Das Opfer ist geschwächt, aber unversehrt |\n| **Mensch, tief** | 4 Cruor | Das Opfer bricht zusammen und braucht Hilfe |\n| **Mensch, leer** | 6 Cruor | Das Opfer stirbt |\n| **Tier** | 1 Cruor | Ab Blutstärke 2 nur halb, 1 pro zwei Tiere, ab Blutstärke 4 wirkungslos |\n| **Blutkonserve** | 1 Cruor pro Beutel | höchstens 2 pro Nacht, ab Blutstärke 4 wirkungslos |\n| **Cruor eines Vesper** | 3 Cruor pro Schluck | Blutbindung +1 Stufe |\n\nSubstanzen im Blut eines Menschen wirken über Cruor weit stärker als direkt eingenommen. Wer von Betrunkenen oder Berauschten trinkt, teilt deren Rausch für eine Szene.",
+    "tags": [
+      "blutquellen",
+      "trinken",
+      "mensch",
+      "tier",
+      "blutkonserve",
+      "rausch"
+    ],
+    "position": 70,
+    "parentKey": null
+  },
+  {
+    "key": "blut_jagd",
+    "gameline": "db",
+    "section": "Blut und Hunger",
+    "title": "Die Jagd",
+    "body": "Jagd ist eine Szene mit **einem Wurf**. Die Methode bestimmt den Pool.\n\n| Methode | Pool | Schwierigkeit |\n|---|---|---|\n| **Verführen** in Bars, Clubs, auf Partys | Raffinesse + Überzeugen | 2 |\n| **Überfall** in dunklen Ecken | Geschick + Heimlichkeit | 2 |\n| **Straße:** Obdachlose, Drogenszene, Nachtschwärmer | Gespür + Straße | 2 |\n| **Tiere** in Parks und Wäldern | Geschick + Überleben | 1 |\n| **Stammspender** (Hintergrund) | Routine, solange der Vesper nicht hungrig ist | - |\n\n**Erfolg:** Der Vesper trinkt maßvoll, 2 Cruor. Steigerungen:\n\n- **Wucht:** Er trinkt tief, 4 Cruor, und entscheidet, ob das Opfer überlebt.\n- **Unauffällig:** Kein Aufsehen, keine Spuren.\n- **Präzise:** Das Opfer erinnert sich an nichts Verdächtiges.\n- **Dauer:** Das Opfer steht bis zum Ende des Kapitels erneut zur Verfügung.\n\n**Misserfolg:** Das Opfer entkommt, wehrt sich oder es gibt einen Zeugen (Aufsehen +1). Oder der Spieler wählt Erfolg mit Preis.\n\n**Eine 1 auf einem Blutwürfel:** Der Vesper hört nicht rechtzeitig auf. Ein menschlicher Anker gibt Halt, oder das Opfer stirbt. Stirbt es, wird ein menschlicher Anker erschüttert.\n\n**Hintergrund Stammspender**\n\n| Stufe | Beschreibung |\n|---|---|\n| 1 | ein Mensch, der freiwillig gibt |\n| 2 | eine kleine Gruppe, die Bescheid weiß |\n| 3 | ein ganzes Netzwerk, etwa ein Club oder eine Klinik |\n\nStammspender müssen geschützt werden. Jeder von ihnen ist ein Wissender, und damit ein Risiko für den Bund.",
+    "tags": [
+      "jagd",
+      "jagen",
+      "verführen",
+      "überfall",
+      "stammspender",
+      "opfer"
+    ],
+    "position": 80,
+    "parentKey": null
+  },
+  {
+    "key": "blut_blutstaerke",
+    "gameline": "db",
+    "section": "Blut und Hunger",
+    "title": "Blutstärke",
+    "body": "Drei Werte beschreiben das Blut eines Vesper: **Blutstärke** (was dein Blut kann), **Blutalter** (was du erlebt hast) und **Glied** (woher dein Blut kommt).\n\nBlutstärke reicht von 1 bis 10. Spielercharaktere liegen zwischen 1 und 5, darüber beginnt das Reich der Ältesten. Jede Stufe bringt Gewinn und Preis zugleich. Mehr Macht bedeutet immer auch mehr Abstand zum Menschsein.\n\n| Blutstärke | Höchste Tiefe | Vorrat | Unterhalt | Besonderheiten |\n|---|---|---|---|---|\n| **1** | 2 | 6 | 1 | Tierblut voll wirksam |\n| **2** | 3 | 7 | 1 | Tierblut nur halb wirksam |\n| **3** | 4 | 8 | 2 | Verheerung heilt für 2 Cruor. Vererbte Anathema eine Stufe stärker. Scar-Zwänge schwerer |\n| **4** | 4 | 9 | 2 | Tierblut und Konserven wirkungslos. Menschenzug Essen höchstens 1 |\n| **5** | 5 | 10 | 3 | Grund-Anathema eine Stufe stärker |\n| **6** | 5, +1 freie Steigerung | 11 | 3 | Hunger-Folgen immer schwer |\n| **7** | 5, +2 freie Steigerungen | 12 | 4 | Menschenblut nährt nur noch halb |\n| **8** | 5, +3 freie Steigerungen | 13 | 4 | Spannung +1 bei allen Gegenkünsten |\n| **9** | 5, +4 freie Steigerungen | 14 | 5 | Alle Menschenzüge höchstens 1 |\n| **10** | 5, +5 freie Steigerungen | 15 | 5 | Nur noch Cruor anderer Vesperi nährt |\n\n- **Höchste Tiefe:** Keine Blutkunst kann tiefer sein. Älteste kommen nicht tiefer, sondern größer: Die freien Steigerungen gelten bei jedem Einsatz einer Blutkunst.\n- **Scar-Zwänge schwerer:** Die SL darf Zwänge vorschlagen, deren Ablehnung 2 Wille kostet.\n- **Regeneration:** Ein Vesper kann pro Runde höchstens so viele Wunden heilen, wie seine Blutstärke beträgt.\n\n**Blutstärke im Vergleich**\n\n- Würfelt ein SC Widerstand gegen einen schwächeren Vesper, erhält er **+1 Würfel pro Punkt Unterschied**, höchstens +3.\n- Wirkt ein SC auf einen stärkeren NSC, steigt dessen **Gegenwehr um 1 pro Punkt Unterschied**, höchstens +3.",
+    "tags": [
+      "blutstärke",
+      "potenz",
+      "vorrat",
+      "unterhalt",
+      "tiefe",
+      "regeneration"
+    ],
+    "position": 90,
+    "parentKey": null
+  },
+  {
+    "key": "blut_verdichtung",
+    "gameline": "db",
+    "section": "Blut und Hunger",
+    "title": "Verdichtung",
+    "body": "Blutstärke steigt nicht einfach mit Übung. Sie verdichtet sich. Eine Verdichtung verlangt **alle vier** Bedingungen:\n\n1. **XP:** neue Blutstärke mal 10, plus das eigene Glied\n2. **Ein Ereignis**, das das Blut verändert: ein Ritual, das Trinken mächtigen Cruors, extreme Nutzung einer Kunst, ein seltenes übernatürliches Geschehen\n3. **Ein menschlicher Anker wird erschüttert**, nach Wahl des Spielers\n4. Die neue Stufe bringt sofort ihren **Preis** mit\n\nJe höher die Blutstärke, desto seltener sind Ereignisse, die für eine weitere Verdichtung taugen. Das bestimmt die SL.",
+    "tags": [
+      "verdichtung",
+      "blutstärke",
+      "steigern",
+      "xp",
+      "ereignis",
+      "anker"
+    ],
+    "position": 100,
+    "parentKey": null
+  },
+  {
+    "key": "blut_blutalter_und_glied",
+    "gameline": "db",
+    "section": "Blut und Hunger",
+    "title": "Blutalter, Entfremdung und Glied",
+    "body": "**Blutalter**\n\nDas Blutalter sind die Jahre seit dem Ersten Schlag. Es bestimmt bei der Erschaffung die Startkategorie und damit Budget, Anker und Menschenzüge.\n\n**Entfremdung:** Vesperi, die länger als ein Jahrhundert existieren, haben den Anschluss an die Gegenwart verloren. Bei Proben mit moderner Technik, heutigen Umgangsformen und aktueller Sprache gilt **Schwierigkeit +1**. Entfremdung kann für **5 XP** abgelegt werden, wenn die Figur sich im Spiel mit der Gegenwart auseinandergesetzt hat.\n\n**Glied**\n\nDas Glied gibt an, wie viele Rote Übergänge zwischen einem Vesper und den Neun liegen. Ein Scion eines der Neun steht im ersten Glied. Ein Scion steht immer ein Glied tiefer als sein Sire.\n\n| Glied | Typisch für |\n|---|---|\n| 1-3 | Legenden, meist verschollen |\n| 4-6 | Älteste und Häupter der Alten Häuser |\n| 7-12 | die meisten Vesperi der Gegenwart |\n| 13+ | ferne Linien, Bastardzweige |\n\n- **Verdichtung:** Das Glied wird zu den XP-Kosten jeder Verdichtung addiert. Nahes Blut verdichtet sich leichter.\n- **Ansehen des Blutes:** Wer im 6. Glied oder höher steht, also näher an den Neun, erhält **+1 Würfel** auf Etikette im Umgang mit den Alten Häusern. Nahes Blut ist die Grundlage des Blood Mandate.\n- **Erkennbar:** Die Kunst des Blutes und die Kunst der Offenbarung können das Glied eines Vesper erkennen.",
+    "tags": [
+      "blutalter",
+      "entfremdung",
+      "glied",
+      "abstammung",
+      "sire",
+      "ansehen"
+    ],
+    "position": 110,
+    "parentKey": null
+  },
+  {
+    "key": "kuenste_grundprinzip",
+    "gameline": "db",
+    "section": "Blutkünste",
+    "title": "Grundprinzip der Blutkünste",
+    "body": "Eine Blutkunst ist keine Liste von Kräften, sondern ein **Prinzip**, nach dem Cruor die Wirklichkeit beeinflusst. Die Kunst beschreibt das Wie, die Anwendung das Was.\n\n> Eine Fähigkeit gehört nicht aufgrund ihres sichtbaren Effekts zu einer Kunst, sondern aufgrund des Prinzips, mit dem sie erzeugt wird.\n\nEs gibt fünfzehn Künste: die Urkunst Blut und sieben Paare aus Kunst und Gegenkunst.\n\n| Kunst | Gegenkunst |\n|---|---|\n| **Blut** (Urkunst) | keine, dafür Instabilität |\n| **Fleisch** | Geist |\n| **Herrschaft** | Freiheit |\n| **Schleier** | Offenbarung |\n| **Bewegung** | Stillstand |\n| **Bindung** | Trennung |\n| **Formung** | Verfall |\n| **Erinnerung** | Vergessen |\n\nPrinzip, typische Attribute, Stufentabelle, Grenzen und Gefestigte Formen jeder einzelnen Kunst stehen im Verzeichnis der Künste.",
+    "tags": [
+      "blutkünste",
+      "prinzip",
+      "künste",
+      "gegenkunst",
+      "urkunst",
+      "cruor"
+    ],
+    "position": 10,
+    "parentKey": null
+  },
+  {
+    "key": "kuenste_tiefe",
+    "gameline": "db",
+    "section": "Blutkünste",
+    "title": "Tiefe",
+    "body": "Die **Tiefe** beschreibt, wie weit das Cruor eines Vesper eine einzelne Kunst verstanden hat. Jede Kunst hat ihre eigene Tiefe von 0 (nicht gelernt) bis 5. Die Tiefe bestimmt drei Dinge:\n\n1. **Würfel:** Pool = Attribut + Tiefe\n2. **Obergrenze:** die höchste Wirkungsstufe, die mit dieser Kunst möglich ist\n3. **Formen:** Man beherrscht nur Formen bis zur eigenen Tiefe\n\nDie Blutstärke begrenzt, wie tief eine Kunst werden kann.",
+    "tags": [
+      "tiefe",
+      "pool",
+      "obergrenze",
+      "formen",
+      "blutstärke",
+      "kunst"
+    ],
+    "position": 20,
+    "parentKey": null
+  },
+  {
+    "key": "kuenste_wirkungsstufen",
+    "gameline": "db",
+    "section": "Blutkünste",
+    "title": "Wirkungsstufen",
+    "body": "Jede Wirkung hat eine **Wirkungsstufe** von 1 bis 5. Die allgemeine Leiter:\n\n| Stufe | Name | Größenordnung | Übliches Ziel |\n|---|---|---|---|\n| **1** | Berührung | kleine, kurze Eingriffe, kaum von Glück zu unterscheiden | der Vesper selbst |\n| **2** | Formung | gezielt, zuverlässig, knapp übermenschlich | selbst oder durch Berührung |\n| **3** | Beherrschung | deutlich übermenschlich, aber noch erklärbar | ein anderes Ziel in Sichtweite |\n| **4** | Überschreitung | offensichtlich unmöglich, Zeugen merken, dass etwas nicht stimmt | ein Ziel oder ein Raum |\n| **5** | Meisterschaft | das Prinzip selbst in extremer Form | Gruppen, Orte, Verbindungen |\n\nDie Stufentabelle jeder Kunst geht dieser allgemeinen Leiter vor. Welche Stufe eine Wirkung hat, entscheidet die SL anhand dieser Tabellen. **Wirkungen ab Stufe 4 vor Zeugen erzeugen Aufsehen**, sofern sie nicht unauffällig gemacht werden.",
+    "tags": [
+      "wirkungsstufe",
+      "berührung",
+      "beherrschung",
+      "überschreitung",
+      "meisterschaft",
+      "aufsehen"
+    ],
+    "position": 30,
+    "parentKey": null
+  },
+  {
+    "key": "kuenste_anwendung",
+    "gameline": "db",
+    "section": "Blutkünste",
+    "title": "Die drei Arten der Anwendung",
+    "body": "| | Gefestigte Form | Eigene Form | Improvisation |\n|---|---|---|---|\n| **Herkunft** | Gemeingut aller Vesperi | selbst entwickelt | spontan |\n| **Würfel** | +2 | normal | normal |\n| **Schwierigkeit** | wie angegeben | Wirkungsstufe - 1, min. 1 | Wirkungsstufe, min. 1 |\n| **Cruor** | 1 | Wirkungsstufe - 1, min. 1 | Wirkungsstufe |\n| **Steigerungen** | keine, alles festgelegt | ja | ja |\n| **Wirkungsstufe** | höchstens 3 | bis zur eigenen Tiefe | bis zur eigenen Tiefe |\n| **Tempo im Kampf** | Blitz | Schnell | Langsam |\n| **Ohne Konflikt** | gelingt ohne Wurf | Routine möglich | immer Wurf |\n\nRichtet sich eine Wirkung gegen ein Ziel, das sich wehrt, gilt die höhere Schwierigkeit: die der Wirkung oder die Gegenwehr des NSC. Gegen einen SC würfelt dieser Widerstand (Wille + Attribut), und es gewinnt, wer mehr Erfolge hat.\n\nWelches Attribut in den Pool kommt, ergibt sich aus der Art der Anwendung. Jede Kunst nennt typische Attribute.",
+    "tags": [
+      "anwendung",
+      "gefestigte form",
+      "eigene form",
+      "improvisation",
+      "schwierigkeit",
+      "cruor",
+      "tempo"
+    ],
+    "position": 40,
+    "parentKey": null
+  },
+  {
+    "key": "kuenste_gefestigte_formen",
+    "gameline": "db",
+    "section": "Blutkünste",
+    "title": "Gefestigte Formen",
+    "body": "So viele Vesperi haben diese Formen seit den Neun benutzt, dass Cruor sie kennt wie einen ausgetretenen Pfad. Deshalb gelingen sie leichter, sind aber starr.\n\n- **+2 Würfel**, feste Wirkung, feste Grenzen, keine Steigerungen\n- höchstens **Wirkungsstufe 3**. Überschreitung und Meisterschaft lassen sich nicht festigen.\n- **Außerhalb von Konflikten gelingen sie ohne Wurf**, außer der Vesper ist hungrig oder jemand widersetzt sich.\n- **Wer die Form kennt, kennt ihre Zeichen.** Jeder Vesper erkennt Gefestigte Formen. Gegen einen Vesper-NSC steigt die Gegenwehr um 1. Ein SC-Vesper erhält +2 Würfel, um ihnen zu widerstehen.\n- Gefestigte Formen kann man von **jedem** Vesper lernen, sogar aus Archiven.",
+    "tags": [
+      "gefestigte form",
+      "lernen",
+      "ohne wurf",
+      "widerstand",
+      "wirkungsstufe",
+      "archiv"
+    ],
+    "position": 50,
+    "parentKey": "kuenste_anwendung"
+  },
+  {
+    "key": "kuenste_eigene_formen_und_improvisation",
+    "gameline": "db",
+    "section": "Blutkünste",
+    "title": "Eigene Formen und Improvisation",
+    "body": "**Eigene Formen**\n\nEine Eigene Form ist ein persönliches, eingeübtes Rezept. Sie wird so notiert:\n\n```\nName · Kunst · Wirkungsstufe\nWirkung: was genau geschieht\nGrenzen: was sie nicht kann\n```\n\nDie SL gleicht die Wirkungsstufe mit der Stufentabelle der Kunst ab. Wer eine Wirkung **dreimal erfolgreich improvisiert** hat, kann sie zum halben Preis als Eigene Form lernen.\n\n**Improvisation**\n\nAlles, was zum Prinzip einer Kunst passt und die eigene Tiefe nicht überschreitet, darf improvisiert werden. Improvisation ist teurer, langsamer und schwerer, aber grenzenlos kreativ.",
+    "tags": [
+      "eigene form",
+      "improvisation",
+      "rezept",
+      "notieren",
+      "halber preis",
+      "tiefe"
+    ],
+    "position": 60,
+    "parentKey": "kuenste_anwendung"
+  },
+  {
+    "key": "kuenste_steigerungen",
+    "gameline": "db",
+    "section": "Blutkünste",
+    "title": "Steigerungen bei Blutkünsten",
+    "body": "| Steigerung | Wirkung bei Blutkünsten |\n|---|---|\n| **Dauer** | Grundwirkung: eine Handlung bis eine Szene. Je Steigerung: Nacht, Woche, Monat. Dauerhaft nur mit Tiefe 5 |\n| **Reichweite** | Berührung, dann Sichtweite, dann Hörweite, dann über eine Verbindung aus Blut, Erinnerung oder Bindung |\n| **Ziele** | +1 Ziel, drei Steigerungen erfassen eine Gruppe |\n| **Unauffällig** | Niemand erkennt die Wirkung als übernatürlich |\n| **Präzise** | genau das gewünschte Detail, keine Nebenwirkungen |\n| **Wucht** | stärkere Wirkung innerhalb der Wirkungsstufe, oder +1 Schaden |\n\nSteigerungen machen eine Wirkung **größer, nie tiefer**. Eine Wirkung der Stufe 3 wird durch Steigerungen nie zu einer Wirkung der Stufe 4.",
+    "tags": [
+      "steigerungen",
+      "dauer",
+      "reichweite",
+      "ziele",
+      "wucht",
+      "blutkünste"
+    ],
+    "position": 70,
+    "parentKey": null
+  },
+  {
+    "key": "kuenste_gegenkuenste",
+    "gameline": "db",
+    "section": "Blutkünste",
+    "title": "Gegenkünste",
+    "body": "Gegenkünste beruhen auf widersprüchlichen Grundannahmen. Daraus folgen zwei Regeln.\n\n**Das Prinzip bestimmt das Gegenmittel.** Eine Wirkung lässt sich mit ihrer Gegenkunst aufheben:\n\n- Die Wirkungsstufe muss mindestens so hoch sein wie die der ursprünglichen Wirkung.\n- Die Schwierigkeit ist die ursprüngliche Wirkungsstufe.\n\nGleiche sichtbare Ergebnisse haben deshalb verschiedene Gegenmittel. Wer per **Schleier** vergessen wurde, hat nie richtig wahrgenommen, und **Offenbarung** holt es zurück. Wer per **Vergessen** vergessen wurde, hat wahrgenommen und die Bedeutung verloren, und nur **Erinnerung** stellt es wieder her.\n\n**Gegenkunst als Widerstand.** Wer die Gegenkunst beherrscht, darf beim Widerstand ihre **Tiefe statt des Attributs** einsetzen: Wille + Tiefe in Freiheit gegen Herrschaft.",
+    "tags": [
+      "gegenkunst",
+      "aufheben",
+      "widerstand",
+      "prinzip",
+      "schleier",
+      "vergessen"
+    ],
+    "position": 80,
+    "parentKey": null
+  },
+  {
+    "key": "kuenste_spannung_und_dissonanz",
+    "gameline": "db",
+    "section": "Blutkünste",
+    "title": "Spannung und Dissonanz",
+    "body": "Wer beide Künste eines Paares beherrscht, trägt **Spannung** in sich.\n\n- **Spannung ist die niedrigere Tiefe des Paares.** Fleisch 4 und Geist 1 ergeben Spannung 1, Fleisch 3 und Geist 3 ergeben Spannung 3.\n- Bei jedem Einsatz einer der beiden Künste kommen **so viele Blutwürfel** in den Pool, wie die Spannung beträgt.\n- Eine 1 auf diesen Blutwürfeln löst eine **Dissonanz-Folge** des Paares aus.\n- Tritt im selben Kapitel die **dritte Dissonanz-Folge** desselben Paares ein, wird sie **dauerhaft**: eine körperliche Veränderung, ein neues persönliches Anathema oder ein Menschenzug sinkt um 1.\n\nAb Blutstärke 8 steigt die Spannung bei allen Gegenkünsten um 1. Die Dissonanz-Folgen der sieben Paare stehen bei den Kunstpaaren.",
+    "tags": [
+      "spannung",
+      "dissonanz",
+      "kunstpaar",
+      "blutwürfel",
+      "dauerhaft",
+      "tiefe"
+    ],
+    "position": 90,
+    "parentKey": "kuenste_gegenkuenste"
+  },
+  {
+    "key": "kuenste_kunst_des_blutes",
+    "gameline": "db",
+    "section": "Blutkünste",
+    "title": "Die Kunst des Blutes und ihre Instabilität",
+    "body": "Die Urkunst hat keine Gegenkunst. Ihr Prinzip lautet: **Cruor kann Cruor verändern.** Sie verwendet Cruor nicht als Werkzeug, sie verändert das Werkzeug selbst.\n\nStattdessen ist sie **inhärent instabil**: Jede Nutzung bringt **Wirkungsstufe - 2 Blutwürfel** in den Pool.\n\n- Stufe 1 und 2: keine Blutwürfel\n- Stufe 3: ein Blutwürfel\n- Stufe 4: zwei Blutwürfel\n- Stufe 5: drei Blutwürfel\n\nEine 1 darauf löst **Instabilität** aus. Nächtliche Anker können Instabilität abwenden.",
+    "tags": [
+      "kunst des blutes",
+      "urkunst",
+      "instabilität",
+      "blutwürfel",
+      "gegenkunst",
+      "cruor"
+    ],
+    "position": 100,
+    "parentKey": null
+  },
+  {
+    "key": "kuenste_fuenf_grenzen",
+    "gameline": "db",
+    "section": "Blutkünste",
+    "title": "Die fünf Grenzen",
+    "body": "Keine Blutkunst kann:\n\n1. **Materie oder Leben aus dem Nichts erschaffen.** Cruor verändert, formt, bewegt und verbindet.\n2. **Wirklich wiederbeleben.** Der Rote Übergang erschafft einen Deathborne, keinen lebenden Menschen.\n3. **Durch die Zeit reisen.** Erinnerung rekonstruiert, Stillstand konserviert, nichts kehrt zurück.\n4. **Grenzenlos reichen.** Ohne Wahrnehmung, Nähe oder Verbindung gibt es keine Wirkung.\n5. **Kostenlos wirken.** Macht verlangt Cruor.",
+    "tags": [
+      "grenzen",
+      "erschaffen",
+      "wiederbeleben",
+      "zeitreise",
+      "reichweite",
+      "kosten"
+    ],
+    "position": 110,
+    "parentKey": null
+  },
+  {
+    "key": "haeuser_blutlinie_und_scars",
+    "gameline": "db",
+    "section": "Häuser und Scars",
+    "title": "Blutlinie, Haus und Blood Scars",
+    "body": "Ein Vesper hat zwei Herkünfte, die sich unterscheiden können:\n\n- Die **Blutlinie** ist genealogisch. Sie bestimmt die **Blood Scar** und die **vererbten Anathema**.\n- Das **Haus** ist politisch und kulturell. Es bestimmt Verbündete, Feinde, Traditionen und Stand, aber nie das Blut.\n\nEin Vesper aus Kharven-Blut, der Haus Enathar beigetreten ist, trägt weiter The Chain und die Sonnenempfindlichkeit der Kharven. Kein Haus besitzt exklusive Blutkünste.\n\n**Blood Scars**\n\nDie Blood Scar ist der Makel der Deathborne. Sie wirkt über **Zwänge**. Jede Scar hat:\n\n- **Auslöser:** Situationen, in denen Zwänge vorgeschlagen werden können\n- **Dauerwirkung:** eine Regel, die ohne Zwang gilt\n- **Zwänge:** typische Beispiele\n\nEinen Zwang annehmen bringt 1 Wille, ablehnen kostet 1 Wille. Ab **Blutstärke 3** darf die SL schwere Zwänge vorschlagen, deren Ablehnung **2 Wille** kostet.",
+    "tags": [
+      "blutlinie",
+      "haus",
+      "blood scar",
+      "makel",
+      "zwang",
+      "vererbt"
+    ],
+    "position": 10,
+    "parentKey": null
+  },
+  {
+    "key": "haeuser_kharven_the_chain",
+    "gameline": "db",
+    "section": "Häuser und Scars",
+    "title": "Kharven: The Chain",
+    "body": "*Kharven-Cruor reagiert auf erzwungene Machtlosigkeit.*\n\n- **Auslöser:** Fesseln, Gefangenschaft, fremde Kontrolle, erzwungene Untätigkeit. Freiwillige Ruhe und freiwillige Starre lösen nichts aus.\n- **Dauerwirkung:** Jede Nacht in erzwungener Machtlosigkeit erhöht den Unterhalt um 1. Nach einer Woche droht Hungerstarre.\n- **Zwänge:** mit Gewalt ausbrechen, obwohl Geduld klüger wäre, einen Befehl verweigern, die Kontrolle über eine Gruppe an sich reißen.",
+    "tags": [
+      "kharven",
+      "the chain",
+      "fesseln",
+      "gefangenschaft",
+      "unterhalt",
+      "zwang"
+    ],
+    "position": 20,
+    "parentKey": "haeuser_blutlinie_und_scars"
+  },
+  {
+    "key": "haeuser_imreth_the_drift",
+    "gameline": "db",
+    "section": "Häuser und Scars",
+    "title": "Imreth: The Drift",
+    "body": "*Imreth-Cruor akzeptiert keine endgültige Form.*\n\n- **Auslöser:** schwere Verletzungen, Hunger ab 3, Wirkungen ab Stufe 4.\n- **Dauerwirkung:** Heilt ein Imreth eine Verheerung, regeneriert der Körper abweichend. Spieler und SL wählen eine sichtbare Veränderung: Augenfarbe, Gesichtszüge, Knochenbildung, Größe.\n- **Zwänge:** eine Veränderung mitten in der Szene, die jemand sieht (Aufsehen +1), den Körper unbedingt verbessern wollen, eine vertraute Form nicht mehr halten können.",
+    "tags": [
+      "imreth",
+      "the drift",
+      "verheerung",
+      "regeneration",
+      "veränderung",
+      "zwang"
+    ],
+    "position": 30,
+    "parentKey": "haeuser_blutlinie_und_scars"
+  },
+  {
+    "key": "haeuser_nyrath_the_weight",
+    "gameline": "db",
+    "section": "Häuser und Scars",
+    "title": "Nyrath: The Weight",
+    "body": "*Nyrath vergessen nur schwer.*\n\n- **Auslöser:** Orte, Menschen und Gegenstände, die an Trauma, Schuld oder Liebe erinnern.\n- **Dauerwirkung:** Die Kunst des Vergessens wirkt gegen Nyrath mit Schwierigkeit +2. Erschütterte und verlorene Anker lasten: In Szenen, die an sie erinnern, -1 Würfel.\n- **Zwänge:** in einer Erinnerung versinken und eine Runde abwesend sein, eine alte Schuld begleichen wollen, eine Kränkung nicht vergeben können.\n- **Identitätsauslöschung:** Wird die Existenz eines Nyrath systematisch ausgelöscht, also Aufzeichnungen, Name und Erinnerungen anderer, wird pro Kapitel ein Anker erschüttert.",
+    "tags": [
+      "nyrath",
+      "the weight",
+      "vergessen",
+      "erinnerung",
+      "anker",
+      "identität"
+    ],
+    "position": 40,
+    "parentKey": "haeuser_blutlinie_und_scars"
+  },
+  {
+    "key": "haeuser_veyran_the_empty_throne",
+    "gameline": "db",
+    "section": "Häuser und Scars",
+    "title": "Veyran: The Empty Throne",
+    "body": "*Veyran-Cruor braucht Anerkennung.*\n\n- **Auslöser:** ignoriert, gedemütigt, übergangen oder isoliert werden.\n- **Dauerwirkung:** Hat ein Veyran in keinem Court mindestens Stand 2 und erkennt auch sonst niemand seine Autorität an, wobei eine Gruppe, die ihm folgt, genügt, sinkt sein Vorrat um 2.\n- **Zwänge:** Anerkennung erzwingen, eine Demütigung rächen, die Führung beanspruchen, auch wenn ein anderer besser geeignet ist.",
+    "tags": [
+      "veyran",
+      "the empty throne",
+      "anerkennung",
+      "stand",
+      "vorrat",
+      "autorität"
+    ],
+    "position": 50,
+    "parentKey": "haeuser_blutlinie_und_scars"
+  },
+  {
+    "key": "haeuser_sarrath_the_fracture",
+    "gameline": "db",
+    "section": "Häuser und Scars",
+    "title": "Sarrath: The Fracture",
+    "body": "*Sarrath trennen Wahrnehmung und Deutung nicht sauber.*\n\n- **Auslöser:** Belastung, Einsatz der Kunst der Offenbarung, Spiegel, Reizüberflutung.\n- **Dauerwirkung:** Zeigt bei einer Wahrnehmungsprobe ein Blutwürfel eine 1, fügt die SL der Wahrnehmung ein falsches Detail hinzu.\n- **Zwänge:** einem Muster folgen, das nicht existiert, einen Traum für Wirklichkeit halten, eine Möglichkeit wie eine Erinnerung behandeln.",
+    "tags": [
+      "sarrath",
+      "the fracture",
+      "wahrnehmung",
+      "offenbarung",
+      "spiegel",
+      "muster"
+    ],
+    "position": 60,
+    "parentKey": "haeuser_blutlinie_und_scars"
+  },
+  {
+    "key": "haeuser_enathar_the_oath",
+    "gameline": "db",
+    "section": "Häuser und Scars",
+    "title": "Enathar: The Oath",
+    "body": "*Ein freiwillig gegebener Schwur verankert sich im Cruor.*\n\n- **Auslöser:** Versprechen, Schwüre, Verträge.\n- **Dauerwirkung:** Bricht ein Enathar ein Versprechen, folgt eine Strafe nach dessen Gewicht:\n\n| Versprechen | Strafe bis zur Wiedergutmachung |\n|---|---|\n| beiläufig (\"Ich verspreche es\") | Hunger +1 |\n| ernst | keine Regeneration |\n| feierlicher Schwur | Blutstärke zählt 1 niedriger |\n\n- **Zwänge:** ein Versprechen wörtlich halten, obwohl es schadet, einen Schwur leisten, der später einholt, sich weigern, eine Lüge auszusprechen.",
+    "tags": [
+      "enathar",
+      "the oath",
+      "schwur",
+      "versprechen",
+      "strafe",
+      "wiedergutmachung"
+    ],
+    "position": 70,
+    "parentKey": "haeuser_blutlinie_und_scars"
+  },
+  {
+    "key": "haeuser_thenera_the_severed_heart",
+    "gameline": "db",
+    "section": "Häuser und Scars",
+    "title": "Thenera: The Severed Heart",
+    "body": "*Thenera-Cruor bildet besonders starke Bindungen.*\n\n- **Auslöser:** Gefahr für geliebte Menschen, Trennung, Verlust.\n- **Dauerwirkung:** Verliert ein Thenera einen Anker, einen Sire, einen Scion oder einen Gefährten, folgt **sofort ein Zwang**, dessen Ablehnung 2 Wille kostet. Bis zum Ende des Kapitels füllt Blut nur halb.\n- **Zwänge:** besitzergreifend schützen, nicht loslassen können, Rache nehmen, jemanden zurückholen wollen.",
+    "tags": [
+      "thenera",
+      "the severed heart",
+      "bindung",
+      "verlust",
+      "anker",
+      "zwang"
+    ],
+    "position": 80,
+    "parentKey": "haeuser_blutlinie_und_scars"
+  },
+  {
+    "key": "haeuser_kaelor_the_yoke",
+    "gameline": "db",
+    "section": "Häuser und Scars",
+    "title": "Kaelor: The Yoke",
+    "body": "*Kaelor-Cruor wehrt sich gegen jede fremde Kontrolle.*\n\n- **Auslöser:** Herrschaft, erzwungene Bindungen, Schwüre, mentale Kontrolle, auch lange freiwillige Bindungen.\n- **Dauerwirkung:** Gegen Herrschaft und Bindung erhält ein Kaelor +2 Würfel auf Widerstand, verliert aber bei jedem Versuch 1 Cruor. Jedes Kapitel mit einer Blutbindung oder einem Schwur bringt einen Zwang.\n- **Zwänge:** eine Bindung brechen, die er eigentlich behalten will, Nähe zurückweisen, einen Befehl aus Prinzip verweigern.",
+    "tags": [
+      "kaelor",
+      "the yoke",
+      "herrschaft",
+      "kontrolle",
+      "blutbindung",
+      "widerstand"
+    ],
+    "position": 90,
+    "parentKey": "haeuser_blutlinie_und_scars"
+  },
+  {
+    "key": "haeuser_varyss_the_echoing_blood",
+    "gameline": "db",
+    "section": "Häuser und Scars",
+    "title": "Varyss: The Echoing Blood",
+    "body": "*Varyss-Cruor nimmt Einflüsse leichter an.*\n\n- **Auslöser:** fremdes Cruor, außergewöhnliche Blutquellen, intensive Blutkünste, die auf ihn wirken.\n- **Dauerwirkung:** Blutbindungen gegen Varyss steigen um 2 Stufen statt um 1. Dafür kostet eine neue Kunst per Blutlehre nur neue Tiefe mal 4. Wer das Cruor eines anderen Vesper trinkt, darf eines seiner Anathema oder eine seiner Eigenen Formen übernehmen, nach Wahl der SL.\n- **Zwänge:** fremde Instinkte übernehmen, auf ein fremdes Anathema reagieren, sich in fremdem Blut verlieren.",
+    "tags": [
+      "varyss",
+      "the echoing blood",
+      "fremdes cruor",
+      "blutbindung",
+      "blutlehre",
+      "anathema"
+    ],
+    "position": 100,
+    "parentKey": "haeuser_blutlinie_und_scars"
+  },
+  {
+    "key": "anathema_skala_und_grundprofil",
+    "gameline": "db",
+    "section": "Anathema",
+    "title": "Anathema: Skala und Grundprofil",
+    "body": "Anathema sind die Verwundbarkeiten der Deathborne. Ihre Wirkung folgt der fünfstufigen Skala des Kerns.\n\n- **Körperlich:** Der Einfluss verletzt oder schwächt den Körper, etwa Sonnenlicht, Feuer, Silber.\n- **Symbolisch:** Der Einfluss setzt eine Grenze oder belastet das Wesen, etwa eine Schwelle, echter Glaube, ein Bindekreis.\n\n| Stufe | Körperlich | Symbolisch |\n|---|---|---|\n| **Keine** | keine besondere Wirkung | keine besondere Wirkung |\n| **Gering** | -1 Würfel, keine Routine | Unbehagen: -1 Würfel, keine Routine |\n| **Mäßig** | -2 Würfel, übernatürliche Kräfte kosten +1 Treibstoff | 1 Treibstoff pro Szene, solange man bleibt |\n| **Stark** | 1 Verheerung pro Runde, Kräfte nur bis Wirkungsstufe 2 | Die Grenze hält, man kommt nicht hindurch. Wird man gewaltsam hineingebracht: 1 Verheerung pro Runde |\n| **Extrem** | 3 Verheerung pro Runde, keine Kräfte | Die Grenze hält und zehrt: 2 Treibstoff pro Runde, bei leerem Vorrat ein Kern-Zustand |\n\nEine Runde ist im Konflikt eine Handlung, außerhalb eines Konflikts etwa eine Minute. Steigt eine Stufe über Extrem hinaus, wirkt sie wie Extrem, und die Figur erleidet jede Runde zusätzlich 1 Verheerung.\n\n**Grundregel**\n\n> Was nicht ausdrücklich verändert wurde, folgt dem Grundprofil.\n\nEine fehlende Angabe bedeutet nie Immunität. Die Blutlinie verändert das Profil, persönliche Anathema verschieben es weiter, die politische Hauszugehörigkeit verändert es nie.\n\n| Einfluss | Stufe | Art |\n|---|---|---|\n| **Sonnenlicht** | Stark | körperlich |\n| **Feuer** | Stark | körperlich |\n| Schwellen und Einladungen | Keine | |\n| Knoblauch | Keine | |\n| Religiöse Symbole | Keine | |\n| Geweihter Boden | Keine | |\n| Fließendes Wasser | Keine | |\n| Silber | Keine | |\n| Salz | Keine | |\n| Weihwasser | Keine | |\n\nSpiegel und Kameras zeigen Vesperi ganz normal. Menschliche Nahrung regeln die Menschenzüge, Rauschmittel die Jagd.",
+    "tags": [
+      "anathema",
+      "verwundbarkeit",
+      "skala",
+      "grundprofil",
+      "sonnenlicht",
+      "feuer",
+      "symbolisch"
+    ],
+    "position": 10,
+    "parentKey": null
+  },
+  {
+    "key": "anathema_quelle_und_blutstaerke",
+    "gameline": "db",
+    "section": "Anathema",
+    "title": "Quelle, Blutstärke und Kern-Zustand",
+    "body": "- **Quelle:** Morgendämmerung, dichte Wolken oder eine kurze Berührung wirken eine Stufe schwächer. Ungeschützte Mittagssonne oder ein Großbrand wirken eine Stufe stärker.\n- **Blutstärke 3:** Vererbte Anathema, also die Abweichungen der Blutlinie, werden eine Stufe stärker.\n- **Blutstärke 5:** Das Grundprofil wird eine Stufe stärker.\n\n**Beispiel:** Ein gewöhnlicher Vesper mit Blutstärke 2 in der Morgendämmerung: Stark, eine Stufe schwächer, also **Mäßig**. Er hält es aus, aber seine Künste kosten mehr. In der Mittagssonne: Stark, eine Stufe stärker, also **Extrem**. Er verbrennt schnell.\n\n**Kern-Zustand:** Füllt Verheerung durch ein Anathema die Gesundheitsleiste, fällt der Vesper in **traumatische Starre**. Wirkt das Anathema danach weiter, folgt der **Letzte Schlag**.",
+    "tags": [
+      "quelle",
+      "stufe",
+      "blutstärke",
+      "dämmerung",
+      "mittagssonne",
+      "starre"
+    ],
+    "position": 20,
+    "parentKey": "anathema_skala_und_grundprofil"
+  },
+  {
+    "key": "anathema_alte_haeuser",
+    "gameline": "db",
+    "section": "Anathema",
+    "title": "Anathema der Alten Häuser",
+    "body": "| Blutlinie | Sonne | Feuer | Besondere Anathema |\n|---|---|---|---|\n| **Kharven** | **Extrem** | Stark | Silber: Mäßig (körperlich) |\n| **Imreth** | Stark | **Extrem** | Salz in offenen Wunden: Mäßig (körperlich) |\n| **Nyrath** | Stark | Stark | Spiegel: Mäßig (symbolisch) |\n| **Veyran** | Stark | Stark | Schwelle: Stark (symbolisch). Widerrufene Gastfreundschaft: Mäßig (symbolisch) |\n| **Sarrath** | **Extrem**, sensorisch | Stark | Spiegel: Stark (symbolisch) |\n| **Enathar** | Stark | Stark | Gelebter Glaube: Stark (symbolisch). Geweihte Orte: Mäßig, bei starker Quelle Stark |\n| **Thenera** | Stark | Stark | Fließendes Wasser: Stark (symbolisch) |\n| **Kaelor** | Stark | Stark | Bindekreise: Extrem (symbolisch). Pfählung verstärkt |\n| **Varyss** | Stark | Stark | ein persönliches Anathema |",
+    "tags": [
+      "alte häuser",
+      "blutlinie",
+      "sonne",
+      "feuer",
+      "anathema",
+      "übersicht"
+    ],
+    "position": 30,
+    "parentKey": null
+  },
+  {
+    "key": "anathema_besonderheiten",
+    "gameline": "db",
+    "section": "Anathema",
+    "title": "Besonderheiten der Blutlinien",
+    "body": "- **Kharven und Silber:** Verletzungen durch Silber zählen als Verheerung.\n- **Imreth und Feuer:** Heilt ein Imreth eine Verheerung durch Feuer, löst das immer The Drift aus.\n- **Nyrath und Spiegel:** Spiegel zeigen frühere Gesichter und alte Verletzungen. Das verursacht keinen Schaden, verrät aber Alter und Identität, und im Spiegel gilt -2 Würfel auf Täuschen.\n- **Veyran und die Schwelle:** Ein eindeutig bewohnter Wohnraum, auch der eines Mieters, auch ein Hotelzimmer für die Dauer des Aufenthalts, kann ohne Einladung nicht betreten werden. Eine einfache freiwillige Einladung öffnet die Schwelle. Wird sie widerrufen, belastet der Ort den Veyran (Mäßig), bis er ihn verlässt.\n- **Sarrath und die Sonne:** Statt Verheerung trifft das Sonnenlicht die Wahrnehmung. Pro Runde steigt Hunger um 1, dazu kommen Blindheit, Halluzinationen und der Verlust übernatürlicher Wahrnehmung. Ab Hunger 5 folgt Hungerstarre.\n- **Enathar und der Glaube:** Entscheidend ist nie das Objekt, sondern der **aufrichtige Glaube** dessen, der es trägt. Ein Kreidesymbol in der Hand eines tief Gläubigen hält einen Enathar auf, ein goldenes Kreuz an einem Zweifler nicht.\n- **Thenera und das Wasser:** Gilt nur für natürliche Strömung. Eine Brücke senkt die Stufe auf Mäßig, das Durchschwimmen eines Flusses erhöht sie auf Extrem. Ein persönlicher Anker, den der Thenera als Erinnerungsstück bei sich trägt, senkt die Stufe um 1.\n- **Kaelor und die Pfählung:** In Bindung verdoppelt sich der Unterhalt eines Kaelor. Nach der Befreiung folgt ein Zwang.\n\n**Varyss: persönliches Anathema**\n\nVaryss haben keinen gemeinsamen Satz zusätzlicher Anathema. Jeder Varyss wählt eines aus dieser Liste auf Stufe **Mäßig**:\n\n| | Anathema | Art |\n|---|---|---|\n| 1 | Silber | körperlich |\n| 2 | Salz | körperlich |\n| 3 | Knoblauch und Weißdorn | körperlich |\n| 4 | Kaltes Eisen | körperlich |\n| 5 | Glockenklang | symbolisch |\n| 6 | Spiegel | symbolisch |\n| 7 | Fließendes Wasser | symbolisch |\n| 8 | Schwellen | symbolisch |\n| 9 | Gelebter Glaube | symbolisch |\n| 10 | Kreise aus Asche | symbolisch |",
+    "tags": [
+      "besonderheiten",
+      "silber",
+      "spiegel",
+      "schwelle",
+      "glaube",
+      "varyss",
+      "bindekreise"
+    ],
+    "position": 40,
+    "parentKey": "anathema_alte_haeuser"
+  },
+  {
+    "key": "anathema_persoenliche_anathema",
+    "gameline": "db",
+    "section": "Anathema",
+    "title": "Persönliche Anathema und seltene Immunitäten",
+    "body": "Ein Vesper kann neue Anathema entwickeln: durch dauerhafte Dissonanz-Folgen, schwere Instabilität, fremdes Cruor, misslungene Rituale oder die Kunst des Blutes. Sie beginnen auf Stufe Gering und können wachsen.\n\n**Seltene Immunitäten**\n\nEin Grund-Anathema kann gesenkt oder aufgehoben werden, etwa durch ein Ritual oder die Kunst des Blutes auf Stufe 5. **Cruor gleicht immer aus:** Für jede Stufe, um die ein Anathema sinkt, entsteht oder wächst ein anderes um dieselbe Stufe. Ein sonnenresistenter Vesper ist eine politische Sensation, und er bezahlt irgendwo anders dafür.",
+    "tags": [
+      "persönliches anathema",
+      "immunität",
+      "ausgleich",
+      "dissonanz",
+      "ritual",
+      "kunst des blutes"
+    ],
+    "position": 50,
+    "parentKey": null
+  },
+  {
+    "key": "koerper_schaden",
+    "gameline": "db",
+    "section": "Körper",
+    "title": "Schaden bei Deathborne",
+    "body": "| Schicht | Quellen |\n|---|---|\n| **Wunde** | Kugeln, Klingen, Schläge, Stürze, Explosionen |\n| **Verheerung** | Feuer, Sonnenlicht, andere körperliche Anathema, die Kunst des Verfalls, gezielte Zerstörung des Cruor |\n| **Kern** | Herz durchbohrt, Kopf abgetrennt, Gehirn zerstört, Körper vernichtet |\n\n- **Keine Abzüge durch Wunden.** Cruor unterdrückt den Schmerz. Abzüge entstehen nur durch Verheerung: -1 Würfel, sobald die Hälfte der Leiste Verheerung ist, -2 Würfel, wenn nur noch ein Kästchen frei ist.\n- **Zusammenbruch:** Ist die Leiste voll und enthält Wunden, ist der Vesper handlungsunfähig, kann aber jederzeit Cruor ausgeben, um Wunden zu heilen und wieder aufzustehen.\n- **Voll mit Verheerung:** traumatische Starre.",
+    "tags": [
+      "schaden",
+      "wunde",
+      "verheerung",
+      "kern",
+      "abzüge",
+      "zusammenbruch"
+    ],
+    "position": 10,
+    "parentKey": null
+  },
+  {
+    "key": "koerper_regeneration",
+    "gameline": "db",
+    "section": "Körper",
+    "title": "Regeneration",
+    "body": "| Was | Cruor | Zeit |\n|---|---|---|\n| Wunde | 1 pro Kästchen | sofort, ohne Handlung, höchstens Blutstärke Kästchen pro Runde |\n| Verheerung | 3 pro Kästchen, ab Blutstärke 3 nur 2 | eine Ruhe am Tag |\n| Finger, Ohr, Auge | 2 | eine Nacht |\n| Hand, Fuß | 4 | drei Nächte |\n| Arm, Bein | 6 | eine Woche |\n| innere Organe außer Herz und Gehirn | 4 | eine Nacht |\n\nEin abgetrenntes Körperteil kann innerhalb einer Szene wieder angesetzt werden und wächst dann für 1 Cruor an.",
+    "tags": [
+      "regeneration",
+      "heilen",
+      "cruor",
+      "körperteile",
+      "verheerung",
+      "wunde"
+    ],
+    "position": 20,
+    "parentKey": null
+  },
+  {
+    "key": "koerper_starre",
+    "gameline": "db",
+    "section": "Körper",
+    "title": "Starre",
+    "body": "**Starre** ist der Zustand, in dem Cruor fast alle Aktivität einstellt. Der Vesper atmet nicht, reagiert kaum und wirkt wie eine Leiche. In Starre kostet er **keinen Unterhalt**.\n\n| Art | Auslöser | Ende |\n|---|---|---|\n| **Freiwillige Starre** | der Vesper entscheidet sich dafür | zu einem vorher bestimmten Zeitpunkt oder bei Gefahr (Gespür + Wille, Schwierigkeit 3) |\n| **Hungerstarre** | ein sechster Hungerpunkt wäre fällig | wenn jemand dem Vesper Blut einflößt, mindestens 2 Cruor |\n| **Traumatische Starre** | Gesundheitsleiste voll mit Verheerung | nach der Dauer in der Tabelle, danach ist eine Verheerung geheilt |\n\n**Dauer der traumatischen Starre**\n\n| Blutstärke | Dauer |\n|---|---|\n| 1-2 | eine Woche |\n| 3-4 | drei Nächte |\n| 5-6 | eine Nacht |\n| 7+ | eine Stunde |\n\nWer einem Vesper in traumatischer Starre Cruor eines anderen Vesper einflößt, mindestens 3, halbiert die Dauer.",
+    "tags": [
+      "starre",
+      "hungerstarre",
+      "traumatische starre",
+      "freiwillige starre",
+      "unterhalt",
+      "erwachen"
+    ],
+    "position": 30,
+    "parentKey": null
+  },
+  {
+    "key": "koerper_bindung",
+    "gameline": "db",
+    "section": "Körper",
+    "title": "Bindung durch Pfählung",
+    "body": "Ein Gegenstand, der das Herz durchdringt und blockiert, versetzt einen Vesper in **Bindung**. Das Material ist gleichgültig, Holz ist nicht besser als Metall.\n\n- **Wie:** ein Kern-Treffer mit einer Stichwaffe, also drei Präzise oder ein wehrloses Ziel\n- **Wirkung:** Der Vesper ist bewegungsunfähig, meist bei Bewusstsein, kann keine Blutkünste einsetzen und nicht regenerieren. Der Unterhalt läuft weiter, bis Hungerstarre eintritt.\n- **Ende:** Wird der Gegenstand entfernt, regeneriert das Herz für 2 Cruor, und der Vesper kann sofort wieder handeln.\n- **Kaelor:** doppelter Unterhalt, nach der Befreiung ein Zwang.",
+    "tags": [
+      "bindung",
+      "pfählung",
+      "herz",
+      "kern-treffer",
+      "kaelor",
+      "unterhalt"
+    ],
+    "position": 40,
+    "parentKey": null
+  },
+  {
+    "key": "koerper_letzter_schlag",
+    "gameline": "db",
+    "section": "Körper",
+    "title": "Enthauptung, Gehirn und der Letzte Schlag",
+    "body": "**Enthauptung**\n\nDie Trennung von Kopf und Herz ist fast immer das Ende.\n\n- Der Vesper ist sofort handlungsunfähig.\n- Wird der Kopf **innerhalb einer Runde** wieder angesetzt und hat der Vesper **Blutstärke 5 oder mehr**, fällt er in traumatische Starre, statt zu vergehen.\n- Andernfalls folgt am Ende der Runde der Letzte Schlag.\n\n**Gehirn**\n\n- **Schwer beschädigt**, also ein Kern-Treffer gegen den Kopf ohne Zerstörung: traumatische Starre. Beim Erwachen ist ein Anker nach Wahl der SL **verloren**. Erinnerung und Persönlichkeit sind beschädigt.\n- **Vollständig zerstört:** Letzter Schlag.\n\n**Der Letzte Schlag**\n\nDer Letzte Schlag beendet die zweite Existenz eines Vesper. Er tritt ein bei:\n\n- vollständiger Zerstörung des Gehirns,\n- dauerhafter Trennung von Kopf und Herz,\n- Zerstörung von Herz und großen Teilen des Rumpfes,\n- Vernichtung des Körpers durch Feuer, Sonne oder Zerstückelung,\n- einem Anathema, das auf einen Vesper in traumatischer Starre weiterwirkt.\n\n**Nicht** tödlich sind: Ertrinken, Ersticken, Erhängen, gewöhnlicher Blutverlust, Herzstillstand, Durchbohrung des Herzens, Verlust von Organen oder Gliedmaßen, gewöhnliche Schuss- und Stichwunden.",
+    "tags": [
+      "letzter schlag",
+      "enthauptung",
+      "gehirn",
+      "tod",
+      "endgültig",
+      "starre"
+    ],
+    "position": 50,
+    "parentKey": null
+  },
+  {
+    "key": "koerper_menschenzuege",
+    "gameline": "db",
+    "section": "Körper",
+    "title": "Menschenzüge",
+    "body": "Menschenzüge sind die Reste des menschlichen Körpers, die ein Vesper noch besitzt. Sie sind die Einbuße, wenn ein Anker verloren geht. Jeder Menschenzug hat einen Wert von **3 bis 0**.\n\n| Zug | 3 | 2 | 1 | 0 |\n|---|---|---|---|---|\n| **Atem** | unbewusst, wie bei einem Menschen | nur bewusst, wer nicht daran denkt, hört auf | bewusst, aber zu gleichmäßig und mechanisch | Luft wird nur noch zum Sprechen und Riechen bewegt, die Brust bleibt sonst reglos |\n| **Wärme** | satt fühlt sich der Körper warm an | nur direkt nach dem Trinken warm | selbst satt nur lauwarm | immer kalt wie eine Leiche |\n| **Herzschlag** | rast bei Gefühlen und Anstrengung | reagiert nur auf Anstrengung und Trinken | langsam und unregelmäßig, Sekunden zwischen den Schlägen | kaum fühlbar, minutenlang still |\n| **Essen** | ein ganzes Abendessen ohne Folgen | einige Bissen und ein Glas | ein Bissen oder Schluck, danach Übelkeit | jede Nahrung wird sofort wieder ausgestoßen |\n| **Träume** | Ruhe mit Träumen wie ein Mensch | Träume selten und blass | Ruhe ohne Träume, nur Dunkelheit | keine Ruhe mehr, nur regungsloses Warten |\n| **Mimik** | Erröten, Tränen, Gänsehaut, unwillkürliche Regungen | nur bewusst gesteuerte Mimik | Regungen wirken verzögert und einstudiert | das Gesicht bleibt still, jede Regung wirkt wie eine Maske |\n\n**Wann ein Menschenzug sinkt**\n\n- **Ein Anker geht verloren:** Ein Menschenzug nach Wahl des Spielers sinkt um 1.\n- **Loslassen** eines menschlichen Ankers: Ein Menschenzug sinkt um 1.\n- **Dauerhafte Dissonanz-Folge:** kann einen Menschenzug um 1 senken.\n- **Blutstärke 4** begrenzt Essen auf höchstens 1, **Blutstärke 9** alle Menschenzüge auf höchstens 1.\n\n**Menschenzüge kommen nicht zurück.** Anker kann man ersetzen, Menschenzüge nicht. Fällt ein Zug auf 0, ist er für immer verloren. Die Kunst des Fleisches kann manche Züge für eine Szene vortäuschen.",
+    "tags": [
+      "menschenzüge",
+      "atem",
+      "wärme",
+      "herzschlag",
+      "essen",
+      "träume",
+      "mimik"
+    ],
+    "position": 60,
+    "parentKey": null
+  },
+  {
+    "key": "koerper_als_mensch_durchgehen",
+    "gameline": "db",
+    "section": "Körper",
+    "title": "Als Mensch durchgehen",
+    "body": "Ob ein Vesper unter Menschen auffällt, hängt von seinem Füllstand und den Menschenzügen ab, die die Situation **prüft**: ein Abendessen prüft Essen, eine Umarmung Wärme und Herzschlag, ein langes Gespräch Atem und Mimik, eine gemeinsame Nacht Träume.\n\n| Geprüfter Zug | Wirkung |\n|---|---|\n| 3 | kein Problem |\n| 2 | Schwierigkeit +1, wenn jemand genau hinsieht |\n| 1 | Schwierigkeit +2 |\n| 0 | fällt auf, sobald jemand darauf achtet, außer eine Blutkunst verbirgt es |\n\n| Füllstand | Durchgehen |\n|---|---|\n| Satt | Routine, solange kein geprüfter Zug unter 2 liegt |\n| Kühl | Wurf, wenn jemand Verdacht schöpft |\n| Leer | immer Wurf |\n| Hungrig | immer Wurf, mit Blutwürfeln |\n\nDer Pool ist meist **Raffinesse + Täuschen**. Ein anwesender menschlicher Anker gibt +1 Würfel.",
+    "tags": [
+      "durchgehen",
+      "täuschen",
+      "füllstand",
+      "menschenzüge",
+      "verdacht",
+      "menschlich"
+    ],
+    "position": 70,
+    "parentKey": "koerper_menschenzuege"
+  },
+  {
+    "key": "gesellschaft_aufsehen",
+    "gameline": "db",
+    "section": "Gesellschaft",
+    "title": "Aufsehen",
+    "body": "Alle Kreaturen der Nacht leben verborgen. **Aufsehen** misst, wie nah die Welt der Wahrheit kommt. Es wird **pro Schauplatz** geführt, meist pro Stadt, und hat **12 Kästchen in vier Stufen**.\n\n| Kästchen | Stufe | Was die Welt hat | Folgen |\n|---|---|---|---|\n| 1-3 | **Gerücht** | Geschichten, Aberglaube, seltsame Zufälle | Neugierige, Spinner, Lokalpresse |\n| 4-6 | **Wissen** | ein Zeuge, der es sicher weiß | Die Wächter der verborgenen Welt werden aufmerksam |\n| 7-9 | **Furcht** | Beweise: Fotos, Aufnahmen, Schriften, eine Leiche | Die verborgene Welt greift ein, Behörden stellen Fragen |\n| 10-12 | **Jagd** | Menschen organisieren sich | Jäger tauchen auf, jedes Kapitel bringt einen Angriff oder eine Enthüllung |\n\nIst das zwölfte Kästchen gefüllt, ist die **Katastrophe** da: eine öffentliche Enthüllung, eine Säuberung, ein Krieg.\n\n**Aufsehen steigt**\n\n| Ereignis | Aufsehen |\n|---|---|\n| Eine kleine Unachtsamkeit, ein seltsamer Moment vor Zeugen | +1 |\n| Eine offensichtlich übernatürliche Wirkung vor Zeugen | +2 |\n| Eine Leiche mit eindeutigen Spuren | +2 |\n| Kontrollverlust in der Öffentlichkeit | +3 |\n| Ein Beweis: Aufnahme, Foto, Dokument, gefangene Kreatur | +3 |\n\nDie Steigerung Unauffällig verhindert Aufsehen direkt im Wurf.\n\n**Aufsehen sinkt**\n\n- **Aufräum-Szene:** Beweise vernichten, Zeugen überzeugen oder zum Vergessen bringen, Spuren verwischen, falsche Fährten legen. Die Szene wird mit einem Wurf aufgelöst. Ein Erfolg senkt Aufsehen um 1, jede Steigerung um 1 weiteres.\n- **Zeit:** Jedes Kapitel ohne neuen Vorfall senkt Aufsehen um 1.\n\n**Eine Stufe lässt sich erst verlassen, wenn ihre Ursache beseitigt ist.** Solange ein Zeuge redet, bleibt es mindestens bei Wissen. Solange ein Beweis existiert, bleibt es mindestens bei Furcht. Solange die Jäger organisiert sind, bleibt es bei Jagd.",
+    "tags": [
+      "aufsehen",
+      "gerücht",
+      "wissen",
+      "furcht",
+      "jagd",
+      "aufräum-szene",
+      "katastrophe"
+    ],
+    "position": 10,
+    "parentKey": null
+  },
+  {
+    "key": "gesellschaft_bund",
+    "gameline": "db",
+    "section": "Gesellschaft",
+    "title": "Der Bund der Schweigenden Nacht und Urteile",
+    "body": "Die Aufsehen-Leiste folgt bei den Deathborne dem Bund der Schweigenden Nacht. Seine Präambel beschreibt die vier Stufen selbst: *Wo einst Gerücht war, ward Wissen. Wo Wissen war, ward Furcht. Wo Furcht war, ward Jagd.*\n\n| Stufe | Bund | Wer reagiert |\n|---|---|---|\n| **Gerücht** | kein Bruch (Artikel 1) | niemand |\n| **Wissen** | Zeugen werden geduldet, wenn sie schweigen (Artikel 2) | der **Keeper of Accord** beginnt zu ermitteln |\n| **Furcht** | Beweise sind ein Bruch (Artikel 3) | der Court greift ein und fällt Urteile (Artikel 11) |\n| **Jagd** | organisierte Jagd beendet jede Duldung (Artikel 10) | Warden, Ashen Hand, im schlimmsten Fall das Black Tribunal |\n\nIst die **Katastrophe** erreicht, sucht die verborgene Welt einen **Verräter der Nacht** (Artikel 12), und niemand fragt, ob es der richtige ist.\n\n**Urteile**\n\nWer einen Bruch verursacht, wird nach Schwere, Absicht und Gefahr beurteilt.\n\n| Urteil | Wirkung |\n|---|---|\n| Wiedergutmachung | eine Schuld gegenüber dem Court |\n| Entfernung des Beweises | eine Aufräum-Szene unter Aufsicht, ohne Belohnung |\n| Schweigepflicht | ein feierlicher Schwur vor dem Arbiter |\n| Verlust von Rechten | Stand -1 |\n| Hausstrafe | das eigene Haus bestimmt die Strafe |\n| Verbannung | Stand 0 in diesem Court, Rückkehr bedeutet Jagd |\n| Cruor-Bindung | Blutbindung Stufe 2 an den Keeper of Accord |\n| Starre | erzwungene Starre für Jahre |\n| Letzter Schlag | nur, wenn kein geringeres Mittel die Gefahr beendet |",
+    "tags": [
+      "bund der schweigenden nacht",
+      "bruch",
+      "keeper of accord",
+      "urteil",
+      "verbannung",
+      "artikel"
+    ],
+    "position": 20,
+    "parentKey": "gesellschaft_aufsehen"
+  },
+  {
+    "key": "gesellschaft_schulden",
+    "gameline": "db",
+    "section": "Gesellschaft",
+    "title": "Schulden",
+    "body": "Schulden gibt es in drei Größen. Bei den Deathborne heißen sie **Gefallen**, **Schuld** und **Blutschuld**.\n\n| Größe | Bedeutung |\n|---|---|\n| **Gefallen** | eine Tür öffnen, eine Information geben, einen Abend lang schweigen |\n| **Schuld** | ein echtes Risiko eingehen, Besitz oder Ansehen aufs Spiel setzen |\n| **Blutschuld** | ein Leben retten, eine Existenz aufgeben, ein Verbrechen decken |\n\nAuf dem Charakterbogen stehen beide Richtungen: wem man schuldet und wer einem schuldet.\n\n- **Eintreiben:** Wer eine Schuld einfordert, verlangt eine Leistung derselben Größe.\n- **Tauschen und verschenken:** Schulden können weitergegeben werden. Wer einem anderen eine Schuld überträgt, verschafft ihm Macht über den Schuldner.\n- **Verweigern:** Wer eine Schuld öffentlich verweigert, beschädigt seinen Ruf. Bis zur Wiedergutmachung ist in dieser Gemeinschaft keine Routine mehr möglich. Eine verweigerte Blutschuld kostet eine Stufe Stand.\n\nEin Enathar, der eine Schuld feierlich anerkennt, bindet sie an The Oath.",
+    "tags": [
+      "schulden",
+      "gefallen",
+      "blutschuld",
+      "eintreiben",
+      "verweigern",
+      "ruf"
+    ],
+    "position": 30,
+    "parentKey": null
+  },
+  {
+    "key": "gesellschaft_stand",
+    "gameline": "db",
+    "section": "Gesellschaft",
+    "title": "Stand",
+    "body": "Stand beschreibt die Stellung einer Figur in einer Gemeinschaft.\n\n| Stand | Beschreibung | Bonus |\n|---|---|---|\n| 0 | fremd, ohne Rechte | - |\n| 1 | geduldet | - |\n| 2 | anerkannt | +1 Würfel |\n| 3 | geschützt, mit Stimme | +2 Würfel |\n| 4 | vereidigt, im inneren Kreis | +3 Würfel |\n\nDer Bonus gilt für **Etikette und Überzeugen innerhalb dieser Gemeinschaft**. Stand öffnet außerdem Türen, die ohne ihn verschlossen bleiben.",
+    "tags": [
+      "stand",
+      "gemeinschaft",
+      "ansehen",
+      "etikette",
+      "überzeugen",
+      "bonus"
+    ],
+    "position": 40,
+    "parentKey": null
+  },
+  {
+    "key": "gesellschaft_court",
+    "gameline": "db",
+    "section": "Gesellschaft",
+    "title": "Stand im Court und Ämter",
+    "body": "Der Court ist die Gemeinschaft der Deathborne. Seine Stufen folgen dem Recht auf Aufenthalt.\n\n| Stand | Name | Rechte |\n|---|---|---|\n| 0 | **Fremder** | keine, der Aufenthalt ist ein Risiko |\n| 1 | **Besucher** | darf sich aufhalten, hat aber keine Stimme |\n| 2 | **Bewohner** | registriert, darf jagen, wo es erlaubt ist |\n| 3 | **Geschützt** | steht unter dem Schutz des Courts, darf eine Domain besitzen |\n| 4 | **Vereidigt** | Stimme im Night Council, Zugang zum Seat |\n\n**Ämter**\n\n| Amt | Aufgabe | Regel |\n|---|---|---|\n| **Regent** | führt den Court | Stand 4, kann Stand vergeben und entziehen |\n| **Keeper of Accord** | wacht über den Bund | +2 Würfel auf Nachforschung bei Brüchen des Bundes, darf Beweise einziehen |\n| **Arbiter** | richtet zwischen Vesperi | +2 Würfel auf Etikette in Streitfällen, kann Schulden für bindend erklären |\n| **Warden** | sorgt für Sicherheit | darf Gewalt anwenden, ohne Stand zu verlieren, befehligt Handlanger |\n\nEin Amt ist ein nächtlicher Anker, sobald der Spieler es einträgt.",
+    "tags": [
+      "court",
+      "stand",
+      "regent",
+      "arbiter",
+      "warden",
+      "amt",
+      "domain"
+    ],
+    "position": 50,
+    "parentKey": "gesellschaft_stand"
+  },
+  {
+    "key": "gesellschaft_orders",
+    "gameline": "db",
+    "section": "Gesellschaft",
+    "title": "Orders",
+    "body": "Eine Order ist eine Überzeugung, keine Herrschaft. Wer einer Order beitritt, darf sie als nächtlichen Anker eintragen. Orders geben keinen Stand im Court, aber Kontakte in jeder Stadt, in der sie vertreten sind.",
+    "tags": [
+      "order",
+      "überzeugung",
+      "anker",
+      "kontakte",
+      "beitritt"
+    ],
+    "position": 60,
+    "parentKey": null
+  },
+  {
+    "key": "gesellschaft_blutbindung",
+    "gameline": "db",
+    "section": "Gesellschaft",
+    "title": "Blutbindung",
+    "body": "Wer das Cruor eines anderen Vesper trinkt, wird an ihn gebunden. Die Blutbindung ist ein **erzwungener Anker**: Sie besetzt einen nächtlichen Ankerplatz und kann nicht selbst aufgegeben werden.\n\n| Stufe | Name | Wirkung |\n|---|---|---|\n| **1** | Zuneigung | Der Gebundene fühlt sich zum anderen hingezogen und denkt oft an ihn |\n| **2** | Loyalität | Die SL darf Zwänge zugunsten des anderen vorschlagen |\n| **3** | Hörigkeit | Gegen den anderen zu handeln kostet 2 Wille pro Handlung |\n\n- Jeder Schluck erhöht die Stufe um 1, höchstens bis 3.\n- Ist kein Ankerplatz frei, verdrängt die Blutbindung einen bestehenden nächtlichen Anker. Gibt es keinen, verdrängt sie einen menschlichen.\n- **Die Bindung gibt Halt** wie jeder andere Anker. Deshalb lassen sich manche Vesperi freiwillig binden.\n- **Lösen:** Die Kunst der Trennung (Stufe 3) senkt die Stufe um 1. Ein Jahr ohne das Blut des anderen senkt sie ebenfalls um 1. Bei Stufe 0 wird der Platz frei.\n- **Kaelor** erhalten jedes Kapitel mit einer Blutbindung einen Zwang, **Varyss** steigen bei jedem Schluck um 2 Stufen.\n\nWer gebunden ist, hat buchstäblich weniger Platz für sich selbst.",
+    "tags": [
+      "blutbindung",
+      "hörigkeit",
+      "anker",
+      "lösen",
+      "kaelor",
+      "varyss"
+    ],
+    "position": 70,
+    "parentKey": null
+  },
+  {
+    "key": "gesellschaft_blutlehre",
+    "gameline": "db",
+    "section": "Gesellschaft",
+    "title": "Blutlehre",
+    "body": "Ein Vesper kann eine **neue Kunst** lernen, indem er vom Cruor eines Lehrers trinkt, der diese Kunst mindestens auf Tiefe 2 beherrscht.\n\n- Die Kunst steigt sofort auf Tiefe 1, ohne Übungszeit.\n- Die XP-Kosten sinken auf 5, bei Varyss auf 4.\n- Die Blutbindung an den Lehrer steigt um 1.\n- Fremde Erinnerungsfetzen des Lehrers begleiten den Schüler bis zum Ende des Kapitels.\n\nDie Aufnahme fremden Cruors ist in den meisten Courts streng geregelt oder tabu. Ein Lehrer, der anbietet, von ihm zu trinken, will etwas.",
+    "tags": [
+      "blutlehre",
+      "lehrer",
+      "neue kunst",
+      "trinken",
+      "blutbindung",
+      "xp"
+    ],
+    "position": 80,
+    "parentKey": null
+  },
+  {
+    "key": "gesellschaft_roter_uebergang",
+    "gameline": "db",
+    "section": "Gesellschaft",
+    "title": "Der Rote Übergang und der Hohle Schlag",
+    "body": "Ein Vesper kann einen toten Menschen zu einem Deathborne machen.\n\n**Voraussetzungen:** Kopf und Herz sind vorhanden und durch einen zusammenhängenden Körper verbunden. Wie lange der Tod zurückliegt, ist gleichgültig.\n\n**Ablauf:** Beanspruchung, Verbindung, Stillstand und Übertragung des Beats werden erzählt. Dann würfelt der Sire einmal:\n\n- **Pool:** Wille + Blutstärke\n- **Schwierigkeit:** 2, +1 bei schwer beschädigtem Körper, +1 bei fortgeschrittener Verwesung\n\n| Ergebnis | Folge |\n|---|---|\n| **Erfolg** | **Erwachen:** Der Erste Schlag erfolgt, ein neuer Vesper entsteht |\n| **Erfolg, aber eine 1 auf einem Blutwürfel** | **Fehlgeburt:** Der Erste Schlag erfolgt, aber etwas ist falsch. Die SL bestimmt, was entsteht |\n| **Misserfolg** | **Schweigen:** Der Tote bleibt tot |\n\n- Der Scion steht ein **Glied** tiefer als der Sire.\n- Die **Affinität** des Scions ist das Steckenpferd des Sires.\n- War der Tote ein menschlicher Anker des Sires, wird dieser Anker zu einem nächtlichen.\n- Ein Roter Übergang an einem ungeeigneten Ort bringt **Aufsehen +2**.\n\n**Der Hohle Schlag**\n\nDurch die Weitergabe des Beats fehlt dem Sire ein Teil seiner Stabilität. Bis zum Ende des Kapitels gilt:\n\n- Vorrat **-3**\n- **+1 Blutwürfel** bei allen Blutkünsten\n\nEin **zweiter** Roter Übergang im selben Kapitel senkt zusätzlich die Blutstärke um 1 bis zum Ende des Kapitels. Ein **dritter** löst sofort eine schwere Instabilität aus.",
+    "tags": [
+      "roter übergang",
+      "sire",
+      "scion",
+      "erwachen",
+      "fehlgeburt",
+      "hohler schlag"
+    ],
+    "position": 90,
+    "parentKey": null
+  },
+  {
+    "key": "erschaffung_der_mensch",
+    "gameline": "db",
+    "section": "Charaktererschaffung",
+    "title": "Schritt 1: Der Mensch",
+    "body": "Jeder Vesper war ein Mensch. Beantworte:\n\n- Wer warst du? Beruf, Familie, Heimat, Überzeugungen.\n- Wie bist du gestorben?\n- Was hast du in deinem ersten Leben geliebt, und was davon existiert noch?\n\nDaraus entstehen Spezialisierungen und die ersten menschlichen Anker.",
+    "tags": [
+      "charaktererschaffung",
+      "der mensch",
+      "früheres leben",
+      "tod",
+      "spezialisierungen"
+    ],
+    "position": 10,
+    "parentKey": null
+  },
+  {
+    "key": "erschaffung_startalter",
+    "gameline": "db",
+    "section": "Charaktererschaffung",
+    "title": "Schritt 2: Startalter",
+    "body": "| | Frisch erwacht | Etabliert | Alt |\n|---|---|---|---|\n| **Blutalter** | bis 10 Jahre | 10 bis 100 Jahre | über 100 Jahre |\n| **Blutstärke** | 1 | 2 | 3 |\n| **Höchste Tiefe** | 2 | 3 | 4 |\n| **Lernschritte** | 3 | 3 | 3 |\n| **Bonus-XP** | 0 | 20 | 45 |\n| **Anker (menschlich / nächtlich)** | 4 / 1 | 3 / 2 | 1 / 4 |\n| **Menschenzüge** | alle auf 3 | 2 Stufen abziehen | 5 Stufen abziehen, keiner unter 1 |\n| **Altlasten** | keine | 1 Schuld oder 1 Feind | 2 Schulden, 1 Feind, 1 Schwur |\n| **Entfremdung** | nein | nein | ja |\n\nWer alt startet, ist mächtiger, aber hungriger, verwundbarer, politisch belastet, und ihm bleibt kaum etwas Menschliches, an dem er sich festhalten kann.",
+    "tags": [
+      "startalter",
+      "frisch erwacht",
+      "etabliert",
+      "alt",
+      "bonus-xp",
+      "altlasten"
+    ],
+    "position": 20,
+    "parentKey": null
+  },
+  {
+    "key": "erschaffung_attribute_und_fertigkeiten",
+    "gameline": "db",
+    "section": "Charaktererschaffung",
+    "title": "Schritt 3 und 4: Attribute und Fertigkeiten",
+    "body": "**Attribute**\n\nVerteile die Werte **4, 3, 3, 2, 2, 1** auf Kraft, Geschick, Verstand, Gespür, Präsenz und Raffinesse. **Wille** beginnt bei 2.\n\n**Fertigkeiten**\n\nWähle ein Paket:\n\n| Paket | Verteilung |\n|---|---|\n| **Spezialist** | einmal 4, zweimal 3, dreimal 2, zweimal 1 |\n| **Generalist** | einmal 3, fünfmal 2, fünfmal 1 |\n\nDazu kommen **zwei Spezialisierungen**, mindestens eine aus dem menschlichen Leben.",
+    "tags": [
+      "attribute",
+      "fertigkeiten",
+      "verteilung",
+      "spezialist",
+      "generalist",
+      "wille"
+    ],
+    "position": 30,
+    "parentKey": null
+  },
+  {
+    "key": "erschaffung_blutlinie_haus_court",
+    "gameline": "db",
+    "section": "Charaktererschaffung",
+    "title": "Schritt 5: Blutlinie, Haus und Court",
+    "body": "- **Blutlinie:** bestimmt Blood Scar und vererbte Anathema. Varyss wählen ihr persönliches Anathema.\n- **Haus:** politische Zugehörigkeit, kann von der Blutlinie abweichen.\n- **Court:** Stand 2 (Bewohner), sofern die Geschichte nichts anderes verlangt.\n- **Order:** optional.\n- **Glied:** das Glied des Sires + 1. Kennt der Spieler es nicht, liegt es bei 9.",
+    "tags": [
+      "blutlinie",
+      "haus",
+      "court",
+      "order",
+      "glied",
+      "stand"
+    ],
+    "position": 40,
+    "parentKey": null
+  },
+  {
+    "key": "erschaffung_blutkuenste_und_erbe",
+    "gameline": "db",
+    "section": "Charaktererschaffung",
+    "title": "Schritt 6 und 7: Blutkünste, Erbe und Formen",
+    "body": "1. Der Spieler stellt der SL **eine Frage**: *\"Was ist das Steckenpferd meines Sires?\"* Die SL nennt eine Kunst. Alles andere über den Sire bleibt bei der SL.\n2. Der Spieler verteilt **3 Lernschritte**. Jeder Lernschritt hebt eine Kunst um 1 Tiefe, höchstens bis zur höchsten Tiefe des Startalters. Beispiele: dreimal Tiefe 1, oder Tiefe 2 und Tiefe 1.\n3. **Das Erbe:** Ist die höchste Startkunst das Steckenpferd des Sires, bei Gleichstand genügt es, wenn es eine der höchsten ist, erhält die Figur **10 Bonus-XP** und **Affinität** in dieser Kunst.\n\nWer seinem Sire nicht folgt, verliert nichts, gewinnt aber auch nichts.\n\n**Formen**\n\n- Pro **Tiefenpunkt** eine Form, wahlweise gefestigt oder eigen.\n- Dazu **eine Gefestigte Form** aus der Pflichtlehre des Sires. Artikel 6 des Bundes verlangt, dass jeder Sire seinen Scion lehrt, was er geworden ist.",
+    "tags": [
+      "lernschritte",
+      "erbe",
+      "steckenpferd",
+      "affinität",
+      "formen",
+      "sire"
+    ],
+    "position": 50,
+    "parentKey": null
+  },
+  {
+    "key": "erschaffung_anker_und_hintergruende",
+    "gameline": "db",
+    "section": "Charaktererschaffung",
+    "title": "Schritt 8: Anker und Hintergründe",
+    "body": "- **Anker:** fünf, verteilt nach Startalter. Jeder Anker ist konkret: ein Name, ein Ort, ein Satz.\n- **Hintergründe:** 3 Punkte für Zuflucht, Ressourcen, Kontakte, Verbündete und Stammspender.\n- **Altlasten** nach Startalter eintragen.",
+    "tags": [
+      "anker",
+      "hintergründe",
+      "altlasten",
+      "punkte",
+      "stammspender",
+      "startalter"
+    ],
+    "position": 60,
+    "parentKey": null
+  },
+  {
+    "key": "erschaffung_abgeleitete_werte",
+    "gameline": "db",
+    "section": "Charaktererschaffung",
+    "title": "Schritt 9 und 10: Abgeleitete Werte, Bonus-XP und Charakterbogen",
+    "body": "| Wert | Berechnung |\n|---|---|\n| Gesundheit | Kraft + 5 |\n| Cruor-Vorrat | nach Blutstärke, zu Beginn voll |\n| Unterhalt | nach Blutstärke |\n| Wille-Vorrat | Wille |\n| Hunger | 0 |\n| Menschenzüge | nach Startalter |\n\n**Bonus-XP ausgeben:** Bonus-XP aus Startalter und Erbe werden nach den normalen Kosten ausgegeben. Die höchste Tiefe des Startalters gilt dabei weiter.\n\n**Der Charakterbogen im Überblick**\n\n| Bereich | Inhalt |\n|---|---|\n| **Person** | Name, früheres Leben, Tod, Startalter |\n| **Blut** | Blutstärke, Blutalter, Glied, Blutlinie, Haus, Blood Scar |\n| **Politik** | Court und Stand, Amt, Order, Schulden in beide Richtungen |\n| **Attribute** | Kraft, Geschick, Verstand, Gespür, Präsenz, Raffinesse, Wille (Wert und Vorrat) |\n| **Fertigkeiten** | 15 Fertigkeiten und Spezialisierungen |\n| **Blutkünste** | Tiefe je Kunst, Affinität, Spannung, Formen |\n| **Cruor** | Vorrat, Unterhalt, Hunger, Füllstand |\n| **Gesundheit** | Leiste mit Wunden und Verheerung |\n| **Anathema** | Grundprofil, vererbte und persönliche Anathema mit Stufe |\n| **Anker** | fünf Plätze, menschlich oder nächtlich, fest oder erschüttert |\n| **Menschenzüge** | Atem, Wärme, Herzschlag, Essen, Träume, Mimik (3 bis 0) |\n| **Hintergründe** | Zuflucht, Ressourcen, Kontakte, Verbündete, Stammspender |\n| **Erfahrung** | XP erhalten und ausgegeben |",
+    "tags": [
+      "abgeleitete werte",
+      "gesundheit",
+      "cruor-vorrat",
+      "bonus-xp",
+      "charakterbogen",
+      "unterhalt"
+    ],
+    "position": 70,
+    "parentKey": null
+  },
+  {
+    "key": "erschaffung_xp_kosten",
+    "gameline": "db",
+    "section": "Charaktererschaffung",
+    "title": "XP-Kosten der Deathborne und Affinität",
+    "body": "| Was | Kosten |\n|---|---|\n| Kunst mit Affinität | neue Tiefe mal 5 |\n| Kunst ohne Affinität | neue Tiefe mal 7 |\n| Gefestigte Form | 3 |\n| Eigene Form | Wirkungsstufe mal 3, halbiert nach dreimaliger erfolgreicher Improvisation |\n| Blutstärke | neuer Wert mal 10 + Glied, dazu Ereignis und Ankererschütterung |\n| Entfremdung ablegen | 5 |\n\nMenschenzüge können nicht gekauft werden.\n\n**Affinität**\n\nAffinität gibt es nur als **Erbe**: wer seine höchste Startkunst in das Steckenpferd seines Sires legt. Eine Kunst mit Affinität kostet dauerhaft weniger XP. Wer seinem Sire nicht folgt, hat keine Affinität.",
+    "tags": [
+      "xp",
+      "kosten",
+      "tiefe",
+      "gefestigte form",
+      "affinität",
+      "blutstärke"
+    ],
+    "position": 80,
+    "parentKey": null
+  },
+  {
+    "key": "erschaffung_weitergabe",
+    "gameline": "db",
+    "section": "Charaktererschaffung",
+    "title": "Weitergabe: eine neue Kunst lernen",
+    "body": "Damit nicht bei jedem Aufstieg die SL gefragt werden muss, gilt:\n\n| Was | Voraussetzung |\n|---|---|\n| **Tiefe steigern** in einer Kunst, die man schon hat | nur XP, das Cruor kennt das Prinzip bereits |\n| **Gefestigte Form lernen** | nur XP |\n| **Eigene Form lernen** | XP und ein kurzer Abgleich mit der Stufentabelle |\n| **Neue Kunst** (Tiefe 0 auf 1) | XP und eine **Quelle** im Spiel |\n\n**Quellen für eine neue Kunst**\n\n| Quelle | Wie | Preis |\n|---|---|---|\n| **Unterweisung** | ein Lehrer mit mindestens Tiefe 2, eine Woche Übung | ein Gefallen beim Lehrer |\n| **Blutlehre** | Cruor des Lehrers trinken | Blutbindung +1 |\n| **Durchbruch** | ein dramatisches Ereignis, in dem die Kunst aus Not erwacht | doppelte XP und eine Instabilität |",
+    "tags": [
+      "weitergabe",
+      "neue kunst",
+      "unterweisung",
+      "blutlehre",
+      "durchbruch",
+      "quelle"
+    ],
+    "position": 90,
+    "parentKey": null
+  },
+  {
+    "key": "welt_deathborne",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Deathborne, Vesperi und Cruor",
+    "body": "Die **Deathborne** sind Menschen, die gestorben und durch einen übernatürlichen Vorgang erneut geboren wurden. Der Begriff ist wörtlich zu verstehen:\n\n> Sie werden durch den Tod geboren.\n\nDer Tod ist keine unerwünschte Nebenwirkung der Verwandlung, sondern ihre Voraussetzung. Ein Mensch muss zuerst sterben.\n\n| Begriff | Bedeutung |\n|---|---|\n| **Deathborne** | die übernatürliche Natur dieser Wesen |\n| **Vesperi** | ihre gebräuchliche Eigenbezeichnung, ein einzelner heißt **Vesper** |\n| **Vampir** | der verbreitetste menschliche Begriff, unter Vesperi meist als unpräzise oder abwertend empfunden |\n| **Cruor** | das Blut eines Deathborne |\n\n**Cruor**\n\nCruor ähnelt äußerlich menschlichem Blut, besitzt aber vollkommen andere Eigenschaften. Nach dem Roten Übergang übernimmt es die Aufgaben, die zuvor biologische Prozesse erfüllten. Es erhält Körper, Gehirn und Erinnerungen, trägt Regeneration und übernatürliche Kräfte und verbindet einen Vesper mit seiner Abstammung.\n\nCruor ist kein Gift und keine Krankheit. Es kann einen Menschen allein nicht verwandeln: Trinken oder Injizieren reicht nicht aus.\n\n**Weder lebendig noch tot**\n\nVesperi altern nicht auf menschliche Weise und brauchen kein biologisches Leben, um weiterzubestehen. Gleichzeitig können sie denken, fühlen, lernen, Beziehungen eingehen und sich verändern. Der Rote Übergang löscht keine Persönlichkeit: Ein Deathborne bleibt grundsätzlich dieselbe Person, die der Mensch vor seinem Tod war. Doch Jahrhunderte, Hunger, Cruor und Macht können diese Person tiefgreifend verändern.\n\n> Die Gefahr liegt nicht darin, dass ein Mensch plötzlich zum Monster wird. Sie liegt darin, dass er nun unbegrenzt Zeit hat, eines zu werden.\n\nMit Ausnahme der ältesten bekannten Deathborne entsteht jeder Vesper durch einen anderen. Dadurch bilden sie eine tatsächliche genealogische Kette, die sich über Jahrtausende zurückverfolgen lässt.",
+    "tags": [
+      "deathborne",
+      "vesperi",
+      "cruor",
+      "vampir",
+      "untot",
+      "abstammung"
+    ],
+    "position": 10,
+    "parentKey": null
+  },
+  {
+    "key": "welt_roter_uebergang",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Der Rote Übergang",
+    "body": "Die Erschaffung eines neuen Vesper heißt **Roter Übergang**. Er ist der zentrale Vorgang der vampirischen Fortpflanzung und nur an einem Menschen möglich, der **tatsächlich gestorben** ist. Wie lange der Tod zurückliegt, spielt keine entscheidende Rolle: Der Verstorbene kann wenige Minuten, Stunden oder Tage tot sein oder schon deutliche Verwesung zeigen. Entscheidend ist nicht die Frische des Körpers, sondern seine strukturelle Unversehrtheit.\n\n**Voraussetzungen**\n\nZwei Bestandteile müssen vorhanden und durch einen zusammenhängenden Körper miteinander verbunden sein:\n\n- ein ausreichend erhaltener Kopf mit Gehirn,\n- das Herz.\n\nArme, Beine, Augen, Lunge, innere Organe, Teile des Rumpfes sowie große Mengen Haut und Muskelgewebe können fehlen. Eine vollständige Enthauptung beendet die Möglichkeit.\n\n**Herz und Geist**\n\nDie Vesperi unterscheiden traditionell zwei notwendige Teile des Menschen. Das **Herz** trägt den körperlichen Zustand, der **Kopf** trägt Persönlichkeit, Erinnerung und Identität. Cruor benötigt beides: Ohne Herz fehlt der Mittelpunkt, von dem aus der Körper aufgebaut und erhalten wird, ohne erhaltenes Gehirn fehlt die Person, die zurückkehren könnte. Ob diese Vorstellung vollständig korrekt ist oder nur die jahrtausendealte Deutung der Vesperi, ist unbekannt.\n\n**Sire und Scion**\n\nDer Vesper, der den Übergang vollzieht, ist der **Sire**, sein neuer Nachkomme der **Scion**. Der Scion trägt einen Teil des Cruors seines Sires und steht damit in derselben Abstammungslinie. Blut allein genügt dafür nicht: Ein tatsächlicher Roter Übergang verlangt die Übertragung eines Teils des eigenen Deathborne-Zustandes.\n\n**Der Ablauf**\n\nRituale unterscheiden sich kulturell und historisch, die fundamentalen Vorgänge bleiben gleich.\n\n| Schritt | Was geschieht |\n|---|---|\n| **Beanspruchung** | Der Sire erkennt den Verstorbenen als seinen künftigen Scion an. Traditionell dient ein Rest des früheren Lebens als Verbindung: menschliches Blut, Gewebe, Knochen, Haare, Zähne. Viele alte Traditionen verlangen, dass der Sire etwas vom ursprünglichen Blut des Toten aufnimmt, womit dessen erstes Leben symbolisch endet |\n| **Verbindung** | Cruor des Sires wird mit dem Körper in Kontakt gebracht, vor allem mit dem Herzen. Dieser Kontakt allein löst nichts aus, Cruor ist nur das Medium |\n| **Stillstand** | Das Herz des Sires kommt vollständig zum Stillstand, sein Cruor hört auf zu zirkulieren. In diesem gefährlichen Zwischenzustand kann er einen Teil seiner eigenen Natur übertragen |\n| **Der Beat** | Der übertragene Anteil heißt **Beat**. Er ist keine messbare Menge Cruor, sondern ein Teil jener Eigenschaft, die einen Vesper überhaupt zum Deathborne macht. Cruor ist nur sein Träger |\n\nWurf, Glied, Affinität und Aufsehen eines Roten Übergangs regelt der Abschnitt Gesellschaft.",
+    "tags": [
+      "roter übergang",
+      "sire",
+      "scion",
+      "beat",
+      "stillstand",
+      "voraussetzungen"
+    ],
+    "position": 20,
+    "parentKey": null
+  },
+  {
+    "key": "welt_erster_schlag",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Der Erste Schlag, das Erwachen und die Wiederherstellung",
+    "body": "Nach der Übertragung kann der Sire den Vorgang nicht weiter erzwingen. Der Körper muss selbst reagieren. Gelingt der Übergang, schlägt das tote Herz irgendwann aus eigener Kraft erneut, ein einziges Mal. Dieser Moment heißt **der Erste Schlag**. Mit ihm beginnt die zweite Existenz, und ab ihm gilt der Verstorbene als Deathborne. Danach breitet sich Cruor durch den Körper aus und übernimmt dessen Funktionen.\n\n**Das Erwachen**\n\nDer Erste Schlag bedeutet nicht, dass der neue Vesper sofort die Augen öffnet oder aufsteht. Bei einem frisch verstorbenen, weitgehend unverletzten Körper kann das Erwachen schnell erfolgen. Bei schwerem körperlichem Schaden, fortgeschrittener Verwesung, fehlenden Extremitäten oder großem Blutverlust dauert es viele Stunden oder Tage. Seltene Berichte sprechen von Deathborne, die erst deutlich später vollständig erwachten.\n\n**Wiederherstellung des Körpers**\n\nCruor besitzt eine ungewöhnliche Fähigkeit zur Rekonstruktion. Es repariert nicht nur vorhandenes Gewebe, sondern folgt einer Art ursprünglichem körperlichem Zustand. Vesperi sprechen von einer **Erinnerung des Fleisches**.\n\nVerlorene Körperteile können grundsätzlich wiederhergestellt werden, aber nicht kostenlos: Je größer der Schaden, desto mehr Blut und Zeit. Ein Vesper, der ohne Arm erschaffen wurde, erwacht zunächst tatsächlich ohne Arm und regeneriert ihn erst später.",
+    "tags": [
+      "erster schlag",
+      "erwachen",
+      "erinnerung des fleisches",
+      "regeneration",
+      "körper",
+      "scion"
+    ],
+    "position": 30,
+    "parentKey": "welt_roter_uebergang"
+  },
+  {
+    "key": "welt_fehlgeschlagene_uebergaenge",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Fehlgeschlagene Übergänge",
+    "body": "Nicht jeder Rote Übergang gelingt. Grundsätzlich werden drei Ergebnisse unterschieden.\n\n| Ergebnis | Was geschieht |\n|---|---|\n| **Schweigen** | Es geschieht nichts, der Tote bleibt tot. Der übertragene Beat verschwindet oder kehrt teilweise zum Sire zurück |\n| **Erwachen** | Der Erste Schlag erfolgt korrekt, ein neuer Deathborne entsteht |\n| **Fehlgeburt** | Der Erste Schlag findet statt, aber der Übergang verläuft nicht vollständig oder nicht korrekt |\n\n**Fehlgeburt**\n\nWas daraus entsteht, ist nicht eindeutig definiert. Historische Berichte sprechen von deformierten Körpern, geistlosen Wesen, instabilem Cruor, permanentem Hunger, fehlender Identität und unkontrollierbaren körperlichen Veränderungen. Solche Wesen gelten unter Vesperi nicht als normale Deathborne. Die Ursachen einer Fehlgeburt sind bis heute nicht vollständig verstanden.",
+    "tags": [
+      "fehlgeburt",
+      "schweigen",
+      "erwachen",
+      "misslungen",
+      "beat",
+      "instabiles cruor"
+    ],
+    "position": 40,
+    "parentKey": "welt_roter_uebergang"
+  },
+  {
+    "key": "welt_hohler_schlag",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Der Preis für den Sire: der Hohle Schlag",
+    "body": "Ein Roter Übergang schwächt den Sire. Durch die Weitergabe eines Beats fehlt seinem Cruor vorübergehend ein Teil der eigenen Stabilität. Dieser Zustand heißt häufig **Hohler Schlag**.\n\nMögliche Folgen sind:\n\n- gesteigerter Hunger,\n- verlangsamte Regeneration,\n- reduzierte Blutstärke,\n- stärkere Auswirkungen ererbter oder persönlicher Schwächen,\n- Schwierigkeiten bei der Nutzung von Blutkünsten.\n\nDer Zustand ist normalerweise vorübergehend. Je stärker und älter ein Sire ist, desto schneller stabilisiert sich sein Cruor gewöhnlich wieder. Mehrere Rote Übergänge innerhalb kurzer Zeit können jedoch gefährlich werden: Im Extremfall erleidet der Sire selbst schwere Cruor-Instabilität. Die Werte dazu stehen unter Gesellschaft.",
+    "tags": [
+      "hohler schlag",
+      "sire",
+      "preis",
+      "instabilität",
+      "blutstärke",
+      "hunger"
+    ],
+    "position": 50,
+    "parentKey": "welt_roter_uebergang"
+  },
+  {
+    "key": "welt_zustimmung",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Zustimmung und der Streit darüber",
+    "body": "Der zukünftige Deathborne muss dem Roten Übergang nicht zustimmen. Da der Mensch zum Zeitpunkt des Vorgangs bereits tot ist, kann ein Sire einen Verstorbenen auch gegen dessen früheren Willen zurückholen.\n\nDiese Tatsache ist innerhalb der Gesellschaft der Vesperi seit Jahrtausenden Gegenstand moralischer, religiöser und politischer Konflikte:\n\n- Einige Traditionen betrachten einen unfreiwilligen Roten Übergang als schweres Verbrechen.\n- Andere sehen einen Leichnam nach dem Tod nicht mehr als Träger eigener Rechte.\n- Wieder andere halten den Roten Übergang für ein Geschenk, das keine Zustimmung benötigt.\n\nDer Bund der Schweigenden Nacht entscheidet die Frage nicht moralisch, sondern praktisch: Der Sire trägt Verantwortung für die Umstände der Erhebung seines Scions und ist verpflichtet, ihn zu lehren, was er geworden ist, was Cruor ist und warum die Schweigende Nacht Bestand haben muss. Unwissenheit eines jungen Deathborne mindert Schuld, hebt die Gefahr aber nicht auf.\n\n> Wer Leben nach dem Tode schenkt, übernimmt Verantwortung für das, was daraus erwächst.\n\nWer heute welche Position vertritt, steht bei den Konfliktlinien der Gegenwart.",
+    "tags": [
+      "zustimmung",
+      "moral",
+      "unfreiwillig",
+      "sire",
+      "verantwortung",
+      "streit"
+    ],
+    "position": 60,
+    "parentKey": "welt_roter_uebergang"
+  },
+  {
+    "key": "welt_blut_und_ernaehrung",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Blut und Ernährung",
+    "body": "Cruor erhält den Deathborne, kann jedoch nicht unbegrenzt aus sich selbst bestehen. Jeder Vesper muss regelmäßig Blut aufnehmen. Das Blut wird vom Cruor verändert und in die eigene übernatürliche Substanz eingebunden. Es dient dabei gleichzeitig als Energiequelle, Baumaterial, Regenerationsmittel und Grundlage vieler Blutkünste.\n\n| Quelle | Bedeutung |\n|---|---|\n| **Menschliches Blut** | die natürliche und effizienteste Nahrung, besonders leicht in Cruor umzuwandeln |\n| **Tierblut** | kann einen Deathborne grundsätzlich erhalten, ist aber deutlich weniger wirksam. Wer sich dauerhaft nur davon ernährt, riskiert Mangelerscheinungen und Instabilität |\n| **Cruor anderer Vesperi** | wesentlich potenter als gewöhnliches Blut, mit außergewöhnlichen Folgen |\n\n**Fremdes Cruor**\n\nDas Trinken eines anderen Deathborne kann die eigene Blutstärke beeinflussen, Erinnerungen oder Eigenschaften übertragen, Bindungen erzeugen, fremde Abstammung in das eigene Cruor einbringen oder zu Instabilität führen. Die Aufnahme fremden Cruors ist deshalb gesellschaftlich stark reguliert oder tabuisiert.\n\nAlkohol und andere Substanzen wirken direkt eingenommen nur eingeschränkt. Ihre stärkste Wirkung entfalten sie, wenn sie bereits im Blut eines Menschen vorhanden sind, von dem der Vesper trinkt.\n\nErtrag, Jagd und Blutbindung regeln die Abschnitte Blut und Hunger sowie Gesellschaft.",
+    "tags": [
+      "blut",
+      "ernährung",
+      "menschenblut",
+      "tierblut",
+      "fremdes cruor",
+      "tabu"
+    ],
+    "position": 70,
+    "parentKey": null
+  },
+  {
+    "key": "welt_blutstaerke_und_blutalter",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Blutstärke, Blutalter und Abstammungstiefe",
+    "body": "Nicht alle Vesperi besitzen gleich starkes Cruor. Drei Größen werden dabei häufig verwechselt.\n\n| Größe | Was sie beschreibt |\n|---|---|\n| **Blutstärke** | die tatsächliche übernatürliche Potenz des Cruor: Regeneration, körperliche Leistungsfähigkeit, Blutbedarf, Widerstandsfähigkeit, mögliche Ausprägung der Blutkünste, Stabilität |\n| **Blutalter** | die Zeit, die Cruor bereits innerhalb eines Deathborne existiert und sich entwickelt hat |\n| **Abstammungstiefe** | wie viele Rote Übergänge zwischen einem Vesper und den frühesten bekannten Deathborne liegen |\n\nBlutstärke ist nicht ausschließlich durch Abstammung festgelegt. Alter führt nicht automatisch zu großer Macht: Ein jahrhundertealter Deathborne kann schwächer sein als ein deutlich jüngerer Vesper. Eine geringe Abstammungstiefe kann die Entwicklung des Cruor erleichtern, eine hohe sie erschweren, aber sie ist keine unveränderliche Obergrenze. Ein weit entfernter Nachkomme kann dieselbe oder größere Blutstärke erreichen, der Weg dorthin ist lediglich schwieriger.\n\n**Verdichtung**\n\nBlutstärke kann im Laufe der Existenz wachsen. Dieser Vorgang heißt **Verdichtung**: Cruor wird mächtiger und übernatürlich stabiler. Auslöser können Zeit, intensive Nutzung von Blutkünsten, besonders potentes Blut, Cruor anderer Deathborne, Rituale und seltene übernatürliche Ereignisse sein. Je höher die Blutstärke bereits ist, desto schwieriger wird jede weitere Verdichtung.\n\n**Der Preis der Macht**\n\nHohe Blutstärke ist nicht nur ein Vorteil. Je stärker Cruor wird, desto weiter entfernt sich der Deathborne von seinem ursprünglichen menschlichen Zustand: größerer Blutbedarf, stärkere ererbte Schwächen, zunehmende Instabilität bei widersprüchlichen Blutkünsten, schlechtere Verträglichkeit minderwertiger Nahrung, sichtbare körperliche Veränderungen und erschwerte Anpassung an menschliche Lebensweisen.\n\n> Mehr Macht ist nicht einfach besser.\n\nSehr alte Deathborne können gleichzeitig unglaublich mächtig und extrem eingeschränkt sein. Stufen, Kosten und Bedingungen stehen unter Blut und Hunger.",
+    "tags": [
+      "blutstärke",
+      "blutalter",
+      "abstammungstiefe",
+      "verdichtung",
+      "preis der macht",
+      "cruor"
+    ],
+    "position": 80,
+    "parentKey": null
+  },
+  {
+    "key": "welt_abstammung_und_blutlinien",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Abstammung, Blutlinien und Blutnarben",
+    "body": "Jeder Rote Übergang erzeugt eine direkte Verbindung zwischen Sire und Scion. Dadurch entstehen reale Abstammungslinien. Cruor gibt dabei nicht nur Macht weiter, sondern auch Eigenschaften, Schwächen, körperliche Besonderheiten, Reaktionen auf Umweltbedingungen und bestimmte Instabilitäten.\n\nDiese Merkmale können sich über Jahrtausende verändern, verstärken oder abschwächen. Blutlinien sind deshalb keine unveränderlichen biologischen Kategorien. Sie entwickeln sich.\n\n**Ererbte Schwächen und Blutnarben**\n\nVesperi besitzen keine einheitlichen klassischen Vampirschwächen. Viele bekannte Legenden beruhen auf Eigenschaften einzelner Abstammungslinien, die außergewöhnlich empfindlich auf Sonnenlicht, Feuer, bestimmte symbolische oder religiöse Orte, bestimmte Stoffe oder bestimmte Umweltbedingungen reagieren. Andere Vesperi tragen dieselbe Schwäche nur abgeschwächt oder überhaupt nicht. Solche vererbten Eigenschaften heißen **Blutnarben** und gehören zu den deutlichsten Merkmalen einer Abstammung. Mit wachsender Blutstärke können sie sich verstärken.\n\nZwei Ebenen werden dabei getrennt: Eine **Blood Scar** ist eine fundamentale Fehlprägung des Cruor einer alten Linie, ein **Anathema** eine konkrete negative Reaktion auf einen Einfluss. The Chain der Kharven ist eine Scar, die außergewöhnliche Sonnenempfindlichkeit derselben Linie ein Anathema. Welche Linie was trägt, führen die Abschnitte Häuser und Scars sowie Anathema.\n\n**Neue Blutlinien**\n\nAbweichungen sind nicht statisch. Über viele Generationen kann eine neue Eigenschaft stabil genug werden, um zum dauerhaften Merkmal einer Blutlinie zu werden. Deshalb beschreiben historische Quellen immer wieder Deathborne, die keinem der Alten Häuser vollständig entsprechen. Die neun alten Linien sind der Ursprung eines großen Teils der bekannten Vesperi, aber nicht das Ende ihrer Entwicklung.\n\n> Cruor verändert sich. Und mit ihm verändern sich die Monster, die Menschen Vampire nennen.",
+    "tags": [
+      "abstammung",
+      "blutlinie",
+      "blutnarben",
+      "ererbte schwächen",
+      "blood scar",
+      "anathema"
+    ],
+    "position": 90,
+    "parentKey": null
+  },
+  {
+    "key": "welt_koerper",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Der Körper eines Deathborne",
+    "body": "Mit dem Ersten Schlag beginnt der Körper eines Vesper erneut zu arbeiten, kehrt aber nicht zum menschlichen Leben zurück. Cruor ersetzt große Teile der biologischen Notwendigkeiten und hält Gewebe, Gehirn und Organe in einem Zustand zwischen Leben und Tod. Ein Vesper kann deshalb äußerlich außergewöhnlich menschlich wirken, obwohl viele Prozesse in ihm nicht mehr notwendig sind.\n\n**Das Herz**\n\nDas Herz schlägt, aber nicht mehr aus biologischer Notwendigkeit. Es bewegt vor allem Cruor durch den Körper. Im Ruhezustand können Sekunden zwischen den Schlägen liegen, bei sehr alten oder ausgehungerten Deathborne deutlich längere Zeiträume. Nach der Aufnahme von Blut, bei Anstrengung oder intensiver Nutzung von Blutkünsten kann der Herzschlag beinahe menschlich wirken. Ein vollständiges Aussetzen tötet nicht unmittelbar, doch ohne Herzschlag verliert ein Vesper zunehmend die Kontrolle über seinen Körper und wird schließlich bewegungsunfähig. Das Herz hält ihn nicht am Leben, es ist der **zentrale Motor seines Cruor**.\n\n**Atmung**\n\nDeathborne müssen nicht atmen. Sie können unter Wasser bleiben, in luftleeren Räumen bestehen, ersticken, erhängt werden und Rauch einatmen, ohne allein daran zu sterben. Geatmet wird zum Sprechen, zum Riechen, aus Gewohnheit und um menschlich zu wirken. Junge Vesperi atmen oft noch vollkommen unbewusst weiter, ältere können minutenlang still stehen, ohne einen Atemzug zu nehmen. Für aufmerksame Menschen ist das eines der subtilsten Zeichen ihrer Natur.\n\n**Körpertemperatur**\n\nCruor erzeugt keinen menschlichen Stoffwechsel. Ein hungriger oder lange ruhender Vesper fühlt sich auffallend kühl an. Nach frischem Blut steigt die Temperatur, die Haut wird stärker durchblutet, der Herzschlag beschleunigt sich, Augen und Haut wirken lebendiger. Ein gut genährter Deathborne kann dadurch nahezu vollständig menschlich erscheinen.\n\n**Menschliche Nahrung**\n\nVesperi können essen, benötigen es aber nicht. Der Verdauungstrakt arbeitet nur eingeschränkt. Kleine Mengen bleiben eine Weile im Körper, größere führen zu Übelkeit, Schmerzen, Erbrechen und verlangsamter Regeneration. Wie viel ein Deathborne verträgt, hängt von Abstammung und Blutstärke ab: Einige nehmen problemlos an einem Abendessen teil, andere schaffen kaum einige Bissen.\n\n**Schlaf**\n\nMenschlichen Schlaf braucht kein Vesper, Cruor jedoch regelmäßig Phasen geringer Aktivität, um sich zu stabilisieren. Die meisten behalten deshalb einen persönlichen Ruhezyklus: schlafen, meditieren, regungslos ruhen oder einfach inaktiv bleiben. Träume sind dabei möglich, ob sie noch aus dem Gehirn stammen oder aus dem Cruor, ist umstritten. Wer viele Tage ohne Ruhe verbringt, macht Hunger, Reizbarkeit und Dissonanz wahrscheinlicher.\n\n**Schmerz**\n\nDeathborne empfinden Schmerz. Der Rote Übergang entfernt weder Nerven noch die Fähigkeit, Verletzungen wahrzunehmen. Cruor kann Schmerz unterdrücken, und erfahrene Vesperi lernen, Verletzungen zu ignorieren, die einen Menschen bewegungsunfähig machen würden. Sie spüren sie trotzdem.\n\nWas einer einzelnen Figur von diesen Zügen bleibt, führen die Menschenzüge unter Körper.",
+    "tags": [
+      "körper",
+      "herz",
+      "atmung",
+      "körpertemperatur",
+      "nahrung",
+      "schlaf",
+      "schmerz"
+    ],
+    "position": 100,
+    "parentKey": null
+  },
+  {
+    "key": "welt_starre",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Die Starre",
+    "body": "Neben gewöhnlicher Ruhe existiert ein wesentlich tieferer Zustand: die **Starre**. Cruor fährt nahezu sämtliche Aktivität des Körpers herunter. Das Herz schlägt extrem selten oder überhaupt nicht mehr. Der Vesper atmet nicht, reagiert kaum auf seine Umgebung, bewegt sich nicht und benötigt nur minimale Mengen Cruor. Äußerlich kann er wie eine gewöhnliche Leiche wirken.\n\n| Form | Ursache |\n|---|---|\n| **Freiwillige Starre** | Ein Vesper versetzt sich bewusst hinein. Besonders alte Deathborne überdauern damit lange Zeiträume |\n| **Hungerstarre** | Ist nicht mehr genügend Cruor vorhanden, fällt der Körper von selbst in Starre, um die endgültige Zerstörung hinauszuzögern |\n| **Traumatische Starre** | Massive Verletzungen erzwingen sie. Je schwerer der Schaden und je geringer die Blutstärke, desto länger hält sie an |\n\nEin Vesper kann in Starre Jahre, Jahrzehnte oder theoretisch noch länger überdauern. Die Dauer allein tötet ihn nicht. Gefährlich wird sie, wenn ein Anathema auf den starren Körper weiterwirkt, denn dann endet sie im Letzten Schlag. Dauer, Ende und Kosten der einzelnen Formen stehen unter Körper.",
+    "tags": [
+      "starre",
+      "freiwillige starre",
+      "hungerstarre",
+      "traumatische starre",
+      "ruhe",
+      "leiche"
+    ],
+    "position": 110,
+    "parentKey": "welt_koerper"
+  },
+  {
+    "key": "welt_verletzungen",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Verletzungen, Feuer und Sonnenlicht",
+    "body": "Ein Vesper kann grundsätzlich auf dieselbe Weise verletzt werden wie ein Mensch. Kugeln zerreißen Gewebe, Messer schneiden, Knochen brechen, Explosionen zerstören Körperteile. Der entscheidende Unterschied ist, dass Cruor diese Schäden wiederherstellen kann. Dadurch verlieren einige Organe ihre besondere Bedeutung: Eine zerstörte Lunge oder Leber ist unangenehm, aber nicht lebensbedrohlich, und selbst massive Blutungen töten nicht, solange genügend Cruor im Körper bleibt.\n\n**Abgetrennte Körperteile**\n\nDer Verlust einer Extremität zerstört einen Vesper nicht. Ein abgetrennter Arm bleibt nicht mit ihm verbunden und entwickelt kein eigenes Leben. Wird er schnell genug zurückgebracht, kann er wieder angesetzt werden, andernfalls rekonstruiert Cruor später einen neuen. Je größer das verlorene Teil, desto höher Blutbedarf und Regenerationszeit.\n\n**Pfählung**\n\nEin Gegenstand, der das Herz durchdringt, zerstört einen Vesper nicht automatisch. Das Material ist bedeutungslos, Holz besitzt keine universelle mystische Wirkung. Entscheidend ist die **mechanische Blockade des Herzens**: Kann es Cruor nicht mehr bewegen, bricht die kontrollierte Zirkulation zusammen, und der Vesper fällt in **Bindung**, meist bei Bewusstsein und bewegungsunfähig. Pfählen ist eine Methode zur Immobilisierung, nicht zur Tötung.\n\n**Enthauptung und Gehirn**\n\nDie Verbindung zwischen Gehirn und Herz ist fundamental, und eine vollständige Enthauptung trennt sie. Cruor kann diesen Zustand nicht überbrücken: Der Vesper wird sofort bewegungsunfähig, und bleibt die Trennung bestehen, kollabiert das Cruor beider Körperteile. Sehr schnelle Wiedervereinigung lässt mächtigen Deathborne eine geringe Chance. Das Gehirn besitzt größere Bedeutung als jedes andere Organ. Cruor kann Gehirngewebe regenerieren, massive Schäden zerstören jedoch Erinnerungen, verändern die Persönlichkeit, beeinträchtigen Fähigkeiten und verursachen lange Starre.\n\n**Feuer und Sonnenlicht**\n\nKeines von beiden wirkt auf alle Vesperi gleich. Feuer besitzt keine universelle übernatürliche Wirkung, ist aber äußerst gefährlich, weil Verbrennungen große Mengen Gewebe gleichzeitig zerstören und Cruor schneller verbrauchen, als der Körper regenerieren kann. Beim Sonnenlicht reicht die Bandbreite von Unwohlsein und geschwächten Blutkünsten bis zu schweren Verbrennungen, raschem Cruor-Verlust, Starre oder endgültiger Zerstörung. Wie ein einzelner Vesper reagiert, hängt an Blutlinie, Blutnarben und Blutstärke. Dass menschliche Legenden Sonnenlicht nahezu universell mit Vampiren verbinden, deutet darauf hin, dass historisch mehrere besonders einflussreiche Abstammungen stark darunter litten.\n\nDie Stufen einzelner Einflüsse stehen unter Anathema, die Regeln zu Bindung und Kern-Treffern unter Körper.",
+    "tags": [
+      "verletzungen",
+      "pfählung",
+      "bindung",
+      "enthauptung",
+      "gehirn",
+      "feuer",
+      "sonnenlicht"
+    ],
+    "position": 120,
+    "parentKey": "welt_koerper"
+  },
+  {
+    "key": "welt_letzter_schlag",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Endgültige Zerstörung und der Letzte Schlag",
+    "body": "Deathborne sind unsterblich im Sinne des Alterns, nicht unzerstörbar.\n\n> Solange Gehirn, Herz und Cruor noch als zusammenhängendes System bestehen, besitzt ein Vesper grundsätzlich die Möglichkeit zur Regeneration.\n\nUm einen Deathborne endgültig zu zerstören, muss dieses System irreversibel unterbrochen werden. Als zuverlässig gelten:\n\n- **vollständige Zerstörung des Gehirns**, weil ohne erhaltene Identität nichts wiederhergestellt werden kann,\n- **dauerhafte Trennung von Kopf und Herz**, die zum Zusammenbruch des Cruor führt,\n- **Zerstörung des Herzens und großer Teile des zentralen Körpers**, sodass kein funktionaler Mittelpunkt bleibt,\n- **weitgehende Vernichtung des Körpers** durch vollständige Verbrennung oder Zerstückelung mit anschließender Vernichtung der Teile.\n\n**Was nicht zwangsläufig tötet**\n\nErtrinken, Ersticken, Erhängen, gewöhnlicher Blutverlust, Herzstillstand, Durchbohrung des Herzens, Verlust einzelner Organe oder Gliedmaßen sowie gewöhnliche Schuss- und Stichverletzungen. All das kann einen Vesper schwer verletzen, immobilisieren oder in Starre versetzen, beendet ihn aber nicht.\n\n**Der Letzte Schlag**\n\nEin gewöhnlicher menschlicher Tod und das Ende eines Deathborne gelten nicht als dasselbe Ereignis. Der Mensch starb bereits vor seinem Roten Übergang. Wird der daraus entstandene Vesper Jahrhunderte später zerstört, ist das kein zweiter gewöhnlicher Tod, sondern das Ende dessen, was beim Ersten Schlag begonnen hat. Die verbreitete alte Bezeichnung dafür lautet **der Letzte Schlag**.\n\nDer Erste Schlag macht einen Toten zum Deathborne, der Letzte Schlag beendet seine zweite Existenz endgültig. Beide Begriffe bilden unter Vesperi einen natürlichen Gegensatz. Die Auslöser im Spiel listet der Abschnitt Körper.",
+    "tags": [
+      "letzter schlag",
+      "endgültige zerstörung",
+      "enthauptung",
+      "gehirn",
+      "erster schlag",
+      "tod"
+    ],
+    "position": 130,
+    "parentKey": "welt_koerper"
+  },
+  {
+    "key": "welt_neun_ersten",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Die Neun Ersten",
+    "body": "Alle bekannten Vesperi führen ihre Abstammung letztlich auf eine kleine Gruppe außergewöhnlich alter Deathborne zurück. Anders als ihre Nachkommen wurden diese ersten Vesperi nicht durch einen Roten Übergang erschaffen. Sie besaßen keinen Sire. Spätere Vesperi nennen sie schlicht **die Neun**.\n\nWann sie lebten, ist unbekannt. Ernstzunehmende vampirische Historiker vermuten das Ereignis mehrere Jahrtausende vor den ersten verlässlichen schriftlichen Aufzeichnungen, doch Fragmente verschiedener Kulturen scheinen auf dieselben neun Gestalten hinzuweisen. Ob ihre heute gebräuchlichen Namen ihre tatsächlichen waren, ist ebenso unklar. Sicher scheint nur:\n\n> Sie starben gemeinsam. Und neun von ihnen standen wieder auf.\n\n**Das ursprüngliche Projekt**\n\nDie Neun waren keine Freunde, sondern ein Zweckbündnis von Menschen, die gemeinsam versuchten, den Tod zu überwinden. Azharet stellte Macht und Ressourcen bereit, Serath verstand den Körper, Elyth entwickelte einen wesentlichen Teil der metaphysischen Theorie, Nayara sammelte und verband das Wissen, Malqor regelte Verpflichtungen und Geheimhaltung, Varesh sicherte das Projekt militärisch, Iskara brachte Wissen über Tod und Übergangsriten ein, Orlo stellte religiöse und philosophische Grundannahmen infrage, und Sael unterstützte das Vorhaben, ohne selbst Teil des Ergebnisses sein zu sollen.\n\nIhre Motivationen widersprachen einander bereits vor ihrem Tod. Das Ritual verband sie. Es vereinte sie nicht.\n\n**Sael und die offene Frage**\n\nSael Varyn hätte nicht zu den Neun gehören sollen, darin stimmen nahezu alle alten Überlieferungen überein. Er war Assistent, Schreiber, Übersetzer, vielleicht Diener, jedenfalls kein vorgesehener Teilnehmer. Vielleicht starb ein Vorgesehener zu früh, vielleicht wurde Sael geopfert, vielleicht sabotierte er das Ritual. Am Ende lag auch er unter den Toten, und auch er erwachte. Manche nennen ihn deshalb **The Father of Bastards**, nicht als Beleidigung, sondern weil erstaunlich viele ungewöhnliche Blutlinien behaupten, auf ihn zurückzugehen.\n\nBis heute gibt es keine gesicherte Antwort darauf, warum das Ritual funktionierte. Wenn es für eine bestimmte Zahl, bestimmte Rollen oder bestimmte Personen entworfen wurde, warum konnte ein ungeplanter Teilnehmer Deathborne werden? Vielleicht war die Zahl neun bedeutungslos. Vielleicht haben die Neun den Tod nicht überwunden, sondern etwas entdeckt, das längst existierte. Und vielleicht war Sael nicht der Fehler im Ritual, sondern der einzige Teil davon, der genau so funktionierte, wie er sollte.\n\nRolle, Ideal, Eigenheit des Cruor, Ur-Scar und Schicksal jedes Einzelnen stehen im Verzeichnis der Ersten.",
+    "tags": [
+      "die neun",
+      "erste deathborne",
+      "projekt",
+      "sael varyn",
+      "ursprung",
+      "ritual"
+    ],
+    "position": 140,
+    "parentKey": null
+  },
+  {
+    "key": "welt_neun_fragen",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Die neun Fragen und die frühen Konfliktachsen",
+    "body": "Der erste Konflikt der Deathborne begann nicht Jahrhunderte später. Er begann wahrscheinlich innerhalb weniger Tage nach dem Erwachen, und zwar als Reihe von Fragen.\n\n| Der Erste | Seine Frage |\n|---|---|\n| **Azharet** | Wie regieren wir jetzt? |\n| **Serath** | Was können wir werden? |\n| **Sael** | Was haben wir getan? |\n| **Iskara** | Wen können wir zurückholen? |\n| **Malqor** | Welche Regeln gelten für uns? |\n| **Varesh** | Wer schützt uns? |\n| **Nayara** | Wie verhindern wir, dass dieses Wissen verloren geht? |\n| **Elyth** | Was ist mit uns zurückgekehrt? |\n\nAuf Azharets Frage gab **Orlo** die kürzeste Antwort: gar nicht. Diese neun Fragen prägen die Gesellschaft der Vesperi bis in die Gegenwart.\n\n**Die frühen Konfliktachsen**\n\n| Achse | Zwischen | Streitfrage |\n|---|---|---|\n| **Herrschaft gegen Freiheit** | Azharet und Orlo | ein Konflikt, der nie vollständig verschwunden ist |\n| **Bewahrung gegen Veränderung** | Nayara und Serath | erhalten oder weiterentwickeln? |\n| **Gesetz gegen persönliche Moral** | Malqor und Sael | stabile Ordnung oder Gewissensentscheidung? |\n| **Überwindung gegen Akzeptanz des Todes** | Iskara und Sael | nur weil ein Mensch zurückkehren kann, sollte er zurückkehren? |\n| **Schutz gegen Selbstbestimmung** | Varesh gegen die Freiheitlicheren | wann wird Schutz zu Herrschaft? |\n\n**Ursprung, nicht Charakterklasse**\n\nDie späteren Häuser sind keine perfekten Fortsetzungen dieser Personen. Nach Jahrtausenden wurden Worte übersetzt, Taten politisch umgedeutet, Geschichten erfunden, Nachfahren abgespalten und Ideologien radikalisiert. Ein Haus, das sich auf Varesh beruft, kann etwas vertreten, das Varesh selbst verachtet hätte. Ein Haus aus Orlos Blut kann tyrannisch werden. Ein Haus aus Iskaras Linie kann den Roten Übergang extrem streng regulieren.\n\n> Die Ersten sind Ursprung. Nicht Charakterklasse.",
+    "tags": [
+      "neun fragen",
+      "konfliktachsen",
+      "ideologie",
+      "die neun",
+      "häuser",
+      "ursprung"
+    ],
+    "position": 150,
+    "parentKey": "welt_neun_ersten"
+  },
+  {
+    "key": "welt_alte_haeuser",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Die Alten Häuser",
+    "body": "Die ältesten politischen Strukturen der Vesperi heißen **Häuser**. Ein Haus ist keine reine Blutlinie, sondern eine über Jahrtausende gewachsene Gemeinschaft aus Abstammung, Tradition, politischem Einfluss, gemeinsamen Ritualen, übernommenen Scions, Vasallenlinien und alten Bündnissen. Viele führen ihren Ursprung auf einen der Neun zurück, historisch beweisbar ist das nicht immer. Was ein Haus langfristig verbindet, ist deshalb nicht nur Blut, sondern Geschichte.\n\n**Hauszugehörigkeit**\n\nEin Vesper wird nicht automatisch durch seinen Sire Mitglied eines Hauses. In vielen Regionen ist das Tradition, aber kein metaphysisches Gesetz. Zugehörigkeit kann entstehen durch einen Roten Übergang innerhalb einer Hauslinie, Adoption, politische Aufnahme, Schwur, Bündnis oder Übertritt. Ein Haus kann einen Vesper ebenso ausschließen, ächten, enterben oder aus seinen Registern streichen. Sein Cruor ändert sich dadurch nicht.\n\n**Blutlinie gegen Haus**\n\nEin Vesper kann genealogisch von Varesh Kharad abstammen und trotzdem Mitglied von Haus Enathar sein. Politisch, kulturell und rechtlich gehört er zu Enathar, sein Cruor zeigt weiter die Merkmale der Kharven-Linie, und bei alten Mischlinien treten mehrere Merkmale gleichzeitig auf. Welche Scar und welche Anathema daran hängen, führen die Abschnitte Häuser und Scars sowie Anathema.\n\nKein Haus besitzt exklusive Blutkünste und keines bestimmt, was ein Vesper lernen darf. Ein Kharven-Hof kann körperliche Ausbildung betonen, ein Nyrath-Archiv Meister der Erinnerung beherbergen, aber das ist Kultur, nicht Cruor-Gesetz. Häuser beschreiben, woher ein Vesper gesellschaftlich kommt, nicht, was er werden darf.\n\n**Historische Spannungen**\n\n- **Kharven und Kaelor:** notwendige dauerhafte Ordnung gegen den Verdacht des Tyrannenstaats.\n- **Veyran und Kaelor:** der offensichtlichste Konflikt, Herrschaft gegen freiwillige Gefolgschaft.\n- **Enathar und Kaelor:** Gesetz gegen persönliche Freiheit, bei wirklich freiwilligen Verträgen aber überraschend häufig Zusammenarbeit.\n- **Imreth und Nyrath:** Veränderung gegen Bewahrung. Nyrath fragt, was verloren geht, Imreth, warum man es behält.\n- **Thenera und Varyss:** Abstammung als Verpflichtung gegen Abstammung als Ursprung, nicht als Schicksal.\n- **Sarrath:** steht häufig außerhalb der Blöcke, wird von allen als Ermittler, Berater und Beobachter genutzt und nie vollständig vertraut.\n\n**Alte und neue Häuser**\n\nDie Neun Großen Häuser sind nicht die einzigen. Im Laufe der Geschichte entstanden Nebenhäuser, abtrünnige Häuser, lokale Dynastien und neue politische Familien, einige nur für Jahrzehnte, andere seit Jahrtausenden. Die Neun heißen gemeinsam **The Elder Houses** oder **die Alten Häuser**, weil ihre Geschichte bis zu den frühesten bekannten Deathborne zurückreicht. Ihr Alter gibt ihnen Prestige, nicht automatisch Herrschaft.",
+    "tags": [
+      "alte häuser",
+      "haus",
+      "hauszugehörigkeit",
+      "blutlinie",
+      "elder houses",
+      "spannungen"
+    ],
+    "position": 160,
+    "parentKey": null
+  },
+  {
+    "key": "welt_courts",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Courts: Territorium, Seat und Court-Typen",
+    "body": "Die Gesellschaft der Vesperi besitzt keine weltweite Zentralregierung. Die Deathborne sind zu alt, zu zahlreich, zu unterschiedlich und zu stark in regionale Geschichte eingebunden. Stattdessen existiert ein Geflecht aus Häusern, Courts, Orders, lokalen Bündnissen, persönlichen Schwüren und uralten Verträgen.\n\nEin **Court** ist die anerkannte politische Ordnung der Vesperi innerhalb eines Gebietes: einer Stadt, mehrerer Städte, einer Region, eines Fürstentums, eines Staates oder in dünn besiedelten Gegenden eines noch größeren Raums. Er ist keine Blutlinie und keine philosophische Bewegung, sondern eine **Herrschaftsstruktur**. Seine wichtigste Aufgabe lautet:\n\n> Das Zusammenleben der Deathborne so zu ordnen, dass weder innerer Krieg noch ein Bruch des Bundes der Schweigenden Nacht die Region zerstört.\n\n**Anerkennung**\n\nEin Court entsteht nicht dadurch, dass ein mächtiger Vesper ein Gebiet für sich beansprucht. Er muss anerkannt werden, durch die Alten Häuser, benachbarte Courts, die regionalen Vesperi, bestehende Verträge oder jahrhundertelange faktische Herrschaft. Deshalb existieren Courts mit vollkommen unterschiedlicher Legitimation: Einer kann demokratisch wirken, einer aristokratisch sein, einer von einem einzelnen Vesper geführt, einer zwischen mehreren Häusern geteilt, einer nur sehr lose organisiert.\n\n**Territorium und Seat**\n\nCourts besitzen keine überall identischen Grenzen. Besonders alte folgen historischen Linien, die für Menschen längst keine Bedeutung mehr haben: Eine menschliche Grenze kann sich verändern, der Court muss es nicht.\n\nDas politische Zentrum heißt **Seat**. Es ist nicht zwingend ein einzelnes Gebäude, sondern auch ein Anwesen, ein unterirdischer Komplex, ein Theater, eine Kirche, ein Hotel, ein ganzer Stadtteil oder ein wandernder Treffpunkt. Dort werden Urteile gesprochen, Abkommen geschlossen, Rechte vergeben und Konflikte beigelegt. In vielen Courts gilt der Seat als besonders geschützter Ort.\n\n**Court-Typen**\n\n- **Crown Court:** ein einzelner Regent mit starker zentraler Macht, typisch für sehr alte Regionen.\n- **Council Court:** mehrere Vesperi oder Häuser regieren gemeinsam, häufig stabiler, aber langsam.\n- **Compact Court:** Herrschaft beruht fast vollständig auf Verträgen, Macht hängt an den eigenen Verpflichtungen.\n- **Free Court:** kaum Zentralmacht, der Court existiert vor allem für Brüche, Territorialkonflikte und äußere Bedrohungen.\n- **Martial Court:** stark militärisch organisiert, typisch in Grenzregionen, Kriegsgebieten und bei starken übernatürlichen Gegnern.\n\n**Konflikte zwischen Courts**\n\nCourts können miteinander handeln, Bündnisse schließen, Krieg führen, Vesperi ausliefern, Sanktionen verhängen und gemeinsame Jagden erklären. Der Bund verhindert keinen Krieg zwischen Courts, er begrenzt nur, wie er geführt werden darf. Kein Court darf etwa menschliche Behörden darüber informieren, dass in der Nachbarstadt Vampire leben.",
+    "tags": [
+      "court",
+      "seat",
+      "territorium",
+      "anerkennung",
+      "court-typen",
+      "konflikte"
+    ],
+    "position": 170,
+    "parentKey": null
+  },
+  {
+    "key": "welt_court_herrschaft",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Regent, Mandate und Rechte im Court",
+    "body": "Die häufigste Form regionaler Führung ist der **Regent**, der anerkannte politische Kopf eines Courts. Der Titel bedeutet nicht automatisch absoluter Herrscher: Ein Regent kann Monarch, Vorsitzender eines Rates, Richter, militärischer Beschützer oder diplomatischer Vertreter sein.\n\n**Das Mandate**\n\nSeine Herrschaft beruht auf einem **Mandate**, das erklärt, warum gerade dieser Vesper herrschen darf.\n\n- **Blood Mandate:** alte Abstammung oder dynastisches Recht.\n- **Accord Mandate:** Vertrag mehrerer Häuser.\n- **Court Mandate:** Wahl oder Zustimmung der örtlichen Vesperi.\n- **Conquest Mandate:** Eroberung, später politisch anerkannt.\n- **Covenant Mandate:** eingesetzt, weil die Stabilität des Bundes es notwendig machte.\n\nDadurch ist Macht nie vollkommen abstrakt. Jeder Regent muss erklären können: Warum gehorcht dieser Court dir?\n\n**Der Night Council**\n\nGrößere Courts besitzen häufig einen **Night Council** aus Vertretern großer Häuser, alten unabhängigen Vesperi, Vertretern wichtiger Orders, Richtern und regionalen Machtträgern. Er kann beratend, gesetzgebend, kontrollierend oder vollständig herrschend sein. Manche Regents hassen ihren Council, andere wären ohne ihn politisch bedeutungslos.\n\n**Ämter**\n\nDie verbreiteten Ämter sind Keeper of Accord, Arbiter und Warden. Der Keeper entscheidet vor allem eine Frage: Ist ein Vorfall nur ein lokales Verbrechen, oder gefährdet er die Schweigende Nacht? In manchen Courts ist er mächtiger als der Regent. Arbiter stammen historisch häufig aus Enathar-Traditionen, das Amt ist aber an kein Haus gebunden. In kleineren Courts sind Regent, Keeper und Warden dieselbe Person. Aufgaben und Werte stehen unter Gesellschaft.\n\n**Domain**\n\nInnerhalb eines Courts können einzelne Vesperi oder Gruppen eigene **Domains** besitzen: Jagdrecht, Schutzrecht, wirtschaftlichen Einfluss, Aufenthaltsrecht, Besitz bestimmter Orte. Eine Domain ist kein kleiner souveräner Staat, sie bleibt dem Court untergeordnet.\n\n**Recht auf Aufenthalt**\n\nEin fremder Vesper kann ein Gebiet betreten, ohne automatisch politische Rechte zu besitzen. Wer dauerhaft bleibt, kann verpflichtet sein, sich registrieren zu lassen, einen lokalen Sire oder Sponsor zu benennen, dem Bund des Courts zuzustimmen und regionale Abgaben oder Dienste zu leisten. Die Stufen von Besucher bis Vereidigtem führt der Stand im Court unter Gesellschaft.",
+    "tags": [
+      "regent",
+      "mandate",
+      "night council",
+      "ämter",
+      "domain",
+      "aufenthaltsrecht"
+    ],
+    "position": 180,
+    "parentKey": "welt_courts"
+  },
+  {
+    "key": "welt_orders",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Orders und die politische Matrix",
+    "body": "Eine **Order** ist eine überregionale Vereinigung von Deathborne, die eine gemeinsame Philosophie, Religion, politische Überzeugung, Methode oder gesellschaftliche Vision verbindet. Orders besitzen normalerweise kein eigenes Territorium, ein Mitglied kann in nahezu jedem Court leben. Dadurch schneiden sie quer durch Häuser, Blutlinien, Staaten und Kulturen.\n\n| Ebene | Ihre Frage |\n|---|---|\n| **Haus** | Woher kommst du? |\n| **Court** | Wer herrscht hier? |\n| **Order** | Woran glaubst du? |\n\n**Die politische Matrix**\n\nEin Vesper besitzt häufig vier voneinander unabhängige politische Ebenen: **Bloodline** (von wem stamme ich ab?), **House** (welcher historischen Gemeinschaft gehöre ich an?), **Court** (welchem regionalen Recht unterstehe ich?) und **Order** (welche Vorstellung von unserer Existenz unterstütze ich?).\n\nDiese Ebenen dürfen sich widersprechen. Ein Vesper kann aus einem alten Thenera-Zweig stammen, zu Haus Varyss gehören, in einem Free Court leben, Mortalist sein und dort das Amt des Keeper of Accord führen: genealogisch von Bindung geprägt, kulturell in einem Haus der Selbstdefinition, politisch sehr frei und ideologisch immer noch ein Mensch. Gerade daraus entstehen interessante Deathborne.\n\n**Mitgliedschaft**\n\nManche Orders verlangen Eid, Prüfung, Sponsor oder Aufnahmezeremonie. Andere sind so lose, dass jemand bereits als Mitglied gilt, wenn er ihre Überzeugungen öffentlich vertritt. Mehrfachmitgliedschaften sind möglich, gelten manchen Orders aber als Verrat oder ideologischer Widerspruch. Die einzelnen Orders stehen im Verzeichnis der Orders, ihre Wirkung im Spiel unter Gesellschaft.\n\n**Keine monolithischen Blöcke**\n\nKeine Order besitzt eine einheitliche Meinung. In jeder Bewegung existieren Moderate, Traditionalisten, Radikale und Reformisten. Ein Continuance-Mitglied kann sehr liberal sein, ein Mortalist Menschen manipulieren, ein Ascendant den Bund fanatisch verteidigen, ein Mitglied der Pale Crown ein hervorragender und gerechter Regent.\n\n> Ideologie beeinflusst einen Charakter. Sie ersetzt ihn nicht.",
+    "tags": [
+      "order",
+      "politische matrix",
+      "bloodline",
+      "haus",
+      "court",
+      "mitgliedschaft"
+    ],
+    "position": 190,
+    "parentKey": null
+  },
+  {
+    "key": "welt_konfliktlinien",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Konfliktlinien der Gegenwart",
+    "body": "Die großen politischen Debatten der Vesperi verlaufen nicht entlang der Häuser, sondern entlang von Fragen.\n\n**Soll der Bund unverändert bestehen?**\n\nContinuance und Ashen Hand sagen: unbedingt. Der Sovereign Path sagt: ja, aber nur so weit wie nötig. Pale Crown und Teile der Ascendants fragen: noch wie lange?\n\n**Wer darf Deathborne erschaffen?**\n\nThe Last Dawn fordert starke Einschränkungen, Ascendants verlangen größere Freiheit, Mortalists verlangen Zustimmung. Viele alte Häuser betrachten den Roten Übergang weiterhin als privates Recht eines Sires.\n\n**Wem gehören Scions?**\n\nOffiziell niemandem. Praktisch gelten sie einigen Traditionen als Familie, anderen als Schüler, und manche alten Courts behandeln sie noch fast wie politische Schutzbefohlene ihres Sires.\n\n**Wie stark darf ein Vesper werden?**\n\nThe Red Communion sieht Verdichtung als Forschung, Ascendants als natürliche Entwicklung, The Last Dawn warnt vor dem Verlust menschlicher Natur. Einige Courts regulieren extreme Blutstärke aus Sicherheitsgründen.\n\n**Wie viel dürfen Menschen wissen?**\n\nVermutlich die wichtigste politische Frage der modernen Zeit. Einzelne Wissende hat der Bund immer geduldet, doch moderne Staaten, Geheimdienste, Unternehmen, Datenbanken, Kameras und globale Kommunikation machen die Grenze zwischen *ein Mensch weiß* und *die Welt weiß* zunehmend unscharf. Damit steht der Bund heute vielleicht stärker unter Druck als jemals zuvor.\n\n**Keine ewige politische Ordnung**\n\nCourts entstehen und fallen, Orders spalten sich, Häuser verlieren Macht, neue Bewegungen entstehen. Ein Vesper, der im Jahr 1200 eine mächtige Institution kannte, kann 1899 feststellen, dass nur noch ihr Name existiert. Ein anderer dient 2026 einer Order, die erst seit drei Jahrzehnten besteht.\n\n> Die Vesperi sind unsterblich. Ihre Gesellschaft ist es nicht.",
+    "tags": [
+      "konfliktlinien",
+      "debatten",
+      "bund",
+      "scions",
+      "verdichtung",
+      "politik"
+    ],
+    "position": 200,
+    "parentKey": "welt_orders"
+  },
+  {
+    "key": "welt_bund",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Der Bund der Schweigenden Nacht",
+    "body": "Vesperi leben seit Jahrhunderten weitgehend verborgen innerhalb menschlicher Gesellschaften. Diese Geheimhaltung ist kein Naturgesetz: Menschen können Vesperi sehen, ihre Existenz erkennen, Beweise sammeln, sie erforschen und sie töten. Einzelne Menschen sind selten eine existenzielle Gefahr, organisierte Gesellschaften dagegen schon, mit Armeen, Religionen, Staaten, Wissenschaft, Industrie und moderner Massenkommunikation.\n\nDarum schlossen die Alten Häuser den **Bund der Schweigenden Nacht**, englisch *The Covenant of Silent Night*. Seine Präambel nennt den Grund:\n\n> Wo einst Gerücht war, ward Wissen. Wo Wissen war, ward Furcht. Wo Furcht war, ward Jagd. Und wo Jagd war, folgten Feuer, Ketten und der Letzte Schlag.\n\nGeschworen wurde er nicht aus Scham und nicht aus Reue, sondern aus Notwendigkeit. Der Schwur der Nacht verlangt keine Liebe, keinen Dienst und keine Vergebung, sondern allein dies: dass die Feindschaft unter Vesperi niemals größer werde als ihr gemeinsames Bedürfnis zu bestehen.\n\n**Was ein Bruch ist**\n\nDas zentrale Prinzip ist eng gefasst: Die Existenz der Deathborne darf niemals zu allgemein anerkanntem und dauerhaft beweisbarem Wissen der menschlichen Gesellschaft werden.\n\n- Gerücht ist kein Bruch.\n- Furcht ist kein Bruch.\n- Aberglaube ist kein Bruch.\n- **Beweis ist ein Bruch.**\n\nSchrift, Bildnis, Aufnahme oder Artefakt, mit dem sich die wahre Natur der Deathborne zweifelsfrei beweisen lässt, soll verborgen, zurückgerufen, unglaubwürdig gemacht oder vernichtet werden. Denn ein einzelner Zeuge stirbt, ein geschriebener Beweis überdauert ihn. Ebenso sollen die Namen, Abstammungen und Orte der Alten Häuser, die Namen von Sire und Scion, die Wege des Roten Übergangs und die Geheimnisse des Cruor verborgen bleiben: Wer einen Deathborne kennt, mag ihm begegnen, wer seine Linie kennt, mag ihn finden.\n\n**Zeugen und Wissende**\n\nNicht jeder Sterbliche, der die Wahrheit erkennt, muss vernichtet werden, denn das Wissen eines Einzelnen ist nicht das Wissen der Welt. Ein Wissender wird geduldet, solange sein Schweigen gewahrt bleibt, sein Wissen sich nicht verbreitet, keine dauerhaften Beweise in seiner Hand liegen und er die Sicherheit der Vesperi nicht gefährdet. Wo Schweigen durch Überzeugung, Eid, Bindung oder Entfernung des Beweises erreichbar ist, soll der Tod eines Menschen nicht leichtfertig gesucht werden. Menschliche Familien und Einrichtungen, die über Generationen Kenntnis besitzen, werden besonders geprüft. Erwächst aus verborgenem Wissen organisierte Jagd, ist jede Duldung verwirkt.\n\nVesperi dürfen unter Menschen Einfluss nehmen, Besitz halten, Ämter lenken und Handel treiben. Ein Richter, ein Arzt, ein Priester, ein König mag wissen. Gericht, Universität, Kirche und Krone sollen es nicht als Wahrheit der Welt verkünden.\n\n**Verrat an der Nacht und höhere Not**\n\nWer absichtlich und wissentlich danach strebt, die Existenz der Vesperi vor der gesamten sterblichen Welt zu offenbaren, gilt als **Verräter der Nacht**. Kein Haus soll ihm Schutz gewähren, kein Eid ihn vor dem Urteil bewahren, kein Sire ihn als Scion beanspruchen, um ihn dem Recht zu entziehen, und keine Blutstärke seine Tat ungeschehen machen. Umgekehrt kennt der Bund die **höhere Not**: Wer einen Sterblichen warnt, um hundert Deathborne vor Vernichtung zu retten, ist nicht derselbe wie jener, der die Nacht aus Eitelkeit verrät. Notwendigkeit hebt das Gesetz nicht auf, doch sie wird im Urteil gewogen.\n\nAuch Fehden und Kriege entbinden niemanden, denn wer den Sterblichen die Jagd auf einen Feind lehrt, lehrt sie zugleich die Jagd auf sich selbst. Kein Haus besitzt den Bund, keines darf seine Worte allein ändern oder sich allein von seiner Pflicht lossagen. Der vollständige Wortlaut der Artikel steht im Verzeichnis des Bundes, Messung und Urteil im Spiel unter Gesellschaft.",
+    "tags": [
+      "bund der schweigenden nacht",
+      "geheimhaltung",
+      "bruch",
+      "beweis",
+      "wissende",
+      "verrat",
+      "höhere not"
+    ],
+    "position": 210,
+    "parentKey": null
+  },
+  {
+    "key": "welt_vampirmythen",
+    "gameline": "db",
+    "section": "Welt",
+    "title": "Menschliche Vampirmythen und Wissen als Waffe",
+    "body": "Menschliche Geschichten über Vampire sind nicht vollständig falsch. Sie sind falsch **verallgemeinert**. Menschen begegneten über Jahrtausende unterschiedlichen Deathborne und hielten die Eigenschaften einzelner Linien für Merkmale einer einzigen Spezies.\n\n| Beobachtung | Daraus wurde |\n|---|---|\n| Dieser Vampir konnte mein Haus nicht betreten | Vampire müssen eingeladen werden |\n| Der Gefangene reagierte entsetzlich auf Silber | Silber tötet Vampire |\n| Das Kreuz hielt ihn tatsächlich zurück | Vampire fürchten das Kreuz |\n| Viele Linien litten schwer unter der Sonne | Vampire können nicht im Sonnenlicht existieren |\n\nJede dieser Aussagen kann wahr sein. Keine davon muss für den nächsten Vesper gelten. Es existiert deshalb kein allgemein zuverlässiges menschliches Handbuch zur Jagd auf Vampire, und viele Vesperi fördern die widersprüchlichen Legenden absichtlich.\n\n**Wissen als Waffe**\n\nDadurch bekommt die Kenntnis einer Abstammung enorme praktische Bedeutung. Zu wissen, dass dort ein Vampir ist, ist nützlich. Zu wissen, dass dort ein Vesper aus der alten Veyran-Linie ist, ist wesentlich gefährlicher. Ein erfahrener Jäger fragt deshalb nicht nur, was sein Gegner ist, sondern:\n\n- von welchem Sire er stammt,\n- welcher Blutlinie er angehört,\n- welche alten Häuser in seiner Abstammung vorkommen,\n- welche Anathema dokumentiert wurden.\n\nUnter Vesperi gilt dasselbe: Die genaue Kenntnis des Cruor eines Gegners kann wertvoller sein als eine stärkere Waffe. Deshalb schützt der Bund nicht nur die Existenz der Deathborne, sondern auch Namen, Linien und Archive. Welche Stufe ein Einfluss bei welcher Blutlinie erreicht, steht unter Anathema.",
+    "tags": [
+      "vampirmythen",
+      "folklore",
+      "legenden",
+      "wissen als waffe",
+      "jäger",
+      "abstammung"
+    ],
+    "position": 220,
+    "parentKey": null
+  }
+]

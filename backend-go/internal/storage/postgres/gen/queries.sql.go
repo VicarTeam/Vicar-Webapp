@@ -619,7 +619,8 @@ const listOwnedSummaries = `-- name: ListOwnedSummaries :many
 SELECT id, game, name, avatar, avatar_orientation, sex, concept,
        clan_name, clan_slogan, clan_nickname, tribe_name, auspice_name,
        tradition_name, creed_name, generation, generation_era, has_cains_mark,
-       chronicle, exp, directory, data_version
+       chronicle, exp, directory, data_version,
+       bloodline_key, house_key, blood_strength, glied
 FROM characters WHERE user_id = $1
 `
 
@@ -645,6 +646,10 @@ type ListOwnedSummariesRow struct {
 	Exp               pgtype.Int4
 	Directory         pgtype.Text
 	DataVersion       pgtype.Text
+	BloodlineKey      pgtype.Text
+	HouseKey          pgtype.Text
+	BloodStrength     pgtype.Int4
+	Glied             pgtype.Int4
 }
 
 func (q *Queries) ListOwnedSummaries(ctx context.Context, userID string) ([]ListOwnedSummariesRow, error) {
@@ -678,6 +683,10 @@ func (q *Queries) ListOwnedSummaries(ctx context.Context, userID string) ([]List
 			&i.Exp,
 			&i.Directory,
 			&i.DataVersion,
+			&i.BloodlineKey,
+			&i.HouseKey,
+			&i.BloodStrength,
+			&i.Glied,
 		); err != nil {
 			return nil, err
 		}
@@ -693,7 +702,8 @@ const listSharedSummaries = `-- name: ListSharedSummaries :many
 SELECT id, game, name, avatar, avatar_orientation, sex, concept,
        clan_name, clan_slogan, clan_nickname, tribe_name, auspice_name,
        tradition_name, creed_name, generation, generation_era, has_cains_mark,
-       chronicle, exp, directory, data_version
+       chronicle, exp, directory, data_version,
+       bloodline_key, house_key, blood_strength, glied
 FROM characters WHERE $1::text = ANY(viewers)
 `
 
@@ -719,6 +729,10 @@ type ListSharedSummariesRow struct {
 	Exp               pgtype.Int4
 	Directory         pgtype.Text
 	DataVersion       pgtype.Text
+	BloodlineKey      pgtype.Text
+	HouseKey          pgtype.Text
+	BloodStrength     pgtype.Int4
+	Glied             pgtype.Int4
 }
 
 func (q *Queries) ListSharedSummaries(ctx context.Context, userID string) ([]ListSharedSummariesRow, error) {
@@ -752,6 +766,10 @@ func (q *Queries) ListSharedSummaries(ctx context.Context, userID string) ([]Lis
 			&i.Exp,
 			&i.Directory,
 			&i.DataVersion,
+			&i.BloodlineKey,
+			&i.HouseKey,
+			&i.BloodStrength,
+			&i.Glied,
 		); err != nil {
 			return nil, err
 		}

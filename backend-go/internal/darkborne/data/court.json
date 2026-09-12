@@ -1,0 +1,154 @@
+{
+  "ranks": [
+    {
+      "level": 0,
+      "name": "Fremder",
+      "rights": "keine, der Aufenthalt ist ein Risiko",
+      "bonus": 0
+    },
+    {
+      "level": 1,
+      "name": "Besucher",
+      "rights": "darf sich aufhalten, hat aber keine Stimme",
+      "bonus": 0
+    },
+    {
+      "level": 2,
+      "name": "Bewohner",
+      "rights": "registriert, darf jagen, wo es erlaubt ist",
+      "bonus": 1
+    },
+    {
+      "level": 3,
+      "name": "Geschützt",
+      "rights": "steht unter dem Schutz des Courts, darf eine Domain besitzen",
+      "bonus": 2
+    },
+    {
+      "level": 4,
+      "name": "Vereidigt",
+      "rights": "Stimme im Night Council, Zugang zum Seat",
+      "bonus": 3
+    }
+  ],
+  "offices": [
+    {
+      "key": "regent",
+      "name": "Regent",
+      "task": "führt den Court",
+      "rule": "Stand 4, kann Stand vergeben und entziehen"
+    },
+    {
+      "key": "keeper_of_accord",
+      "name": "Keeper of Accord",
+      "task": "wacht über den Bund",
+      "rule": "+2 Würfel auf Nachforschung bei Brüchen des Bundes, darf Beweise einziehen"
+    },
+    {
+      "key": "arbiter",
+      "name": "Arbiter",
+      "task": "richtet zwischen Vesperi",
+      "rule": "+2 Würfel auf Etikette in Streitfällen, kann Schulden für bindend erklären"
+    },
+    {
+      "key": "warden",
+      "name": "Warden",
+      "task": "sorgt für Sicherheit",
+      "rule": "darf Gewalt anwenden, ohne Stand zu verlieren, befehligt Handlanger"
+    }
+  ],
+  "debts": [
+    {
+      "key": "gefallen",
+      "name": "Gefallen",
+      "description": "eine Tür öffnen, eine Information geben, einen Abend lang schweigen"
+    },
+    {
+      "key": "schuld",
+      "name": "Schuld",
+      "description": "ein echtes Risiko eingehen, Besitz oder Ansehen aufs Spiel setzen"
+    },
+    {
+      "key": "blutschuld",
+      "name": "Blutschuld",
+      "description": "ein Leben retten, eine Existenz aufgeben, ein Verbrechen decken. Ein Enathar, der sie feierlich anerkennt, bindet sie an The Oath"
+    }
+  ],
+  "judgements": [
+    {
+      "key": "wiedergutmachung",
+      "name": "Wiedergutmachung",
+      "effect": "eine Schuld gegenüber dem Court"
+    },
+    {
+      "key": "entfernung_des_beweises",
+      "name": "Entfernung des Beweises",
+      "effect": "eine Aufräum-Szene unter Aufsicht, ohne Belohnung"
+    },
+    {
+      "key": "schweigepflicht",
+      "name": "Schweigepflicht",
+      "effect": "ein feierlicher Schwur vor dem Arbiter"
+    },
+    {
+      "key": "verlust_von_rechten",
+      "name": "Verlust von Rechten",
+      "effect": "Stand -1"
+    },
+    {
+      "key": "hausstrafe",
+      "name": "Hausstrafe",
+      "effect": "das eigene Haus bestimmt die Strafe"
+    },
+    {
+      "key": "verbannung",
+      "name": "Verbannung",
+      "effect": "Stand 0 in diesem Court, Rückkehr bedeutet Jagd"
+    },
+    {
+      "key": "cruor_bindung",
+      "name": "Cruor-Bindung",
+      "effect": "Blutbindung Stufe 2 an den Keeper of Accord"
+    },
+    {
+      "key": "starre",
+      "name": "Starre",
+      "effect": "erzwungene Starre für Jahre"
+    },
+    {
+      "key": "letzter_schlag",
+      "name": "Letzter Schlag",
+      "effect": "nur, wenn kein geringeres Mittel die Gefahr beendet"
+    }
+  ],
+  "awareness": [
+    {
+      "key": "geruecht",
+      "name": "Gerücht",
+      "boxes": "1-3",
+      "covenant": "kein Bruch (Artikel 1)",
+      "consequence": "Niemand aus der verborgenen Welt reagiert. Die Welt hat nur Geschichten, Aberglaube und seltsame Zufälle, dazu Neugierige, Spinner und die Lokalpresse."
+    },
+    {
+      "key": "wissen",
+      "name": "Wissen",
+      "boxes": "4-6",
+      "covenant": "Zeugen werden geduldet, wenn sie schweigen (Artikel 2)",
+      "consequence": "Es gibt einen Zeugen, der es sicher weiß. Der Keeper of Accord beginnt zu ermitteln."
+    },
+    {
+      "key": "furcht",
+      "name": "Furcht",
+      "boxes": "7-9",
+      "covenant": "Beweise sind ein Bruch (Artikel 3)",
+      "consequence": "Es gibt Beweise: Fotos, Aufnahmen, Schriften oder eine Leiche. Der Court greift ein und fällt Urteile nach Artikel 11, Behörden stellen Fragen."
+    },
+    {
+      "key": "jagd",
+      "name": "Jagd",
+      "boxes": "10-12",
+      "covenant": "organisierte Jagd beendet jede Duldung (Artikel 10)",
+      "consequence": "Menschen organisieren sich und Jäger tauchen auf. Warden und die Ashen Hand reagieren, im schlimmsten Fall das Black Tribunal. Ist das zwölfte Kästchen gefüllt, sucht die verborgene Welt einen Verräter der Nacht (Artikel 12)."
+    }
+  ]
+}

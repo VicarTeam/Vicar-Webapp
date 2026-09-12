@@ -1,0 +1,47 @@
+[
+  {
+    "key": "fresh",
+    "name": "Frisch erwacht",
+    "bloodAge": "bis 10 Jahre",
+    "bloodStrength": 1,
+    "maxDepth": 2,
+    "learnSteps": 3,
+    "bonusXp": 0,
+    "humanAnchors": 4,
+    "nightAnchors": 1,
+    "humanTraitReduction": 0,
+    "burdens": "keine",
+    "alienation": false,
+    "description": "Der Erste Schlag liegt erst wenige Jahre zurück. Alle Menschenzüge stehen auf 3, das alte Leben ist noch greifbar, die Macht dagegen klein."
+  },
+  {
+    "key": "established",
+    "name": "Etabliert",
+    "bloodAge": "10 bis 100 Jahre",
+    "bloodStrength": 2,
+    "maxDepth": 3,
+    "learnSteps": 3,
+    "bonusXp": 20,
+    "humanAnchors": 3,
+    "nightAnchors": 2,
+    "humanTraitReduction": 2,
+    "burdens": "1 Schuld oder 1 Feind",
+    "alienation": false,
+    "description": "Der Vesper hat seinen Platz in der Nacht gefunden. Von den Menschenzügen werden insgesamt 2 Stufen abgezogen, und er bringt eine Altlast aus seiner Vergangenheit mit."
+  },
+  {
+    "key": "old",
+    "name": "Alt",
+    "bloodAge": "über 100 Jahre",
+    "bloodStrength": 3,
+    "maxDepth": 4,
+    "learnSteps": 3,
+    "bonusXp": 45,
+    "humanAnchors": 1,
+    "nightAnchors": 4,
+    "humanTraitReduction": 5,
+    "burdens": "2 Schulden, 1 Feind, 1 Schwur",
+    "alienation": true,
+    "description": "Wer alt startet, ist mächtiger, aber hungriger, verwundbarer und politisch belastet. Von den Menschenzügen werden 5 Stufen abgezogen, keiner darf dabei unter 1 fallen, und ihm bleibt kaum etwas Menschliches, an dem er sich festhalten kann."
+  }
+]

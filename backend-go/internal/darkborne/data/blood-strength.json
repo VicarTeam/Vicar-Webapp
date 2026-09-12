@@ -1,0 +1,89 @@
+[
+  {
+    "level": 1,
+    "maxDepth": 2,
+    "reserve": 6,
+    "upkeep": 1,
+    "freeIncreases": 0,
+    "notes": ["Tierblut voll wirksam"]
+  },
+  {
+    "level": 2,
+    "maxDepth": 3,
+    "reserve": 7,
+    "upkeep": 1,
+    "freeIncreases": 0,
+    "notes": ["Tierblut nur halb wirksam"]
+  },
+  {
+    "level": 3,
+    "maxDepth": 4,
+    "reserve": 8,
+    "upkeep": 2,
+    "freeIncreases": 0,
+    "notes": [
+      "Verheerung heilt für 2 Cruor",
+      "Vererbte Anathema eine Stufe stärker",
+      "Scar-Zwänge schwerer"
+    ]
+  },
+  {
+    "level": 4,
+    "maxDepth": 4,
+    "reserve": 9,
+    "upkeep": 2,
+    "freeIncreases": 0,
+    "notes": [
+      "Tierblut und Konserven wirkungslos",
+      "Menschenzug Essen höchstens 1"
+    ]
+  },
+  {
+    "level": 5,
+    "maxDepth": 5,
+    "reserve": 10,
+    "upkeep": 3,
+    "freeIncreases": 0,
+    "notes": ["Grund-Anathema eine Stufe stärker"]
+  },
+  {
+    "level": 6,
+    "maxDepth": 5,
+    "reserve": 11,
+    "upkeep": 3,
+    "freeIncreases": 1,
+    "notes": ["Hunger-Folgen immer schwer"]
+  },
+  {
+    "level": 7,
+    "maxDepth": 5,
+    "reserve": 12,
+    "upkeep": 4,
+    "freeIncreases": 2,
+    "notes": ["Menschenblut nährt nur noch halb"]
+  },
+  {
+    "level": 8,
+    "maxDepth": 5,
+    "reserve": 13,
+    "upkeep": 4,
+    "freeIncreases": 3,
+    "notes": ["Spannung +1 bei allen Gegenkünsten"]
+  },
+  {
+    "level": 9,
+    "maxDepth": 5,
+    "reserve": 14,
+    "upkeep": 5,
+    "freeIncreases": 4,
+    "notes": ["Alle Menschenzüge höchstens 1"]
+  },
+  {
+    "level": 10,
+    "maxDepth": 5,
+    "reserve": 15,
+    "upkeep": 5,
+    "freeIncreases": 5,
+    "notes": ["Nur noch Cruor anderer Vesperi nährt"]
+  }
+]

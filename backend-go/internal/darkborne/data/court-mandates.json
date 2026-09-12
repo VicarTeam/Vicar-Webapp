@@ -1,0 +1,27 @@
+[
+  {
+    "key": "blood_mandate",
+    "name": "Blood Mandate",
+    "description": "Herrschaft durch alte Abstammung oder dynastisches Recht."
+  },
+  {
+    "key": "accord_mandate",
+    "name": "Accord Mandate",
+    "description": "Herrschaft durch Vertrag mehrerer Häuser."
+  },
+  {
+    "key": "court_mandate",
+    "name": "Court Mandate",
+    "description": "Herrschaft durch Wahl oder Zustimmung der örtlichen Vesperi."
+  },
+  {
+    "key": "conquest_mandate",
+    "name": "Conquest Mandate",
+    "description": "Herrschaft durch Eroberung, die später politisch anerkannt wurde."
+  },
+  {
+    "key": "covenant_mandate",
+    "name": "Covenant Mandate",
+    "description": "Ein Regent wurde eingesetzt, weil die Stabilität des Covenant of Silent Night dies notwendig machte."
+  }
+]

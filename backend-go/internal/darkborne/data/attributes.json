@@ -1,0 +1,51 @@
+[
+  {
+    "key": "kraft",
+    "name": "Kraft",
+    "category": "body",
+    "kind": "power",
+    "description": "Rohe Stärke, Ausdauer und körperliche Belastbarkeit."
+  },
+  {
+    "key": "geschick",
+    "name": "Geschick",
+    "category": "body",
+    "kind": "finesse",
+    "description": "Präzision, Schnelligkeit und Körperbeherrschung."
+  },
+  {
+    "key": "verstand",
+    "name": "Verstand",
+    "category": "mind",
+    "kind": "power",
+    "description": "Wissen, Logik, Planung und Gedächtnis."
+  },
+  {
+    "key": "gespuer",
+    "name": "Gespür",
+    "category": "mind",
+    "kind": "finesse",
+    "description": "Wahrnehmung, Intuition und Geistesgegenwart."
+  },
+  {
+    "key": "praesenz",
+    "name": "Präsenz",
+    "category": "social",
+    "kind": "power",
+    "description": "Autorität, Ausstrahlung und Durchsetzungskraft."
+  },
+  {
+    "key": "raffinesse",
+    "name": "Raffinesse",
+    "category": "social",
+    "kind": "finesse",
+    "description": "Charme, Manipulation und feine Andeutung."
+  },
+  {
+    "key": "wille",
+    "name": "Wille",
+    "category": "will",
+    "kind": "resistance",
+    "description": "Die Kraft der Person, die Widerstand gegen alles leistet, was von außen in sie eindringen will."
+  }
+]

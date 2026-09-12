@@ -33,12 +33,22 @@ import {
   vdzPhysicalAttributes,
   vdzSocialAttributes,
 } from "@/@types/vdz"
+import {
+  DbCategory,
+  getDbAttributeName,
+  getDbAttributesOf,
+  getDbCategoryName,
+  type IDbSheet,
+} from "@/@types/deathborne"
 
 const store = useStore()
 const editingCharacter = computed(() => store.editingCharacter as ICharacter | undefined)
 
 const isMage = computed(() => editingCharacter.value?.game === GameLine.Mage)
 const isDarkAges = computed(() => editingCharacter.value?.game === GameLine.DarkAges)
+const isDeathborne = computed(() => editingCharacter.value?.game === GameLine.Deathborne)
+const dbSheet = computed(() => editingCharacter.value as unknown as IDbSheet)
+const requestDbLevel = inject("request-db-level") as ((type: string, subject?: unknown) => void) | undefined
 const requestVdzLevel = inject("request-vdz-level") as VdzRequestLevelFn | undefined
 
 const levelAttributeModal = ref<InstanceType<typeof AttributeModal> | null>(null)
@@ -80,7 +90,7 @@ function deleteAttribute(attr: IAttributeData | M20Attribute) {
 
 <template>
   <div v-if="editingCharacter" class="attributes-view">
-    <div v-if="!isMage && !isDarkAges" class="card category" v-for="cat in editingCharacter.categories" :key="cat.name">
+    <div v-if="!isMage && !isDarkAges && !isDeathborne" class="card category" v-for="cat in editingCharacter.categories" :key="cat.name">
       <div class="cat-head"><b>{{ getCategoryName(cat.name) }}</b></div>
 
       <div class="attribute" :class="{ modified: effAttr(attr.key).modified }" v-for="attr in cat.attributes" :key="attr.key" :id="`hlat-${attr.key}`">
@@ -110,6 +120,40 @@ function deleteAttribute(attr: IAttributeData | M20Attribute) {
           <LevelButton v-if="(editingCharacter as any as IVdzSheet).attributes[a] < 5" @click="requestVdzLevel?.('attribute', a)" />
           <small class="name" @click="setDicePool?.('attr', getVdzAttributeName(a), (editingCharacter as any as IVdzSheet).attributes[a])">{{ getVdzAttributeName(a) }}</small>
           <Dots :amount="(editingCharacter as any as IVdzSheet).attributes[a]" :max="5" />
+        </div>
+      </div>
+    </template>
+
+    <template v-if="isDeathborne">
+      <div
+        class="card category"
+        v-for="category in [DbCategory.Body, DbCategory.Mind, DbCategory.Social]"
+        :key="category"
+      >
+        <div class="cat-head"><b>{{ getDbCategoryName(category) }}</b></div>
+        <div class="attribute" v-for="a in getDbAttributesOf(category)" :key="a">
+          <LevelButton
+            v-if="(dbSheet.attributes[a] ?? 0) < 5"
+            @click="requestDbLevel?.('attribute', a)"
+            :data-agent="'level:db-attr:' + a"
+          />
+          <small class="name" @click="setDicePool?.('attr', getDbAttributeName(a), dbSheet.attributes[a] ?? 0)">
+            {{ getDbAttributeName(a) }}
+          </small>
+          <Dots :amount="dbSheet.attributes[a] ?? 0" :max="5" />
+        </div>
+      </div>
+
+      <div class="card category">
+        <div class="cat-head"><b>Wille</b></div>
+        <div class="attribute">
+          <LevelButton v-if="dbSheet.wille < 5" @click="requestDbLevel?.('wille')" data-agent="level:db-wille" />
+          <small class="name" @click="setDicePool?.('attr', 'Wille', dbSheet.wille)">Wille</small>
+          <Dots :amount="dbSheet.wille" :max="5" />
+        </div>
+        <div class="attribute">
+          <small class="name">Vorrat</small>
+          <Dots :amount="dbSheet.willePool" :max="dbSheet.wille" />
         </div>
       </div>
     </template>

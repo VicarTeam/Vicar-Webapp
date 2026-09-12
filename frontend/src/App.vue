@@ -4,6 +4,7 @@ import { useStore } from "@/app/store.ts"
 import TipModal from "@/components/editor/TipModal.vue"
 import QuickLexiconOverlay from "@/components/main/lexicon/QuickLexiconOverlay.vue"
 import VampireFx from "@/components/fx/VampireFx.vue"
+import { DarkborneData } from "@/libs/data/darkborne-data"
 
 const store = useStore()
 
@@ -15,7 +16,7 @@ watchEffect(() => {
 
 function setTheme(theme: string) {
   const html = document.documentElement
-  html.classList.remove("theme--v5", "theme--w5", "theme--m20", "theme--h5", "theme--vdz")
+  html.classList.remove("theme--v5", "theme--w5", "theme--m20", "theme--h5", "theme--vdz", "theme--db")
   html.classList.add(`theme--${theme}`)
 }
 
@@ -35,7 +36,10 @@ function onKeyDown(e: KeyboardEvent) {
   }
 }
 
-onMounted(() => window.addEventListener("keydown", onKeyDown))
+onMounted(() => {
+  window.addEventListener("keydown", onKeyDown)
+  DarkborneData.load().catch(() => undefined)
+})
 onUnmounted(() => window.removeEventListener("keydown", onKeyDown))
 
 provide("show-tip", (content: any, title?: any) => {

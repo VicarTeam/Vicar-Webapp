@@ -1,0 +1,210 @@
+[
+  {
+    "key": "kharven",
+    "name": "Haus Kharven",
+    "epithet": "Das Eiserne Haus",
+    "originName": "Varesh Kharad",
+    "originTitle": "The Warlord",
+    "idea": "Verantwortung verlangt Stärke",
+    "reputation": "Soldaten, Beschützer, Strategen, Vollstrecker",
+    "description": "Haus Kharven betrachtet Macht nicht als Privileg, sondern als Verpflichtung. Ein starker Vesper, der Schwächere nicht schützt, gilt innerhalb des Hauses als Versager. Historisch stellte Kharven Kriegsherren, Leibwächter, militärische Berater, Feldkommandanten und Vollstrecker politischer Ordnungen. Das Haus besitzt einen ausgeprägten Ehrenbegriff, der jedoch nicht universell moralisch ist: Ein Kharven kann absolut grausam sein und sich trotzdem für ehrenhaft halten. Entscheidend ist allein, dass er seine Aufgabe nicht abbricht.",
+    "scar": {
+      "key": "the_chain",
+      "name": "The Chain",
+      "summary": "Kharven-Cruor reagiert auf erzwungene Machtlosigkeit.",
+      "triggers": ["Fesseln", "Gefangenschaft", "fremde Kontrolle", "erzwungene Untätigkeit"],
+      "permanentEffect": "Jede Nacht in erzwungener Machtlosigkeit erhöht den Unterhalt um 1. Nach einer Woche droht Hungerstarre. Freiwillige Ruhe und freiwillige Starre lösen nichts aus.",
+      "compulsions": ["mit Gewalt ausbrechen, obwohl Geduld klüger wäre", "einen Befehl verweigern", "die Kontrolle über eine Gruppe an sich reißen"]
+    },
+    "anathema": [
+      { "influenceKey": "sunlight", "level": "extreme", "note": "" },
+      { "influenceKey": "fire", "level": "strong", "note": "" },
+      { "influenceKey": "silver", "level": "moderate", "note": "Verletzungen durch Silber zählen als Verheerung." }
+    ]
+  },
+  {
+    "key": "imreth",
+    "name": "Haus Imreth",
+    "epithet": "Das Wandelnde Haus",
+    "originName": "Serath Imru",
+    "originTitle": "The Physician",
+    "idea": "Der Körper ist kein endgültiger Zustand",
+    "reputation": "Ärzte, Anatomen, Experimentatoren, Körperästheten",
+    "description": "Haus Imreth entwickelte sich aus der Überzeugung, dass der Deathborne-Körper nicht bewahrt, sondern verbessert werden sollte. Viele Angehörige betrachten körperliche Form als etwas Vorläufiges: ein Gesicht, ein Geschlecht, eine Narbe, ein Muskel, ein Organ, alles ist veränderbar. Das bedeutet jedoch nicht automatisch groteske Körpermodifikation. Einige Imreth streben nach perfekter Schönheit, andere nach perfekter Funktion, wieder andere nach völliger Abkehr von menschlicher Anatomie.",
+    "scar": {
+      "key": "the_drift",
+      "name": "The Drift",
+      "summary": "Imreth-Cruor akzeptiert keine endgültige Form.",
+      "triggers": ["schwere Verletzungen", "Hunger ab 3", "Wirkungen ab Stufe 4"],
+      "permanentEffect": "Heilt ein Imreth eine Verheerung, regeneriert der Körper abweichend. Spieler und SL wählen eine sichtbare Veränderung: Augenfarbe, Gesichtszüge, Knochenbildung, Größe.",
+      "compulsions": ["eine Veränderung mitten in der Szene zeigen, die jemand sieht (Aufsehen +1)", "den Körper unbedingt verbessern wollen", "eine vertraute Form nicht mehr halten können"]
+    },
+    "anathema": [
+      { "influenceKey": "sunlight", "level": "strong", "note": "" },
+      { "influenceKey": "fire", "level": "extreme", "note": "Heilt ein Imreth eine Verheerung durch Feuer, löst das immer The Drift aus." },
+      { "influenceKey": "salt", "level": "moderate", "note": "Wirkt nur in offenen Wunden." }
+    ]
+  },
+  {
+    "key": "nyrath",
+    "name": "Haus Nyrath",
+    "epithet": "Das Haus der Erinnerung",
+    "originName": "Nayara Vel",
+    "originTitle": "The Keeper",
+    "idea": "Was vergessen wird, stirbt ein zweites Mal",
+    "reputation": "Historiker, Archivare, Geheimnisträger, Chronisten",
+    "description": "Nyrath besitzt wahrscheinlich die vollständigsten vampirischen Archive der Welt. Das Haus sammelt Namen, Verträge, Blutlinien, Kriege, Abstammungen, verbotene Texte und menschliche Geschichte. Für Nyrath ist Erinnerung Macht, nicht weil Wissen automatisch Herrschaft bedeutet, sondern weil ein unsterbliches Wesen Dinge wissen kann, die kein lebender Mensch mehr überprüfen kann. Nyrath gilt deshalb gleichzeitig als unverzichtbar und als gefährlich.",
+    "scar": {
+      "key": "the_weight",
+      "name": "The Weight",
+      "summary": "Nyrath vergessen nur schwer.",
+      "triggers": ["Orte, Menschen und Gegenstände, die an Trauma, Schuld oder Liebe erinnern"],
+      "permanentEffect": "Die Kunst des Vergessens wirkt gegen Nyrath mit Schwierigkeit +2. Erschütterte und verlorene Anker lasten: In Szenen, die an sie erinnern, gilt -1 Würfel. Wird die Existenz eines Nyrath systematisch ausgelöscht, also Aufzeichnungen, Name und Erinnerungen anderer, wird pro Kapitel ein Anker erschüttert.",
+      "compulsions": ["in einer Erinnerung versinken und eine Runde abwesend sein", "eine alte Schuld begleichen wollen", "eine Kränkung nicht vergeben können"]
+    },
+    "anathema": [
+      { "influenceKey": "sunlight", "level": "strong", "note": "" },
+      { "influenceKey": "fire", "level": "strong", "note": "" },
+      { "influenceKey": "mirrors", "level": "moderate", "note": "Spiegel zeigen frühere Gesichter und alte Verletzungen. Das verursacht keinen Schaden, verrät aber Alter und Identität, und im Spiegel gilt -2 Würfel auf Täuschen." }
+    ]
+  },
+  {
+    "key": "veyran",
+    "name": "Haus Veyran",
+    "epithet": "Das Purpurne Haus",
+    "originName": "Azharet Veyr",
+    "originTitle": "The Sovereign",
+    "idea": "Dauer verlangt Führung",
+    "reputation": "Aristokraten, Verwalter, Diplomaten, Machtpolitiker",
+    "description": "Haus Veyran betrachtet unsterbliche Herrschaft als logische Konsequenz unsterblicher Existenz. Menschen denken in Jahrzehnten, Vesperi können in Jahrhunderten planen, und Veyran sieht darin Verantwortung und Berechtigung zugleich. Das Haus besitzt historisch starke Verbindungen zu Adel, Wirtschaft, Verwaltung, politischen Eliten und alten Familien. Nicht jeder Veyran will König sein, aber fast jeder glaubt, dass eine Welt ohne Führung irgendwann zerfällt.",
+    "scar": {
+      "key": "the_empty_throne",
+      "name": "The Empty Throne",
+      "summary": "Veyran-Cruor braucht Anerkennung.",
+      "triggers": ["ignoriert werden", "gedemütigt werden", "übergangen werden", "isoliert werden"],
+      "permanentEffect": "Hat ein Veyran in keinem Court mindestens Stand 2 und erkennt auch sonst niemand seine Autorität an, wobei eine Gruppe, die ihm folgt, genügt, sinkt sein Vorrat um 2.",
+      "compulsions": ["Anerkennung erzwingen", "eine Demütigung rächen", "die Führung beanspruchen, auch wenn ein anderer besser geeignet ist"]
+    },
+    "anathema": [
+      { "influenceKey": "sunlight", "level": "strong", "note": "" },
+      { "influenceKey": "fire", "level": "strong", "note": "" },
+      { "influenceKey": "threshold", "level": "strong", "note": "Ein eindeutig bewohnter Wohnraum, auch der eines Mieters oder ein Hotelzimmer für die Dauer des Aufenthalts, kann ohne Einladung nicht betreten werden. Eine einfache freiwillige Einladung öffnet die Schwelle." },
+      { "influenceKey": "revoked_hospitality", "level": "moderate", "note": "Wird die Einladung widerrufen, belastet der Ort den Veyran, bis er ihn verlässt." }
+    ]
+  },
+  {
+    "key": "sarrath",
+    "name": "Haus Sarrath",
+    "epithet": "Das Haus hinter den Augen",
+    "originName": "Elyth Sarr",
+    "originTitle": "The Seer",
+    "idea": "Wahrnehmung ist niemals vollständig",
+    "reputation": "Mystiker, Ermittler, Seher, Okkultisten",
+    "description": "Sarrath ist vermutlich das unheimlichste der Alten Häuser. Seine Angehörigen beschäftigen sich obsessiv mit Wahrnehmung, Mustern, Vorzeichen, Zufällen und verborgenen Zusammenhängen. Viele große Ermittler der Vesperi stammten aus Sarrath, ebenso viele vollkommen wahnsinnig wirkende Propheten. Das Haus selbst bestreitet, dass seine Mitglieder die Zukunft sehen können, und spricht lieber von Möglichkeiten, die andere nicht bemerken.",
+    "scar": {
+      "key": "the_fracture",
+      "name": "The Fracture",
+      "summary": "Sarrath trennen Wahrnehmung und Deutung nicht sauber.",
+      "triggers": ["Belastung", "Einsatz der Kunst der Offenbarung", "Spiegel", "Reizüberflutung"],
+      "permanentEffect": "Zeigt bei einer Wahrnehmungsprobe ein Blutwürfel eine 1, fügt die SL der Wahrnehmung ein falsches Detail hinzu.",
+      "compulsions": ["einem Muster folgen, das nicht existiert", "einen Traum für Wirklichkeit halten", "eine Möglichkeit wie eine Erinnerung behandeln"]
+    },
+    "anathema": [
+      { "influenceKey": "sunlight", "level": "extreme", "note": "Sensorisch statt körperlich: Statt Verheerung trifft das Sonnenlicht die Wahrnehmung. Pro Runde steigt Hunger um 1, dazu kommen Blindheit, Halluzinationen und der Verlust übernatürlicher Wahrnehmung. Ab Hunger 5 folgt Hungerstarre." },
+      { "influenceKey": "fire", "level": "strong", "note": "" },
+      { "influenceKey": "mirrors", "level": "strong", "note": "" }
+    ]
+  },
+  {
+    "key": "enathar",
+    "name": "Haus Enathar",
+    "epithet": "Das Haus des Siegels",
+    "originName": "Malqor Enath",
+    "originTitle": "The Judge",
+    "idea": "Unsterblichkeit ohne Gesetz endet im ewigen Krieg",
+    "reputation": "Richter, Vertragsmeister, Vermittler, Gesetzgeber",
+    "description": "Enathar ist wahrscheinlich das politisch wichtigste Haus bei der Entstehung gemeinsamer vampirischer Gesetze. Seine Mitglieder glauben, dass Regeln für Unsterbliche wichtiger sind als für Menschen. Ein Mensch kann einen Streit fünfzig Jahre austragen, ein Vesper kann ihn fünfhundert Jahre weiterführen. Verträge, Schuld und Verantwortung besitzen deshalb im Denken Enathars enorme Bedeutung, und viele der ältesten vampirischen Abkommen tragen zumindest indirekt seine Handschrift.",
+    "scar": {
+      "key": "the_oath",
+      "name": "The Oath",
+      "summary": "Ein freiwillig gegebener Schwur verankert sich im Cruor.",
+      "triggers": ["Versprechen", "Schwüre", "Verträge"],
+      "permanentEffect": "Bricht ein Enathar ein Versprechen, folgt bis zur Wiedergutmachung eine Strafe nach dessen Gewicht: ein beiläufiges Versprechen bringt Hunger +1, ein ernstes Versprechen verhindert jede Regeneration, ein feierlicher Schwur lässt die Blutstärke 1 niedriger zählen.",
+      "compulsions": ["ein Versprechen wörtlich halten, obwohl es schadet", "einen Schwur leisten, der später einholt", "sich weigern, eine Lüge auszusprechen"]
+    },
+    "anathema": [
+      { "influenceKey": "sunlight", "level": "strong", "note": "" },
+      { "influenceKey": "fire", "level": "strong", "note": "" },
+      { "influenceKey": "lived_faith", "level": "strong", "note": "Entscheidend ist nie das Objekt, sondern der aufrichtige Glaube dessen, der es trägt. Ein Kreidesymbol in der Hand eines tief Gläubigen hält einen Enathar auf, ein goldenes Kreuz an einem Zweifler nicht." },
+      { "influenceKey": "consecrated_ground", "level": "moderate", "note": "Bei starker Quelle Stark." }
+    ]
+  },
+  {
+    "key": "thenera",
+    "name": "Haus Thenera",
+    "epithet": "Das Trauernde Haus",
+    "originName": "Iskara Thene",
+    "originTitle": "The Mourner",
+    "idea": "Bindung überlebt den Tod",
+    "reputation": "Familienhäuser, Bewahrer von Dynastien, Totenwächter",
+    "description": "Haus Thenera besitzt eine ungewöhnlich starke Vorstellung von Familie. Ein Scion ist keine politische Investition, sondern wird Teil eines Geflechts. Thenera bewahrt häufig menschliche Familien über Generationen hinweg, und manche Angehörige schützen noch immer Nachfahren von Menschen, die sie vor Jahrhunderten geliebt haben. Andere kontrollieren Familien so stark, dass Schutz längst zu Besitz geworden ist.",
+    "scar": {
+      "key": "the_severed_heart",
+      "name": "The Severed Heart",
+      "summary": "Thenera-Cruor bildet besonders starke Bindungen.",
+      "triggers": ["Gefahr für geliebte Menschen", "Trennung", "Verlust"],
+      "permanentEffect": "Verliert ein Thenera einen Anker, einen Sire, einen Scion oder einen Gefährten, folgt sofort ein Zwang, dessen Ablehnung 2 Wille kostet. Bis zum Ende des Kapitels füllt Blut nur halb.",
+      "compulsions": ["besitzergreifend schützen", "nicht loslassen können", "Rache nehmen", "jemanden zurückholen wollen"]
+    },
+    "anathema": [
+      { "influenceKey": "sunlight", "level": "strong", "note": "" },
+      { "influenceKey": "fire", "level": "strong", "note": "" },
+      { "influenceKey": "running_water", "level": "strong", "note": "Gilt nur für natürliche Strömung. Eine Brücke senkt die Stufe auf Mäßig, das Durchschwimmen eines Flusses erhöht sie auf Extrem. Ein persönlicher Anker, den der Thenera als Erinnerungsstück bei sich trägt, senkt die Stufe um 1." }
+    ]
+  },
+  {
+    "key": "kaelor",
+    "name": "Haus Kaelor",
+    "epithet": "Das Ungebundene Haus",
+    "originName": "Orlo Kael",
+    "originTitle": "The Heretic",
+    "idea": "Keine Macht besitzt natürliche Autorität",
+    "reputation": "Rebellen, Wanderer, Revolutionäre, Individualisten",
+    "description": "Kaelor entstand aus der radikalsten philosophischen Linie der frühen Vesperi. Das Haus lehnt die Vorstellung ab, dass Alter automatisch Autorität bedeutet, dass Sires ihre Scions besitzen, dass Häuser über Individuen bestimmen oder dass Vesperi über Menschen herrschen dürfen. Das macht Kaelor nicht automatisch anarchistisch: Einige akzeptieren freiwillige Hierarchien, andere dienen jahrelang einem Anführer. Entscheidend ist allein, dass die Bindung gewählt bleibt.",
+    "scar": {
+      "key": "the_yoke",
+      "name": "The Yoke",
+      "summary": "Kaelor-Cruor wehrt sich gegen jede fremde Kontrolle.",
+      "triggers": ["Herrschaft", "erzwungene Bindungen", "Schwüre", "mentale Kontrolle", "auch lange freiwillige Bindungen"],
+      "permanentEffect": "Gegen Herrschaft und Bindung erhält ein Kaelor +2 Würfel auf Widerstand, verliert aber bei jedem Versuch 1 Cruor. Jedes Kapitel mit einer Blutbindung oder einem Schwur bringt einen Zwang.",
+      "compulsions": ["eine Bindung brechen, die er eigentlich behalten will", "Nähe zurückweisen", "einen Befehl aus Prinzip verweigern"]
+    },
+    "anathema": [
+      { "influenceKey": "sunlight", "level": "strong", "note": "" },
+      { "influenceKey": "fire", "level": "strong", "note": "" },
+      { "influenceKey": "binding_circles", "level": "extreme", "note": "Pfählung wirkt verstärkt: In Bindung verdoppelt sich der Unterhalt eines Kaelor, nach der Befreiung folgt ein Zwang." }
+    ]
+  },
+  {
+    "key": "varyss",
+    "name": "Haus Varyss",
+    "epithet": "Das Haus ohne Form",
+    "originName": "Sael Varyn",
+    "originTitle": "The Last",
+    "idea": "Kein Deathborne ist verpflichtet, das zu werden, was sein Sire erwartet",
+    "reputation": "Außenseiter, Grenzgänger, Innovatoren, Bastardlinien",
+    "description": "Haus Varyss ist das jüngste der Neun Großen Häuser, zumindest nach eigener Überlieferung, und besitzt keine so klare alte Tradition wie die anderen. Varyss nimmt gebrochene Linien, ausgestoßene Scions, ungewöhnliche Mutationen und neue Abstammungszweige vergleichsweise bereitwillig auf. Andere Häuser betrachten Varyss deshalb häufig als politisch unrein, während Varyss diese Vorstellung für lächerlich hält. Varyss besitzt keinen gemeinsamen Satz zusätzlicher Anathema: Jeder Varyss wählt ein persönliches Anathema auf Stufe Mäßig aus Silber, Salz, Knoblauch und Weißdorn, kaltem Eisen, Glockenklang, Spiegeln, fließendem Wasser, Schwellen, gelebtem Glauben oder Kreisen aus Asche.",
+    "scar": {
+      "key": "the_echoing_blood",
+      "name": "The Echoing Blood",
+      "summary": "Varyss-Cruor nimmt Einflüsse leichter an.",
+      "triggers": ["fremdes Cruor", "außergewöhnliche Blutquellen", "intensive Blutkünste, die auf ihn wirken"],
+      "permanentEffect": "Blutbindungen gegen Varyss steigen um 2 Stufen statt um 1. Dafür kostet eine neue Kunst per Blutlehre nur neue Tiefe mal 4. Wer das Cruor eines anderen Vesper trinkt, darf eines seiner Anathema oder eine seiner Eigenen Formen übernehmen, nach Wahl der SL.",
+      "compulsions": ["fremde Instinkte übernehmen", "auf ein fremdes Anathema reagieren", "sich in fremdem Blut verlieren"]
+    },
+    "anathema": [
+      { "influenceKey": "sunlight", "level": "strong", "note": "" },
+      { "influenceKey": "fire", "level": "strong", "note": "" }
+    ]
+  }
+]

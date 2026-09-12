@@ -19,7 +19,7 @@ export default defineConfig({
       manifest: {
         name: 'Vicar',
         short_name: 'Vicar',
-        description: 'Charakterverwaltung für World of Darkness (V5/W5/H5/M20)',
+        description: 'Charakterverwaltung für World of Darkness und Darkborne',
         lang: 'de',
         dir: 'ltr',
         display: 'standalone',

@@ -5,6 +5,7 @@ import Avatar from "@/components/Avatar.vue"
 import IconButton from "@/components/IconButton.vue"
 import {getGenerationName, getSexName, type ICharacter} from "@/@types/models"
 import CharacterStorage from "@/libs/io/character-storage"
+import { DarkborneData } from "@/libs/data/darkborne-data"
 import FileCreator from "@/libs/io/file-creator"
 import MigrateCharacterModal from "@/components/main/characters/modals/MigrateCharacterModal.vue"
 import { GameLine, type IBaseSheet } from "@/@types/gameline"
@@ -123,6 +124,15 @@ async function copySyncOutId() {
 
 const mocActive = computed(() => localIsVampire.value && !!(props.character as any)?.hasCainsMark)
 
+const isDeathborneChar = computed(() => props.character.game === GameLine.Deathborne)
+
+const deathborneHouse = computed(() => {
+  if (!isDeathborneChar.value) return ""
+  const key = (props.character as any).bloodline || (props.character as any).house
+  if (!key || !DarkborneData.isLoaded) return ""
+  return DarkborneData.house(key)?.name ?? ""
+})
+
 function onDragHandleDown(e: PointerEvent) {
   beginDrag(props.character as unknown as ICharacter, e)
 }
@@ -136,6 +146,7 @@ function onDragHandleDown(e: PointerEvent) {
       m20: character.game === GameLine.Mage,
       h5: character.game === GameLine.Hunter,
       vdz: character.game === GameLine.DarkAges,
+      db: character.game === GameLine.Deathborne,
     }"
   >
     <div class="drag-handle" @pointerdown="onDragHandleDown" title="Drag">
@@ -157,10 +168,18 @@ function onDragHandleDown(e: PointerEvent) {
         <span v-else-if="(character as any).tribe"><i> Stamm:</i> {{ (character as any).tribe.name }}</span>
         <span v-else-if="(character as any).tradition"><i> Allianz:</i> {{ (character as any).tradition.name }}</span>
         <span v-else-if="(character as any).creed"><i> Credo:</i> {{ (character as any).creed.name }}</span>
+        <span v-else-if="isDeathborneChar"><i> Blutlinie:</i> {{ deathborneHouse || "unbekannt" }}</span>
 
-        <bullet />
+        <bullet v-if="(character as any).clan || (character as any).auspice" />
         <span v-if="(character as any).clan">{{ (character as any).clan.slogan ?? (character as any).clan.nickname }}</span>
         <span v-else-if="(character as any).auspice">{{ (character as any).auspice.name }}</span>
+
+        <template v-if="isDeathborneChar">
+          <bullet />
+          <span><i> Blutstärke:</i> {{ (character as any).bloodStrength ?? 1 }}</span>
+          <bullet />
+          <span><i> Glied:</i> {{ (character as any).glied ?? 9 }}</span>
+        </template>
 
         <bullet v-if="localIsVampire" />
         <span v-if="localIsVampire && !mocActive"><i> Generation:</i> {{ (character as any).generation }} ({{ getGenerationName((character as any).generationEra) }})</span>
@@ -264,6 +283,17 @@ function onDragHandleDown(e: PointerEvent) {
   &.w5 { --card-accent: #0e2e8c; }
   &.m20 { --card-accent: #6f2dbd; }
   &.h5 { --card-accent: #3b5d2a; }
+
+  &.db {
+    --card-accent: #4a1533;
+    background:
+      radial-gradient(120% 130% at 50% -20%, rgba(74, 21, 51, 0.34), transparent 60%),
+      linear-gradient(180deg, #120e13, #0b090c);
+    box-shadow:
+      var(--shadow-hairline),
+      var(--shadow-raise),
+      inset 0 0 26px rgba(0, 0, 0, 0.55);
+  }
 
   // VDZ (Dark Ages): gealterte, mittelalterliche Optik – dunkler Graurot-Verlauf
   // und eine feine Körnungs-Textur (keine warmen Gold-/Bronzetöne).
