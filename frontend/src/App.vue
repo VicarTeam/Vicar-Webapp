@@ -6,8 +6,23 @@ import QuickLexiconOverlay from "@/components/main/lexicon/QuickLexiconOverlay.v
 import VampireFx from "@/components/fx/VampireFx.vue"
 import OnyxBanner from "@/components/onyx/OnyxBanner.vue"
 import { DarkborneData } from "@/libs/data/darkborne-data"
+import DataManager from "@/libs/data/data-manager"
+import { checkSession } from "@/libs/auth"
+import { onyxState } from "@/libs/onyx"
+import { useRouter } from "vue-router"
 
 const store = useStore()
+const router = useRouter()
+
+router.afterEach(async (to) => {
+  if (to.path === "/login" || to.path === "/logged-in" || onyxState.loggedIn) {
+    return
+  }
+  const session = await checkSession()
+  if (session.status !== "not_found") {
+    await DataManager.loadLogin(false).catch(() => false)
+  }
+})
 
 const tipModal = ref<InstanceType<typeof TipModal>>()
 
