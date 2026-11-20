@@ -27,6 +27,10 @@ type Config struct {
 	// mongo_only | dual_write_mongo_primary | dual_write_pg_primary | pg_only.
 	DBMode      string
 	PostgresURL string
+
+	OnyxURL          string
+	OnyxClientID     string
+	OnyxClientSecret string
 }
 
 // Load reads configuration. A .env in the working directory is loaded if present
@@ -49,6 +53,10 @@ func Load() (*Config, error) {
 		DevMode:     os.Getenv("DEV_MODE") == "true" || os.Getenv("NODE_ENV") == "development",
 		DBMode:      env("DB_MODE", "mongo_only"),
 		PostgresURL: env("POSTGRES_URL", os.Getenv("DATABASE_URL")),
+
+		OnyxURL:          strings.TrimSpace(os.Getenv("ONYX_URL")),
+		OnyxClientID:     strings.TrimSpace(os.Getenv("ONYX_CLIENT_ID")),
+		OnyxClientSecret: strings.TrimSpace(os.Getenv("ONYX_CLIENT_SECRET")),
 	}
 
 	// Derive the database name from the connection string if not given explicitly

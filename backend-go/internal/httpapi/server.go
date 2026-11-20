@@ -11,6 +11,7 @@ import (
 	"github.com/VicarTeam/vicar-backend/internal/auth"
 	"github.com/VicarTeam/vicar-backend/internal/config"
 	"github.com/VicarTeam/vicar-backend/internal/discord"
+	"github.com/VicarTeam/vicar-backend/internal/onyx"
 	"github.com/VicarTeam/vicar-backend/internal/storage"
 	"github.com/go-chi/chi/v5"
 )
@@ -22,9 +23,11 @@ type Server struct {
 	discord  *discord.Client
 	realtime http.Handler
 	preAuth  *preAuthCache
+	onyx     *onyx.Client
+	onyxFlow *onyxFlowCache
 }
 
-func New(cfg *config.Config, store storage.Provider, authSvc *auth.Service, dc *discord.Client, realtime http.Handler) *Server {
+func New(cfg *config.Config, store storage.Provider, authSvc *auth.Service, dc *discord.Client, onyxClient *onyx.Client, realtime http.Handler) *Server {
 	return &Server{
 		cfg:      cfg,
 		store:    store,
@@ -32,6 +35,8 @@ func New(cfg *config.Config, store storage.Provider, authSvc *auth.Service, dc *
 		discord:  dc,
 		realtime: realtime,
 		preAuth:  newPreAuthCache(),
+		onyx:     onyxClient,
+		onyxFlow: newOnyxFlowCache(),
 	}
 }
 
@@ -45,6 +50,7 @@ func (s *Server) Handler() http.Handler {
 
 	// Public routes (no auth), registered before the auth guard.
 	s.mountAuth(api)
+	s.mountOnyx(api)
 	s.mountData(api)
 	s.mountDarkborne(api)
 	s.mountCdnStatic(api)
@@ -61,6 +67,7 @@ func (s *Server) Handler() http.Handler {
 		s.mountCharacters(r)
 		s.mountDarkborneCharacters(r)
 		s.mountUsers(r)
+		s.mountOnyxAccount(r)
 		s.mountSkillTrees(r)
 		s.mountFolders(r)
 		s.mountCdnUpload(r)

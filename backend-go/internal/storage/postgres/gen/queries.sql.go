@@ -384,7 +384,7 @@ func (q *Queries) GetSkillTreeOwned(ctx context.Context, arg GetSkillTreeOwnedPa
 }
 
 const getUserByAgentToken = `-- name: GetUserByAgentToken :one
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE agent_token = $1 AND agent_token <> ''
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at, onyx_id FROM users WHERE agent_token = $1 AND agent_token <> ''
 `
 
 func (q *Queries) GetUserByAgentToken(ctx context.Context, agentToken string) (User, error) {
@@ -403,12 +403,13 @@ func (q *Queries) GetUserByAgentToken(ctx context.Context, agentToken string) (U
 		&i.AgentToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.OnyxID,
 	)
 	return i, err
 }
 
 const getUserByDiscordID = `-- name: GetUserByDiscordID :one
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE discord_id = $1
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at, onyx_id FROM users WHERE discord_id = $1
 `
 
 func (q *Queries) GetUserByDiscordID(ctx context.Context, discordID string) (User, error) {
@@ -427,12 +428,13 @@ func (q *Queries) GetUserByDiscordID(ctx context.Context, discordID string) (Use
 		&i.AgentToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.OnyxID,
 	)
 	return i, err
 }
 
 const getUserByFvttToken = `-- name: GetUserByFvttToken :one
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE fvtt_token = $1 AND fvtt_token <> ''
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at, onyx_id FROM users WHERE fvtt_token = $1 AND fvtt_token <> ''
 `
 
 func (q *Queries) GetUserByFvttToken(ctx context.Context, fvttToken string) (User, error) {
@@ -451,13 +453,14 @@ func (q *Queries) GetUserByFvttToken(ctx context.Context, fvttToken string) (Use
 		&i.AgentToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.OnyxID,
 	)
 	return i, err
 }
 
 const getUserByID = `-- name: GetUserByID :one
 
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE id = $1
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at, onyx_id FROM users WHERE id = $1
 `
 
 // ============================ users ============================
@@ -477,12 +480,38 @@ func (q *Queries) GetUserByID(ctx context.Context, id string) (User, error) {
 		&i.AgentToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.OnyxID,
+	)
+	return i, err
+}
+
+const getUserByOnyxID = `-- name: GetUserByOnyxID :one
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at, onyx_id FROM users WHERE onyx_id = $1 AND onyx_id <> ''
+`
+
+func (q *Queries) GetUserByOnyxID(ctx context.Context, onyxID string) (User, error) {
+	row := q.db.QueryRow(ctx, getUserByOnyxID, onyxID)
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.DiscordID,
+		&i.Username,
+		&i.Password,
+		&i.ShortCode,
+		&i.InstalledHomebrew,
+		&i.CurrentAccessToken,
+		&i.IsAdmin,
+		&i.FvttToken,
+		&i.AgentToken,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.OnyxID,
 	)
 	return i, err
 }
 
 const getUserByUsername = `-- name: GetUserByUsername :one
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE username = $1
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at, onyx_id FROM users WHERE username = $1
 `
 
 func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User, error) {
@@ -501,12 +530,13 @@ func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User,
 		&i.AgentToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.OnyxID,
 	)
 	return i, err
 }
 
 const getUserByUsernameCI = `-- name: GetUserByUsernameCI :one
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE lower(username) = lower($1)
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at, onyx_id FROM users WHERE lower(username) = lower($1)
 `
 
 func (q *Queries) GetUserByUsernameCI(ctx context.Context, lower string) (User, error) {
@@ -525,6 +555,7 @@ func (q *Queries) GetUserByUsernameCI(ctx context.Context, lower string) (User, 
 		&i.AgentToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.OnyxID,
 	)
 	return i, err
 }
@@ -782,7 +813,7 @@ func (q *Queries) ListSharedSummaries(ctx context.Context, userID string) ([]Lis
 }
 
 const listUsers = `-- name: ListUsers :many
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users ORDER BY username
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at, onyx_id FROM users ORDER BY username
 `
 
 func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
@@ -807,6 +838,7 @@ func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
 			&i.AgentToken,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.OnyxID,
 		); err != nil {
 			return nil, err
 		}
@@ -819,7 +851,7 @@ func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
 }
 
 const listUsersByIDs = `-- name: ListUsersByIDs :many
-SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at FROM users WHERE id = ANY($1::text[])
+SELECT id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, created_at, updated_at, onyx_id FROM users WHERE id = ANY($1::text[])
 `
 
 func (q *Queries) ListUsersByIDs(ctx context.Context, dollar_1 []string) ([]User, error) {
@@ -844,6 +876,7 @@ func (q *Queries) ListUsersByIDs(ctx context.Context, dollar_1 []string) ([]User
 			&i.AgentToken,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.OnyxID,
 		); err != nil {
 			return nil, err
 		}
@@ -964,8 +997,8 @@ func (q *Queries) UpsertSkillTree(ctx context.Context, arg UpsertSkillTreeParams
 }
 
 const upsertUser = `-- name: UpsertUser :exec
-INSERT INTO users (id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+INSERT INTO users (id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, onyx_id)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
 ON CONFLICT (id) DO UPDATE SET
     discord_id = EXCLUDED.discord_id,
     username = EXCLUDED.username,
@@ -976,6 +1009,7 @@ ON CONFLICT (id) DO UPDATE SET
     is_admin = EXCLUDED.is_admin,
     fvtt_token = EXCLUDED.fvtt_token,
     agent_token = EXCLUDED.agent_token,
+    onyx_id = EXCLUDED.onyx_id,
     updated_at = now()
 `
 
@@ -990,6 +1024,7 @@ type UpsertUserParams struct {
 	IsAdmin            bool
 	FvttToken          string
 	AgentToken         string
+	OnyxID             string
 }
 
 func (q *Queries) UpsertUser(ctx context.Context, arg UpsertUserParams) error {
@@ -1004,6 +1039,7 @@ func (q *Queries) UpsertUser(ctx context.Context, arg UpsertUserParams) error {
 		arg.IsAdmin,
 		arg.FvttToken,
 		arg.AgentToken,
+		arg.OnyxID,
 	)
 	return err
 }

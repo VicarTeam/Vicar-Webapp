@@ -27,9 +27,11 @@ func (s *Server) getMe(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]any{
-		"id":       u.IDHex(),
-		"username": u.Username,
-		"isAdmin":  u.IsAdmin,
+		"id":          u.IDHex(),
+		"username":    u.Username,
+		"isAdmin":     u.IsAdmin,
+		"onyxEnabled": s.onyx.Enabled(),
+		"onyxLinked":  u.OnyxID != "",
 	})
 }
 

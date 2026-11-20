@@ -57,6 +57,9 @@ services:
       DISCORD_CLIENT_ID: "${DISCORD_CLIENT_ID}"
       DISCORD_CLIENT_SECRET: "${DISCORD_CLIENT_SECRET}"
       DISCORD_REDIRECT_URI: "${APP_URL}/api/auth/callback"
+      ONYX_URL: "${ONYX_URL}"
+      ONYX_CLIENT_ID: "${ONYX_CLIENT_ID}"
+      ONYX_CLIENT_SECRET: "${ONYX_CLIENT_SECRET}"
       # Hochgeladene Bilder (Avatare/Skill-Tree) - bestehendes CDN-Volume weiterverwenden.
       CDN_DIR: "/data/cdn"
     volumes:

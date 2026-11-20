@@ -27,7 +27,7 @@ func testServer(t *testing.T) http.Handler {
 		t.Fatalf("connect: %v", err)
 	}
 	t.Cleanup(func() { _ = store.Close(context.Background()) })
-	return New(&config.Config{}, store, nil, nil, nil).Handler()
+	return New(&config.Config{}, store, nil, nil, nil, nil).Handler()
 }
 
 func TestDarkborneRevisionEndpoint(t *testing.T) {

@@ -107,7 +107,7 @@ async function onDeleted(tree: ISkillTree) {
 <style scoped lang="scss">
 .skilltree-manager {
   width: 100%;
-  height: 100vh;
+  height: var(--app-height);
   display: flex;
   flex-direction: column;
   min-height: 0;

@@ -125,6 +125,10 @@ func (d *dualUsers) FindByAgentToken(ctx context.Context, token string) (*models
 	return d.find(ctx, func(u storage.UserStore) (*models.User, error) { return u.FindByAgentToken(ctx, token) })
 }
 
+func (d *dualUsers) FindByOnyxID(ctx context.Context, onyxID string) (*models.User, error) {
+	return d.find(ctx, func(u storage.UserStore) (*models.User, error) { return u.FindByOnyxID(ctx, onyxID) })
+}
+
 func (d *dualUsers) FindByIDs(ctx context.Context, ids []string) ([]models.User, error) {
 	return d.s.primary.Users().FindByIDs(ctx, ids)
 }

@@ -87,4 +87,5 @@ type User struct {
 	AgentToken         string
 	CreatedAt          pgtype.Timestamptz
 	UpdatedAt          pgtype.Timestamptz
+	OnyxID             string
 }

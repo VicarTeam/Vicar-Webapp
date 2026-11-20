@@ -22,6 +22,7 @@ type User struct {
 	IsAdmin            bool               `bson:"isAdmin"`
 	FvttToken          string             `bson:"fvttToken,omitempty"`
 	AgentToken         string             `bson:"agentToken,omitempty"`
+	OnyxID             string             `bson:"onyxId,omitempty"`
 }
 
 // IDHex returns the hex representation used as `id` by the frontend.

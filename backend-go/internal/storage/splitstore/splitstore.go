@@ -129,6 +129,10 @@ func (d *splitUsers) FindByAgentToken(ctx context.Context, token string) (*model
 	return d.find(func(u storage.UserStore) (*models.User, error) { return u.FindByAgentToken(ctx, token) })
 }
 
+func (d *splitUsers) FindByOnyxID(ctx context.Context, onyxID string) (*models.User, error) {
+	return d.find(func(u storage.UserStore) (*models.User, error) { return u.FindByOnyxID(ctx, onyxID) })
+}
+
 func (d *splitUsers) FindByIDs(ctx context.Context, ids []string) ([]models.User, error) {
 	p, err := d.s.pg.Users().FindByIDs(ctx, ids)
 	if err != nil {

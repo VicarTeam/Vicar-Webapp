@@ -97,7 +97,7 @@ function onTabChange(value: number) {
 .content {
   flex-grow: 1;
   width: 100%;
-  height: calc(100vh - 4.2rem - 3px);
+  height: calc(var(--app-height) - 4.2rem - 3px);
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;

@@ -55,6 +55,13 @@ func (s *userStore) FindByAgentToken(ctx context.Context, token string) (*models
 	return s.one(ctx, bson.M{"agentToken": token})
 }
 
+func (s *userStore) FindByOnyxID(ctx context.Context, onyxID string) (*models.User, error) {
+	if onyxID == "" {
+		return nil, storage.ErrNotFound
+	}
+	return s.one(ctx, bson.M{"onyxId": onyxID})
+}
+
 func (s *userStore) FindByIDs(ctx context.Context, ids []string) ([]models.User, error) {
 	oids := make([]primitive.ObjectID, 0, len(ids))
 	for _, id := range ids {

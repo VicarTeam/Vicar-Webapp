@@ -3,6 +3,7 @@ package httpapi
 import (
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -91,6 +92,11 @@ func (s *Server) authCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	pair, err := s.auth.Authenticate(r.Context(), auth.DiscordUser{ID: profile.ID, Username: profile.Username})
+	if errors.Is(err, auth.ErrRegistrationClosed) {
+		s.discord.Revoke(accessToken)
+		s.frontendRedirect(w, r, "/login", url.Values{"onyx": {"register_only"}})
+		return
+	}
 	if err != nil || pair == nil {
 		text(w, http.StatusInternalServerError, "Failed to authorize")
 		return
@@ -163,6 +169,10 @@ func (s *Server) authLoginPassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	pair, err := s.auth.AuthenticateByPassword(r.Context(), creds.Username, creds.Password)
+	if errors.Is(err, auth.ErrRegistrationClosed) {
+		s.frontendRedirect(w, r, "/login", url.Values{"onyx": {"register_only"}})
+		return
+	}
 	if err != nil || pair == nil {
 		http.Redirect(w, r, failureURL, http.StatusFound)
 		return
@@ -176,7 +186,7 @@ func (s *Server) authLoginDev(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	rParam := r.URL.Query().Get("r")
-	pair, err := s.auth.Authenticate(r.Context(), auth.DiscordUser{ID: "dev-local-user", Username: "dev"})
+	pair, err := s.auth.AuthenticateDevUser(r.Context(), auth.DiscordUser{ID: "dev-local-user", Username: "dev"})
 	if err != nil || pair == nil {
 		text(w, http.StatusInternalServerError, "error")
 		return

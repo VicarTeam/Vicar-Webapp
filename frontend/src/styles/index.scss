@@ -4,6 +4,10 @@
 @use "components";
 @use "utilities";
 
+html {
+  --app-height: calc(100vh - var(--onyx-banner-height, 0px));
+}
+
 #app {
   position: absolute;
   top: 0;

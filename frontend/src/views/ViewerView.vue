@@ -683,7 +683,7 @@ onUnmounted(() => {
 
 .viewer-content {
   width: 100%;
-  height: calc(100vh - 4.2rem - 3px);
+  height: calc(var(--app-height) - 4.2rem - 3px);
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -849,7 +849,7 @@ onUnmounted(() => {
   }
 
   .viewer-content {
-    height: calc(100vh - 7.6rem);
+    height: calc(var(--app-height) - 7.6rem);
   }
 }
 
@@ -865,7 +865,7 @@ onUnmounted(() => {
   }
 
   .viewer-content {
-    height: calc(100vh - 9.2rem);
+    height: calc(var(--app-height) - 9.2rem);
   }
 }
 </style>

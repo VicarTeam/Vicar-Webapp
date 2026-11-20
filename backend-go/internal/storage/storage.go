@@ -63,6 +63,7 @@ type UserStore interface {
 	FindByDiscordID(ctx context.Context, discordID string) (*models.User, error)
 	FindByFvttToken(ctx context.Context, token string) (*models.User, error)
 	FindByAgentToken(ctx context.Context, token string) (*models.User, error)
+	FindByOnyxID(ctx context.Context, onyxID string) (*models.User, error)
 	FindByIDs(ctx context.Context, ids []string) ([]models.User, error)
 	All(ctx context.Context) ([]models.User, error)
 	Create(ctx context.Context, u *models.User) error

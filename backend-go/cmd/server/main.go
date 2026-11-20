@@ -17,6 +17,7 @@ import (
 	"github.com/VicarTeam/vicar-backend/internal/config"
 	"github.com/VicarTeam/vicar-backend/internal/discord"
 	"github.com/VicarTeam/vicar-backend/internal/httpapi"
+	"github.com/VicarTeam/vicar-backend/internal/onyx"
 	"github.com/VicarTeam/vicar-backend/internal/realtime"
 	"github.com/VicarTeam/vicar-backend/internal/storage"
 	"github.com/VicarTeam/vicar-backend/internal/storage/dualstore"
@@ -44,7 +45,8 @@ func main() {
 	authSvc := auth.NewService(cfg.JWTSecret, store.Users(), store.RefreshTokens())
 	dc := discord.New(cfg.DiscordClientID, cfg.DiscordClientSecret, cfg.DiscordRedirectURI)
 	hub := realtime.New(store, authSvc)
-	srv := httpapi.New(cfg, store, authSvc, dc, hub.Handler())
+	onyxClient := onyx.New(cfg.OnyxURL, cfg.OnyxClientID, cfg.OnyxClientSecret, cfg.BackendURL+"/auth/onyx/callback")
+	srv := httpapi.New(cfg, store, authSvc, dc, onyxClient, hub.Handler())
 
 	httpServer := &http.Server{
 		Addr:              ":" + cfg.Port,

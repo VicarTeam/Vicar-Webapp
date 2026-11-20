@@ -27,6 +27,9 @@ var schemaSQL string
 //go:embed sql/folders.sql
 var foldersSQL string
 
+//go:embed sql/users_onyx_id.sql
+var usersOnyxIDSQL string
+
 //go:embed sql/users_agent_token.sql
 var usersAgentTokenSQL string
 
@@ -119,6 +122,7 @@ func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 		{"0004", darkborneSQL},
 		{"0005", darkborneLoreSQL},
 		{"0006", charactersDarkborneSummarySQL},
+		{"0007", usersOnyxIDSQL},
 	}
 	for _, step := range steps {
 		if err := applyMigration(ctx, pool, step.version, step.sql); err != nil {

@@ -11,7 +11,6 @@ import (
 	"github.com/VicarTeam/vicar-backend/internal/models"
 	"github.com/VicarTeam/vicar-backend/internal/storage"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -34,6 +33,8 @@ type TokenPair struct {
 }
 
 // DiscordUser is the subset of the Discord profile we persist.
+var ErrRegistrationClosed = errors.New("auth: new accounts can only be created through onyx")
+
 type DiscordUser struct {
 	ID       string
 	Username string
@@ -128,30 +129,11 @@ func (s *Service) GetUserIDRegardlessOfExpired(token string) (string, bool) {
 func (s *Service) AuthenticateByPassword(ctx context.Context, username, password string) (*TokenPair, error) {
 	user, err := s.users.FindByUsernameCI(ctx, username)
 	if errors.Is(err, storage.ErrNotFound) {
-		// Unknown username → create the account on first login (legacy behaviour).
-		hash, herr := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-		if herr != nil {
-			return nil, herr
-		}
-		user = &models.User{
-			Username:  username,
-			Password:  string(hash),
-			DiscordID: "local:" + uuid.NewString(),
-		}
-		if cerr := s.users.Create(ctx, user); cerr != nil {
-			return nil, cerr
-		}
+		return nil, ErrRegistrationClosed
 	} else if err != nil {
 		return nil, err
 	} else if user.Password == "" {
-		hash, herr := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-		if herr != nil {
-			return nil, herr
-		}
-		user.Password = string(hash)
-		if uerr := s.users.Update(ctx, user); uerr != nil {
-			return nil, uerr
-		}
+		return nil, nil
 	} else if bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)) != nil {
 		return nil, nil // password mismatch
 	}
@@ -160,6 +142,17 @@ func (s *Service) AuthenticateByPassword(ctx context.Context, username, password
 }
 
 func (s *Service) Authenticate(ctx context.Context, du DiscordUser) (*TokenPair, error) {
+	user, err := s.users.FindByDiscordID(ctx, du.ID)
+	if errors.Is(err, storage.ErrNotFound) {
+		return nil, ErrRegistrationClosed
+	}
+	if err != nil {
+		return nil, err
+	}
+	return s.issueSession(ctx, user.IDHex())
+}
+
+func (s *Service) AuthenticateDevUser(ctx context.Context, du DiscordUser) (*TokenPair, error) {
 	user, err := s.getOrRegister(ctx, du)
 	if err != nil {
 		return nil, err

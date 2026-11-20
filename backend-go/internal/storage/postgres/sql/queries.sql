@@ -18,6 +18,9 @@ SELECT * FROM users WHERE fvtt_token = $1 AND fvtt_token <> '';
 -- name: GetUserByAgentToken :one
 SELECT * FROM users WHERE agent_token = $1 AND agent_token <> '';
 
+-- name: GetUserByOnyxID :one
+SELECT * FROM users WHERE onyx_id = $1 AND onyx_id <> '';
+
 -- name: ListUsersByIDs :many
 SELECT * FROM users WHERE id = ANY($1::text[]);
 
@@ -25,8 +28,8 @@ SELECT * FROM users WHERE id = ANY($1::text[]);
 SELECT * FROM users ORDER BY username;
 
 -- name: UpsertUser :exec
-INSERT INTO users (id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+INSERT INTO users (id, discord_id, username, password, short_code, installed_homebrew, current_access_token, is_admin, fvtt_token, agent_token, onyx_id)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
 ON CONFLICT (id) DO UPDATE SET
     discord_id = EXCLUDED.discord_id,
     username = EXCLUDED.username,
@@ -37,6 +40,7 @@ ON CONFLICT (id) DO UPDATE SET
     is_admin = EXCLUDED.is_admin,
     fvtt_token = EXCLUDED.fvtt_token,
     agent_token = EXCLUDED.agent_token,
+    onyx_id = EXCLUDED.onyx_id,
     updated_at = now();
 
 -- name: DeleteUser :exec

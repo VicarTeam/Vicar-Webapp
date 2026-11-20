@@ -30,6 +30,7 @@ import {HomebrewManager} from "@/libs/data/homebrew-manager";
 import {VicarSync} from "@/libs/io/vicar-sync";
 import {get, patch} from "@/libs/io/rest";
 import router from "@/app/router.ts";
+import {applyOnyxAccount, completePendingOnyxClaim} from "@/libs/onyx";
 
 export default class DataManager {
 
@@ -57,7 +58,7 @@ export default class DataManager {
       return true;
     }
 
-    const [status, res] = await get<{ username: string; isAdmin?: boolean }>(`/users/@me`);
+    const [status, res] = await get<{ username: string; isAdmin?: boolean; onyxEnabled?: boolean; onyxLinked?: boolean }>(`/users/@me`);
     if (status >= 400) {
       if (status === 401) {
         if (routing) {
@@ -69,6 +70,11 @@ export default class DataManager {
 
     this.loggedInAs = res.username;
     this.isAdmin = !!res.isAdmin;
+    applyOnyxAccount(res);
+    const claimedUsername = await completePendingOnyxClaim();
+    if (claimedUsername) {
+      this.loggedInAs = claimedUsername;
+    }
     return true;
   }
 

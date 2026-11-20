@@ -4,6 +4,7 @@ import { useStore } from "@/app/store.ts"
 import TipModal from "@/components/editor/TipModal.vue"
 import QuickLexiconOverlay from "@/components/main/lexicon/QuickLexiconOverlay.vue"
 import VampireFx from "@/components/fx/VampireFx.vue"
+import OnyxBanner from "@/components/onyx/OnyxBanner.vue"
 import { DarkborneData } from "@/libs/data/darkborne-data"
 
 const store = useStore()
@@ -48,7 +49,11 @@ provide("show-tip", (content: any, title?: any) => {
 </script>
 
 <template>
-  <RouterView />
+  <OnyxBanner />
+
+  <div class="app-body">
+    <RouterView />
+  </div>
 
   <QuickLexiconOverlay />
 
@@ -57,4 +62,9 @@ provide("show-tip", (content: any, title?: any) => {
   <TipModal ref="tipModal" />
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.app-body {
+  position: relative;
+  height: var(--app-height);
+}
+</style>

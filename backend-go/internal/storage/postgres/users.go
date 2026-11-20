@@ -23,6 +23,7 @@ func toUser(g gen.User) *models.User {
 		IsAdmin:            g.IsAdmin,
 		FvttToken:          g.FvttToken,
 		AgentToken:         g.AgentToken,
+		OnyxID:             g.OnyxID,
 	}
 }
 
@@ -38,6 +39,7 @@ func upsertUserParams(u *models.User) gen.UpsertUserParams {
 		IsAdmin:            u.IsAdmin,
 		FvttToken:          u.FvttToken,
 		AgentToken:         u.AgentToken,
+		OnyxID:             u.OnyxID,
 	}
 }
 
@@ -68,6 +70,11 @@ func (s *userStore) FindByFvttToken(ctx context.Context, token string) (*models.
 
 func (s *userStore) FindByAgentToken(ctx context.Context, token string) (*models.User, error) {
 	g, err := s.q.GetUserByAgentToken(ctx, token)
+	return userOrErr(g, err)
+}
+
+func (s *userStore) FindByOnyxID(ctx context.Context, onyxID string) (*models.User, error) {
+	g, err := s.q.GetUserByOnyxID(ctx, onyxID)
 	return userOrErr(g, err)
 }
 
